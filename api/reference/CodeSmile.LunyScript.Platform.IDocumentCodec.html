@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IDocumentCodec | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IDocumentCodec | LunyScript API Reference ">
+      
+      <meta name="description" content="The only place LunyScript converts between a saved document and the values in a script&#39;s variable slots. The cloud-save provider and any future file provider both go through it.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_Platform_IDocumentCodec.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.Platform.IDocumentCodec%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.Platform.IDocumentCodec">
+
+
+
+  <h1 id="CodeSmile_LunyScript_Platform_IDocumentCodec" data-uid="CodeSmile.LunyScript.Platform.IDocumentCodec" class="text-break">
+Interface IDocumentCodec  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/IDocumentCodec.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a>.<a class="xref" href="CodeSmile.LunyScript.Platform.html">Platform</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The only place LunyScript converts between a saved document and the values in a script's
+variable slots. The cloud-save provider and any future file provider both go through it.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IDocumentCodec</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_Platform_IDocumentCodec_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>.NET 10 seam.</b> The implementation today uses <code>UnityEngine.JsonUtility</code>, which is a
+Mono-era serializer with no support for dictionaries, no polymorphism and no way to fail
+loudly on an unknown key. The .NET 10 counterpart is <code>System.Text.Json</code> with a
+source-generated <code>JsonSerializerContext</code>, which is also the only form of it that survives
+managed code stripping at High and IL2CPP's ahead-of-time compilation.
+Replacing: <code>UnityEngine.JsonUtility</code>, <code>System.Runtime.Serialization</code>.</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Platform_IDocumentCodec_TryDecode_" data-uid="CodeSmile.LunyScript.Platform.IDocumentCodec.TryDecode*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Platform_IDocumentCodec_TryDecode__1_System_ReadOnlySpan_System_Byte____0__" data-uid="CodeSmile.LunyScript.Platform.IDocumentCodec.TryDecode``1(System.ReadOnlySpan{System.Byte},``0@)">
+  TryDecode&lt;T&gt;(ReadOnlySpan&lt;byte&gt;, out T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/IDocumentCodec.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads a UTF-8 document written by <a class="xref" href="CodeSmile.LunyScript.Platform.IDocumentCodec.html#CodeSmile_LunyScript_Platform_IDocumentCodec_TryEncode__1___0__System_Span_System_Byte__System_Int32__">TryEncode&lt;T&gt;(in T, Span&lt;byte&gt;, out int)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool TryDecode&lt;T&gt;(ReadOnlySpan&lt;byte&gt; document, out T value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>document</code> <span class="xref">ReadOnlySpan</span>&lt;<span class="xref">byte</span>&gt;</dt>
+    <dd></dd>
+    <dt><code>value</code> <span class="xref">T</span></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when the document does not decode into <code class="typeparamref">T</code>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Platform_IDocumentCodec_TryEncode_" data-uid="CodeSmile.LunyScript.Platform.IDocumentCodec.TryEncode*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Platform_IDocumentCodec_TryEncode__1___0__System_Span_System_Byte__System_Int32__" data-uid="CodeSmile.LunyScript.Platform.IDocumentCodec.TryEncode``1(``0@,System.Span{System.Byte},System.Int32@)">
+  TryEncode&lt;T&gt;(in T, Span&lt;byte&gt;, out int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/IDocumentCodec.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes a value into a UTF-8 document.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool TryEncode&lt;T&gt;(in T value, Span&lt;byte&gt; destination, out int bytesWritten)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <span class="xref">T</span></dt>
+    <dd><p>The value to encode.</p>
+</dd>
+    <dt><code>destination</code> <span class="xref">Span</span>&lt;<span class="xref">byte</span>&gt;</dt>
+    <dd><p>Buffer the document is written into.</p>
+</dd>
+    <dt><code>bytesWritten</code> <span class="xref">int</span></dt>
+    <dd><p>Number of bytes written when the call returns true.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when <code class="paramref">destination</code> is too small; nothing is written then.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/IDocumentCodec.cs/#L17" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

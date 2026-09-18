@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IScriptHost | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IScriptHost | LunyScript API Reference ">
+      
+      <meta name="description" content="The object a script runs on, as the blocks see it. Blocks reach the object through this interface and never through a GameObject, a Transform or a Component.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_IScriptHost.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.IScriptHost%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.IScriptHost">
+
+
+
+  <h1 id="CodeSmile_LunyScript_IScriptHost" data-uid="CodeSmile.LunyScript.IScriptHost" class="text-break">
+Interface IScriptHost  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The object a script runs on, as the blocks see it. Blocks reach the object through this
+interface and never through a <code>GameObject</code>, a <code>Transform</code> or a <code>Component</code>.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IScriptHost</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_IScriptHost_examples">Examples</h2>
+  <pre><code class="lang-csharp">var host = new FakeHost(instanceId: 1);
+var instance = runner.Spawn(program, host);</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_IScriptHost_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>Game scripts use GameObjectHost. Explicit editor workflows use the scene-free host owned by
+EditorScriptSession, which refuses spatial access. FakeHost remains a test double.
+AGENTS.md rule 53 and docs/editor-foundation.md define the capability boundary.</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_IsAlive_" data-uid="CodeSmile.LunyScript.IScriptHost.IsAlive*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_IsAlive" data-uid="CodeSmile.LunyScript.IScriptHost.IsAlive">
+  IsAlive
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>False once the underlying object no longer exists. The Editor and DEBUG frame loop polls
+this to report lifecycle violations. Explicit Ready validation and network transform
+access guards read this in every build.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsAlive { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_IsAlive_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>AGENTS.md rule 20 states the contract and what it does not promise. Detection is
+best-effort.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_MotionBodyIsActive_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionBodyIsActive*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_MotionBodyIsActive" data-uid="CodeSmile.LunyScript.IScriptHost.MotionBodyIsActive">
+  MotionBodyIsActive
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L282"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the object's GameObject is active in the hierarchy. Physical Motion
+inputs on an inactive body are refused.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool MotionBodyIsActive { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_Describe_" data-uid="CodeSmile.LunyScript.IScriptHost.Describe*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_Describe" data-uid="CodeSmile.LunyScript.IScriptHost.Describe">
+  Describe()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Names this host for a diagnostic message. <b>Allocates</b>, and is called only where
+LunyScript is reporting a failure, by throwing or by logging, never on the succeeding
+run-time path.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Describe()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>Something a user can find in the scene, for example a GameObject name, where the
+implementation can still read one.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_Describe_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>GameObjectHost retains the name and EntityId in DEBUG or when
+LUNYSCRIPT_CAPTURE_HOST_NAMES is defined. Rename updates that capture after the native
+name is written. Without capture a destroyed host returns a fixed description.
+docs/proposals/review-proposals.md states the capture and native-rename boundaries.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_HasParent_" data-uid="CodeSmile.LunyScript.IScriptHost.HasParent*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_HasParent_CodeSmile_LunyScript_TransformRelation_System_Int32_" data-uid="CodeSmile.LunyScript.IScriptHost.HasParent(CodeSmile.LunyScript.TransformRelation,System.Int32)">
+  HasParent(TransformRelation, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L137"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the named object has a parent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool HasParent(TransformRelation relation, int childIndex)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>relation</code> <a class="xref" href="CodeSmile.LunyScript.TransformRelation.html">TransformRelation</a></dt>
+    <dd><p>Which object to ask about.</p>
+</dd>
+    <dt><code>childIndex</code> <span class="xref">int</span></dt>
+    <dd><p>The child index, used only for
+<a class="xref" href="CodeSmile.LunyScript.TransformRelation.html#CodeSmile_LunyScript_TransformRelation_Child">Child</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when it is parented to another object rather than sitting at the scene
+root.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The named object does not exist.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_LookAt_" data-uid="CodeSmile.LunyScript.IScriptHost.LookAt*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_LookAt_CodeSmile_LunyScript_TransformRelation_System_Int32_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.LookAt(CodeSmile.LunyScript.TransformRelation,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+  LookAt(TransformRelation, int, double, double, double, double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L251"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Turns the named object to face a world point, about a stated up direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool LookAt(TransformRelation relation, int childIndex, double x, double y, double z, double upX, double upY, double upZ)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>relation</code> <a class="xref" href="CodeSmile.LunyScript.TransformRelation.html">TransformRelation</a></dt>
+    <dd><p>Which object to turn.</p>
+</dd>
+    <dt><code>childIndex</code> <span class="xref">int</span></dt>
+    <dd><p>Its child index, used only for
+<a class="xref" href="CodeSmile.LunyScript.TransformRelation.html#CodeSmile_LunyScript_TransformRelation_Child">Child</a>.</p>
+</dd>
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The world x of the point to face.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The world y.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The world z.</p>
+</dd>
+    <dt><code>upX</code> <span class="xref">double</span></dt>
+    <dd><p>The x of the up direction to keep the object's up axis nearest.</p>
+</dd>
+    <dt><code>upY</code> <span class="xref">double</span></dt>
+    <dd><p>The y of that direction.</p>
+</dd>
+    <dt><code>upZ</code> <span class="xref">double</span></dt>
+    <dd><p>The z of that direction.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when the facing is undefined, in which case <b>nothing was written</b>: the
+point is where the object already stands, or the direction to it is parallel to the up
+direction, and there is no rotation the two describe. True when the object was turned.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_LookAt_CodeSmile_LunyScript_TransformRelation_System_Int32_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>An undefined facing writes nothing rather than inventing a direction</b>, which is the
+captain's answer to API-semantics row T04 on 2026-09-13. The object's forward axis ends
+up pointing at the point and its up axis is kept as near the up direction as the facing
+allows. Must allocate nothing; AGENTS.md rule 29.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The named object does not exist.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_MotionAddForce_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionAddForce*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_MotionAddForce_System_Double_System_Double_System_Double_CodeSmile_LunyScript_TransformSpace_System_Boolean_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionAddForce(System.Double,System.Double,System.Double,CodeSmile.LunyScript.TransformSpace,System.Boolean)">
+  MotionAddForce(double, double, double, TransformSpace, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L298"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A force or impulse on a dynamic body. Local space is the body's physics
+orientation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MotionAddForce(double x, double y, double z, TransformSpace space, bool impulse)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>space</code> <a class="xref" href="CodeSmile.LunyScript.TransformSpace.html">TransformSpace</a></dt>
+    <dd></dd>
+    <dt><code>impulse</code> <span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_MotionFaceTowards_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionFaceTowards*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_MotionFaceTowards_System_Double_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionFaceTowards(System.Double,System.Double,System.Double,System.Double)">
+  MotionFaceTowards(double, double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L319"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Turns toward a world point by at most <code class="paramref">maxDegrees</code> without
+overshoot. A point the object already stands on, or a direction parallel to world up,
+writes nothing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MotionFaceTowards(double targetX, double targetY, double targetZ, double maxDegrees)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>targetX</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>targetY</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>targetZ</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>maxDegrees</code> <span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_MotionMoveBy_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionMoveBy*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_MotionMoveBy_System_Double_System_Double_System_Double_CodeSmile_LunyScript_TransformSpace_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionMoveBy(System.Double,System.Double,System.Double,CodeSmile.LunyScript.TransformSpace)">
+  MotionMoveBy(double, double, double, TransformSpace)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L286"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>One Motion.MoveBy displacement. Local space is the object's physics orientation
+and is unaffected by scale.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MotionMoveBy(double x, double y, double z, TransformSpace space)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>space</code> <a class="xref" href="CodeSmile.LunyScript.TransformSpace.html">TransformSpace</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_MotionMoveTowards_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionMoveTowards*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_MotionMoveTowards_System_Double_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionMoveTowards(System.Double,System.Double,System.Double,System.Double)">
+  MotionMoveTowards(double, double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L290"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>One Motion.MoveTo step: move toward a world point by at most
+<code class="paramref">maxDistance</code> without overshoot.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MotionMoveTowards(double destX, double destY, double destZ, double maxDistance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>destX</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>destY</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>destZ</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>maxDistance</code> <span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_MotionRotateTowards_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionRotateTowards*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_MotionRotateTowards_System_Double_System_Double_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionRotateTowards(System.Double,System.Double,System.Double,System.Double,System.Double)">
+  MotionRotateTowards(double, double, double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L294"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>One Motion.RotateTo step: turn toward an orientation by at most
+<code class="paramref">maxDegrees</code> without overshoot.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MotionRotateTowards(double x, double y, double z, double w, double maxDegrees)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>w</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>maxDegrees</code> <span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_MotionSetVelocity_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionSetVelocity*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_MotionSetVelocity_System_Double_System_Double_System_Double_CodeSmile_LunyScript_TransformSpace_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionSetVelocity(System.Double,System.Double,System.Double,CodeSmile.LunyScript.TransformSpace)">
+  MotionSetVelocity(double, double, double, TransformSpace)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L302"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Absolute linear velocity, converted from <code class="paramref">space</code> before the
+world write.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MotionSetVelocity(double x, double y, double z, TransformSpace space)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>space</code> <a class="xref" href="CodeSmile.LunyScript.TransformSpace.html">TransformSpace</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_MotionStop_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionStop*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_MotionStop" data-uid="CodeSmile.LunyScript.IScriptHost.MotionStop">
+  MotionStop()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L305"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Clears linear and angular velocity once.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MotionStop()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_MotionTeleport_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionTeleport*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_MotionTeleport_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionTeleport(System.Double,System.Double,System.Double)">
+  MotionTeleport(double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L309"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Places the object. A dynamic body also clears both velocities. A kinematic body
+receives a pose write and no velocity setter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MotionTeleport(double x, double y, double z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_MotionTeleport_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionTeleport*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_MotionTeleport_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.MotionTeleport(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+  MotionTeleport(double, double, double, double, double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L313"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Places the object and writes this orientation. A dynamic body also clears both
+velocities. A kinematic body receives a pose write and no velocity setter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MotionTeleport(double x, double y, double z, double rotationX, double rotationY, double rotationZ, double rotationW)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>rotationX</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>rotationY</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>rotationZ</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>rotationW</code> <span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_MoveBy_" data-uid="CodeSmile.LunyScript.IScriptHost.MoveBy*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_MoveBy_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.MoveBy(System.Double,System.Double,System.Double)">
+  MoveBy(double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds to the object's world-space position. Called by <code>MoveByBlock</code> once per frame
+update it appears in, and must allocate nothing; AGENTS.md rule 29.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void MoveBy(double x, double y, double z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>World units to add along X.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>World units to add along Y.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>World units to add along Z.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_MoveBy_System_Double_System_Double_System_Double__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The parameters are <code>Number</code> because that is the API's number type; <code>GameObjectHost</code>
+converts to <code>float</code> at this seam and nowhere else, so the conversion's tolerance has
+one site to be tested at. AGENTS.md rules 12 and 13.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_OffsetTransform_" data-uid="CodeSmile.LunyScript.IScriptHost.OffsetTransform*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_OffsetTransform_CodeSmile_LunyScript_TransformRelation_System_Int32_CodeSmile_LunyScript_TransformSpace_CodeSmile_LunyScript_TransformPart_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.OffsetTransform(CodeSmile.LunyScript.TransformRelation,System.Int32,CodeSmile.LunyScript.TransformSpace,CodeSmile.LunyScript.TransformPart,System.Double,System.Double,System.Double)">
+  OffsetTransform(TransformRelation, int, TransformSpace, TransformPart, double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L216"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds to one of the named object's three transform values, in one of the two
+frames.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void OffsetTransform(TransformRelation relation, int childIndex, TransformSpace space, TransformPart part, double x, double y, double z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>relation</code> <a class="xref" href="CodeSmile.LunyScript.TransformRelation.html">TransformRelation</a></dt>
+    <dd><p>Which object to change.</p>
+</dd>
+    <dt><code>childIndex</code> <span class="xref">int</span></dt>
+    <dd><p>Its child index, used only for
+<a class="xref" href="CodeSmile.LunyScript.TransformRelation.html#CodeSmile_LunyScript_TransformRelation_Child">Child</a>.</p>
+</dd>
+    <dt><code>space</code> <a class="xref" href="CodeSmile.LunyScript.TransformSpace.html">TransformSpace</a></dt>
+    <dd><p>Which frame the amounts are in.</p>
+</dd>
+    <dt><code>part</code> <a class="xref" href="CodeSmile.LunyScript.TransformPart.html">TransformPart</a></dt>
+    <dd><p>Which value to add to.</p>
+</dd>
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The first amount.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The second amount.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The third amount.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_OffsetTransform_CodeSmile_LunyScript_TransformRelation_System_Int32_CodeSmile_LunyScript_TransformSpace_CodeSmile_LunyScript_TransformPart_System_Double_System_Double_System_Double__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Must allocate nothing; AGENTS.md rule 29. A <a class="xref" href="CodeSmile.LunyScript.TransformPart.html#CodeSmile_LunyScript_TransformPart_Rotation">Rotation</a> amount
+is euler degrees applied about the frame's axes, which is what
+<a class="xref" href="CodeSmile.LunyScript.IScriptHost.html#CodeSmile_LunyScript_IScriptHost_RotateBy_System_Double_System_Double_System_Double_">RotateBy(double, double, double)</a> does in world space.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The named object does not exist, or
+<code class="paramref">part</code> is <a class="xref" href="CodeSmile.LunyScript.TransformPart.html#CodeSmile_LunyScript_TransformPart_Scale">Scale</a>: scaling by an amount is a
+motion verb this version does not define, and the script surface offers none.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_ProbeMotionMechanism_" data-uid="CodeSmile.LunyScript.IScriptHost.ProbeMotionMechanism*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_ProbeMotionMechanism" data-uid="CodeSmile.LunyScript.IScriptHost.ProbeMotionMechanism">
+  ProbeMotionMechanism()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L278"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Which movement component this object has, so Motion can refuse a mismatched
+command before any native write.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">MotionMechanism ProbeMotionMechanism()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionMechanism.html">MotionMechanism</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_ProbeMotionMechanism_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Must allocate nothing; AGENTS.md rule 29. A host with both a CharacterController
+and a Rigidbody reports the CharacterController.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_ReadChildCount_" data-uid="CodeSmile.LunyScript.IScriptHost.ReadChildCount*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_ReadChildCount_CodeSmile_LunyScript_TransformRelation_System_Int32_" data-uid="CodeSmile.LunyScript.IScriptHost.ReadChildCount(CodeSmile.LunyScript.TransformRelation,System.Int32)">
+  ReadChildCount(TransformRelation, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L128"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many children the named object has.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">int ReadChildCount(TransformRelation relation, int childIndex)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>relation</code> <a class="xref" href="CodeSmile.LunyScript.TransformRelation.html">TransformRelation</a></dt>
+    <dd><p>Which object to count the children of.</p>
+</dd>
+    <dt><code>childIndex</code> <span class="xref">int</span></dt>
+    <dd><p>The child index, used only when <code class="paramref">relation</code> is
+<a class="xref" href="CodeSmile.LunyScript.TransformRelation.html#CodeSmile_LunyScript_TransformRelation_Child">Child</a> and ignored otherwise.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd><p>The child count, which is zero for an object with no children.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_ReadChildCount_CodeSmile_LunyScript_TransformRelation_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Must allocate nothing; AGENTS.md rule 29.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The named object does not exist: there is no
+parent, or the child index is outside the child count.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_ReadMotionPosition_" data-uid="CodeSmile.LunyScript.IScriptHost.ReadMotionPosition*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_ReadMotionPosition_System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.IScriptHost.ReadMotionPosition(System.Double@,System.Double@,System.Double@)">
+  ReadMotionPosition(out double, out double, out double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L323"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The object's physics world position when a Rigidbody is present, otherwise the
+transform world position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ReadMotionPosition(out double x, out double y, out double z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_ReadMotionRotation_" data-uid="CodeSmile.LunyScript.IScriptHost.ReadMotionRotation*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_ReadMotionRotation_System_Double__System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.IScriptHost.ReadMotionRotation(System.Double@,System.Double@,System.Double@,System.Double@)">
+  ReadMotionRotation(out double, out double, out double, out double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L327"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The object's physics world rotation when a Rigidbody is present, otherwise the
+transform world rotation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ReadMotionRotation(out double x, out double y, out double z, out double w)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd></dd>
+    <dt><code>w</code> <span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_ReadPosition_" data-uid="CodeSmile.LunyScript.IScriptHost.ReadPosition*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_ReadPosition_System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.IScriptHost.ReadPosition(System.Double@,System.Double@,System.Double@)">
+  ReadPosition(out double, out double, out double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The object's world position, which the transform stream sends and applies.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ReadPosition(out double x, out double y, out double z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The world x.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The world y.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The world z.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_ReadPosition_System_Double__System_Double__System_Double___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Read and write are separate from <a class="xref" href="CodeSmile.LunyScript.IScriptHost.html#CodeSmile_LunyScript_IScriptHost_MoveBy_System_Double_System_Double_System_Double_">MoveBy(double, double, double)</a> because the stream carries
+absolute values: a peer applies the position the authority holds, not the distance it
+moved, so that a dropped tick does not leave the two ends apart forever.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_ReadRotation_" data-uid="CodeSmile.LunyScript.IScriptHost.ReadRotation*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_ReadRotation_System_Double__System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.IScriptHost.ReadRotation(System.Double@,System.Double@,System.Double@,System.Double@)">
+  ReadRotation(out double, out double, out double, out double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The object's world rotation, as a quaternion.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ReadRotation(out double x, out double y, out double z, out double w)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The quaternion's x.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The quaternion's y.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The quaternion's z.</p>
+</dd>
+    <dt><code>w</code> <span class="xref">double</span></dt>
+    <dd><p>The quaternion's w.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_ReadRotation_System_Double__System_Double__System_Double__System_Double___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>A quaternion rather than three angles, because the stream compresses a quaternion
+into 4 bytes and because converting to angles and back turns one rotation into a different
+one whenever the second angle passes 90 degrees.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_ReadScale_" data-uid="CodeSmile.LunyScript.IScriptHost.ReadScale*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_ReadScale_System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.IScriptHost.ReadScale(System.Double@,System.Double@,System.Double@)">
+  ReadScale(out double, out double, out double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The object's local scale.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ReadScale(out double x, out double y, out double z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The local x scale.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The local y scale.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The local z scale.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_ReadScale_System_Double__System_Double__System_Double___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Local rather than world, because a world scale cannot be written back on an object
+with a rotated parent, and because the replaced <code>NetworkTransform</code> carries the local
+scale too.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_ReadTransform_" data-uid="CodeSmile.LunyScript.IScriptHost.ReadTransform*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_ReadTransform_CodeSmile_LunyScript_TransformRelation_System_Int32_CodeSmile_LunyScript_TransformSpace_CodeSmile_LunyScript_TransformPart_System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.IScriptHost.ReadTransform(CodeSmile.LunyScript.TransformRelation,System.Int32,CodeSmile.LunyScript.TransformSpace,CodeSmile.LunyScript.TransformPart,System.Double@,System.Double@,System.Double@)">
+  ReadTransform(TransformRelation, int, TransformSpace, TransformPart, out double, out double, out double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads one of the named object's three transform values, in one of the two
+frames.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ReadTransform(TransformRelation relation, int childIndex, TransformSpace space, TransformPart part, out double x, out double y, out double z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>relation</code> <a class="xref" href="CodeSmile.LunyScript.TransformRelation.html">TransformRelation</a></dt>
+    <dd><p>Which object to read.</p>
+</dd>
+    <dt><code>childIndex</code> <span class="xref">int</span></dt>
+    <dd><p>Its child index, used only for
+<a class="xref" href="CodeSmile.LunyScript.TransformRelation.html#CodeSmile_LunyScript_TransformRelation_Child">Child</a>.</p>
+</dd>
+    <dt><code>space</code> <a class="xref" href="CodeSmile.LunyScript.TransformSpace.html">TransformSpace</a></dt>
+    <dd><p>Which frame the numbers come back in.</p>
+</dd>
+    <dt><code>part</code> <a class="xref" href="CodeSmile.LunyScript.TransformPart.html">TransformPart</a></dt>
+    <dd><p>Which value to read. <a class="xref" href="CodeSmile.LunyScript.TransformPart.html#CodeSmile_LunyScript_TransformPart_Rotation">Rotation</a> is euler
+degrees.</p>
+</dd>
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The first component.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The second component.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The third component.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_ReadTransform_CodeSmile_LunyScript_TransformRelation_System_Int32_CodeSmile_LunyScript_TransformSpace_CodeSmile_LunyScript_TransformPart_System_Double__System_Double__System_Double___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Must allocate nothing; AGENTS.md rule 29. A world-space
+<a class="xref" href="CodeSmile.LunyScript.TransformPart.html#CodeSmile_LunyScript_TransformPart_Scale">Scale</a> is Unity's lossy scale, which is an approximation once a
+parent in the chain is rotated and scaled non-uniformly.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The named object does not exist.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_RotateAround_" data-uid="CodeSmile.LunyScript.IScriptHost.RotateAround*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_RotateAround_CodeSmile_LunyScript_TransformRelation_System_Int32_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Boolean_" data-uid="CodeSmile.LunyScript.IScriptHost.RotateAround(CodeSmile.LunyScript.TransformRelation,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Boolean)">
+  RotateAround(TransformRelation, int, double, double, double, double, double, double, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L270"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Turns the named object about a world point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void RotateAround(TransformRelation relation, int childIndex, double pointX, double pointY, double pointZ, double xDegrees, double yDegrees, double zDegrees, bool rotateWithOrbit)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>relation</code> <a class="xref" href="CodeSmile.LunyScript.TransformRelation.html">TransformRelation</a></dt>
+    <dd><p>Which object to turn.</p>
+</dd>
+    <dt><code>childIndex</code> <span class="xref">int</span></dt>
+    <dd><p>Its child index, used only for
+<a class="xref" href="CodeSmile.LunyScript.TransformRelation.html#CodeSmile_LunyScript_TransformRelation_Child">Child</a>.</p>
+</dd>
+    <dt><code>pointX</code> <span class="xref">double</span></dt>
+    <dd><p>The world x of the point to turn about.</p>
+</dd>
+    <dt><code>pointY</code> <span class="xref">double</span></dt>
+    <dd><p>The world y of that point.</p>
+</dd>
+    <dt><code>pointZ</code> <span class="xref">double</span></dt>
+    <dd><p>The world z of that point.</p>
+</dd>
+    <dt><code>xDegrees</code> <span class="xref">double</span></dt>
+    <dd><p>The rotation to apply, about the world x axis.</p>
+</dd>
+    <dt><code>yDegrees</code> <span class="xref">double</span></dt>
+    <dd><p>The rotation to apply, about the world y axis.</p>
+</dd>
+    <dt><code>zDegrees</code> <span class="xref">double</span></dt>
+    <dd><p>The rotation to apply, about the world z axis.</p>
+</dd>
+    <dt><code>rotateWithOrbit</code> <span class="xref">bool</span></dt>
+    <dd><p>True turns the object's own rotation by the same rotation as
+well as carrying its position around the point; false moves the position and leaves the
+rotation alone. There is no default: the two are different behaviours and the caller states
+which one it wants, which is the captain's answer to API-semantics row T05.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_RotateAround_CodeSmile_LunyScript_TransformRelation_System_Int32_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Boolean__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Must allocate nothing; AGENTS.md rule 29.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The named object does not exist.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_RotateBy_" data-uid="CodeSmile.LunyScript.IScriptHost.RotateBy*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_RotateBy_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.RotateBy(System.Double,System.Double,System.Double)">
+  RotateBy(double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds a world-space rotation, in euler degrees. Called by <code>RotateByBlock</code> once per
+frame update it appears in, and must allocate nothing; AGENTS.md rule 29.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void RotateBy(double xDegrees, double yDegrees, double zDegrees)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>xDegrees</code> <span class="xref">double</span></dt>
+    <dd><p>Degrees to add around the world X axis.</p>
+</dd>
+    <dt><code>yDegrees</code> <span class="xref">double</span></dt>
+    <dd><p>Degrees to add around the world Y axis.</p>
+</dd>
+    <dt><code>zDegrees</code> <span class="xref">double</span></dt>
+    <dd><p>Degrees to add around the world Z axis.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_ScaleBy_" data-uid="CodeSmile.LunyScript.IScriptHost.ScaleBy*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_ScaleBy_CodeSmile_LunyScript_TransformRelation_System_Int32_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.ScaleBy(CodeSmile.LunyScript.TransformRelation,System.Int32,System.Double,System.Double,System.Double)">
+  ScaleBy(TransformRelation, int, double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L229"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Multiplies the named object's local scale by three factors.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void ScaleBy(TransformRelation relation, int childIndex, double x, double y, double z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>relation</code> <a class="xref" href="CodeSmile.LunyScript.TransformRelation.html">TransformRelation</a></dt>
+    <dd><p>Which object to scale.</p>
+</dd>
+    <dt><code>childIndex</code> <span class="xref">int</span></dt>
+    <dd><p>Its child index, used only for
+<a class="xref" href="CodeSmile.LunyScript.TransformRelation.html#CodeSmile_LunyScript_TransformRelation_Child">Child</a>.</p>
+</dd>
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The factor for the local x scale.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The factor for the local y scale.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The factor for the local z scale.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_ScaleBy_CodeSmile_LunyScript_TransformRelation_System_Int32_System_Double_System_Double_System_Double__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Local, because that is the only scale Unity lets anything write; see
+<a class="xref" href="CodeSmile.LunyScript.IScriptHost.html#CodeSmile_LunyScript_IScriptHost_ReadScale_System_Double__System_Double__System_Double__">ReadScale(out double, out double, out double)</a>. Must allocate nothing; AGENTS.md rule 29.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The named object does not exist.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_SetParent_" data-uid="CodeSmile.LunyScript.IScriptHost.SetParent*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_SetParent_CodeSmile_LunyScript_TransformRelation_System_Int32_CodeSmile_LunyScript_TransformRelation_System_Int32_System_Boolean_" data-uid="CodeSmile.LunyScript.IScriptHost.SetParent(CodeSmile.LunyScript.TransformRelation,System.Int32,CodeSmile.LunyScript.TransformRelation,System.Int32,System.Boolean)">
+  SetParent(TransformRelation, int, TransformRelation, int, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L157"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Moves the named object to another parent, or to the scene root.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetParent(TransformRelation relation, int childIndex, TransformRelation parentRelation, int parentChildIndex, bool keepWorldPose)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>relation</code> <a class="xref" href="CodeSmile.LunyScript.TransformRelation.html">TransformRelation</a></dt>
+    <dd><p>Which object to reparent.</p>
+</dd>
+    <dt><code>childIndex</code> <span class="xref">int</span></dt>
+    <dd><p>Its child index, used only for
+<a class="xref" href="CodeSmile.LunyScript.TransformRelation.html#CodeSmile_LunyScript_TransformRelation_Child">Child</a>.</p>
+</dd>
+    <dt><code>parentRelation</code> <a class="xref" href="CodeSmile.LunyScript.TransformRelation.html">TransformRelation</a></dt>
+    <dd><p>The destination. <a class="xref" href="CodeSmile.LunyScript.TransformRelation.html#CodeSmile_LunyScript_TransformRelation_None">None</a> is the
+scene root.</p>
+</dd>
+    <dt><code>parentChildIndex</code> <span class="xref">int</span></dt>
+    <dd><p>The destination's child index, used only for
+<a class="xref" href="CodeSmile.LunyScript.TransformRelation.html#CodeSmile_LunyScript_TransformRelation_Child">Child</a>.</p>
+</dd>
+    <dt><code>keepWorldPose</code> <span class="xref">bool</span></dt>
+    <dd><p>True keeps the object's world position and rotation and writes
+the closest local scale it can, which is the default the captain chose for API-semantics row
+T06 on 2026-09-13; false keeps the object's local values and lets its world placement move.
+The scale is the half that can only be approximated: a parent that is rotated and scaled
+unevenly produces world scales no local scale reproduces.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_SetParent_CodeSmile_LunyScript_TransformRelation_System_Int32_CodeSmile_LunyScript_TransformRelation_System_Int32_System_Boolean__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Reparenting does not replace the object's transform, so a host that caches one
+still holds the right object afterwards; <code>docs/host-transform-cache.md</code> states what that
+cache assumes.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Either named object does not exist, or the
+destination is the object itself or one of its own descendants.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_WritePosition_" data-uid="CodeSmile.LunyScript.IScriptHost.WritePosition*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_WritePosition_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.WritePosition(System.Double,System.Double,System.Double)">
+  WritePosition(double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Places the object at a world position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void WritePosition(double x, double y, double z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The world x.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The world y.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The world z.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_WriteRotation_" data-uid="CodeSmile.LunyScript.IScriptHost.WriteRotation*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_WriteRotation_System_Double_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.WriteRotation(System.Double,System.Double,System.Double,System.Double)">
+  WriteRotation(double, double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Turns the object to a world rotation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void WriteRotation(double x, double y, double z, double w)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The quaternion's x.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The quaternion's y.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The quaternion's z.</p>
+</dd>
+    <dt><code>w</code> <span class="xref">double</span></dt>
+    <dd><p>The quaternion's w.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_WriteScale_" data-uid="CodeSmile.LunyScript.IScriptHost.WriteScale*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_WriteScale_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.WriteScale(System.Double,System.Double,System.Double)">
+  WriteScale(double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L118"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the object's local scale.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void WriteScale(double x, double y, double z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The local x scale.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The local y scale.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The local z scale.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptHost_WriteTransform_" data-uid="CodeSmile.LunyScript.IScriptHost.WriteTransform*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptHost_WriteTransform_CodeSmile_LunyScript_TransformRelation_System_Int32_CodeSmile_LunyScript_TransformSpace_CodeSmile_LunyScript_TransformPart_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.IScriptHost.WriteTransform(CodeSmile.LunyScript.TransformRelation,System.Int32,CodeSmile.LunyScript.TransformSpace,CodeSmile.LunyScript.TransformPart,System.Double,System.Double,System.Double)">
+  WriteTransform(TransformRelation, int, TransformSpace, TransformPart, double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L195"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes one of the named object's three transform values, in one of the two
+frames.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void WriteTransform(TransformRelation relation, int childIndex, TransformSpace space, TransformPart part, double x, double y, double z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>relation</code> <a class="xref" href="CodeSmile.LunyScript.TransformRelation.html">TransformRelation</a></dt>
+    <dd><p>Which object to write.</p>
+</dd>
+    <dt><code>childIndex</code> <span class="xref">int</span></dt>
+    <dd><p>Its child index, used only for
+<a class="xref" href="CodeSmile.LunyScript.TransformRelation.html#CodeSmile_LunyScript_TransformRelation_Child">Child</a>.</p>
+</dd>
+    <dt><code>space</code> <a class="xref" href="CodeSmile.LunyScript.TransformSpace.html">TransformSpace</a></dt>
+    <dd><p>Which frame the numbers are in.</p>
+</dd>
+    <dt><code>part</code> <a class="xref" href="CodeSmile.LunyScript.TransformPart.html">TransformPart</a></dt>
+    <dd><p>Which value to write.</p>
+</dd>
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The first component.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The second component.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The third component.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptHost_WriteTransform_CodeSmile_LunyScript_TransformRelation_System_Int32_CodeSmile_LunyScript_TransformSpace_CodeSmile_LunyScript_TransformPart_System_Double_System_Double_System_Double__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Must allocate nothing; AGENTS.md rule 29.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The named object does not exist, or
+<code class="paramref">part</code> is <a class="xref" href="CodeSmile.LunyScript.TransformPart.html#CodeSmile_LunyScript_TransformPart_Scale">Scale</a> with
+<a class="xref" href="CodeSmile.LunyScript.TransformSpace.html#CodeSmile_LunyScript_TransformSpace_World">World</a>: a world scale cannot be written back on an object whose
+parent is rotated, which is why Unity's own lossy scale is read-only. The script surface has
+no world-space <code>SetScale</code> at all, so this refusal is reachable only from a direct call
+on this interface.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptHost.cs/#L26" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

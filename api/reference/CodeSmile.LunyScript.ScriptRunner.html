@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class ScriptRunner | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class ScriptRunner | LunyScript API Reference ">
+      
+      <meta name="description" content="Owns the built programs, the live instances and the instance pool, and runs each event kind across every instance.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_ScriptRunner.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.ScriptRunner%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.ScriptRunner">
+
+
+
+  <h1 id="CodeSmile_LunyScript_ScriptRunner" data-uid="CodeSmile.LunyScript.ScriptRunner" class="text-break">
+Class ScriptRunner  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L5"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Owns the built programs, the live instances and the instance pool, and runs each event kind
+across every instance.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class ScriptRunner</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">ScriptRunner</span></div>
+    </dd>
+  </dl>
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_ScriptRunner_examples">Examples</h2>
+  <pre><code class="lang-csharp">var runner = new ScriptRunner();
+var program = runner.GetOrBuildProgram(new CountdownScript());
+var instance = runner.Spawn(program, new FakeHost(1));
+runner.RaiseReady(instance);
+runner.TickFrameUpdate();</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_ScriptRunner_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>A runner names no Unity type at all. The one place it reports a block failure goes through
+<a class="xref" href="CodeSmile.LunyScript.LunyScriptLog.html">LunyScriptLog</a>, which is the only class in the product that calls
+<code>UnityEngine.Debug</code>. That is what lets every block be tested in Edit Mode against
+<code>FakeHost</code>, with no scene and no frame; AGENTS.md rule 53.</p>
+<p>
+    <b><code>Build()</code> runs once per script type, and this cache is what makes that true.</b>
+    <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html#CodeSmile_LunyScript_ScriptRunner_GetOrBuildProgram_CodeSmile_LunyScript_ScriptBase_">GetOrBuildProgram(ScriptBase)</a> compiles a script type the first time it is asked for and
+    returns the same program afterwards, so spawning a hundred objects of one script type
+    compiles it once.
+</p>
+<p>
+    Structural changes and reentrant dispatch are refused while a runner executes authored
+    actions. The one removal the runtime loop does make is its own: it
+    drops an instance whose host no longer exists and steps its index back for it.
+</p>
+</div>
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner__ctor_" data-uid="CodeSmile.LunyScript.ScriptRunner.#ctor*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner__ctor_System_Int32_CodeSmile_LunyScript_ScriptContexts_" data-uid="CodeSmile.LunyScript.ScriptRunner.#ctor(System.Int32,CodeSmile.LunyScript.ScriptContexts)">
+  ScriptRunner(int, ScriptContexts)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L281"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a runner.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ScriptRunner(int expectedInstanceCapacity = 64, ScriptContexts context = ScriptContexts.Runtime)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>expectedInstanceCapacity</code> <span class="xref">int</span></dt>
+    <dd><p>How many live instances to make room for up front. The
+list grows past it, at a spawn, which is a boundary where the allocation rule permits
+allocation; presizing keeps a measured spawn free of that growth.</p>
+</dd>
+    <dt><code>context</code> <a class="xref" href="CodeSmile.LunyScript.ScriptContexts.html">ScriptContexts</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner__ctor_System_Int32_CodeSmile_LunyScript_ScriptContexts__examples">Examples</h4>
+  <pre><code class="lang-csharp">var runner = new ScriptRunner(expectedInstanceCapacity: 128);</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_AssetGateway_" data-uid="CodeSmile.LunyScript.ScriptRunner.AssetGateway*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_AssetGateway" data-uid="CodeSmile.LunyScript.ScriptRunner.AssetGateway">
+  AssetGateway
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L212"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The one gateway this runner's <code>Asset.Load</code> and <code>Asset.Release</code> blocks talk
+to. Bound Inspector loads do not need a provider. Resources loads need
+<a class="xref" href="CodeSmile.LunyScript.AssetGateway.html#CodeSmile_LunyScript_AssetGateway_UseProvider_CodeSmile_LunyScript_IAssetLoadProvider_">UseProvider(IAssetLoadProvider)</a>. Available on runtime and editor runners.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AssetGateway AssetGateway { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.AssetGateway.html">AssetGateway</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_AssetGateway_examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.AssetGateway.UseProvider(new FakeAssetLoadProvider());</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_CameraGateway_" data-uid="CodeSmile.LunyScript.ScriptRunner.CameraGateway*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_CameraGateway" data-uid="CodeSmile.LunyScript.ScriptRunner.CameraGateway">
+  CameraGateway
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The one camera gateway every instance this runner spawns writes through. Whoever owns
+the runner names its backend with <a class="xref" href="CodeSmile.LunyScript.CameraGateway.html#CodeSmile_LunyScript_CameraGateway_UseProvider_CodeSmile_LunyScript_ICameraProvider_">UseProvider(ICameraProvider)</a>; with none,
+every camera block writes nothing and says so once.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CameraGateway CameraGateway { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.CameraGateway.html">CameraGateway</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_CameraGateway_examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.CameraGateway.UseProvider(new FakeCameraProvider());</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_CloudGateway_" data-uid="CodeSmile.LunyScript.ScriptRunner.CloudGateway*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_CloudGateway" data-uid="CodeSmile.LunyScript.ScriptRunner.CloudGateway">
+  CloudGateway
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L146"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The one gateway this runner's cloud blocks talk to. Whoever owns the runner names its
+provider with <a class="xref" href="CodeSmile.LunyScript.CloudSaveGateway.html#CodeSmile_LunyScript_CloudSaveGateway_UseProvider_CodeSmile_LunyScript_ICloudSaveProvider_">UseProvider(ICloudSaveProvider)</a>; requests made before that are
+queued, not thrown. <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html#CodeSmile_LunyScript_ScriptRunner_TickFrameUpdate">TickFrameUpdate()</a> polls it once per frame, before any
+instance runs, so a completion is observed in the same frame the watches that react to it
+run in.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CloudSaveGateway CloudGateway { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.CloudSaveGateway.html">CloudSaveGateway</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_CloudGateway_examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.CloudGateway.UseProvider(new FileCloudSaveProvider(directory));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_Context_" data-uid="CodeSmile.LunyScript.ScriptRunner.Context*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_Context" data-uid="CodeSmile.LunyScript.ScriptRunner.Context">
+  Context
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The runner's execution context. Editor Play Mode game runners are Runtime.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ScriptContexts Context { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ScriptContexts.html">ScriptContexts</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_Context_examples">Examples</h4>
+  <pre><code class="lang-csharp">var runner = new ScriptRunner(context: ScriptContexts.Editor);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_Diagnostics_" data-uid="CodeSmile.LunyScript.ScriptRunner.Diagnostics*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_Diagnostics" data-uid="CodeSmile.LunyScript.ScriptRunner.Diagnostics">
+  Diagnostics
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Ordinary local observation and control, independent of authored execution.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RunnerDiagnostics Diagnostics { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.RunnerDiagnostics.html">RunnerDiagnostics</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_Diagnostics_examples">Examples</h4>
+  <pre><code class="lang-csharp">var snapshot = runner.Diagnostics.ReadCurrent(target);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_InputGateway_" data-uid="CodeSmile.LunyScript.ScriptRunner.InputGateway*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_InputGateway" data-uid="CodeSmile.LunyScript.ScriptRunner.InputGateway">
+  InputGateway
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L182"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The one input gateway every instance this runner spawns reads through. Whoever owns the
+runner names its backend with <a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_UseProvider_CodeSmile_LunyScript_IInputProvider_">UseProvider(IInputProvider)</a>; a script that
+reads input before that reads the resting value of every action and says so once.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public InputGateway InputGateway { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.InputGateway.html">InputGateway</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_InputGateway_examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.InputGateway.UseProvider(new FakeInputProvider());</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_InputGateway_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Resolution happens once per program, at the first spawn of that program, because a
+declaration names a local player and an action name and both are written in
+<code>Build()</code>.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_InstanceCount_" data-uid="CodeSmile.LunyScript.ScriptRunner.InstanceCount*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_InstanceCount" data-uid="CodeSmile.LunyScript.ScriptRunner.InstanceCount">
+  InstanceCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many instances this runner is currently running.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int InstanceCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_IsPaused_" data-uid="CodeSmile.LunyScript.ScriptRunner.IsPaused*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_IsPaused" data-uid="CodeSmile.LunyScript.ScriptRunner.IsPaused">
+  IsPaused
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L294"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True while <code>Time.Pause</code> has set the runner flag. This is what
+<code>Time.IsPaused</code> reads. It is not whether the time scale is zero.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPaused { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_NetworkGateway_" data-uid="CodeSmile.LunyScript.ScriptRunner.NetworkGateway*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_NetworkGateway" data-uid="CodeSmile.LunyScript.ScriptRunner.NetworkGateway">
+  NetworkGateway
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L164"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The one netcode gateway every instance this runner spawns talks to. Give it a
+provider before starting a session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NetworkGateway NetworkGateway { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NetworkGateway.html">NetworkGateway</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_NetworkGateway_examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.NetworkGateway.UseProvider(new FakeNetworkProvider());
+runner.NetworkGateway.StartHost();</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_NetworkGateway_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The runner drains this gateway twice per tick: once before the instances run, to
+refresh authority and apply what arrived, and once after, to send what the cadences say to
+send. AGENTS.md rule 45 is why the refresh is first: a block that reads
+<code>Net.HasAuthority</code> reads the answer this tick opened with, and every block in the frame
+reads the same one.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_NetworkTicksElapsed_" data-uid="CodeSmile.LunyScript.ScriptRunner.NetworkTicksElapsed*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_NetworkTicksElapsed" data-uid="CodeSmile.LunyScript.ScriptRunner.NetworkTicksElapsed">
+  NetworkTicksElapsed
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L234"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many network ticks this runner has taken, whatever the frame rate is. A tick is
+counted only on a frame where the session is connected AND at least one instance is bound to
+a networked object, so a runner that has never had a session reports zero.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int NetworkTicksElapsed { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_NetworkTicksElapsed_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>A tick is not one message.</b> One tick produces one stream, sent in as many pieces as
+the backend's message budget needs, or in none at all when no channel had anything to
+send. Divide this into a byte total for a per-tick figure; it is not a message count.</p>
+<p>
+Read by <code>AGENTS.md</code> rule 47's bandwidth measurement, which divides the bytes a
+window sent by the ticks that window took. It is a counter rather than a figure derived
+from elapsed time because the two are not the same: the runner's tick accumulator is
+driven by its own time source, and a measurement that assumed a tick rate rather than
+counting ticks would report a per-tick figure for a number of ticks that never
+happened. That mistake was made and caught on 2026-09-06, by dividing this runner's
+bytes by a netcode backend's tick count.
+</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_NetworkedInstanceCount_" data-uid="CodeSmile.LunyScript.ScriptRunner.NetworkedInstanceCount*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_NetworkedInstanceCount" data-uid="CodeSmile.LunyScript.ScriptRunner.NetworkedInstanceCount">
+  NetworkedInstanceCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L215"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many instances this runner has bound to a networked object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int NetworkedInstanceCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_ProgramCount_" data-uid="CodeSmile.LunyScript.ScriptRunner.ProgramCount*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_ProgramCount" data-uid="CodeSmile.LunyScript.ScriptRunner.ProgramCount">
+  ProgramCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L270"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many script types this runner has built.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int ProgramCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_RandomSeed_" data-uid="CodeSmile.LunyScript.ScriptRunner.RandomSeed*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_RandomSeed" data-uid="CodeSmile.LunyScript.ScriptRunner.RandomSeed">
+  RandomSeed
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L260"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The session seed unseeded random streams are derived from. Tests supply one
+through <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html#CodeSmile_LunyScript_ScriptRunner_UseRandomSeed_System_UInt32_">UseRandomSeed(uint)</a> so a failing run can be replayed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint RandomSeed { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">uint</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_TimeSource_" data-uid="CodeSmile.LunyScript.ScriptRunner.TimeSource*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_TimeSource" data-uid="CodeSmile.LunyScript.ScriptRunner.TimeSource">
+  TimeSource
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L242"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The clock a rate-capped <code>SyncCadence</code> counts its cooldown down against, and the
+one the <code>Time</code> surface's blocks read.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ITimeSource TimeSource { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Platform.ITimeSource.html">ITimeSource</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_TimeSource_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><code>Time.Scale</code>, <code>Time.IsPaused</code>, <code>Time.SetScale</code>, <code>Time.Pause</code> and
+<code>Time.Resume</code> need this to be an <code>IGameClock</code>, which <code>UnityTimeSource</code> and
+<code>TestKit.ManualTimeSource</code> both are; <code>Time.Delta</code> and <code>Time.Elapsed</code> read any
+clock.</p>
+</div>
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_BindNetworkObject_" data-uid="CodeSmile.LunyScript.ScriptRunner.BindNetworkObject*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_BindNetworkObject_CodeSmile_LunyScript_ScriptInstance_System_Int32_" data-uid="CodeSmile.LunyScript.ScriptRunner.BindNetworkObject(CodeSmile.LunyScript.ScriptInstance,System.Int32)">
+  BindNetworkObject(ScriptInstance, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L1335"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Binds one instance to a networked object, so that it takes part in the network
+tick: its authority is refreshed every frame, its synchronised variables are sent while it
+has authority, and messages and updates addressed to that object reach it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void BindNetworkObject(ScriptInstance instance, int networkObjectId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a></dt>
+    <dd><p>The instance, as <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html#CodeSmile_LunyScript_ScriptRunner_Spawn_CodeSmile_LunyScript_ScriptProgram_CodeSmile_LunyScript_IScriptHost_System_Boolean_">Spawn(ScriptProgram, IScriptHost, bool)</a> returned it.</p>
+</dd>
+    <dt><code>networkObjectId</code> <span class="xref">int</span></dt>
+    <dd><p>The object's network id, which the netcode backend assigns and
+which is the same number on every peer.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_BindNetworkObject_CodeSmile_LunyScript_ScriptInstance_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.BindNetworkObject(instance, 7);</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_BindNetworkObject_CodeSmile_LunyScript_ScriptInstance_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Called by <code>CodeSmile.LunyScript.Netcode</code> when Netcode for GameObjects spawns
+the object, and by a test that pairs two runners by hand. The core knows nothing about how
+the id is produced; AGENTS.md rule 49.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The instance is null, the id is
+<code>ScriptInstance.NoNetworkObject</code>, or another live instance already holds that id.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_Despawn_" data-uid="CodeSmile.LunyScript.ScriptRunner.Despawn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_Despawn_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.ScriptRunner.Despawn(CodeSmile.LunyScript.ScriptInstance)">
+  Despawn(ScriptInstance)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L454"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Stops running an instance and keeps it for the next spawn of the same program.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Despawn(ScriptInstance instance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a></dt>
+    <dd><p>The instance to stop.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_Despawn_CodeSmile_LunyScript_ScriptInstance__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.Despawn(instance);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">instance</code> is null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_FindNetworkedInstance_" data-uid="CodeSmile.LunyScript.ScriptRunner.FindNetworkedInstance*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_FindNetworkedInstance_System_Int32_" data-uid="CodeSmile.LunyScript.ScriptRunner.FindNetworkedInstance(System.Int32)">
+  FindNetworkedInstance(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L1393"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The instance bound to one network object id, or null when no instance is.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ScriptInstance FindNetworkedInstance(int networkObjectId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>networkObjectId</code> <span class="xref">int</span></dt>
+    <dd><p>The id.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a></dt>
+    <dd><p>The instance, or null.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_FindNetworkedInstance_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var instance = runner.FindNetworkedInstance(7);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_GetOrBuildProgram_" data-uid="CodeSmile.LunyScript.ScriptRunner.GetOrBuildProgram*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_GetOrBuildProgram_CodeSmile_LunyScript_ScriptBase_" data-uid="CodeSmile.LunyScript.ScriptRunner.GetOrBuildProgram(CodeSmile.LunyScript.ScriptBase)">
+  GetOrBuildProgram(ScriptBase)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L331"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the program for this script type, building it the first time it is asked for.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ScriptProgram GetOrBuildProgram(ScriptBase prototype)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>prototype</code> <a class="xref" href="CodeSmile.LunyScript.ScriptBase.html">ScriptBase</a></dt>
+    <dd><p>An instance of the script type. <code>Build()</code> reads nothing from it,
+because it is object-independent, but the first object of a script type is the object
+<code>Build()</code> runs on and the program keeps it as <a class="xref" href="CodeSmile.LunyScript.ScriptProgram.html#CodeSmile_LunyScript_ScriptProgram_BuiltScript">BuiltScript</a>
+for as long as the program lives; <code>docs/slice-decisions.md</code> D4.42. A later object of the
+same type reaches nothing: the cached program is returned unchanged.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ScriptProgram.html">ScriptProgram</a></dt>
+    <dd><p>The one program every object of that script type shares.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_GetOrBuildProgram_CodeSmile_LunyScript_ScriptBase__examples">Examples</h4>
+  <pre><code class="lang-csharp">var program = runner.GetOrBuildProgram(new CountdownScript());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">prototype</code> is null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_HasProgram_" data-uid="CodeSmile.LunyScript.ScriptRunner.HasProgram*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_HasProgram_System_Type_" data-uid="CodeSmile.LunyScript.ScriptRunner.HasProgram(System.Type)">
+  HasProgram(Type)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L361"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether this runner has already built a program for a script type, without building
+one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasProgram(Type scriptType)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>scriptType</code> <span class="xref">Type</span></dt>
+    <dd><p>The script type to ask about.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html#CodeSmile_LunyScript_ScriptRunner_GetOrBuildProgram_CodeSmile_LunyScript_ScriptBase_">GetOrBuildProgram(ScriptBase)</a> would return a cached program.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_HasProgram_System_Type__examples">Examples</h4>
+  <pre><code class="lang-csharp">var built = runner.HasProgram(typeof(CountdownScript));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_PooledCount_" data-uid="CodeSmile.LunyScript.ScriptRunner.PooledCount*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_PooledCount_CodeSmile_LunyScript_ScriptProgram_" data-uid="CodeSmile.LunyScript.ScriptRunner.PooledCount(CodeSmile.LunyScript.ScriptProgram)">
+  PooledCount(ScriptProgram)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L600"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many pooled instances are waiting for a respawn of one program.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int PooledCount(ScriptProgram program)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>program</code> <a class="xref" href="CodeSmile.LunyScript.ScriptProgram.html">ScriptProgram</a></dt>
+    <dd><p>The program to ask about.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd><p>The pool's size, or 0 when nothing of that program has been despawned.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_PooledCount_CodeSmile_LunyScript_ScriptProgram__examples">Examples</h4>
+  <pre><code class="lang-csharp">var pooled = runner.PooledCount(program);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_RaiseApplication_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseApplication*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_RaiseApplication_CodeSmile_LunyScript_ApplicationObservation_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseApplication(CodeSmile.LunyScript.ApplicationObservation)">
+  RaiseApplication(ApplicationObservation)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Delivers one of the five <code>On.Application</code> observations to every enabled
+instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RaiseApplication(ApplicationObservation observation)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>observation</code> <a class="xref" href="CodeSmile.LunyScript.ApplicationObservation.html">ApplicationObservation</a></dt>
+    <dd><p>What Unity reported.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_RaiseApplication_CodeSmile_LunyScript_ApplicationObservation__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.RaiseApplication(ApplicationObservation.Paused);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The runner is already dispatching, or it is an
+editor runner.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_RaiseCollisionEnter_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseCollisionEnter*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_RaiseCollisionEnter_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseCollisionEnter(CodeSmile.LunyScript.ScriptInstance)">
+  RaiseCollisionEnter(ScriptInstance)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Runs this instance's <code>On.CollisionEnter</code> blocks. Unity raises
+<code>OnCollisionEnter</code> on the contact component; tests call this without a scene.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RaiseCollisionEnter(ScriptInstance instance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a></dt>
+    <dd><p>The instance whose blocks run.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_RaiseCollisionEnter_CodeSmile_LunyScript_ScriptInstance__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.RaiseCollisionEnter(instance);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_RaiseCollisionExit_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseCollisionExit*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_RaiseCollisionExit_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseCollisionExit(CodeSmile.LunyScript.ScriptInstance)">
+  RaiseCollisionExit(ScriptInstance)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L136"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Runs this instance's <code>On.CollisionExit</code> blocks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RaiseCollisionExit(ScriptInstance instance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a></dt>
+    <dd><p>The instance whose blocks run.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_RaiseCollisionExit_CodeSmile_LunyScript_ScriptInstance__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.RaiseCollisionExit(instance);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_RaiseCollisionStay_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseCollisionStay*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_RaiseCollisionStay_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseCollisionStay(CodeSmile.LunyScript.ScriptInstance)">
+  RaiseCollisionStay(ScriptInstance)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Runs this instance's <code>On.CollisionStay</code> blocks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RaiseCollisionStay(ScriptInstance instance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a></dt>
+    <dd><p>The instance whose blocks run.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_RaiseCollisionStay_CodeSmile_LunyScript_ScriptInstance__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.RaiseCollisionStay(instance);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_RaiseReady_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseReady*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_RaiseReady_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseReady(CodeSmile.LunyScript.ScriptInstance)">
+  RaiseReady(ScriptInstance)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Delivers Ready once. An action error disables that instance and is reported once.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RaiseReady(ScriptInstance instance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_RaiseReady_CodeSmile_LunyScript_ScriptInstance__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.RaiseReady(instance);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_RaiseTriggerEnter_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseTriggerEnter*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_RaiseTriggerEnter_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseTriggerEnter(CodeSmile.LunyScript.ScriptInstance)">
+  RaiseTriggerEnter(ScriptInstance)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Runs this instance's <code>On.TriggerEnter</code> blocks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RaiseTriggerEnter(ScriptInstance instance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a></dt>
+    <dd><p>The instance whose blocks run.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_RaiseTriggerEnter_CodeSmile_LunyScript_ScriptInstance__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.RaiseTriggerEnter(instance);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_RaiseTriggerExit_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseTriggerExit*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_RaiseTriggerExit_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseTriggerExit(CodeSmile.LunyScript.ScriptInstance)">
+  RaiseTriggerExit(ScriptInstance)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L169"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Runs this instance's <code>On.TriggerExit</code> blocks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RaiseTriggerExit(ScriptInstance instance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a></dt>
+    <dd><p>The instance whose blocks run.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_RaiseTriggerExit_CodeSmile_LunyScript_ScriptInstance__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.RaiseTriggerExit(instance);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_RaiseTriggerStay_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseTriggerStay*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_RaiseTriggerStay_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.ScriptRunner.RaiseTriggerStay(CodeSmile.LunyScript.ScriptInstance)">
+  RaiseTriggerStay(ScriptInstance)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L158"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Runs this instance's <code>On.TriggerStay</code> blocks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RaiseTriggerStay(ScriptInstance instance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a></dt>
+    <dd><p>The instance whose blocks run.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_RaiseTriggerStay_CodeSmile_LunyScript_ScriptInstance__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.RaiseTriggerStay(instance);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_SetEnabled_" data-uid="CodeSmile.LunyScript.ScriptRunner.SetEnabled*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_SetEnabled_CodeSmile_LunyScript_ScriptInstance_System_Boolean_" data-uid="CodeSmile.LunyScript.ScriptRunner.SetEnabled(CodeSmile.LunyScript.ScriptInstance,System.Boolean)">
+  SetEnabled(ScriptInstance, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L637"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Turns an instance's per-frame blocks on or off, following the host's own enabled
+state. Unity owns that state and LunyScript re-implements none of it; AGENTS.md rule 54.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetEnabled(ScriptInstance instance, bool enabled)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a></dt>
+    <dd><p>The instance.</p>
+</dd>
+    <dt><code>enabled</code> <span class="xref">bool</span></dt>
+    <dd><p>Whether its per-frame blocks run.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_SetEnabled_CodeSmile_LunyScript_ScriptInstance_System_Boolean__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.SetEnabled(instance, false);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_Spawn_" data-uid="CodeSmile.LunyScript.ScriptRunner.Spawn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_Spawn_CodeSmile_LunyScript_ScriptProgram_CodeSmile_LunyScript_IScriptHost_System_Boolean_" data-uid="CodeSmile.LunyScript.ScriptRunner.Spawn(CodeSmile.LunyScript.ScriptProgram,CodeSmile.LunyScript.IScriptHost,System.Boolean)">
+  Spawn(ScriptProgram, IScriptHost, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L384"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates or reuses an instance of a program for one host, and starts running it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ScriptInstance Spawn(ScriptProgram program, IScriptHost host, bool enabled = true)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>program</code> <a class="xref" href="CodeSmile.LunyScript.ScriptProgram.html">ScriptProgram</a></dt>
+    <dd><p>The program to run.</p>
+</dd>
+    <dt><code>host</code> <a class="xref" href="CodeSmile.LunyScript.IScriptHost.html">IScriptHost</a></dt>
+    <dd><p>The object the blocks act on.</p>
+</dd>
+    <dt><code>enabled</code> <span class="xref">bool</span></dt>
+    <dd><p>Whether the instance's per-frame blocks run from the start. True by
+default, which is what a test or a direct caller wants. <code>LunyScriptBehaviour</code> passes
+false and lets Unity's own <code>OnEnable</code> enable it, so that the first activation delivers
+<code>On.Enabled</code> exactly once and a spawn delivers none.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a></dt>
+    <dd><p>The instance, enabled and not yet ready.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_Spawn_CodeSmile_LunyScript_ScriptProgram_CodeSmile_LunyScript_IScriptHost_System_Boolean__examples">Examples</h4>
+  <pre><code class="lang-csharp">var instance = runner.Spawn(program, new FakeHost(1));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_Spawn_CodeSmile_LunyScript_ScriptProgram_CodeSmile_LunyScript_IScriptHost_System_Boolean__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>A fresh instance allocates its slot arrays, which is exactly what
+<a class="xref" href="CodeSmile.LunyScript.InstanceLayout.html#CodeSmile_LunyScript_InstanceLayout_SlotBytes">SlotBytes</a> predicts plus one array header per
+<a class="xref" href="CodeSmile.LunyScript.InstanceLayout.html#CodeSmile_LunyScript_InstanceLayout_SlotArrayCount">SlotArrayCount</a>. A pooled instance allocates nothing: it is
+rebound to the new host and reset to the program's declared defaults.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_TickEditorUpdate_" data-uid="CodeSmile.LunyScript.ScriptRunner.TickEditorUpdate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_TickEditorUpdate" data-uid="CodeSmile.LunyScript.ScriptRunner.TickEditorUpdate">
+  TickEditorUpdate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L220"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Delivers one editor update followed by shared variable watches, without game services.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TickEditorUpdate()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_TickEditorUpdate_examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.TickEditorUpdate();</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_TickFixedUpdate_" data-uid="CodeSmile.LunyScript.ScriptRunner.TickFixedUpdate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_TickFixedUpdate" data-uid="CodeSmile.LunyScript.ScriptRunner.TickFixedUpdate">
+  TickFixedUpdate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Delivers <code>On.FixedUpdate</code>. Unity runs the fixed step zero to many times per
+frame, before <code>Update</code>; AGENTS.md rule 54.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TickFixedUpdate()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_TickFixedUpdate_examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.TickFixedUpdate();</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The runner is already dispatching, or it is an
+editor runner.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_TickFrameUpdate_" data-uid="CodeSmile.LunyScript.ScriptRunner.TickFrameUpdate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_TickFrameUpdate" data-uid="CodeSmile.LunyScript.ScriptRunner.TickFrameUpdate">
+  TickFrameUpdate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Delivers runtime updates. An editor runner must use TickEditorUpdate instead.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TickFrameUpdate()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_TickFrameUpdate_examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.TickFrameUpdate();</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_TickLateUpdate_" data-uid="CodeSmile.LunyScript.ScriptRunner.TickLateUpdate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_TickLateUpdate" data-uid="CodeSmile.LunyScript.ScriptRunner.TickLateUpdate">
+  TickLateUpdate()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Delivers <code>On.LateUpdate</code>, after every instance's <code>On.FrameUpdate</code> and its
+watches have run in the same frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TickLateUpdate()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_TickLateUpdate_examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.TickLateUpdate();</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The runner is already dispatching, or it is an
+editor runner.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_UnbindNetworkObject_" data-uid="CodeSmile.LunyScript.ScriptRunner.UnbindNetworkObject*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_UnbindNetworkObject_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.ScriptRunner.UnbindNetworkObject(CodeSmile.LunyScript.ScriptInstance)">
+  UnbindNetworkObject(ScriptInstance)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L1372"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes an instance's network binding. Called when the object despawns, and by
+<a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html#CodeSmile_LunyScript_ScriptRunner_Despawn_CodeSmile_LunyScript_ScriptInstance_">Despawn(ScriptInstance)</a> for every instance it pools.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UnbindNetworkObject(ScriptInstance instance)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>instance</code> <a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a></dt>
+    <dd><p>The instance. Doing this to an instance that has no binding changes
+nothing.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_UnbindNetworkObject_CodeSmile_LunyScript_ScriptInstance__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.UnbindNetworkObject(instance);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The instance is null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_UseRandomSeed_" data-uid="CodeSmile.LunyScript.ScriptRunner.UseRandomSeed*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_UseRandomSeed_System_UInt32_" data-uid="CodeSmile.LunyScript.ScriptRunner.UseRandomSeed(System.UInt32)">
+  UseRandomSeed(uint)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L267"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Replaces the session seed used to derive unseeded named streams. A stream
+declared with an explicit seed ignores this value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UseRandomSeed(uint seed)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>seed</code> <span class="xref">uint</span></dt>
+    <dd><p>The seed a failing test prints so the run can be repeated. Zero becomes
+1, because a xorshift state cannot hold zero.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_UseRandomSeed_System_UInt32__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.UseRandomSeed(42);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_ScriptRunner_UseTimeSource_" data-uid="CodeSmile.LunyScript.ScriptRunner.UseTimeSource*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ScriptRunner_UseTimeSource_CodeSmile_LunyScript_Platform_ITimeSource_" data-uid="CodeSmile.LunyScript.ScriptRunner.UseTimeSource(CodeSmile.LunyScript.Platform.ITimeSource)">
+  UseTimeSource(ITimeSource)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.cs/#L254"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Replaces the clock this runner reads. A game leaves the default,
+<code>UnityTimeSource</code>; a test installs <code>TestKit.ManualTimeSource</code> so that a cadence
+test advances time by a stated amount rather than by however long a frame took.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UseTimeSource(ITimeSource timeSource)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>timeSource</code> <a class="xref" href="CodeSmile.LunyScript.Platform.ITimeSource.html">ITimeSource</a></dt>
+    <dd><p>The clock.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_UseTimeSource_CodeSmile_LunyScript_Platform_ITimeSource__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.UseTimeSource(new ManualTimeSource());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The clock is null.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptRunner.Diagnostics.cs/#L5" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

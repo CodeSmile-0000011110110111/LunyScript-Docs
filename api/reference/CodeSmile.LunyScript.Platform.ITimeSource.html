@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Interface ITimeSource | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface ITimeSource | LunyScript API Reference ">
+      
+      <meta name="description" content="The only place LunyScript reads the passage of time. Blocks and the runner take an  instead of calling UnityEngine.Time or System.DateTime.UtcNow directly.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_Platform_ITimeSource.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.Platform.ITimeSource%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.Platform.ITimeSource">
+
+
+
+  <h1 id="CodeSmile_LunyScript_Platform_ITimeSource" data-uid="CodeSmile.LunyScript.Platform.ITimeSource" class="text-break">
+Interface ITimeSource  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITimeSource.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a>.<a class="xref" href="CodeSmile.LunyScript.Platform.html">Platform</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The only place LunyScript reads the passage of time. Blocks and the runner take an
+<a class="xref" href="CodeSmile.LunyScript.Platform.ITimeSource.html">ITimeSource</a> instead of calling <code>UnityEngine.Time</code> or
+<code>System.DateTime.UtcNow</code> directly.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface ITimeSource</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_Platform_ITimeSource_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>.NET 10 seam.</b> The counterpart is <code>System.TimeProvider</code>, which does not exist in
+.NET Standard 2.1 and therefore cannot be used while Unity 6.7's Mono and IL2CPP backends are
+targets. When the product drops pre-Unity 7 support, the implementation of this interface
+becomes a wrapper over a <code>TimeProvider</code> and every caller stays unchanged.
+Replacing: <code>UnityEngine.Time.deltaTime</code>, <code>UnityEngine.Time.time</code>,
+<code>System.DateTime.UtcNow</code>, <code>System.Diagnostics.Stopwatch</code>.</p>
+<p>
+    <b>Four reads, in two pairs.</b> The first pair is the clock a game's own speed is
+    measured on, so a time scale below one slows it and a pause stops it. The second pair
+    is real time, which neither the scale nor a pause changes. A clock that is never scaled,
+    such as the editor session's, answers both pairs with the same numbers, and that is a
+    correct answer rather than a placeholder. <a class="xref" href="CodeSmile.LunyScript.Platform.IGameClock.html">IGameClock</a> is what adds the
+    scale and the pause; a clock that only reports time implements this interface alone.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Platform_ITimeSource_DeltaSeconds_" data-uid="CodeSmile.LunyScript.Platform.ITimeSource.DeltaSeconds*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Platform_ITimeSource_DeltaSeconds" data-uid="CodeSmile.LunyScript.Platform.ITimeSource.DeltaSeconds">
+  DeltaSeconds
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITimeSource.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Seconds since the previous frame, scaled by the game's time scale, as a double.
+See AGENTS.md section 5 for why every number in this API is a double.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double DeltaSeconds { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Platform_ITimeSource_ElapsedSeconds_" data-uid="CodeSmile.LunyScript.Platform.ITimeSource.ElapsedSeconds*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Platform_ITimeSource_ElapsedSeconds" data-uid="CodeSmile.LunyScript.Platform.ITimeSource.ElapsedSeconds">
+  ElapsedSeconds
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITimeSource.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Seconds since the run started, scaled by the game's time scale. Monotonic; never
+derived from wall-clock time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double ElapsedSeconds { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Platform_ITimeSource_UnscaledDeltaSeconds_" data-uid="CodeSmile.LunyScript.Platform.ITimeSource.UnscaledDeltaSeconds*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Platform_ITimeSource_UnscaledDeltaSeconds" data-uid="CodeSmile.LunyScript.Platform.ITimeSource.UnscaledDeltaSeconds">
+  UnscaledDeltaSeconds
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITimeSource.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Seconds since the previous frame in real time, which the time scale and a pause do
+not change. A paused game still reports how long its frames take here.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double UnscaledDeltaSeconds { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Platform_ITimeSource_UnscaledElapsedSeconds_" data-uid="CodeSmile.LunyScript.Platform.ITimeSource.UnscaledElapsedSeconds*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Platform_ITimeSource_UnscaledElapsedSeconds" data-uid="CodeSmile.LunyScript.Platform.ITimeSource.UnscaledElapsedSeconds">
+  UnscaledElapsedSeconds
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITimeSource.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Seconds since the run started in real time, which keeps advancing while the game is
+paused. Monotonic; never derived from wall-clock time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">double UnscaledElapsedSeconds { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITimeSource.cs/#L26" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

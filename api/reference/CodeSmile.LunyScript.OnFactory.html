@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct OnFactory | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct OnFactory | LunyScript API Reference ">
+      
+      <meta name="description" content="The On surface inside Build(): registers blocks against the events the runner raises.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_OnFactory.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.OnFactory%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.OnFactory">
+
+
+
+  <h1 id="CodeSmile_LunyScript_OnFactory" data-uid="CodeSmile.LunyScript.OnFactory" class="text-break">
+Struct OnFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The <code>On</code> surface inside <code>Build()</code>: registers blocks against the events the runner
+raises.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct OnFactory</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_OnFactory_examples">Examples</h2>
+  <pre><code class="lang-csharp">On.Ready(health.Set(100.0));
+On.FrameUpdate(If(health &gt; 0.0).Then(health.Add(-1.0)));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_OnFactory_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>The <code>params</code> array is a build-time allocation and is inside the boundary the allocation
+rule permits; AGENTS.md rule 33 forbids <code>params</code> on the run-time path, which this is not.</p>
+<p>
+    <b>No event registration here captures the authored line, and that is a language limit rather
+    than an oversight.</b> C# allows no parameter after a <code>params</code> array, so
+    <code>[CallerFilePath]</code> cannot be added without taking the <code>params</code> sugar away from
+    every call site. The blocks passed in carry their own locations, because the factories
+    that built them are not <code>params</code> methods; see <a class="xref" href="CodeSmile.LunyScript.SourceLocation.html">SourceLocation</a>.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_Application_" data-uid="CodeSmile.LunyScript.OnFactory.Application*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_Application" data-uid="CodeSmile.LunyScript.OnFactory.Application">
+  Application
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L316"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The five application observations: pause, resume, focus and quit.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public OnApplicationFactory Application { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.OnApplicationFactory.html">OnApplicationFactory</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Application_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Application.Paused(Armed.Set(false));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_Authority_" data-uid="CodeSmile.LunyScript.OnFactory.Authority*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_Authority" data-uid="CodeSmile.LunyScript.OnFactory.Authority">
+  Authority
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L345"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The two authority events: gaining authority over this object, and losing it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public OnAuthorityFactory Authority { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.OnAuthorityFactory.html">OnAuthorityFactory</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Authority_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Authority.Gained(isReady.Set(false));</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_CollisionEnter_" data-uid="CodeSmile.LunyScript.OnFactory.CollisionEnter*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_CollisionEnter_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.CollisionEnter(CodeSmile.LunyScript.Block[])">
+  CollisionEnter(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L211"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run when this object's collider begins touching another
+collider.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CollisionEnter(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_CollisionEnter_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.CollisionEnter(Score.Add(1.0));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_CollisionEnter_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Unity raises <code>OnCollisionEnter</code> on the object the script is on, so this is
+<code>On.</code> rather than <code>When.</code>. A script that does not call this, or
+<a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_CollisionStay_CodeSmile_LunyScript_Block___">CollisionStay(params Block[])</a>, <a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_CollisionExit_CodeSmile_LunyScript_Block___">CollisionExit(params Block[])</a>, <a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_TriggerEnter_CodeSmile_LunyScript_Block___">TriggerEnter(params Block[])</a>,
+<a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_TriggerStay_CodeSmile_LunyScript_Block___">TriggerStay(params Block[])</a> or <a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_TriggerExit_CodeSmile_LunyScript_Block___">TriggerExit(params Block[])</a>, is not subscribed to physics
+callbacks at all.</p>
+<p>
+    The blocks run against this object. <code>Other</code> is the other collider, the same
+    surface on all six contact events. Unity still allocates the <code>Collision</code>
+    argument it passes into its own callback; LunyScript copies primitives from the
+    other collider and does not store that argument. Contact events are process
+    events: a Pausable script does not run these blocks while the runner is paused.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_CollisionExit_" data-uid="CodeSmile.LunyScript.OnFactory.CollisionExit*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_CollisionExit_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.CollisionExit(CodeSmile.LunyScript.Block[])">
+  CollisionExit(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L249"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run when this object's collider stops touching another
+collider.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CollisionExit(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_CollisionExit_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.CollisionExit(Touching.Set(false));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_CollisionExit_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Unity raises <code>OnCollisionExit</code> on the object the script is on. The blocks run
+against this object; <code>Other</code> is the other collider. See
+<a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_CollisionEnter_CodeSmile_LunyScript_Block___">CollisionEnter(params Block[])</a>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_CollisionStay_" data-uid="CodeSmile.LunyScript.OnFactory.CollisionStay*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_CollisionStay_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.CollisionStay(CodeSmile.LunyScript.Block[])">
+  CollisionStay(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L230"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run every fixed step while this object's collider is
+touching another collider.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CollisionStay(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_CollisionStay_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.CollisionStay(Push.Set(Other.WorldPosition));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_CollisionStay_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Unity raises <code>OnCollisionStay</code> on the object the script is on. The blocks run
+against this object; <code>Other</code> is the other collider. See
+<a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_CollisionEnter_CodeSmile_LunyScript_Block___">CollisionEnter(params Block[])</a>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_Created_" data-uid="CodeSmile.LunyScript.OnFactory.Created*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_Created_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.Created(CodeSmile.LunyScript.Block[])">
+  Created(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run once, at the first managed binding to a native host.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Created(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Created_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Created(Armed.Set(true));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Created_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Delivered after declared inputs are resolved and before <a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_Ready_CodeSmile_LunyScript_Block___">Ready(params Block[])</a>. A pooled
+respawn onto the same host does not raise it again; a bind to a different host does. It
+does not promise Unity's <code>Awake</code> timing: a host that is already in the scene still
+gets it on first bind.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_Despawned_" data-uid="CodeSmile.LunyScript.OnFactory.Despawned*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_Despawned_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.Despawned(CodeSmile.LunyScript.Block[])">
+  Despawned(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L183"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run once when the incarnation ends, while the instance and
+its object are still valid.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Despawned(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Despawned_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Despawned(Object.Despawn("Shield"));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Despawned_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This is the bounded cleanup the settled <code>contract-dispatch-order</code> answer asks for
+before the incarnation is invalidated: the instance is still in the runner's live list,
+its host is still alive, and the objects it created still exist, so these blocks can act
+on all three. The objects it created are destroyed after they have run.</p>
+<p>
+    It is <b>not</b> delivered for an instance the scene-unload sweep collects, because
+    that sweep exists for a host that went away without telling LunyScript and these
+    blocks would run against a destroyed object; <code>docs/host-transform-cache.md</code>.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_Disabled_" data-uid="CodeSmile.LunyScript.OnFactory.Disabled*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_Disabled_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.Disabled(CodeSmile.LunyScript.Block[])">
+  Disabled(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L158"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run when the instance becomes disabled, having been
+enabled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Disabled(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Disabled_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Disabled(Armed.Set(false));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Disabled_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Delivered once per transition. An authored <code>Object.Deactivate()</code> produces it,
+an authored <code>Object.Despawn()</code> produces it before <a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_Despawned_CodeSmile_LunyScript_Block___">Despawned(params Block[])</a>, and so does
+Unity's own <code>OnDisable</code> on a managed object.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_Enabled_" data-uid="CodeSmile.LunyScript.OnFactory.Enabled*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_Enabled_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.Enabled(CodeSmile.LunyScript.Block[])">
+  Enabled(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L141"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run when the instance becomes enabled, having been
+disabled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Enabled(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Enabled_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Enabled(Armed.Set(true));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Enabled_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Delivered once per transition: enabling an already-enabled instance delivers nothing. An
+authored <code>Object.Activate()</code> produces it, and so does Unity's own <code>OnEnable</code> on
+a managed object, through <code>LunyScriptBehaviour</code> - <b>including the first
+activation</b>, which is where Unity delivers <code>OnEnable</code> for the first time. It
+therefore runs before <code>On.Ready</code> on a managed object, the way <code>OnEnable</code> runs
+before <code>Start</code>.</p>
+<p>
+    A bare <code>ScriptRunner.Spawn</code>, which a test uses and a managed object does not,
+    delivers none: it writes the enabled state rather than changing it.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_FixedUpdate_" data-uid="CodeSmile.LunyScript.OnFactory.FixedUpdate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_FixedUpdate_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.FixedUpdate(CodeSmile.LunyScript.Block[])">
+  FixedUpdate(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run once per fixed step, for as long as the instance is
+enabled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void FixedUpdate(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_FixedUpdate_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Speed.Add(-0.02));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_FixedUpdate_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Unity runs the fixed step zero to many times per frame, before <code>Update</code>; a rigidbody
+move belongs here rather than in <a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_FrameUpdate_CodeSmile_LunyScript_Block___">FrameUpdate(params Block[])</a>. AGENTS.md rule 54 and 56.</p>
+<p>
+    <code>On.Ready</code> still runs before this instance's first fixed step, the same way it
+    runs before its first frame update. The watches do not run here: they are polled once
+    per frame, after <a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_FrameUpdate_CodeSmile_LunyScript_Block___">FrameUpdate(params Block[])</a>.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_FrameUpdate_" data-uid="CodeSmile.LunyScript.OnFactory.FrameUpdate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_FrameUpdate_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.FrameUpdate(CodeSmile.LunyScript.Block[])">
+  FrameUpdate(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run once per frame, for as long as the instance is enabled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void FrameUpdate(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_FrameUpdate_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(score.Add(1.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_LateUpdate_" data-uid="CodeSmile.LunyScript.OnFactory.LateUpdate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_LateUpdate_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.LateUpdate(CodeSmile.LunyScript.Block[])">
+  LateUpdate(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L115"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run once per frame, after every instance's
+<a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_FrameUpdate_CodeSmile_LunyScript_Block___">FrameUpdate(params Block[])</a> blocks and its watches have run in that frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void LateUpdate(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_LateUpdate_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.LateUpdate(If(Fuse &lt;= 0.0).Then(Object.Despawn()));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_Message_" data-uid="CodeSmile.LunyScript.OnFactory.Message*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_Message_System_String_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.Message(System.String,CodeSmile.LunyScript.Block[])">
+  Message(string, params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L332"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run on the peer this message is delivered to, which is the
+peer with authority over the object it was sent from.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Message(string messageName, params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>messageName</code> <span class="xref">string</span></dt>
+    <dd><p>What the message is called. Use <code>nameof</code>, so that a rename
+moves this and the matching <code>Net.Send.ToAuthority</code> together.</p>
+</dd>
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Message_System_String_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Message(nameof(RequestReady), isReady.Set(true));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Message_System_String_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Two calls naming the same message append to one list, in the order they were
+written, the way two <a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_FrameUpdate_CodeSmile_LunyScript_Block___">FrameUpdate(params Block[])</a> calls do.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">messageName</code> is null or
+whitespace, or <code class="paramref">blocks</code> is null or contains null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_Ready_" data-uid="CodeSmile.LunyScript.OnFactory.Ready*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_Ready_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.Ready(CodeSmile.LunyScript.Block[])">
+  Ready(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run once, when an instance starts.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Ready(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Ready_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(health.Set(100.0), playerName.Set("Player One"));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_TriggerEnter_" data-uid="CodeSmile.LunyScript.OnFactory.TriggerEnter*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_TriggerEnter_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.TriggerEnter(CodeSmile.LunyScript.Block[])">
+  TriggerEnter(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L268"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run when this object's collider begins overlapping a
+trigger, or when a collider enters this object's trigger.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TriggerEnter(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_TriggerEnter_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.TriggerEnter(Inside.Set(true));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_TriggerEnter_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Unity raises <code>OnTriggerEnter</code> on the object the script is on. The blocks run
+against this object; <code>Other</code> is the other collider. See
+<a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_CollisionEnter_CodeSmile_LunyScript_Block___">CollisionEnter(params Block[])</a>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_TriggerExit_" data-uid="CodeSmile.LunyScript.OnFactory.TriggerExit*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_TriggerExit_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.TriggerExit(CodeSmile.LunyScript.Block[])">
+  TriggerExit(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L306"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run when this object's collider stops overlapping a
+trigger, or when a collider leaves this object's trigger.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TriggerExit(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_TriggerExit_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.TriggerExit(Inside.Set(false));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_TriggerExit_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Unity raises <code>OnTriggerExit</code> on the object the script is on. The blocks run
+against this object; <code>Other</code> is the other collider. See
+<a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_CollisionEnter_CodeSmile_LunyScript_Block___">CollisionEnter(params Block[])</a>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_OnFactory_TriggerStay_" data-uid="CodeSmile.LunyScript.OnFactory.TriggerStay*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OnFactory_TriggerStay_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.TriggerStay(CodeSmile.LunyScript.Block[])">
+  TriggerStay(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L287"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers blocks that run every fixed step while this object's collider overlaps
+a trigger, or while a collider remains inside this object's trigger.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TriggerStay(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>blocks</code> <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt>
+    <dd><p>The blocks, in order.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_TriggerStay_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.TriggerStay(If(Other.HasTag("Player")).Then(Inside.Set(true)));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_TriggerStay_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Unity raises <code>OnTriggerStay</code> on the object the script is on, when the project
+setting for that callback is on. The blocks run against this object; <code>Other</code> is
+the other collider. See <a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_CollisionEnter_CodeSmile_LunyScript_Block___">CollisionEnter(params Block[])</a>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/OnFactory.cs/#L26" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

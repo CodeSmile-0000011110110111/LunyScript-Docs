@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IAssetLoadProvider | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IAssetLoadProvider | LunyScript API Reference ">
+      
+      <meta name="description" content="What an asset-load backend provides to : one load of a provider-qualified key, returned as an operation the gateway polls once per frame. Script code never sees this type; it sees Asset.Load and When.Operation.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_IAssetLoadProvider.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.IAssetLoadProvider%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.IAssetLoadProvider">
+
+
+
+  <h1 id="CodeSmile_LunyScript_IAssetLoadProvider" data-uid="CodeSmile.LunyScript.IAssetLoadProvider" class="text-break">
+Interface IAssetLoadProvider  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Assets/IAssetLoadProvider.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>What an asset-load backend provides to <a class="xref" href="CodeSmile.LunyScript.AssetGateway.html">AssetGateway</a>: one load of a
+provider-qualified key, returned as an operation the gateway polls once per frame. Script
+code never sees this type; it sees <code>Asset.Load</code> and <code>When.Operation</code>.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IAssetLoadProvider</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_IAssetLoadProvider_examples">Examples</h2>
+  <pre><code class="lang-csharp">runner.AssetGateway.UseProvider(new FakeAssetLoadProvider());</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_IAssetLoadProvider_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>Two implementations exist. <a class="xref" href="CodeSmile.LunyScript.FakeAssetLoadProvider.html">FakeAssetLoadProvider</a> is an in-memory table for
+tests, the same role <a class="xref" href="CodeSmile.LunyScript.FileCloudSaveProvider.html">FileCloudSaveProvider</a> has for Cloud Save.
+<a class="xref" href="CodeSmile.LunyScript.ResourcesAssetLoadProvider.html">ResourcesAssetLoadProvider</a> reads Unity Resources folders behind the start
+boundary. Bound Inspector loads do not use a provider: the object is already on the
+instance.</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_IAssetLoadProvider_Describe_" data-uid="CodeSmile.LunyScript.IAssetLoadProvider.Describe*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IAssetLoadProvider_Describe" data-uid="CodeSmile.LunyScript.IAssetLoadProvider.Describe">
+  Describe()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Assets/IAssetLoadProvider.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Names this provider for the gateway's log lines. <b>Allocates</b>; called only at
+state transitions, never per frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string Describe()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>For example: &quot;Resources folders&quot; or &quot;in-memory asset provider&quot;.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IAssetLoadProvider_Load_" data-uid="CodeSmile.LunyScript.IAssetLoadProvider.Load*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IAssetLoadProvider_Load_System_String_System_Type_" data-uid="CodeSmile.LunyScript.IAssetLoadProvider.Load(System.String,System.Type)">
+  Load(string, Type)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Assets/IAssetLoadProvider.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts loading one key of one declared type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IAssetLoadOperation Load(string key, Type declaredType)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>key</code> <span class="xref">string</span></dt>
+    <dd><p>The provider-qualified key. Validated at build time.</p>
+</dd>
+    <dt><code>declaredType</code> <span class="xref">Type</span></dt>
+    <dd><p>The Unity asset type the load asked for.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.IAssetLoadOperation.html">IAssetLoadOperation</a></dt>
+    <dd><p>The operation the gateway polls. Missing content completes as
+<code>OperationFailure.NotFound</code>. A stored object of another type completes as
+<code>OperationFailure.Denied</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Assets/IAssetLoadProvider.cs/#L24" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

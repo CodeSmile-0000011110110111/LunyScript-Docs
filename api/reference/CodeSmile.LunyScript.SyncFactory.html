@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct SyncFactory | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct SyncFactory | LunyScript API Reference ">
+      
+      <meta name="description" content="The Sync surface: which parts of an object&#39;s transform cross the network, and how often each one is sent.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_SyncFactory.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.SyncFactory%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.SyncFactory">
+
+
+
+  <h1 id="CodeSmile_LunyScript_SyncFactory" data-uid="CodeSmile.LunyScript.SyncFactory" class="text-break">
+Struct SyncFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SyncFactory.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The <code>Sync</code> surface: which parts of an object's transform cross the network, and
+how often each one is sent.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct SyncFactory</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_SyncFactory_examples">Examples</h2>
+  <pre><code class="lang-csharp">protected override void Build()
+{
+    Sync.Position(SyncCadence.EveryTick);
+    Sync.Rotation(SyncCadence.OnChange);
+    Sync.Scale(SyncCadence.Once);
+}</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_SyncFactory_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>One call per channel, each with its own cadence, which is <code>AGENTS.md</code> rule 46 applied
+to the transform. There is no &quot;synchronise the transform&quot; switch, for the reason rule 46
+gives for there being no networked struct: a scale that never changes would otherwise share
+a payload with a position that changes every tick, and the cost of the second would be paid
+for the first.</p>
+<p>
+    What the channels carry crosses as one stream per authority per network tick, not as one
+    message per object; rule 47, and <code>docs/netcode-bandwidth.md</code> is the measurement
+    that rule requires.
+</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_SyncFactory_Position_" data-uid="CodeSmile.LunyScript.SyncFactory.Position*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncFactory_Position_CodeSmile_LunyScript_SyncCadence_" data-uid="CodeSmile.LunyScript.SyncFactory.Position(CodeSmile.LunyScript.SyncCadence)">
+  Position(SyncCadence)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SyncFactory.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Synchronises the object's world position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Position(SyncCadence cadence)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>cadence</code> <a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt>
+    <dd><p>How often it is sent. Required, so that a position whose cost nobody
+chose cannot be synchronised.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_SyncFactory_Position_CodeSmile_LunyScript_SyncCadence__examples">Examples</h4>
+  <pre><code class="lang-csharp">Sync.Position(SyncCadence.EveryTick);</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_SyncFactory_Position_CodeSmile_LunyScript_SyncCadence__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The position is sent as the change since the last one sent, in 6 bytes, and as an
+absolute position in 12 whenever the change is too large to encode or a peer has just
+joined. Only the authority may move an object whose position is synchronised; a move on any
+other peer is refused, and the diagnostic names what to write instead.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The cadence is unset, or this script already
+declared this channel.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_SyncFactory_Rotation_" data-uid="CodeSmile.LunyScript.SyncFactory.Rotation*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncFactory_Rotation_CodeSmile_LunyScript_SyncCadence_" data-uid="CodeSmile.LunyScript.SyncFactory.Rotation(CodeSmile.LunyScript.SyncCadence)">
+  Rotation(SyncCadence)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SyncFactory.cs/#L66"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Synchronises the object's world rotation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Rotation(SyncCadence cadence)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>cadence</code> <a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt>
+    <dd><p>How often it is sent.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_SyncFactory_Rotation_CodeSmile_LunyScript_SyncCadence__examples">Examples</h4>
+  <pre><code class="lang-csharp">Sync.Rotation(SyncCadence.OnChange);</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_SyncFactory_Rotation_CodeSmile_LunyScript_SyncCadence__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Sent as a quaternion compressed into 4 bytes: the two-bit index of its largest
+component and the other three at ten bits each.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The cadence is unset, or this script already
+declared this channel.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_SyncFactory_Scale_" data-uid="CodeSmile.LunyScript.SyncFactory.Scale*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncFactory_Scale_CodeSmile_LunyScript_SyncCadence_" data-uid="CodeSmile.LunyScript.SyncFactory.Scale(CodeSmile.LunyScript.SyncCadence)">
+  Scale(SyncCadence)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SyncFactory.cs/#L90"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Synchronises the object's local scale.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Scale(SyncCadence cadence)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>cadence</code> <a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt>
+    <dd><p>How often it is sent.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_SyncFactory_Scale_CodeSmile_LunyScript_SyncCadence__examples">Examples</h4>
+  <pre><code class="lang-csharp">Sync.Scale(SyncCadence.Once);</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_SyncFactory_Scale_CodeSmile_LunyScript_SyncCadence__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Sent as three half-precision values, 6 bytes. A scale that is chosen once and never
+changed is declared with <code>SyncCadence.Once</code> and then costs nothing per tick.</p>
+<pre><code>&lt;p&gt;
+    &lt;b&gt;Each axis must be between -65504 and 65504&lt;/b&gt;, which is what the 16-bit encoding
+    holds. This channel sends the value rather than a change, so unlike a position it has no
+    second form to fall back to: an object scaled outside that range has its scale sent to
+    nobody, every peer keeps the last scale that was inside the range, and the runner writes
+    one warning naming the object, its scale and the bound. That warning is written once for
+    an object and not again: a scale that leaves the range later is refused the same way and
+    in silence, because composing the message on a path that repeats would allocate.
+&lt;/p&gt;
+</code></pre>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The cadence is unset, or this script already
+declared this channel.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SyncFactory.cs/#L29" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

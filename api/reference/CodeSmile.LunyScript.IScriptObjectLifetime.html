@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Interface IScriptObjectLifetime | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface IScriptObjectLifetime | LunyScript API Reference ">
+      
+      <meta name="description" content="The part of a host that can activate, deactivate, create and destroy objects. A host that provides it declares  by implementing this interface; a host that does not cannot run a script containing an Object block, and the spawn is refused with a message naming the missing service.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_IScriptObjectLifetime.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.IScriptObjectLifetime%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.IScriptObjectLifetime">
+
+
+
+  <h1 id="CodeSmile_LunyScript_IScriptObjectLifetime" data-uid="CodeSmile.LunyScript.IScriptObjectLifetime" class="text-break">
+Interface IScriptObjectLifetime  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptObjectLifetime.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The part of a host that can activate, deactivate, create and destroy objects. A host that
+provides it declares <a class="xref" href="CodeSmile.LunyScript.ScriptServices.html#CodeSmile_LunyScript_ScriptServices_RuntimeObjectLifetime">RuntimeObjectLifetime</a> by implementing this
+interface; a host that does not cannot run a script containing an <code>Object</code> block, and
+the spawn is refused with a message naming the missing service.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IScriptObjectLifetime</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_IScriptObjectLifetime_examples">Examples</h2>
+  <pre><code class="lang-csharp">var lifetime = (IScriptObjectLifetime)instance.Host;
+lifetime.SetActive(false);</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_IScriptObjectLifetime_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>It is a second interface rather than four more members on <a class="xref" href="CodeSmile.LunyScript.IScriptHost.html">IScriptHost</a> for the
+reason <a class="xref" href="CodeSmile.LunyScript.IScriptHostCapabilities.html">IScriptHostCapabilities</a> is a second interface: the scene-free editor
+host owned by <code>EditorScriptSession</code> has no object to activate or destroy, and four
+members it can only refuse would make every implementation carry them. AGENTS.md rule 53 and
+<code>docs/editor-foundation.md</code> own that boundary.</p>
+<p>
+    It names no <code>GameObject</code>, <code>Transform</code> or <code>Component</code>, so the core stays
+    testable without a scene and the type ban of AGENTS.md rule 24 still holds.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_IScriptObjectLifetime_IsActive_" data-uid="CodeSmile.LunyScript.IScriptObjectLifetime.IsActive*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptObjectLifetime_IsActive" data-uid="CodeSmile.LunyScript.IScriptObjectLifetime.IsActive">
+  IsActive
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptObjectLifetime.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the object is active. Reads the object's own state rather than a flag
+LunyScript keeps beside it, because Unity owns that state; AGENTS.md rule 54.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsActive { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_IScriptObjectLifetime_CreateOwnedObject_" data-uid="CodeSmile.LunyScript.IScriptObjectLifetime.CreateOwnedObject*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptObjectLifetime_CreateOwnedObject_System_String_" data-uid="CodeSmile.LunyScript.IScriptObjectLifetime.CreateOwnedObject(System.String)">
+  CreateOwnedObject(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptObjectLifetime.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a new, empty, active object and returns the host that names it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IScriptHost CreateOwnedObject(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <span class="xref">string</span></dt>
+    <dd><p>What the created object is called.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.IScriptHost.html">IScriptHost</a></dt>
+    <dd><p>The host for the created object.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptObjectLifetime_CreateOwnedObject_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The created object carries no LunyScript script, so it raises no LunyScript observation
+and cannot re-enter the runner. <b>This allocates</b>, and it is AGENTS.md rule 31's
+first boundary, spawn.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptObjectLifetime_DestroyObject_" data-uid="CodeSmile.LunyScript.IScriptObjectLifetime.DestroyObject*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptObjectLifetime_DestroyObject" data-uid="CodeSmile.LunyScript.IScriptObjectLifetime.DestroyObject">
+  DestroyObject()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptObjectLifetime.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Destroys the object this host names.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void DestroyObject()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptObjectLifetime_DestroyObject_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Called on an owned object when its owner despawns, and on the script's own object
+when <code>Object.Despawn()</code> ends it. Like <a class="xref" href="CodeSmile.LunyScript.IScriptObjectLifetime.html#CodeSmile_LunyScript_IScriptObjectLifetime_SetActive_System_Boolean_">SetActive(bool)</a> it is called outside the
+runner's dispatch, because Unity raises <code>OnDisable</code> and <code>OnDestroy</code> synchronously
+inside it.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_IScriptObjectLifetime_SetActive_" data-uid="CodeSmile.LunyScript.IScriptObjectLifetime.SetActive*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IScriptObjectLifetime_SetActive_System_Boolean_" data-uid="CodeSmile.LunyScript.IScriptObjectLifetime.SetActive(System.Boolean)">
+  SetActive(bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptObjectLifetime.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Activates or deactivates the object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void SetActive(bool active)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>active</code> <span class="xref">bool</span></dt>
+    <dd><p>True to activate, false to deactivate.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptObjectLifetime_SetActive_System_Boolean__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>On a real GameObject this is <code>SetActive</code>, and Unity raises the component
+callbacks that follow from it synchronously inside this call. <code>ScriptRunner</code> therefore
+calls it outside its own dispatch, never from inside a block.</p>
+</div>
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptObjectLifetime.cs/#L28" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

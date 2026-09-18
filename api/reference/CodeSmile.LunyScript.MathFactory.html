@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct MathFactory | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct MathFactory | LunyScript API Reference ">
+      
+      <meta name="description" content="The core numeric functions, written as Math.Abs(...) inside a script&#39;s Build(). Every member returns an expression that is evaluated each time the block holding it runs; none of them writes anything.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_MathFactory.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.MathFactory%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.MathFactory">
+
+
+
+  <h1 id="CodeSmile_LunyScript_MathFactory" data-uid="CodeSmile.LunyScript.MathFactory" class="text-break">
+Struct MathFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The core numeric functions, written as <code>Math.Abs(...)</code> inside a script's
+<code>Build()</code>. Every member returns an expression that is evaluated each time the block
+holding it runs; none of them writes anything.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct MathFactory</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_MathFactory_examples">Examples</h2>
+  <pre><code class="lang-csharp">On.FrameUpdate(Distance.Set(Math.Clamp(Distance + Step, 0.0, 100.0)));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_MathFactory_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>Every function here has a second, writing form on the variable itself.</b> The API
+semantics board's C01 answer, 2026-09-13, requires both: <code>Math.Abs(Offset)</code> computes a
+magnitude and leaves <code>Offset</code> alone, while <code>Offset.Abs()</code> writes the magnitude
+back into <code>Offset</code>. Reach for the expression when the result feeds something else and
+for the write when the variable is the destination.</p>
+<p>
+    <b>What this surface holds, and what it deliberately does not.</b> The board's C04
+    answer is a small core plus named packages: <code>Abs</code>, <code>Min</code>, <code>Max</code>,
+    <code>Clamp</code>, <code>Floor</code>, <code>Ceiling</code>, <code>Truncate</code>, <code>Round</code> and
+    <code>Lerp</code> are the core, and remap, easing, curve, spatial and trigonometric functions
+    live in separate first-party Math packages that this one does not carry. That is an
+    organisation choice rather than a refusal to own them.
+</p>
+<p>
+    <b>The five arithmetic operators are not members here.</b> Addition, subtraction,
+    multiplication, division and remainder are written <code>+ - * / %</code>, which is their
+    expression form; <code>Health.Add</code>, <code>Subtract</code>, <code>Multiply</code>, <code>Divide</code> and
+    <code>Remainder</code> are their writing form. A <code>Math.Subtract</code> would be a third
+    spelling of something C# already spells.
+</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Abs_" data-uid="CodeSmile.LunyScript.MathFactory.Abs*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Abs_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Abs(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Abs(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The magnitude of a number, with no sign.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock Abs(NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The expression to read.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. It records the line this block was
+written on, so a later failure names that line rather than LunyScript's own source.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Abs_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Speed.Set(Math.Abs(Velocity)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this
+factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Ceiling_" data-uid="CodeSmile.LunyScript.MathFactory.Ceiling*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Ceiling_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Ceiling(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Ceiling(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The smallest whole number that is not less than this one, so 1.2 becomes 2 and
+-1.7 becomes -1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock Ceiling(NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The expression to read.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Ceiling_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Slots.Set(Math.Ceiling(Needed / PerSlot)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this
+factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Clamp_" data-uid="CodeSmile.LunyScript.MathFactory.Clamp*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Clamp_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Clamp(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Clamp(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L178"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A number held between two bounds. The bounds are applied in order, the minimum
+first and the maximum second, so a reversed pair produces the maximum rather than
+throwing. A NaN value stays NaN and a NaN bound applies to nothing, because every
+comparison against a NaN is false; <a class="xref" href="CodeSmile.LunyScript.MathFactory.html#CodeSmile_LunyScript_MathFactory_IsNaN_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">IsNaN(NumberValueBlock, string, int)</a> is what asks about one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock Clamp(NumberValueBlock value, NumberValueBlock minimum, NumberValueBlock maximum, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The expression to read.</p>
+</dd>
+    <dt><code>minimum</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The lower bound.</p>
+</dd>
+    <dt><code>maximum</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The upper bound.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Clamp_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Health.Set(Math.Clamp(Health + Healing, 0.0, 100.0)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any operand is null, or this factory was not
+obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Floor_" data-uid="CodeSmile.LunyScript.MathFactory.Floor*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Floor_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Floor(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Floor(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The largest whole number that is not greater than this one, so 1.7 becomes 1 and
+-1.2 becomes -2.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock Floor(NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The expression to read.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Floor_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Tile.Set(Math.Floor(Position)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this
+factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_IsFinite_" data-uid="CodeSmile.LunyScript.MathFactory.IsFinite*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_IsFinite_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.IsFinite(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  IsFinite(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L344"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A condition that is true when the number is finite: neither infinite nor NaN. No
+comparison can ask this, because an infinity compares the way a very large number
+does.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConditionBlock IsFinite(NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The expression to read.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>A condition block for <code>If(...)</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_IsFinite_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Math.IsFinite(Ratio)).Then(Shown.Set(Ratio)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this
+factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_IsNaN_" data-uid="CodeSmile.LunyScript.MathFactory.IsNaN*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_IsNaN_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.IsNaN(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  IsNaN(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L358"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A condition that is true when the number is NaN. No comparison can ask this,
+because NaN compares false against everything including itself.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConditionBlock IsNaN(NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The expression to read.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>A condition block for <code>If(...)</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_IsNaN_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Math.IsNaN(Ratio)).Then(Ratio.Set(0.0)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this
+factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Lerp_" data-uid="CodeSmile.LunyScript.MathFactory.Lerp*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Lerp_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Lerp(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Lerp(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L198"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A number a stated fraction of the way from one value to another. The fraction is
+not limited: 2.0 is twice the distance past the destination and -1.0 is the same distance
+before the origin. Wrap this in <a class="xref" href="CodeSmile.LunyScript.MathFactory.html#CodeSmile_LunyScript_MathFactory_Clamp_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">Clamp(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a> when a limit is wanted, so the limit
+is visible in the line that has it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock Lerp(NumberValueBlock from, NumberValueBlock to, NumberValueBlock fraction, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>from</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Where the fraction 0 sits.</p>
+</dd>
+    <dt><code>to</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Where the fraction 1 sits.</p>
+</dd>
+    <dt><code>fraction</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>How far along to go.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Lerp_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Shown.Set(Math.Lerp(Shown, Health, 0.1)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any operand is null, or this factory was not
+obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Lerp_" data-uid="CodeSmile.LunyScript.MathFactory.Lerp*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Lerp_CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Number__CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Number__CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Lerp(CodeSmile.LunyScript.Var{CodeSmile.LunyScript.Number},CodeSmile.LunyScript.Var{CodeSmile.LunyScript.Number},CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Lerp(Var&lt;Number&gt;, Var&lt;Number&gt;, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L299"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <code>Var&lt;Number&gt;</code> form of scalar <code>Lerp</code>, so two number variables
+stay a scalar <code>Lerp</code> after the spatial overload exists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock Lerp(Var&lt;Number&gt; from, Var&lt;Number&gt; to, NumberValueBlock fraction, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>from</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a>&gt;</dt>
+    <dd><p>Where the fraction 0 sits.</p>
+</dd>
+    <dt><code>to</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a>&gt;</dt>
+    <dd><p>Where the fraction 1 sits.</p>
+</dd>
+    <dt><code>fraction</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>How far along to go.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Lerp_CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Number__CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Number__CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Shown.Set(Math.Lerp(Shown, Health, 0.1)));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Lerp_" data-uid="CodeSmile.LunyScript.MathFactory.Lerp*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Lerp_CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Vec2__CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Vec2__CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Lerp(CodeSmile.LunyScript.Var{CodeSmile.LunyScript.Vec2},CodeSmile.LunyScript.Var{CodeSmile.LunyScript.Vec2},CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Lerp(Var&lt;Vec2&gt;, Var&lt;Vec2&gt;, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L279"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <code>Var&lt;Vec2&gt;</code> form of two-component <code>Lerp</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vec2ValueBlock Lerp(Var&lt;Vec2&gt; from, Var&lt;Vec2&gt; to, NumberValueBlock fraction, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>from</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Vec2.html">Vec2</a>&gt;</dt>
+    <dd><p>Where the fraction 0 sits.</p>
+</dd>
+    <dt><code>to</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Vec2.html">Vec2</a>&gt;</dt>
+    <dd><p>Where the fraction 1 sits.</p>
+</dd>
+    <dt><code>fraction</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>How far along to go.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec2ValueBlock.html">Vec2ValueBlock</a></dt>
+    <dd><p>A spatial expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Lerp_CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Vec2__CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Vec2__CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Shown.Set(Math.Lerp(Start, End, 0.5)));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Lerp_" data-uid="CodeSmile.LunyScript.MathFactory.Lerp*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Lerp_CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Vec3__CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Vec3__CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Lerp(CodeSmile.LunyScript.Var{CodeSmile.LunyScript.Vec3},CodeSmile.LunyScript.Var{CodeSmile.LunyScript.Vec3},CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Lerp(Var&lt;Vec3&gt;, Var&lt;Vec3&gt;, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L237"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The <code>Var&lt;Vec3&gt;</code> form of spatial <code>Lerp</code>, so
+<code>Math.Lerp(Start, End, 0.5)</code> is not also a scalar <code>Lerp</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vec3ValueBlock Lerp(Var&lt;Vec3&gt; from, Var&lt;Vec3&gt; to, NumberValueBlock fraction, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>from</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a>&gt;</dt>
+    <dd><p>Where the fraction 0 sits.</p>
+</dd>
+    <dt><code>to</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a>&gt;</dt>
+    <dd><p>Where the fraction 1 sits.</p>
+</dd>
+    <dt><code>fraction</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>How far along to go.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt>
+    <dd><p>A spatial expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Lerp_CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Vec3__CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Vec3__CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Shown.Set(Math.Lerp(Start, End, 0.5)));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Lerp_" data-uid="CodeSmile.LunyScript.MathFactory.Lerp*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Lerp_CodeSmile_LunyScript_Vec2ValueBlock_CodeSmile_LunyScript_Vec2ValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Lerp(CodeSmile.LunyScript.Vec2ValueBlock,CodeSmile.LunyScript.Vec2ValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Lerp(Vec2ValueBlock, Vec2ValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L259"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A two-component spatial value a stated fraction of the way from one value to
+another. The fraction is not limited, matching the scalar <code>Lerp</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vec2ValueBlock Lerp(Vec2ValueBlock from, Vec2ValueBlock to, NumberValueBlock fraction, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>from</code> <a class="xref" href="CodeSmile.LunyScript.Vec2ValueBlock.html">Vec2ValueBlock</a></dt>
+    <dd><p>Where the fraction 0 sits.</p>
+</dd>
+    <dt><code>to</code> <a class="xref" href="CodeSmile.LunyScript.Vec2ValueBlock.html">Vec2ValueBlock</a></dt>
+    <dd><p>Where the fraction 1 sits.</p>
+</dd>
+    <dt><code>fraction</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>How far along to go.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec2ValueBlock.html">Vec2ValueBlock</a></dt>
+    <dd><p>A spatial expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Lerp_CodeSmile_LunyScript_Vec2ValueBlock_CodeSmile_LunyScript_Vec2ValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Shown.Set(Math.Lerp(Start, End, 0.5)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any operand is null, or this factory was not
+obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Lerp_" data-uid="CodeSmile.LunyScript.MathFactory.Lerp*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Lerp_CodeSmile_LunyScript_Vec3ValueBlock_CodeSmile_LunyScript_Vec3ValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Lerp(CodeSmile.LunyScript.Vec3ValueBlock,CodeSmile.LunyScript.Vec3ValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Lerp(Vec3ValueBlock, Vec3ValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L216"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A spatial value a stated fraction of the way from one value to another. The
+fraction is not limited, matching the scalar <code>Lerp</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vec3ValueBlock Lerp(Vec3ValueBlock from, Vec3ValueBlock to, NumberValueBlock fraction, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>from</code> <a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt>
+    <dd><p>Where the fraction 0 sits.</p>
+</dd>
+    <dt><code>to</code> <a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt>
+    <dd><p>Where the fraction 1 sits.</p>
+</dd>
+    <dt><code>fraction</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>How far along to go.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt>
+    <dd><p>A spatial expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Lerp_CodeSmile_LunyScript_Vec3ValueBlock_CodeSmile_LunyScript_Vec3ValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Shown.Set(Math.Lerp(Start, End, 0.5)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any operand is null, or this factory was not
+obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Max_" data-uid="CodeSmile.LunyScript.MathFactory.Max*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Max_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Max(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Max(NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L160"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The larger of two numbers. A NaN loses to a real number whichever side it is on,
+for the reason <a class="xref" href="CodeSmile.LunyScript.MathFactory.html#CodeSmile_LunyScript_MathFactory_Min_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">Min(NumberValueBlock, NumberValueBlock, string, int)</a> states.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock Max(NumberValueBlock left, NumberValueBlock right, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The first expression to read.</p>
+</dd>
+    <dt><code>right</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The second expression to read.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Max_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Shown.Set(Math.Max(Health, 0.0)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Either operand is null, or this factory was not
+obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Min_" data-uid="CodeSmile.LunyScript.MathFactory.Min*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Min_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Min(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Min(NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L145"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The smaller of two numbers. A NaN loses to a real number whichever side it is on,
+rather than spreading the way <code>System.Math.Min</code> does; two NaNs leave NaN, because
+there is no real number to return.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock Min(NumberValueBlock left, NumberValueBlock right, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The first expression to read.</p>
+</dd>
+    <dt><code>right</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The second expression to read.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Min_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Shown.Set(Math.Min(Health, Cap)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Either operand is null, or this factory was not
+obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Round_" data-uid="CodeSmile.LunyScript.MathFactory.Round*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Round_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_RoundingMode_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Round(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.RoundingMode,System.String,System.Int32)">
+  Round(NumberValueBlock, RoundingMode, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The whole number nearest this one, with the rule for a value exactly halfway
+stated rather than defaulted.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock Round(NumberValueBlock value, RoundingMode rounding, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The expression to read.</p>
+</dd>
+    <dt><code>rounding</code> <a class="xref" href="CodeSmile.LunyScript.RoundingMode.html">RoundingMode</a></dt>
+    <dd><p>Which way a midpoint goes.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Round_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_RoundingMode_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Shown.Set(Math.Round(Health, RoundingMode.AwayFromZero)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this
+factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Round_" data-uid="CodeSmile.LunyScript.MathFactory.Round*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Round_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Round(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Round(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L109"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The whole number nearest this one. A value exactly halfway goes to the nearer even
+whole number, so 2.5 becomes 2 and 3.5 becomes 4.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock Round(NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The expression to read.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Round_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Shown.Set(Math.Round(Health)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this
+factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Slerp_" data-uid="CodeSmile.LunyScript.MathFactory.Slerp*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Slerp_CodeSmile_LunyScript_RotationValueBlock_CodeSmile_LunyScript_RotationValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Slerp(CodeSmile.LunyScript.RotationValueBlock,CodeSmile.LunyScript.RotationValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Slerp(RotationValueBlock, RotationValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L321"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>An orientation a stated fraction of the way from one to another along the
+shortest arc. The fraction is not limited, matching scalar <code>Lerp</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RotationValueBlock Slerp(RotationValueBlock from, RotationValueBlock to, NumberValueBlock fraction, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>from</code> <a class="xref" href="CodeSmile.LunyScript.RotationValueBlock.html">RotationValueBlock</a></dt>
+    <dd><p>Where the fraction 0 sits.</p>
+</dd>
+    <dt><code>to</code> <a class="xref" href="CodeSmile.LunyScript.RotationValueBlock.html">RotationValueBlock</a></dt>
+    <dd><p>Where the fraction 1 sits.</p>
+</dd>
+    <dt><code>fraction</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>How far along to go.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.RotationValueBlock.html">RotationValueBlock</a></dt>
+    <dd><p>An orientation expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Slerp_CodeSmile_LunyScript_RotationValueBlock_CodeSmile_LunyScript_RotationValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Facing.Set(Math.Slerp(From, To, 0.5)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any operand is null, or this factory was not
+obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MathFactory_Truncate_" data-uid="CodeSmile.LunyScript.MathFactory.Truncate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MathFactory_Truncate_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MathFactory.Truncate(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Truncate(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>This number with its fractional part dropped, towards zero, so 1.7 becomes 1 and
+-1.7 becomes -1. That is what separates it from <a class="xref" href="CodeSmile.LunyScript.MathFactory.html#CodeSmile_LunyScript_MathFactory_Floor_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">Floor(NumberValueBlock, string, int)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock Truncate(NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The expression to read.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MathFactory_Truncate_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(WholeSeconds.Set(Math.Truncate(Elapsed)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this
+factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MathFactory.cs/#L36" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

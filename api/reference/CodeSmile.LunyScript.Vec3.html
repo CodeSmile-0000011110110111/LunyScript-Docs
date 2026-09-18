@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct Vec3 | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct Vec3 | LunyScript API Reference ">
+      
+      <meta name="description" content="A three-component spatial value: a position, a direction, a displacement or a scale.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_Vec3.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.Vec3%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.Vec3">
+
+
+
+  <h1 id="CodeSmile_LunyScript_Vec3" data-uid="CodeSmile.LunyScript.Vec3" class="text-break">
+Struct Vec3  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>A three-component spatial value: a position, a direction, a displacement or a
+scale.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct Vec3</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_Vec3_examples">Examples</h2>
+  <pre><code class="lang-csharp">var spawn = new Vec3(0.0, 1.0, 0.0);
+var raised = spawn.WithY(2.5);</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_Vec3_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>Why the name is <code>Vec3</code> and not <code>Vector3</code>.</b> A type called
+<code>CodeSmile.LunyScript.Vector3</code> would be ambiguous with <code>UnityEngine.Vector3</code> in
+every script carrying <code>using UnityEngine;</code>, which is nearly every script in a Unity
+project, and the C# compiler reports that as an error the script author cannot fix without
+writing an alias. The short name also leaves room for a <code>Vec2</code> beside it.</p>
+<p>
+    <b>The components are <code>Single</code> while <code>Number</code> is <code>Double</code>.</b> That is
+    the precision split the API semantics record carries: scalars use double, and spatial
+    payload and spatial math use float, narrowing at the destination that declares it.
+    Every member here takes and returns <code>Double</code> at its edges, so a script never
+    writes an <code>f</code> suffix, and the narrowing happens in one place.
+</p>
+<p>
+    <b>A component is replaced, never written.</b> <code>WithX</code>, <code>WithY</code> and
+    <code>WithZ</code> return a copy with one component changed, which is what a spatial
+    variable's <code>Set</code> takes. There is no writable component handle; the API semantics
+    board ruled that out on 2026-09-13.
+</p>
+</div>
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Vec3__ctor_" data-uid="CodeSmile.LunyScript.Vec3.#ctor*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3__ctor_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.Vec3.#ctor(System.Double,System.Double,System.Double)">
+  Vec3(double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a value from three numbers, narrowing each to the component's single
+precision.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vec3(double x, double y, double z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The first component.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The second component.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The third component.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3__ctor_System_Double_System_Double_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">var spawn = new Vec3(0.0, 1.0, 0.0);</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="CodeSmile_LunyScript_Vec3_One" data-uid="CodeSmile.LunyScript.Vec3.One">
+  One
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The value whose three components are one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Vec3 One</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_One_examples">Examples</h4>
+  <pre><code class="lang-csharp">var unscaled = Vec3.One;</code></pre>
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_Vec3_Zero" data-uid="CodeSmile.LunyScript.Vec3.Zero">
+  Zero
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The value whose three components are zero.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Vec3 Zero</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_Zero_examples">Examples</h4>
+  <pre><code class="lang-csharp">var origin = Vec3.Zero;</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Vec3_Length_" data-uid="CodeSmile.LunyScript.Vec3.Length*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_Length" data-uid="CodeSmile.LunyScript.Vec3.Length">
+  Length
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L102"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How long this value is.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Length { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_Length_examples">Examples</h4>
+  <pre><code class="lang-csharp">var speed = velocity.Length;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_LengthSquared_" data-uid="CodeSmile.LunyScript.Vec3.LengthSquared*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_LengthSquared" data-uid="CodeSmile.LunyScript.Vec3.LengthSquared">
+  LengthSquared
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How long this value is, squared, which needs no square root and is what a
+comparison of two lengths should use.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double LengthSquared { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_LengthSquared_examples">Examples</h4>
+  <pre><code class="lang-csharp">var withinRange = offset.LengthSquared &lt;= range * range;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_Normalized_" data-uid="CodeSmile.LunyScript.Vec3.Normalized*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_Normalized" data-uid="CodeSmile.LunyScript.Vec3.Normalized">
+  Normalized
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>This value scaled to a length of one. A value of length zero normalizes to zero
+rather than to a NaN, because a direction that does not exist is not a number the caller
+can use.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vec3 Normalized { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_Normalized_examples">Examples</h4>
+  <pre><code class="lang-csharp">var direction = offset.Normalized;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_X_" data-uid="CodeSmile.LunyScript.Vec3.X*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_X" data-uid="CodeSmile.LunyScript.Vec3.X">
+  X
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The first component.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float X { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">float</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_X_examples">Examples</h4>
+  <pre><code class="lang-csharp">var x = offset.X;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_Y_" data-uid="CodeSmile.LunyScript.Vec3.Y*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_Y" data-uid="CodeSmile.LunyScript.Vec3.Y">
+  Y
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The second component.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float Y { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">float</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_Y_examples">Examples</h4>
+  <pre><code class="lang-csharp">var y = offset.Y;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_Z_" data-uid="CodeSmile.LunyScript.Vec3.Z*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_Z" data-uid="CodeSmile.LunyScript.Vec3.Z">
+  Z
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The third component.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float Z { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">float</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_Z_examples">Examples</h4>
+  <pre><code class="lang-csharp">var z = offset.Z;</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Vec3_Cross_" data-uid="CodeSmile.LunyScript.Vec3.Cross*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_Cross_CodeSmile_LunyScript_Vec3_CodeSmile_LunyScript_Vec3_" data-uid="CodeSmile.LunyScript.Vec3.Cross(CodeSmile.LunyScript.Vec3,CodeSmile.LunyScript.Vec3)">
+  Cross(Vec3, Vec3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L146"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The cross product of two values: a value at right angles to both, whose length is
+the area of the parallelogram they span.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vec3 Cross(Vec3 left, Vec3 right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The first value.</p>
+</dd>
+    <dt><code>right</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The second value.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The cross product.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_Cross_CodeSmile_LunyScript_Vec3_CodeSmile_LunyScript_Vec3__examples">Examples</h4>
+  <pre><code class="lang-csharp">var right = Vec3.Cross(forward, up);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_DistanceTo_" data-uid="CodeSmile.LunyScript.Vec3.DistanceTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_DistanceTo_CodeSmile_LunyScript_Vec3_" data-uid="CodeSmile.LunyScript.Vec3.DistanceTo(CodeSmile.LunyScript.Vec3)">
+  DistanceTo(Vec3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L138"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How far this value is from another.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double DistanceTo(Vec3 other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The value to measure to.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd><p>The distance.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_DistanceTo_CodeSmile_LunyScript_Vec3__examples">Examples</h4>
+  <pre><code class="lang-csharp">var range = position.DistanceTo(targetPosition);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_Dot_" data-uid="CodeSmile.LunyScript.Vec3.Dot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_Dot_CodeSmile_LunyScript_Vec3_" data-uid="CodeSmile.LunyScript.Vec3.Dot(CodeSmile.LunyScript.Vec3)">
+  Dot(Vec3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L131"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The dot product of this value and another: the length of one times the length of
+the other times the cosine of the angle between them.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double Dot(Vec3 other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The value to read.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd><p>The dot product.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_Dot_CodeSmile_LunyScript_Vec3__examples">Examples</h4>
+  <pre><code class="lang-csharp">var facing = forward.Dot(toTarget.Normalized);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_Equals_" data-uid="CodeSmile.LunyScript.Vec3.Equals*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_Equals_CodeSmile_LunyScript_Vec3_" data-uid="CodeSmile.LunyScript.Vec3.Equals(CodeSmile.LunyScript.Vec3)">
+  Equals(Vec3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L215"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether two values have the same three components.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(Vec3 other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The value to compare against.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when every component matches exactly.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_Equals_CodeSmile_LunyScript_Vec3__examples">Examples</h4>
+  <pre><code class="lang-csharp">var unmoved = position.Equals(lastPosition);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_Equals_" data-uid="CodeSmile.LunyScript.Vec3.Equals*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_Equals_System_Object_" data-uid="CodeSmile.LunyScript.Vec3.Equals(System.Object)">
+  Equals(object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether this is an equal value of the same type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <span class="xref">object</span></dt>
+    <dd><p>What to compare against.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when it is a <code>Vec3</code> with the same three components.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_Equals_System_Object__examples">Examples</h4>
+  <pre><code class="lang-csharp">var same = position.Equals((Object)other);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_From_" data-uid="CodeSmile.LunyScript.Vec3.From*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_From_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_" data-uid="CodeSmile.LunyScript.Vec3.From(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock)">
+  From(NumberValueBlock, NumberValueBlock, NumberValueBlock)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a spatial expression out of three number expressions, for a variable whose
+three components come from three places.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vec3ValueBlock From(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The first component.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The second component.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The third component.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt>
+    <dd><p>A spatial expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_From_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Spawn.Set(Vec3.From(Column, 0.0, Row)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any operand is null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_GetHashCode_" data-uid="CodeSmile.LunyScript.Vec3.GetHashCode*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_GetHashCode" data-uid="CodeSmile.LunyScript.Vec3.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L227"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A hash of the three components.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd><p>The hash.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_GetHashCode_examples">Examples</h4>
+  <pre><code class="lang-csharp">var hash = position.GetHashCode();</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_Lerp_" data-uid="CodeSmile.LunyScript.Vec3.Lerp*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_Lerp_CodeSmile_LunyScript_Vec3_CodeSmile_LunyScript_Vec3_System_Double_" data-uid="CodeSmile.LunyScript.Vec3.Lerp(CodeSmile.LunyScript.Vec3,CodeSmile.LunyScript.Vec3,System.Double)">
+  Lerp(Vec3, Vec3, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L159"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A value a stated fraction of the way from this one to another. The fraction is
+not limited: 2.0 is twice the distance past the destination, matching scalar
+<code>Math.Lerp</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vec3 Lerp(Vec3 from, Vec3 to, double fraction)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>from</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>Where the fraction 0 sits.</p>
+</dd>
+    <dt><code>to</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>Where the fraction 1 sits.</p>
+</dd>
+    <dt><code>fraction</code> <span class="xref">double</span></dt>
+    <dd><p>How far along to go.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The interpolated value.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_Lerp_CodeSmile_LunyScript_Vec3_CodeSmile_LunyScript_Vec3_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">var mid = Vec3.Lerp(start, end, 0.5);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_ToString_" data-uid="CodeSmile.LunyScript.Vec3.ToString*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_ToString" data-uid="CodeSmile.LunyScript.Vec3.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L233"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The three components, so a log line naming one reads as it was written.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>The components in brackets.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_ToString_examples">Examples</h4>
+  <pre><code class="lang-csharp">var described = position.ToString();</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_WithX_" data-uid="CodeSmile.LunyScript.Vec3.WithX*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_WithX_System_Double_" data-uid="CodeSmile.LunyScript.Vec3.WithX(System.Double)">
+  WithX(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A copy of this value with its first component replaced.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vec3 WithX(double x)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The component to put in its place.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The replaced copy. This value is unchanged.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_WithX_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">var moved = position.WithX(0.0);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_WithY_" data-uid="CodeSmile.LunyScript.Vec3.WithY*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_WithY_System_Double_" data-uid="CodeSmile.LunyScript.Vec3.WithY(System.Double)">
+  WithY(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A copy of this value with its second component replaced.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vec3 WithY(double y)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The component to put in its place.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The replaced copy. This value is unchanged.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_WithY_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">var raised = position.WithY(2.5);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_WithZ_" data-uid="CodeSmile.LunyScript.Vec3.WithZ*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_WithZ_System_Double_" data-uid="CodeSmile.LunyScript.Vec3.WithZ(System.Double)">
+  WithZ(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A copy of this value with its third component replaced.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vec3 WithZ(double z)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The component to put in its place.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The replaced copy. This value is unchanged.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_WithZ_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">var flattened = position.WithZ(0.0);</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Vec3_op_Addition_" data-uid="CodeSmile.LunyScript.Vec3.op_Addition*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_op_Addition_CodeSmile_LunyScript_Vec3_CodeSmile_LunyScript_Vec3_" data-uid="CodeSmile.LunyScript.Vec3.op_Addition(CodeSmile.LunyScript.Vec3,CodeSmile.LunyScript.Vec3)">
+  operator +(Vec3, Vec3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L169"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds two values component by component.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vec3 operator +(Vec3 left, Vec3 right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The first value.</p>
+</dd>
+    <dt><code>right</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The second value.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The sum.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_op_Addition_CodeSmile_LunyScript_Vec3_CodeSmile_LunyScript_Vec3__examples">Examples</h4>
+  <pre><code class="lang-csharp">var moved = position + offset;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_op_Division_" data-uid="CodeSmile.LunyScript.Vec3.op_Division*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_op_Division_CodeSmile_LunyScript_Vec3_System_Double_" data-uid="CodeSmile.LunyScript.Vec3.op_Division(CodeSmile.LunyScript.Vec3,System.Double)">
+  operator /(Vec3, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Divides every component of a value by a number.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vec3 operator /(Vec3 value, double divisor)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The value to divide.</p>
+</dd>
+    <dt><code>divisor</code> <span class="xref">double</span></dt>
+    <dd><p>What to divide by. Zero produces the IEEE 754 result rather than
+throwing, which is what <code>Double</code> division does everywhere else in this API.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The divided value.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_op_Division_CodeSmile_LunyScript_Vec3_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">var average = total / count;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_op_Multiply_" data-uid="CodeSmile.LunyScript.Vec3.op_Multiply*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_op_Multiply_CodeSmile_LunyScript_Vec3_System_Double_" data-uid="CodeSmile.LunyScript.Vec3.op_Multiply(CodeSmile.LunyScript.Vec3,System.Double)">
+  operator *(Vec3, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L192"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Scales every component of a value by a number.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vec3 operator *(Vec3 value, double factor)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The value to scale.</p>
+</dd>
+    <dt><code>factor</code> <span class="xref">double</span></dt>
+    <dd><p>What to scale by.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The scaled value.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_op_Multiply_CodeSmile_LunyScript_Vec3_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">var step = direction * speed;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_op_Multiply_" data-uid="CodeSmile.LunyScript.Vec3.op_Multiply*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_op_Multiply_System_Double_CodeSmile_LunyScript_Vec3_" data-uid="CodeSmile.LunyScript.Vec3.op_Multiply(System.Double,CodeSmile.LunyScript.Vec3)">
+  operator *(double, Vec3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L200"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Scales every component of a value by a number.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vec3 operator *(double factor, Vec3 value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>factor</code> <span class="xref">double</span></dt>
+    <dd><p>What to scale by.</p>
+</dd>
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The value to scale.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The scaled value.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_op_Multiply_System_Double_CodeSmile_LunyScript_Vec3__examples">Examples</h4>
+  <pre><code class="lang-csharp">var step = speed * direction;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_op_Subtraction_" data-uid="CodeSmile.LunyScript.Vec3.op_Subtraction*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_op_Subtraction_CodeSmile_LunyScript_Vec3_CodeSmile_LunyScript_Vec3_" data-uid="CodeSmile.LunyScript.Vec3.op_Subtraction(CodeSmile.LunyScript.Vec3,CodeSmile.LunyScript.Vec3)">
+  operator -(Vec3, Vec3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L177"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Subtracts one value from another component by component.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vec3 operator -(Vec3 left, Vec3 right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The value to take from.</p>
+</dd>
+    <dt><code>right</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The value to take away.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The difference.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_op_Subtraction_CodeSmile_LunyScript_Vec3_CodeSmile_LunyScript_Vec3__examples">Examples</h4>
+  <pre><code class="lang-csharp">var toTarget = targetPosition - position;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3_op_UnaryNegation_" data-uid="CodeSmile.LunyScript.Vec3.op_UnaryNegation*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3_op_UnaryNegation_CodeSmile_LunyScript_Vec3_" data-uid="CodeSmile.LunyScript.Vec3.op_UnaryNegation(CodeSmile.LunyScript.Vec3)">
+  operator -(Vec3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L184"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>This value with every component's sign reversed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Vec3 operator -(Vec3 value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The value to reverse.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The reversed value.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vec3_op_UnaryNegation_CodeSmile_LunyScript_Vec3__examples">Examples</h4>
+  <pre><code class="lang-csharp">var back = -forward;</code></pre>
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Vec3.cs/#L33" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

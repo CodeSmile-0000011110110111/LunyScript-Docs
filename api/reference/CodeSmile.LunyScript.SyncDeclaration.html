@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct SyncDeclaration | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct SyncDeclaration | LunyScript API Reference ">
+      
+      <meta name="description" content="One synchronised variable, as the script declared it: which slot holds it, how often it is sent, and the bookkeeping slots the cadence and the staleness reading need. Recorded at build time, read by the program, and never changed afterwards.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_SyncDeclaration.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.SyncDeclaration%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.SyncDeclaration">
+
+
+
+  <h1 id="CodeSmile_LunyScript_SyncDeclaration" data-uid="CodeSmile.LunyScript.SyncDeclaration" class="text-break">
+Struct SyncDeclaration  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>One synchronised variable, as the script declared it: which slot holds it, how often it is
+sent, and the bookkeeping slots the cadence and the staleness reading need. Recorded at build time, read by the
+program, and never changed afterwards.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct SyncDeclaration</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_SyncDeclaration_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>One of these per synchronised variable, which is what AGENTS.md rule 46 requires: state is
+declared one variable at a time, and there is no networked struct that could carry two of
+them. This type is that rule expressed in the build output, and it is deliberately not a
+grouping: nothing here can hold a second variable.</p>
+<p>
+    <b>The cadence's own state lives in slots, not in fields on this struct.</b> AGENTS.md
+    rule 23: all per-object state is a slot allocated at build time. One declaration is
+    shared by every object running the script, so "the value I last sent" and "how long
+    until I may send again" are per-object facts and belong in the instance. What this
+    struct carries is the addresses of those slots, which are the same for every object.
+</p>
+</div>
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_SyncDeclaration__ctor_" data-uid="CodeSmile.LunyScript.SyncDeclaration.#ctor*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration__ctor_System_String_CodeSmile_LunyScript_SlotKind_CodeSmile_LunyScript_TextCapacity_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_CodeSmile_LunyScript_SyncCadence_" data-uid="CodeSmile.LunyScript.SyncDeclaration.#ctor(System.String,CodeSmile.LunyScript.SlotKind,CodeSmile.LunyScript.TextCapacity,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,CodeSmile.LunyScript.SyncCadence)">
+  SyncDeclaration(string, SlotKind, TextCapacity, int, int, int, int, int, SyncCadence)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a declaration.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SyncDeclaration(string name, SlotKind kind, TextCapacity capacity, int slotIndex, int shadowSlotIndex, int sentSlotIndex, int cooldownSlotIndex, int stalenessSlotIndex, SyncCadence cadence)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <span class="xref">string</span></dt>
+    <dd><p>The variable's name.</p>
+</dd>
+    <dt><code>kind</code> <a class="xref" href="CodeSmile.LunyScript.SlotKind.html">SlotKind</a></dt>
+    <dd><p>Which kind of slot holds the value.</p>
+</dd>
+    <dt><code>capacity</code> <a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a></dt>
+    <dd><p>How many bytes a text slot holds; ignored for the other kinds.</p>
+</dd>
+    <dt><code>slotIndex</code> <span class="xref">int</span></dt>
+    <dd><p>Which slot of that kind holds the value.</p>
+</dd>
+    <dt><code>shadowSlotIndex</code> <span class="xref">int</span></dt>
+    <dd><p>Which slot of that kind holds the last sent value.</p>
+</dd>
+    <dt><code>sentSlotIndex</code> <span class="xref">int</span></dt>
+    <dd><p>Which <code>Flag</code> slot records that a send has happened.</p>
+</dd>
+    <dt><code>cooldownSlotIndex</code> <span class="xref">int</span></dt>
+    <dd><p>Which <code>Number</code> slot counts down to the next permitted
+send, or -1 when the cadence carries no rate cap.</p>
+</dd>
+    <dt><code>stalenessSlotIndex</code> <span class="xref">int</span></dt>
+    <dd><p>Which <code>Number</code> slot counts seconds since the last
+received value.</p>
+</dd>
+    <dt><code>cadence</code> <a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt>
+    <dd><p>How often the value is sent.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_Cadence" data-uid="CodeSmile.LunyScript.SyncDeclaration.Cadence">
+  Cadence
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How often the value is sent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SyncCadence Cadence</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_Capacity" data-uid="CodeSmile.LunyScript.SyncDeclaration.Capacity">
+  Capacity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many bytes the text slot holds, for <a class="xref" href="CodeSmile.LunyScript.SlotKind.html#CodeSmile_LunyScript_SlotKind_Text">Text</a>. Unused and
+default for the other two kinds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly TextCapacity Capacity</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_CooldownSlotIndex" data-uid="CodeSmile.LunyScript.SyncDeclaration.CooldownSlotIndex">
+  CooldownSlotIndex
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Which <code>Number</code> slot counts down the seconds until a rate-capped cadence may
+send again, or -1 when the cadence carries no rate cap.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly int CooldownSlotIndex</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_Kind" data-uid="CodeSmile.LunyScript.SyncDeclaration.Kind">
+  Kind
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Which kind of slot holds the value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SlotKind Kind</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SlotKind.html">SlotKind</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_Name" data-uid="CodeSmile.LunyScript.SyncDeclaration.Name">
+  Name
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The variable's name, for diagnostics and for the Block Inspector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly string Name</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_SentSlotIndex" data-uid="CodeSmile.LunyScript.SyncDeclaration.SentSlotIndex">
+  SentSlotIndex
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Which <code>Flag</code> slot records that this peer has sent the value at least once
+since the last peer joined. It is what makes the first send happen even when the value still
+equals its declared default, and what a join resets so that a late joiner receives a
+<code>SyncCadence.Once</code> value it was not there for.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly int SentSlotIndex</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_ShadowSlotIndex" data-uid="CodeSmile.LunyScript.SyncDeclaration.ShadowSlotIndex">
+  ShadowSlotIndex
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Which slot of that kind holds the value this peer last sent. Compared against the
+value to decide whether <code>SyncCadence.OnChange</code> has anything to send.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly int ShadowSlotIndex</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_SlotIndex" data-uid="CodeSmile.LunyScript.SyncDeclaration.SlotIndex">
+  SlotIndex
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Which slot of that kind holds the value the script reads and writes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly int SlotIndex</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_StalenessSlotIndex" data-uid="CodeSmile.LunyScript.SyncDeclaration.StalenessSlotIndex">
+  StalenessSlotIndex
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Which <code>Number</code> slot counts the seconds since this peer last received a value
+for the variable. Read by <code>Net.SecondsSinceUpdate</code>, and held at zero on the peer with
+authority, whose own value is never stale.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly int StalenessSlotIndex</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_SyncDeclaration_StalenessSlotIndex_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>AGENTS.md rule 45: latency is a state a script may read, not an exception it
+handles. A rate-capped or <code>Once</code> variable is stale between sends by design, and this is
+where a script can see by how much rather than having to assume.</p>
+</div>
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_SyncDeclaration_CooldownSlot_" data-uid="CodeSmile.LunyScript.SyncDeclaration.CooldownSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_CooldownSlot" data-uid="CodeSmile.LunyScript.SyncDeclaration.CooldownSlot">
+  CooldownSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The slot counting down to the next permitted send. Only meaningful when
+<a class="xref" href="CodeSmile.LunyScript.SyncCadence.html#CodeSmile_LunyScript_SyncCadence_IsRateCapped">IsRateCapped</a> is true.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberSlot CooldownSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberSlot.html">NumberSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_SyncDeclaration_FlagSlot_" data-uid="CodeSmile.LunyScript.SyncDeclaration.FlagSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_FlagSlot" data-uid="CodeSmile.LunyScript.SyncDeclaration.FlagSlot">
+  FlagSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The value slot, for a <code>Flag</code> variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FlagSlot FlagSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.FlagSlot.html">FlagSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_SyncDeclaration_NumberSlot_" data-uid="CodeSmile.LunyScript.SyncDeclaration.NumberSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_NumberSlot" data-uid="CodeSmile.LunyScript.SyncDeclaration.NumberSlot">
+  NumberSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The value slot, for a <code>Number</code> variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberSlot NumberSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberSlot.html">NumberSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_SyncDeclaration_SentSlot_" data-uid="CodeSmile.LunyScript.SyncDeclaration.SentSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_SentSlot" data-uid="CodeSmile.LunyScript.SyncDeclaration.SentSlot">
+  SentSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L82"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The slot recording that the value has been sent at least once.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FlagSlot SentSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.FlagSlot.html">FlagSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_SyncDeclaration_ShadowFlagSlot_" data-uid="CodeSmile.LunyScript.SyncDeclaration.ShadowFlagSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_ShadowFlagSlot" data-uid="CodeSmile.LunyScript.SyncDeclaration.ShadowFlagSlot">
+  ShadowFlagSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The last-sent slot, for a <code>Flag</code> variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FlagSlot ShadowFlagSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.FlagSlot.html">FlagSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_SyncDeclaration_ShadowNumberSlot_" data-uid="CodeSmile.LunyScript.SyncDeclaration.ShadowNumberSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_ShadowNumberSlot" data-uid="CodeSmile.LunyScript.SyncDeclaration.ShadowNumberSlot">
+  ShadowNumberSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The last-sent slot, for a <code>Number</code> variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberSlot ShadowNumberSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberSlot.html">NumberSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_SyncDeclaration_ShadowTextSlot_" data-uid="CodeSmile.LunyScript.SyncDeclaration.ShadowTextSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_ShadowTextSlot" data-uid="CodeSmile.LunyScript.SyncDeclaration.ShadowTextSlot">
+  ShadowTextSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The last-sent slot, for a <code>Text</code> variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TextSlot ShadowTextSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TextSlot.html">TextSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_SyncDeclaration_StalenessSlot_" data-uid="CodeSmile.LunyScript.SyncDeclaration.StalenessSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_StalenessSlot" data-uid="CodeSmile.LunyScript.SyncDeclaration.StalenessSlot">
+  StalenessSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The slot counting seconds since the last received value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberSlot StalenessSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberSlot.html">NumberSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_SyncDeclaration_TextSlot_" data-uid="CodeSmile.LunyScript.SyncDeclaration.TextSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_TextSlot" data-uid="CodeSmile.LunyScript.SyncDeclaration.TextSlot">
+  TextSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The value slot, for a <code>Text</code> variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TextSlot TextSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TextSlot.html">TextSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_SyncDeclaration_ToString_" data-uid="CodeSmile.LunyScript.SyncDeclaration.ToString*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SyncDeclaration_ToString" data-uid="CodeSmile.LunyScript.SyncDeclaration.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Names the declaration for a diagnostic.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>For example: &quot;Health (Number, OnChange, at most 10 per second)&quot;.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/SyncDeclaration.cs/#L23" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

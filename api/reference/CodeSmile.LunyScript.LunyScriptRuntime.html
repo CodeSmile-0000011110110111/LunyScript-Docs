@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class LunyScriptRuntime | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class LunyScriptRuntime | LunyScript API Reference ">
+      
+      <meta name="description" content="Holds the one  that  components share, and the hidden object that ticks it once per frame.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_LunyScriptRuntime.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.LunyScriptRuntime%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.LunyScriptRuntime">
+
+
+
+  <h1 id="CodeSmile_LunyScript_LunyScriptRuntime" data-uid="CodeSmile.LunyScript.LunyScriptRuntime" class="text-break">
+Class LunyScriptRuntime  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptRuntime.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Holds the one <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html">ScriptRunner</a> that <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html">LunyScriptBehaviour</a> components
+share, and the hidden object that ticks it once per frame.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class LunyScriptRuntime</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">LunyScriptRuntime</span></div>
+    </dd>
+  </dl>
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_LunyScriptRuntime_examples">Examples</h2>
+  <pre><code class="lang-csharp">var runner = LunyScriptRuntime.DefaultRunner;</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_LunyScriptRuntime_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>This is the one mutable static in the runtime core, and it carries the attribute that
+resets it.</b> AGENTS.md rule 17 forbids mutable static state and rule 18 names
+<code>[AutoStaticsCleanup]</code> as the mechanism for the unavoidable one: with domain reload
+disabled, a static keeps its value from the previous Play session, and this attribute is what
+puts it back. Gate 3 in <code>docs/gates.md</code> measured the attribute working on this editor
+version.</p>
+<p>
+    The type is <code>partial</code> because Unity's code generator emits a second partial
+    declaration holding the generated reset method; a non-partial declaration fails to compile
+    with <code>error CS0260</code>.
+</p>
+<p>
+    A test that wants its own runner creates one directly with <code>new ScriptRunner()</code> and
+    never touches this type. Nothing here is needed to run blocks.
+</p>
+</div>
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="CodeSmile_LunyScript_LunyScriptRuntime_DriverObjectName" data-uid="CodeSmile.LunyScript.LunyScriptRuntime.DriverObjectName">
+  DriverObjectName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptRuntime.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Name of the hidden GameObject that ticks the default runner.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const string DriverObjectName = &quot;LunyScript Runner&quot;</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_LunyScriptRuntime_DefaultRunner_" data-uid="CodeSmile.LunyScript.LunyScriptRuntime.DefaultRunner*"></a>
+
+  <h3 id="CodeSmile_LunyScript_LunyScriptRuntime_DefaultRunner" data-uid="CodeSmile.LunyScript.LunyScriptRuntime.DefaultRunner">
+  DefaultRunner
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptRuntime.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The runner every <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html">LunyScriptBehaviour</a> in the scene uses. Created the first
+time it is asked for, together with the hidden object that ticks it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ScriptRunner DefaultRunner { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html">ScriptRunner</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_LunyScriptRuntime_DefaultRunner_examples">Examples</h4>
+  <pre><code class="lang-csharp">var program = LunyScriptRuntime.DefaultRunner.GetOrBuildProgram(script);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_LunyScriptRuntime_HasDefaultRunner_" data-uid="CodeSmile.LunyScript.LunyScriptRuntime.HasDefaultRunner*"></a>
+
+  <h3 id="CodeSmile_LunyScript_LunyScriptRuntime_HasDefaultRunner" data-uid="CodeSmile.LunyScript.LunyScriptRuntime.HasDefaultRunner">
+  HasDefaultRunner
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptRuntime.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether a default runner exists, without creating one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool HasDefaultRunner { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_LunyScriptRuntime_HasDefaultRunner_examples">Examples</h4>
+  <pre><code class="lang-csharp">Assert.That(LunyScriptRuntime.HasDefaultRunner, Is.False);</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_LunyScriptRuntime_NotifyDriverDestroyed_" data-uid="CodeSmile.LunyScript.LunyScriptRuntime.NotifyDriverDestroyed*"></a>
+
+  <h3 id="CodeSmile_LunyScript_LunyScriptRuntime_NotifyDriverDestroyed_CodeSmile_LunyScript_LunyScriptDriverBehaviour_" data-uid="CodeSmile.LunyScript.LunyScriptRuntime.NotifyDriverDestroyed(CodeSmile.LunyScript.LunyScriptDriverBehaviour)">
+  NotifyDriverDestroyed(LunyScriptDriverBehaviour)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptRuntime.cs/#L123"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Drops the default runner, but only when the driver being destroyed is still the current
+one. Called by <a class="xref" href="CodeSmile.LunyScript.LunyScriptDriverBehaviour.html">LunyScriptDriverBehaviour</a> from its <code>OnDestroy</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void NotifyDriverDestroyed(LunyScriptDriverBehaviour driver)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>driver</code> <a class="xref" href="CodeSmile.LunyScript.LunyScriptDriverBehaviour.html">LunyScriptDriverBehaviour</a></dt>
+    <dd><p>The driver that is being destroyed.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_LunyScriptRuntime_NotifyDriverDestroyed_CodeSmile_LunyScript_LunyScriptDriverBehaviour__examples">Examples</h4>
+  <pre><code class="lang-csharp">private void OnDestroy() =&gt; LunyScriptRuntime.NotifyDriverDestroyed(this);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_LunyScriptRuntime_Reset_" data-uid="CodeSmile.LunyScript.LunyScriptRuntime.Reset*"></a>
+
+  <h3 id="CodeSmile_LunyScript_LunyScriptRuntime_Reset" data-uid="CodeSmile.LunyScript.LunyScriptRuntime.Reset">
+  Reset()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptRuntime.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Drops the default runner and destroys its driver object, so the next caller gets a fresh
+runner. A test calls this between cases; the driver calls
+<a class="xref" href="CodeSmile.LunyScript.LunyScriptRuntime.html#CodeSmile_LunyScript_LunyScriptRuntime_NotifyDriverDestroyed_CodeSmile_LunyScript_LunyScriptDriverBehaviour_">NotifyDriverDestroyed(LunyScriptDriverBehaviour)</a> rather than this, so that destroying an old driver
+cannot drop a runner created after it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Reset()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_LunyScriptRuntime_Reset_examples">Examples</h4>
+  <pre><code class="lang-csharp">LunyScriptRuntime.Reset();</code></pre>
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptRuntime.cs/#L33" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

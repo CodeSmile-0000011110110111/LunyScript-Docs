@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct VarFactory | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct VarFactory | LunyScript API Reference ">
+      
+      <meta name="description" content="The Var surface inside Build(): declares a script&#39;s variables and hands back the typed handles the blocks are built from.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_VarFactory.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.VarFactory%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.VarFactory">
+
+
+
+  <h1 id="CodeSmile_LunyScript_VarFactory" data-uid="CodeSmile.LunyScript.VarFactory" class="text-break">
+Struct VarFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/VarFactory.cs/#L24"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The <code>Var</code> surface inside <code>Build()</code>: declares a script's variables and hands back the
+typed handles the blocks are built from.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct VarFactory</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_VarFactory_examples">Examples</h2>
+  <pre><code class="lang-csharp">protected override void Build()
+{
+    var health = Var.Define&lt;Number&gt;("health", 100.0);
+    var playerName = Var.DefineText("playerName");
+}</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_VarFactory_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This is a build-time surface. Every call runs once per script type, before any object exists,
+and constructs part of the shared Script program, which is why it may allocate. The blocks
+returned during that build execute later, per event and per Script instance. AGENTS.md rule 43;
+rule 25 forbids reading anything about an object here.</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_VarFactory_DefineAllocatingText_" data-uid="CodeSmile.LunyScript.VarFactory.DefineAllocatingText*"></a>
+
+  <h3 id="CodeSmile_LunyScript_VarFactory_DefineAllocatingText_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.VarFactory.DefineAllocatingText(System.String,System.Int32)">
+  DefineAllocatingText(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/VarFactory.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a text variable that uses bounded heap storage rather than a
+<code>FixedString</code>. The bound is UTF-8 bytes. This variable cannot be synchronised.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Var&lt;Text&gt; DefineAllocatingText(string name, int maxBytes)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <span class="xref">string</span></dt>
+    <dd><p>The name, which should come from <code>nameof</code>.</p>
+</dd>
+    <dt><code>maxBytes</code> <span class="xref">int</span></dt>
+    <dd><p>How many UTF-8 bytes it may hold, from 1 to 1048576.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a>&gt;</dt>
+    <dd><p>The typed handle.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_VarFactory_DefineAllocatingText_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Log = Var.DefineAllocatingText(nameof(Log), 16384);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_VarFactory_DefineSyncedText_" data-uid="CodeSmile.LunyScript.VarFactory.DefineSyncedText*"></a>
+
+  <h3 id="CodeSmile_LunyScript_VarFactory_DefineSyncedText_System_String_CodeSmile_LunyScript_SyncCadence_CodeSmile_LunyScript_TextCapacity_" data-uid="CodeSmile.LunyScript.VarFactory.DefineSyncedText(System.String,CodeSmile.LunyScript.SyncCadence,CodeSmile.LunyScript.TextCapacity)">
+  DefineSyncedText(string, SyncCadence, TextCapacity)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/VarFactory.cs/#L122"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a text variable that every peer sees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Var&lt;Text&gt; DefineSyncedText(string name, SyncCadence cadence, TextCapacity capacity = TextCapacity.Bytes64)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <span class="xref">string</span></dt>
+    <dd><p>The variable's name, which should come from <code>nameof</code>.</p>
+</dd>
+    <dt><code>cadence</code> <a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt>
+    <dd><p>How often it is sent. Required, per AGENTS.md rule 46: a synchronised
+variable whose cost nobody chose cannot be written. Text carries a managed string on the
+wire, so <a class="xref" href="CodeSmile.LunyScript.SyncCadence.html#CodeSmile_LunyScript_SyncCadence_EveryTick">EveryTick</a> is refused for it and
+<a class="xref" href="CodeSmile.LunyScript.SyncCadence.html#CodeSmile_LunyScript_SyncCadence_Once">Once</a> is the usual choice.</p>
+</dd>
+    <dt><code>capacity</code> <a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a></dt>
+    <dd><p>How many bytes it holds. Defaults to
+<a class="xref" href="CodeSmile.LunyScript.TextCapacity.html#CodeSmile_LunyScript_TextCapacity_Bytes64">Bytes64</a>, which is one cache line.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a>&gt;</dt>
+    <dd><p>The handle.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_VarFactory_DefineSyncedText_System_String_CodeSmile_LunyScript_SyncCadence_CodeSmile_LunyScript_TextCapacity__examples">Examples</h4>
+  <pre><code class="lang-csharp">PlayerName = Var.DefineSyncedText(nameof(PlayerName), SyncCadence.Once);
+Motto = Var.DefineSyncedText(nameof(Motto), SyncCadence.OnChange, TextCapacity.Bytes512);</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_VarFactory_DefineSyncedText_System_String_CodeSmile_LunyScript_SyncCadence_CodeSmile_LunyScript_TextCapacity__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>The cadence comes before the capacity, which is the opposite of the order the proposal
+wrote.</b> C# allows no required parameter after an optional one, so a defaulted capacity
+and a required cadence can only be written in this order. It is also the order
+<a class="xref" href="CodeSmile.LunyScript.VarFactory.html#CodeSmile_LunyScript_VarFactory_DefineSynced__1_System_String_CodeSmile_LunyScript_SyncCadence___0_">DefineSynced&lt;T&gt;(string, SyncCadence, T)</a> already uses: the name, then the cadence, then the one
+thing that has a sensible default.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The cadence is unset, the cadence is
+<a class="xref" href="CodeSmile.LunyScript.SyncCadence.html#CodeSmile_LunyScript_SyncCadence_EveryTick">EveryTick</a>, or the name is taken.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_VarFactory_DefineSynced_" data-uid="CodeSmile.LunyScript.VarFactory.DefineSynced*"></a>
+
+  <h3 id="CodeSmile_LunyScript_VarFactory_DefineSynced__1_System_String_CodeSmile_LunyScript_SyncCadence___0_" data-uid="CodeSmile.LunyScript.VarFactory.DefineSynced``1(System.String,CodeSmile.LunyScript.SyncCadence,``0)">
+  DefineSynced&lt;T&gt;(string, SyncCadence, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/VarFactory.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a variable that every peer sees, with the cadence that says what it costs.
+The cadence is required, so a synchronised variable whose cost nobody chose cannot be
+written; AGENTS.md rule 46.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Var&lt;T&gt; DefineSynced&lt;T&gt;(string name, SyncCadence cadence, T defaultValue = default) where T : struct</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <span class="xref">string</span></dt>
+    <dd><p>The variable's name, which should come from <code>nameof</code>.</p>
+</dd>
+    <dt><code>cadence</code> <a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt>
+    <dd><p>How often it is sent.</p>
+</dd>
+    <dt><code>defaultValue</code> <span class="xref">T</span></dt>
+    <dd><p>What it starts from.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;T&gt;</dt>
+    <dd><p>The handle, which reads and writes exactly like an unsynchronised one.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p><code>Number</code> or <code>Flag</code>. Use <a class="xref" href="CodeSmile.LunyScript.VarFactory.html#CodeSmile_LunyScript_VarFactory_DefineSyncedText_System_String_CodeSmile_LunyScript_SyncCadence_CodeSmile_LunyScript_TextCapacity_">DefineSyncedText(string, SyncCadence, TextCapacity)</a> for
+text.</p>
+</dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_VarFactory_DefineSynced__1_System_String_CodeSmile_LunyScript_SyncCadence___0__examples">Examples</h4>
+  <pre><code class="lang-csharp">Score = Var.DefineSynced&lt;Number&gt;(nameof(Score), SyncCadence.OnChange, 0.0);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The cadence is unset, or the name is taken.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_VarFactory_DefineText_" data-uid="CodeSmile.LunyScript.VarFactory.DefineText*"></a>
+
+  <h3 id="CodeSmile_LunyScript_VarFactory_DefineText_System_String_CodeSmile_LunyScript_TextCapacity_" data-uid="CodeSmile.LunyScript.VarFactory.DefineText(System.String,CodeSmile.LunyScript.TextCapacity)">
+  DefineText(string, TextCapacity)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/VarFactory.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a text variable and how many bytes it holds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Var&lt;Text&gt; DefineText(string name, TextCapacity capacity = TextCapacity.Bytes64)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <span class="xref">string</span></dt>
+    <dd><p>The name, used in diagnostics. Unique within the script.</p>
+</dd>
+    <dt><code>capacity</code> <a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a></dt>
+    <dd><p>How many bytes the variable holds. Defaults to
+<a class="xref" href="CodeSmile.LunyScript.TextCapacity.html#CodeSmile_LunyScript_TextCapacity_Bytes64">Bytes64</a>, which is 64 bytes of storage and 61 usable bytes, because
+64 bytes is a common cache-line size. AGENTS.md rule 15: the capacity is still declared per
+variable, so pass a smaller or larger one when the content is known to be shorter or longer
+than 61 bytes.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a>&gt;</dt>
+    <dd><p>The typed handle.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_VarFactory_DefineText_System_String_CodeSmile_LunyScript_TextCapacity__examples">Examples</h4>
+  <pre><code class="lang-csharp">var playerName = Var.DefineText("playerName");                       // 64 bytes, 61 usable
+var chatLine = Var.DefineText("chatLine", TextCapacity.Bytes512);    // 512 bytes, 509 usable</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The name is already taken.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_VarFactory_Define_" data-uid="CodeSmile.LunyScript.VarFactory.Define*"></a>
+
+  <h3 id="CodeSmile_LunyScript_VarFactory_Define__1_System_String___0_" data-uid="CodeSmile.LunyScript.VarFactory.Define``1(System.String,``0)">
+  Define&lt;T&gt;(string, T)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/VarFactory.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a <code>Number</code> or <code>Flag</code> variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Var&lt;T&gt; Define&lt;T&gt;(string name, T defaultValue = default) where T : struct</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <span class="xref">string</span></dt>
+    <dd><p>The name, used in diagnostics and by the future runtime inspector. Unique
+within the script.</p>
+</dd>
+    <dt><code>defaultValue</code> <span class="xref">T</span></dt>
+    <dd><p>What every instance starts from.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;T&gt;</dt>
+    <dd><p>The typed handle.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p><code>Number</code> or <code>Flag</code>. Use <a class="xref" href="CodeSmile.LunyScript.VarFactory.html#CodeSmile_LunyScript_VarFactory_DefineText_System_String_CodeSmile_LunyScript_TextCapacity_">DefineText(string, TextCapacity)</a> for
+text.</p>
+</dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_VarFactory_Define__1_System_String___0__examples">Examples</h4>
+  <pre><code class="lang-csharp">var health = Var.Define&lt;Number&gt;("health", 100.0);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="typeparamref">T</code> is not a kind LunyScript
+stores, or the name is already taken.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/VarFactory.cs/#L24" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

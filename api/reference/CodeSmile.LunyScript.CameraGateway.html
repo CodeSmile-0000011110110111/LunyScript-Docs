@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class CameraGateway | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class CameraGateway | LunyScript API Reference ">
+      
+      <meta name="description" content="The core&#39;s one entry point to the camera. Owns the , passes each authored operation to it, and reports a refused one once.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_CameraGateway.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.CameraGateway%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.CameraGateway">
+
+
+
+  <h1 id="CodeSmile_LunyScript_CameraGateway" data-uid="CodeSmile.LunyScript.CameraGateway" class="text-break">
+Class CameraGateway  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/View/CameraGateway.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The core's one entry point to the camera. Owns the <a class="xref" href="CodeSmile.LunyScript.ICameraProvider.html">ICameraProvider</a>, passes
+each authored operation to it, and reports a refused one once.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class CameraGateway</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">CameraGateway</span></div>
+    </dd>
+  </dl>
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_CameraGateway_examples">Examples</h2>
+  <pre><code class="lang-csharp">runner.CameraGateway.UseProvider(new FakeCameraProvider());</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_CameraGateway_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This is the camera counterpart of <a class="xref" href="CodeSmile.LunyScript.NetworkGateway.html">NetworkGateway</a> and
+<a class="xref" href="CodeSmile.LunyScript.InputGateway.html">InputGateway</a> and is the same shape for the same reason: the core may not
+reference Cinemachine, so the core owns an interface and a separate, package-gated
+assembly implements it.</p>
+<p>
+    <b>With no provider installed, a camera block writes nothing and says so once.</b> That
+    is what the accepted design asks of an absent optional adapter: a diagnostic, and no
+    block executes. A project without the Cinemachine package therefore still builds,
+    still runs and still passes its tests; the camera operations do nothing and the reason
+    is in the Console.
+</p>
+<p>
+    <b>A refusal is reported once per operation per object pair.</b> These operations are
+    normally authored in <code>On.Ready</code>, but nothing stops one appearing in
+    <code>On.FrameUpdate</code>, and a Console line per frame would bury the one that matters.
+    The bookkeeping allocates only on the failure path, which is not the steady state.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_CameraGateway_HasProvider_" data-uid="CodeSmile.LunyScript.CameraGateway.HasProvider*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CameraGateway_HasProvider" data-uid="CodeSmile.LunyScript.CameraGateway.HasProvider">
+  HasProvider
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/View/CameraGateway.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether a camera adapter has been installed. False means every camera operation
+writes nothing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasProvider { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_CameraGateway_ChangeTargetGroup_" data-uid="CodeSmile.LunyScript.CameraGateway.ChangeTargetGroup*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CameraGateway_ChangeTargetGroup_UnityEngine_Object_CodeSmile_LunyScript_CameraTargetOperation_UnityEngine_Object_System_Double_System_Double_System_String_System_String_" data-uid="CodeSmile.LunyScript.CameraGateway.ChangeTargetGroup(UnityEngine.Object,CodeSmile.LunyScript.CameraTargetOperation,UnityEngine.Object,System.Double,System.Double,System.String,System.String)">
+  ChangeTargetGroup(Object, CameraTargetOperation, Object, double, double, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/View/CameraGateway.cs/#L138"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Changes a rig's group of tracked objects, reporting a refusal once.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CameraOperationResult ChangeTargetGroup(Object rig, CameraTargetOperation operation, Object target, double weight, double radius, string call, string scriptTypeName)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>rig</code> <span class="xref">Object</span></dt>
+    <dd><p>The camera rig.</p>
+</dd>
+    <dt><code>operation</code> <a class="xref" href="CodeSmile.LunyScript.CameraTargetOperation.html">CameraTargetOperation</a></dt>
+    <dd><p>What to do to the group.</p>
+</dd>
+    <dt><code>target</code> <span class="xref">Object</span></dt>
+    <dd><p>The object the operation acts on.</p>
+</dd>
+    <dt><code>weight</code> <span class="xref">double</span></dt>
+    <dd><p>How much it pulls the framing.</p>
+</dd>
+    <dt><code>radius</code> <span class="xref">double</span></dt>
+    <dd><p>How much room to leave around it.</p>
+</dd>
+    <dt><code>call</code> <span class="xref">string</span></dt>
+    <dd><p>How the authored call is written, for the diagnostic. The block passes
+the constant it was built with; composing one here allocated three events per call on the
+frame path, which AGENTS.md rule 29 forbids and
+<code>ExecutionCoreAllocationTests.EveryBlock_AllocatesNothingWhenItRuns</code> caught.</p>
+</dd>
+    <dt><code>scriptTypeName</code> <span class="xref">string</span></dt>
+    <dd><p>Whose script asked, for the diagnostic.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.CameraOperationResult.html">CameraOperationResult</a></dt>
+    <dd><p>What happened.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CameraGateway_ChangeTargetGroup_UnityEngine_Object_CodeSmile_LunyScript_CameraTargetOperation_UnityEngine_Object_System_Double_System_Double_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">gateway.ChangeTargetGroup(rig, CameraTargetOperation.Add, avatar, 1.0, 0.5, "Camera.For(...).Targets.Add", "ArenaScript");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_CameraGateway_SetTracking_" data-uid="CodeSmile.LunyScript.CameraGateway.SetTracking*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CameraGateway_SetTracking_UnityEngine_Object_CodeSmile_LunyScript_CameraTracking_UnityEngine_Object_System_String_System_String_" data-uid="CodeSmile.LunyScript.CameraGateway.SetTracking(UnityEngine.Object,CodeSmile.LunyScript.CameraTracking,UnityEngine.Object,System.String,System.String)">
+  SetTracking(Object, CameraTracking, Object, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/View/CameraGateway.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes one of a rig's two tracking targets, reporting a refusal once.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CameraOperationResult SetTracking(Object rig, CameraTracking tracking, Object target, string call, string scriptTypeName)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>rig</code> <span class="xref">Object</span></dt>
+    <dd><p>The camera rig.</p>
+</dd>
+    <dt><code>tracking</code> <a class="xref" href="CodeSmile.LunyScript.CameraTracking.html">CameraTracking</a></dt>
+    <dd><p>Which of the two.</p>
+</dd>
+    <dt><code>target</code> <span class="xref">Object</span></dt>
+    <dd><p>The object to track, or null to stop tracking.</p>
+</dd>
+    <dt><code>call</code> <span class="xref">string</span></dt>
+    <dd><p>How the authored call is written, for the diagnostic. The block passes
+the constant it was built with, so nothing here composes a string on the frame path.</p>
+</dd>
+    <dt><code>scriptTypeName</code> <span class="xref">string</span></dt>
+    <dd><p>Whose script asked, for the diagnostic.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.CameraOperationResult.html">CameraOperationResult</a></dt>
+    <dd><p>What happened.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CameraGateway_SetTracking_UnityEngine_Object_CodeSmile_LunyScript_CameraTracking_UnityEngine_Object_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">gateway.SetTracking(rig, CameraTracking.Follow, avatar, "Camera.For(...).Follow", "ChaseScript");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_CameraGateway_SetViewCamera_" data-uid="CodeSmile.LunyScript.CameraGateway.SetViewCamera*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CameraGateway_SetViewCamera_UnityEngine_Object_UnityEngine_Object_System_String_" data-uid="CodeSmile.LunyScript.CameraGateway.SetViewCamera(UnityEngine.Object,UnityEngine.Object,System.String)">
+  SetViewCamera(Object, Object, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/View/CameraGateway.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Makes a view render one camera rig, reporting a refusal once.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CameraOperationResult SetViewCamera(Object view, Object rig, string scriptTypeName)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">Object</span></dt>
+    <dd><p>The view the author assigned.</p>
+</dd>
+    <dt><code>rig</code> <span class="xref">Object</span></dt>
+    <dd><p>The rig to make active.</p>
+</dd>
+    <dt><code>scriptTypeName</code> <span class="xref">string</span></dt>
+    <dd><p>Whose script asked, for the diagnostic.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.CameraOperationResult.html">CameraOperationResult</a></dt>
+    <dd><p>What happened.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CameraGateway_SetViewCamera_UnityEngine_Object_UnityEngine_Object_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">gateway.SetViewCamera(view, rig, "ChaseScript");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_CameraGateway_SetViewport_" data-uid="CodeSmile.LunyScript.CameraGateway.SetViewport*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CameraGateway_SetViewport_UnityEngine_Object_System_Double_System_Double_System_Double_System_Double_System_String_" data-uid="CodeSmile.LunyScript.CameraGateway.SetViewport(UnityEngine.Object,System.Double,System.Double,System.Double,System.Double,System.String)">
+  SetViewport(Object, double, double, double, double, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/View/CameraGateway.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the fraction of the screen a view occupies, reporting a refusal once.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CameraOperationResult SetViewport(Object view, double x, double y, double width, double height, string scriptTypeName)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>view</code> <span class="xref">Object</span></dt>
+    <dd><p>The view the author assigned.</p>
+</dd>
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The left edge.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The bottom edge.</p>
+</dd>
+    <dt><code>width</code> <span class="xref">double</span></dt>
+    <dd><p>How much of the width.</p>
+</dd>
+    <dt><code>height</code> <span class="xref">double</span></dt>
+    <dd><p>How much of the height.</p>
+</dd>
+    <dt><code>scriptTypeName</code> <span class="xref">string</span></dt>
+    <dd><p>Whose script asked, for the diagnostic.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.CameraOperationResult.html">CameraOperationResult</a></dt>
+    <dd><p>What happened.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CameraGateway_SetViewport_UnityEngine_Object_System_Double_System_Double_System_Double_System_Double_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">gateway.SetViewport(view, 0.0, 0.5, 1.0, 0.5, "SplitScreenScript");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_CameraGateway_UseProvider_" data-uid="CodeSmile.LunyScript.CameraGateway.UseProvider*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CameraGateway_UseProvider_CodeSmile_LunyScript_ICameraProvider_" data-uid="CodeSmile.LunyScript.CameraGateway.UseProvider(CodeSmile.LunyScript.ICameraProvider)">
+  UseProvider(ICameraProvider)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/View/CameraGateway.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Installs the backend.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UseProvider(ICameraProvider provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>provider</code> <a class="xref" href="CodeSmile.LunyScript.ICameraProvider.html">ICameraProvider</a></dt>
+    <dd><p>The backend. Null is the caller's mistake.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CameraGateway_UseProvider_CodeSmile_LunyScript_ICameraProvider__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.CameraGateway.UseProvider(new FakeCameraProvider());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The provider is null.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/View/CameraGateway.cs/#L35" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

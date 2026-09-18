@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class AllocationMeasure | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class AllocationMeasure | LunyScript API Reference ">
+      
+      <meta name="description" content="Measures whether a piece of work allocates managed memory, and how much. Ships with the product so that a user can hold their own blocks to the rule the shipped blocks are held to.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_TestKit_AllocationMeasure.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.TestKit.AllocationMeasure%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure">
+
+
+
+  <h1 id="CodeSmile_LunyScript_TestKit_AllocationMeasure" data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure" class="text-break">
+Class AllocationMeasure  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/TestKit/Runtime/AllocationMeasure.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a>.<a class="xref" href="CodeSmile.LunyScript.TestKit.html">TestKit</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Measures whether a piece of work allocates managed memory, and how much. Ships with the
+product so that a user can hold their own blocks to the rule the shipped blocks are held to.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class AllocationMeasure</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">AllocationMeasure</span></div>
+    </dd>
+  </dl>
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_TestKit_AllocationMeasure_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>There are two instruments and neither one works everywhere, which is why this class exists
+rather than a one-line helper.</b></p>
+<ol><li>
+            <code>GC.GetAllocatedBytesForCurrentThread()</code>. Gives a byte count. Present in the
+            API surface on every backend, but <b>measured returning a constant on Unity
+            6000.7.0a5's Mono 6.13.0</b>, where every delta is therefore 0 including the delta
+            across a deliberate 4096-byte array allocation. A 0 from this instrument on Mono
+            means "not measured", not "did not allocate", and reading it as the latter would
+            make every allocation test in this project pass for the wrong reason.
+        </li><li>
+            The profiler's <code>GC.Alloc</code> recorder, <code>UnityEngine.Profiling.Recorder</code>.
+            Gives an event count rather than bytes. Measured working on Mono in the Editor.
+            Profiler markers are compiled out of a non-development player, so this instrument
+            is unavailable there. This is the same mechanism Unity's own
+            <code>Is.Not.AllocatingGCMemory()</code> constraint uses.
+        </li></ol>
+<a class="xref" href="CodeSmile.LunyScript.TestKit.AllocationMeasure.html#CodeSmile_LunyScript_TestKit_AllocationMeasure_Measure_System_Action_System_Int32_System_Int32_">Measure(Action, int, int)</a> uses whichever instruments are usable, records in the returned
+<a class="xref" href="CodeSmile.LunyScript.TestKit.AllocationSample.html">AllocationSample</a> which of them observed an allocation, and
+<a class="xref" href="CodeSmile.LunyScript.TestKit.AllocationMeasure.html#CodeSmile_LunyScript_TestKit_AllocationMeasure_IsUsable">IsUsable</a> reports whether any measurement is possible at all on this runtime. A
+test asserts on <a class="xref" href="CodeSmile.LunyScript.TestKit.AllocationSample.html#CodeSmile_LunyScript_TestKit_AllocationSample_Allocates">Allocates</a>; only a test that has checked
+<a class="xref" href="CodeSmile.LunyScript.TestKit.AllocationMeasure.html#CodeSmile_LunyScript_TestKit_AllocationMeasure_ByteCounterUsable">ByteCounterUsable</a> may assert on a byte count.
+<p>
+    <b>The verdict comes from every usable instrument, and neither instrument's zero is
+    trusted alone.</b> The byte counter's zero can mean "not measured", as it does on Mono.
+    And <a class="xref" href="CodeSmile.LunyScript.TestKit.AllocationSample.html#CodeSmile_LunyScript_TestKit_AllocationSample_BytesPerIteration">BytesPerIteration</a> is an average, so a single 32-byte
+    allocation spread over 128 iterations averages to 0 while the profiler counts its event;
+    that is why <a class="xref" href="CodeSmile.LunyScript.TestKit.AllocationSample.html#CodeSmile_LunyScript_TestKit_AllocationSample_TotalBytes">TotalBytes</a> is kept undivided and why the
+    verdict is true when either instrument observed an allocation.
+</p>
+<p>
+    This class deliberately does not reference the test framework, so a project can ship it in
+    a player build.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_TestKit_AllocationMeasure_ByteCounterUsable_" data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure.ByteCounterUsable*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TestKit_AllocationMeasure_ByteCounterUsable" data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure.ByteCounterUsable">
+  ByteCounterUsable
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/TestKit/Runtime/AllocationMeasure.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether <code>GC.GetAllocatedBytesForCurrentThread()</code> reports allocations on this runtime.
+Probed once, by allocating a 4096-byte array and checking that the counter advanced by at
+least that much.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool ByteCounterUsable { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_TestKit_AllocationMeasure_IsUsable_" data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure.IsUsable*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TestKit_AllocationMeasure_IsUsable" data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure.IsUsable">
+  IsUsable
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/TestKit/Runtime/AllocationMeasure.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True when at least one instrument works, so an allocation claim can be checked at
+all on this runtime.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsUsable { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_TestKit_AllocationMeasure_ProfilerRecorderUsable_" data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure.ProfilerRecorderUsable*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TestKit_AllocationMeasure_ProfilerRecorderUsable" data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure.ProfilerRecorderUsable">
+  ProfilerRecorderUsable
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/TestKit/Runtime/AllocationMeasure.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the profiler's <code>GC.Alloc</code> recorder reports allocations on this runtime.
+Probed once, by allocating a 4096-byte array inside a recording window and checking that at
+least one allocation event was counted.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool ProfilerRecorderUsable { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_TestKit_AllocationMeasure_Measure_" data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure.Measure*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TestKit_AllocationMeasure_Measure_System_Action_System_Int32_System_Int32_" data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure.Measure(System.Action,System.Int32,System.Int32)">
+  Measure(Action, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/TestKit/Runtime/AllocationMeasure.cs/#L182"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Runs <code class="paramref">work</code> <code class="paramref">warmupIterations</code> times without measuring,
+then <code class="paramref">measuredIterations</code> times with every usable instrument.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AllocationSample Measure(Action work, int warmupIterations = 16, int measuredIterations = 128)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>work</code> <span class="xref">Action</span></dt>
+    <dd><p>The work to measure. Pass a cached delegate; a delegate created at the call site allocates
+once, outside the measured region, but one created inside the work would be measured.</p>
+</dd>
+    <dt><code>warmupIterations</code> <span class="xref">int</span></dt>
+    <dd><p>Iterations run before measuring. At least one is required on every backend: the first call
+to a method allocates in the runtime's own structures, which is a one-time cost and not a
+property of the work.</p>
+</dd>
+    <dt><code>measuredIterations</code> <span class="xref">int</span></dt>
+    <dd><p>Iterations the figures cover. The byte figure is reported as
+a total across all of them, and divided by this only where a caller asks for a per-iteration
+figure.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TestKit.AllocationSample.html">AllocationSample</a></dt>
+    <dd><p>What was observed, and by which instrument.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TestKit_AllocationMeasure_Measure_System_Action_System_Int32_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var sample = AllocationMeasure.Measure(() =&gt; instance.SetHealth(10.0));
+Assert.That(sample.Allocates, Is.False, sample.ToString());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>No instrument works on this runtime, so the
+question cannot be answered here at all; <code class="paramref">work</code> is null; or
+<code class="paramref">warmupIterations</code> or <code class="paramref">measuredIterations</code> is less than
+one.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TestKit_AllocationMeasure_ObservingInstruments_" data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure.ObservingInstruments*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TestKit_AllocationMeasure_ObservingInstruments_System_Int64_System_Int32_" data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure.ObservingInstruments(System.Int64,System.Int32)">
+  ObservingInstruments(long, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/TestKit/Runtime/AllocationMeasure.cs/#L143"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Names the instruments that observed an allocation in one measurement, from the figures that
+measurement produced. Where neither figure is above zero, names the usable instruments
+instead, so that a zero stays distinguishable from a runtime where nothing was measured.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string ObservingInstruments(long totalBytes, int allocationEvents)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>totalBytes</code> <span class="xref">long</span></dt>
+    <dd><p>Bytes across every measured iteration, or -1 when the byte counter is
+not usable on this runtime.</p>
+</dd>
+    <dt><code>allocationEvents</code> <span class="xref">int</span></dt>
+    <dd><p>Profiler allocation events across every measured iteration, or
+-1 when the profiler recorder is not usable on this runtime.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>&quot;byte counter and profiler&quot;, &quot;byte counter&quot; or &quot;profiler&quot; when that instrument or those
+instruments observed an allocation, and otherwise &quot;none observed, usable: &quot; followed by
+<a class="xref" href="CodeSmile.LunyScript.TestKit.AllocationMeasure.html#CodeSmile_LunyScript_TestKit_AllocationMeasure_UsableInstruments">UsableInstruments()</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TestKit_AllocationMeasure_ObservingInstruments_System_Int64_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var instrument = AllocationMeasure.ObservingInstruments(0, 128); // "profiler"</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_TestKit_AllocationMeasure_UsableInstruments_" data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure.UsableInstruments*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TestKit_AllocationMeasure_UsableInstruments" data-uid="CodeSmile.LunyScript.TestKit.AllocationMeasure.UsableInstruments">
+  UsableInstruments()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/TestKit/Runtime/AllocationMeasure.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Names the usable instruments, for a log line and for a failure message.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string UsableInstruments()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>For example: &quot;profiler only&quot;, or &quot;byte counter and profiler&quot;, or &quot;none&quot;.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/TestKit/Runtime/AllocationMeasure.cs/#L53" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

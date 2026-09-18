@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct Prefab | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct Prefab | LunyScript API Reference ">
+      
+      <meta name="description" content="A handle to one prefab input of a script. Returned by Bind.Prefab at build time; what the input holds is an instance read, because the value belongs to the object and not to the script type.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_Prefab.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.Prefab%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.Prefab">
+
+
+
+  <h1 id="CodeSmile_LunyScript_Prefab" data-uid="CodeSmile.LunyScript.Prefab" class="text-break">
+Struct Prefab  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Prefab.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>A handle to one prefab input of a script. Returned by <code>Bind.Prefab</code> at build time; what
+the input holds is an instance read, because the value belongs to the object and not to the
+script type.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct Prefab</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_Prefab_examples">Examples</h2>
+  <pre><code class="lang-csharp">[Asset] public Prefab Sentry { get; private set; }
+On.Ready(Object.Spawn(Sentry).At(new Vec3(0.0, 1.0, 0.0)).Into("Guard"));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_Prefab_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>This is the declared asset input of <a class="xref" href="CodeSmile.LunyScript.Asset-1.html">Asset&lt;T&gt;</a>, narrowed to a prefab.</b> It
+occupies an asset slot, it is declared in the same table, and it is resolved by the same
+three steps at spawn. The two differences are stated here because they are the whole reason
+the type exists.</p>
+<p>
+    <b>A prefab input refuses a GameObject that is not a prefab.</b> An
+    <code>Asset&lt;GameObject&gt;</code> is satisfied by any <code>GameObject</code>, including one
+    dragged out of the Hierarchy, and a scene object assigned to an input a script spawns
+    from is a mistake that shows up as a duplicated scene object rather than as a message. A
+    value the host assigned that is not a prefab asset is refused at spawn, and the input
+    then resolves as if nothing had been assigned.
+</p>
+<p>
+    <b><code>Object.Spawn</code> takes this type and nothing else</b>, so passing an
+    <code>Asset&lt;AudioClip&gt;</code> or an <code>Asset&lt;GameObject&gt;</code> to a spawn does not
+    compile.
+</p>
+<p>
+    <b>The declared name is the input's durable identity</b>, the way it is for
+    <a class="xref" href="CodeSmile.LunyScript.Asset-1.html">Asset&lt;T&gt;</a>: a value stored on a host is matched to an input by that name,
+    which is why the name comes from <code>nameof</code> and why renaming a declared input orphans
+    what a scene stored for the old name.
+</p>
+<p>
+    <b>A handle is valid only inside the <code>Build</code> that declared it</b>, for the reason
+    <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var&lt;T&gt;</a> states: it carries a slot index and nothing that identifies its
+    program.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Prefab_IsDeclared_" data-uid="CodeSmile.LunyScript.Prefab.IsDeclared*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Prefab_IsDeclared" data-uid="CodeSmile.LunyScript.Prefab.IsDeclared">
+  IsDeclared
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Prefab.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>False for a handle <code>Build()</code> never assigned, which is what the
+unassigned-member check reads.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsDeclared { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Prefab_Name_" data-uid="CodeSmile.LunyScript.Prefab.Name*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Prefab_Name" data-uid="CodeSmile.LunyScript.Prefab.Name">
+  Name
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Prefab.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The name the script declared, which is what a stored value is matched against and
+what a diagnostic names.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Prefab_ToString_" data-uid="CodeSmile.LunyScript.Prefab.ToString*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Prefab_ToString" data-uid="CodeSmile.LunyScript.Prefab.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Prefab.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The declared name, for a log line or a failure message.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>For example: &quot;Sentry : prefab&quot;.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Prefab.cs/#L46" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

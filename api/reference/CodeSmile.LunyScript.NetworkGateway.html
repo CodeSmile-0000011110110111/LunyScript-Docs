@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class NetworkGateway | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class NetworkGateway | LunyScript API Reference ">
+      
+      <meta name="description" content="The core&#39;s one entry point to netcode. Owns the , refuses the session calls that are a user mistake, and drains the provider&#39;s two queues once per tick. AGENTS.md rules 44 to 49.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_NetworkGateway.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.NetworkGateway%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.NetworkGateway">
+
+
+
+  <h1 id="CodeSmile_LunyScript_NetworkGateway" data-uid="CodeSmile.LunyScript.NetworkGateway" class="text-break">
+Class NetworkGateway  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The core's one entry point to netcode. Owns the <a class="xref" href="CodeSmile.LunyScript.INetworkProvider.html">INetworkProvider</a>, refuses the
+session calls that are a user mistake, and drains the provider's two queues once per tick.
+AGENTS.md rules 44 to 49.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class NetworkGateway</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">NetworkGateway</span></div>
+    </dd>
+  </dl>
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_NetworkGateway_examples">Examples</h2>
+  <pre><code class="lang-csharp">runner.NetworkGateway.UseProvider(new FakeNetworkProvider());
+runner.NetworkGateway.StartHost();</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_NetworkGateway_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This is the netcode counterpart of <code>CloudSaveGateway</code> and is deliberately the same shape,
+because rule 49 poses the same problem rule 52 already solved: the core may not reference the
+backend, so the core owns an interface and a separate assembly implements it.</p>
+<p>
+    <b>This type is one of exactly five places the zero-allocation rule relaxes</b>, named as
+    "the services and network gateway" in AGENTS.md rule 31. What that rule permits is narrow:
+    a request may allocate below a stated ceiling, and a <b>pending</b> request must allocate
+    zero per tick. Tick is on the per-frame path and allocates nothing, which
+    is why both queues are drained with <code>TryDequeue</code> rather than by iterating a returned
+    collection.
+</p>
+<p>
+    <b>No session method throws because the network is unavailable.</b> They throw only for a
+    user mistake, which is starting a session while one is running. Being offline is a state
+    a script reads through <code>Net.IsConnected</code>; rule 45.
+</p>
+</div>
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_DefaultMaximumTransformStreamBytes" data-uid="CodeSmile.LunyScript.NetworkGateway.DefaultMaximumTransformStreamBytes">
+  DefaultMaximumTransformStreamBytes
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L158"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>What a gateway with no provider reports. Chosen to be smaller than what any
+ordinary transport carries, so that a test running without one still exercises the
+split.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int DefaultMaximumTransformStreamBytes = 1024</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_DefaultTicksPerSecond" data-uid="CodeSmile.LunyScript.NetworkGateway.DefaultTicksPerSecond">
+  DefaultTicksPerSecond
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The tick rate a gateway starts with: 30 a second, which is the rate the replaced
+<code>NetworkTransform</code> runs at.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const double DefaultTicksPerSecond = 30</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_SmallestUsefulTransformStreamBytes" data-uid="CodeSmile.LunyScript.NetworkGateway.SmallestUsefulTransformStreamBytes">
+  SmallestUsefulTransformStreamBytes
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L162"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The smallest budget that can carry one object: the stream's header and the largest
+an object's entry can be.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int SmallestUsefulTransformStreamBytes = 31</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_HasProvider_" data-uid="CodeSmile.LunyScript.NetworkGateway.HasProvider*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_HasProvider" data-uid="CodeSmile.LunyScript.NetworkGateway.HasProvider">
+  HasProvider
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether a provider has been set. False means every session call is refused and every
+state reads as offline.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasProvider { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_IsConnected_" data-uid="CodeSmile.LunyScript.NetworkGateway.IsConnected*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_IsConnected" data-uid="CodeSmile.LunyScript.NetworkGateway.IsConnected">
+  IsConnected
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True when connected as host or client. False with no provider.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsConnected { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_IsHost_" data-uid="CodeSmile.LunyScript.NetworkGateway.IsHost*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_IsHost" data-uid="CodeSmile.LunyScript.NetworkGateway.IsHost">
+  IsHost
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True when this peer is the host. False with no provider.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsHost { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_MaximumTransformStreamBytes_" data-uid="CodeSmile.LunyScript.NetworkGateway.MaximumTransformStreamBytes*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_MaximumTransformStreamBytes" data-uid="CodeSmile.LunyScript.NetworkGateway.MaximumTransformStreamBytes">
+  MaximumTransformStreamBytes
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L141"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many payload bytes of transform stream one send may carry. The provider's
+answer, or <a class="xref" href="CodeSmile.LunyScript.NetworkGateway.html#CodeSmile_LunyScript_NetworkGateway_DefaultMaximumTransformStreamBytes">DefaultMaximumTransformStreamBytes</a> when there is no provider.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int MaximumTransformStreamBytes { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetworkGateway_MaximumTransformStreamBytes_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>A provider that answers with less than one object's worth is corrected up to
+<a class="xref" href="CodeSmile.LunyScript.NetworkGateway.html#CodeSmile_LunyScript_NetworkGateway_SmallestUsefulTransformStreamBytes">SmallestUsefulTransformStreamBytes</a>, because a budget below that would put the
+runner in the position of either sending nothing or sending over the budget every tick, and
+sending over a budget the backend set is the provider's business to report rather than the
+runner's to hide.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_PeerCount_" data-uid="CodeSmile.LunyScript.NetworkGateway.PeerCount*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_PeerCount" data-uid="CodeSmile.LunyScript.NetworkGateway.PeerCount">
+  PeerCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Peers in the session including this one, or 0 with no provider.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int PeerCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_RoundTripMilliseconds_" data-uid="CodeSmile.LunyScript.NetworkGateway.RoundTripMilliseconds*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_RoundTripMilliseconds" data-uid="CodeSmile.LunyScript.NetworkGateway.RoundTripMilliseconds">
+  RoundTripMilliseconds
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Round trip time to the host in milliseconds, or 0 offline or on the host.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double RoundTripMilliseconds { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_State_" data-uid="CodeSmile.LunyScript.NetworkGateway.State*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_State" data-uid="CodeSmile.LunyScript.NetworkGateway.State">
+  State
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>What the session is doing. <a class="xref" href="CodeSmile.LunyScript.SessionState.html#CodeSmile_LunyScript_SessionState_Offline">Offline</a> when no provider has
+been set, so a script may read this before anything is configured.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SessionState State { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SessionState.html">SessionState</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_TicksPerSecond_" data-uid="CodeSmile.LunyScript.NetworkGateway.TicksPerSecond*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_TicksPerSecond" data-uid="CodeSmile.LunyScript.NetworkGateway.TicksPerSecond">
+  TicksPerSecond
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L225"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many times a second the transform stream is sent, whatever the frame rate is.
+30 by default, which is the rate the replaced <code>NetworkTransform</code> runs at and the rate
+<code>docs/netcode-bandwidth.md</code> measured both stacks at.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double TicksPerSecond { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetworkGateway_TicksPerSecond_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><code>AGENTS.md</code> rule 47 says one stream per authority per tick, and this is what &quot;tick&quot;
+means: a rate of its own, not the frame rate. A game running at 120 frames a second
+sends 30 streams a second, and one running at 20 sends 20, because a tick cannot be
+sent in a frame that does not happen.</p>
+<p>
+    Synchronised variables are not on this rate. They publish once per frame, which is
+    what they have done since the milestone that introduced them and what their tests
+    asserts; moving them here is named as its own change in
+    <code>docs/proposals/netcode-transform-stream.md</code>.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The rate is zero or less.</p>
+</dd>
+  </dl>
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_Describe_" data-uid="CodeSmile.LunyScript.NetworkGateway.Describe*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_Describe" data-uid="CodeSmile.LunyScript.NetworkGateway.Describe">
+  Describe()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L283"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Names the provider for a log line. <b>Allocates</b>; called at state transitions,
+never per tick.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Describe()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>The provider's description, or a sentence saying there is none.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_EndSession_" data-uid="CodeSmile.LunyScript.NetworkGateway.EndSession*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_EndSession" data-uid="CodeSmile.LunyScript.NetworkGateway.EndSession">
+  EndSession()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Ends the session. Does nothing when already offline, so that a restart is
+<a class="xref" href="CodeSmile.LunyScript.NetworkGateway.html#CodeSmile_LunyScript_NetworkGateway_EndSession">EndSession()</a> then <a class="xref" href="CodeSmile.LunyScript.NetworkGateway.html#CodeSmile_LunyScript_NetworkGateway_StartHost">StartHost()</a> with no state tracking by the
+caller. This is what the demo's menu calls to restart.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void EndSession()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_HasAuthority_" data-uid="CodeSmile.LunyScript.NetworkGateway.HasAuthority*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_HasAuthority_System_Int32_" data-uid="CodeSmile.LunyScript.NetworkGateway.HasAuthority(System.Int32)">
+  HasAuthority(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether this peer may write the state of one object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasAuthority(int objectId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>objectId</code> <span class="xref">int</span></dt>
+    <dd><p>The networked object.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when there is no provider or no session, so a script guarded on authority
+does nothing offline rather than misbehaving.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_SendToAuthority_" data-uid="CodeSmile.LunyScript.NetworkGateway.SendToAuthority*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_SendToAuthority_System_Int32_System_Int32_" data-uid="CodeSmile.LunyScript.NetworkGateway.SendToAuthority(System.Int32,System.Int32)">
+  SendToAuthority(int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sends one message to the peer holding authority over the object. Does nothing when
+offline: a message with nowhere to go is not a user mistake, it is the offline state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SendToAuthority(int objectId, int messageId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>objectId</code> <span class="xref">int</span></dt>
+    <dd><p>The object the message is about.</p>
+</dd>
+    <dt><code>messageId</code> <span class="xref">int</span></dt>
+    <dd><p>Which message.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_SendTransformStream_" data-uid="CodeSmile.LunyScript.NetworkGateway.SendTransformStream*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_SendTransformStream_System_Byte___System_Int32_" data-uid="CodeSmile.LunyScript.NetworkGateway.SendTransformStream(System.Byte[],System.Int32)">
+  SendTransformStream(byte[], int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Hands one authority's transform stream for this network tick to the provider.
+Does nothing while the session is not connected, for the reason
+<a class="xref" href="CodeSmile.LunyScript.NetworkGateway.html#CodeSmile_LunyScript_NetworkGateway_SendVariable_System_Int32_System_Int32_CodeSmile_LunyScript_NetworkValue__">SendVariable(int, int, in NetworkValue)</a> does nothing then.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SendTransformStream(byte[] payload, int length)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>payload</code> <span class="xref">byte</span>[]</dt>
+    <dd><p>The buffer the runner encoded into.</p>
+</dd>
+    <dt><code>length</code> <span class="xref">int</span></dt>
+    <dd><p>How many bytes of it the stream occupies.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetworkGateway_SendTransformStream_System_Byte___System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">gateway.SendTransformStream(writer.Buffer, writer.Length);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_SendVariable_" data-uid="CodeSmile.LunyScript.NetworkGateway.SendVariable*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_SendVariable_System_Int32_System_Int32_CodeSmile_LunyScript_NetworkValue__" data-uid="CodeSmile.LunyScript.NetworkGateway.SendVariable(System.Int32,System.Int32,CodeSmile.LunyScript.NetworkValue@)">
+  SendVariable(int, int, in NetworkValue)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L126"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sends one variable's value to the other peers. Called by the cadence, only on the
+authority. Does nothing when offline.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SendVariable(int objectId, int variableIndex, in NetworkValue value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>objectId</code> <span class="xref">int</span></dt>
+    <dd><p>The object the variable belongs to.</p>
+</dd>
+    <dt><code>variableIndex</code> <span class="xref">int</span></dt>
+    <dd><p>Which synchronised variable, by declaration order.</p>
+</dd>
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.NetworkValue.html">NetworkValue</a></dt>
+    <dd><p>The value.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_StartClient_" data-uid="CodeSmile.LunyScript.NetworkGateway.StartClient*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_StartClient_System_String_" data-uid="CodeSmile.LunyScript.NetworkGateway.StartClient(System.String)">
+  StartClient(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Joins a session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StartClient(string address)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>address</code> <span class="xref">string</span></dt>
+    <dd><p>Where to connect.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>No provider, or a session is already running.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_StartHost_" data-uid="CodeSmile.LunyScript.NetworkGateway.StartHost*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_StartHost" data-uid="CodeSmile.LunyScript.NetworkGateway.StartHost">
+  StartHost()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts hosting.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StartHost()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>No provider, or a session is already running.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_TryDequeueMessage_" data-uid="CodeSmile.LunyScript.NetworkGateway.TryDequeueMessage*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_TryDequeueMessage_CodeSmile_LunyScript_NetworkMessage__" data-uid="CodeSmile.LunyScript.NetworkGateway.TryDequeueMessage(CodeSmile.LunyScript.NetworkMessage@)">
+  TryDequeueMessage(out NetworkMessage)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L241"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Takes one received message, if there is one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryDequeueMessage(out NetworkMessage message)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>message</code> <a class="xref" href="CodeSmile.LunyScript.NetworkMessage.html">NetworkMessage</a></dt>
+    <dd><p>The message, when this returns true.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when there is nothing to take or no provider.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_TryDequeuePeerJoined_" data-uid="CodeSmile.LunyScript.NetworkGateway.TryDequeuePeerJoined*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_TryDequeuePeerJoined_System_Int32__" data-uid="CodeSmile.LunyScript.NetworkGateway.TryDequeuePeerJoined(System.Int32@)">
+  TryDequeuePeerJoined(out int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L269"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Takes one &quot;a peer joined&quot; notification, if there is one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryDequeuePeerJoined(out int peerId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>peerId</code> <span class="xref">int</span></dt>
+    <dd><p>The peer that joined, when this returns true.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when there is nothing to take or no provider.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_TryDequeueTransformStream_" data-uid="CodeSmile.LunyScript.NetworkGateway.TryDequeueTransformStream*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_TryDequeueTransformStream_System_Byte____System_Int32__System_Int32__" data-uid="CodeSmile.LunyScript.NetworkGateway.TryDequeueTransformStream(System.Byte[]@,System.Int32@,System.Int32@)">
+  TryDequeueTransformStream(out byte[], out int, out int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L195"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The next transform stream that arrived, as a view into the provider's buffer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryDequeueTransformStream(out byte[] payload, out int offset, out int length)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>payload</code> <span class="xref">byte</span>[]</dt>
+    <dd><p>The provider's buffer.</p>
+</dd>
+    <dt><code>offset</code> <span class="xref">int</span></dt>
+    <dd><p>Where the stream starts in it.</p>
+</dd>
+    <dt><code>length</code> <span class="xref">int</span></dt>
+    <dd><p>How many bytes it occupies.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when none is waiting, and when there is no provider.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetworkGateway_TryDequeueTransformStream_System_Byte____System_Int32__System_Int32___examples">Examples</h4>
+  <pre><code class="lang-csharp">while (gateway.TryDequeueTransformStream(out var payload, out var offset, out var length))
+{
+}</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_TryDequeueVariable_" data-uid="CodeSmile.LunyScript.NetworkGateway.TryDequeueVariable*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_TryDequeueVariable_CodeSmile_LunyScript_NetworkVariableUpdate__" data-uid="CodeSmile.LunyScript.NetworkGateway.TryDequeueVariable(CodeSmile.LunyScript.NetworkVariableUpdate@)">
+  TryDequeueVariable(out NetworkVariableUpdate)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L255"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Takes one received variable update, if there is one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool TryDequeueVariable(out NetworkVariableUpdate update)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>update</code> <a class="xref" href="CodeSmile.LunyScript.NetworkVariableUpdate.html">NetworkVariableUpdate</a></dt>
+    <dd><p>The update, when this returns true.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when there is nothing to take or no provider.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetworkGateway_UseProvider_" data-uid="CodeSmile.LunyScript.NetworkGateway.UseProvider*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetworkGateway_UseProvider_CodeSmile_LunyScript_INetworkProvider_" data-uid="CodeSmile.LunyScript.NetworkGateway.UseProvider(CodeSmile.LunyScript.INetworkProvider)">
+  UseProvider(INetworkProvider)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L66"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the backend. Called once at startup, before any session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UseProvider(INetworkProvider provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>provider</code> <a class="xref" href="CodeSmile.LunyScript.INetworkProvider.html">INetworkProvider</a></dt>
+    <dd><p>The backend. Null is the caller's mistake.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The provider is null, or a session is running.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/NetworkGateway.cs/#L34" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

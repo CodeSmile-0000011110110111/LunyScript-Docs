@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct ObjectLifetimeFactory | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct ObjectLifetimeFactory | LunyScript API Reference ">
+      
+      <meta name="description" content="The Object surface inside Build(): builds the blocks that create, activate, deactivate and end objects this script owns.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_ObjectLifetimeFactory.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.ObjectLifetimeFactory%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory">
+
+
+
+  <h1 id="CodeSmile_LunyScript_ObjectLifetimeFactory" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory" class="text-break">
+Struct ObjectLifetimeFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The <code>Object</code> surface inside <code>Build()</code>: builds the blocks that create, activate,
+deactivate and end objects this script owns.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct ObjectLifetimeFactory</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_ObjectLifetimeFactory_examples">Examples</h2>
+  <pre><code class="lang-csharp">On.Ready(Object.Create("Shield"));
+On.Disabled(Object.Deactivate("Shield"));
+On.FrameUpdate(If(Health &lt;= 0.0).Then(Object.Despawn()));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_ObjectLifetimeFactory_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>The type is not called <code>ObjectFactory</code></b>, because <code>UnityEditor.ObjectFactory</code>
+already exists and this project's editor assembly uses it; two types of that name in scope
+make the editor assembly fail to compile. The script-facing surface is still written
+<code>Object</code>, which is what the settled <code>contract-object-lifecycle</code> answer names, and
+the type name is never written in a script.</p>
+<p>
+    <b>Self by omission.</b> Omitting the name acts on the object the script runs on.
+    Passing a name acts on an object <a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Create_System_String_System_String_System_Int32_">Create(string, string, int)</a> created under that name, in this
+    same script.
+</p>
+<p>
+    <b><a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Create_System_String_System_String_System_Int32_">Create(string, string, int)</a> and <a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Spawn_CodeSmile_LunyScript_Prefab_System_String_System_Int32_">Spawn(Prefab, string, int)</a> are the two calls that produce an
+    object, and they are not the same call.</b> <a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Create_System_String_System_String_System_Int32_">Create(string, string, int)</a> takes no asset and
+    produces a bare, empty object under a name. <a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Spawn_CodeSmile_LunyScript_Prefab_System_String_System_Int32_">Spawn(Prefab, string, int)</a> produces one from a
+    declared prefab input, and its chain places it, parents it and optionally holds it
+    under a name. Both fill the same owned-object slot, so one name is produced by one of
+    the two and addressed by the rest of this surface.
+</p>
+<p>
+    The blocks reach the object through <a class="xref" href="CodeSmile.LunyScript.IScriptObjectLifetime.html">IScriptObjectLifetime</a>, never through
+    a <code>UnityEngine.GameObject</code>; AGENTS.md rule 24. A host that does not implement that
+    interface cannot run a script containing these blocks, and the spawn is refused rather
+    than the block failing later.
+</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_Activate_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Activate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Activate_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Activate(System.String,System.String,System.Int32)">
+  Activate(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L200"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that activates an object: the one this script runs on, or one this
+script created.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Block Activate(string name = null, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <span class="xref">string</span></dt>
+    <dd><p>The name its <a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Create_System_String_System_String_System_Int32_">Create(string, string, int)</a> used, or null for the object this
+script runs on.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one: it is what records
+the line of the script this block was written on.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Activate_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Enabled(Object.Activate("Shield"));
+On.Disabled(Object.Activate());</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Activate_System_String_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>Omitting the name acts on the object the script runs on.</b> That form records a
+<a class="xref" href="CodeSmile.LunyScript.LifetimeRequest.html">LifetimeRequest</a>, and the runner applies it after the current dispatch,
+which is what delivers <code>On.Enabled</code> between event invocations rather than inside
+one. Activating an already-active object delivers nothing.</p>
+<p>
+    Passing a name acts on the object <a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Create_System_String_System_String_System_Int32_">Create(string, string, int)</a> created under it, and takes
+    effect where it is written, because an owned object runs no LunyScript and raises no
+    observation. A name for which the slot is empty is left alone.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">name</code> is whitespace. A name no
+<a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Create_System_String_System_String_System_Int32_">Create(string, string, int)</a> in this script uses is refused when <code>Build()</code> finishes.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_Create_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Create*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Create_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Create(System.String,System.String,System.Int32)">
+  Create(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that creates a new, empty, active object called <code class="paramref">name</code>,
+owned by the instance that runs the block.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Block Create(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <span class="xref">string</span></dt>
+    <dd><p>What the created object is called, and how this script addresses it.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one: it is what records
+the line of the script this block was written on.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Create_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Object.Create("Shield"));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Create_System_String_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>Owned means the API owns its lifetime</b>: the object is destroyed when the instance
+that created it is despawned, by every path that despawns one. The name is both what the
+object is called in the scene and how the other calls on this surface address it; a
+scene object's name is one of the three kinds of literal AGENTS.md exempts from the
+<code>nameof</code> rule, because no C# member carries it.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">name</code> is null or whitespace,
+or this script already creates an object under that name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_Deactivate_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Deactivate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Deactivate_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Deactivate(System.String,System.String,System.Int32)">
+  Deactivate(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L229"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that deactivates an object: the one this script runs on, or one this
+script created.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Block Deactivate(string name = null, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <span class="xref">string</span></dt>
+    <dd><p>The name its <a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Create_System_String_System_String_System_Int32_">Create(string, string, int)</a> used, or null for the object this
+script runs on.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Deactivate_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Health &lt;= 0.0).Then(Object.Deactivate()));
+On.Disabled(Object.Deactivate("Shield"));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Deactivate_System_String_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>Omitting the name acts on the object the script runs on.</b> That form records a
+<a class="xref" href="CodeSmile.LunyScript.LifetimeRequest.html">LifetimeRequest</a>, and the runner applies it after the current dispatch,
+which is what delivers <code>On.Disabled</code>. Deactivating an already-inactive object
+delivers nothing. Passing a name acts on the owned object immediately.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">name</code> is whitespace.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_Despawn_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Despawn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Despawn_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Despawn(System.String,System.String,System.Int32)">
+  Despawn(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L264"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that ends an object: the one this script runs on, or one this script
+created.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Block Despawn(string name = null, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>name</code> <span class="xref">string</span></dt>
+    <dd><p>The name its <a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Create_System_String_System_String_System_Int32_">Create(string, string, int)</a> used, or null for the object this
+script runs on.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Despawn_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.LateUpdate(If(Fuse &lt;= 0.0).Then(Object.Despawn()));
+On.Despawned(Object.Despawn("Shield"));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Despawn_System_String_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>Omitting the name ends the object the script runs on.</b> That form records a
+<a class="xref" href="CodeSmile.LunyScript.LifetimeRequest.html">LifetimeRequest</a>, and the runner applies it after the current dispatch: it
+despawns the instance, which delivers <code>On.Disabled</code> and then <code>On.Despawned</code>
+while the object still exists, and destroys the object afterwards. Despawning an
+instance that is already despawned delivers nothing.</p>
+<p>
+    Passing a name destroys that owned object and empties its slot, where it is written.
+    A slot that is already empty is left alone: the owner's own despawn empties every
+    slot, so despawning an owned object twice is ordinary rather than a failure.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">name</code> is whitespace.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_Spawn_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Spawn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Spawn_CodeSmile_LunyScript_Operation_CodeSmile_LunyScript_Prefab__System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Spawn(CodeSmile.LunyScript.Operation{CodeSmile.LunyScript.Prefab},System.String,System.Int32)">
+  Spawn(Operation&lt;Prefab&gt;, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L156"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts a spawn from a succeeded prefab acquisition. The payload is readable after
+<code>When.Operation(handle).Succeeded</code> only. A spawn before Succeeded is refused at
+run.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SpawnBuilder Spawn(Operation&lt;Prefab&gt; acquisition, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>acquisition</code> <a class="xref" href="CodeSmile.LunyScript.Operation-1.html">Operation</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Prefab.html">Prefab</a>&gt;</dt>
+    <dd><p>The typed handle a successful <code>Asset.Load</code> bound.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html">SpawnBuilder</a></dt>
+    <dd><p>A builder that takes a placement, a parent and a name, and converts to a block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Spawn_CodeSmile_LunyScript_Operation_CodeSmile_LunyScript_Prefab__System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">When.Operation(EnemyContent).Succeeded(Object.Spawn(EnemyContent));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">acquisition</code> was never
+declared.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_Spawn_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Spawn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Spawn_CodeSmile_LunyScript_Prefab_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Spawn(CodeSmile.LunyScript.Prefab,System.String,System.Int32)">
+  Spawn(Prefab, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts a spawn: builds an object from a declared prefab input, which the returned
+builder can place, parent and hold.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SpawnBuilder Spawn(Prefab prefab, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>prefab</code> <a class="xref" href="CodeSmile.LunyScript.Prefab.html">Prefab</a></dt>
+    <dd><p>The declared prefab input to produce an object from. Declared with
+<code>[Asset] public Prefab X { get; private set; }</code> or with <code>Bind.Prefab</code>.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one: it is what records
+the line of the script this block was written on.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html">SpawnBuilder</a></dt>
+    <dd><p>A builder that takes a placement, a parent and a name, and converts to a block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Spawn_CodeSmile_LunyScript_Prefab_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Object.Spawn(Sentry));
+On.Ready(Object.Spawn(Sentry).At(new Vec3(0.0, 1.0, 0.0)).ChildOf().Into("Guard"));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Spawn_CodeSmile_LunyScript_Prefab_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>The spawn takes effect after the current dispatch, not where it is written.</b> A
+prefab can carry a <code>LunyScriptBehaviour</code>, and producing such an object runs its
+<code>Awake</code> inside the call, which re-enters the runner; the runner refuses that during
+dispatch. So an object held with <code>Into(name)</code> is in its slot from the next event
+onward, not from the next line. <a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html">SpawnObjectBlock</a> states the mechanism and
+<code>docs/execution-model.md</code> states the order.</p>
+<p>
+    <b>A spawn with no <code>Into</code> is not held by anything.</b> It is produced, placed,
+    and then the script has no further hold on it: it is not destroyed when this instance
+    despawns and this script cannot address it again. A spawn with <code>Into(name)</code> is
+    owned, exactly as an <a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Create_System_String_System_String_System_Int32_">Create(string, string, int)</a> object is, and <code>Object.Despawn(name)</code>
+    ends it.
+</p>
+<p>
+    <b>The placement frame is the parent's, and <code>InWorldSpace()</code> selects world
+    coordinates</b>, which is the spelling the transform family uses; the settled
+    <code>semantics-t02</code> answer of 2026-09-13. With no parent the two frames are the same
+    coordinates.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">prefab</code> is a handle this
+script's <code>Build()</code> never declared.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L43" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

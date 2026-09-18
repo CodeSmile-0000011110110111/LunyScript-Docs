@@ -1,0 +1,2279 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct TransformFactory | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct TransformFactory | LunyScript API Reference ">
+      
+      <meta name="description" content="The Transform surface inside Build(): where the object a script runs on is, how it is turned and scaled, what is above and below it in the hierarchy, and what it is parented to.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_TransformFactory.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.TransformFactory%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.TransformFactory">
+
+
+
+  <h1 id="CodeSmile_LunyScript_TransformFactory" data-uid="CodeSmile.LunyScript.TransformFactory" class="text-break">
+Struct TransformFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The <code>Transform</code> surface inside <code>Build()</code>: where the object a script runs on is,
+how it is turned and scaled, what is above and below it in the hierarchy, and what it is
+parented to.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct TransformFactory</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_TransformFactory_examples">Examples</h2>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.MoveBy(Step, 0.0, 0.0), Transform.RotateBy(0.0, 1.5, 0.0));
+On.Ready(Transform.SetScale(2.0));
+On.Ready(If(Transform.HasParent).Then(Transform.Unparent()));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_TransformFactory_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>The blocks reach the object through <code>IScriptHost</code>, never through a
+<code>UnityEngine.Transform</code>; AGENTS.md rule 24. Every parameter is a
+<a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a>, so a literal, a variable and an expression all work, through
+the implicit conversions that type declares.</p>
+<p>
+    <b>A displacement is in the object's own frame and an absolute value names its frame in
+    the verb.</b> <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a> and <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_RotateBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">RotateBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a> act along the object's own
+    oriented axes unless the builder they return is given <code>InWorldSpace()</code>;
+    <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_SetWorldPosition_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">SetWorldPosition(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a> and <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_SetLocalPosition_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">SetLocalPosition(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a> say which frame they
+    mean in their names. That is the captain's answer to API-semantics row T02 on 2026-09-13,
+    and <a class="xref" href="CodeSmile.LunyScript.TransformSpace.html">TransformSpace</a> states why one word covers two frames.
+</p>
+<p>
+    <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_Parent">Parent</a>, <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_Child_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">Child(NumberValueBlock, string, int)</a> and <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_Root">Root</a> aim the same verbs at
+    one step of the hierarchy around the object. They offer no further navigation of their
+    own; <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html">TransformTargetFactory</a> says why.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_ChildCount_" data-uid="CodeSmile.LunyScript.TransformFactory.ChildCount*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_ChildCount" data-uid="CodeSmile.LunyScript.TransformFactory.ChildCount">
+  ChildCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L585"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many children this object has.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock ChildCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_ChildCount_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(If(Transform.ChildCount &gt; 0.0).Then(Carrying.Set(true)));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_ChildCount_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Direct children only, which is what Unity's own child count is.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_HasParent_" data-uid="CodeSmile.LunyScript.TransformFactory.HasParent*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_HasParent" data-uid="CodeSmile.LunyScript.TransformFactory.HasParent">
+  HasParent
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L592"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether this object is parented to another object rather than sitting at the
+scene root.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConditionBlock HasParent { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_HasParent_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(If(Transform.HasParent).Then(Held.Set(true)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_LocalPositionX_" data-uid="CodeSmile.LunyScript.TransformFactory.LocalPositionX*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_LocalPositionX" data-uid="CodeSmile.LunyScript.TransformFactory.LocalPositionX">
+  LocalPositionX
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L261"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The x of this object's position in its parent's frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock LocalPositionX { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_LocalPositionX_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Offset.Set(Transform.LocalPositionX));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_LocalPositionX_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The same as <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_WorldPositionX">WorldPositionX</a> for an object at the scene root.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_LocalPositionY_" data-uid="CodeSmile.LunyScript.TransformFactory.LocalPositionY*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_LocalPositionY" data-uid="CodeSmile.LunyScript.TransformFactory.LocalPositionY">
+  LocalPositionY
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L267"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The y of this object's position in its parent's frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock LocalPositionY { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_LocalPositionY_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Offset.Set(Transform.LocalPositionY));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_LocalPositionZ_" data-uid="CodeSmile.LunyScript.TransformFactory.LocalPositionZ*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_LocalPositionZ" data-uid="CodeSmile.LunyScript.TransformFactory.LocalPositionZ">
+  LocalPositionZ
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L273"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The z of this object's position in its parent's frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock LocalPositionZ { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_LocalPositionZ_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Offset.Set(Transform.LocalPositionZ));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_LocalRotationX_" data-uid="CodeSmile.LunyScript.TransformFactory.LocalRotationX*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_LocalRotationX" data-uid="CodeSmile.LunyScript.TransformFactory.LocalRotationX">
+  LocalRotationX
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L301"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The x of this object's rotation in its parent's frame, in euler degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock LocalRotationX { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_LocalRotationX_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Pitch.Set(Transform.LocalRotationX));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_LocalRotationY_" data-uid="CodeSmile.LunyScript.TransformFactory.LocalRotationY*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_LocalRotationY" data-uid="CodeSmile.LunyScript.TransformFactory.LocalRotationY">
+  LocalRotationY
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L307"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The y of this object's rotation in its parent's frame, in euler degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock LocalRotationY { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_LocalRotationY_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Heading.Set(Transform.LocalRotationY));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_LocalRotationZ_" data-uid="CodeSmile.LunyScript.TransformFactory.LocalRotationZ*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_LocalRotationZ" data-uid="CodeSmile.LunyScript.TransformFactory.LocalRotationZ">
+  LocalRotationZ
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L313"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The z of this object's rotation in its parent's frame, in euler degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock LocalRotationZ { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_LocalRotationZ_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Roll.Set(Transform.LocalRotationZ));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_Parent_" data-uid="CodeSmile.LunyScript.TransformFactory.Parent*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_Parent" data-uid="CodeSmile.LunyScript.TransformFactory.Parent">
+  Parent
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The object this one is parented to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TransformTargetFactory Parent { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html">TransformTargetFactory</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_Parent_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(If(Transform.HasParent).Then(Siblings.Set(Transform.Parent.ChildCount)));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_Parent_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Every verb reached through this refuses to run on an object that has no parent, and
+says so naming the object; guard with <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_HasParent">HasParent</a>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_Root_" data-uid="CodeSmile.LunyScript.TransformFactory.Root*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_Root" data-uid="CodeSmile.LunyScript.TransformFactory.Root">
+  Root
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L66"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The topmost object of this one's hierarchy, which is this object itself when it has
+no parent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TransformTargetFactory Root { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html">TransformTargetFactory</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_Root_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetParent(Transform.Root));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_ScaleX_" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleX*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_ScaleX" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleX">
+  ScaleX
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L321"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The x of this object's own scale.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock ScaleX { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_ScaleX_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Width.Set(Transform.ScaleX));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_ScaleX_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The scale as it is stored on the object, which is the only scale Unity lets anything
+write. <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_WorldScaleX">WorldScaleX</a> is the derived one and is read-only.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_ScaleY_" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleY*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_ScaleY" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleY">
+  ScaleY
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L327"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The y of this object's own scale.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock ScaleY { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_ScaleY_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Height.Set(Transform.ScaleY));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_ScaleZ_" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleZ*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_ScaleZ" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleZ">
+  ScaleZ
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L333"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The z of this object's own scale.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock ScaleZ { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_ScaleZ_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Depth.Set(Transform.ScaleZ));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_WorldPositionX_" data-uid="CodeSmile.LunyScript.TransformFactory.WorldPositionX*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_WorldPositionX" data-uid="CodeSmile.LunyScript.TransformFactory.WorldPositionX">
+  WorldPositionX
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L242"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The x of this object's position in the scene's frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock WorldPositionX { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_WorldPositionX_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Drift.Set(Transform.WorldPositionX));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_WorldPositionY_" data-uid="CodeSmile.LunyScript.TransformFactory.WorldPositionY*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_WorldPositionY" data-uid="CodeSmile.LunyScript.TransformFactory.WorldPositionY">
+  WorldPositionY
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L248"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The y of this object's position in the scene's frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock WorldPositionY { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_WorldPositionY_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Transform.WorldPositionY &lt; 0.0).Then(Fell.Set(true)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_WorldPositionZ_" data-uid="CodeSmile.LunyScript.TransformFactory.WorldPositionZ*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_WorldPositionZ" data-uid="CodeSmile.LunyScript.TransformFactory.WorldPositionZ">
+  WorldPositionZ
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L254"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The z of this object's position in the scene's frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock WorldPositionZ { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_WorldPositionZ_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Depth.Set(Transform.WorldPositionZ));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_WorldRotationX_" data-uid="CodeSmile.LunyScript.TransformFactory.WorldRotationX*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_WorldRotationX" data-uid="CodeSmile.LunyScript.TransformFactory.WorldRotationX">
+  WorldRotationX
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L283"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The x of this object's rotation in the scene's frame, in euler degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock WorldRotationX { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_WorldRotationX_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Pitch.Set(Transform.WorldRotationX));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_WorldRotationX_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Euler degrees rather than a quaternion, because that is what a script author writes.
+Unity derives the three angles from the rotation it holds, and more than one set of angles
+names the same rotation, so reading these back after writing them can give a different set
+that turns the object the same way.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_WorldRotationY_" data-uid="CodeSmile.LunyScript.TransformFactory.WorldRotationY*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_WorldRotationY" data-uid="CodeSmile.LunyScript.TransformFactory.WorldRotationY">
+  WorldRotationY
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L289"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The y of this object's rotation in the scene's frame, in euler degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock WorldRotationY { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_WorldRotationY_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Heading.Set(Transform.WorldRotationY));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_WorldRotationZ_" data-uid="CodeSmile.LunyScript.TransformFactory.WorldRotationZ*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_WorldRotationZ" data-uid="CodeSmile.LunyScript.TransformFactory.WorldRotationZ">
+  WorldRotationZ
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L295"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The z of this object's rotation in the scene's frame, in euler degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock WorldRotationZ { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_WorldRotationZ_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Roll.Set(Transform.WorldRotationZ));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_WorldScaleX_" data-uid="CodeSmile.LunyScript.TransformFactory.WorldScaleX*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_WorldScaleX" data-uid="CodeSmile.LunyScript.TransformFactory.WorldScaleX">
+  WorldScaleX
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L342"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The x of this object's scale in the scene's frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock WorldScaleX { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_WorldScaleX_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Width.Set(Transform.WorldScaleX));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_WorldScaleX_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This is Unity's lossy scale: the scale derived from the whole parent chain. It is an
+approximation once a parent is both rotated and scaled unevenly, and it cannot be written -
+there is no world-space scale setter on this surface or any other.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_WorldScaleY_" data-uid="CodeSmile.LunyScript.TransformFactory.WorldScaleY*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_WorldScaleY" data-uid="CodeSmile.LunyScript.TransformFactory.WorldScaleY">
+  WorldScaleY
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L348"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The y of this object's scale in the scene's frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock WorldScaleY { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_WorldScaleY_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Height.Set(Transform.WorldScaleY));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_WorldScaleZ_" data-uid="CodeSmile.LunyScript.TransformFactory.WorldScaleZ*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_WorldScaleZ" data-uid="CodeSmile.LunyScript.TransformFactory.WorldScaleZ">
+  WorldScaleZ
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L354"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The z of this object's scale in the scene's frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock WorldScaleZ { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_WorldScaleZ_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Depth.Set(Transform.WorldScaleZ));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_Child_" data-uid="CodeSmile.LunyScript.TransformFactory.Child*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_Child_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.Child(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Child(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>One of this object's children, by index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TransformTargetFactory Child(NumberValueBlock index, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>index</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Which child, counting from zero. An expression rather than a literal, so
+a variable can name it; it is rounded to the nearest whole number when the block runs.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html">TransformTargetFactory</a></dt>
+    <dd><p>That child's verbs.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_Child_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.Child(0).RotateBy(0.0, 1.0, 0.0));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_Child_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Every verb reached through this refuses to run when the index is outside the child
+count, and says what the count was; guard with <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_ChildCount">ChildCount</a>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">index</code> is null, or this
+surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_LookAt_" data-uid="CodeSmile.LunyScript.TransformFactory.LookAt*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_LookAt_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.LookAt(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  LookAt(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L553"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a facing: turns this object so its forward axis points at a world
+point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public LookAtBuilder LookAt(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world x of the point to face, evaluated each time the block runs.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world y of that point.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world z of that point.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LookAtBuilder.html">LookAtBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes one up clause first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_LookAt_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.LookAt(TargetX, TargetY, TargetZ));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_LookAt_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The up axis is kept nearest the world up unless the returned builder's
+<code>WithUp</code> names another direction. A point the object already stands on, or a direction
+to it parallel to the up direction, names no rotation, and nothing is written.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any coordinate is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_MoveBy_" data-uid="CodeSmile.LunyScript.TransformFactory.MoveBy*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.MoveBy(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a displacement of this object's position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TransformOffsetBuilder MoveBy(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Units along the frame's X axis, evaluated each time the block runs.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Units along the frame's Y axis.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Units along the frame's Z axis.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one: it is what records
+the line of the script this block was written on, so that a later failure names that line
+rather than LunyScript's own source.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TransformOffsetBuilder.html">TransformOffsetBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes one space clause first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.MoveBy(0.02, 0.0, 0.0));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>The amounts are along the object's own oriented axes unless the returned builder's
+<code>InWorldSpace()</code> says otherwise</b>, and their length is in world distance units,
+unaffected by the object's scale or its parent's. They are per run, not per second: placed
+in <code>On.FrameUpdate</code>, this moves the object the same distance every frame whatever the
+frame rate.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any amount is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_MoveTo_" data-uid="CodeSmile.LunyScript.TransformFactory.MoveTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_MoveTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.MoveTo(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  MoveTo(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L170"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a move of this object to a world position over a duration.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TransformToBuilder MoveTo(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world x to reach, evaluated when a run starts.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world y to reach.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world z to reach.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TransformToBuilder.html">TransformToBuilder</a></dt>
+    <dd><p>A builder whose <code>Over</code> names the duration.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_MoveTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.MoveTo(3.0, 0.0, 0.0).Over(2.0));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_MoveTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The first run captures the current pose, the destination and the duration. Each
+later run in a process event adds <code>Time.Delta</code> and writes the interpolated world
+position. Place it in <code>On.FrameUpdate</code>. A script the pause system has stopped does
+not run this block. <code>Over</code> is required; without it this is not a block.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any coordinate is null, or this surface was
+read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_RotateAround_" data-uid="CodeSmile.LunyScript.TransformFactory.RotateAround*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_RotateAround_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.RotateAround(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  RotateAround(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L574"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds an orbit: names the world point this object turns about.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public OrbitPointBuilder RotateAround(NumberValueBlock pointX, NumberValueBlock pointY, NumberValueBlock pointZ, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>pointX</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world x of the pivot, evaluated each time the block runs.</p>
+</dd>
+    <dt><code>pointY</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world y of the pivot.</p>
+</dd>
+    <dt><code>pointZ</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world z of the pivot.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.OrbitPointBuilder.html">OrbitPointBuilder</a></dt>
+    <dd><p>A builder whose <code>By</code> names the rotation.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_RotateAround_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.RotateAround(0.0, 0.0, 0.0).By(0.0, 1.0, 0.0).KeepRotation());</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_RotateAround_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The rotation comes next, with <code>By</code>, and then one of the two behaviours.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any coordinate is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_RotateBy_" data-uid="CodeSmile.LunyScript.TransformFactory.RotateBy*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_RotateBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.RotateBy(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  RotateBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L144"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a turn of this object's rotation, in euler degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TransformOffsetBuilder RotateBy(NumberValueBlock xDegrees, NumberValueBlock yDegrees, NumberValueBlock zDegrees, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>xDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Degrees about the frame's X axis, evaluated each time the block
+runs.</p>
+</dd>
+    <dt><code>yDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Degrees about the frame's Y axis.</p>
+</dd>
+    <dt><code>zDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Degrees about the frame's Z axis.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TransformOffsetBuilder.html">TransformOffsetBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes one space clause first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_RotateBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.RotateBy(0.0, 1.5, 0.0));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_RotateBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The delta composes <b>after</b> the rotation the object already has, which is a turn
+about its own axes, unless the returned builder's <code>InWorldSpace()</code> makes it compose
+before. The amounts are per run, not per second, the same as <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any amount is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_RotateTo_" data-uid="CodeSmile.LunyScript.TransformFactory.RotateTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_RotateTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.RotateTo(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  RotateTo(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L191"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a turn of this object to a world rotation over a duration, along the
+shortest arc.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TransformToBuilder RotateTo(NumberValueBlock xDegrees, NumberValueBlock yDegrees, NumberValueBlock zDegrees, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>xDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Degrees about the world X axis, evaluated when a run starts.</p>
+</dd>
+    <dt><code>yDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Degrees about the world Y axis.</p>
+</dd>
+    <dt><code>zDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Degrees about the world Z axis.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TransformToBuilder.html">TransformToBuilder</a></dt>
+    <dd><p>A builder whose <code>Over</code> names the duration.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_RotateTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.RotateTo(0.0, 90.0, 0.0).Over(1.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any amount is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_ScaleBy_" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleBy*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_ScaleBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleBy(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  ScaleBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L510"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that multiplies this object's own scale by one factor per
+axis.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Block ScaleBy(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The factor for the x scale, evaluated each time the block runs.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The factor for the y scale.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The factor for the z scale.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_ScaleBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Transform.ScaleBy(2.0, 1.0, 2.0));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_ScaleBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>A factor, not an amount: one leaves the axis unchanged, zero collapses it and a
+negative factor mirrors it. Repeated every frame it compounds, which is what makes it a
+growth rather than a step. There is no world modifier and no AddScale verb; that is the
+captain's answer to API-semantics row T03 on 2026-09-13.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any factor is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_ScaleBy_" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleBy*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_ScaleBy_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleBy(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  ScaleBy(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L529"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that multiplies this object's own scale by one factor on every
+axis.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Block ScaleBy(NumberValueBlock factor, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>factor</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The factor for all three axes, evaluated each time the block runs.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_ScaleBy_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Transform.ScaleBy(2.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">factor</code> is null, or this
+surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_ScaleTo_" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_ScaleTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleTo(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  ScaleTo(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L213"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a change of this object's own scale over a duration, one value per
+axis.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TransformToBuilder ScaleTo(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The x scale to reach, evaluated when a run starts.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The y scale to reach.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The z scale to reach.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TransformToBuilder.html">TransformToBuilder</a></dt>
+    <dd><p>A builder whose <code>Over</code> names the duration.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_ScaleTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.ScaleTo(2.0, 1.0, 2.0).Over(0.5));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any amount is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_ScaleTo_" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_ScaleTo_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.ScaleTo(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  ScaleTo(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L232"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a change of this object's own scale over a duration, one value on every
+axis.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TransformToBuilder ScaleTo(NumberValueBlock uniformScale, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>uniformScale</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The scale for all three axes, evaluated when a run starts.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TransformToBuilder.html">TransformToBuilder</a></dt>
+    <dd><p>A builder whose <code>Over</code> names the duration.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_ScaleTo_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.ScaleTo(2.0).Over(0.5));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">uniformScale</code> is null, or
+this surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_SetLocalPosition_" data-uid="CodeSmile.LunyScript.TransformFactory.SetLocalPosition*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_SetLocalPosition_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.SetLocalPosition(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  SetLocalPosition(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L392"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that places this object at a position in its parent's frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Block SetLocalPosition(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The local x, evaluated each time the block runs.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The local y.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The local z.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_SetLocalPosition_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetLocalPosition(0.0, 1.0, 0.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any amount is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_SetLocalRotation_" data-uid="CodeSmile.LunyScript.TransformFactory.SetLocalRotation*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_SetLocalRotation_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.SetLocalRotation(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  SetLocalRotation(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L438"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that turns this object to a rotation in its parent's frame, in
+euler degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Block SetLocalRotation(NumberValueBlock xDegrees, NumberValueBlock yDegrees, NumberValueBlock zDegrees, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>xDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Degrees about the parent's X axis, evaluated each time the block
+runs.</p>
+</dd>
+    <dt><code>yDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Degrees about the parent's Y axis.</p>
+</dd>
+    <dt><code>zDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Degrees about the parent's Z axis.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_SetLocalRotation_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetLocalRotation(0.0, 90.0, 0.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any amount is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_SetParent_" data-uid="CodeSmile.LunyScript.TransformFactory.SetParent*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_SetParent_CodeSmile_LunyScript_TransformTargetFactory_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.SetParent(CodeSmile.LunyScript.TransformTargetFactory,System.String,System.Int32)">
+  SetParent(TransformTargetFactory, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L610"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts a reparent of this object under another.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ReparentBuilder SetParent(TransformTargetFactory parent, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>parent</code> <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html">TransformTargetFactory</a></dt>
+    <dd><p>Where it goes, named with a relation.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ReparentBuilder.html">ReparentBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes the <code>KeepLocal()</code> clause
+first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_SetParent_CodeSmile_LunyScript_TransformTargetFactory_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetParent(Transform.Root));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_SetParent_CodeSmile_LunyScript_TransformTargetFactory_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The object keeps its world position and rotation, and gets the closest local scale
+Unity can write, unless the returned builder's <code>KeepLocal()</code> says otherwise.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">parent</code> is a <code>default</code> no
+factory call produced, or this surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_SetScale_" data-uid="CodeSmile.LunyScript.TransformFactory.SetScale*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_SetScale_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.SetScale(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  SetScale(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L463"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that sets this object's own scale, one value per axis.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Block SetScale(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The x scale, evaluated each time the block runs.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The y scale.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The z scale.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_SetScale_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetScale(2.0, 1.0, 2.0));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_SetScale_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>There is no world-space scale setter, on this surface or any other: Unity's world
+scale is derived from the whole parent chain and is read-only, because a rotated parent
+produces world scales that no local scale reproduces.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any amount is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_SetScale_" data-uid="CodeSmile.LunyScript.TransformFactory.SetScale*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_SetScale_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.SetScale(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  SetScale(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L484"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that sets this object's own scale to one value on every
+axis.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Block SetScale(NumberValueBlock uniformScale, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>uniformScale</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The scale for all three axes, evaluated each time the block
+runs.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_SetScale_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetScale(2.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">uniformScale</code> is null, or this
+surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_SetWorldPosition_" data-uid="CodeSmile.LunyScript.TransformFactory.SetWorldPosition*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_SetWorldPosition_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.SetWorldPosition(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  SetWorldPosition(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L371"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that places this object at a position in the scene's frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Block SetWorldPosition(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world x, evaluated each time the block runs.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world y.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world z.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_SetWorldPosition_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetWorldPosition(0.0, 1.0, 0.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any amount is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_SetWorldRotation_" data-uid="CodeSmile.LunyScript.TransformFactory.SetWorldRotation*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_SetWorldRotation_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.SetWorldRotation(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  SetWorldRotation(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L414"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that turns this object to a rotation in the scene's frame, in
+euler degrees.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Block SetWorldRotation(NumberValueBlock xDegrees, NumberValueBlock yDegrees, NumberValueBlock zDegrees, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>xDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Degrees about the world X axis, evaluated each time the block runs.</p>
+</dd>
+    <dt><code>yDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Degrees about the world Y axis.</p>
+</dd>
+    <dt><code>zDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Degrees about the world Z axis.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler; see <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html#CodeSmile_LunyScript_TransformFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_SetWorldRotation_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetWorldRotation(0.0, 90.0, 0.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any amount is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TransformFactory_Unparent_" data-uid="CodeSmile.LunyScript.TransformFactory.Unparent*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformFactory_Unparent_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformFactory.Unparent(System.String,System.Int32)">
+  Unparent(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L629"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts a move of this object to the scene root.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ReparentBuilder Unparent(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ReparentBuilder.html">ReparentBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes the <code>KeepLocal()</code> clause
+first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_Unparent_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Transform.Unparent());</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TransformFactory_Unparent_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This is not Unity's <code>Transform.DetachChildren</code>, which moves every child of an
+object out; this moves the object itself out.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TransformFactory.cs/#L37" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

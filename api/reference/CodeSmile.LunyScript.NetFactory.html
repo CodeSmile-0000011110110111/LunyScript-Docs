@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct NetFactory | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct NetFactory | LunyScript API Reference ">
+      
+      <meta name="description" content="The Net surface a script reads the session through: who has authority, whether there is a session, how many peers, how far behind a value is, and the one way to ask the authority to do something.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_NetFactory.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.NetFactory%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.NetFactory">
+
+
+
+  <h1 id="CodeSmile_LunyScript_NetFactory" data-uid="CodeSmile.LunyScript.NetFactory" class="text-break">
+Struct NetFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NetFactory.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The <code>Net</code> surface a script reads the session through: who has authority, whether there
+is a session, how many peers, how far behind a value is, and the one way to ask the authority
+to do something.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct NetFactory</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_NetFactory_examples">Examples</h2>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Net.HasAuthority).Then(Score.Add(1.0)));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_NetFactory_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>Everything here is a state, and none of it throws when there is no session.</b> AGENTS.md
+rule 45: authority, ownership, connection state and latency are what a networked script gets
+wrong, and a design that hides them produces the &quot;works as host, breaks as client&quot; defect. An
+offline peer has no authority, is not connected, has zero peers and a round trip of zero, and
+a script that guards on any of those then does nothing rather than misbehaving.</p>
+<p>
+    <b>Authority, not "server".</b> <a class="xref" href="CodeSmile.LunyScript.NetFactory.html#CodeSmile_LunyScript_NetFactory_HasAuthority">HasAuthority</a> means owner under distributed
+    authority, which is the default topology, and server under client-server. The same script
+    runs unchanged in either; AGENTS.md rule 44.
+</p>
+<p>
+    <b>The three session facts are conditions and the two numbers are number expressions.</b>
+    A condition goes into <code>If(...)</code> and is negated with <code>!</code>, the way every other
+    condition in this API is; a number expression is compared and combined the way every
+    other number is. The proposal this milestone was written from wrote
+    <code>If(Net.HasAuthority == false)</code>, which would have needed a second way to negate a
+    condition alongside the <code>!</code> operator that already exists.
+    <code>If(!Net.HasAuthority)</code> is the same sentence with the operator the API already has.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_NetFactory_HasAuthority_" data-uid="CodeSmile.LunyScript.NetFactory.HasAuthority*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetFactory_HasAuthority" data-uid="CodeSmile.LunyScript.NetFactory.HasAuthority">
+  HasAuthority
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NetFactory.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True on the peer that may write this object's synchronised variables.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConditionBlock HasAuthority { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_HasAuthority_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Net.HasAuthority).Then(Health.Add(-1.0)));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_HasAuthority_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Owner under distributed authority, server under client-server; false while there is
+no session, and false on every peer for an object that was never bound to a networked object.
+This is the guard a write to a synchronised variable belongs behind: without it the write is
+refused on every peer but one, with the message
+<code>ScriptInstance</code> raises.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetFactory_IsConnected_" data-uid="CodeSmile.LunyScript.NetFactory.IsConnected*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetFactory_IsConnected" data-uid="CodeSmile.LunyScript.NetFactory.IsConnected">
+  IsConnected
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NetFactory.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True while a session is connected, as host or as client.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConditionBlock IsConnected { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_IsConnected_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(!Net.IsConnected).Then(Status.Set("offline")));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_IsConnected_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Connecting is not connected, and neither is disconnected. The three are separate
+states because a script that shows &quot;connecting&quot; and one that shows &quot;offline&quot; are showing a
+player different things; AGENTS.md rule 45.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetFactory_IsHost_" data-uid="CodeSmile.LunyScript.NetFactory.IsHost*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetFactory_IsHost" data-uid="CodeSmile.LunyScript.NetFactory.IsHost">
+  IsHost
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NetFactory.cs/#L90"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True on the peer that is hosting the session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ConditionBlock IsHost { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_IsHost_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Net.IsHost).Then(Role.Set("host")));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_IsHost_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Exposed rather than hidden because hiding it is what produces a script that works
+for whoever is hosting while they test it. It is not the same question as
+<a class="xref" href="CodeSmile.LunyScript.NetFactory.html#CodeSmile_LunyScript_NetFactory_HasAuthority">HasAuthority</a>, which is asked per object.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetFactory_PeerCount_" data-uid="CodeSmile.LunyScript.NetFactory.PeerCount*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetFactory_PeerCount" data-uid="CodeSmile.LunyScript.NetFactory.PeerCount">
+  PeerCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NetFactory.cs/#L105"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many peers are in the session, including this one. Zero while offline.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock PeerCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_PeerCount_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Net.PeerCount &gt; 1.0).Then(Crowded.Set(true)));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetFactory_RoundTripMilliseconds_" data-uid="CodeSmile.LunyScript.NetFactory.RoundTripMilliseconds*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetFactory_RoundTripMilliseconds" data-uid="CodeSmile.LunyScript.NetFactory.RoundTripMilliseconds">
+  RoundTripMilliseconds
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NetFactory.cs/#L123"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Round trip time to the host in milliseconds. Zero on the host and while
+offline.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock RoundTripMilliseconds { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_RoundTripMilliseconds_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Net.RoundTripMilliseconds &gt; 200.0).Then(ShowLagWarning.Set(true)));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_RoundTripMilliseconds_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Latency is a state, not an exception; AGENTS.md rule 45. A script may show it, may
+refuse to start a timed action above a threshold, and may do neither.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_NetFactory_Send_" data-uid="CodeSmile.LunyScript.NetFactory.Send*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetFactory_Send" data-uid="CodeSmile.LunyScript.NetFactory.Send">
+  Send
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NetFactory.cs/#L138"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Where a message to the authority is written.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NetSendFactory Send { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NetSendFactory.html">NetSendFactory</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_Send_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(!Net.HasAuthority).Then(Net.Send.ToAuthority(nameof(RequestReady))));</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_NetFactory_SecondsSinceUpdate_" data-uid="CodeSmile.LunyScript.NetFactory.SecondsSinceUpdate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetFactory_SecondsSinceUpdate_CodeSmile_LunyScript_TransformChannel_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NetFactory.SecondsSinceUpdate(CodeSmile.LunyScript.TransformChannel,System.String,System.Int32)">
+  SecondsSinceUpdate(TransformChannel, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NetFactory.cs/#L193"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many seconds since a value for one transform channel arrived from the
+authority. Zero on the authority itself, whose transform is the one being sent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock SecondsSinceUpdate(TransformChannel channel, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>channel</code> <a class="xref" href="CodeSmile.LunyScript.TransformChannel.html">TransformChannel</a></dt>
+    <dd><p>The channel to ask about, which this script must synchronise.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Filled in by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Filled in by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A value block reading the age in seconds.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_SecondsSinceUpdate_CodeSmile_LunyScript_TransformChannel_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">If(Net.SecondsSinceUpdate(TransformChannel.Position) &gt; 0.5).Then(Ghosted.Set(true))</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_SecondsSinceUpdate_CodeSmile_LunyScript_TransformChannel_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Latency is a state a script reads rather than an exception it handles;
+<code>AGENTS.md</code> rule 45.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This script does not synchronise that
+channel, so nothing ever arrives for it and there is no age to report.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_NetFactory_SecondsSinceUpdate_" data-uid="CodeSmile.LunyScript.NetFactory.SecondsSinceUpdate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NetFactory_SecondsSinceUpdate__1_CodeSmile_LunyScript_Var___0__System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NetFactory.SecondsSinceUpdate``1(CodeSmile.LunyScript.Var{``0},System.String,System.Int32)">
+  SecondsSinceUpdate&lt;T&gt;(Var&lt;T&gt;, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NetFactory.cs/#L162"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many seconds ago this peer last received a value for one synchronised variable.
+Zero on the peer with authority, whose own value is never behind.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberValueBlock SecondsSinceUpdate&lt;T&gt;(Var&lt;T&gt; variable, string callerFilePath = null, int callerLineNumber = 0) where T : struct</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>variable</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;T&gt;</dt>
+    <dd><p>The synchronised variable to ask about. It has to have been declared
+with <code>Var.DefineSynced</code> or <code>Var.DefineSyncedText</code> in this same script.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Filled in by the compiler.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Filled in by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression, in seconds.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p><code>Number</code>, <code>Flag</code> or <code>Text</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_SecondsSinceUpdate__1_CodeSmile_LunyScript_Var___0__System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Net.SecondsSinceUpdate(Health) &gt; 1.0).Then(FadeHealthBar.Set(true)));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NetFactory_SecondsSinceUpdate__1_CodeSmile_LunyScript_Var___0__System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This is the per-variable half of rule 45's &quot;latency is a state&quot;. A rate-capped variable is
+stale between sends by design and a <code>SyncCadence.Once</code> variable is stale from the
+moment after it arrives; both are correct, and this is how a script can say by how much
+rather than assume.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The variable is not one this script
+synchronises, so there is no arrival for it to be counting from.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NetFactory.cs/#L37" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

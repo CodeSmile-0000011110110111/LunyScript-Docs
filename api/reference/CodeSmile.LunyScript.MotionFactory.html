@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct MotionFactory | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct MotionFactory | LunyScript API Reference ">
+      
+      <meta name="description" content="The Motion surface inside Build(): component-directed movement, force and relocation for the object a script runs on.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_MotionFactory.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.MotionFactory%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.MotionFactory">
+
+
+
+  <h1 id="CodeSmile_LunyScript_MotionFactory" data-uid="CodeSmile.LunyScript.MotionFactory" class="text-break">
+Struct MotionFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The <code>Motion</code> surface inside <code>Build()</code>: component-directed movement, force and
+relocation for the object a script runs on.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct MotionFactory</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_MotionFactory_examples">Examples</h2>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.MoveTo(Pad).AtSpeed(4.0));
+On.FixedUpdate(Motion.AddForce(Thrust).InWorldSpace());
+On.Ready(Motion.TeleportTo(Spawn));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_MotionFactory_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>Motion is not Transform.</b> <code>Transform.MoveBy</code> writes pose immediately, with no
+physics. <code>Motion.MoveBy</code> selects a CharacterController, a kinematic Rigidbody, or a
+direct transform, and refuses a dynamic Rigidbody. Dynamic bodies use
+<a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_AddForce_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_">AddForce(Vec3ValueBlock, string, int)</a>, <a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_AddImpulse_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_">AddImpulse(Vec3ValueBlock, string, int)</a>, <a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_SetVelocity_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_">SetVelocity(Vec3ValueBlock, string, int)</a> and
+<a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_StopMotion_System_String_System_Int32_">StopMotion(string, int)</a>. Relocation that is not traversed movement is
+<a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_">TeleportTo(Vec3ValueBlock, string, int)</a>. API-semantics M20.</p>
+<p>
+    Kinematic displacement, every physical input, and a Rigidbody teleport belong in
+    <code>On.FixedUpdate</code>. Written in any other event they are reported once and ignored;
+    they are not transferred to a later step. API-semantics M12.
+</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_AddForce_" data-uid="CodeSmile.LunyScript.MotionFactory.AddForce*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_AddForce_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.AddForce(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  AddForce(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L212"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Applies a continuous force given as three numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionForceBuilder AddForce(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The frame's X component.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The frame's Y component.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The frame's Z component.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionForceBuilder.html">MotionForceBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>InWorldSpace()</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_AddForce_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.AddForce(0.0, 0.0, 10.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any component is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_AddForce_" data-uid="CodeSmile.LunyScript.MotionFactory.AddForce*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_AddForce_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.AddForce(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
+  AddForce(Vec3ValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Applies a continuous force on an active dynamic Rigidbody, along the object's own
+axes unless <code>InWorldSpace()</code> is written.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionForceBuilder AddForce(Vec3ValueBlock force, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>force</code> <a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt>
+    <dd><p>The force.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionForceBuilder.html">MotionForceBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>InWorldSpace()</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_AddForce_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.AddForce(Thrust).InWorldSpace());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">force</code> is null, or this
+surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_AddImpulse_" data-uid="CodeSmile.LunyScript.MotionFactory.AddImpulse*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_AddImpulse_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.AddImpulse(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  AddImpulse(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L250"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Applies an instant change given as three numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionForceBuilder AddImpulse(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The frame's X component.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The frame's Y component.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The frame's Z component.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionForceBuilder.html">MotionForceBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>InWorldSpace()</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_AddImpulse_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.AddImpulse(0.0, 4.0, 0.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any component is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_AddImpulse_" data-uid="CodeSmile.LunyScript.MotionFactory.AddImpulse*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_AddImpulse_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.AddImpulse(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
+  AddImpulse(Vec3ValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L235"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Applies an instant change on an active dynamic Rigidbody, along the object's own
+axes unless <code>InWorldSpace()</code> is written. Named instead of a force-mode parameter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionForceBuilder AddImpulse(Vec3ValueBlock impulse, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>impulse</code> <a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt>
+    <dd><p>The impulse.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionForceBuilder.html">MotionForceBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>InWorldSpace()</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_AddImpulse_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.AddImpulse(Kick));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">impulse</code> is null, or this
+surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_FaceTowards_" data-uid="CodeSmile.LunyScript.MotionFactory.FaceTowards*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_FaceTowards_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.FaceTowards(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  FaceTowards(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L155"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Turns toward a world point given as three numbers. Incomplete until
+<code>DegreesPerSecond</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionFaceTowardsBuilder FaceTowards(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world x.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world y.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world z.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionFaceTowardsBuilder.html">MotionFaceTowardsBuilder</a></dt>
+    <dd><p>A builder that takes <code>DegreesPerSecond</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_FaceTowards_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.FaceTowards(0.0, 0.0, 4.0).DegreesPerSecond(90.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any coordinate is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_FaceTowards_" data-uid="CodeSmile.LunyScript.MotionFactory.FaceTowards*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_FaceTowards_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.FaceTowards(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
+  FaceTowards(Vec3ValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L134"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Turns toward a world point each execution. Incomplete until
+<code>DegreesPerSecond</code>. Maintains facing while the block keeps running.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionFaceTowardsBuilder FaceTowards(Vec3ValueBlock target, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>target</code> <a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt>
+    <dd><p>The world point to face.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionFaceTowardsBuilder.html">MotionFaceTowardsBuilder</a></dt>
+    <dd><p>A builder that takes <code>DegreesPerSecond</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_FaceTowards_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.FaceTowards(Pad).DegreesPerSecond(90.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">target</code> is null, or this
+surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_MoveBy_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveBy*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveBy(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>One displacement this execution, along the object's own oriented axes unless
+<code>InWorldSpace()</code> is written. The length is in world distance units and is not scaled
+by time.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionDisplacementBuilder MoveBy(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Units along the frame's X axis.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Units along the frame's Y axis.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>Units along the frame's Z axis.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionDisplacementBuilder.html">MotionDisplacementBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>InWorldSpace()</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.MoveBy(0.0, 0.0, 0.1));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any amount is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_MoveBy_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveBy*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_MoveBy_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveBy(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
+  MoveBy(Vec3ValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>One displacement this execution, from a spatial value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionDisplacementBuilder MoveBy(Vec3ValueBlock delta, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>delta</code> <a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt>
+    <dd><p>The displacement.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionDisplacementBuilder.html">MotionDisplacementBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>InWorldSpace()</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_MoveBy_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.MoveBy(Step));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">delta</code> is null, or this
+surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_MoveTo_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_MoveTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveTo(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  MoveTo(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Steps toward a world destination given as three numbers. Incomplete until
+<code>AtSpeed</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionMoveToBuilder MoveTo(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world x.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world y.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world z.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionMoveToBuilder.html">MotionMoveToBuilder</a></dt>
+    <dd><p>A builder that takes <code>AtSpeed</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_MoveTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.MoveTo(0.0, 0.0, 4.0).AtSpeed(4.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any coordinate is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_MoveTo_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_MoveTo_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveTo(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
+  MoveTo(Vec3ValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L90"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Steps toward a world destination. Incomplete until <code>AtSpeed</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionMoveToBuilder MoveTo(Vec3ValueBlock destination, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>destination</code> <a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt>
+    <dd><p>The world point to reach.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionMoveToBuilder.html">MotionMoveToBuilder</a></dt>
+    <dd><p>A builder that takes <code>AtSpeed</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_MoveTo_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.MoveTo(Pad).AtSpeed(4.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">destination</code> is null, or this
+surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_RotateTo_" data-uid="CodeSmile.LunyScript.MotionFactory.RotateTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_RotateTo_CodeSmile_LunyScript_RotationValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.RotateTo(CodeSmile.LunyScript.RotationValueBlock,System.String,System.Int32)">
+  RotateTo(RotationValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L178"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Steps toward an orientation. Incomplete until <code>DegreesPerSecond</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionRotateToBuilder RotateTo(RotationValueBlock orientation, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>orientation</code> <a class="xref" href="CodeSmile.LunyScript.RotationValueBlock.html">RotationValueBlock</a></dt>
+    <dd><p>The orientation to reach.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionRotateToBuilder.html">MotionRotateToBuilder</a></dt>
+    <dd><p>A builder that takes <code>DegreesPerSecond</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_RotateTo_CodeSmile_LunyScript_RotationValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.RotateTo(Facing).DegreesPerSecond(90.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">orientation</code> is null, or this
+surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_SetVelocity_" data-uid="CodeSmile.LunyScript.MotionFactory.SetVelocity*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_SetVelocity_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.SetVelocity(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  SetVelocity(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L293"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes absolute linear velocity given as three numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionVelocityBuilder SetVelocity(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The frame's X component.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The frame's Y component.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The frame's Z component.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionVelocityBuilder.html">MotionVelocityBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>InWorldSpace()</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_SetVelocity_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.SetVelocity(0.0, 0.0, 2.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any component is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_SetVelocity_" data-uid="CodeSmile.LunyScript.MotionFactory.SetVelocity*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_SetVelocity_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.SetVelocity(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
+  SetVelocity(Vec3ValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L273"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes absolute linear velocity, converted from the selected frame before the
+world write.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionVelocityBuilder SetVelocity(Vec3ValueBlock velocity, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>velocity</code> <a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt>
+    <dd><p>The velocity.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionVelocityBuilder.html">MotionVelocityBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>InWorldSpace()</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_SetVelocity_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.SetVelocity(Wind).InWorldSpace());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">velocity</code> is null, or this
+surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_StopMotion_" data-uid="CodeSmile.LunyScript.MotionFactory.StopMotion*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_StopMotion_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.StopMotion(System.String,System.Int32)">
+  StopMotion(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L314"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Clears linear and angular velocity once. Not a freeze: later gravity and contacts
+still move the body.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Block StopMotion(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>The finished block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_StopMotion_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(If(Landed).Then(Motion.StopMotion()));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_TeleportTo_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  TeleportTo(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L353"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Places the object at a world position given as three numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionTeleportBuilder TeleportTo(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world x.</p>
+</dd>
+    <dt><code>y</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world y.</p>
+</dd>
+    <dt><code>z</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The world z.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionTeleportBuilder.html">MotionTeleportBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>WithRotation</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.TeleportTo(0.0, 1.0, 0.0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any coordinate is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_TeleportTo_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
+  TeleportTo(Vec3ValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L333"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Places the object at a world position. Dynamic bodies also clear both velocities.
+Kinematic bodies receive a pose write and no velocity setter. Position only unless
+<code>WithRotation</code> is written.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public MotionTeleportBuilder TeleportTo(Vec3ValueBlock position, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>position</code> <a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt>
+    <dd><p>The world point.</p>
+</dd>
+    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
+    <dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd>
+    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
+    <dd><p>Supplied by the compiler.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionTeleportBuilder.html">MotionTeleportBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>WithRotation</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.TeleportTo(Spawn));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">position</code> is null, or this
+surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L30" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

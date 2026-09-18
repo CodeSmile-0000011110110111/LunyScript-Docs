@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class InputGateway | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class InputGateway | LunyScript API Reference ">
+      
+      <meta name="description" content="The core&#39;s one entry point to player input. Owns the , resolves each program&#39;s declared actions once, and answers the value reads and the occurrence tests the input blocks make.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_InputGateway.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.InputGateway%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.InputGateway">
+
+
+
+  <h1 id="CodeSmile_LunyScript_InputGateway" data-uid="CodeSmile.LunyScript.InputGateway" class="text-break">
+Class InputGateway  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The core's one entry point to player input. Owns the <a class="xref" href="CodeSmile.LunyScript.IInputProvider.html">IInputProvider</a>, resolves
+each program's declared actions once, and answers the value reads and the occurrence tests
+the input blocks make.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class InputGateway</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">InputGateway</span></div>
+    </dd>
+  </dl>
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_InputGateway_examples">Examples</h2>
+  <pre><code class="lang-csharp">runner.InputGateway.UseProvider(new FakeInputProvider());</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_InputGateway_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This is the input counterpart of <a class="xref" href="CodeSmile.LunyScript.NetworkGateway.html">NetworkGateway</a> and is deliberately the same
+shape, because it has the same problem: the core may not reference the Input System package,
+so the core owns an interface and a separate, package-gated assembly implements it. The
+ownership board's P01 row is what authorises that adapter, and it is the only place in the
+product where the package is named.</p>
+<p>
+    <b>Resolution happens once per program, not once per object.</b> A declaration carries a
+    local player index and a name, both written in <code>Build()</code>, so every object running
+    the script resolves to the same configured action. <a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_ResolutionsFor_CodeSmile_LunyScript_ScriptProgram_">ResolutionsFor(ScriptProgram)</a> returns
+    the one array of backend identifiers that program's instances share; the array is
+    re-resolved in place when the provider changes, so an instance that already holds it
+    keeps reading the right actions.
+</p>
+<p>
+    <b>Nothing here is per frame except the reads.</b> Each read is one array index and one
+    call into the backend, and allocates nothing; AGENTS.md rule 29.
+</p>
+<p>
+    <b>A declaration that does not resolve is reported once and reads its resting value.</b>
+    The report names the script, the declaration and why, at error severity, once per
+    declaration per program, for the reason the asset inputs report once: the mistake is in
+    the script's wiring or in the action asset, so a thousand objects say so once.
+</p>
+</div>
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="CodeSmile_LunyScript_InputGateway_Unresolved" data-uid="CodeSmile.LunyScript.InputGateway.Unresolved">
+  Unresolved
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The identifier a declaration that did not resolve carries. Every read of it
+produces the resting value of its kind.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int Unresolved = -1</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_InputGateway_HasProvider_" data-uid="CodeSmile.LunyScript.InputGateway.HasProvider*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputGateway_HasProvider" data-uid="CodeSmile.LunyScript.InputGateway.HasProvider">
+  HasProvider
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether an input backend has been installed. False means every action reads its
+resting value and every occurrence test is false.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasProvider { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_InputGateway_IsLocked_" data-uid="CodeSmile.LunyScript.InputGateway.IsLocked*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputGateway_IsLocked" data-uid="CodeSmile.LunyScript.InputGateway.IsLocked">
+  IsLocked
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the last cursor lock write was Lock.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsLocked { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_InputGateway_IsVisible_" data-uid="CodeSmile.LunyScript.InputGateway.IsVisible*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputGateway_IsVisible" data-uid="CodeSmile.LunyScript.InputGateway.IsVisible">
+  IsVisible
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the last cursor visibility write was Show.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsVisible { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_InputGateway_LocalPlayerCount_" data-uid="CodeSmile.LunyScript.InputGateway.LocalPlayerCount*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputGateway_LocalPlayerCount" data-uid="CodeSmile.LunyScript.InputGateway.LocalPlayerCount">
+  LocalPlayerCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L90"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many local players the backend has, or zero when there is none.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int LocalPlayerCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_InputGateway_IsPressed_" data-uid="CodeSmile.LunyScript.InputGateway.IsPressed*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputGateway_IsPressed_System_Int32_" data-uid="CodeSmile.LunyScript.InputGateway.IsPressed(System.Int32)">
+  IsPressed(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L165"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether one resolved action is held down now.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsPressed(int actionId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>actionId</code> <span class="xref">int</span></dt>
+    <dd><p>The identifier, or <a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_Unresolved">Unresolved</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False for an unresolved action and for no provider.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputGateway_IsPressed_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var pressed = gateway.IsPressed(actionId);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_InputGateway_Occurred_" data-uid="CodeSmile.LunyScript.InputGateway.Occurred*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputGateway_Occurred_System_Int32_CodeSmile_LunyScript_InputPhase_" data-uid="CodeSmile.LunyScript.InputGateway.Occurred(System.Int32,CodeSmile.LunyScript.InputPhase)">
+  Occurred(int, InputPhase)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L196"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether one occurrence happened to a resolved action during this frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Occurred(int actionId, InputPhase phase)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>actionId</code> <span class="xref">int</span></dt>
+    <dd><p>The identifier, or <a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_Unresolved">Unresolved</a>.</p>
+</dd>
+    <dt><code>phase</code> <a class="xref" href="CodeSmile.LunyScript.InputPhase.html">InputPhase</a></dt>
+    <dd><p>Which occurrence to ask about.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False for an unresolved action and for no provider.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputGateway_Occurred_System_Int32_CodeSmile_LunyScript_InputPhase__examples">Examples</h4>
+  <pre><code class="lang-csharp">var fired = gateway.Occurred(actionId, InputPhase.Performed);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_InputGateway_ReadNumber_" data-uid="CodeSmile.LunyScript.InputGateway.ReadNumber*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputGateway_ReadNumber_System_Int32_" data-uid="CodeSmile.LunyScript.InputGateway.ReadNumber(System.Int32)">
+  ReadNumber(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L173"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>One resolved action's one-component value now.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double ReadNumber(int actionId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>actionId</code> <span class="xref">int</span></dt>
+    <dd><p>The identifier, or <a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_Unresolved">Unresolved</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd><p>Zero for an unresolved action and for no provider.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputGateway_ReadNumber_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var throttle = gateway.ReadNumber(actionId);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_InputGateway_ReadVector_" data-uid="CodeSmile.LunyScript.InputGateway.ReadVector*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputGateway_ReadVector_System_Int32_" data-uid="CodeSmile.LunyScript.InputGateway.ReadVector(System.Int32)">
+  ReadVector(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L182"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>One resolved action's spatial value now.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vec3 ReadVector(int actionId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>actionId</code> <span class="xref">int</span></dt>
+    <dd><p>The identifier, or <a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_Unresolved">Unresolved</a>.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The zero vector for an unresolved action and for no provider.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputGateway_ReadVector_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var move = gateway.ReadVector(actionId);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_InputGateway_ResolutionsFor_" data-uid="CodeSmile.LunyScript.InputGateway.ResolutionsFor*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputGateway_ResolutionsFor_CodeSmile_LunyScript_ScriptProgram_" data-uid="CodeSmile.LunyScript.InputGateway.ResolutionsFor(CodeSmile.LunyScript.ScriptProgram)">
+  ResolutionsFor(ScriptProgram)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L143"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The backend identifiers this program's declared actions resolved to, in declaration
+order. Resolved the first time the program is asked for, and re-resolved in place when
+the provider changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int[] ResolutionsFor(ScriptProgram program)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>program</code> <a class="xref" href="CodeSmile.LunyScript.ScriptProgram.html">ScriptProgram</a></dt>
+    <dd><p>The program whose declarations to resolve.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span>[]</dt>
+    <dd><p>One identifier per declaration, <a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_Unresolved">Unresolved</a> where it did not
+resolve. An empty array for a program that declares no action.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputGateway_ResolutionsFor_CodeSmile_LunyScript_ScriptProgram__examples">Examples</h4>
+  <pre><code class="lang-csharp">var ids = runner.InputGateway.ResolutionsFor(program);</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputGateway_ResolutionsFor_CodeSmile_LunyScript_ScriptProgram__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Called once per spawn and never per frame. The returned array belongs to the
+gateway and is shared by every instance of the program, because a declaration's player and
+name are the same for all of them.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_InputGateway_UseProvider_" data-uid="CodeSmile.LunyScript.InputGateway.UseProvider*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputGateway_UseProvider_CodeSmile_LunyScript_IInputProvider_" data-uid="CodeSmile.LunyScript.InputGateway.UseProvider(CodeSmile.LunyScript.IInputProvider)">
+  UseProvider(IInputProvider)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Installs the backend and re-resolves every program that has already been
+resolved, so an instance spawned before the provider arrived starts reading real
+actions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void UseProvider(IInputProvider provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>provider</code> <a class="xref" href="CodeSmile.LunyScript.IInputProvider.html">IInputProvider</a></dt>
+    <dd><p>The backend. Null is the caller's mistake.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputGateway_UseProvider_CodeSmile_LunyScript_IInputProvider__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.InputGateway.UseProvider(new FakeInputProvider());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The provider is null.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L42" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

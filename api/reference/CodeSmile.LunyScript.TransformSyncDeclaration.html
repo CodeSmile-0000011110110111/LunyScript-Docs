@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct TransformSyncDeclaration | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct TransformSyncDeclaration | LunyScript API Reference ">
+      
+      <meta name="description" content="One Sync.Position, Sync.Rotation or Sync.Scale as the build recorded it: which channel, at which cadence, and which slots hold the per-object bookkeeping the network tick needs. Built by  and read by ; a script never sees one.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_TransformSyncDeclaration.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.TransformSyncDeclaration%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.TransformSyncDeclaration">
+
+
+
+  <h1 id="CodeSmile_LunyScript_TransformSyncDeclaration" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration" class="text-break">
+Struct TransformSyncDeclaration  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformSyncDeclaration.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>One <code>Sync.Position</code>, <code>Sync.Rotation</code> or <code>Sync.Scale</code> as the build
+recorded it: which channel, at which cadence, and which slots hold the per-object bookkeeping
+the network tick needs. Built by <a class="xref" href="CodeSmile.LunyScript.ScriptBuildContext.html">ScriptBuildContext</a> and read by
+<a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html">ScriptRunner</a>; a script never sees one.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct TransformSyncDeclaration</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_TransformSyncDeclaration_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>The shadow slots are the one part worth reading twice, because they mean two things at once
+and that is deliberate. On the peer with authority they hold the last value it put in the
+stream. On every other peer they hold the last value it took out of one. Both are the same
+fact - the value the two ends agree on - which is exactly what a change is measured against,
+so the position channel's change encoding needs no second set of slots to decode with.</p>
+<p>
+    <b>The rotation channel uses one shadow slot, not three, and what it holds is not a
+    coordinate.</b> A rotation is sent whole rather than as a change, so the only thing the
+    authority needs to remember is the 32 bits it last sent, and
+    <a class="xref" href="CodeSmile.LunyScript.TransformSyncDeclaration.html#CodeSmile_LunyScript_TransformSyncDeclaration_ShadowSlotX">ShadowSlotX</a> holds exactly those, as a <a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a>, which
+    carries a 32-bit integer without rounding. <a class="xref" href="CodeSmile.LunyScript.TransformSyncDeclaration.html#CodeSmile_LunyScript_TransformSyncDeclaration_ShadowSlotY">ShadowSlotY</a> and
+    <a class="xref" href="CodeSmile.LunyScript.TransformSyncDeclaration.html#CodeSmile_LunyScript_TransformSyncDeclaration_ShadowSlotZ">ShadowSlotZ</a> are <span class="xref">CodeSmile.LunyScript.ScriptBuildContext.NoShadowSlot</span> there:
+    a negative index cannot address a slot, so a path that read one by mistake fails its
+    bounds check rather than reading an unrelated variable.
+</p>
+</div>
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="CodeSmile_LunyScript_TransformSyncDeclaration_Cadence" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.Cadence">
+  Cadence
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformSyncDeclaration.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How often it is sent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly SyncCadence Cadence</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_TransformSyncDeclaration_Channel" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.Channel">
+  Channel
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformSyncDeclaration.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Which part of the transform this declaration synchronises.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly TransformChannel Channel</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TransformChannel.html">TransformChannel</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_TransformSyncDeclaration_CooldownSlot_" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.CooldownSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformSyncDeclaration_CooldownSlot" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.CooldownSlot">
+  CooldownSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformSyncDeclaration.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How long the rate cap still holds this channel back. Only a rate-capped cadence has
+one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberSlot CooldownSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberSlot.html">NumberSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_TransformSyncDeclaration_IsRateCapped_" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.IsRateCapped*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformSyncDeclaration_IsRateCapped" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.IsRateCapped">
+  IsRateCapped
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformSyncDeclaration.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the cadence carries a rate cap, and therefore whether
+<a class="xref" href="CodeSmile.LunyScript.TransformSyncDeclaration.html#CodeSmile_LunyScript_TransformSyncDeclaration_CooldownSlot">CooldownSlot</a> addresses a real slot.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsRateCapped { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_TransformSyncDeclaration_SentSlot_" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.SentSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformSyncDeclaration_SentSlot" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.SentSlot">
+  SentSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformSyncDeclaration.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether this channel has been sent at least once since the last peer joined.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FlagSlot SentSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.FlagSlot.html">FlagSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_TransformSyncDeclaration_ShadowSlotX_" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.ShadowSlotX*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformSyncDeclaration_ShadowSlotX" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.ShadowSlotX">
+  ShadowSlotX
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformSyncDeclaration.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>For a position or a scale, the slot holding the x of the value both ends agree on.
+For a rotation, the slot holding the 32 bits last sent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberSlot ShadowSlotX { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberSlot.html">NumberSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_TransformSyncDeclaration_ShadowSlotY_" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.ShadowSlotY*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformSyncDeclaration_ShadowSlotY" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.ShadowSlotY">
+  ShadowSlotY
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformSyncDeclaration.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The slot holding the y of the value both ends agree on.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberSlot ShadowSlotY { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberSlot.html">NumberSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_TransformSyncDeclaration_ShadowSlotZ_" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.ShadowSlotZ*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformSyncDeclaration_ShadowSlotZ" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.ShadowSlotZ">
+  ShadowSlotZ
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformSyncDeclaration.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The slot holding the z of the value both ends agree on.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberSlot ShadowSlotZ { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberSlot.html">NumberSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_TransformSyncDeclaration_StalenessSlot_" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.StalenessSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformSyncDeclaration_StalenessSlot" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.StalenessSlot">
+  StalenessSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformSyncDeclaration.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many seconds since a value for this channel arrived, which
+<code>Net.SecondsSinceUpdate</code> reads.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public NumberSlot StalenessSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberSlot.html">NumberSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_TransformSyncDeclaration_UnencodableReportedSlot_" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.UnencodableReportedSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformSyncDeclaration_UnencodableReportedSlot" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.UnencodableReportedSlot">
+  UnencodableReportedSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformSyncDeclaration.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The slot latching that this object's value was already reported as outside what the
+stream's encoding holds. Set once and never cleared, so the report is made once for an
+object and not again. Only the scale channel has one: it is the only channel that sends a
+value rather than a change, so it is the only one with no second form to fall back
+to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FlagSlot UnencodableReportedSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.FlagSlot.html">FlagSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_TransformSyncDeclaration_ToString_" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.ToString*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TransformSyncDeclaration_ToString" data-uid="CodeSmile.LunyScript.TransformSyncDeclaration.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformSyncDeclaration.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How a diagnostic names this declaration.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformSyncDeclaration.cs/#L26" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

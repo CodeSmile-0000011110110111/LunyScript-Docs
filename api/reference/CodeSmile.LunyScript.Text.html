@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct Text | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct Text | LunyScript API Reference ">
+      
+      <meta name="description" content="A text literal written in a script, and the type argument that makes a text variable Var&amp;lt;Text&amp;gt;.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_Text.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.Text%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.Text">
+
+
+
+  <h1 id="CodeSmile_LunyScript_Text" data-uid="CodeSmile.LunyScript.Text" class="text-break">
+Struct Text  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Text.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>A text literal written in a script, and the type argument that makes a text variable
+<code>Var&lt;Text&gt;</code>.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct Text</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_Text_examples">Examples</h2>
+  <pre><code class="lang-csharp">var playerName = Var.DefineText("playerName");
+On.Ready(playerName.Set("Player One"));   // the String becomes a Text here</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_Text_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>A <a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a> is a build-time value only.</b> It carries a managed
+<code>System.String</code>, which is what a literal in C# source is, and it is converted into the
+block's fixed-capacity storage while the script type is built. No slot ever holds one and no
+block ever creates one, so the managed string never reaches the run-time path. The run-time
+storage is a <code>Unity.Collections.FixedString</code> chosen by the variable's declared
+<a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a>.</p>
+<p>
+    The implicit conversion from <code>String</code> is deliberate and does not contradict AGENTS.md
+    rule 40, which forbids an implicit conversion from <code>String</code> to a variable <i>block</i>
+    so that <code>Debug.Log("msg" + variable)</code> cannot silently become one. This conversion
+    produces a literal value, not a block.
+</p>
+</div>
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Text__ctor_" data-uid="CodeSmile.LunyScript.Text.#ctor*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Text__ctor_System_String_" data-uid="CodeSmile.LunyScript.Text.#ctor(System.String)">
+  Text(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Text.cs/#L51"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a literal from a string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Text(string value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <span class="xref">string</span></dt>
+    <dd><p>The characters. Null is treated as the empty string.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="CodeSmile_LunyScript_Text_MaxLiteralBytes" data-uid="CodeSmile.LunyScript.Text.MaxLiteralBytes">
+  MaxLiteralBytes
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Text.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Largest text literal a script can write, in UTF-8 bytes. A literal is stored in a
+<code>FixedString512Bytes</code> inside the block, whatever capacity the target variable
+declares.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const int MaxLiteralBytes = 509</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Text_ByteLength_" data-uid="CodeSmile.LunyScript.Text.ByteLength*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Text_ByteLength" data-uid="CodeSmile.LunyScript.Text.ByteLength">
+  ByteLength
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Text.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Number of UTF-8 bytes this literal needs, which is what
+<a class="xref" href="CodeSmile.LunyScript.Text.html#CodeSmile_LunyScript_Text_MaxLiteralBytes">MaxLiteralBytes</a> and a variable's <a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a> are measured
+in.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int ByteLength { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Text_Value_" data-uid="CodeSmile.LunyScript.Text.Value*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Text_Value" data-uid="CodeSmile.LunyScript.Text.Value">
+  Value
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Text.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The literal's characters. Never null; an uninitialised <a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a> reads as
+the empty string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Value { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Text_Equals_" data-uid="CodeSmile.LunyScript.Text.Equals*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Text_Equals_CodeSmile_LunyScript_Text_" data-uid="CodeSmile.LunyScript.Text.Equals(CodeSmile.LunyScript.Text)">
+  Equals(Text)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Text.cs/#L122"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Two literals are equal when their characters are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(Text other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a></dt>
+    <dd><p>The literal to compare against.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when both carry the same characters.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Text_Equals_" data-uid="CodeSmile.LunyScript.Text.Equals*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Text_Equals_System_Object_" data-uid="CodeSmile.LunyScript.Text.Equals(System.Object)">
+  Equals(object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Text.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Indicates whether this instance and a specified object are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <span class="xref">object</span></dt>
+    <dd><p>The object to compare with the current instance.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if <code class="paramref">obj</code> and this instance are the same type and represent the same value; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Text_Format_" data-uid="CodeSmile.LunyScript.Text.Format*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Text_Format_System_String_CodeSmile_LunyScript_TextArgument___" data-uid="CodeSmile.LunyScript.Text.Format(System.String,CodeSmile.LunyScript.TextArgument[])">
+  Format(string, params TextArgument[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Text.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a text value out of a format and the values that fill its holes, for a text
+variable's <code>Set</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static TextFormat Format(string format, params TextArgument[] arguments)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>format</code> <span class="xref">string</span></dt>
+    <dd><p>The text to write, with <code>{0}</code> where the first value goes,
+<code>{1}</code> the second, and so on. A number hole may ask for a fixed number of decimal places,
+written <code>{0:2}</code>. A literal brace is written <code>{{</code> or <code>}}</code>.</p>
+</dd>
+    <dt><code>arguments</code> <a class="xref" href="CodeSmile.LunyScript.TextArgument.html">TextArgument</a>[]</dt>
+    <dd><p>One value per hole: a number, a flag or a text variable. Literals of
+those kinds convert on their own.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TextFormat.html">TextFormat</a></dt>
+    <dd><p>The parsed format, which a text variable's <code>Set</code> takes.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Text_Format_System_String_CodeSmile_LunyScript_TextArgument____examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Label.Set(Text.Format("{0:1}/{1} hp", Health, MaxHealth)));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Text_Format_System_String_CodeSmile_LunyScript_TextArgument____remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>What a number hole prints.</b> With no decimal count, up to six decimal places with
+trailing zeros removed, so a whole number prints with no decimal point at all. With a
+count, exactly that many places, rounding a midpoint to the nearer even digit the way
+<code>Math.Round</code> does. NaN prints as <code>NaN</code> and an infinity as <code>Infinity</code> or
+<code>-Infinity</code>. A magnitude at or above 9,000,000,000,000,000,000 is printed through
+Unity's own single-precision formatter, which is the one case where the printed digits are
+not the <code>Double</code>'s.</p>
+<p>
+    <b>What a flag hole prints</b> is <code>true</code> or <code>false</code>. <b>A text hole</b>
+    copies the variable's bytes in.
+</p>
+<p>
+    The format is parsed once per script type, inside <code>Build()</code>. Writing the result
+    per frame appends into a buffer the size of the destination variable and allocates
+    nothing; text that does not fit the destination is refused the same way
+    <code>Set</code> refuses a literal that is too long.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The format is null or malformed, an argument is
+null or carries no value, or a hole names an argument that was not passed.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_Text_GetHashCode_" data-uid="CodeSmile.LunyScript.Text.GetHashCode*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Text_GetHashCode" data-uid="CodeSmile.LunyScript.Text.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Text.cs/#L128"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the hash code for this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd><p>A 32-bit signed integer that is the hash code for this instance.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Text_ToFixedString_" data-uid="CodeSmile.LunyScript.Text.ToFixedString*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Text_ToFixedString" data-uid="CodeSmile.LunyScript.Text.ToFixedString">
+  ToFixedString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Text.cs/#L109"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Converts the literal into the fixed-capacity form a block stores.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public FixedString512Bytes ToFixedString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">FixedString512Bytes</span></dt>
+    <dd><p>The literal as a <code>FixedString512Bytes</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Text_ToFixedString_examples">Examples</h4>
+  <pre><code class="lang-csharp">var stored = new Text("hello").ToFixedString();</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The literal needs more than
+<a class="xref" href="CodeSmile.LunyScript.Text.html#CodeSmile_LunyScript_Text_MaxLiteralBytes">MaxLiteralBytes</a> UTF-8 bytes.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_Text_ToString_" data-uid="CodeSmile.LunyScript.Text.ToString*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Text_ToString" data-uid="CodeSmile.LunyScript.Text.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Text.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The literal's characters.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p><a class="xref" href="CodeSmile.LunyScript.Text.html#CodeSmile_LunyScript_Text_Value">Value</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Text_op_Implicit_" data-uid="CodeSmile.LunyScript.Text.op_Implicit*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Text_op_Implicit_System_String__CodeSmile_LunyScript_Text" data-uid="CodeSmile.LunyScript.Text.op_Implicit(System.String)~CodeSmile.LunyScript.Text">
+  implicit operator Text(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Text.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Turns a C# string literal into a LunyScript text literal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static implicit operator Text(string value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <span class="xref">string</span></dt>
+    <dd><p>The characters.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a></dt>
+    <dd><p>The literal.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Text_op_Implicit_System_String__CodeSmile_LunyScript_Text_examples">Examples</h4>
+  <pre><code class="lang-csharp">Text greeting = "hello";</code></pre>
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Text.cs/#L31" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

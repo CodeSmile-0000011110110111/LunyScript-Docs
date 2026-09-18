@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct Rotation | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct Rotation | LunyScript API Reference ">
+      
+      <meta name="description" content="An orientation in three dimensions, held as a unit quaternion.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_Rotation.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.Rotation%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.Rotation">
+
+
+
+  <h1 id="CodeSmile_LunyScript_Rotation" data-uid="CodeSmile.LunyScript.Rotation" class="text-break">
+Struct Rotation  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>An orientation in three dimensions, held as a unit quaternion.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct Rotation</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <h2 id="CodeSmile_LunyScript_Rotation_examples">Examples</h2>
+  <pre><code class="lang-csharp">var facing = Rotation.Euler(0.0, 90.0, 0.0);
+var reversed = facing.Inverse;</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_Rotation_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>The four components are readable and none of them is writable.</b> Three of the four are
+not independent of the fourth: a quaternion that is not of length one is not an
+orientation, so writing one component alone produces a value that rotates and stretches.
+The API semantics board ruled on 2026-09-13 that a rotation is changed through its
+constructors or <a class="xref" href="CodeSmile.LunyScript.Rotation.html#CodeSmile_LunyScript_Rotation_Compose_CodeSmile_LunyScript_Rotation_">Compose(Rotation)</a> rather than through its components.</p>
+<p>
+    <b>An input that names no orientation produces <a class="xref" href="CodeSmile.LunyScript.Rotation.html#CodeSmile_LunyScript_Rotation_Identity">Identity</a>.</b> A
+    quaternion of length zero and one carrying a NaN or an infinity are both refused that
+    way rather than stored, so nothing downstream reads a value that is not a rotation.
+</p>
+<p>
+    <b><a class="xref" href="CodeSmile.LunyScript.Rotation.html#CodeSmile_LunyScript_Rotation_Euler_System_Double_System_Double_System_Double_">Euler(double, double, double)</a> takes degrees and applies them in the order Z, then X, then
+    Y</b>, which is the order Unity's own euler-angle rotation uses, so a script that
+    computes an orientation here and one that reads it off a transform agree.
+</p>
+</div>
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Rotation__ctor_" data-uid="CodeSmile.LunyScript.Rotation.#ctor*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation__ctor_System_Double_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.Rotation.#ctor(System.Double,System.Double,System.Double,System.Double)">
+  Rotation(double, double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds an orientation from four quaternion components, scaling them to length one.
+Components that name no orientation - a length of zero, or a NaN or an infinity among them
+- produce <a class="xref" href="CodeSmile.LunyScript.Rotation.html#CodeSmile_LunyScript_Rotation_Identity">Identity</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rotation(double x, double y, double z, double w)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>x</code> <span class="xref">double</span></dt>
+    <dd><p>The first component.</p>
+</dd>
+    <dt><code>y</code> <span class="xref">double</span></dt>
+    <dd><p>The second component.</p>
+</dd>
+    <dt><code>z</code> <span class="xref">double</span></dt>
+    <dd><p>The third component.</p>
+</dd>
+    <dt><code>w</code> <span class="xref">double</span></dt>
+    <dd><p>The fourth component.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation__ctor_System_Double_System_Double_System_Double_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">var upright = new Rotation(0.0, 0.0, 0.0, 1.0);</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="CodeSmile_LunyScript_Rotation_Identity" data-uid="CodeSmile.LunyScript.Rotation.Identity">
+  Identity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The orientation that turns nothing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly Rotation Identity</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Rotation.html">Rotation</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_Identity_examples">Examples</h4>
+  <pre><code class="lang-csharp">var upright = Rotation.Identity;</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Rotation_Inverse_" data-uid="CodeSmile.LunyScript.Rotation.Inverse*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_Inverse" data-uid="CodeSmile.LunyScript.Rotation.Inverse">
+  Inverse
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The orientation that undoes this one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rotation Inverse { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Rotation.html">Rotation</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_Inverse_examples">Examples</h4>
+  <pre><code class="lang-csharp">var undone = facing.Inverse;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_W_" data-uid="CodeSmile.LunyScript.Rotation.W*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_W" data-uid="CodeSmile.LunyScript.Rotation.W">
+  W
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The fourth component of the quaternion.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float W { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">float</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_W_examples">Examples</h4>
+  <pre><code class="lang-csharp">var w = facing.W;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_X_" data-uid="CodeSmile.LunyScript.Rotation.X*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_X" data-uid="CodeSmile.LunyScript.Rotation.X">
+  X
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The first component of the quaternion.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float X { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">float</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_X_examples">Examples</h4>
+  <pre><code class="lang-csharp">var x = facing.X;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_Y_" data-uid="CodeSmile.LunyScript.Rotation.Y*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_Y" data-uid="CodeSmile.LunyScript.Rotation.Y">
+  Y
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The second component of the quaternion.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float Y { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">float</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_Y_examples">Examples</h4>
+  <pre><code class="lang-csharp">var y = facing.Y;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_Z_" data-uid="CodeSmile.LunyScript.Rotation.Z*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_Z" data-uid="CodeSmile.LunyScript.Rotation.Z">
+  Z
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The third component of the quaternion.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float Z { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">float</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_Z_examples">Examples</h4>
+  <pre><code class="lang-csharp">var z = facing.Z;</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Rotation_AngleTo_" data-uid="CodeSmile.LunyScript.Rotation.AngleTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_AngleTo_CodeSmile_LunyScript_Rotation_" data-uid="CodeSmile.LunyScript.Rotation.AngleTo(CodeSmile.LunyScript.Rotation)">
+  AngleTo(Rotation)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L239"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How far apart two orientations are, in degrees, between 0 and 180.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double AngleTo(Rotation other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="CodeSmile.LunyScript.Rotation.html">Rotation</a></dt>
+    <dd><p>The orientation to measure to.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd><p>The angle in degrees.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_AngleTo_CodeSmile_LunyScript_Rotation__examples">Examples</h4>
+  <pre><code class="lang-csharp">var offBy = facing.AngleTo(wanted);</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_AngleTo_CodeSmile_LunyScript_Rotation__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>An orientation and its four negated components name the same orientation, so the
+angle between them is zero rather than 360. That is what &quot;antipodal equality&quot; means here,
+and a tolerance comparison is written <code>a.AngleTo(b) &lt;= tolerance</code>.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_ApplyTo_" data-uid="CodeSmile.LunyScript.Rotation.ApplyTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_ApplyTo_CodeSmile_LunyScript_Vec3_" data-uid="CodeSmile.LunyScript.Rotation.ApplyTo(CodeSmile.LunyScript.Vec3)">
+  ApplyTo(Vec3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L143"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A spatial value turned by this orientation. The value's length is unchanged.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vec3 ApplyTo(Vec3 value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The value to turn.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The turned value.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_ApplyTo_CodeSmile_LunyScript_Vec3__examples">Examples</h4>
+  <pre><code class="lang-csharp">var worldOffset = facing.ApplyTo(new Vec3(0.0, 0.0, 1.0));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_Compose_" data-uid="CodeSmile.LunyScript.Rotation.Compose*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_Compose_CodeSmile_LunyScript_Rotation_" data-uid="CodeSmile.LunyScript.Rotation.Compose(CodeSmile.LunyScript.Rotation)">
+  Compose(Rotation)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>This orientation applied after another one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Rotation Compose(Rotation first)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>first</code> <a class="xref" href="CodeSmile.LunyScript.Rotation.html">Rotation</a></dt>
+    <dd><p>The orientation applied first.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Rotation.html">Rotation</a></dt>
+    <dd><p>The combined orientation.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_Compose_CodeSmile_LunyScript_Rotation__examples">Examples</h4>
+  <pre><code class="lang-csharp">var combined = yaw.Compose(pitch);</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_Compose_CodeSmile_LunyScript_Rotation__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The argument is applied first and this one second, so
+<code>yaw.Compose(pitch)</code> pitches and then yaws.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_Equals_" data-uid="CodeSmile.LunyScript.Rotation.Equals*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_Equals_CodeSmile_LunyScript_Rotation_" data-uid="CodeSmile.LunyScript.Rotation.Equals(CodeSmile.LunyScript.Rotation)">
+  Equals(Rotation)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L268"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether two values name the same orientation. Four negated components name the
+same orientation, so they compare equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(Rotation other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="CodeSmile.LunyScript.Rotation.html">Rotation</a></dt>
+    <dd><p>The orientation to compare against.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when the components match exactly, or match exactly after negation.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_Equals_CodeSmile_LunyScript_Rotation__examples">Examples</h4>
+  <pre><code class="lang-csharp">var unchanged = facing.Equals(lastFacing);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_Equals_" data-uid="CodeSmile.LunyScript.Rotation.Equals*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_Equals_System_Object_" data-uid="CodeSmile.LunyScript.Rotation.Equals(System.Object)">
+  Equals(object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L276"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether this is an equal orientation of the same type.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <span class="xref">object</span></dt>
+    <dd><p>What to compare against.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when it is a <code>Rotation</code> naming the same orientation.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_Equals_System_Object__examples">Examples</h4>
+  <pre><code class="lang-csharp">var same = facing.Equals((Object)other);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_Euler_" data-uid="CodeSmile.LunyScript.Rotation.Euler*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_Euler_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_" data-uid="CodeSmile.LunyScript.Rotation.Euler(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock)">
+  Euler(NumberValueBlock, NumberValueBlock, NumberValueBlock)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L115"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds an orientation expression out of three angle expressions, applied in the
+order Z, then X, then Y.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static RotationValueBlock Euler(NumberValueBlock xDegrees, NumberValueBlock yDegrees, NumberValueBlock zDegrees)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>xDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The angle around the first axis.</p>
+</dd>
+    <dt><code>yDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The angle around the second axis.</p>
+</dd>
+    <dt><code>zDegrees</code> <a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>The angle around the third axis.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.RotationValueBlock.html">RotationValueBlock</a></dt>
+    <dd><p>An orientation expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_Euler_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Facing.Set(Rotation.Euler(0.0, Heading, 0.0)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any operand is null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_Euler_" data-uid="CodeSmile.LunyScript.Rotation.Euler*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_Euler_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.Rotation.Euler(System.Double,System.Double,System.Double)">
+  Euler(double, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds an orientation from three angles in degrees, applied in the order Z, then
+X, then Y.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Rotation Euler(double xDegrees, double yDegrees, double zDegrees)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>xDegrees</code> <span class="xref">double</span></dt>
+    <dd><p>The angle around the first axis.</p>
+</dd>
+    <dt><code>yDegrees</code> <span class="xref">double</span></dt>
+    <dd><p>The angle around the second axis.</p>
+</dd>
+    <dt><code>zDegrees</code> <span class="xref">double</span></dt>
+    <dd><p>The angle around the third axis.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Rotation.html">Rotation</a></dt>
+    <dd><p>The orientation those three angles name.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_Euler_System_Double_System_Double_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">var facing = Rotation.Euler(0.0, 90.0, 0.0);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_GetHashCode_" data-uid="CodeSmile.LunyScript.Rotation.GetHashCode*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_GetHashCode" data-uid="CodeSmile.LunyScript.Rotation.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L282"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A hash of the orientation, taken from the form whose first non-zero component is
+positive, so two values that compare equal hash equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd><p>The hash.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_GetHashCode_examples">Examples</h4>
+  <pre><code class="lang-csharp">var hash = facing.GetHashCode();</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_Slerp_" data-uid="CodeSmile.LunyScript.Rotation.Slerp*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_Slerp_CodeSmile_LunyScript_Rotation_CodeSmile_LunyScript_Rotation_System_Double_" data-uid="CodeSmile.LunyScript.Rotation.Slerp(CodeSmile.LunyScript.Rotation,CodeSmile.LunyScript.Rotation,System.Double)">
+  Slerp(Rotation, Rotation, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L158"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>An orientation a stated fraction of the way from one to another along the shortest
+arc. The fraction is not limited, matching scalar <code>Math.Lerp</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Rotation Slerp(Rotation from, Rotation to, double fraction)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>from</code> <a class="xref" href="CodeSmile.LunyScript.Rotation.html">Rotation</a></dt>
+    <dd><p>Where the fraction 0 sits.</p>
+</dd>
+    <dt><code>to</code> <a class="xref" href="CodeSmile.LunyScript.Rotation.html">Rotation</a></dt>
+    <dd><p>Where the fraction 1 sits.</p>
+</dd>
+    <dt><code>fraction</code> <span class="xref">double</span></dt>
+    <dd><p>How far along to go.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Rotation.html">Rotation</a></dt>
+    <dd><p>The interpolated orientation.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_Slerp_CodeSmile_LunyScript_Rotation_CodeSmile_LunyScript_Rotation_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">var mid = Rotation.Slerp(from, to, 0.5);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_ToEuler_" data-uid="CodeSmile.LunyScript.Rotation.ToEuler*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_ToEuler" data-uid="CodeSmile.LunyScript.Rotation.ToEuler">
+  ToEuler()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L205"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The three euler angles in degrees that name this orientation, in the order Unity
+writes them: Z, then X, then Y.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Vec3 ToEuler()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>X, Y and Z degrees.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_ToEuler_examples">Examples</h4>
+  <pre><code class="lang-csharp">var degrees = facing.ToEuler();</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Rotation_ToString_" data-uid="CodeSmile.LunyScript.Rotation.ToString*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Rotation_ToString" data-uid="CodeSmile.LunyScript.Rotation.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L296"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The four components, so a log line naming one reads as it was written.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>The components in brackets.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Rotation_ToString_examples">Examples</h4>
+  <pre><code class="lang-csharp">var described = facing.ToString();</code></pre>
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Rotation.cs/#L29" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
