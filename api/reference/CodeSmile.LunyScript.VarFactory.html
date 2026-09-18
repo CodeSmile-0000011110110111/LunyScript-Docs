@@ -9,7 +9,8 @@
       <meta name="description" content="The Var surface inside Build(): declares a script&#39;s variables and hands back the typed handles the blocks are built from.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="../toc.html">
       
@@ -31,6 +32,7 @@
       <meta name="loc:downloadPdf" content="Download PDF">
 
       <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -95,9 +97,14 @@ typed handles the blocks are built from.</p>
 
 
 
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
 
 
 
+
+
+  </details>
 
 
 
@@ -134,18 +141,31 @@ rule 25 forbids reading anything about an object here.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Var&lt;Text&gt; DefineAllocatingText(string name, int maxBytes)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Var&lt;Text&gt; DefineAllocatingText(string name, int maxBytes)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>name</code> <span class="xref">string</span></dt>
-    <dd><p>The name, which should come from <code>nameof</code>.</p>
-</dd>
-    <dt><code>maxBytes</code> <span class="xref">int</span></dt>
-    <dd><p>How many UTF-8 bytes it may hold, from 1 to 1048576.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>maxBytes</code></dt></td>
+    <td style="width: 99%"><dd><p>How many UTF-8 bytes it may hold, from 1 to 1048576.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -179,25 +199,41 @@ rule 25 forbids reading anything about an object here.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Var&lt;Text&gt; DefineSyncedText(string name, SyncCadence cadence, TextCapacity capacity = TextCapacity.Bytes64)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Var&lt;Text&gt; DefineSyncedText(string name, SyncCadence cadence, TextCapacity capacity = TextCapacity.Bytes64)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>name</code> <span class="xref">string</span></dt>
-    <dd><p>The variable's name, which should come from <code>nameof</code>.</p>
-</dd>
-    <dt><code>cadence</code> <a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt>
-    <dd><p>How often it is sent. Required, per AGENTS.md rule 46: a synchronised
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>cadence</code></dt></td>
+    <td style="width: 99%"><dd><p>How often it is sent. Required, per AGENTS.md rule 46: a synchronised
 variable whose cost nobody chose cannot be written. Text carries a managed string on the
 wire, so <a class="xref" href="CodeSmile.LunyScript.SyncCadence.html#CodeSmile_LunyScript_SyncCadence_EveryTick">EveryTick</a> is refused for it and
 <a class="xref" href="CodeSmile.LunyScript.SyncCadence.html#CodeSmile_LunyScript_SyncCadence_Once">Once</a> is the usual choice.</p>
-</dd>
-    <dt><code>capacity</code> <a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a></dt>
-    <dd><p>How many bytes it holds. Defaults to
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>capacity</code></dt></td>
+    <td style="width: 99%"><dd><p>How many bytes it holds. Defaults to
 <a class="xref" href="CodeSmile.LunyScript.TextCapacity.html#CodeSmile_LunyScript_TextCapacity_Bytes64">Bytes64</a>, which is one cache line.</p>
-</dd>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -248,21 +284,37 @@ written; AGENTS.md rule 46.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Var&lt;T&gt; DefineSynced&lt;T&gt;(string name, SyncCadence cadence, T defaultValue = default) where T : struct</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Var&lt;T&gt; DefineSynced&lt;T&gt;(string name, SyncCadence cadence, T defaultValue = default) where T : struct</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>name</code> <span class="xref">string</span></dt>
-    <dd><p>The variable's name, which should come from <code>nameof</code>.</p>
-</dd>
-    <dt><code>cadence</code> <a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt>
-    <dd><p>How often it is sent.</p>
-</dd>
-    <dt><code>defaultValue</code> <span class="xref">T</span></dt>
-    <dd><p>What it starts from.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>cadence</code></dt></td>
+    <td style="width: 99%"><dd><p>How often it is sent.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">T</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>defaultValue</code></dt></td>
+    <td style="width: 99%"><dd><p>What it starts from.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -309,22 +361,35 @@ text.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Var&lt;Text&gt; DefineText(string name, TextCapacity capacity = TextCapacity.Bytes64)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Var&lt;Text&gt; DefineText(string name, TextCapacity capacity = TextCapacity.Bytes64)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>name</code> <span class="xref">string</span></dt>
-    <dd><p>The name, used in diagnostics. Unique within the script.</p>
-</dd>
-    <dt><code>capacity</code> <a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a></dt>
-    <dd><p>How many bytes the variable holds. Defaults to
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The name, used in diagnostics. Unique within the script.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>capacity</code></dt></td>
+    <td style="width: 99%"><dd><p>How many bytes the variable holds. Defaults to
 <a class="xref" href="CodeSmile.LunyScript.TextCapacity.html#CodeSmile_LunyScript_TextCapacity_Bytes64">Bytes64</a>, which is 64 bytes of storage and 61 usable bytes, because
 64 bytes is a common cache-line size. AGENTS.md rule 15: the capacity is still declared per
 variable, so pass a smaller or larger one when the content is known to be shorter or longer
 than 61 bytes.</p>
-</dd>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -365,19 +430,32 @@ var chatLine = Var.DefineText("chatLine", TextCapacity.Bytes512);    // 512 byte
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Var&lt;T&gt; Define&lt;T&gt;(string name, T defaultValue = default) where T : struct</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Var&lt;T&gt; Define&lt;T&gt;(string name, T defaultValue = default) where T : struct</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>name</code> <span class="xref">string</span></dt>
-    <dd><p>The name, used in diagnostics and by the future runtime inspector. Unique
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The name, used in diagnostics and by the future runtime inspector. Unique
 within the script.</p>
-</dd>
-    <dt><code>defaultValue</code> <span class="xref">T</span></dt>
-    <dd><p>What every instance starts from.</p>
-</dd>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">T</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>defaultValue</code></dt></td>
+    <td style="width: 99%"><dd><p>What every instance starts from.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">

@@ -9,7 +9,8 @@
       <meta name="description" content="What one allocation measurement observed, and with which instrument. Carries the instrument because the two instruments this project has are not both available on every runtime, and a figure recorded without naming its instrument cannot be compared with another run&#39;s. Where an allocation was observed,  names the instruments that observed it rather than every instrument that was usable.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="../toc.html">
       
@@ -31,6 +32,7 @@
       <meta name="loc:downloadPdf" content="Download PDF">
 
       <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -98,9 +100,14 @@ rather than every instrument that was usable.</p>
 
 
 
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
 
 
 
+
+
+  </details>
 
 
 
@@ -123,30 +130,52 @@ rather than every instrument that was usable.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AllocationSample(long totalBytes, int allocationEvents, bool allocates, string instrument, int measuredIterations = 1)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public AllocationSample(long totalBytes, int allocationEvents, bool allocates, string instrument, int measuredIterations = 1)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>totalBytes</code> <span class="xref">long</span></dt>
-    <dd><p>Bytes across every measured iteration, or -1 when unmeasured.</p>
-</dd>
-    <dt><code>allocationEvents</code> <span class="xref">int</span></dt>
-    <dd><p>Profiler allocation events, or -1 when unmeasured.</p>
-</dd>
-    <dt><code>allocates</code> <span class="xref">bool</span></dt>
-    <dd><p>The verdict, from every usable instrument.</p>
-</dd>
-    <dt><code>instrument</code> <span class="xref">string</span></dt>
-    <dd><p>The instruments that observed an allocation, or, where none did, the
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">long</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>totalBytes</code></dt></td>
+    <td style="width: 99%"><dd><p>Bytes across every measured iteration, or -1 when unmeasured.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>allocationEvents</code></dt></td>
+    <td style="width: 99%"><dd><p>Profiler allocation events, or -1 when unmeasured.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">bool</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>allocates</code></dt></td>
+    <td style="width: 99%"><dd><p>The verdict, from every usable instrument.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>instrument</code></dt></td>
+    <td style="width: 99%"><dd><p>The instruments that observed an allocation, or, where none did, the
 instruments that were usable. <a class="xref" href="CodeSmile.LunyScript.TestKit.AllocationMeasure.html#CodeSmile_LunyScript_TestKit_AllocationMeasure_ObservingInstruments_System_Int64_System_Int32_">ObservingInstruments(long, int)</a> produces
 this string from the two figures above and is what a caller constructing a sample directly
 should use.</p>
-</dd>
-    <dt><code>measuredIterations</code> <span class="xref">int</span></dt>
-    <dd><p>How many iterations the figures cover.</p>
-</dd>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>measuredIterations</code></dt></td>
+    <td style="width: 99%"><dd><p>How many iterations the figures cover.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 
@@ -175,7 +204,7 @@ should use.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool Allocates { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Allocates { get; }</code></pre>
   </div>
 
 
@@ -214,7 +243,7 @@ rounds a rare allocation away while the profiler still counts its event.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int AllocationEvents { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int AllocationEvents { get; }</code></pre>
   </div>
 
 
@@ -247,7 +276,7 @@ this runtime.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public long BytesPerIteration { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public long BytesPerIteration { get; }</code></pre>
   </div>
 
 
@@ -291,7 +320,7 @@ number of times, which is what an allocation test asserts.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int EventsPerIteration { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int EventsPerIteration { get; }</code></pre>
   </div>
 
 
@@ -325,7 +354,7 @@ message.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Instrument { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Instrument { get; }</code></pre>
   </div>
 
 
@@ -372,7 +401,7 @@ figure.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int MeasuredIterations { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int MeasuredIterations { get; }</code></pre>
   </div>
 
 
@@ -406,7 +435,7 @@ things and must not be conflated.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public long TotalBytes { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public long TotalBytes { get; }</code></pre>
   </div>
 
 
@@ -449,7 +478,7 @@ visible.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override string ToString()</code></pre>
   </div>
 
 

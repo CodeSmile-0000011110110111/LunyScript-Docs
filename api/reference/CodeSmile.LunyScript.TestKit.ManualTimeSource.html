@@ -9,7 +9,8 @@
       <meta name="description" content="A clock a test advances by hand, so that a rate-capped SyncCadence, a scaled read or a pause can be tested against stated amounts of time rather than against however long a frame happened to take.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="../toc.html">
       
@@ -31,6 +32,7 @@
       <meta name="loc:downloadPdf" content="Download PDF">
 
       <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -96,6 +98,9 @@ happened to take.</p>
 
 
 
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
     <dd>
@@ -113,6 +118,8 @@ happened to take.</p>
   </dl>
 
 
+
+  </details>
 
 
 
@@ -156,7 +163,7 @@ See AGENTS.md section 5 for why every number in this API is a double.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double DeltaSeconds { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double DeltaSeconds { get; }</code></pre>
   </div>
 
 
@@ -189,7 +196,7 @@ derived from wall-clock time.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double ElapsedSeconds { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double ElapsedSeconds { get; }</code></pre>
   </div>
 
 
@@ -222,7 +229,7 @@ flag instead.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool IsPaused { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsPaused { get; }</code></pre>
   </div>
 
 
@@ -255,7 +262,7 @@ motion, and zero is paused.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double Scale { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double Scale { get; }</code></pre>
   </div>
 
 
@@ -288,7 +295,7 @@ not change. A paused game still reports how long its frames take here.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double UnscaledDeltaSeconds { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double UnscaledDeltaSeconds { get; }</code></pre>
   </div>
 
 
@@ -321,7 +328,7 @@ paused. Monotonic; never derived from wall-clock time.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double UnscaledElapsedSeconds { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double UnscaledElapsedSeconds { get; }</code></pre>
   </div>
 
 
@@ -358,15 +365,25 @@ paused. Monotonic; never derived from wall-clock time.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Advance(double seconds)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Advance(double seconds)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>seconds</code> <span class="xref">double</span></dt>
-    <dd><p>How much real time the next tick took.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seconds</code></dt></td>
+    <td style="width: 99%"><dd><p>How much real time the next tick took.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 
@@ -401,7 +418,7 @@ remembered. Pausing an already paused clock changes nothing.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Pause()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Pause()</code></pre>
   </div>
 
 
@@ -429,7 +446,7 @@ when none was. Resuming a clock that is not paused changes nothing.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Resume()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Resume()</code></pre>
   </div>
 
 
@@ -457,16 +474,26 @@ restore afterwards.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void SetScale(double scale)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void SetScale(double scale)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>scale</code> <span class="xref">double</span></dt>
-    <dd><p>The new scale. Zero pauses; a negative or non-finite value is
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>scale</code></dt></td>
+    <td style="width: 99%"><dd><p>The new scale. Zero pauses; a negative or non-finite value is
 refused.</p>
-</dd>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 

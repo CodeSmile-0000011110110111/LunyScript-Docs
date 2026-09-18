@@ -9,7 +9,8 @@
       <meta name="description" content="Measures whether a piece of work allocates managed memory, and how much. Ships with the product so that a user can hold their own blocks to the rule the shipped blocks are held to.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="../toc.html">
       
@@ -31,6 +32,7 @@
       <meta name="loc:downloadPdf" content="Download PDF">
 
       <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -95,6 +97,9 @@ product so that a user can hold their own blocks to the rule the shipped blocks 
 
 
 
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
     <dd>
@@ -105,6 +110,8 @@ product so that a user can hold their own blocks to the rule the shipped blocks 
 
 
 
+
+  </details>
 
 
 
@@ -164,7 +171,7 @@ least that much.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool ByteCounterUsable { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static bool ByteCounterUsable { get; }</code></pre>
   </div>
 
 
@@ -197,7 +204,7 @@ all on this runtime.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool IsUsable { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static bool IsUsable { get; }</code></pre>
   </div>
 
 
@@ -231,7 +238,7 @@ least one allocation event was counted.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool ProfilerRecorderUsable { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static bool ProfilerRecorderUsable { get; }</code></pre>
   </div>
 
 
@@ -268,26 +275,42 @@ then <code class="paramref">measuredIterations</code> times with every usable in
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static AllocationSample Measure(Action work, int warmupIterations = 16, int measuredIterations = 128)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static AllocationSample Measure(Action work, int warmupIterations = 16, int measuredIterations = 128)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>work</code> <span class="xref">Action</span></dt>
-    <dd><p>The work to measure. Pass a cached delegate; a delegate created at the call site allocates
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Action</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>work</code></dt></td>
+    <td style="width: 99%"><dd><p>The work to measure. Pass a cached delegate; a delegate created at the call site allocates
 once, outside the measured region, but one created inside the work would be measured.</p>
-</dd>
-    <dt><code>warmupIterations</code> <span class="xref">int</span></dt>
-    <dd><p>Iterations run before measuring. At least one is required on every backend: the first call
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>warmupIterations</code></dt></td>
+    <td style="width: 99%"><dd><p>Iterations run before measuring. At least one is required on every backend: the first call
 to a method allocates in the runtime's own structures, which is a one-time cost and not a
 property of the work.</p>
-</dd>
-    <dt><code>measuredIterations</code> <span class="xref">int</span></dt>
-    <dd><p>Iterations the figures cover. The byte figure is reported as
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>measuredIterations</code></dt></td>
+    <td style="width: 99%"><dd><p>Iterations the figures cover. The byte figure is reported as
 a total across all of them, and divided by this only where a caller asks for a per-iteration
 figure.</p>
-</dd>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -333,20 +356,33 @@ instead, so that a zero stays distinguishable from a runtime where nothing was m
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string ObservingInstruments(long totalBytes, int allocationEvents)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static string ObservingInstruments(long totalBytes, int allocationEvents)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>totalBytes</code> <span class="xref">long</span></dt>
-    <dd><p>Bytes across every measured iteration, or -1 when the byte counter is
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">long</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>totalBytes</code></dt></td>
+    <td style="width: 99%"><dd><p>Bytes across every measured iteration, or -1 when the byte counter is
 not usable on this runtime.</p>
-</dd>
-    <dt><code>allocationEvents</code> <span class="xref">int</span></dt>
-    <dd><p>Profiler allocation events across every measured iteration, or
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>allocationEvents</code></dt></td>
+    <td style="width: 99%"><dd><p>Profiler allocation events across every measured iteration, or
 -1 when the profiler recorder is not usable on this runtime.</p>
-</dd>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -382,7 +418,7 @@ instruments observed an allocation, and otherwise &quot;none observed, usable: &
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string UsableInstruments()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static string UsableInstruments()</code></pre>
   </div>
 
 

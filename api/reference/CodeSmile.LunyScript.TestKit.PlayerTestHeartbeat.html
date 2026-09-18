@@ -9,7 +9,8 @@
       <meta name="description" content="One on-disk heartbeat a supervising agent can read to tell a slow test run from a dead one, without opening the player window.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="../toc.html">
       
@@ -31,6 +32,7 @@
       <meta name="loc:downloadPdf" content="Download PDF">
 
       <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -95,6 +97,9 @@ dead one, without opening the player window.</p>
 
 
 
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
     <dd>
@@ -105,6 +110,8 @@ dead one, without opening the player window.</p>
 
 
 
+
+  </details>
 
 
 
@@ -137,7 +144,7 @@ construct their paths from this same constant.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string FileName = &quot;player-test-heartbeat.txt&quot;</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const string FileName = &quot;player-test-heartbeat.txt&quot;</code></pre>
   </div>
 
 
@@ -168,7 +175,7 @@ construct their paths from this same constant.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string TimestampFormat = &quot;yyyy-MM-ddTHH:mm:ss.fffZ&quot;</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const string TimestampFormat = &quot;yyyy-MM-ddTHH:mm:ss.fffZ&quot;</code></pre>
   </div>
 
 
@@ -204,7 +211,7 @@ construct their paths from this same constant.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string DefaultPath()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static string DefaultPath()</code></pre>
   </div>
 
 
@@ -237,14 +244,24 @@ construct their paths from this same constant.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static string PathForBuildPlayer(string buildPlayerPath)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static string PathForBuildPlayer(string buildPlayerPath)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>buildPlayerPath</code> <span class="xref">string</span></dt>
-    <dd></dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>buildPlayerPath</code></dt></td>
+    <td style="width: 99%"><dd></dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -275,16 +292,29 @@ file is missing or has no <code>timestamp=</code> line.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool TryRead(string path, out PlayerTestHeartbeatRecord record)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static bool TryRead(string path, out PlayerTestHeartbeatRecord record)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>path</code> <span class="xref">string</span></dt>
-    <dd></dd>
-    <dt><code>record</code> <a class="xref" href="CodeSmile.LunyScript.TestKit.PlayerTestHeartbeatRecord.html">PlayerTestHeartbeatRecord</a></dt>
-    <dd></dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>path</code></dt></td>
+    <td style="width: 99%"><dd></dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.TestKit.PlayerTestHeartbeatRecord.html">PlayerTestHeartbeatRecord</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>record</code></dt></td>
+    <td style="width: 99%"><dd></dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -314,16 +344,29 @@ file is missing or has no <code>timestamp=</code> line.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void Write(string path, PlayerTestHeartbeatRecord record)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static void Write(string path, PlayerTestHeartbeatRecord record)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>path</code> <span class="xref">string</span></dt>
-    <dd></dd>
-    <dt><code>record</code> <a class="xref" href="CodeSmile.LunyScript.TestKit.PlayerTestHeartbeatRecord.html">PlayerTestHeartbeatRecord</a></dt>
-    <dd></dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>path</code></dt></td>
+    <td style="width: 99%"><dd></dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.TestKit.PlayerTestHeartbeatRecord.html">PlayerTestHeartbeatRecord</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>record</code></dt></td>
+    <td style="width: 99%"><dd></dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 

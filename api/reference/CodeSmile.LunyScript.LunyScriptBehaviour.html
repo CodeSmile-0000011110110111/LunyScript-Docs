@@ -9,7 +9,8 @@
       <meta name="description" content="Assigns one GameObject to one script type. This is the component a user adds; the script is named by an explicit field rather than by a type name written as a string.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="../toc.html">
       
@@ -31,6 +32,7 @@
       <meta name="loc:downloadPdf" content="Download PDF">
 
       <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -96,6 +98,9 @@ public sealed class LunyScriptBehaviour : MonoBehaviour</code></pre>
 
 
 
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
     <dd>
@@ -110,6 +115,8 @@ public sealed class LunyScriptBehaviour : MonoBehaviour</code></pre>
 
 
 
+
+  </details>
 
 
 
@@ -160,7 +167,7 @@ so execution never writes to the serialized reference.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string AssetInputsFieldName = &quot;m_AssetInputs&quot;</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const string AssetInputsFieldName = &quot;m_AssetInputs&quot;</code></pre>
   </div>
 
 
@@ -194,7 +201,7 @@ so execution never writes to the serialized reference.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string ProcessModeFieldName = &quot;m_ProcessMode&quot;</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const string ProcessModeFieldName = &quot;m_ProcessMode&quot;</code></pre>
   </div>
 
 
@@ -225,7 +232,7 @@ so execution never writes to the serialized reference.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public const string ScriptFieldName = &quot;m_ScriptToRun&quot;</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const string ScriptFieldName = &quot;m_ScriptToRun&quot;</code></pre>
   </div>
 
 
@@ -265,7 +272,7 @@ stored.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public AssetInputAssignment[] AssetInputs { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public AssetInputAssignment[] AssetInputs { get; }</code></pre>
   </div>
 
 
@@ -307,7 +314,7 @@ Reading this property never creates a default runner or activates a script.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public RunnerDiagnostics Diagnostics { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public RunnerDiagnostics Diagnostics { get; }</code></pre>
   </div>
 
 
@@ -345,7 +352,7 @@ the serialized field holds.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Script Script { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Script Script { get; }</code></pre>
   </div>
 
 
@@ -397,15 +404,25 @@ is replaced by that built object. <code>docs/slice-decisions.md</code> D4.42.</p
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public T GetAsset&lt;T&gt;(in Asset&lt;T&gt; input) where T : Object</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public T GetAsset&lt;T&gt;(in Asset&lt;T&gt; input) where T : Object</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>input</code> <a class="xref" href="CodeSmile.LunyScript.Asset-1.html">Asset</a>&lt;T&gt;</dt>
-    <dd><p>The handle <code>Build()</code> assigned to the script's own property.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Asset-1.html">Asset</a>&lt;T&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>input</code></dt></td>
+    <td style="width: 99%"><dd><p>The handle <code>Build()</code> assigned to the script's own property.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -452,15 +469,25 @@ the case before <code>Awake</code> and after the object is destroyed.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public T GetEnum&lt;T&gt;(in Var&lt;T&gt; variable) where T : struct</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public T GetEnum&lt;T&gt;(in Var&lt;T&gt; variable) where T : struct</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>variable</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;T&gt;</dt>
-    <dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;T&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>variable</code></dt></td>
+    <td style="width: 99%"><dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -507,15 +534,25 @@ the case before <code>Awake</code> and after the object is destroyed.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool GetFlag(in Var&lt;Flag&gt; variable)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool GetFlag(in Var&lt;Flag&gt; variable)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>variable</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Flag.html">Flag</a>&gt;</dt>
-    <dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Flag.html">Flag</a>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>variable</code></dt></td>
+    <td style="width: 99%"><dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -556,15 +593,25 @@ the case before <code>Awake</code> and after the object is destroyed.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double GetNumber(in Var&lt;Number&gt; variable)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double GetNumber(in Var&lt;Number&gt; variable)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>variable</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a>&gt;</dt>
-    <dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>variable</code></dt></td>
+    <td style="width: 99%"><dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -605,15 +652,25 @@ the case before <code>Awake</code> and after the object is destroyed.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Rotation GetRotation(in Var&lt;Rotation&gt; variable)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Rotation GetRotation(in Var&lt;Rotation&gt; variable)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>variable</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Rotation.html">Rotation</a>&gt;</dt>
-    <dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Rotation.html">Rotation</a>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>variable</code></dt></td>
+    <td style="width: 99%"><dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -654,15 +711,25 @@ the case before <code>Awake</code> and after the object is destroyed.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Vec2 GetVec2(in Var&lt;Vec2&gt; variable)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Vec2 GetVec2(in Var&lt;Vec2&gt; variable)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>variable</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Vec2.html">Vec2</a>&gt;</dt>
-    <dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Vec2.html">Vec2</a>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>variable</code></dt></td>
+    <td style="width: 99%"><dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -703,15 +770,25 @@ the case before <code>Awake</code> and after the object is destroyed.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Vec3 GetVec3(in Var&lt;Vec3&gt; variable)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Vec3 GetVec3(in Var&lt;Vec3&gt; variable)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>variable</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a>&gt;</dt>
-    <dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>variable</code></dt></td>
+    <td style="width: 99%"><dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -753,18 +830,31 @@ nothing.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public CopyError ReadText&lt;TDestination&gt;(in Var&lt;Text&gt; variable, ref TDestination destination) where TDestination : unmanaged, INativeList&lt;byte&gt;, IUTF8Bytes</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CopyError ReadText&lt;TDestination&gt;(in Var&lt;Text&gt; variable, ref TDestination destination) where TDestination : unmanaged, INativeList&lt;byte&gt;, IUTF8Bytes</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>variable</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a>&gt;</dt>
-    <dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
-</dd>
-    <dt><code>destination</code> <span class="xref">TDestination</span></dt>
-    <dd><p>Where the text is written. Its previous content is replaced.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>variable</code></dt></td>
+    <td style="width: 99%"><dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">TDestination</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>destination</code></dt></td>
+    <td style="width: 99%"><dd><p>Where the text is written. Its previous content is replaced.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -813,16 +903,26 @@ the case before <code>Awake</code> and after the object is destroyed.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Send(string messageName)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Send(string messageName)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>messageName</code> <span class="xref">string</span></dt>
-    <dd><p>What the message is called. Use the same name the script's
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>messageName</code></dt></td>
+    <td style="width: 99%"><dd><p>What the message is called. Use the same name the script's
 <code>On.Message</code> call uses, from <code>nameof</code>.</p>
-</dd>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 
@@ -858,18 +958,31 @@ nothing.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool TextEquals&lt;TOther&gt;(in Var&lt;Text&gt; variable, in TOther other) where TOther : unmanaged, INativeList&lt;byte&gt;, IUTF8Bytes</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool TextEquals&lt;TOther&gt;(in Var&lt;Text&gt; variable, in TOther other) where TOther : unmanaged, INativeList&lt;byte&gt;, IUTF8Bytes</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>variable</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a>&gt;</dt>
-    <dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
-</dd>
-    <dt><code>other</code> <span class="xref">TOther</span></dt>
-    <dd><p>The text to compare against.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>variable</code></dt></td>
+    <td style="width: 99%"><dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">TOther</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>other</code></dt></td>
+    <td style="width: 99%"><dd><p>The text to compare against.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -917,15 +1030,25 @@ the case before <code>Awake</code> and after the object is destroyed.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int TextLength(in Var&lt;Text&gt; variable)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int TextLength(in Var&lt;Text&gt; variable)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>variable</code> <a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a>&gt;</dt>
-    <dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>variable</code></dt></td>
+    <td style="width: 99%"><dd><p>The handle <code>Build()</code> assigned, from <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a>.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">

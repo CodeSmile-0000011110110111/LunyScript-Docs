@@ -9,7 +9,8 @@
       <meta name="description" content="What a time scale is allowed to be, and the one refusal message every caller that checks it raises.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="../toc.html">
       
@@ -31,6 +32,7 @@
       <meta name="loc:downloadPdf" content="Download PDF">
 
       <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -95,6 +97,9 @@ raises.</p>
 
 
 
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
     <dd>
@@ -105,6 +110,8 @@ raises.</p>
 
 
 
+
+  </details>
 
 
 
@@ -138,15 +145,25 @@ drift. The block adds the authored line it captured; the two clocks have none to
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool IsValidScale(double scale)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static bool IsValidScale(double scale)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>scale</code> <span class="xref">double</span></dt>
-    <dd><p>The value to test.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>scale</code></dt></td>
+    <td style="width: 99%"><dd><p>The value to test.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -184,22 +201,38 @@ infinity passes it, which is why the second test is there and not redundant.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static LunyScriptUsageException RefusedScale(double scale, string caller, string authored)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static LunyScriptUsageException RefusedScale(double scale, string caller, string authored)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>scale</code> <span class="xref">double</span></dt>
-    <dd><p>The value that was given.</p>
-</dd>
-    <dt><code>caller</code> <span class="xref">string</span></dt>
-    <dd><p>What to name as the call, for example <code>Time.SetScale</code>.</p>
-</dd>
-    <dt><code>authored</code> <span class="xref">string</span></dt>
-    <dd><p>Where the call was written, already formatted, or an empty string
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>scale</code></dt></td>
+    <td style="width: 99%"><dd><p>The value that was given.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>caller</code></dt></td>
+    <td style="width: 99%"><dd><p>What to name as the call, for example <code>Time.SetScale</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>authored</code></dt></td>
+    <td style="width: 99%"><dd><p>Where the call was written, already formatted, or an empty string
 when the caller has no authored line to give.</p>
-</dd>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">

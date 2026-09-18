@@ -9,7 +9,8 @@
       <meta name="description" content="One synchronised variable, as the script declared it: which slot holds it, how often it is sent, and the bookkeeping slots the cadence and the staleness reading need. Recorded at build time, read by the program, and never changed afterwards.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="../toc.html">
       
@@ -31,6 +32,7 @@
       <meta name="loc:downloadPdf" content="Download PDF">
 
       <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -96,9 +98,14 @@ program, and never changed afterwards.</p>
 
 
 
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
 
 
 
+
+
+  </details>
 
 
 
@@ -134,41 +141,75 @@ grouping: nothing here can hold a second variable.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SyncDeclaration(string name, SlotKind kind, TextCapacity capacity, int slotIndex, int shadowSlotIndex, int sentSlotIndex, int cooldownSlotIndex, int stalenessSlotIndex, SyncCadence cadence)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SyncDeclaration(string name, SlotKind kind, TextCapacity capacity, int slotIndex, int shadowSlotIndex, int sentSlotIndex, int cooldownSlotIndex, int stalenessSlotIndex, SyncCadence cadence)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>name</code> <span class="xref">string</span></dt>
-    <dd><p>The variable's name.</p>
-</dd>
-    <dt><code>kind</code> <a class="xref" href="CodeSmile.LunyScript.SlotKind.html">SlotKind</a></dt>
-    <dd><p>Which kind of slot holds the value.</p>
-</dd>
-    <dt><code>capacity</code> <a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a></dt>
-    <dd><p>How many bytes a text slot holds; ignored for the other kinds.</p>
-</dd>
-    <dt><code>slotIndex</code> <span class="xref">int</span></dt>
-    <dd><p>Which slot of that kind holds the value.</p>
-</dd>
-    <dt><code>shadowSlotIndex</code> <span class="xref">int</span></dt>
-    <dd><p>Which slot of that kind holds the last sent value.</p>
-</dd>
-    <dt><code>sentSlotIndex</code> <span class="xref">int</span></dt>
-    <dd><p>Which <code>Flag</code> slot records that a send has happened.</p>
-</dd>
-    <dt><code>cooldownSlotIndex</code> <span class="xref">int</span></dt>
-    <dd><p>Which <code>Number</code> slot counts down to the next permitted
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable's name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.SlotKind.html">SlotKind</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>kind</code></dt></td>
+    <td style="width: 99%"><dd><p>Which kind of slot holds the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>capacity</code></dt></td>
+    <td style="width: 99%"><dd><p>How many bytes a text slot holds; ignored for the other kinds.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>slotIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>Which slot of that kind holds the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>shadowSlotIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>Which slot of that kind holds the last sent value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sentSlotIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>Which <code>Flag</code> slot records that a send has happened.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>cooldownSlotIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>Which <code>Number</code> slot counts down to the next permitted
 send, or -1 when the cadence carries no rate cap.</p>
-</dd>
-    <dt><code>stalenessSlotIndex</code> <span class="xref">int</span></dt>
-    <dd><p>Which <code>Number</code> slot counts seconds since the last
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>stalenessSlotIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>Which <code>Number</code> slot counts seconds since the last
 received value.</p>
-</dd>
-    <dt><code>cadence</code> <a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt>
-    <dd><p>How often the value is sent.</p>
-</dd>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.SyncCadence.html">SyncCadence</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>cadence</code></dt></td>
+    <td style="width: 99%"><dd><p>How often the value is sent.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 
@@ -196,7 +237,7 @@ received value.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly SyncCadence Cadence</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly SyncCadence Cadence</code></pre>
   </div>
 
 
@@ -228,7 +269,7 @@ default for the other two kinds.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly TextCapacity Capacity</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly TextCapacity Capacity</code></pre>
   </div>
 
 
@@ -260,7 +301,7 @@ send again, or -1 when the cadence carries no rate cap.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly int CooldownSlotIndex</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly int CooldownSlotIndex</code></pre>
   </div>
 
 
@@ -291,7 +332,7 @@ send again, or -1 when the cadence carries no rate cap.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly SlotKind Kind</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly SlotKind Kind</code></pre>
   </div>
 
 
@@ -322,7 +363,7 @@ send again, or -1 when the cadence carries no rate cap.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly string Name</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly string Name</code></pre>
   </div>
 
 
@@ -356,7 +397,7 @@ equals its declared default, and what a join resets so that a late joiner receiv
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly int SentSlotIndex</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly int SentSlotIndex</code></pre>
   </div>
 
 
@@ -388,7 +429,7 @@ value to decide whether <code>SyncCadence.OnChange</code> has anything to send.<
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly int ShadowSlotIndex</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly int ShadowSlotIndex</code></pre>
   </div>
 
 
@@ -419,7 +460,7 @@ value to decide whether <code>SyncCadence.OnChange</code> has anything to send.<
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly int SlotIndex</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly int SlotIndex</code></pre>
   </div>
 
 
@@ -452,7 +493,7 @@ authority, whose own value is never stale.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly int StalenessSlotIndex</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly int StalenessSlotIndex</code></pre>
   </div>
 
 
@@ -494,7 +535,7 @@ where a script can see by how much rather than having to assume.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public NumberSlot CooldownSlot { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NumberSlot CooldownSlot { get; }</code></pre>
   </div>
 
 
@@ -526,7 +567,7 @@ where a script can see by how much rather than having to assume.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public FlagSlot FlagSlot { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public FlagSlot FlagSlot { get; }</code></pre>
   </div>
 
 
@@ -558,7 +599,7 @@ where a script can see by how much rather than having to assume.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public NumberSlot NumberSlot { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NumberSlot NumberSlot { get; }</code></pre>
   </div>
 
 
@@ -590,7 +631,7 @@ where a script can see by how much rather than having to assume.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public FlagSlot SentSlot { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public FlagSlot SentSlot { get; }</code></pre>
   </div>
 
 
@@ -622,7 +663,7 @@ where a script can see by how much rather than having to assume.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public FlagSlot ShadowFlagSlot { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public FlagSlot ShadowFlagSlot { get; }</code></pre>
   </div>
 
 
@@ -654,7 +695,7 @@ where a script can see by how much rather than having to assume.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public NumberSlot ShadowNumberSlot { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NumberSlot ShadowNumberSlot { get; }</code></pre>
   </div>
 
 
@@ -686,7 +727,7 @@ where a script can see by how much rather than having to assume.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TextSlot ShadowTextSlot { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public TextSlot ShadowTextSlot { get; }</code></pre>
   </div>
 
 
@@ -718,7 +759,7 @@ where a script can see by how much rather than having to assume.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public NumberSlot StalenessSlot { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NumberSlot StalenessSlot { get; }</code></pre>
   </div>
 
 
@@ -750,7 +791,7 @@ where a script can see by how much rather than having to assume.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TextSlot TextSlot { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public TextSlot TextSlot { get; }</code></pre>
   </div>
 
 
@@ -786,7 +827,7 @@ where a script can see by how much rather than having to assume.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override string ToString()</code></pre>
   </div>
 
 

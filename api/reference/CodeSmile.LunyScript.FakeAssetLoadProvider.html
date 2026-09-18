@@ -9,7 +9,8 @@
       <meta name="description" content="An in-memory asset-load backend for tests: keys map to objects a test registered, a missing key fails as NotFound, and a registered object of another type fails as Denied. No Resources folder is required. AGENTS.md rule 52&#39;s shape applied to assets.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="../toc.html">
       
@@ -31,6 +32,7 @@
       <meta name="loc:downloadPdf" content="Download PDF">
 
       <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -97,6 +99,9 @@ assets.</p>
 
 
 
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
     <dd>
@@ -113,6 +118,8 @@ assets.</p>
   </dl>
 
 
+
+  </details>
 
 
 
@@ -141,7 +148,7 @@ state transitions, never per frame.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string Describe()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Describe()</code></pre>
   </div>
 
 
@@ -174,18 +181,31 @@ state transitions, never per frame.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IAssetLoadOperation Load(string key, Type declaredType)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public IAssetLoadOperation Load(string key, Type declaredType)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>key</code> <span class="xref">string</span></dt>
-    <dd><p>The provider-qualified key. Validated at build time.</p>
-</dd>
-    <dt><code>declaredType</code> <span class="xref">Type</span></dt>
-    <dd><p>The Unity asset type the load asked for.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>key</code></dt></td>
+    <td style="width: 99%"><dd><p>The provider-qualified key. Validated at build time.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Type</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>declaredType</code></dt></td>
+    <td style="width: 99%"><dd><p>The Unity asset type the load asked for.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -218,18 +238,31 @@ state transitions, never per frame.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Register(string key, Object asset)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Register(string key, Object asset)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>key</code> <span class="xref">string</span></dt>
-    <dd><p>The Resources-style key the script will pass.</p>
-</dd>
-    <dt><code>asset</code> <span class="xref">Object</span></dt>
-    <dd><p>The object a successful load of that key returns.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>key</code></dt></td>
+    <td style="width: 99%"><dd><p>The Resources-style key the script will pass.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>asset</code></dt></td>
+    <td style="width: 99%"><dd><p>The object a successful load of that key returns.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 

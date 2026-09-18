@@ -1,0 +1,129 @@
+/* ALERT BOXES - Light/Dark Mode Support.
+   A DocFX alert is a .alert block whose <h5> carries the alert word. The header text sits on the
+   header background declared below, so the two have to be picked together; the light theme's
+   header colours here are darker than the dark theme's because the light header backgrounds are
+   pale. Measured contrast ratios of header text against its own header background:
+   light NOTE 6.05, TIP 6.52, WARNING 5.77, IMPORTANT 4.92;
+   dark NOTE 5.19, TIP 6.29, WARNING 7.70, IMPORTANT 4.97. WCAG AA asks for 4.5 at this size. */
+
+/* Light Mode Colors */
+[data-bs-theme="light"] {
+    --alert-info-text: #0D5AA7;
+    --alert-info-bg: #e3f2fd;
+    --alert-info-border: #1976d2;
+    --alert-info-body-bg: #eaf4ff;
+
+    --alert-tip-text: #3F6212;
+    --alert-tip-bg: #f1f8e9;
+    --alert-tip-border: #689f38;
+    --alert-tip-body-bg: #f3fbed;
+
+    --alert-warning-text: #7A5B00;
+    --alert-warning-bg: #f8f6da;
+    --alert-warning-border: #fbc02d;
+    --alert-warning-body-bg: #fbfae8;
+
+    --alert-danger-text: #C62828;
+    --alert-danger-bg: #ffebee;
+    --alert-danger-border: #d32f2f;
+    --alert-danger-body-bg: #fff0f0;
+}
+
+/* Dark Mode Colors */
+[data-bs-theme="dark"] {
+    --alert-info-text: #64b5f6;
+    --alert-info-bg: #1e3a5f;
+    --alert-info-border: #64b5f6;
+    --alert-info-body-bg: #223344;
+
+    --alert-tip-text: #9ccc65;
+    --alert-tip-bg: #2a3d1f;
+    --alert-tip-border: #9ccc65;
+    --alert-tip-body-bg: #1f2f1d;
+
+    --alert-warning-text: #ffd54f;
+    --alert-warning-bg: #403e24;
+    --alert-warning-border: #ffd54f;
+    --alert-warning-body-bg: #3a3923;
+
+    --alert-danger-text: #e57373;
+    --alert-danger-bg: #3d1f1f;
+    --alert-danger-border: #e57373;
+    --alert-danger-body-bg: #2f1a1a;
+}
+
+
+/* Alert Base Styling. The alert word sits in its own coloured header strip, so .alert itself
+   carries no padding and each child element pads itself. */
+.alert {
+  padding: 0px;
+  color: inherit;
+  border: none;
+  box-shadow: 0px 2px 2px 0px rgba(100, 100, 100, 0.4);
+}
+
+.alert>p {
+  margin-bottom: 0;
+  padding: 10px;
+}
+
+.alert>ul {
+  margin-bottom: 0;
+  padding: 10px 40px;
+}
+
+.alert>h5 {
+  padding: 10px 15px;
+  margin-top: 0;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: 4px 4px 0 0;
+}
+
+/* Alert Type-Specific Styling */
+.alert-info {
+  background-color: var(--alert-info-body-bg);
+}
+
+.alert-info>h5 {
+  color: var(--alert-info-text);
+  background-color: var(--alert-info-bg);
+  border-bottom: 4px solid var(--alert-info-border);
+}
+
+.alert-tip {
+  background-color: var(--alert-tip-body-bg);
+}
+
+.alert-tip>h5 {
+  color: var(--alert-tip-text);
+  background-color: var(--alert-tip-bg);
+  border-bottom: 4px solid var(--alert-tip-border);
+}
+
+/* The template gives info, warning and danger alerts a Bootstrap Icons glyph and leaves tip
+   without one, because tip is this project's own alert kind. \f46b is bi-lightbulb in the icon
+   font the template already loads. */
+.alert-tip h5:before {
+  content: "\f46b";
+}
+
+.alert-warning {
+  background-color: var(--alert-warning-body-bg);
+}
+
+.alert-warning>h5 {
+  color: var(--alert-warning-text);
+  background-color: var(--alert-warning-bg);
+  border-bottom: 4px solid var(--alert-warning-border);
+}
+
+.alert-danger {
+  background-color: var(--alert-danger-body-bg);
+}
+
+.alert-danger>h5 {
+  color: var(--alert-danger-text);
+  background-color: var(--alert-danger-bg);
+  border-bottom: 4px solid var(--alert-danger-border);
+}

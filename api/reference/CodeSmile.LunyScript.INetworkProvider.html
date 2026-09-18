@@ -9,7 +9,8 @@
       <meta name="description" content="What a netcode backend provides to the : a session to start and end, the connection facts a script is allowed to read, and two queues the gateway drains once per tick. Script code never sees this type; it sees the Net and Sync surfaces. AGENTS.md rule 49.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="../toc.html">
       
@@ -31,6 +32,7 @@
       <meta name="loc:downloadPdf" content="Download PDF">
 
       <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -97,9 +99,14 @@ AGENTS.md rule 49.</p>
 
 
 
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
 
 
 
+
+
+  </details>
 
 
 
@@ -145,7 +152,7 @@ the defect that hiding it produces.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool IsHost { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">bool IsHost { get; }</code></pre>
   </div>
 
 
@@ -178,7 +185,7 @@ The runner splits a tick's stream into as many sends as it needs to stay inside 
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">int MaximumTransformStreamBytes { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">int MaximumTransformStreamBytes { get; }</code></pre>
   </div>
 
 
@@ -224,7 +231,7 @@ carries unfragmented, so this is not a limit only an unusual session meets.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">int PeerCount { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">int PeerCount { get; }</code></pre>
   </div>
 
 
@@ -257,7 +264,7 @@ the host. Latency is a state a script may read, not an error; AGENTS.md rule 45.
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">double RoundTripMilliseconds { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">double RoundTripMilliseconds { get; }</code></pre>
   </div>
 
 
@@ -290,7 +297,7 @@ session has been started.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">SessionState State { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">SessionState State { get; }</code></pre>
   </div>
 
 
@@ -328,7 +335,7 @@ never per tick.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">string Describe()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">string Describe()</code></pre>
   </div>
 
 
@@ -364,7 +371,7 @@ an already-offline provider, it does nothing, so that a restart is
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void EndSession()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">void EndSession()</code></pre>
   </div>
 
 
@@ -391,15 +398,25 @@ an already-offline provider, it does nothing, so that a restart is
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool HasAuthority(int objectId)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">bool HasAuthority(int objectId)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>objectId</code> <span class="xref">int</span></dt>
-    <dd><p>The networked object, as the gateway numbers it.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>objectId</code></dt></td>
+    <td style="width: 99%"><dd><p>The networked object, as the gateway numbers it.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -433,18 +450,31 @@ a name and no payload in this milestone.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void SendToAuthority(int objectId, int messageId)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">void SendToAuthority(int objectId, int messageId)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>objectId</code> <span class="xref">int</span></dt>
-    <dd><p>The object the message is about.</p>
-</dd>
-    <dt><code>messageId</code> <span class="xref">int</span></dt>
-    <dd><p>The message, interned by the gateway so no string crosses this call.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>objectId</code></dt></td>
+    <td style="width: 99%"><dd><p>The object the message is about.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>messageId</code></dt></td>
+    <td style="width: 99%"><dd><p>The message, interned by the gateway so no string crosses this call.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 
@@ -469,19 +499,32 @@ a name and no payload in this milestone.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void SendTransformStream(byte[] payload, int length)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">void SendTransformStream(byte[] payload, int length)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>payload</code> <span class="xref">byte</span>[]</dt>
-    <dd><p>The buffer the runner encoded the stream into. The provider must
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">byte</span>[]</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>payload</code></dt></td>
+    <td style="width: 99%"><dd><p>The buffer the runner encoded the stream into. The provider must
 copy what it needs before returning, because the runner reuses this buffer next tick.</p>
-</dd>
-    <dt><code>length</code> <span class="xref">int</span></dt>
-    <dd><p>How many bytes of it the stream occupies.</p>
-</dd>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>length</code></dt></td>
+    <td style="width: 99%"><dd><p>How many bytes of it the stream occupies.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 
@@ -513,23 +556,39 @@ only when the variable's cadence says to send.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void SendVariable(int objectId, int variableIndex, in NetworkValue value)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">void SendVariable(int objectId, int variableIndex, in NetworkValue value)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>objectId</code> <span class="xref">int</span></dt>
-    <dd><p>The object the variable belongs to.</p>
-</dd>
-    <dt><code>variableIndex</code> <span class="xref">int</span></dt>
-    <dd><p>Which synchronised variable, numbered by the order the script
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>objectId</code></dt></td>
+    <td style="width: 99%"><dd><p>The object the variable belongs to.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>variableIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>Which synchronised variable, numbered by the order the script
 declared it in. See <a class="xref" href="CodeSmile.LunyScript.NetworkVariableUpdate.html#CodeSmile_LunyScript_NetworkVariableUpdate_VariableIndex">VariableIndex</a> for why this is not a
 slot index.</p>
-</dd>
-    <dt><code>value</code> <a class="xref" href="CodeSmile.LunyScript.NetworkValue.html">NetworkValue</a></dt>
-    <dd><p>The value to send.</p>
-</dd>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NetworkValue.html">NetworkValue</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The value to send.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 
@@ -554,15 +613,25 @@ slot index.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void StartClient(string address)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">void StartClient(string address)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>address</code> <span class="xref">string</span></dt>
-    <dd><p>Where to connect. An implementation that needs no address ignores it.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>address</code></dt></td>
+    <td style="width: 99%"><dd><p>Where to connect. An implementation that needs no address ignores it.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 
@@ -588,7 +657,7 @@ implementation may assume it is offline.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">void StartHost()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">void StartHost()</code></pre>
   </div>
 
 
@@ -616,15 +685,25 @@ until it returns false, once per tick.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool TryDequeueMessage(out NetworkMessage message)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">bool TryDequeueMessage(out NetworkMessage message)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>message</code> <a class="xref" href="CodeSmile.LunyScript.NetworkMessage.html">NetworkMessage</a></dt>
-    <dd><p>The message, when this returns true.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NetworkMessage.html">NetworkMessage</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>The message, when this returns true.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -660,15 +739,25 @@ same way and for the same reason as <a class="xref" href="CodeSmile.LunyScript.I
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool TryDequeuePeerJoined(out int peerId)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">bool TryDequeuePeerJoined(out int peerId)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>peerId</code> <span class="xref">int</span></dt>
-    <dd><p>The peer that joined, when this returns true.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>peerId</code></dt></td>
+    <td style="width: 99%"><dd><p>The peer that joined, when this returns true.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -715,21 +804,37 @@ The view is valid until the next stream arrives.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool TryDequeueTransformStream(out byte[] payload, out int offset, out int length)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">bool TryDequeueTransformStream(out byte[] payload, out int offset, out int length)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>payload</code> <span class="xref">byte</span>[]</dt>
-    <dd><p>The provider's buffer.</p>
-</dd>
-    <dt><code>offset</code> <span class="xref">int</span></dt>
-    <dd><p>Where the stream starts in it.</p>
-</dd>
-    <dt><code>length</code> <span class="xref">int</span></dt>
-    <dd><p>How many bytes it occupies.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">byte</span>[]</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>payload</code></dt></td>
+    <td style="width: 99%"><dd><p>The provider's buffer.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>offset</code></dt></td>
+    <td style="width: 99%"><dd><p>Where the stream starts in it.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>length</code></dt></td>
+    <td style="width: 99%"><dd><p>How many bytes it occupies.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -766,15 +871,25 @@ way and for the same reason as <a class="xref" href="CodeSmile.LunyScript.INetwo
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">bool TryDequeueVariable(out NetworkVariableUpdate update)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">bool TryDequeueVariable(out NetworkVariableUpdate update)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>update</code> <a class="xref" href="CodeSmile.LunyScript.NetworkVariableUpdate.html">NetworkVariableUpdate</a></dt>
-    <dd><p>The update, when this returns true.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NetworkVariableUpdate.html">NetworkVariableUpdate</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>update</code></dt></td>
+    <td style="width: 99%"><dd><p>The update, when this returns true.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">

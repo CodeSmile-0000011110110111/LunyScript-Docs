@@ -9,7 +9,8 @@
       <meta name="description" content="One authored Object.Spawn that has run and has not been applied yet: which prefab input to produce from, where the produced object goes, what it is parented to, and which owned-object slot holds it.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="../toc.html">
       
@@ -31,6 +32,7 @@
       <meta name="loc:downloadPdf" content="Download PDF">
 
       <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -96,9 +98,14 @@ owned-object slot holds it.</p>
 
 
 
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
 
 
 
+
+
+  </details>
 
 
 
@@ -131,34 +138,59 @@ spawn costs no allocation until the runner produces the object.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SpawnRequest(int prefabSlotIndex, string prefabName, int intoSlotIndex, int parentSlotIndex, in SpawnPlacement placement, int operationIndex = -1)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnRequest(int prefabSlotIndex, string prefabName, int intoSlotIndex, int parentSlotIndex, in SpawnPlacement placement, int operationIndex = -1)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>prefabSlotIndex</code> <span class="xref">int</span></dt>
-    <dd><p>The prefab input's asset slot, or
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>prefabSlotIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>The prefab input's asset slot, or
 <a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html#CodeSmile_LunyScript_SpawnObjectBlock_NoPrefabSlot">NoPrefabSlot</a> when spawning from an acquisition.</p>
-</dd>
-    <dt><code>prefabName</code> <span class="xref">string</span></dt>
-    <dd><p>The input's declared name, or the operation name.</p>
-</dd>
-    <dt><code>intoSlotIndex</code> <span class="xref">int</span></dt>
-    <dd><p>The owned-object slot, or
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>prefabName</code></dt></td>
+    <td style="width: 99%"><dd><p>The input's declared name, or the operation name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>intoSlotIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>The owned-object slot, or
 <a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html#CodeSmile_LunyScript_SpawnObjectBlock_NotHeld">NotHeld</a>.</p>
-</dd>
-    <dt><code>parentSlotIndex</code> <span class="xref">int</span></dt>
-    <dd><p>The parent slot, <a class="xref" href="CodeSmile.LunyScript.ActivateObjectBlock.html#CodeSmile_LunyScript_ActivateObjectBlock_Self">Self</a>, or
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>parentSlotIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>The parent slot, <a class="xref" href="CodeSmile.LunyScript.ActivateObjectBlock.html#CodeSmile_LunyScript_ActivateObjectBlock_Self">Self</a>, or
 <a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html#CodeSmile_LunyScript_SpawnObjectBlock_NoParent">NoParent</a>.</p>
-</dd>
-    <dt><code>placement</code> <a class="xref" href="CodeSmile.LunyScript.SpawnPlacement.html">SpawnPlacement</a></dt>
-    <dd><p>The evaluated placement.</p>
-</dd>
-    <dt><code>operationIndex</code> <span class="xref">int</span></dt>
-    <dd><p>The acquisition handle, or
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.SpawnPlacement.html">SpawnPlacement</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>placement</code></dt></td>
+    <td style="width: 99%"><dd><p>The evaluated placement.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>operationIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>The acquisition handle, or
 <a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html#CodeSmile_LunyScript_SpawnObjectBlock_NoOperation">NoOperation</a>.</p>
-</dd>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 
@@ -188,7 +220,7 @@ spawn costs no allocation until the runner produces the object.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int IntoSlotIndex { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int IntoSlotIndex { get; }</code></pre>
   </div>
 
 
@@ -221,7 +253,7 @@ spawn costs no allocation until the runner produces the object.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int OperationIndex { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int OperationIndex { get; }</code></pre>
   </div>
 
 
@@ -254,7 +286,7 @@ spawn costs no allocation until the runner produces the object.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int ParentSlotIndex { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int ParentSlotIndex { get; }</code></pre>
   </div>
 
 
@@ -287,7 +319,7 @@ evaluated.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SpawnPlacement Placement { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnPlacement Placement { get; }</code></pre>
   </div>
 
 
@@ -319,7 +351,7 @@ evaluated.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string PrefabName { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string PrefabName { get; }</code></pre>
   </div>
 
 
@@ -351,7 +383,7 @@ evaluated.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public int PrefabSlotIndex { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int PrefabSlotIndex { get; }</code></pre>
   </div>
 
 

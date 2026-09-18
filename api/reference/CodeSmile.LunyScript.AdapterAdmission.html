@@ -9,7 +9,8 @@
       <meta name="description" content="The package and version admission table for extension blocks and optional adapters.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="../toc.html">
       
@@ -31,6 +32,7 @@
       <meta name="loc:downloadPdf" content="Download PDF">
 
       <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -94,6 +96,9 @@ Class AdapterAdmission  <a class="header-action link-secondary" title="View sour
 
 
 
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
     <dd>
@@ -104,6 +109,8 @@ Class AdapterAdmission  <a class="header-action link-secondary" title="View sour
 
 
 
+
+  </details>
 
 
 
@@ -166,7 +173,7 @@ if they still need to be admitted.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void Clear()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static void Clear()</code></pre>
   </div>
 
 
@@ -198,18 +205,31 @@ calls this next to <a class="xref" href="CodeSmile.LunyScript.AdapterAdmission.h
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void NoteInstalled(string packageId, string version)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static void NoteInstalled(string packageId, string version)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>packageId</code> <span class="xref">string</span></dt>
-    <dd><p>The Unity package id.</p>
-</dd>
-    <dt><code>version</code> <span class="xref">string</span></dt>
-    <dd><p>The installed version string.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>packageId</code></dt></td>
+    <td style="width: 99%"><dd><p>The Unity package id.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>version</code></dt></td>
+    <td style="width: 99%"><dd><p>The installed version string.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 
@@ -246,34 +266,59 @@ not.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void Register(Type blockType, string packageId, string minimumVersion, string owner, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static void Register(Type blockType, string packageId, string minimumVersion, string owner, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>blockType</code> <span class="xref">Type</span></dt>
-    <dd><p>The concrete <a class="xref" href="CodeSmile.LunyScript.IScriptNode.html">IScriptNode</a> type the adapter
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Type</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>blockType</code></dt></td>
+    <td style="width: 99%"><dd><p>The concrete <a class="xref" href="CodeSmile.LunyScript.IScriptNode.html">IScriptNode</a> type the adapter
 adds.</p>
-</dd>
-    <dt><code>packageId</code> <span class="xref">string</span></dt>
-    <dd><p>The Unity package id, for example
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>packageId</code></dt></td>
+    <td style="width: 99%"><dd><p>The Unity package id, for example
 <code>com.example.puppetmaster</code>.</p>
-</dd>
-    <dt><code>minimumVersion</code> <span class="xref">string</span></dt>
-    <dd><p>The lowest version that admits this type, for example
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>minimumVersion</code></dt></td>
+    <td style="width: 99%"><dd><p>The lowest version that admits this type, for example
 <code>1.2.0</code>. Newer installed versions are admitted.</p>
-</dd>
-    <dt><code>owner</code> <span class="xref">string</span></dt>
-    <dd><p>The adapter that owns this type, usually its assembly
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>owner</code></dt></td>
+    <td style="width: 99%"><dd><p>The adapter that owns this type, usually its assembly
 name.</p>
-</dd>
-    <dt><code>callerFilePath</code> <span class="xref">string</span></dt>
-    <dd><p>Supplied by the compiler.</p>
-</dd>
-    <dt><code>callerLineNumber</code> <span class="xref">int</span></dt>
-    <dd><p>Supplied by the compiler.</p>
-</dd>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 
@@ -311,19 +356,32 @@ one.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static bool TryGet(Type blockType, out AdapterRegistration registration)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static bool TryGet(Type blockType, out AdapterRegistration registration)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>blockType</code> <span class="xref">Type</span></dt>
-    <dd><p>The node type to look up.</p>
-</dd>
-    <dt><code>registration</code> <a class="xref" href="CodeSmile.LunyScript.AdapterRegistration.html">AdapterRegistration</a></dt>
-    <dd><p>The recorded requirement when this method returns
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Type</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>blockType</code></dt></td>
+    <td style="width: 99%"><dd><p>The node type to look up.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.AdapterRegistration.html">AdapterRegistration</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>registration</code></dt></td>
+    <td style="width: 99%"><dd><p>The recorded requirement when this method returns
 true.</p>
-</dd>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
@@ -359,15 +417,25 @@ source restores the map filled by <a class="xref" href="CodeSmile.LunyScript.Ada
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void UseVersionSource(IPackageVersionSource source)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static void UseVersionSource(IPackageVersionSource source)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>source</code> <a class="xref" href="CodeSmile.LunyScript.IPackageVersionSource.html">IPackageVersionSource</a></dt>
-    <dd><p>The source to query at spawn, or null for the map.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.IPackageVersionSource.html">IPackageVersionSource</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>source</code></dt></td>
+    <td style="width: 99%"><dd><p>The source to query at spawn, or null for the map.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 

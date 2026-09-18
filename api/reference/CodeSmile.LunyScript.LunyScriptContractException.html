@@ -9,7 +9,8 @@
       <meta name="description" content="Thrown when LunyScript observes that the lifecycle ownership contract was broken: the object running a script was destroyed, reparented or otherwise changed by native Unity API rather than by a LunyScript block.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
-      <link rel="stylesheet" href="../public/main.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
       <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="../toc.html">
       
@@ -31,6 +32,7 @@
       <meta name="loc:downloadPdf" content="Download PDF">
 
       <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -96,6 +98,9 @@ than by a LunyScript block.</p>
 
 
 
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
   <dl class="typelist inheritance">
     <dt>Inheritance</dt>
     <dd>
@@ -111,22 +116,26 @@ than by a LunyScript block.</p>
   <dl class="typelist inheritedMembers">
     <dt>Inherited Members</dt>
     <dd>
-    <div>
+    <ul>
+    <li>
       <a class="xref" href="CodeSmile.LunyScript.LunyScriptException.html#CodeSmile_LunyScript_LunyScriptException_ScriptTypeName">LunyScriptException.ScriptTypeName</a>
-    </div>
-    <div>
+    </li>
+    <li>
       <a class="xref" href="CodeSmile.LunyScript.LunyScriptException.html#CodeSmile_LunyScript_LunyScriptException_BlockTypeName">LunyScriptException.BlockTypeName</a>
-    </div>
-    <div>
+    </li>
+    <li>
       <a class="xref" href="CodeSmile.LunyScript.LunyScriptException.html#CodeSmile_LunyScript_LunyScriptException_Location">LunyScriptException.Location</a>
-    </div>
-    <div>
+    </li>
+    <li>
       <a class="xref" href="CodeSmile.LunyScript.LunyScriptException.html#CodeSmile_LunyScript_LunyScriptException_StackTrace">LunyScriptException.StackTrace</a>
-    </div>
-    <div>
+    </li>
+    <li>
       <a class="xref" href="CodeSmile.LunyScript.LunyScriptException.html#CodeSmile_LunyScript_LunyScriptException_ToLogRecord">LunyScriptException.ToLogRecord()</a>
-    </div>
+    </li>
+    </ul>
   </dd></dl>
+
+  </details>
 
 
 
@@ -158,15 +167,25 @@ repair the state, and it is not a goal to detect every case.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public LunyScriptContractException(string message)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public LunyScriptContractException(string message)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>message</code> <span class="xref">string</span></dt>
-    <dd><p>Which object, and which call put it outside the contract.</p>
-</dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>Which object, and which call put it outside the contract.</p>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 
@@ -191,25 +210,44 @@ repair the state, and it is not a goal to detect every case.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public LunyScriptContractException(string message, string scriptTypeName, string blockTypeName, SourceLocation location)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public LunyScriptContractException(string message, string scriptTypeName, string blockTypeName, SourceLocation location)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><code>message</code> <span class="xref">string</span></dt>
-    <dd><p>Which object, and which call put it outside the contract.</p>
-</dd>
-    <dt><code>scriptTypeName</code> <span class="xref">string</span></dt>
-    <dd><p>The script type's name, or null.</p>
-</dd>
-    <dt><code>blockTypeName</code> <span class="xref">string</span></dt>
-    <dd><p>The block type's name, or null.</p>
-</dd>
-    <dt><code>location</code> <a class="xref" href="CodeSmile.LunyScript.SourceLocation.html">SourceLocation</a></dt>
-    <dd><p>Where the block was authored, or
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>Which object, and which call put it outside the contract.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>scriptTypeName</code></dt></td>
+    <td style="width: 99%"><dd><p>The script type's name, or null.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>blockTypeName</code></dt></td>
+    <td style="width: 99%"><dd><p>The block type's name, or null.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.SourceLocation.html">SourceLocation</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>location</code></dt></td>
+    <td style="width: 99%"><dd><p>Where the block was authored, or
 <a class="xref" href="CodeSmile.LunyScript.SourceLocation.html#CodeSmile_LunyScript_SourceLocation_Unknown">Unknown</a>.</p>
-</dd>
+</dd></td>
+  </tr>
   </dl>
+  </table>
 
 
 
