@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_RoutineGroupEndingBuilder" data-uid="CodeSmile.LunyScript.RoutineGroupEndingBuilder" class="text-break">
-Struct RoutineGroupEndingBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L216"><i class="bi bi-code-slash"></i></a>
+Struct RoutineGroupEndingBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L230"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -109,7 +109,7 @@ happens to the children that had not finished when the group published its resul
 
 
   <h2 id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_examples">Examples</h2>
-  <pre><code class="lang-csharp">On.Ready(Routine("Race").Run(InParallel(reachExit, timeOut).UntilOneEnds()));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Routine("Race").Run(InParallel(reachExit, timeOut).UntilOneFinishes()));</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_remarks">Remarks</h2>
@@ -122,11 +122,49 @@ result is published.</p>
 </h2>
 
 
+  <a id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_Canceled_" data-uid="CodeSmile.LunyScript.RoutineGroupEndingBuilder.Canceled*"></a>
+
+  <h3 id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_Canceled" data-uid="CodeSmile.LunyScript.RoutineGroupEndingBuilder.Canceled">
+  Canceled
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L293"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A condition that is true once this group was cancelled before it produced a result.
+Cancellation is neither a success nor a failure, so <a class="xref" href="CodeSmile.LunyScript.RoutineGroupEndingBuilder.html#CodeSmile_LunyScript_RoutineGroupEndingBuilder_Succeeded">Succeeded</a> and
+<a class="xref" href="CodeSmile.LunyScript.RoutineGroupEndingBuilder.html#CodeSmile_LunyScript_RoutineGroupEndingBuilder_Failed">Failed</a> are both false for the same group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Canceled { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_Canceled_examples">Examples</h4>
+  <pre><code class="lang-csharp">var race = InParallel(reachExit, timeOut).UntilOneFinishes();
+On.Ready(Routine("Race").Run(race, If(race.Canceled).Then(retry.Set(true))));</code></pre>
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_Failed_" data-uid="CodeSmile.LunyScript.RoutineGroupEndingBuilder.Failed*"></a>
 
   <h3 id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_Failed" data-uid="CodeSmile.LunyScript.RoutineGroupEndingBuilder.Failed">
   Failed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L267"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L281"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A condition that is true once this group has ended Failed.</p>
@@ -150,7 +188,7 @@ result is published.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_Failed_examples">Examples</h4>
-  <pre><code class="lang-csharp">var race = InParallel(reachExit, timeOut).UntilOneEnds();
+  <pre><code class="lang-csharp">var race = InParallel(reachExit, timeOut).UntilOneFinishes();
 On.Ready(Routine("Race").Run(race, If(race.Failed).Then(caught.Set(true))));</code></pre>
 
 
@@ -158,19 +196,19 @@ On.Ready(Routine("Race").Run(race, If(race.Failed).Then(caught.Set(true))));</co
 
 
 
-  <a id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_Worked_" data-uid="CodeSmile.LunyScript.RoutineGroupEndingBuilder.Worked*"></a>
+  <a id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_Succeeded_" data-uid="CodeSmile.LunyScript.RoutineGroupEndingBuilder.Succeeded*"></a>
 
-  <h3 id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_Worked" data-uid="CodeSmile.LunyScript.RoutineGroupEndingBuilder.Worked">
-  Worked
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L257"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_Succeeded" data-uid="CodeSmile.LunyScript.RoutineGroupEndingBuilder.Succeeded">
+  Succeeded
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L271"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A condition that is true once this group has ended Worked.</p>
+  <div class="markdown level1 summary"><p>A condition that is true once this group has ended Succeeded.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Worked { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Succeeded { get; }</code></pre>
   </div>
 
 
@@ -185,9 +223,9 @@ On.Ready(Routine("Race").Run(race, If(race.Failed).Then(caught.Set(true))));</co
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_Worked_examples">Examples</h4>
-  <pre><code class="lang-csharp">var race = InParallel(reachExit, timeOut).UntilOneEnds();
-On.Ready(Routine("Race").Run(race, If(race.Worked).Then(escaped.Set(true))));</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_Succeeded_examples">Examples</h4>
+  <pre><code class="lang-csharp">var race = InParallel(reachExit, timeOut).UntilOneFinishes();
+On.Ready(Routine("Race").Run(race, If(race.Succeeded).Then(escaped.Set(true))));</code></pre>
 
 
 
@@ -202,7 +240,7 @@ On.Ready(Routine("Race").Run(race, If(race.Worked).Then(escaped.Set(true))));</c
 
   <h3 id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_OthersKeepRunning" data-uid="CodeSmile.LunyScript.RoutineGroupEndingBuilder.OthersKeepRunning">
   OthersKeepRunning()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L245"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L259"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Leaves the children that had not finished running when this group published its
@@ -229,7 +267,7 @@ runs, and cancels them when it ends or is itself cancelled.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_OthersKeepRunning_examples">Examples</h4>
-  <pre><code class="lang-csharp">var search = InParallel(searchLeft, searchRight).UntilOneWorks().OthersKeepRunning();</code></pre>
+  <pre><code class="lang-csharp">var search = InParallel(searchLeft, searchRight).UntilOneSucceeds().OthersKeepRunning();</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_OthersKeepRunning_remarks">Remarks</h4>
@@ -248,7 +286,7 @@ final.</p>
 
   <h3 id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_op_Implicit_CodeSmile_LunyScript_RoutineGroupEndingBuilder__CodeSmile_LunyScript_Block" data-uid="CodeSmile.LunyScript.RoutineGroupEndingBuilder.op_Implicit(CodeSmile.LunyScript.RoutineGroupEndingBuilder)~CodeSmile.LunyScript.Block">
   implicit operator Block(RoutineGroupEndingBuilder)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L277"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L303"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finalises this group as a step of a routine.</p>
@@ -288,7 +326,7 @@ final.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupEndingBuilder_op_Implicit_CodeSmile_LunyScript_RoutineGroupEndingBuilder__CodeSmile_LunyScript_Block_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Routine("Race").Run(InParallel(reachExit, timeOut).UntilOneEnds()));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Routine("Race").Run(InParallel(reachExit, timeOut).UntilOneFinishes()));</code></pre>
 
 
 
@@ -299,7 +337,7 @@ final.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L216" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L230" class="edit-link">Edit this page</a>
         </div>
 
 

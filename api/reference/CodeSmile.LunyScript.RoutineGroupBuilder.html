@@ -112,9 +112,9 @@ Struct RoutineGroupBuilder  <a class="header-action link-secondary" title="View 
 
 
   <h2 id="CodeSmile_LunyScript_RoutineGroupBuilder_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>Used as it is, the group runs every child and waits for all of them, reporting Worked only if
-every child worked and Failed otherwise; a failure does not stop it early. The two clause
-calls replace that with an early ending. <code>docs/execution-model.md</code>, &quot;Shared outcomes and
+  <div class="markdown level0 remarks"><p>Used as it is, the group runs every child and waits for all of them, reporting Succeeded
+only if every child succeeded and Failed otherwise; a failure does not stop it early. The
+two clause calls replace that with an early ending. <code>docs/execution-model.md</code>, &quot;Shared outcomes and
 concurrent groups&quot;, is the contract this shape implements.</p>
 </div>
 
@@ -123,15 +123,54 @@ concurrent groups&quot;, is the contract this shape implements.</p>
 </h2>
 
 
+  <a id="CodeSmile_LunyScript_RoutineGroupBuilder_Canceled_" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.Canceled*"></a>
+
+  <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_Canceled" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.Canceled">
+  Canceled
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L178"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A condition that is true once this group was cancelled before it produced a result.
+Cancellation is neither a success nor a failure, so <a class="xref" href="CodeSmile.LunyScript.RoutineGroupBuilder.html#CodeSmile_LunyScript_RoutineGroupBuilder_Succeeded">Succeeded</a> and
+<a class="xref" href="CodeSmile.LunyScript.RoutineGroupBuilder.html#CodeSmile_LunyScript_RoutineGroupBuilder_Failed">Failed</a> are both false for the same group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Canceled { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupBuilder_Canceled_examples">Examples</h4>
+  <pre><code class="lang-csharp">var open = InParallel(slideDoor, playSound);
+On.Ready(Routine("Open").Run(open, If(open.Canceled).Then(retry.Set(true))));</code></pre>
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_RoutineGroupBuilder_Failed_" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.Failed*"></a>
 
   <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_Failed" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.Failed">
   Failed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L165"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L166"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A condition that is true once this group has ended Failed. A group that was
-cancelled has no result, so neither this nor <a class="xref" href="CodeSmile.LunyScript.RoutineGroupBuilder.html#CodeSmile_LunyScript_RoutineGroupBuilder_Worked">Worked</a> is true for it.</p>
+cancelled has no result, so neither this nor <a class="xref" href="CodeSmile.LunyScript.RoutineGroupBuilder.html#CodeSmile_LunyScript_RoutineGroupBuilder_Succeeded">Succeeded</a> is true for it;
+<a class="xref" href="CodeSmile.LunyScript.RoutineGroupBuilder.html#CodeSmile_LunyScript_RoutineGroupBuilder_Canceled">Canceled</a> is what is true for that group.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -160,20 +199,20 @@ On.Ready(Routine("Open").Run(open, If(open.Failed).Then(alarm.Set(true))));</cod
 
 
 
-  <a id="CodeSmile_LunyScript_RoutineGroupBuilder_Worked_" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.Worked*"></a>
+  <a id="CodeSmile_LunyScript_RoutineGroupBuilder_Succeeded_" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.Succeeded*"></a>
 
-  <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_Worked" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.Worked">
-  Worked
+  <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_Succeeded" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.Succeeded">
+  Succeeded
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L154"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A condition that is true once this group has ended Worked, for the routine steps
+  <div class="markdown level1 summary"><p>A condition that is true once this group has ended Succeeded, for the routine steps
 written after it.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Worked { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Succeeded { get; }</code></pre>
   </div>
 
 
@@ -188,9 +227,9 @@ written after it.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupBuilder_Worked_examples">Examples</h4>
+  <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupBuilder_Succeeded_examples">Examples</h4>
   <pre><code class="lang-csharp">var open = InParallel(slideDoor, playSound);
-On.Ready(Routine("Open").Run(open, If(open.Worked).Then(entered.Set(true))));</code></pre>
+On.Ready(Routine("Open").Run(open, If(open.Succeeded).Then(entered.Set(true))));</code></pre>
 
 
 
@@ -201,10 +240,10 @@ On.Ready(Routine("Open").Run(open, If(open.Worked).Then(entered.Set(true))));</c
 </h2>
 
 
-  <a id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneEnds_" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.UntilOneEnds*"></a>
+  <a id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneFinishes_" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.UntilOneFinishes*"></a>
 
-  <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneEnds" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.UntilOneEnds">
-  UntilOneEnds()
+  <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneFinishes" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.UntilOneFinishes">
+  UntilOneFinishes()
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L128"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -215,7 +254,7 @@ wins.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public RoutineGroupEndingBuilder UntilOneEnds()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public RoutineGroupEndingBuilder UntilOneFinishes()</code></pre>
   </div>
 
 
@@ -231,28 +270,28 @@ wins.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneEnds_examples">Examples</h4>
-  <pre><code class="lang-csharp">var race = InParallel(reachExit, timeOut).UntilOneEnds();</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneFinishes_examples">Examples</h4>
+  <pre><code class="lang-csharp">var race = InParallel(reachExit, timeOut).UntilOneFinishes();</code></pre>
 
 
 
 
 
 
-  <a id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneWorks_" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.UntilOneWorks*"></a>
+  <a id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneSucceeds_" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.UntilOneSucceeds*"></a>
 
-  <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneWorks" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.UntilOneWorks">
-  UntilOneWorks()
+  <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneSucceeds" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.UntilOneSucceeds">
+  UntilOneSucceeds()
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L141"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>The first child to work ends this group Worked. A child that fails ends nothing on
-its own; the group ends Failed only when every child has failed.</p>
+  <div class="markdown level1 summary"><p>The first child to succeed ends this group Succeeded. A child that fails ends
+nothing on its own; the group ends Failed only when every child has failed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public RoutineGroupEndingBuilder UntilOneWorks()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public RoutineGroupEndingBuilder UntilOneSucceeds()</code></pre>
   </div>
 
 
@@ -268,8 +307,8 @@ its own; the group ends Failed only when every child has failed.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneWorks_examples">Examples</h4>
-  <pre><code class="lang-csharp">var anyRoute = InParallel(frontDoor, backDoor, window).UntilOneWorks();</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneSucceeds_examples">Examples</h4>
+  <pre><code class="lang-csharp">var anyRoute = InParallel(frontDoor, backDoor, window).UntilOneSucceeds();</code></pre>
 
 
 
@@ -284,7 +323,7 @@ its own; the group ends Failed only when every child has failed.</p>
 
   <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_op_Implicit_CodeSmile_LunyScript_RoutineGroupBuilder__CodeSmile_LunyScript_Block" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.op_Implicit(CodeSmile.LunyScript.RoutineGroupBuilder)~CodeSmile.LunyScript.Block">
   implicit operator Block(RoutineGroupBuilder)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L176"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L189"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finalises this group as a step of a routine. A bare composite that already describes

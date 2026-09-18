@@ -157,7 +157,7 @@ Class ActionBlock  <a class="header-action link-secondary" title="View source" h
     public override ActionResult Advance(ScriptInstance instance)
     {
         instance.SetNumber(m_Remaining, instance.GetNumber(m_Remaining) - 1.0);
-        return instance.GetNumber(m_Remaining) &gt; 0.0 ? ActionResult.Running : ActionResult.Worked;
+        return instance.GetNumber(m_Remaining) &gt; 0.0 ? ActionResult.Running : ActionResult.Succeeded;
     }
 }</code></pre>
 
@@ -165,7 +165,7 @@ Class ActionBlock  <a class="header-action link-secondary" title="View source" h
   <h2 id="CodeSmile_LunyScript_ActionBlock_remarks">Remarks</h2>
   <div class="markdown level0 remarks"><p>An ordinary <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a> does its work inside one <a class="xref" href="CodeSmile.LunyScript.Block.html#CodeSmile_LunyScript_Block_Execute_CodeSmile_LunyScript_ScriptInstance_">Execute(ScriptInstance)</a> call.
 An action is advanced once per frame by whatever owns it - a routine activation, or a
-concurrent group - until it reports <a class="xref" href="CodeSmile.LunyScript.ActionResult.html#CodeSmile_LunyScript_ActionResult_Worked">Worked</a> or
+concurrent group - until it reports <a class="xref" href="CodeSmile.LunyScript.ActionResult.html#CodeSmile_LunyScript_ActionResult_Succeeded">Succeeded</a> or
 <a class="xref" href="CodeSmile.LunyScript.ActionResult.html#CodeSmile_LunyScript_ActionResult_Failed">Failed</a>.</p>
 <p>
     <b>The per-object state of an action lives in slots, not in fields.</b> One action object
@@ -280,7 +280,7 @@ the finished outcome.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_ActionBlock_Advance_CodeSmile_LunyScript_ScriptInstance__examples">Examples</h4>
-  <pre><code class="lang-csharp">public override ActionResult Advance(ScriptInstance instance) =&gt; ActionResult.Worked;</code></pre>
+  <pre><code class="lang-csharp">public override ActionResult Advance(ScriptInstance instance) =&gt; ActionResult.Succeeded;</code></pre>
 
 
 
@@ -342,7 +342,7 @@ by the owner, before the first <a class="xref" href="CodeSmile.LunyScript.Action
   </h3>
 
   <div class="markdown level1 summary"><p>Interrupts this action and performs its own bounded cleanup. An action that is
-cancelled reports no outcome at all: cancellation is neither Worked nor Failed.</p>
+cancelled reports no outcome at all: cancellation is neither Succeeded nor Failed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 

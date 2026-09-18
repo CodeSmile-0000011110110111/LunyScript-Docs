@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder" data-uid="CodeSmile.LunyScript.RoutineGroupSurvivorBuilder" class="text-break">
-Struct RoutineGroupSurvivorBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L311"><i class="bi bi-code-slash"></i></a>
+Struct RoutineGroupSurvivorBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L338"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -109,7 +109,7 @@ group publishes its result.</p>
 
 
   <h2 id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_examples">Examples</h2>
-  <pre><code class="lang-csharp">On.Ready(Routine("Search").Run(InParallel(left, right).UntilOneWorks().OthersKeepRunning()));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Routine("Search").Run(InParallel(left, right).UntilOneSucceeds().OthersKeepRunning()));</code></pre>
 
 
 
@@ -118,11 +118,49 @@ group publishes its result.</p>
 </h2>
 
 
+  <a id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Canceled_" data-uid="CodeSmile.LunyScript.RoutineGroupSurvivorBuilder.Canceled*"></a>
+
+  <h3 id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Canceled" data-uid="CodeSmile.LunyScript.RoutineGroupSurvivorBuilder.Canceled">
+  Canceled
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L385"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A condition that is true once this group was cancelled before it produced a result.
+Cancellation is neither a success nor a failure, so <a class="xref" href="CodeSmile.LunyScript.RoutineGroupSurvivorBuilder.html#CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Succeeded">Succeeded</a> and
+<a class="xref" href="CodeSmile.LunyScript.RoutineGroupSurvivorBuilder.html#CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Failed">Failed</a> are both false for the same group.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Canceled { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Canceled_examples">Examples</h4>
+  <pre><code class="lang-csharp">var search = InParallel(left, right).UntilOneSucceeds().OthersKeepRunning();
+On.Ready(Routine("Search").Run(search, If(search.Canceled).Then(retry.Set(true))));</code></pre>
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Failed_" data-uid="CodeSmile.LunyScript.RoutineGroupSurvivorBuilder.Failed*"></a>
 
   <h3 id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Failed" data-uid="CodeSmile.LunyScript.RoutineGroupSurvivorBuilder.Failed">
   Failed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L346"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L373"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A condition that is true once this group has ended Failed.</p>
@@ -146,7 +184,7 @@ group publishes its result.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Failed_examples">Examples</h4>
-  <pre><code class="lang-csharp">var search = InParallel(left, right).UntilOneWorks().OthersKeepRunning();
+  <pre><code class="lang-csharp">var search = InParallel(left, right).UntilOneSucceeds().OthersKeepRunning();
 On.Ready(Routine("Search").Run(search, If(search.Failed).Then(lost.Set(true))));</code></pre>
 
 
@@ -154,19 +192,19 @@ On.Ready(Routine("Search").Run(search, If(search.Failed).Then(lost.Set(true))));
 
 
 
-  <a id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Worked_" data-uid="CodeSmile.LunyScript.RoutineGroupSurvivorBuilder.Worked*"></a>
+  <a id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Succeeded_" data-uid="CodeSmile.LunyScript.RoutineGroupSurvivorBuilder.Succeeded*"></a>
 
-  <h3 id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Worked" data-uid="CodeSmile.LunyScript.RoutineGroupSurvivorBuilder.Worked">
-  Worked
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L336"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Succeeded" data-uid="CodeSmile.LunyScript.RoutineGroupSurvivorBuilder.Succeeded">
+  Succeeded
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L363"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A condition that is true once this group has ended Worked.</p>
+  <div class="markdown level1 summary"><p>A condition that is true once this group has ended Succeeded.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Worked { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Succeeded { get; }</code></pre>
   </div>
 
 
@@ -181,9 +219,9 @@ On.Ready(Routine("Search").Run(search, If(search.Failed).Then(lost.Set(true))));
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Worked_examples">Examples</h4>
-  <pre><code class="lang-csharp">var search = InParallel(left, right).UntilOneWorks().OthersKeepRunning();
-On.Ready(Routine("Search").Run(search, If(search.Worked).Then(found.Set(true))));</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_Succeeded_examples">Examples</h4>
+  <pre><code class="lang-csharp">var search = InParallel(left, right).UntilOneSucceeds().OthersKeepRunning();
+On.Ready(Routine("Search").Run(search, If(search.Succeeded).Then(found.Set(true))));</code></pre>
 
 
 
@@ -198,7 +236,7 @@ On.Ready(Routine("Search").Run(search, If(search.Worked).Then(found.Set(true))))
 
   <h3 id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_op_Implicit_CodeSmile_LunyScript_RoutineGroupSurvivorBuilder__CodeSmile_LunyScript_Block" data-uid="CodeSmile.LunyScript.RoutineGroupSurvivorBuilder.op_Implicit(CodeSmile.LunyScript.RoutineGroupSurvivorBuilder)~CodeSmile.LunyScript.Block">
   implicit operator Block(RoutineGroupSurvivorBuilder)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L356"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L395"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finalises this group as a step of a routine.</p>
@@ -238,7 +276,7 @@ On.Ready(Routine("Search").Run(search, If(search.Worked).Then(found.Set(true))))
 
 
   <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupSurvivorBuilder_op_Implicit_CodeSmile_LunyScript_RoutineGroupSurvivorBuilder__CodeSmile_LunyScript_Block_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Routine("Search").Run(InParallel(left, right).UntilOneWorks().OthersKeepRunning()));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Routine("Search").Run(InParallel(left, right).UntilOneSucceeds().OthersKeepRunning()));</code></pre>
 
 
 
@@ -249,7 +287,7 @@ On.Ready(Routine("Search").Run(search, If(search.Worked).Then(found.Set(true))))
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L311" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/RoutineBuilder.cs/#L338" class="edit-link">Edit this page</a>
         </div>
 
 
