@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Assets and operations | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Assets and operations" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/assets-and-operations.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/assets-and-operations.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Assets and operations" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Assets and operations","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/assets-and-operations.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Assets and operations</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Declare the asset a script needs and use it:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Turret</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Prefab</span> <span class="n">Shell</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Fire"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Shell</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vec3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">)));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Add the component, drag a prefab onto the <code class="language-plaintext highlighter-rouge">Shell</code> field it shows in the Inspector, and the turret
+spawns that prefab whenever it receives the message.</p>
+
+<h2 id="declared-inputs">Declared inputs</h2>
+
+<p>An asset a script uses is a declared input. The script names what it needs, and the object assigns
+it. Nothing is looked up by path while the game runs.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Prefab</span> <span class="n">Shell</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">Texture2D</span><span class="p">&gt;</span> <span class="n">Poster</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="p">[</span><span class="nf">Asset</span><span class="p">(</span><span class="n">Resources</span> <span class="p">=</span> <span class="s">"Posters/Stripe"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">Texture2D</span><span class="p">&gt;</span> <span class="n">Stripe</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Put <code class="language-plaintext highlighter-rouge">[Asset]</code> on a public auto-property of a <code class="language-plaintext highlighter-rouge">partial</code> script and the generator writes the
+<code class="language-plaintext highlighter-rouge">DefineAssets</code> override. <code class="language-plaintext highlighter-rouge">Prefab</code> is the type that <code class="language-plaintext highlighter-rouge">Object.Spawn</code> takes; <code class="language-plaintext highlighter-rouge">Asset&lt;T&gt;</code> is for everything
+else. <code class="language-plaintext highlighter-rouge">Resources = key</code> names a Resources-relative, extension-free key that is used when the object
+assigns nothing.</p>
+
+<p>The explicit form does the same thing inside <code class="language-plaintext highlighter-rouge">Build()</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Stripe</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="n">Asset</span><span class="p">&lt;</span><span class="n">Texture2D</span><span class="p">&gt;(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Stripe</span><span class="p">),</span>
+    <span class="n">AssetSource</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">Texture2D</span><span class="p">&gt;(</span><span class="s">"Posters/Stripe"</span><span class="p">));</span>
+<span class="n">Shell</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Prefab</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Shell</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>An object assigns its inputs on the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component, one field per declared input,
+below the script. An input the object leaves empty resolves to that input’s own declared source, and
+then to the registered placeholder for its type, and the resolution is reported. A <code class="language-plaintext highlighter-rouge">GameObject</code> that
+the object assigned but that is not a prefab asset is refused at spawn, because <code class="language-plaintext highlighter-rouge">Object.Spawn</code> takes
+<code class="language-plaintext highlighter-rouge">Prefab</code>.</p>
+
+<h2 id="operations-work-that-takes-more-than-one-frame">Operations: work that takes more than one frame</h2>
+
+<p>A load, an interactive rebind and a cloud round trip each take more than a frame and end in one
+classified outcome. An operation handle is how a script observes one.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Operation</span><span class="p">&lt;</span><span class="n">Prefab</span><span class="p">&gt;</span> <span class="n">Loading</span><span class="p">;</span>
+
+<span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Loading</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="n">Define</span><span class="p">&lt;</span><span class="n">Prefab</span><span class="p">&gt;(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
+
+    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Guard</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
+
+    <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Loading</span><span class="p">),</span> <span class="n">Ready</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+    <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Ready</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+    <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Finished</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Release</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Operation.Define(name)</code> declares a handle that carries no payload, and
+<code class="language-plaintext highlighter-rouge">Operation.Define&lt;T&gt;(name)</code> declares one that carries a <code class="language-plaintext highlighter-rouge">T</code> when it succeeds. The name is what a
+diagnostic message calls the attempt. An attempt that is still pending after 30 unscaled seconds
+times out.</p>
+
+<h2 id="watching-an-outcome">Watching an outcome</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Watch</th>
+      <th>When it runs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.Operation(handle).Succeeded(block, ..)</code></td>
+      <td>The attempt met its objective.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.Operation(handle).Failed(block, ..)</code></td>
+      <td>The attempt reached a terminal state without meeting it.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.Operation(handle).Cancelled(block, ..)</code></td>
+      <td>The attempt was cancelled.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.Operation(handle).Finished(block, ..)</code></td>
+      <td>Any of the three above.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span><span class="n">Ready</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">LastFailure</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">Failure</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Cancelled</span><span class="p">(</span><span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Cancelled."</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Finished</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Release</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>Cancellation runs the <code class="language-plaintext highlighter-rouge">Cancelled</code> watch and leaves the <code class="language-plaintext highlighter-rouge">Failed</code> watch alone; the two are separate
+outcomes. A classified failure that no watch observes is logged once per attempt.</p>
+
+<h2 id="reading-an-outcome-as-a-condition">Reading an outcome as a condition</h2>
+
+<p>The same four states read as conditions, which is what you use inside a tick event:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">IsPending</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">State</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1</span><span class="p">)),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">Succeeded</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">State</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">2</span><span class="p">)),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">Failed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">State</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">3</span><span class="p">)),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">Cancelled</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">State</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">4</span><span class="p">)),</span>
+    <span class="n">Code</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">Failure</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">handle.Failure</code> is the classified failure as a number: <code class="language-plaintext highlighter-rouge">None</code>, <code class="language-plaintext highlighter-rouge">Offline</code>, <code class="language-plaintext highlighter-rouge">NotSignedIn</code>,
+<code class="language-plaintext highlighter-rouge">RateLimited</code>, <code class="language-plaintext highlighter-rouge">Denied</code>, <code class="language-plaintext highlighter-rouge">NotFound</code>, <code class="language-plaintext highlighter-rouge">Timeout</code>, <code class="language-plaintext highlighter-rouge">Unknown</code>. It reads <code class="language-plaintext highlighter-rouge">None</code> while the attempt is
+pending, and after a success and after a cancellation.</p>
+
+<h2 id="cancelling-and-retrying">Cancelling and retrying</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Loading</span><span class="p">.</span><span class="nf">Cancel</span><span class="p">();</span>
+<span class="n">Loading</span><span class="p">.</span><span class="nf">Retry</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Cancel()</code> cancels a pending attempt and leaves a terminal one as it is. It promises nothing about
+rolling back an effect that has already reached the outside.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Retry()</code> starts a new attempt, and is refused unless the current one has failed or been cancelled.
+The new attempt is pending; what restarts the underlying work is the family call you bind with <code class="language-plaintext highlighter-rouge">.As</code>,
+so a retry is normally followed by another <code class="language-plaintext highlighter-rouge">Asset.Load(...).As(handle)</code>.</p>
+
+<h2 id="loading-and-releasing-an-asset">Loading and releasing an asset</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Guard</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Loading</span><span class="p">);</span>        <span class="c1">// a declared Prefab</span>
+<span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Poster</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">PosterLoad</span><span class="p">);</span>    <span class="c1">// a declared Asset&lt;T&gt;</span>
+<span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">AssetSource</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">Texture2D</span><span class="p">&gt;(</span><span class="s">"Posters/Stripe"</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="n">PosterLoad</span><span class="p">);</span>
+<span class="n">Asset</span><span class="p">.</span><span class="nf">Release</span><span class="p">(</span><span class="n">Loading</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Asset.Load</code> is incomplete without <code class="language-plaintext highlighter-rouge">.As(handle)</code>, because the handle is the only way to see the
+outcome. <code class="language-plaintext highlighter-rouge">Asset.Release(handle)</code> drops this owner’s hold on what the attempt produced, and is refused
+until that attempt has succeeded.</p>
+
+<p><code class="language-plaintext highlighter-rouge">AssetSource.Resources&lt;T&gt;(key)</code> takes a relative, extension-free Resources path with no leading
+slash. A bound Inspector reference and <code class="language-plaintext highlighter-rouge">AssetSource.Resources</code> are the two sources this version
+offers.</p>
+
+<h2 id="a-worked-example">A worked example</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">GuardPost</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Prefab</span> <span class="n">Guard</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Flag</span><span class="p">&gt;</span> <span class="n">Manned</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="n">Operation</span><span class="p">&lt;</span><span class="n">Prefab</span><span class="p">&gt;</span> <span class="n">Loading</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Loading</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="n">Define</span><span class="p">&lt;</span><span class="n">Prefab</span><span class="p">&gt;(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Guard</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
+
+        <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span>
+            <span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">ChildOf</span><span class="p">().</span><span class="nf">Into</span><span class="p">(</span><span class="s">"Guard"</span><span class="p">),</span>
+            <span class="n">Manned</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Manned</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Finished</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Release</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> —
+<code class="language-plaintext highlighter-rouge">Object.Spawn</code> and the rest of the lifetime surface.</li>
+  <li><a href="/LunyScript-Docs/manual/player-input.html">Player input</a> — rebinding, which uses the same
+operation handle.</li>
+  <li><a href="/LunyScript-Docs/manual/networking-and-cloud-save.html">Networking and cloud save</a> — the
+cloud family and its own watches.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.AssetFactory.html"><code class="language-plaintext highlighter-rouge">AssetFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.AssetAttribute.html"><code class="language-plaintext highlighter-rouge">AssetAttribute</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.AssetSource.html"><code class="language-plaintext highlighter-rouge">AssetSource</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Operation.html"><code class="language-plaintext highlighter-rouge">Operation</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OperationFactory.html"><code class="language-plaintext highlighter-rouge">OperationFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OperationWatchBuilder.html"><code class="language-plaintext highlighter-rouge">OperationWatchBuilder</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

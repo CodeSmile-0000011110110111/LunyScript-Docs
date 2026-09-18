@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Motion | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Motion" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/motion.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/motion.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Motion" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Motion","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/motion.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Motion</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Move an object through whichever physics component it has, with one call:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Thruster</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">AddForce</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">12</span><span class="p">).</span><span class="nf">InLocalSpace</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Put this on a GameObject with a dynamic Rigidbody and it accelerates forward along its own axis.</p>
+
+<h2 id="what-motion-is-for-and-how-it-differs-from-transform">What Motion is for, and how it differs from Transform</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Transform.MoveBy</code> writes the pose immediately and involves no physics.
+<code class="language-plaintext highlighter-rouge">Motion.MoveBy</code> is directed at whichever component the object actually has, and it produces the right
+call for that component:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>The object has</th>
+      <th><code class="language-plaintext highlighter-rouge">Motion.MoveBy</code> becomes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A <code class="language-plaintext highlighter-rouge">CharacterController</code></td>
+      <td><code class="language-plaintext highlighter-rouge">CharacterController.Move</code>, so the move collides and slides.</td>
+    </tr>
+    <tr>
+      <td>A kinematic <code class="language-plaintext highlighter-rouge">Rigidbody</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Rigidbody.MovePosition</code>, so other bodies see the move.</td>
+    </tr>
+    <tr>
+      <td>No body and no controller</td>
+      <td>A transform write.</td>
+    </tr>
+    <tr>
+      <td>A dynamic <code class="language-plaintext highlighter-rouge">Rigidbody</code></td>
+      <td>A refusal, because a dynamic body is moved by force.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// One line, on four different objects, each with its own component.</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">0.02</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">InLocalSpace</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>A call that is refused — because the object carries the wrong component, or because the call is made
+outside <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code> when the component requires it — is reported once and then ignored. Nothing
+is queued for a later step.</p>
+
+<h2 id="moving-a-character-or-a-kinematic-body">Moving a character or a kinematic body</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Motion</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">0.02</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>            <span class="c1">// own axes; (delta) takes a Vec3</span>
+<span class="n">Motion</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">0.02</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">InWorldSpace</span><span class="p">();</span>
+<span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">Pad</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>        <span class="c1">// world units per second</span>
+<span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>   <span class="c1">// or Milliseconds, Minutes</span>
+<span class="n">Motion</span><span class="p">.</span><span class="nf">RotateTo</span><span class="p">(</span><span class="n">Facing</span><span class="p">).</span><span class="nf">DegreesPerSecond</span><span class="p">(</span><span class="m">90</span><span class="p">);</span>
+<span class="n">Motion</span><span class="p">.</span><span class="nf">RotateTo</span><span class="p">(</span><span class="n">Facing</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>
+<span class="n">Motion</span><span class="p">.</span><span class="nf">FaceTowards</span><span class="p">(</span><span class="n">Pad</span><span class="p">).</span><span class="nf">DegreesPerSecond</span><span class="p">(</span><span class="m">90</span><span class="p">);</span>
+<span class="n">Motion</span><span class="p">.</span><span class="nf">FaceTowards</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">DegreesPerSecond</span><span class="p">(</span><span class="m">180</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">MoveTo</code> is incomplete until either <code class="language-plaintext highlighter-rouge">AtSpeed</code> or <code class="language-plaintext highlighter-rouge">Over</code> plus a unit; the two are exclusive.
+<code class="language-plaintext highlighter-rouge">RotateTo</code> takes a <code class="language-plaintext highlighter-rouge">Rotation</code>, which
+<a href="/LunyScript-Docs/manual/variables-and-values.html">Variables and values</a> explains how to
+build. <code class="language-plaintext highlighter-rouge">FaceTowards</code> turns towards a world point at a fixed rate and keeps facing it for as long as
+the block keeps running; it uses world up, and a target that coincides with the object writes
+nothing.</p>
+
+<p>A kinematic Rigidbody must run these in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>. A CharacterController and an object with
+neither component accept them from any event.</p>
+
+<h2 id="driving-a-dynamic-body">Driving a dynamic body</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span>
+    <span class="n">Motion</span><span class="p">.</span><span class="nf">AddForce</span><span class="p">(</span><span class="m">0.7</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">InWorldSpace</span><span class="p">(),</span>
+    <span class="n">Motion</span><span class="p">.</span><span class="nf">AddImpulse</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span>
+    <span class="n">Motion</span><span class="p">.</span><span class="nf">SetVelocity</span><span class="p">(-</span><span class="m">1.2</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">InWorldSpace</span><span class="p">(),</span>
+    <span class="n">Motion</span><span class="p">.</span><span class="nf">StopMotion</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>All four require an active dynamic Rigidbody and <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>. <code class="language-plaintext highlighter-rouge">AddImpulse</code> is a separate call
+rather than a force-mode parameter on <code class="language-plaintext highlighter-rouge">AddForce</code>, so the two read differently at a glance.
+<code class="language-plaintext highlighter-rouge">SetVelocity</code> converts the vector out of the frame you chose before it writes the world velocity.
+<code class="language-plaintext highlighter-rouge">StopMotion</code> clears linear and angular velocity once, at the moment it runs.</p>
+
+<h2 id="relocating-and-observing-the-result">Relocating, and observing the result</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Motion</span><span class="p">.</span><span class="nf">TeleportTo</span><span class="p">(</span><span class="n">Landing</span><span class="p">);</span>
+<span class="n">Motion</span><span class="p">.</span><span class="nf">TeleportTo</span><span class="p">(</span><span class="n">Landing</span><span class="p">).</span><span class="nf">WithRotation</span><span class="p">(</span><span class="n">Facing</span><span class="p">);</span>
+<span class="n">Motion</span><span class="p">.</span><span class="nf">TeleportTo</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+
+<span class="n">Drift</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Body</span><span class="p">.</span><span class="n">PositionDelta</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">TeleportTo</code> also clears both velocities on a dynamic body, and writes the pose on a kinematic one.
+Omit <code class="language-plaintext highlighter-rouge">WithRotation</code> and the current orientation is kept. A Rigidbody teleport must run in
+<code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>; a CharacterController or an object with no body may run it from any event.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Body.PositionDelta</code> is the world position after the previous physics step minus the world position
+at the step before that, as a <code class="language-plaintext highlighter-rouge">Vec3</code>. The first reading after a spawn is zero. Reading it anywhere in
+<code class="language-plaintext highlighter-rouge">Build()</code> opts this script type into the per-step copy that produces it, so a script type that never
+reads it stores no previous position.</p>
+
+<h2 id="a-worked-example">A worked example</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Patroller</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Vec3</span><span class="p">&gt;</span> <span class="n">Home</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Vec3</span><span class="p">&gt;</span> <span class="n">Post</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;</span> <span class="n">Leg</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Home</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Vec3</span><span class="p">.</span><span class="nf">From</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">)),</span> <span class="n">Post</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Vec3</span><span class="p">.</span><span class="nf">From</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">)));</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span>
+            <span class="nf">If</span><span class="p">(</span><span class="n">Leg</span> <span class="p">==</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">Post</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">2</span><span class="p">)),</span>
+            <span class="nf">If</span><span class="p">(</span><span class="n">Leg</span> <span class="p">==</span> <span class="m">1</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">Home</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">2</span><span class="p">)),</span>
+            <span class="nf">If</span><span class="p">(</span><span class="n">Body</span><span class="p">.</span><span class="n">PositionDelta</span><span class="p">.</span><span class="n">Length</span> <span class="p">&lt;</span> <span class="m">0.001</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Leg</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1</span> <span class="p">-</span> <span class="n">Leg</span><span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/flow.html">Flow: conditions, timed work and routines</a> — sequence
+several moves instead of switching on a number.</li>
+  <li><a href="/LunyScript-Docs/manual/transform.html">Transform</a> — writing the pose directly.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.MotionFactory.html"><code class="language-plaintext highlighter-rouge">MotionFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.BodyFactory.html"><code class="language-plaintext highlighter-rouge">BodyFactory</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

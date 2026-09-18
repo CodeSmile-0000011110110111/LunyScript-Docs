@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Writing a script | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Writing a script" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/writing-a-script.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/writing-a-script.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Writing a script" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Writing a script","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/writing-a-script.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Writing a script</h1>
+  </header>
+
+  <div class="post-content">
+    <p>A LunyScript script is one C# class with one method in it. This is a whole working script:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Spinner</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">RotateBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">35</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Select a GameObject, choose <strong>Add Component → LunyScript → LunyScript Behaviour</strong>, and pick
+<code class="language-plaintext highlighter-rouge">Spinner</code> in the component’s <strong>Script To Run</strong> field. Press Play and the object turns 35 degrees per
+second. That is the whole setup: one file, one component, one field.</p>
+
+<h2 id="what-build-does">What <code class="language-plaintext highlighter-rouge">Build</code> does</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Build()</code> composes blocks. A block is one unit of work — <code class="language-plaintext highlighter-rouge">Transform.RotateBy(...)</code>,
+<code class="language-plaintext highlighter-rouge">Charge.Add(5)</code>, <code class="language-plaintext highlighter-rouge">If(...).Then(...)</code> — and composing it records that the work exists. The work runs
+later, when the event it was registered against is raised.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Build()</code> runs once for each script type. Ten objects assigned to <code class="language-plaintext highlighter-rouge">Spinner</code> share the blocks that one
+<code class="language-plaintext highlighter-rouge">Build()</code> call composed; what each object owns is its own copy of the variable values those blocks
+read and write. That is why <code class="language-plaintext highlighter-rouge">Build()</code> takes no object as a parameter and why a block reads a value
+through a variable handle instead of holding the value itself.</p>
+
+<p>A surface such as <code class="language-plaintext highlighter-rouge">Transform</code> or <code class="language-plaintext highlighter-rouge">On</code> throws when it is touched outside <code class="language-plaintext highlighter-rouge">Build()</code>. Compose the blocks
+in <code class="language-plaintext highlighter-rouge">Build()</code> and let the events run them.</p>
+
+<h2 id="the-three-methods-you-can-override">The three methods you can override</h2>
+
+<p>Every script overrides <code class="language-plaintext highlighter-rouge">Build()</code>. The other two run before it and exist so that generated code has a
+place to put declarations.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>When it runs</th>
+      <th>Who writes it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">protected override void Build()</code></td>
+      <td>Once per script type.</td>
+      <td>You.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">protected override void DefineVariables()</code></td>
+      <td>Before <code class="language-plaintext highlighter-rouge">Build()</code>.</td>
+      <td>The <code class="language-plaintext highlighter-rouge">[Variable]</code> generator, or you.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">protected override void DefineAssets()</code></td>
+      <td>Before <code class="language-plaintext highlighter-rouge">Build()</code>.</td>
+      <td>The <code class="language-plaintext highlighter-rouge">[Asset]</code> generator, or you.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Battery</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="c1">// The [Variable] generator writes the DefineVariables override.</span>
+    <span class="p">[</span><span class="nf">Variable</span><span class="p">(</span><span class="m">40</span><span class="p">)]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;</span> <span class="n">Charge</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="c1">// The [Asset] generator writes the DefineAssets override.</span>
+    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Prefab</span> <span class="n">Spark</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Charge</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Discharge"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Spark</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The class is <code class="language-plaintext highlighter-rouge">partial</code> because the generators write the other half of it. A script that declares no
+<code class="language-plaintext highlighter-rouge">[Variable]</code> and no <code class="language-plaintext highlighter-rouge">[Asset]</code> property is written without <code class="language-plaintext highlighter-rouge">partial</code>. <code class="language-plaintext highlighter-rouge">Spark</code> gets its own field on
+the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component, below the script, and that is where the object assigns a
+prefab to it.</p>
+
+<h2 id="what-you-can-call-inside-build">What you can call inside <code class="language-plaintext highlighter-rouge">Build</code></h2>
+
+<p>Two base classes exist. <code class="language-plaintext highlighter-rouge">Script</code> is for a game object. <code class="language-plaintext highlighter-rouge">EditorScript</code> is for a tool that runs in the
+editor, and it offers the surfaces that do not need a running game object.</p>
+
+<p>Available on both <code class="language-plaintext highlighter-rouge">Script</code> and <code class="language-plaintext highlighter-rouge">EditorScript</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Var</span>  <span class="n">Define</span>  <span class="n">Shared</span>  <span class="n">Bind</span>  <span class="n">When</span>  <span class="n">Math</span>  <span class="n">Random</span>  <span class="n">Operation</span>  <span class="n">Asset</span>
+<span class="nf">If</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>  <span class="nf">ForEach</span><span class="p">(</span><span class="n">collection</span><span class="p">)</span>  <span class="nf">Routine</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="nf">InParallel</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span>  <span class="nf">Run</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span>  <span class="nf">Choose</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span>  <span class="nf">Option</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+<span class="nf">Seconds</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="nf">Milliseconds</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="nf">Minutes</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="nf">Hours</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Available on <code class="language-plaintext highlighter-rouge">Script</code> only:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span>  <span class="n">Transform</span>  <span class="n">Motion</span>  <span class="n">Body</span>  <span class="n">Other</span>  <span class="n">Object</span>  <span class="n">Time</span>  <span class="n">Input</span>  <span class="n">View</span>  <span class="n">Camera</span>
+<span class="n">Gate</span>  <span class="n">Net</span>  <span class="n">Sync</span>  <span class="n">Cloud</span>  <span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="a-script-is-a-plain-c-class">A script is a plain C# class</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Script</code> and every subclass of it are ordinary C# classes. Unity delivers its own messages to the
+<code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component, which is the one object that connects a GameObject to a script
+type, and that component is what raises the events described in
+<a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a>.</p>
+
+<p>Keeping a script off Unity’s own object types is why the <code class="language-plaintext highlighter-rouge">Script To Run</code> field is a managed
+reference, chosen from a picker, rather than an object field. The field serializes with the scene or
+the prefab, and <code class="language-plaintext highlighter-rouge">Instantiate</code> copies it.</p>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/variables-and-values.html">Variables and values</a> — declare state
+and write to it.</li>
+  <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> — the
+full list of events a block can be registered against.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Script.html"><code class="language-plaintext highlighter-rouge">Script</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ScriptBase.html"><code class="language-plaintext highlighter-rouge">ScriptBase</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.EditorScript.html"><code class="language-plaintext highlighter-rouge">EditorScript</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

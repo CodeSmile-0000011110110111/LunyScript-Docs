@@ -37,7 +37,7 @@
         </span>
       </label>
 
-      <div class="trigger"><!--
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
           Override of minima's stock header.html (which only resolves header_pages against
           site.pages) so the nav can link straight to the generated DocFX API reference. /api/
           is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
@@ -50,9 +50,21 @@
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <div class="home"><h1 class="page-heading">LunyScript Docs</h1><p><strong>LunyScript</strong> is a C# scripting layer for Unity. A user writes a <code class="language-plaintext highlighter-rouge">Script</code> subclass whose
-<code class="language-plaintext highlighter-rouge">Build()</code> method composes blocks — <code class="language-plaintext highlighter-rouge">On.Ready(...)</code>, <code class="language-plaintext highlighter-rouge">If(health &gt; 10).Then(...)</code>,
-<code class="language-plaintext highlighter-rouge">Transform.MoveBy(...)</code> — and those blocks run against game objects at runtime.</p>
+        <div class="home"><h1 class="page-heading">LunyScript Docs</h1><p><strong>LunyScript</strong> is a C# scripting layer for Unity. Add a component to a game object, point it at a
+script class, and the object does what the script says:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Spinner</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">RotateBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">35</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>A user writes a <code class="language-plaintext highlighter-rouge">Script</code> subclass whose <code class="language-plaintext highlighter-rouge">Build()</code> method composes blocks — <code class="language-plaintext highlighter-rouge">On.Ready(...)</code>,
+<code class="language-plaintext highlighter-rouge">If(health &gt; 10).Then(...)</code>, <code class="language-plaintext highlighter-rouge">Transform.MoveBy(...)</code> — and those blocks run against game objects at
+runtime.</p>
 
 <p>The visual surface it commits to is a runtime debugger, not an authoring editor. Simplified
 scripting works for designers when they can observe a running script and take control of it
@@ -69,7 +81,11 @@ not a <code class="language-plaintext highlighter-rouge">ScriptableObject</code>
 and sixteen networked players as the high-end target. It owns seven API families: camera and
 viewport, player input, animation, audio, particle effects, UI Toolkit, and physics.</p>
 
+<h2 id="documentation">Documentation</h2>
+
 <ul>
+  <li><a href="/LunyScript-Docs/manual/">Manual</a> — one page per feature: what it is for, the shortest
+script that uses it, and what to read next.</li>
   <li><a href="/LunyScript-Docs/api/">API Reference</a> — generated type documentation from the runtime
 assemblies.</li>
 </ul>

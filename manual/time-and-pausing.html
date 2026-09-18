@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Time, pausing and gates | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Time, pausing and gates" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/time-and-pausing.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/time-and-pausing.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Time, pausing and gates" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Time, pausing and gates","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/time-and-pausing.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Time, pausing and gates</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Pause the whole game from one line, and keep this script ticking through it:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">PauseMenu</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Flag</span><span class="p">&gt;</span> <span class="n">MenuOpen</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="n">Always</span><span class="p">);</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+            <span class="nf">If</span><span class="p">(</span><span class="n">MenuOpen</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Pause</span><span class="p">()).</span><span class="nf">Else</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Resume</span><span class="p">()));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Every pausable script stops while <code class="language-plaintext highlighter-rouge">MenuOpen</code> is true. This one keeps running, because it set its
+process mode to <code class="language-plaintext highlighter-rouge">Always</code>.</p>
+
+<h2 id="reading-the-clock">Reading the clock</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Age</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">);</span>                   <span class="c1">// frame length in game seconds</span>
+<span class="n">RealAge</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">.</span><span class="nf">Unscaled</span><span class="p">());</span>    <span class="c1">// frame length in real seconds</span>
+<span class="n">Since</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Elapsed</span><span class="p">);</span>               <span class="c1">// game seconds since the run started</span>
+<span class="n">Wall</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Elapsed</span><span class="p">.</span><span class="nf">Unscaled</span><span class="p">());</span>     <span class="c1">// real seconds since the run started</span>
+<span class="n">Speed</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Scale</span><span class="p">);</span>
+<span class="nf">If</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">IsPaused</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Dim</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Unscaled()</code> gives the real-time reading, which a pause and a changed time scale both leave alone.
+<code class="language-plaintext highlighter-rouge">Time.Scale</code> has one reading, so <code class="language-plaintext highlighter-rouge">Time.Scale.Unscaled()</code> does not compile.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Time.IsPaused</code> reads the runner’s paused flag. Writing a time scale of zero stops game time from
+advancing and leaves that flag as it was, so the two answer different questions.</p>
+
+<h2 id="changing-the-clock">Changing the clock</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Time</span><span class="p">.</span><span class="nf">SetScale</span><span class="p">(</span><span class="m">0.5</span><span class="p">);</span>   <span class="c1">// half speed; 1 is ordinary speed, above 1 runs faster</span>
+<span class="n">Time</span><span class="p">.</span><span class="nf">Pause</span><span class="p">();</span>         <span class="c1">// sets the paused flag and zeroes the scale</span>
+<span class="n">Time</span><span class="p">.</span><span class="nf">Resume</span><span class="p">();</span>        <span class="c1">// restores the last positive scale, or 1</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Time.SetScale</code> refuses a negative, NaN or infinite scale when the block runs. Zero is a valid scale.
+Pausing a paused game and resuming a running game both change nothing.</p>
+
+<h2 id="process-modes-which-scripts-keep-running">Process modes: which scripts keep running</h2>
+
+<p>A process mode decides whether one script’s tick events are delivered while the game is paused. Set
+it once, directly in <code class="language-plaintext highlighter-rouge">Build()</code>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mode</th>
+      <th>While the game runs</th>
+      <th>While the game is paused</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Process.Pausable</code></td>
+      <td>Ticks.</td>
+      <td>Skips its tick events.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Process.WhenPaused</code></td>
+      <td>Skips its tick events.</td>
+      <td>Ticks.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Process.Always</code></td>
+      <td>Ticks.</td>
+      <td>Ticks.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Process.Disabled</code></td>
+      <td>Skips its tick events.</td>
+      <td>Skips its tick events.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Process.Inherit</code></td>
+      <td>Whatever the nearest parent that set a mode uses.</td>
+      <td>The same.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="n">Pausable</span><span class="p">);</span>    <span class="c1">// ordinary gameplay</span>
+<span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="n">WhenPaused</span><span class="p">);</span>  <span class="c1">// a tool that runs only while paused</span>
+<span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="n">Always</span><span class="p">);</span>      <span class="c1">// the pause menu that holds the pause</span>
+<span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="n">Disabled</span><span class="p">);</span>    <span class="c1">// a script kept for its lifecycle events</span>
+<span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="n">Inherit</span><span class="p">);</span>     <span class="c1">// whatever the nearest parent uses</span>
+</code></pre></div></div>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="n">WhenPaused</span><span class="p">);</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Rewind</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">.</span><span class="nf">Unscaled</span><span class="p">()));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Inherit</code> walks up the parents and falls back to <code class="language-plaintext highlighter-rouge">Pausable</code> when no parent set a mode; leaving
+<code class="language-plaintext highlighter-rouge">SetProcessMode</code> out is the same as <code class="language-plaintext highlighter-rouge">Inherit</code>. <code class="language-plaintext highlighter-rouge">Disabled</code> stops the tick events while lifecycle
+events such as <code class="language-plaintext highlighter-rouge">On.Enabled</code> and <code class="language-plaintext highlighter-rouge">On.Despawned</code> keep arriving, and the GameObject stays active.</p>
+
+<p>Each object can override its script’s mode in the Inspector, through the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code>
+component’s <strong>Process Mode</strong> field. The field’s <code class="language-plaintext highlighter-rouge">Script Default</code> entry uses what <code class="language-plaintext highlighter-rouge">Build()</code> set.</p>
+
+<h2 id="gates-suppressing-input-or-camera-writes">Gates: suppressing input or camera writes</h2>
+
+<p>A gate is a named suppression of one or more categories, opened and closed by name. It leaves the
+clock alone, so every script keeps ticking while a gate is open.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">"Review"</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Input</span><span class="p">);</span>
+<span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">"Review"</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Input</span> <span class="p">|</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Camera</span><span class="p">);</span>
+<span class="n">Gate</span><span class="p">.</span><span class="nf">Close</span><span class="p">(</span><span class="s">"Review"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>What it suppresses</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">GateCategory.Input</code></td>
+      <td>Action reads return their resting value, and every action occurrence reads false.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">GateCategory.Camera</code></td>
+      <td>Camera writes are ignored.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">GateCategory.None</code></td>
+      <td>Nothing.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// With the Input gate open, this reads false while the button is held.</span>
+<span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">"Menu"</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Input</span><span class="p">);</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">fire</span><span class="p">.</span><span class="n">IsPressed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Shots</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()));</span>
+
+<span class="c1">// With the Camera gate open, this writes nothing.</span>
+<span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">"Menu"</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Camera</span><span class="p">);</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">).</span><span class="nf">Follow</span><span class="p">(</span><span class="n">Avatar</span><span class="p">));</span>
+
+<span class="c1">// A gate opened on None leaves both of those lines working.</span>
+<span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">"Menu"</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">None</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>An open input gate leaves the cursor alone and leaves interactive rebinding working, so a rebinding
+screen can hold the gate open while it captures a new binding. Pausing the game opens no gate, and
+opening a gate pauses nothing; combine the two when you want both.</p>
+
+<h2 id="the-two-together">The two together</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="n">Always</span><span class="p">);</span>
+
+    <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+        <span class="n">Countdown</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">.</span><span class="nf">Unscaled</span><span class="p">()),</span>
+        <span class="nf">If</span><span class="p">(</span><span class="n">MenuOpen</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Pause</span><span class="p">(),</span>
+                <span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">"Menu"</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Input</span> <span class="p">|</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Camera</span><span class="p">))</span>
+            <span class="p">.</span><span class="nf">Else</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Resume</span><span class="p">(),</span> <span class="n">Gate</span><span class="p">.</span><span class="nf">Close</span><span class="p">(</span><span class="s">"Menu"</span><span class="p">)));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The script sets <code class="language-plaintext highlighter-rouge">Always</code> so that its own countdown keeps running while it holds the game paused, and
+opens both gates so the player’s movement input and the chase camera stop reaching the game.</p>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> — the
+tick events a process mode governs.</li>
+  <li><a href="/LunyScript-Docs/manual/player-input.html">Player input</a> — what an open input gate changes.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.TimeFactory.html"><code class="language-plaintext highlighter-rouge">TimeFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.GateFactory.html"><code class="language-plaintext highlighter-rouge">GateFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Process.html"><code class="language-plaintext highlighter-rouge">Process</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.GateCategory.html"><code class="language-plaintext highlighter-rouge">GateCategory</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Cameras and viewports | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Cameras and viewports" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cameras-and-viewports.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cameras-and-viewports.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Cameras and viewports" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Cameras and viewports","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cameras-and-viewports.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Cameras and viewports</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Point a view at a camera rig and tell that rig what to follow:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">PlayerCamera</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">Screen</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">ChaseRig</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span>
+            <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Screen</span><span class="p">).</span><span class="nf">SetCamera</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">),</span>
+            <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">).</span><span class="nf">Follow</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Assign <code class="language-plaintext highlighter-rouge">Screen</code> and <code class="language-plaintext highlighter-rouge">ChaseRig</code> on the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component in the Inspector, press Play,
+and the chase rig follows this object.</p>
+
+<h2 id="the-two-surfaces">The two surfaces</h2>
+
+<p><code class="language-plaintext highlighter-rouge">View</code> is about where an image is drawn: which camera rig a view renders, and which rectangle of the
+screen it occupies. <code class="language-plaintext highlighter-rouge">Camera</code> is about what a rig is aimed at: what it follows, what it looks at, and
+which objects it keeps in frame.</p>
+
+<p>Both take a declared asset input, which
+<a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> explains. A camera
+rig is a Cinemachine rig; where Cinemachine is absent, every <code class="language-plaintext highlighter-rouge">View</code> and <code class="language-plaintext highlighter-rouge">Camera</code> block writes nothing
+and reports that once.</p>
+
+<h2 id="views">Views</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Screen</span><span class="p">).</span><span class="nf">SetCamera</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">);</span>
+<span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Screen</span><span class="p">).</span><span class="nf">SetViewport</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">SetCamera</code> selects which rig this view renders, replacing whatever it rendered before.
+<code class="language-plaintext highlighter-rouge">SetViewport(x, y, width, height)</code> takes fractions of the screen: <code class="language-plaintext highlighter-rouge">x</code> is the left edge and <code class="language-plaintext highlighter-rouge">y</code> the
+bottom edge, both from 0 to 1, and <code class="language-plaintext highlighter-rouge">width</code> and <code class="language-plaintext highlighter-rouge">height</code> are how much of the screen the view covers.</p>
+
+<p>Two-player split screen is two views, each with its own viewport and rig:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span>
+    <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">TopScreen</span><span class="p">).</span><span class="nf">SetViewport</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">),</span>
+    <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">TopScreen</span><span class="p">).</span><span class="nf">SetCamera</span><span class="p">(</span><span class="n">PlayerOneRig</span><span class="p">),</span>
+    <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">BottomScreen</span><span class="p">).</span><span class="nf">SetViewport</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">),</span>
+    <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">BottomScreen</span><span class="p">).</span><span class="nf">SetCamera</span><span class="p">(</span><span class="n">PlayerTwoRig</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h2 id="what-a-rig-tracks">What a rig tracks</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Call</th>
+      <th>What it sets</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Camera.For(rig).Follow()</code></td>
+      <td>The rig follows this script’s own object.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Camera.For(rig).Follow(target)</code></td>
+      <td>The rig follows the object in that declared input.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Camera.For(rig).LookAt()</code></td>
+      <td>The rig aims at this script’s own object.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Camera.For(rig).LookAt(target)</code></td>
+      <td>The rig aims at the object in that declared input.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span>
+    <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">).</span><span class="nf">Follow</span><span class="p">(),</span>         <span class="c1">// this object</span>
+    <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="nf">Follow</span><span class="p">(</span><span class="n">Avatar</span><span class="p">),</span>   <span class="c1">// a declared input</span>
+    <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">).</span><span class="nf">LookAt</span><span class="p">(),</span>         <span class="c1">// this object</span>
+    <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="nf">LookAt</span><span class="p">(</span><span class="n">Avatar</span><span class="p">));</span>  <span class="c1">// a declared input</span>
+</code></pre></div></div>
+
+<p>Calling <code class="language-plaintext highlighter-rouge">Follow()</code> with no target on a script whose host has no scene object throws; name a declared
+input instead.</p>
+
+<h2 id="keeping-several-objects-in-frame">Keeping several objects in frame</h2>
+
+<p>A rig with a target group holds a set of targets, each with a weight and a radius:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="n">Targets</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Avatar</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">);</span>   <span class="c1">// a named target</span>
+<span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="n">Targets</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">);</span>           <span class="c1">// this script's own object</span>
+<span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="n">Targets</span><span class="p">.</span><span class="nf">SetWeight</span><span class="p">(</span><span class="n">Avatar</span><span class="p">,</span> <span class="m">2</span><span class="p">);</span>
+<span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="n">Targets</span><span class="p">.</span><span class="nf">SetRadius</span><span class="p">(</span><span class="n">Avatar</span><span class="p">,</span> <span class="m">1.5</span><span class="p">);</span>
+<span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="n">Targets</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="n">Avatar</span><span class="p">);</span>
+<span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="n">Targets</span><span class="p">.</span><span class="nf">Remove</span><span class="p">();</span>              <span class="c1">// this script's own object</span>
+<span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="n">Targets</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>The weight decides how strongly a target pulls the framing, and the radius is how much room around it
+the rig keeps clear. Both are required on <code class="language-plaintext highlighter-rouge">Add</code>; there is no default for either. <code class="language-plaintext highlighter-rouge">SetWeight</code> and
+<code class="language-plaintext highlighter-rouge">SetRadius</code> always name a target. A rig with no target group refuses these calls when they run and
+writes nothing.</p>
+
+<h2 id="a-worked-example">A worked example</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">ArenaCamera</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">Screen</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">ArenaRig</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">PlayerOne</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">PlayerTwo</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span>
+            <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Screen</span><span class="p">).</span><span class="nf">SetViewport</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span>
+            <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Screen</span><span class="p">).</span><span class="nf">SetCamera</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">),</span>
+            <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="n">Targets</span><span class="p">.</span><span class="nf">Clear</span><span class="p">(),</span>
+            <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="n">Targets</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">PlayerOne</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">),</span>
+            <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="n">Targets</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">PlayerTwo</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="what-an-open-camera-gate-changes">What an open camera gate changes</h2>
+
+<p>A camera gate makes every camera write be ignored, so a cutscene or a menu can hold the framing it
+set while the rest of the game keeps running:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">"Cutscene"</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Camera</span><span class="p">);</span>
+<span class="c1">// Camera.For(ChaseRig).Follow(Avatar) now writes nothing.</span>
+<span class="n">Gate</span><span class="p">.</span><span class="nf">Close</span><span class="p">(</span><span class="s">"Cutscene"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/player-input.html">Player input</a> — pairing each viewport with a
+local player’s actions.</li>
+  <li><a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> — declaring the
+view and rig inputs these calls take.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ViewFactory.html"><code class="language-plaintext highlighter-rouge">ViewFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CameraFactory.html"><code class="language-plaintext highlighter-rouge">CameraFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CameraTargetsBuilder.html"><code class="language-plaintext highlighter-rouge">CameraTargetsBuilder</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

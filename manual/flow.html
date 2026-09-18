@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Flow: conditions, timed work and routines | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Flow: conditions, timed work and routines" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/flow.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/flow.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Flow: conditions, timed work and routines" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Flow: conditions, timed work and routines","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/flow.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Flow: conditions, timed work and routines</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Branch on a value, repeat on a cadence, and run steps one after another — all inside <code class="language-plaintext highlighter-rouge">Build()</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Beacon</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;</span> <span class="n">Flashes</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Run</span><span class="p">(</span><span class="n">Flashes</span><span class="p">.</span><span class="nf">Increment</span><span class="p">()).</span><span class="nf">Every</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">().</span><span class="nf">Start</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The counter goes up once per second, for as long as the object lives.</p>
+
+<h2 id="branching">Branching</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">If</span><span class="p">(</span><span class="n">Charge</span> <span class="p">&lt;</span> <span class="m">5</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Powered</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+<span class="nf">If</span><span class="p">(</span><span class="n">Charge</span> <span class="p">&lt;</span> <span class="m">5</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Powered</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)).</span><span class="nf">Else</span><span class="p">(</span><span class="n">Powered</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<span class="nf">If</span><span class="p">(</span><span class="n">Armed</span> <span class="p">&amp;</span> <span class="n">Charge</span> <span class="p">&gt;</span> <span class="m">10</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Fire</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="n">Shots</span><span class="p">.</span><span class="nf">Increment</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">If</code> takes a condition: a comparison, a <code class="language-plaintext highlighter-rouge">Var&lt;Flag&gt;</code>, or several combined with <code class="language-plaintext highlighter-rouge">&amp;</code>, <code class="language-plaintext highlighter-rouge">|</code> and <code class="language-plaintext highlighter-rouge">!</code>. It is
+incomplete without <code class="language-plaintext highlighter-rouge">Then</code>; an <code class="language-plaintext highlighter-rouge">If</code> used as a block with no branch is refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs,
+with a message naming the branch you left out. The condition is evaluated each time the <code class="language-plaintext highlighter-rouge">If</code> runs,
+immediately before its children.</p>
+
+<h2 id="repeating-work">Repeating work</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Run(block, ..)</code> declares work. <code class="language-plaintext highlighter-rouge">Start()</code> begins one activation of it, and <code class="language-plaintext highlighter-rouge">Stop()</code> ends it.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Form</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Run(body)</code></td>
+      <td>Runs the body every frame until stopped.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Run(body).For(3).Seconds()</code></td>
+      <td>Runs the body every frame for three seconds.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Run(body).For(5).Times()</code></td>
+      <td>Runs the body on five frames.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Run(body).Every(1).Seconds()</code></td>
+      <td>Runs the body once per second, until stopped.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Run(body).Every(500).Milliseconds().For(5).Times()</code></td>
+      <td>Runs the body five times, half a second apart.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">pulse</span>      <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Pulse</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()).</span><span class="nf">For</span><span class="p">(</span><span class="m">3</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>
+    <span class="kt">var</span> <span class="n">cadence</span>    <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Cadence</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()).</span><span class="nf">Every</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>
+    <span class="kt">var</span> <span class="n">burst</span>      <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Burst</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()).</span><span class="nf">Every</span><span class="p">(</span><span class="m">500</span><span class="p">).</span><span class="nf">Milliseconds</span><span class="p">().</span><span class="nf">For</span><span class="p">(</span><span class="m">5</span><span class="p">).</span><span class="nf">Times</span><span class="p">();</span>
+    <span class="kt">var</span> <span class="n">continuous</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Continuous</span><span class="p">.</span><span class="nf">Inc</span><span class="p">());</span>
+
+    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">pulse</span><span class="p">.</span><span class="nf">Start</span><span class="p">(),</span> <span class="n">cadence</span><span class="p">.</span><span class="nf">Start</span><span class="p">(),</span>
+        <span class="n">burst</span><span class="p">.</span><span class="nf">Start</span><span class="p">(),</span> <span class="n">continuous</span><span class="p">.</span><span class="nf">Start</span><span class="p">());</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Quiet"</span><span class="p">,</span> <span class="n">continuous</span><span class="p">.</span><span class="nf">Stop</span><span class="p">(),</span> <span class="n">cadence</span><span class="p">.</span><span class="nf">Stop</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Declaring the work is separate from starting it, so you can hold the declaration in a local and start
+it from whichever event you like. <code class="language-plaintext highlighter-rouge">Start()</code> and <code class="language-plaintext highlighter-rouge">Stop()</code> are available on the bare declaration, on a
+cadence, and on the finished handle. The unit is a trailing call — <code class="language-plaintext highlighter-rouge">Seconds()</code>, <code class="language-plaintext highlighter-rouge">Milliseconds()</code>,
+<code class="language-plaintext highlighter-rouge">Minutes()</code>, <code class="language-plaintext highlighter-rouge">Hours()</code> — and the chain is incomplete until one of them, or <code class="language-plaintext highlighter-rouge">Times()</code>, follows.</p>
+
+<h2 id="routines-steps-in-order-over-several-frames">Routines: steps in order, over several frames</h2>
+
+<p>A routine runs its steps in the order you wrote them, each one finishing before the next begins, over
+as many frames as they need.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Block</span> <span class="n">walkOut</span>   <span class="p">=</span> <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+    <span class="n">Block</span> <span class="n">waitAtPost</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Ticks</span><span class="p">.</span><span class="nf">Increment</span><span class="p">()).</span><span class="nf">For</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>
+    <span class="n">Block</span> <span class="n">walkBack</span>  <span class="p">=</span> <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
+
+    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Patrol"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">walkOut</span><span class="p">,</span> <span class="n">waitAtPost</span><span class="p">,</span> <span class="n">walkBack</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The name you pass to <code class="language-plaintext highlighter-rouge">Routine</code> is what a diagnostic message and the runtime inspector call it.</p>
+
+<h2 id="running-steps-at-the-same-time">Running steps at the same time</h2>
+
+<p><code class="language-plaintext highlighter-rouge">InParallel</code> groups children that run at the same time. It belongs inside a routine; running it
+directly in an event list throws.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ending</th>
+      <th>When the group ends</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>No clause</td>
+      <td>When every child has finished. The group succeeded if every child succeeded.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.UntilOneFinishes()</code></td>
+      <td>When the first child reaches any terminal state, whichever one that is.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.UntilOneSucceeds()</code></td>
+      <td>When the first child succeeds. A child that fails ends nothing on its own.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">bothDoors</span>  <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">openLeft</span><span class="p">,</span> <span class="n">openRight</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">firstDone</span>  <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">openLeft</span><span class="p">,</span> <span class="n">openRight</span><span class="p">).</span><span class="nf">UntilOneFinishes</span><span class="p">();</span>
+<span class="kt">var</span> <span class="n">firstOpen</span>  <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">openLeft</span><span class="p">,</span> <span class="n">openRight</span><span class="p">).</span><span class="nf">UntilOneSucceeds</span><span class="p">();</span>
+<span class="kt">var</span> <span class="n">keepGoing</span> <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">openLeft</span><span class="p">,</span> <span class="n">openRight</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">UntilOneSucceeds</span><span class="p">().</span><span class="nf">OthersKeepRunning</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">OthersKeepRunning()</code> comes after a terminal clause and leaves the remaining children running once
+the group has ended. Without it, the children still running are cancelled when the group ends.</p>
+
+<h2 id="reading-a-groups-outcome">Reading a group’s outcome</h2>
+
+<p>A group publishes three conditions, and you read them by holding the group in a local:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Block</span> <span class="n">reachExit</span> <span class="p">=</span> <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">12</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">4</span><span class="p">);</span>
+    <span class="n">Block</span> <span class="n">timeOut</span>   <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Ticks</span><span class="p">.</span><span class="nf">Increment</span><span class="p">()).</span><span class="nf">For</span><span class="p">(</span><span class="m">5</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>
+
+    <span class="kt">var</span> <span class="n">race</span> <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">reachExit</span><span class="p">,</span> <span class="n">timeOut</span><span class="p">).</span><span class="nf">UntilOneFinishes</span><span class="p">();</span>
+
+    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Escape"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+        <span class="n">race</span><span class="p">,</span>
+        <span class="nf">If</span><span class="p">(</span><span class="n">race</span><span class="p">.</span><span class="n">Succeeded</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Escaped</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)),</span>
+        <span class="nf">If</span><span class="p">(</span><span class="n">race</span><span class="p">.</span><span class="n">Failed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Alarm</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)),</span>
+        <span class="nf">If</span><span class="p">(</span><span class="n">race</span><span class="p">.</span><span class="n">Canceled</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Retryable</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">))));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Condition</th>
+      <th>True once the group has ended</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">race.Succeeded</code></td>
+      <td>Having met its objective.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">race.Failed</code></td>
+      <td>Having reached a terminal state without meeting it.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">race.Canceled</code></td>
+      <td>Having been cancelled.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">If</span><span class="p">(</span><span class="n">race</span><span class="p">.</span><span class="n">Succeeded</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Escaped</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<span class="nf">If</span><span class="p">(</span><span class="n">race</span><span class="p">.</span><span class="n">Failed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Alarm</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<span class="nf">If</span><span class="p">(</span><span class="n">race</span><span class="p">.</span><span class="n">Canceled</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Retryable</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Succeeded</code> is the one success word across the whole author-facing surface, so an operation handle,
+an action result and a routine group all spell it the same way. <code class="language-plaintext highlighter-rouge">Canceled</code> carries one L, which is
+the spelling .NET and Unity use.</p>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/choosing-between-options.html">Choosing between options</a> — pick an
+action by score instead of by condition.</li>
+  <li><a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> — the same
+outcome words on work that leaves the process.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.IfBuilder.html"><code class="language-plaintext highlighter-rouge">IfBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RunWorkBuilder.html"><code class="language-plaintext highlighter-rouge">RunBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RoutineBuilder.html"><code class="language-plaintext highlighter-rouge">RoutineBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ActionResult.html"><code class="language-plaintext highlighter-rouge">ActionResult</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

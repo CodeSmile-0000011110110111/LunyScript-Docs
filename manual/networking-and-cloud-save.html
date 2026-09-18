@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Networking and cloud save | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Networking and cloud save" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Networking and cloud save" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Networking and cloud save","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Networking and cloud save</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Synchronise a variable by naming how often it should be sent:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Scorer</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;</span> <span class="n">Score</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Score</span> <span class="p">=</span> <span class="n">Var</span><span class="p">.</span><span class="n">DefineSynced</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;(</span>
+            <span class="k">nameof</span><span class="p">(</span><span class="n">Score</span><span class="p">),</span> <span class="n">SyncCadence</span><span class="p">.</span><span class="n">OnChange</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Score</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The authority counts, and every peer reads the same <code class="language-plaintext highlighter-rouge">Score</code>. <code class="language-plaintext highlighter-rouge">Score</code> is written and read with the
+same calls as any other variable.</p>
+
+<h2 id="how-synchronisation-is-expressed">How synchronisation is expressed</h2>
+
+<p>Each channel and each variable names its own cadence. There is one call per channel rather than one
+switch that sends everything, so a scale that never changes stays off the wire while a position that
+changes every tick is sent every tick.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Cadence</th>
+      <th>When the value is sent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SyncCadence.Once</code></td>
+      <td>One time, the first time the value is known.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SyncCadence.OnChange</code></td>
+      <td>Whenever the value changes.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SyncCadence.EveryTick</code></td>
+      <td>On every network tick.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SyncCadence.OnChangeCapped(maxPerSecond)</code></td>
+      <td>On change, at most that many times per second.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Sync</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="n">SyncCadence</span><span class="p">.</span><span class="n">EveryTick</span><span class="p">);</span>
+<span class="n">Sync</span><span class="p">.</span><span class="nf">Rotation</span><span class="p">(</span><span class="n">SyncCadence</span><span class="p">.</span><span class="n">OnChange</span><span class="p">);</span>
+<span class="n">Sync</span><span class="p">.</span><span class="nf">Scale</span><span class="p">(</span><span class="n">SyncCadence</span><span class="p">.</span><span class="n">Once</span><span class="p">);</span>
+
+<span class="n">Score</span> <span class="p">=</span> <span class="n">Var</span><span class="p">.</span><span class="n">DefineSynced</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Score</span><span class="p">),</span> <span class="n">SyncCadence</span><span class="p">.</span><span class="n">OnChange</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+<span class="n">IsReady</span> <span class="p">=</span> <span class="n">Var</span><span class="p">.</span><span class="n">DefineSynced</span><span class="p">&lt;</span><span class="n">Flag</span><span class="p">&gt;(</span>
+    <span class="k">nameof</span><span class="p">(</span><span class="n">IsReady</span><span class="p">),</span> <span class="n">SyncCadence</span><span class="p">.</span><span class="n">OnChange</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+<span class="n">Health</span> <span class="p">=</span> <span class="n">Var</span><span class="p">.</span><span class="n">DefineSynced</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;(</span>
+    <span class="k">nameof</span><span class="p">(</span><span class="n">Health</span><span class="p">),</span> <span class="n">SyncCadence</span><span class="p">.</span><span class="nf">OnChangeCapped</span><span class="p">(</span><span class="m">10</span><span class="p">),</span> <span class="m">100</span><span class="p">);</span>
+<span class="n">PlayerName</span> <span class="p">=</span> <span class="n">Var</span><span class="p">.</span><span class="nf">DefineSyncedText</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">PlayerName</span><span class="p">),</span> <span class="n">SyncCadence</span><span class="p">.</span><span class="n">Once</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The cadence is required, so no channel is synchronised at a cost nobody chose. Declaring one channel
+twice in a script is refused, and so is leaving the cadence out.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Var.DefineSynced&lt;T&gt;</code> takes <code class="language-plaintext highlighter-rouge">Number</code> or <code class="language-plaintext highlighter-rouge">Flag</code>; text uses <code class="language-plaintext highlighter-rouge">Var.DefineSyncedText</code>. The cadence comes
+before the capacity, because C# allows no required parameter after an optional one. Text carries a
+managed string on the wire, so <code class="language-plaintext highlighter-rouge">EveryTick</code> is refused for it and <code class="language-plaintext highlighter-rouge">Once</code> is the usual choice.</p>
+
+<p>Position is sent as the change since the last one, in 6 bytes, and in full in 12 bytes when the change
+is too large to encode that way or a peer has just joined. Rotation is a quaternion compressed into 4
+bytes. What the channels carry crosses as one stream per authority per network tick.</p>
+
+<p>Only the authority may move an object whose position is synchronised. A move on another peer is
+refused, and the diagnostic message names what to write instead.</p>
+
+<h2 id="reading-the-session">Reading the session</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Driving</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">IsConnected</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Online</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">IsHost</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Hosting</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+
+<span class="n">Peers</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">PeerCount</span><span class="p">);</span>
+<span class="n">Latency</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">RoundTripMilliseconds</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Net.HasAuthority</code> is whether this peer owns this object, <code class="language-plaintext highlighter-rouge">Net.IsConnected</code> whether it is in a
+session at all, and <code class="language-plaintext highlighter-rouge">Net.IsHost</code> whether it is the host.</p>
+
+<h2 id="noticing-a-stale-replica">Noticing a stale replica</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Net.SecondsSinceUpdate</code> is how long since this peer last received a value, which is how a script
+notices that its copy has stopped arriving:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="nf">SecondsSinceUpdate</span><span class="p">(</span><span class="n">Score</span><span class="p">)</span> <span class="p">&gt;</span> <span class="m">2</span><span class="p">)</span>
+        <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Stale</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">))</span>
+        <span class="p">.</span><span class="nf">Else</span><span class="p">(</span><span class="n">Stale</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p>It takes either a variable declared with <code class="language-plaintext highlighter-rouge">DefineSynced</code>, or a transform channel.</p>
+
+<h2 id="messages">Messages</h2>
+
+<p>A peer without authority asks the authority to act by sending a named message. The authority receives
+it with <code class="language-plaintext highlighter-rouge">On.Message</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// On any peer.</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(!</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span> <span class="p">&amp;</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">IsFalse</span><span class="p">())</span>
+        <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">Send</span><span class="p">.</span><span class="nf">ToAuthority</span><span class="p">(</span><span class="s">"RequestReady"</span><span class="p">)));</span>
+
+<span class="c1">// On the authority, in the same script.</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RequestReady"</span><span class="p">,</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>Spell the name with <code class="language-plaintext highlighter-rouge">nameof</code> where you have a constant to name, so the send and the handler move
+together. A send with no matching <code class="language-plaintext highlighter-rouge">On.Message</code> in the same script is refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs.</p>
+
+<h2 id="authority-changing-hands">Authority changing hands</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="n">Authority</span><span class="p">.</span><span class="nf">Gained</span><span class="p">(</span><span class="n">Driving</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="n">Authority</span><span class="p">.</span><span class="nf">Lost</span><span class="p">(</span><span class="n">Driving</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>An object spawned with authority raises <code class="language-plaintext highlighter-rouge">Gained</code> on the first networked tick. <code class="language-plaintext highlighter-rouge">Lost</code> also runs when
+the session ends.</p>
+
+<h2 id="cloud-save">Cloud save</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Cloud</code> stores a number under a key and reads it back:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Cloud</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RunEnded"</span><span class="p">,</span> <span class="n">Cloud</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">,</span> <span class="n">Score</span><span class="p">));</span>
+
+<span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">).</span><span class="nf">Saved</span><span class="p">(</span><span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Saved."</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">).</span><span class="nf">Loaded</span><span class="p">(</span><span class="n">Score</span><span class="p">,</span> <span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Loaded."</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"The store did not answer."</span><span class="p">));</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Watch</th>
+      <th>When it runs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.Cloud(key).Saved(block, ..)</code></td>
+      <td>The value reached the store.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.Cloud(key).Loaded(into, block, ..)</code></td>
+      <td>The value arrived and was written into <code class="language-plaintext highlighter-rouge">into</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.Cloud(key).Failed(block, ..)</code></td>
+      <td>The attempt ended without doing either.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The first parameter of <code class="language-plaintext highlighter-rouge">Loaded</code> is the <code class="language-plaintext highlighter-rouge">Var&lt;Number&gt;</code> the loaded value is written into, and the blocks
+after it run once that write has happened. The key is required and must not be blank.</p>
+
+<p>The cloud family counts its outcomes per key rather than through an operation handle, so it is
+watched with <code class="language-plaintext highlighter-rouge">When.Cloud</code> and does not appear in
+<a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a>.</p>
+
+<h2 id="a-worked-example">A worked example</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">NetworkedRunner</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;</span> <span class="n">Score</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Flag</span><span class="p">&gt;</span> <span class="n">Stale</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Score</span> <span class="p">=</span> <span class="n">Var</span><span class="p">.</span><span class="n">DefineSynced</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;(</span>
+            <span class="k">nameof</span><span class="p">(</span><span class="n">Score</span><span class="p">),</span> <span class="n">SyncCadence</span><span class="p">.</span><span class="n">OnChange</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+        <span class="n">Sync</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="n">SyncCadence</span><span class="p">.</span><span class="n">EveryTick</span><span class="p">);</span>
+        <span class="n">Sync</span><span class="p">.</span><span class="nf">Rotation</span><span class="p">(</span><span class="n">SyncCadence</span><span class="p">.</span><span class="n">OnChange</span><span class="p">);</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Cloud</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">));</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+            <span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Score</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)),</span>
+            <span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="nf">SecondsSinceUpdate</span><span class="p">(</span><span class="n">Score</span><span class="p">)</span> <span class="p">&gt;</span> <span class="m">2</span><span class="p">)</span>
+                <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Stale</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">))</span>
+                <span class="p">.</span><span class="nf">Else</span><span class="p">(</span><span class="n">Stale</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
+
+        <span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">).</span><span class="nf">Loaded</span><span class="p">(</span><span class="n">Score</span><span class="p">,</span> <span class="n">Stale</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> —
+<code class="language-plaintext highlighter-rouge">On.Message</code> and <code class="language-plaintext highlighter-rouge">On.Authority</code> in their place among the other events.</li>
+  <li><a href="/LunyScript-Docs/manual/variables-and-values.html">Variables and values</a> — how a
+synchronised variable is read and written.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.NetFactory.html"><code class="language-plaintext highlighter-rouge">NetFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.NetSendFactory.html"><code class="language-plaintext highlighter-rouge">NetSendFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SyncFactory.html"><code class="language-plaintext highlighter-rouge">SyncFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SyncCadence.html"><code class="language-plaintext highlighter-rouge">SyncCadence</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudFactory.html"><code class="language-plaintext highlighter-rouge">CloudFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudWatchBuilder.html"><code class="language-plaintext highlighter-rouge">CloudWatchBuilder</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Variables and values | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Variables and values" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/variables-and-values.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/variables-and-values.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Variables and values" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Variables and values","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/variables-and-values.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Variables and values</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Declare a variable with one attribute and write to it with one call:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Battery</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Variable</span><span class="p">(</span><span class="m">40</span><span class="p">)]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;</span> <span class="n">Charge</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Charge</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span> <span class="p">*</span> <span class="m">2</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The battery starts at 40 and drains by two per second. Nothing else is configured: the <code class="language-plaintext highlighter-rouge">[Variable]</code>
+attribute’s code generator writes the declaration, and every object assigned to <code class="language-plaintext highlighter-rouge">Battery</code> gets its
+own <code class="language-plaintext highlighter-rouge">Charge</code>.</p>
+
+<h2 id="what-a-variable-is">What a variable is</h2>
+
+<p>A variable is a named, typed slot that belongs to one object. <code class="language-plaintext highlighter-rouge">Var&lt;Number&gt;</code> is the handle you hold in
+the script; the number itself lives in the running object’s slot storage. That separation is what
+lets <code class="language-plaintext highlighter-rouge">Build()</code> run once for the whole script type while each object keeps its own value.</p>
+
+<p>Every number in LunyScript is a <code class="language-plaintext highlighter-rouge">Double</code>, so a script writes <code class="language-plaintext highlighter-rouge">0.5</code> and never <code class="language-plaintext highlighter-rouge">0.5f</code>. <code class="language-plaintext highlighter-rouge">Vec2</code> and
+<code class="language-plaintext highlighter-rouge">Vec3</code> store <code class="language-plaintext highlighter-rouge">Single</code> internally and accept <code class="language-plaintext highlighter-rouge">Double</code> at their edges, which is why you write plain
+numbers everywhere.</p>
+
+<h2 id="the-kinds-a-variable-can-hold">The kinds a variable can hold</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Kind</th>
+      <th>What it holds</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Number</code></td>
+      <td>A <code class="language-plaintext highlighter-rouge">Double</code>.</td>
+      <td><code class="language-plaintext highlighter-rouge">[Variable(100)] public Var&lt;Number&gt; Health { get; private set; }</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Flag</code></td>
+      <td>True or false.</td>
+      <td><code class="language-plaintext highlighter-rouge">[Variable] public Var&lt;Flag&gt; Powered { get; private set; }</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Text</code></td>
+      <td>UTF-8 bytes in a fixed slot.</td>
+      <td><code class="language-plaintext highlighter-rouge">[Variable(Capacity = TextCapacity.Bytes128)] public Var&lt;Text&gt; Readout { get; private set; }</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Vec2</code>, <code class="language-plaintext highlighter-rouge">Vec3</code></td>
+      <td>Two or three components.</td>
+      <td><code class="language-plaintext highlighter-rouge">Probe = Define.Vec3(nameof(Probe), new Vec3(0, 1, 0));</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Rotation</code></td>
+      <td>An orientation.</td>
+      <td><code class="language-plaintext highlighter-rouge">Facing = Define.Rotation(nameof(Facing), Rotation.Euler(0, 90, 0));</code></td>
+    </tr>
+    <tr>
+      <td>A C# <code class="language-plaintext highlighter-rouge">enum</code></td>
+      <td>One of your own enum members.</td>
+      <td><code class="language-plaintext highlighter-rouge">Equipped = Define.Enum&lt;Weapon&gt;(nameof(Equipped), Weapon.Sword);</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="two-ways-to-declare">Two ways to declare</h2>
+
+<p>The attribute form is the short one. Put <code class="language-plaintext highlighter-rouge">[Variable]</code> on a public auto-property of the script and
+make the class <code class="language-plaintext highlighter-rouge">partial</code>; the generator writes the <code class="language-plaintext highlighter-rouge">DefineVariables</code> override. The property name is
+the variable name, and names are unique within a script.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;</span> <span class="n">Hits</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">[</span><span class="nf">Variable</span><span class="p">(</span><span class="m">100</span><span class="p">)]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;</span> <span class="n">Health</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">[</span><span class="nf">Variable</span><span class="p">(</span><span class="k">true</span><span class="p">)]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Flag</span><span class="p">&gt;</span> <span class="n">Armed</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">[</span><span class="nf">Variable</span><span class="p">(</span><span class="n">Capacity</span> <span class="p">=</span> <span class="n">TextCapacity</span><span class="p">.</span><span class="n">Bytes512</span><span class="p">)]</span>
+<span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Text</span><span class="p">&gt;</span> <span class="n">Log</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">Define</code> form is written by hand inside <code class="language-plaintext highlighter-rouge">Build()</code>, and it is what you use for the kinds the
+attribute has no starting-value syntax for, and for a shared value:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Vec3</span><span class="p">&gt;</span> <span class="n">Home</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;</span> <span class="n">TeamScore</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Home</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Vec3</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Home</span><span class="p">),</span> <span class="k">new</span> <span class="nf">Vec3</span><span class="p">(-</span><span class="m">4.2</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.0</span><span class="p">));</span>
+    <span class="n">TeamScore</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">TeamScore</span><span class="p">),</span> <span class="m">0</span><span class="p">).</span><span class="nf">Shared</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The whole set of declarations:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">)</span>   <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Flag</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">)</span>     <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>                   <span class="p">[</span> <span class="p">.</span><span class="nf">Allocating</span><span class="p">(</span><span class="n">maxBytes</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Vec3</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Vec2</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Rotation</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
+<span class="n">Define</span><span class="p">.</span><span class="n">Enum</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">)</span>
+<span class="n">Var</span><span class="p">.</span><span class="n">Define</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
+<span class="n">Var</span><span class="p">.</span><span class="nf">DefineText</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">capacity</span> <span class="p">])</span>
+<span class="n">Var</span><span class="p">.</span><span class="nf">DefineAllocatingText</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">maxBytes</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Var.Define*</code> and <code class="language-plaintext highlighter-rouge">Define.*</code> declare the same things; <code class="language-plaintext highlighter-rouge">Define.*</code> is the shorter spelling.</p>
+
+<h2 id="sharing-one-value-between-objects">Sharing one value between objects</h2>
+
+<p><code class="language-plaintext highlighter-rouge">.Shared()</code> puts the value in a store that every object can reach, instead of in this object’s own
+slots. A second script reaches that value with <code class="language-plaintext highlighter-rouge">Bind</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// The script that owns the declaration.</span>
+<span class="n">TeamScore</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">TeamScore</span><span class="p">),</span> <span class="m">0</span><span class="p">).</span><span class="nf">Shared</span><span class="p">();</span>
+
+<span class="c1">// Any other script, in its own Build().</span>
+<span class="n">Score</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">ScoreKeeper</span><span class="p">.</span><span class="n">TeamScore</span><span class="p">)).</span><span class="nf">Shared</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Shared()</code> with no argument uses <code class="language-plaintext highlighter-rouge">SharedStore.Default</code>. Pass a store to keep separate groups apart,
+and reset one store with <code class="language-plaintext highlighter-rouge">Shared.Clear(store)</code>. <code class="language-plaintext highlighter-rouge">Bind</code> always names a store, because a bound value is
+by definition one that another script declared.</p>
+
+<h2 id="writing-a-variable">Writing a variable</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Charge</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">40</span><span class="p">);</span>      <span class="c1">// a literal, another variable, or an expression</span>
+<span class="n">Charge</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">20</span><span class="p">);</span>      <span class="n">Charge</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">5</span><span class="p">);</span>   <span class="n">Charge</span><span class="p">.</span><span class="nf">Sub</span><span class="p">(</span><span class="m">5</span><span class="p">);</span>
+<span class="n">Charge</span><span class="p">.</span><span class="nf">Multiply</span><span class="p">(</span><span class="m">1.5</span><span class="p">);</span> <span class="n">Charge</span><span class="p">.</span><span class="nf">Mul</span><span class="p">(</span><span class="m">1.2</span><span class="p">);</span>
+<span class="n">Charge</span><span class="p">.</span><span class="nf">Divide</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>    <span class="n">Charge</span><span class="p">.</span><span class="nf">Div</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>        <span class="n">Charge</span><span class="p">.</span><span class="nf">Remainder</span><span class="p">(</span><span class="m">10</span><span class="p">);</span>
+<span class="n">Charge</span><span class="p">.</span><span class="nf">Negate</span><span class="p">();</span>
+<span class="n">Charge</span><span class="p">.</span><span class="nf">Increment</span><span class="p">();</span>  <span class="n">Charge</span><span class="p">.</span><span class="nf">Inc</span><span class="p">();</span>         <span class="n">Charge</span><span class="p">.</span><span class="nf">Decrement</span><span class="p">();</span>   <span class="n">Charge</span><span class="p">.</span><span class="nf">Dec</span><span class="p">();</span>
+<span class="n">Charge</span><span class="p">.</span><span class="nf">Min</span><span class="p">(</span><span class="m">25</span><span class="p">);</span>      <span class="n">Charge</span><span class="p">.</span><span class="nf">Max</span><span class="p">(</span><span class="m">30</span><span class="p">);</span>       <span class="n">Charge</span><span class="p">.</span><span class="nf">Clamp</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">20</span><span class="p">);</span>
+<span class="n">Charge</span><span class="p">.</span><span class="nf">Abs</span><span class="p">();</span>        <span class="n">Charge</span><span class="p">.</span><span class="nf">Floor</span><span class="p">();</span>       <span class="n">Charge</span><span class="p">.</span><span class="nf">Ceiling</span><span class="p">();</span>
+<span class="n">Charge</span><span class="p">.</span><span class="nf">Truncate</span><span class="p">();</span>
+<span class="n">Charge</span><span class="p">.</span><span class="nf">Round</span><span class="p">();</span>      <span class="n">Charge</span><span class="p">.</span><span class="nf">Round</span><span class="p">(</span><span class="n">RoundingMode</span><span class="p">.</span><span class="n">AwayFromZero</span><span class="p">);</span>
+<span class="n">Powered</span><span class="p">.</span><span class="nf">Toggle</span><span class="p">();</span>
+<span class="n">Log</span><span class="p">.</span><span class="nf">Clear</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>The short and long spellings are the same call, so pick one and keep to it. Dividing by zero follows
+IEEE arithmetic and produces an infinity. <code class="language-plaintext highlighter-rouge">Round()</code> sends a midpoint to the nearest even number;
+<code class="language-plaintext highlighter-rouge">Round(RoundingMode.AwayFromZero)</code> sends 22.5 to 23.</p>
+
+<h2 id="reading-a-variable-in-an-expression">Reading a variable in an expression</h2>
+
+<p>Operators build an expression that is evaluated when the block runs:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Charge</span> <span class="p">&lt;</span> <span class="m">5</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Powered</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Charge</span> <span class="p">&gt;</span> <span class="m">10</span> <span class="p">&amp;</span> <span class="n">Armed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Hits</span><span class="p">.</span><span class="nf">Increment</span><span class="p">()),</span>
+    <span class="n">Ratio</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Charge</span> <span class="p">/</span> <span class="n">MaxCharge</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>Use the single-character <code class="language-plaintext highlighter-rouge">&amp;</code>, <code class="language-plaintext highlighter-rouge">|</code> and <code class="language-plaintext highlighter-rouge">!</code> to combine conditions. <code class="language-plaintext highlighter-rouge">&amp;&amp;</code> and <code class="language-plaintext highlighter-rouge">||</code> have no meaning here,
+because a short-circuit would have to pick a side while <code class="language-plaintext highlighter-rouge">Build()</code> runs, before any value exists.</p>
+
+<p>A <code class="language-plaintext highlighter-rouge">Var&lt;Flag&gt;</code> is itself a condition, so <code class="language-plaintext highlighter-rouge">If(Powered)</code> and <code class="language-plaintext highlighter-rouge">If(Powered.IsTrue())</code> are the same test.
+<code class="language-plaintext highlighter-rouge">IsFalse()</code> is the other direction.</p>
+
+<h2 id="math-as-expressions">Math as expressions</h2>
+
+<p>Every <code class="language-plaintext highlighter-rouge">Math</code> call returns a value instead of writing one, so it composes into an assignment or a
+condition:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Ratio</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="nf">Clamp</span><span class="p">(</span><span class="n">Charge</span> <span class="p">/</span> <span class="m">10</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">));</span>
+<span class="n">Smoothed</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="nf">Lerp</span><span class="p">(</span><span class="n">Smoothed</span><span class="p">,</span> <span class="n">Charge</span><span class="p">,</span> <span class="n">Math</span><span class="p">.</span><span class="nf">Min</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span> <span class="p">*</span> <span class="m">5</span><span class="p">)));</span>
+<span class="nf">If</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="nf">IsNaN</span><span class="p">(</span><span class="n">Ratio</span><span class="p">)</span> <span class="p">|</span> <span class="p">!</span><span class="n">Math</span><span class="p">.</span><span class="nf">IsFinite</span><span class="p">(</span><span class="n">Ratio</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Ratio</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Math</code> offers <code class="language-plaintext highlighter-rouge">Abs</code>, <code class="language-plaintext highlighter-rouge">Floor</code>, <code class="language-plaintext highlighter-rouge">Ceiling</code>, <code class="language-plaintext highlighter-rouge">Truncate</code>, <code class="language-plaintext highlighter-rouge">Min</code>, <code class="language-plaintext highlighter-rouge">Max</code>, <code class="language-plaintext highlighter-rouge">Clamp</code>, <code class="language-plaintext highlighter-rouge">Round</code>, <code class="language-plaintext highlighter-rouge">Lerp</code>, <code class="language-plaintext highlighter-rouge">Slerp</code>,
+<code class="language-plaintext highlighter-rouge">IsFinite</code> and <code class="language-plaintext highlighter-rouge">IsNaN</code>. <code class="language-plaintext highlighter-rouge">Lerp</code> has overloads for <code class="language-plaintext highlighter-rouge">Number</code>, <code class="language-plaintext highlighter-rouge">Vec2</code> and <code class="language-plaintext highlighter-rouge">Vec3</code>, and its fraction may sit
+outside 0 to 1, which extrapolates past the endpoints. <code class="language-plaintext highlighter-rouge">Slerp</code> takes the shortest arc between two
+<code class="language-plaintext highlighter-rouge">Rotation</code> values.</p>
+
+<h2 id="vectors-and-rotations">Vectors and rotations</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Probe</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Vec3</span><span class="p">.</span><span class="nf">From</span><span class="p">(-</span><span class="m">2</span><span class="p">,</span> <span class="p">-</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>   <span class="c1">// an expression, read when the block runs</span>
+<span class="n">Probe</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Probe</span><span class="p">.</span><span class="nf">WithY</span><span class="p">(</span><span class="m">1.5</span><span class="p">));</span>       <span class="c1">// one component replaced</span>
+<span class="n">Distance</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Probe</span><span class="p">.</span><span class="nf">DistanceTo</span><span class="p">(</span><span class="n">Target</span><span class="p">));</span>
+<span class="n">Forward</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Facing</span><span class="p">.</span><span class="nf">ApplyTo</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vec3</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">)));</span>
+<span class="n">Facing</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Rotation</span><span class="p">.</span><span class="nf">Euler</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">90</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>
+<span class="n">Angle</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Facing</span><span class="p">.</span><span class="nf">AngleTo</span><span class="p">(</span><span class="n">Rotation</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">new Vec3(x, y, z)</code> takes <code class="language-plaintext highlighter-rouge">Double</code> literals and produces a constant. <code class="language-plaintext highlighter-rouge">Vec3.From(x, y, z)</code> takes
+number expressions and produces a value computed when the block runs, which is what you use to build
+a position out of variables. <code class="language-plaintext highlighter-rouge">Vec2</code> has the same pair. <code class="language-plaintext highlighter-rouge">Vec3.Zero</code>, <code class="language-plaintext highlighter-rouge">Vec3.One</code>, <code class="language-plaintext highlighter-rouge">Vec2.Zero</code>,
+<code class="language-plaintext highlighter-rouge">Vec2.One</code> and <code class="language-plaintext highlighter-rouge">Rotation.Identity</code> are the constants.</p>
+
+<p>Components and derived values read the same way on a literal and on an expression: <code class="language-plaintext highlighter-rouge">X</code>, <code class="language-plaintext highlighter-rouge">Y</code>, <code class="language-plaintext highlighter-rouge">Z</code>,
+<code class="language-plaintext highlighter-rouge">Length</code>, <code class="language-plaintext highlighter-rouge">LengthSquared</code>, <code class="language-plaintext highlighter-rouge">Normalized</code>, <code class="language-plaintext highlighter-rouge">Dot(other)</code>, <code class="language-plaintext highlighter-rouge">DistanceTo(other)</code>, <code class="language-plaintext highlighter-rouge">WithX</code>, <code class="language-plaintext highlighter-rouge">WithY</code>, <code class="language-plaintext highlighter-rouge">WithZ</code>,
+and <code class="language-plaintext highlighter-rouge">Vec3ValueBlock.Cross(left, right)</code>. A rotation offers <code class="language-plaintext highlighter-rouge">Inverse</code>, <code class="language-plaintext highlighter-rouge">ApplyTo(vec)</code>,
+<code class="language-plaintext highlighter-rouge">AngleTo(other)</code> and <code class="language-plaintext highlighter-rouge">Compose(other)</code>.</p>
+
+<h2 id="text">Text</h2>
+
+<p>A text variable holds UTF-8 bytes in a fixed slot. The capacity you choose is the storage; three of
+those bytes hold the length and a terminating zero, so <code class="language-plaintext highlighter-rouge">Bytes64</code> stores 61 usable bytes.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Capacity</th>
+      <th>Storage</th>
+      <th>Usable</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TextCapacity.Bytes32</code></td>
+      <td>32</td>
+      <td>29</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TextCapacity.Bytes64</code> (the default)</td>
+      <td>64</td>
+      <td>61</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TextCapacity.Bytes128</code></td>
+      <td>128</td>
+      <td>125</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TextCapacity.Bytes512</code></td>
+      <td>512</td>
+      <td>509</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TextCapacity.Bytes4096</code></td>
+      <td>4096</td>
+      <td>4093</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">Text.Format</code> builds the content. <code class="language-plaintext highlighter-rouge">{0}</code> is the first argument, <code class="language-plaintext highlighter-rouge">{1}</code> the second, and <code class="language-plaintext highlighter-rouge">{0:2}</code> asks a
+number hole for exactly two decimal places. A literal brace is written twice: <code class="language-plaintext highlighter-rouge">{{</code> or <code class="language-plaintext highlighter-rouge">}}</code>.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Readout</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Text</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span>
+    <span class="s">"{0:1} / {1} charge, lamp {2}"</span><span class="p">,</span> <span class="n">Charge</span><span class="p">,</span> <span class="n">MaxCharge</span><span class="p">,</span> <span class="n">Powered</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>The format is parsed once, inside <code class="language-plaintext highlighter-rouge">Build()</code>. Writing the result every frame appends into a buffer the
+size of the destination and allocates nothing. Text longer than the slot is refused and the slot
+keeps what it had.</p>
+
+<p>For content that outgrows 4093 bytes, declare an allocating variable instead. It uses the same
+<code class="language-plaintext highlighter-rouge">Set</code>, <code class="language-plaintext highlighter-rouge">Clear</code> and <code class="language-plaintext highlighter-rouge">Text.Format</code> calls:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Log</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Log</span><span class="p">)).</span><span class="nf">Allocating</span><span class="p">(</span><span class="m">65536</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>An allocating variable takes a UTF-8 bound from 1 to 1048576 bytes and is local to its peer, so it is
+the fixed-capacity form that
+<a href="/LunyScript-Docs/manual/networking-and-cloud-save.html">Networking and cloud save</a> sends over
+the wire.</p>
+
+<h2 id="reacting-to-a-change">Reacting to a change</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Var</span><span class="p">(</span><span class="n">Charge</span><span class="p">).</span><span class="nf">Changed</span><span class="p">(</span><span class="n">Alarm</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>The watch is polled once per frame, after <code class="language-plaintext highlighter-rouge">On.FrameUpdate</code>. A value that is written and written back
+within the same frame raises nothing, because the poll sees the value it saw before.</p>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/lists-and-maps.html">Lists and maps</a> — many values under one name.</li>
+  <li><a href="/LunyScript-Docs/manual/random-numbers.html">Random numbers</a> — draw a number into a
+<code class="language-plaintext highlighter-rouge">Var&lt;Number&gt;</code>.</li>
+  <li><a href="/LunyScript-Docs/manual/flow.html">Flow: conditions, timed work and routines</a> — what to do
+with the conditions you just built.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Var-1.html"><code class="language-plaintext highlighter-rouge">Var&lt;T&gt;</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.DefineFactory.html"><code class="language-plaintext highlighter-rouge">DefineFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.BindFactory.html"><code class="language-plaintext highlighter-rouge">BindFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.MathFactory.html"><code class="language-plaintext highlighter-rouge">MathFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Vec3.html"><code class="language-plaintext highlighter-rouge">Vec3</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Rotation.html"><code class="language-plaintext highlighter-rouge">Rotation</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Text.html"><code class="language-plaintext highlighter-rouge">Text</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.TextCapacity.html"><code class="language-plaintext highlighter-rouge">TextCapacity</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
