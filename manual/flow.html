@@ -185,12 +185,15 @@ directly in an event list throws.</p>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">bothDoors</span>  <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">openLeft</span><span class="p">,</span> <span class="n">openRight</span><span class="p">);</span>
 <span class="kt">var</span> <span class="n">firstDone</span>  <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">openLeft</span><span class="p">,</span> <span class="n">openRight</span><span class="p">).</span><span class="nf">UntilOneFinishes</span><span class="p">();</span>
 <span class="kt">var</span> <span class="n">firstOpen</span>  <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">openLeft</span><span class="p">,</span> <span class="n">openRight</span><span class="p">).</span><span class="nf">UntilOneSucceeds</span><span class="p">();</span>
-<span class="kt">var</span> <span class="n">keepGoing</span> <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">openLeft</span><span class="p">,</span> <span class="n">openRight</span><span class="p">)</span>
-    <span class="p">.</span><span class="nf">UntilOneSucceeds</span><span class="p">().</span><span class="nf">OthersKeepRunning</span><span class="p">();</span>
+<span class="kt">var</span> <span class="n">arrival</span> <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">moveCamera</span><span class="p">,</span> <span class="n">fadeMusic</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">UntilOneFinishes</span><span class="p">().</span><span class="nf">OthersKeepRunning</span><span class="p">();</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Arrival"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">arrival</span><span class="p">,</span> <span class="n">fadeInArrivalPanel</span><span class="p">));</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">OthersKeepRunning()</code> comes after a terminal clause and leaves the remaining children running once
-the group has ended. Without it, the children still running are cancelled when the group ends.</p>
+<p><code class="language-plaintext highlighter-rouge">OthersKeepRunning()</code> comes after a terminal clause. Here <code class="language-plaintext highlighter-rouge">fadeInArrivalPanel</code> is a multi-frame
+action, so the unfinished camera movement or music fade continues while that following step runs.
+The enclosing routine owns the survivor and cancels it when the routine ends or is cancelled.</p>
 
 <h2 id="reading-a-groups-outcome">Reading a group’s outcome</h2>
 
