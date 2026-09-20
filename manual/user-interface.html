@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>User interface | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="User interface" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/user-interface.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/user-interface.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="User interface" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"User interface","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/user-interface.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">User interface</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Show a value on a label your UXML already lays out:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">HealthHud</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;</span> <span class="n">Health</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">health</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Label</span><span class="p">(</span><span class="s">"health"</span><span class="p">);</span>
+        <span class="n">health</span><span class="p">.</span><span class="nf">BindText</span><span class="p">(</span><span class="n">Text</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">"{0}% HP"</span><span class="p">,</span> <span class="n">Health</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Panel.Label("health")</code> names an element the UXML document already contains. <code class="language-plaintext highlighter-rouge">BindText</code> writes the
+formatted text onto that label whenever <code class="language-plaintext highlighter-rouge">Health</code> changes, and writes nothing on a frame where it
+did not change.</p>
+
+<h2 id="what-the-factory-reaches">What the factory reaches</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Panel</code> is LunyScript’s view of UI Toolkit. Unity owns the UXML document, the USS stylesheet, the
+<code class="language-plaintext highlighter-rouge">PanelSettings</code> asset and the control types; the script names elements, binds values to them,
+routes their events, places an authored fragment, and shows or hides a panel.</p>
+
+<p>The supported scene component is <code class="language-plaintext highlighter-rouge">PanelRenderer</code>. <code class="language-plaintext highlighter-rouge">UIDocument</code> is not a supported path. A script
+that declares an element and finds no <code class="language-plaintext highlighter-rouge">PanelRenderer</code> reports the mistake once and the object still
+runs, with binds writing nothing and reads returning the kind’s resting value.</p>
+
+<h2 id="the-six-element-kinds">The six element kinds</h2>
+
+<p>Each call names an element in the document and returns a typed handle. The name must match the
+UXML <code class="language-plaintext highlighter-rouge">name</code> attribute, and comparison is case sensitive.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Call</th>
+      <th>The UXML control it expects</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Panel.Label(name)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Label</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Panel.Button(name)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Button</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Panel.Toggle(name)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Toggle</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Panel.ProgressBar(name)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ProgressBar</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Panel.TextField(name)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">TextField</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Panel.Group(name)</code></td>
+      <td>any element, used as a container</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">health</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Label</span><span class="p">(</span><span class="s">"health"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">start</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Button</span><span class="p">(</span><span class="s">"start"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">mute</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Toggle</span><span class="p">(</span><span class="s">"mute"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">bar</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">ProgressBar</span><span class="p">(</span><span class="s">"health-bar"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">nameField</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">TextField</span><span class="p">(</span><span class="s">"player-name"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">panelBody</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Group</span><span class="p">(</span><span class="s">"body"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Declaring one name as two different kinds in one scope is refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs, and so is an
+empty or whitespace name. An element the document does not contain, or one that is a different
+control than the handle expects, is reported once per declaration and the object still runs.</p>
+
+<p>Elements are resolved to their <code class="language-plaintext highlighter-rouge">VisualElement</code> once per object when it spawns, and again when the
+<code class="language-plaintext highlighter-rouge">PanelRenderer</code> reloads its tree. Nothing queries the visual tree per use. A panel finishes loading
+after the script starts, so a bound value that settled in the meantime is written as soon as its
+element resolves rather than being treated as already written.</p>
+
+<h2 id="writing-values-onto-elements">Writing values onto elements</h2>
+
+<p>A bind is a standing declaration: it writes when the value changes. A <code class="language-plaintext highlighter-rouge">Set</code> is a one-shot block you
+place in an event list, and it writes every time that block runs.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Call</th>
+      <th>What it writes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">label.BindText(value)</code></td>
+      <td>The label’s text, whenever the value changes.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">label.SetText(value)</code></td>
+      <td>The label’s text, once, where the block runs.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">toggle.BindValue(flag)</code></td>
+      <td>The toggle’s checked state, whenever the flag changes.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">bar.SetValue(number)</code></td>
+      <td>The progress bar’s value, once.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">handle.SetVisible(flag)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">display</code>, so a hidden element takes no space.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">handle.SetEnabled(flag)</code></td>
+      <td>Whether the element accepts input.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">health</span><span class="p">.</span><span class="nf">BindText</span><span class="p">(</span><span class="n">Text</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">"{0}% HP"</span><span class="p">,</span> <span class="n">Health</span><span class="p">));</span>
+<span class="n">bar</span><span class="p">.</span><span class="nf">BindValue</span><span class="p">(</span><span class="n">Health</span><span class="p">);</span>
+<span class="n">mute</span><span class="p">.</span><span class="nf">BindValue</span><span class="p">(</span><span class="n">Muted</span><span class="p">);</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">health</span><span class="p">.</span><span class="nf">SetText</span><span class="p">(</span><span class="n">Score</span><span class="p">),</span> <span class="n">start</span><span class="p">.</span><span class="nf">SetEnabled</span><span class="p">(</span><span class="n">CanStart</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">HideHud</span><span class="p">,</span> <span class="n">panelBody</span><span class="p">.</span><span class="nf">SetVisible</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">BindText</code> accepts a Number, a <code class="language-plaintext highlighter-rouge">Text.Format</code> and a <code class="language-plaintext highlighter-rouge">Var&lt;Text&gt;</code>. <code class="language-plaintext highlighter-rouge">BindValue</code> is on <code class="language-plaintext highlighter-rouge">Toggle</code> and
+<code class="language-plaintext highlighter-rouge">ProgressBar</code>. <code class="language-plaintext highlighter-rouge">SetVisible</code> and <code class="language-plaintext highlighter-rouge">SetEnabled</code> are on every kind.</p>
+
+<h2 id="reading-an-element-back">Reading an element back</h2>
+
+<p><code class="language-plaintext highlighter-rouge">toggle.Value</code> and <code class="language-plaintext highlighter-rouge">bar.Value</code> are expressions you can use wherever a flag or a number is accepted.
+<code class="language-plaintext highlighter-rouge">label.Text</code> and <code class="language-plaintext highlighter-rouge">field.Text</code> are text expressions a variable can be set from.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">mute</span><span class="p">.</span><span class="n">Value</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">MusicLevel</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0.0</span><span class="p">)));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">UI</span><span class="p">(</span><span class="n">nameField</span><span class="p">).</span><span class="nf">ValueChanged</span><span class="p">(</span><span class="n">PlayerName</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">nameField</span><span class="p">.</span><span class="n">Text</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h2 id="reacting-to-an-element">Reacting to an element</h2>
+
+<p><code class="language-plaintext highlighter-rouge">When.UI</code> is a watch on an element, not an <code class="language-plaintext highlighter-rouge">On.*</code> event on the object.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Watch</th>
+      <th>When it runs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.UI(button).Activated(..)</code></td>
+      <td>The button was clicked or submitted with the navigation key.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.UI(toggle).ValueChanged(..)</code></td>
+      <td>The toggle was checked or unchecked.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.UI(field).ValueChanged(..)</code></td>
+      <td>The text field’s value changed.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.UI(bar).ValueChanged(..)</code></td>
+      <td>The progress bar’s value changed.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">UI</span><span class="p">(</span><span class="n">start</span><span class="p">).</span><span class="nf">Activated</span><span class="p">(</span><span class="n">StartRequested</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">UI</span><span class="p">(</span><span class="n">mute</span><span class="p">).</span><span class="nf">ValueChanged</span><span class="p">(</span><span class="n">Muted</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">mute</span><span class="p">.</span><span class="n">Value</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Activated</code> covers a pointer click and a navigation submit, so a control reached with a gamepad runs
+the same blocks as one clicked with a mouse. An activation that arrives while the script is not
+processing, because its process mode is suppressed, is dropped rather than queued.</p>
+
+<h2 id="a-second-panel-on-another-object">A second panel on another object</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Panel.For(input)</code> targets the <code class="language-plaintext highlighter-rouge">PanelRenderer</code> on a declared GameObject input instead of the object
+the script runs on. Names then resolve inside that panel’s document.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">Hud</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">var</span> <span class="n">hudHealth</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Hud</span><span class="p">).</span><span class="nf">Label</span><span class="p">(</span><span class="s">"health"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="placing-an-authored-fragment">Placing an authored fragment</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Panel.Place(uxml)</code> clones a <code class="language-plaintext highlighter-rouge">VisualTreeAsset</code> into one of the nine reserved HUD regions. The
+handle it returns is the name scope for names inside that clone, so two clones of the same asset do
+not collide.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">VisualTreeAsset</span><span class="p">&gt;</span> <span class="n">PlayerPortrait</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">var</span> <span class="n">first</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Place</span><span class="p">(</span><span class="n">PlayerPortrait</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="n">Anchor</span><span class="p">.</span><span class="n">TopLeft</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">second</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Place</span><span class="p">(</span><span class="n">PlayerPortrait</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="n">Anchor</span><span class="p">.</span><span class="n">TopRight</span><span class="p">);</span>
+<span class="n">first</span><span class="p">.</span><span class="nf">Label</span><span class="p">(</span><span class="s">"health"</span><span class="p">).</span><span class="nf">BindText</span><span class="p">(</span><span class="n">FirstHealth</span><span class="p">);</span>
+<span class="n">second</span><span class="p">.</span><span class="nf">Label</span><span class="p">(</span><span class="s">"health"</span><span class="p">).</span><span class="nf">BindText</span><span class="p">(</span><span class="n">SecondHealth</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The nine anchors are <code class="language-plaintext highlighter-rouge">TopLeft</code>, <code class="language-plaintext highlighter-rouge">Top</code>, <code class="language-plaintext highlighter-rouge">TopRight</code>, <code class="language-plaintext highlighter-rouge">Left</code>, <code class="language-plaintext highlighter-rouge">Center</code>, <code class="language-plaintext highlighter-rouge">Right</code>, <code class="language-plaintext highlighter-rouge">BottomLeft</code>,
+<code class="language-plaintext highlighter-rouge">Bottom</code> and <code class="language-plaintext highlighter-rouge">BottomRight</code>. Each name is the UXML name of the region that receives the clone, so
+the HUD document must contain an element with that name; a HUD that does not is reported once and
+the placement does nothing. Insert <code class="language-plaintext highlighter-rouge">.In(view)</code> before <code class="language-plaintext highlighter-rouge">.At</code> to place into the panel on a declared
+view GameObject instead of the host panel: <code class="language-plaintext highlighter-rouge">Panel.Place(Portrait).In(SecondView).At(Anchor.Top)</code>.</p>
+
+<p>A <code class="language-plaintext highlighter-rouge">Place</code> whose UXML input has no asset assigned refuses the spawn, because a UXML fragment is a
+data asset LunyScript will not substitute. <code class="language-plaintext highlighter-rouge">Panel.Place(uxml)</code> without <code class="language-plaintext highlighter-rouge">.At</code> or <code class="language-plaintext highlighter-rouge">.In</code> is refused
+while <code class="language-plaintext highlighter-rouge">Build()</code> runs.</p>
+
+<h2 id="opening-and-closing-a-menu">Opening and closing a menu</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">PauseMenu</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Panel</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="n">PauseMenu</span><span class="p">).</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">ClosePause</span><span class="p">,</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Close</span><span class="p">(</span><span class="n">PauseMenu</span><span class="p">).</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Open</code> writes <code class="language-plaintext highlighter-rouge">display</code> on the panel’s root so it takes space again; <code class="language-plaintext highlighter-rouge">Close</code> writes <code class="language-plaintext highlighter-rouge">display = None</code>
+and keeps the element cache, so reopening does not resolve every name again. <code class="language-plaintext highlighter-rouge">ForPlayer</code> is
+required and names which local player the call is for. Each panel carries its own state, so opening
+one panel does not affect another, and repeating <code class="language-plaintext highlighter-rouge">Open</code> on a panel that is already open writes
+nothing.</p>
+
+<p>Focus is not part of this version: <code class="language-plaintext highlighter-rouge">Open</code> records no focus and <code class="language-plaintext highlighter-rouge">Close</code> restores none.</p>
+
+<h2 id="what-is-not-here-yet">What is not here yet</h2>
+
+<p>Code-only control creation (<code class="language-plaintext highlighter-rouge">Panel.Create</code>), Unity’s runtime DataBinding bridge, <code class="language-plaintext highlighter-rouge">AssignPlayer</code>,
+<code class="language-plaintext highlighter-rouge">Destroy</code>, <code class="language-plaintext highlighter-rouge">Slider</code>, class-list writes, <code class="language-plaintext highlighter-rouge">Focus</code> and <code class="language-plaintext highlighter-rouge">SetShared</code> are planned and not implemented.
+<code class="language-plaintext highlighter-rouge">docs/proposals/ui-toolkit.md</code> is the family document and records which of those are should-have.</p>
+
+<h2 id="seeing-it-run">Seeing it run</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Assets/CodeSmile/LunyScript/_Development/ApiExamples/Scenes/UserInterface.unity</code> runs everything on
+this page: the two bound controls, the three separately scoped <code class="language-plaintext highlighter-rouge">health</code> Labels, both <code class="language-plaintext highlighter-rouge">When.UI</code>
+watches, and <code class="language-plaintext highlighter-rouge">Panel.Open</code> and <code class="language-plaintext highlighter-rouge">Panel.Close</code> on a second <code class="language-plaintext highlighter-rouge">PanelRenderer</code>. Open it and press Play.</p>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/variables-and-values.html">Variables and values</a> — the values a
+bind writes onto an element.</li>
+  <li><a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> — declaring the
+GameObject and UXML inputs <code class="language-plaintext highlighter-rouge">Panel.For</code>, <code class="language-plaintext highlighter-rouge">Panel.Place</code> and <code class="language-plaintext highlighter-rouge">Panel.Open</code> take.</li>
+  <li><a href="/LunyScript-Docs/manual/time-and-pausing.html">Time, pausing and gates</a> — what a suppressed
+process mode does to binds and to <code class="language-plaintext highlighter-rouge">When.UI</code>.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.PanelFactory.html"><code class="language-plaintext highlighter-rouge">PanelFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Anchor.html"><code class="language-plaintext highlighter-rouge">Anchor</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
