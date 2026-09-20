@@ -499,6 +499,13 @@ of the stream is written once rather than once per backend.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.UIGateway.html">UIGateway</a></dt>
+      <dd><p>The core's one entry point to UI Toolkit. Resolves declared names to
+<code>VisualElement</code> once per instance at spawn and again on panel reload, and answers the
+writes, reads and occurrence tests the UI blocks make.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.VariableAttribute.html">VariableAttribute</a></dt>
       <dd><p>Declares a variable whose handle is assigned before Build, in declaration order.</p>
 </dd>
@@ -1059,6 +1066,34 @@ currently running.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.PanelCloseBuilder.html">PanelCloseBuilder</a></dt>
+      <dd><p>What <code>Panel.Close(menu)</code> returns. <code>ForPlayer</code> is required.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.PanelFactory.html">PanelFactory</a></dt>
+      <dd><p>The <code>Panel</code> surface inside <code>Build()</code>: typed binds, Place of a UXML fragment, and
+Open/Close of a menu. It hides <code>PanelRenderer</code> inside a <code>Script</code> the same way
+<code>Transform</code> hides <code>UnityEngine.Transform</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.PanelHandle.html">PanelHandle</a></dt>
+      <dd><p>What <code>Panel.For(panel)</code> returns: typed elements on that panel's document.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.PanelOpenBuilder.html">PanelOpenBuilder</a></dt>
+      <dd><p>What <code>Panel.Open(menu)</code> returns. <code>ForPlayer</code> is required.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.PlaceAtBuilder.html">PlaceAtBuilder</a></dt>
+      <dd><p>What <code>Panel.Place(uxml)</code> returns. <code>At</code> is required; <code>In</code> is
+optional.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.PlayerInputFactory.html">PlayerInputFactory</a></dt>
       <dd><p>What <code>Input.ForPlayer(player)</code> returns: one method per kind of value an action produces,
 each declaring one action and handing back the typed handle that reads it.</p>
@@ -1372,6 +1407,60 @@ the duration.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.UiActivatedWatchBuilder.html">UiActivatedWatchBuilder</a></dt>
+      <dd><p>What <code>When.UI(button)</code> returns. <code>Activated</code> is pointer click plus
+keyboard and gamepad submit.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.UiButton.html">UiButton</a></dt>
+      <dd><p>A handle to one named Button.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.UiGroup.html">UiGroup</a></dt>
+      <dd><p>A handle to one named Group, for showing or hiding a cluster already in the panel
+UXML. Not a Place target.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.UiLabel.html">UiLabel</a></dt>
+      <dd><p>A handle to one named Label. Returned by <code>Panel.Label</code> at build time.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.UiPlacement.html">UiPlacement</a></dt>
+      <dd><p>A Place fragment: the name scope for elements inside a cloned UXML, and a block so
+<code>On.Ready(Panel.Place(...).At(...))</code> still compiles. Placement itself runs at spawn.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.UiProgressBar.html">UiProgressBar</a></dt>
+      <dd><p>A handle to one named ProgressBar.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.UiText.html">UiText</a></dt>
+      <dd><p>The current text of a Label or TextField, for <code>PlayerName.Set(nameField.Text)</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.UiTextField.html">UiTextField</a></dt>
+      <dd><p>A handle to one named TextField.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.UiToggle.html">UiToggle</a></dt>
+      <dd><p>A handle to one named Toggle.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.UiValueChangedWatchBuilder.html">UiValueChangedWatchBuilder</a></dt>
+      <dd><p>What <code>When.UI(toggle)</code>, <code>When.UI(bar)</code> and <code>When.UI(field)</code>
+return.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.UtilityOption.html">UtilityOption</a></dt>
       <dd><p>One scored option of a <code>Choose</code> selector: a score expression and the action that runs
 while that option is selected.</p>
@@ -1551,6 +1640,12 @@ spawn of that script is refused with a message naming the missing service.</p>
 follow or aim at. A host that can supply one implements this interface.</p>
 </dd>
     </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.IUiElementHandle.html">IUiElementHandle</a></dt>
+      <dd><p>The one thing every UI element handle has in common: whether <code>Build()</code> produced it,
+and where its declaration sits in the program.</p>
+</dd>
+    </dl>
     <h3 id="enums">
 Enums
 </h3>
@@ -1558,6 +1653,12 @@ Enums
       <dt><a class="xref" href="CodeSmile.LunyScript.ActionResult.html">ActionResult</a></dt>
       <dd><p>What an action reports about the objective it was given: still pending, finished having met
 it, or finished having failed to meet it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.Anchor.html">Anchor</a></dt>
+      <dd><p>One of the nine reserved HUD regions a <code>Panel.Place</code> call can occupy: four corners,
+four edges, and the centre.</p>
 </dd>
     </dl>
     <dl class="jumplist">
