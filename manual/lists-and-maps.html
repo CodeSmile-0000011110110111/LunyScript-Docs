@@ -155,6 +155,45 @@ a flag you can test:</p>
 <p><code class="language-plaintext highlighter-rouge">Failed()</code> is one flag for the whole collection, set by a refused call and cleared by the next
 successful mutation on that same collection. <code class="language-plaintext highlighter-rouge">Contains</code> is a read and leaves the flag alone.</p>
 
+<h2 id="branching-on-one-add">Branching on one add</h2>
+
+<p><code class="language-plaintext highlighter-rouge">TryAdd</code> is the form of <code class="language-plaintext highlighter-rouge">Add</code> whose own outcome you branch on. Give it to <code class="language-plaintext highlighter-rouge">If</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Pickup"</span><span class="p">,</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Slots</span><span class="p">.</span><span class="nf">TryAdd</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+        <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Kept</span><span class="p">.</span><span class="nf">Increment</span><span class="p">())</span>
+        <span class="p">.</span><span class="nf">Else</span><span class="p">(</span><span class="n">ShowFull</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p>Each time the block runs it adds the item once. <code class="language-plaintext highlighter-rouge">Then</code> runs when that add changed the list, and
+<code class="language-plaintext highlighter-rouge">Else</code> runs when the list refused it, for example because it is full or a <code class="language-plaintext highlighter-rouge">ForEach</code> is visiting
+it. The branch depends on this add alone, so an earlier refusal elsewhere on the list does not
+change it.</p>
+
+<p>To read the outcome later, store it in a named result:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="n">CollectionResult</span> <span class="n">Added</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="c1">// Inside Build():</span>
+<span class="n">Added</span> <span class="p">=</span> <span class="n">CollectionResult</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Added</span><span class="p">));</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Pickup"</span><span class="p">,</span> <span class="n">Slots</span><span class="p">.</span><span class="nf">TryAdd</span><span class="p">(</span><span class="n">item</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Added</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Added</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Glow</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Added</span><span class="p">.</span><span class="n">Failed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">ShowFull</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">If(Added)</code> means <code class="language-plaintext highlighter-rouge">If(Added.Succeeded)</code>. Before the add first runs, both <code class="language-plaintext highlighter-rouge">Added.Succeeded</code> and
+<code class="language-plaintext highlighter-rouge">Added.Failed</code> are false. After that, <code class="language-plaintext highlighter-rouge">Added</code> keeps the latest outcome until the add runs again.
+Reading it adds nothing. Every object has its own result, and a pooled object that is reused
+starts over with both false.</p>
+
+<p>Each <code class="language-plaintext highlighter-rouge">TryAdd</code> is used once, by one <code class="language-plaintext highlighter-rouge">If</code> or one <code class="language-plaintext highlighter-rouge">.As</code>, and the block it produces goes in one place.
+A result has one <code class="language-plaintext highlighter-rouge">TryAdd</code> bound to it. <code class="language-plaintext highlighter-rouge">Build()</code> reports a <code class="language-plaintext highlighter-rouge">TryAdd</code> used twice, placed twice or
+never placed, and a result with no <code class="language-plaintext highlighter-rouge">TryAdd</code> or two, naming the line. A refused <code class="language-plaintext highlighter-rouge">TryAdd</code> writes
+nothing to the Console, because your <code class="language-plaintext highlighter-rouge">Else</code> or your result is where you handle it; a refused <code class="language-plaintext highlighter-rouge">Add</code>
+still reports its first refusal.</p>
+
 <h2 id="visiting-every-entry">Visiting every entry</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">ForEach</span><span class="p">(</span><span class="n">Slots</span><span class="p">).</span><span class="nf">Do</span><span class="p">(</span><span class="n">item</span> <span class="p">=&gt;</span> <span class="n">Total</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">item</span><span class="p">));</span>
@@ -213,6 +252,7 @@ collection can hold.</li>
 on <code class="language-plaintext highlighter-rouge">Failed()</code> and on <code class="language-plaintext highlighter-rouge">Contains</code>.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ListHandle-1.html"><code class="language-plaintext highlighter-rouge">ListHandle&lt;T&gt;</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CollectionResult.html"><code class="language-plaintext highlighter-rouge">CollectionResult</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.MapHandle-2.html"><code class="language-plaintext highlighter-rouge">MapHandle&lt;TKey, TValue&gt;</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CollectionRead.html"><code class="language-plaintext highlighter-rouge">CollectionRead</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.TextLength.html"><code class="language-plaintext highlighter-rouge">TextLength</code></a>.</li>
