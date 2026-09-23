@@ -227,9 +227,21 @@ the session ends.</p>
 <p>The first parameter of <code class="language-plaintext highlighter-rouge">Loaded</code> is the <code class="language-plaintext highlighter-rouge">Var&lt;Number&gt;</code> the loaded value is written into, and the blocks
 after it run once that write has happened. The key is required and must not be blank.</p>
 
-<p>The cloud family counts its outcomes per key rather than through an operation handle, so it is
-watched with <code class="language-plaintext highlighter-rouge">When.Cloud</code> and does not appear in
-<a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a>.</p>
+<p>A save or a load can also be one attempt on an operation handle. <code class="language-plaintext highlighter-rouge">.As(handle)</code> binds it, and a load
+names the variable its value is written into first:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RunEnded"</span><span class="p">,</span> <span class="n">Cloud</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">,</span> <span class="n">Score</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">SavingScore</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Cloud</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Score</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">LoadingScore</span><span class="p">));</span>
+
+<span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="n">SavingScore</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span><span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Saved."</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="n">LoadingScore</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"No score yet."</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">When.Cloud(handle)</code> is the same watch as <code class="language-plaintext highlighter-rouge">When.Operation(handle)</code>, so <code class="language-plaintext highlighter-rouge">Succeeded</code>, <code class="language-plaintext highlighter-rouge">Failed</code>,
+<code class="language-plaintext highlighter-rouge">Cancelled</code>, <code class="language-plaintext highlighter-rouge">Finished</code>, <code class="language-plaintext highlighter-rouge">Cancel()</code> and <code class="language-plaintext highlighter-rouge">Retry()</code> work the way
+<a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> describes. The
+key’s own <code class="language-plaintext highlighter-rouge">When.Cloud(key)</code> watches still run for the same request. A load whose attempt was cancelled
+writes nothing into its variable.</p>
 
 <h2 id="a-worked-example">A worked example</h2>
 
@@ -273,7 +285,9 @@ synchronised variable is read and written.</li>
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SyncFactory.html"><code class="language-plaintext highlighter-rouge">SyncFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SyncCadence.html"><code class="language-plaintext highlighter-rouge">SyncCadence</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudFactory.html"><code class="language-plaintext highlighter-rouge">CloudFactory</code></a>,
-<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudWatchBuilder.html"><code class="language-plaintext highlighter-rouge">CloudWatchBuilder</code></a>.</li>
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudWatchBuilder.html"><code class="language-plaintext highlighter-rouge">CloudWatchBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudSaveBuilder.html"><code class="language-plaintext highlighter-rouge">CloudSaveBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudLoadBuilder.html"><code class="language-plaintext highlighter-rouge">CloudLoadBuilder</code></a>.</li>
 </ul>
 
   </div>
