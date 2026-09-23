@@ -92,11 +92,8 @@ it.</p>
 
 <h2 id="declaring">Declaring</h2>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Define</span><span class="p">.</span><span class="n">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">ValueLength</span><span class="p">(</span><span class="n">length</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">Define</span><span class="p">.</span><span class="n">Map</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">,</span> <span class="n">TValue</span><span class="p">&gt;(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">KeyLength</span><span class="p">(</span><span class="n">length</span><span class="p">)</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">ValueLength</span><span class="p">(</span><span class="n">length</span><span class="p">)</span> <span class="p">]</span>
-</code></pre></div></div>
+<p>The signature of these calls, including the optional length clauses, is in the
+<a href="#call-list">call list</a> at the end of this page.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Slots</span>  <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Slots</span><span class="p">),</span> <span class="m">4</span><span class="p">);</span>
 <span class="n">Names</span>  <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="n">List</span><span class="p">&lt;</span><span class="n">Text</span><span class="p">&gt;(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Names</span><span class="p">),</span> <span class="m">8</span><span class="p">).</span><span class="nf">ValueLength</span><span class="p">(</span><span class="n">TextLength</span><span class="p">.</span><span class="n">S</span><span class="p">);</span>
@@ -241,6 +238,17 @@ handle that <code class="language-plaintext highlighter-rouge">Build()</code> ne
                 <span class="k">new</span><span class="p">[]</span> <span class="p">{</span> <span class="n">Total</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="k">value</span><span class="p">),</span> <span class="n">Best</span><span class="p">.</span><span class="nf">Max</span><span class="p">(</span><span class="k">value</span><span class="p">)</span> <span class="p">}));</span>
     <span class="p">}</span>
 <span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="call-list">Call list</h2>
+
+<p>These lines are declaration signatures, not a script you can paste. Brackets mark a clause you may
+leave out. The working declarations are under Declaring, above.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Define</span><span class="p">.</span><span class="n">List</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">ValueLength</span><span class="p">(</span><span class="n">length</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Define</span><span class="p">.</span><span class="n">Map</span><span class="p">&lt;</span><span class="n">TKey</span><span class="p">,</span> <span class="n">TValue</span><span class="p">&gt;(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">KeyLength</span><span class="p">(</span><span class="n">length</span><span class="p">)</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">ValueLength</span><span class="p">(</span><span class="n">length</span><span class="p">)</span> <span class="p">]</span>
 </code></pre></div></div>
 
 <h2 id="what-to-read-next">What to read next</h2>

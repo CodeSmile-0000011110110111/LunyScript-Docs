@@ -139,9 +139,21 @@ place to put declarations.</p>
 the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component, below the script, and that is where the object assigns a
 prefab to it.</p>
 
-<h2 id="what-you-can-call-inside-build">What you can call inside <code class="language-plaintext highlighter-rouge">Build</code></h2>
+<h2 id="a-script-is-a-plain-c-class">A script is a plain C# class</h2>
 
-<p>Two base classes exist. <code class="language-plaintext highlighter-rouge">Script</code> is for a game object. <code class="language-plaintext highlighter-rouge">EditorScript</code> is for a tool that runs in the
+<p><code class="language-plaintext highlighter-rouge">Script</code> and every subclass of it are ordinary C# classes. Unity delivers its own messages to the
+<code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component, which is the one object that connects a GameObject to a script
+type, and that component is what raises the events described in
+<a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a>.</p>
+
+<p>Keeping a script off Unity’s own object types is why the <code class="language-plaintext highlighter-rouge">Script To Run</code> field is a managed
+reference, chosen from a picker, rather than an object field. The field serializes with the scene or
+the prefab, and <code class="language-plaintext highlighter-rouge">Instantiate</code> copies it.</p>
+
+<h2 id="call-list">Call list</h2>
+
+<p>These names are the surfaces you can call inside <code class="language-plaintext highlighter-rouge">Build()</code>. They are not a script you can paste.
+Two base classes exist. <code class="language-plaintext highlighter-rouge">Script</code> is for a game object. <code class="language-plaintext highlighter-rouge">EditorScript</code> is for a tool that runs in the
 editor, and it offers the surfaces that do not need a running game object.</p>
 
 <p>Available on both <code class="language-plaintext highlighter-rouge">Script</code> and <code class="language-plaintext highlighter-rouge">EditorScript</code>:</p>
@@ -157,17 +169,6 @@ editor, and it offers the surfaces that do not need a running game object.</p>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span>  <span class="n">Transform</span>  <span class="n">Motion</span>  <span class="n">Body</span>  <span class="n">Other</span>  <span class="n">Object</span>  <span class="n">Time</span>  <span class="n">Input</span>  <span class="n">View</span>  <span class="n">Camera</span>
 <span class="n">Gate</span>  <span class="n">Net</span>  <span class="n">Sync</span>  <span class="n">Cloud</span>  <span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
 </code></pre></div></div>
-
-<h2 id="a-script-is-a-plain-c-class">A script is a plain C# class</h2>
-
-<p><code class="language-plaintext highlighter-rouge">Script</code> and every subclass of it are ordinary C# classes. Unity delivers its own messages to the
-<code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component, which is the one object that connects a GameObject to a script
-type, and that component is what raises the events described in
-<a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a>.</p>
-
-<p>Keeping a script off Unity’s own object types is why the <code class="language-plaintext highlighter-rouge">Script To Run</code> field is a managed
-reference, chosen from a picker, rather than an object field. The field serializes with the scene or
-the prefab, and <code class="language-plaintext highlighter-rouge">Instantiate</code> copies it.</p>
 
 <h2 id="what-to-read-next">What to read next</h2>
 

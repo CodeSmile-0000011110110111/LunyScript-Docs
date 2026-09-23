@@ -70,9 +70,30 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>The battery starts at 40 and drains by two per second. Nothing else is configured: the <code class="language-plaintext highlighter-rouge">[Variable]</code>
-attribute’s code generator writes the declaration, and every object assigned to <code class="language-plaintext highlighter-rouge">Battery</code> gets its
-own <code class="language-plaintext highlighter-rouge">Charge</code>.</p>
+<p>The battery starts at 40 and drains by two per second. The <code class="language-plaintext highlighter-rouge">[Variable]</code> attribute’s code generator
+writes the declaration, and every object assigned to <code class="language-plaintext highlighter-rouge">Battery</code> gets its own <code class="language-plaintext highlighter-rouge">Charge</code>. The <code class="language-plaintext highlighter-rouge">40</code> is
+read by the compiler. It is not a field on the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component. That component’s
+Inspector fields are the script, the declared assets, and the process mode.</p>
+
+<p>Ordinary Unity C# for the same drain:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Battery</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="kt">double</span> <span class="n">charge</span> <span class="p">=</span> <span class="m">40</span><span class="p">;</span>
+
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">=&gt;</span>
+        <span class="n">charge</span> <span class="p">-=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span> <span class="p">*</span> <span class="m">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Number</code> is a <code class="language-plaintext highlighter-rouge">double</code>, so the C# field is a <code class="language-plaintext highlighter-rouge">double</code>. <code class="language-plaintext highlighter-rouge">Time.deltaTime</code> is a <code class="language-plaintext highlighter-rouge">float</code>, and the
+subtraction widens it. Both scripts subtract two times the scaled frame length. Battery sets no
+process mode, so the type default is Inherit, which is Pausable when no parent script names a mode.
+The block then runs while the runner is running and does not run while the runner is paused. A parent
+script that sets another mode is followed. The C# <code class="language-plaintext highlighter-rouge">Update</code> still runs while <code class="language-plaintext highlighter-rouge">timeScale</code> is 0 and adds
+0, because <code class="language-plaintext highlighter-rouge">deltaTime</code> is 0.</p>
 
 <h2 id="what-a-variable-is">What a variable is</h2>
 
@@ -153,23 +174,6 @@ attribute has no starting-value syntax for, and for a shared value:</p>
     <span class="n">TeamScore</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">TeamScore</span><span class="p">),</span> <span class="m">0</span><span class="p">).</span><span class="nf">Shared</span><span class="p">();</span>
 <span class="p">}</span>
 </code></pre></div></div>
-
-<p>The whole set of declarations:</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">)</span>   <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">Define</span><span class="p">.</span><span class="nf">Flag</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">)</span>     <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>                   <span class="p">[</span> <span class="p">.</span><span class="nf">Allocating</span><span class="p">(</span><span class="n">maxBytes</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>
-<span class="n">Define</span><span class="p">.</span><span class="nf">Vec3</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
-<span class="n">Define</span><span class="p">.</span><span class="nf">Vec2</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
-<span class="n">Define</span><span class="p">.</span><span class="nf">Rotation</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
-<span class="n">Define</span><span class="p">.</span><span class="n">Enum</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">)</span>
-<span class="n">Var</span><span class="p">.</span><span class="n">Define</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
-<span class="n">Var</span><span class="p">.</span><span class="nf">DefineText</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">capacity</span> <span class="p">])</span>
-<span class="n">Var</span><span class="p">.</span><span class="nf">DefineAllocatingText</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">maxBytes</span><span class="p">)</span>
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">Var.Define*</code> and <code class="language-plaintext highlighter-rouge">Define.*</code> declare the same things; <code class="language-plaintext highlighter-rouge">Define.*</code> is the shorter spelling.</p>
 
 <h2 id="sharing-one-value-between-objects">Sharing one value between objects</h2>
 
@@ -329,6 +333,26 @@ the wire.</p>
 
 <p>The watch is polled once per frame, after <code class="language-plaintext highlighter-rouge">On.FrameUpdate</code>. A value that is written and written back
 within the same frame raises nothing, because the poll sees the value it saw before.</p>
+
+<h2 id="call-list">Call list</h2>
+
+<p>These lines are declaration signatures, not a script you can paste. Brackets mark a clause you may
+leave out. The working declarations are above.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">)</span>   <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Flag</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">)</span>     <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>                   <span class="p">[</span> <span class="p">.</span><span class="nf">Allocating</span><span class="p">(</span><span class="n">maxBytes</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Vec3</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Vec2</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Rotation</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
+<span class="n">Define</span><span class="p">.</span><span class="n">Enum</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">)</span>
+<span class="n">Var</span><span class="p">.</span><span class="n">Define</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
+<span class="n">Var</span><span class="p">.</span><span class="nf">DefineText</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">capacity</span> <span class="p">])</span>
+<span class="n">Var</span><span class="p">.</span><span class="nf">DefineAllocatingText</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">maxBytes</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Var.Define*</code> and <code class="language-plaintext highlighter-rouge">Define.*</code> declare the same things. <code class="language-plaintext highlighter-rouge">Define.*</code> is the shorter spelling.</p>
 
 <h2 id="what-to-read-next">What to read next</h2>
 

@@ -70,8 +70,27 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Add the component, give the spike a <code class="language-plaintext highlighter-rouge">Spike</code> tag and a trigger collider, and the object loses ten
-health each time it enters one.</p>
+<p>Add the component, give the spike a <code class="language-plaintext highlighter-rouge">Spike</code> tag and a trigger collider, and put a <code class="language-plaintext highlighter-rouge">Rigidbody</code> on
+the spike or on this object. The object loses ten health each time it enters that trigger.</p>
+
+<p>Ordinary Unity C# for the same contact:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Hazard</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="kt">double</span> <span class="n">health</span> <span class="p">=</span> <span class="m">100</span><span class="p">;</span>
+
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">OnTriggerEnter</span><span class="p">(</span><span class="n">Collider</span> <span class="n">other</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="nf">CompareTag</span><span class="p">(</span><span class="s">"Spike"</span><span class="p">))</span>
+            <span class="n">health</span> <span class="p">-=</span> <span class="m">10</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Other.HasTag</code> calls <code class="language-plaintext highlighter-rouge">CompareTag</code> on the other collider. Both scripts subtract 10 when that tag is
+<code class="language-plaintext highlighter-rouge">Spike</code>. The <code class="language-plaintext highlighter-rouge">Rigidbody</code> is Unity’s contact rule. Neither script creates it.</p>
 
 <h2 id="what-on-does">What <code class="language-plaintext highlighter-rouge">On</code> does</h2>
 
@@ -243,18 +262,8 @@ sending side. Two <code class="language-plaintext highlighter-rouge">On.Message<
 
 <h2 id="creating-and-removing-objects">Creating and removing objects</h2>
 
-<p><code class="language-plaintext highlighter-rouge">Object</code> produces and disposes of game objects that this script owns.</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-<span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span> <span class="p">{</span> <span class="n">prefab</span> <span class="p">|</span> <span class="n">handle</span> <span class="p">}</span> <span class="p">)</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">At</span><span class="p">(</span><span class="n">position</span> <span class="p">[</span> <span class="p">,</span> <span class="n">rotation</span> <span class="p">])</span> <span class="p">]</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">InWorldSpace</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InLocalSpace</span><span class="p">()</span> <span class="p">]</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">ChildOf</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span> <span class="p">]</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">Into</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">Object</span><span class="p">.</span><span class="nf">Activate</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
-<span class="n">Object</span><span class="p">.</span><span class="nf">Deactivate</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
-<span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
-</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">Object</code> produces and disposes of game objects that this script owns. The signature of those calls
+is in the <a href="#call-list">call list</a> at the end of this page.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Prefab</span> <span class="n">Sentry</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
@@ -280,6 +289,22 @@ keeps its own pose; leave <code class="language-plaintext highlighter-rouge">Chi
 they act on this object after the current dispatch finishes, so the rest of the block list still
 runs. <code class="language-plaintext highlighter-rouge">Object.Despawn()</code> on this object produces <code class="language-plaintext highlighter-rouge">On.Disabled</code>, then <code class="language-plaintext highlighter-rouge">On.Despawned</code>, and then
 destroys the host.</p>
+
+<h2 id="call-list">Call list</h2>
+
+<p>These lines are call signatures, not a script you can paste. Brackets mark a clause you may leave
+out. The working spawn is under Creating and removing objects, above.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span> <span class="p">{</span> <span class="n">prefab</span> <span class="p">|</span> <span class="n">handle</span> <span class="p">}</span> <span class="p">)</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">At</span><span class="p">(</span><span class="n">position</span> <span class="p">[</span> <span class="p">,</span> <span class="n">rotation</span> <span class="p">])</span> <span class="p">]</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">InWorldSpace</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InLocalSpace</span><span class="p">()</span> <span class="p">]</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">ChildOf</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span> <span class="p">]</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">Into</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">Activate</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">Deactivate</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
+</code></pre></div></div>
 
 <h2 id="what-to-read-next">What to read next</h2>
 
