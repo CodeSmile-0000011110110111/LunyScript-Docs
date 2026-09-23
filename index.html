@@ -50,36 +50,198 @@
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <div class="home"><h1 class="page-heading">LunyScript Docs</h1><p><strong>LunyScript</strong> is a C# scripting layer for Unity. Add a component to a game object, point it at a
-script class, and the object does what the script says:</p>
+        <div class="home"><h1 class="page-heading">LunyScript Docs</h1><p><strong>LunyScript</strong> is a C# scripting layer for Unity. A script is one class with one <code class="language-plaintext highlighter-rouge">Build()</code> method.
+Inside <code class="language-plaintext highlighter-rouge">Build()</code> you compose blocks that say what an object does, and the runtime runs those blocks
+against every object that carries the script. Add the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component to a game
+object, pick the script, press Play.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+<p><img src="/LunyScript-Docs/assets/runtime-debugger-placeholder.svg" alt="Placeholder for a screenshot of the runtime debugger" /></p>
 
-<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Spinner</span> <span class="p">:</span> <span class="n">Script</span>
-<span class="p">{</span>
-    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">RotateBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">35</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
-<span class="p">}</span>
+<p><em>The runtime debugger shows a running script: which blocks are active, what values feed them, and
+which branch each condition took. Screenshot to follow.</em></p>
+
+<p>A character that loses health on a spike, regenerates after three seconds without a hit, and shows
+its health on the HUD. This is the whole body of its <code class="language-plaintext highlighter-rouge">Build()</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">TriggerEnter</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="nf">HasTag</span><span class="p">(</span><span class="s">"Spike"</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">25</span><span class="p">),</span> <span class="n">SinceHit</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">)));</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+    <span class="n">SinceHit</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">SinceHit</span> <span class="p">&gt;</span> <span class="m">3</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">10</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)),</span>
+    <span class="n">Health</span><span class="p">.</span><span class="nf">Clamp</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">100</span><span class="p">),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">()));</span>
+
+<span class="n">Panel</span><span class="p">.</span><span class="nf">Label</span><span class="p">(</span><span class="s">"health"</span><span class="p">).</span><span class="nf">BindText</span><span class="p">(</span><span class="n">Text</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">"{0:0} HP"</span><span class="p">,</span> <span class="n">Health</span><span class="p">));</span>
 </code></pre></div></div>
 
-<p>A user writes a <code class="language-plaintext highlighter-rouge">Script</code> subclass whose <code class="language-plaintext highlighter-rouge">Build()</code> method composes blocks — <code class="language-plaintext highlighter-rouge">On.Ready(...)</code>,
-<code class="language-plaintext highlighter-rouge">If(health &gt; 10).Then(...)</code>, <code class="language-plaintext highlighter-rouge">Transform.MoveBy(...)</code> — and those blocks run against game objects at
-runtime.</p>
+<p><code class="language-plaintext highlighter-rouge">Health</code> and <code class="language-plaintext highlighter-rouge">SinceHit</code> are two <code class="language-plaintext highlighter-rouge">[Variable]</code> properties on the script class, and <code class="language-plaintext highlighter-rouge">health</code> is the
+name of a label in the object’s UI Toolkit panel.
+<a href="/LunyScript-Docs/manual/writing-a-script.html">Writing a script</a> shows the class around a
+<code class="language-plaintext highlighter-rouge">Build()</code>. The blocks are composed once for the script type; every object that carries the script
+keeps its own <code class="language-plaintext highlighter-rouge">Health</code> and <code class="language-plaintext highlighter-rouge">SinceHit</code>.</p>
 
-<p>The visual surface it commits to is a runtime debugger, not an authoring editor. Simplified
-scripting works for designers when they can observe a running script and take control of it
-while the game is running. Observing means reading the running state: which blocks are active,
-what values feed them, which branch a condition took. Taking control means changing that state
-from the outside while it runs, rather than stopping the game, editing the script and entering
-Play Mode again.</p>
+<h2 id="the-api-in-highlights">The API in highlights</h2>
 
-<p>LunyScript does not provide a visual authoring surface: no node graph, no flowchart editor, and
-no way of composing a script by dragging instead of writing C#. A <code class="language-plaintext highlighter-rouge">Script</code> is a plain C# class,
-not a <code class="language-plaintext highlighter-rouge">ScriptableObject</code> or a <code class="language-plaintext highlighter-rouge">MonoBehaviour</code>.</p>
+<p><strong>Steps in order, over as many frames as they take.</strong> A routine runs its steps one after another,
+each finishing before the next begins. A timed move takes a duration and one of 31 named easing
+curves. This lift has no Rigidbody, so <code class="language-plaintext highlighter-rouge">Motion</code> writes its transform:</p>
 
-<p>v1 targets Unity 6.7 LTS, desktop and web, four local split-screen players as the design point
-and sixteen networked players as the high-end target. It owns seven API families: camera and
-viewport, player input, animation, audio, particle effects, UI Toolkit, and physics.</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Block</span> <span class="n">rise</span> <span class="p">=</span> <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">4</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">().</span><span class="nf">Ease</span><span class="p">(</span><span class="n">Easing</span><span class="p">.</span><span class="n">InOutSine</span><span class="p">);</span>
+<span class="n">Block</span> <span class="n">sink</span> <span class="p">=</span> <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">().</span><span class="nf">Ease</span><span class="p">(</span><span class="n">Easing</span><span class="p">.</span><span class="n">InOutSine</span><span class="p">);</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Lift"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">rise</span><span class="p">,</span> <span class="n">sink</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><strong>Work on a cadence, declared once and started from any event.</strong> <code class="language-plaintext highlighter-rouge">Every</code> sets the interval, <code class="language-plaintext highlighter-rouge">For</code>
+the duration or the count, and the unit is a trailing call:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">heartbeat</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Pulse</span><span class="p">.</span><span class="nf">Increment</span><span class="p">()).</span><span class="nf">Every</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>
+<span class="kt">var</span> <span class="n">burst</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Flash</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1</span><span class="p">)).</span><span class="nf">Every</span><span class="p">(</span><span class="m">200</span><span class="p">).</span><span class="nf">Milliseconds</span><span class="p">().</span><span class="nf">For</span><span class="p">(</span><span class="m">5</span><span class="p">).</span><span class="nf">Times</span><span class="p">();</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">heartbeat</span><span class="p">.</span><span class="nf">Start</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">TriggerEnter</span><span class="p">(</span><span class="n">burst</span><span class="p">.</span><span class="nf">Start</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p><strong>An action chosen by score.</strong> Each option carries a number expression. Every frame the highest
+score wins and its action runs. <code class="language-plaintext highlighter-rouge">Hold</code> keeps a winner for at least one second, so the character
+does not flip between the two when the scores sit close together. Write to <code class="language-plaintext highlighter-rouge">Food</code> and <code class="language-plaintext highlighter-rouge">Rest</code> from
+anywhere:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Choose</span><span class="p">(</span><span class="s">"needs"</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span>
+    <span class="nf">Option</span><span class="p">(</span><span class="n">Food</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">2</span><span class="p">)),</span>
+    <span class="nf">Option</span><span class="p">(</span><span class="n">Rest</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">6</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">1</span><span class="p">)))</span>
+    <span class="p">.</span><span class="nf">Hold</span><span class="p">(</span><span class="nf">Seconds</span><span class="p">(</span><span class="m">1</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p><strong>One move call, whichever component the object has.</strong> <code class="language-plaintext highlighter-rouge">Motion.MoveBy</code> becomes
+<code class="language-plaintext highlighter-rouge">CharacterController.Move</code> on a character, <code class="language-plaintext highlighter-rouge">Rigidbody.MovePosition</code> on a kinematic body, and a
+transform write on an object with neither. The same line runs on all three:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">0.02</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">InLocalSpace</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p><strong>Pause the game and keep this script running.</strong> A process mode decides which scripts tick while
+the game is paused. The pause menu sets <code class="language-plaintext highlighter-rouge">Always</code>, so its own blocks keep running while every
+pausable script stops:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="n">Always</span><span class="p">);</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">MenuOpen</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Pause</span><span class="p">()).</span><span class="nf">Else</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Resume</span><span class="p">()));</span>
+</code></pre></div></div>
+
+<p><strong>Input per local player, and a viewport per player.</strong> An action is declared by player index and
+name, and read as a condition or a value. A view names which camera rig it renders and which part
+of the screen it covers:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">fire</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">Button</span><span class="p">(</span><span class="s">"Fire"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">move</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">Vector2</span><span class="p">(</span><span class="s">"Move"</span><span class="p">);</span>
+
+<span class="n">When</span><span class="p">.</span><span class="nf">Input</span><span class="p">(</span><span class="n">fire</span><span class="p">).</span><span class="nf">Performed</span><span class="p">(</span><span class="n">Shots</span><span class="p">.</span><span class="nf">Increment</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Direction</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">move</span><span class="p">.</span><span class="n">Value</span><span class="p">));</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span>
+    <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">TopScreen</span><span class="p">).</span><span class="nf">SetViewport</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">),</span>
+    <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">TopScreen</span><span class="p">).</span><span class="nf">SetCamera</span><span class="p">(</span><span class="n">PlayerOneRig</span><span class="p">),</span>
+    <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">BottomScreen</span><span class="p">).</span><span class="nf">SetViewport</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">),</span>
+    <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">BottomScreen</span><span class="p">).</span><span class="nf">SetCamera</span><span class="p">(</span><span class="n">PlayerTwoRig</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><strong>Networking by naming a cadence.</strong> A synchronised variable and a transform channel each say how
+often they are sent. <code class="language-plaintext highlighter-rouge">Score</code> is written and read with the same calls as any other variable, and
+every peer reads the same value:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Score</span> <span class="p">=</span> <span class="n">Var</span><span class="p">.</span><span class="n">DefineSynced</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Score</span><span class="p">),</span> <span class="n">SyncCadence</span><span class="p">.</span><span class="n">OnChange</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+<span class="n">Sync</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="n">SyncCadence</span><span class="p">.</span><span class="n">EveryTick</span><span class="p">);</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Score</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p><strong>Work that takes more than a frame ends in one of four outcomes.</strong> A load, an interactive rebind,
+a scene load and a cloud round trip are each observed through one operation handle, with the same
+four words: <code class="language-plaintext highlighter-rouge">Succeeded</code>, <code class="language-plaintext highlighter-rouge">Failed</code>, <code class="language-plaintext highlighter-rouge">Cancelled</code>, <code class="language-plaintext highlighter-rouge">Finished</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Guard</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
+
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Loading</span><span class="p">),</span> <span class="n">Manned</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Manned</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Finished</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Release</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h2 id="one-line-from-each-feature">One line from each feature</h2>
+
+<p>Every line below is a complete statement inside <code class="language-plaintext highlighter-rouge">Build()</code>, given the variables, handles and declared
+assets it names. The manual has one page per group.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Values</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Charge</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span> <span class="p">*</span> <span class="m">2</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Charge</span> <span class="p">&lt;</span> <span class="m">5</span> <span class="p">&amp;</span> <span class="n">Armed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Powered</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Var</span><span class="p">(</span><span class="n">Charge</span><span class="p">).</span><span class="nf">Changed</span><span class="p">(</span><span class="n">Alarm</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<span class="n">TeamScore</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">TeamScore</span><span class="p">),</span> <span class="m">0</span><span class="p">).</span><span class="nf">Shared</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">ForEach</span><span class="p">(</span><span class="n">Slots</span><span class="p">).</span><span class="nf">Do</span><span class="p">(</span><span class="n">item</span> <span class="p">=&gt;</span> <span class="n">Total</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">item</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Random</span><span class="p">.</span><span class="nf">Number</span><span class="p">().</span><span class="nf">From</span><span class="p">(</span><span class="n">loot</span><span class="p">).</span><span class="nf">In</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Roll</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">LateUpdate</span><span class="p">(</span><span class="n">Readout</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Text</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">"{0:1} s"</span><span class="p">,</span> <span class="n">Age</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Ratio</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="nf">Clamp</span><span class="p">(</span><span class="n">Charge</span> <span class="p">/</span> <span class="m">10</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">)));</span>
+
+<span class="c1">// Running blocks</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">100</span><span class="p">),</span> <span class="n">Powered</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">TriggerEnter</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="nf">HasTag</span><span class="p">(</span><span class="s">"Spike"</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Hits</span><span class="p">.</span><span class="nf">Increment</span><span class="p">()));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Run</span><span class="p">(</span><span class="n">Pulse</span><span class="p">.</span><span class="nf">Increment</span><span class="p">()).</span><span class="nf">Every</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">().</span><span class="nf">Start</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Patrol"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">walkOut</span><span class="p">,</span> <span class="n">walkBack</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Doors"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="nf">InParallel</span><span class="p">(</span><span class="n">openLeft</span><span class="p">,</span> <span class="n">openRight</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Choose</span><span class="p">(</span><span class="s">"ai"</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span><span class="nf">Option</span><span class="p">(</span><span class="n">Food</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">eat</span><span class="p">),</span> <span class="nf">Option</span><span class="p">(</span><span class="n">Rest</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">nap</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">MenuOpen</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Pause</span><span class="p">()).</span><span class="nf">Else</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Resume</span><span class="p">()));</span>
+<span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="n">Always</span><span class="p">);</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">"Cutscene"</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Input</span> <span class="p">|</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Camera</span><span class="p">));</span>
+
+<span class="c1">// Moving objects</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">RotateBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">90</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">2</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">AddForce</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">12</span><span class="p">).</span><span class="nf">InLocalSpace</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">TeleportTo</span><span class="p">(</span><span class="n">Landing</span><span class="p">).</span><span class="nf">WithRotation</span><span class="p">(</span><span class="n">Facing</span><span class="p">));</span>
+
+<span class="c1">// Players</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Input</span><span class="p">(</span><span class="n">fire</span><span class="p">).</span><span class="nf">Performed</span><span class="p">(</span><span class="n">Shots</span><span class="p">.</span><span class="nf">Increment</span><span class="p">());</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">UI</span><span class="p">(</span><span class="n">rebind</span><span class="p">).</span><span class="nf">Activated</span><span class="p">(</span><span class="n">fire</span><span class="p">.</span><span class="nf">Rebind</span><span class="p">().</span><span class="nf">As</span><span class="p">(</span><span class="n">Rebinding</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">Cursor</span><span class="p">.</span><span class="nf">Lock</span><span class="p">(),</span> <span class="n">Input</span><span class="p">.</span><span class="n">Cursor</span><span class="p">.</span><span class="nf">Hide</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">).</span><span class="nf">Follow</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Screen</span><span class="p">).</span><span class="nf">SetViewport</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">));</span>
+<span class="n">Panel</span><span class="p">.</span><span class="nf">Label</span><span class="p">(</span><span class="s">"health"</span><span class="p">).</span><span class="nf">BindText</span><span class="p">(</span><span class="n">Text</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">"{0}% HP"</span><span class="p">,</span> <span class="n">Health</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">UI</span><span class="p">(</span><span class="n">start</span><span class="p">).</span><span class="nf">Activated</span><span class="p">(</span><span class="n">StartRequested</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+
+<span class="c1">// Content</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Guard</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">TriggerEnter</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Shell</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vec3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">()));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Animator</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="s">"Speed"</span><span class="p">).</span><span class="nf">Set</span><span class="p">(</span><span class="n">Speed</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="n">Audio</span><span class="p">.</span><span class="nf">PlayOneShot</span><span class="p">(</span><span class="n">BreakClip</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Input</span><span class="p">(</span><span class="n">fire</span><span class="p">).</span><span class="nf">Performed</span><span class="p">(</span><span class="n">Particles</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">MuzzleFlash</span><span class="p">).</span><span class="nf">Emit</span><span class="p">(</span><span class="m">12</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Scene</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Vault</span><span class="p">).</span><span class="nf">Additive</span><span class="p">().</span><span class="nf">As</span><span class="p">(</span><span class="n">LoadingVault</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">SceneLoaded</span><span class="p">(</span><span class="n">Vault</span><span class="p">).</span><span class="nf">Do</span><span class="p">(</span><span class="n">VaultReady</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+
+<span class="c1">// Peers and the cloud</span>
+<span class="n">Score</span> <span class="p">=</span> <span class="n">Var</span><span class="p">.</span><span class="n">DefineSynced</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Score</span><span class="p">),</span> <span class="n">SyncCadence</span><span class="p">.</span><span class="n">OnChange</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+<span class="n">Sync</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="n">SyncCadence</span><span class="p">.</span><span class="n">EveryTick</span><span class="p">);</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Score</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Ping"</span><span class="p">,</span> <span class="n">Pings</span><span class="p">.</span><span class="nf">Increment</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(!</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">Send</span><span class="p">.</span><span class="nf">ToAuthority</span><span class="p">(</span><span class="s">"Ping"</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Cloud</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">).</span><span class="nf">Loaded</span><span class="p">(</span><span class="n">Score</span><span class="p">,</span> <span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Loaded."</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h2 id="what-lunyscript-is-and-is-not">What LunyScript is, and is not</h2>
+
+<p>A <code class="language-plaintext highlighter-rouge">Script</code> is a plain C# class. It is not a <code class="language-plaintext highlighter-rouge">ScriptableObject</code> and not a <code class="language-plaintext highlighter-rouge">MonoBehaviour</code>. The
+<code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component is the one object that connects a GameObject to a script type.</p>
+
+<p>LunyScript has no visual authoring surface: no node graph, no flowchart editor, and no way of
+composing a script by dragging instead of writing C#. The visual surface it commits to is the
+runtime debugger, which observes a running script and changes its state from the outside while the
+game runs.</p>
+
+<p>v1 targets Unity 6.7 LTS, desktop and web, four local split-screen players as the design point and
+sixteen networked players as the high-end target.</p>
 
 <h2 id="documentation">Documentation</h2>
 

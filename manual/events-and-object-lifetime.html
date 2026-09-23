@@ -71,26 +71,8 @@
 </code></pre></div></div>
 
 <p>Add the component, give the spike a <code class="language-plaintext highlighter-rouge">Spike</code> tag and a trigger collider, and put a <code class="language-plaintext highlighter-rouge">Rigidbody</code> on
-the spike or on this object. The object loses ten health each time it enters that trigger.</p>
-
-<p>Ordinary Unity C# for the same contact:</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-
-<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Hazard</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-    <span class="k">private</span> <span class="kt">double</span> <span class="n">health</span> <span class="p">=</span> <span class="m">100</span><span class="p">;</span>
-
-    <span class="k">private</span> <span class="k">void</span> <span class="nf">OnTriggerEnter</span><span class="p">(</span><span class="n">Collider</span> <span class="n">other</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="nf">CompareTag</span><span class="p">(</span><span class="s">"Spike"</span><span class="p">))</span>
-            <span class="n">health</span> <span class="p">-=</span> <span class="m">10</span><span class="p">;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">Other.HasTag</code> calls <code class="language-plaintext highlighter-rouge">CompareTag</code> on the other collider. Both scripts subtract 10 when that tag is
-<code class="language-plaintext highlighter-rouge">Spike</code>. The <code class="language-plaintext highlighter-rouge">Rigidbody</code> is Unity’s contact rule. Neither script creates it.</p>
+the spike or on this object. The object loses ten health each time it enters that trigger. The
+<code class="language-plaintext highlighter-rouge">Rigidbody</code> is Unity’s rule for a trigger contact; the script does not create it.</p>
 
 <h2 id="what-on-does">What <code class="language-plaintext highlighter-rouge">On</code> does</h2>
 

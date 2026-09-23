@@ -75,25 +75,9 @@ writes the declaration, and every object assigned to <code class="language-plain
 read by the compiler. It is not a field on the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component. That component’s
 Inspector fields are the script, the declared assets, and the process mode.</p>
 
-<p>Ordinary Unity C# for the same drain:</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-
-<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Battery</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-    <span class="k">private</span> <span class="kt">double</span> <span class="n">charge</span> <span class="p">=</span> <span class="m">40</span><span class="p">;</span>
-
-    <span class="k">private</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span> <span class="p">=&gt;</span>
-        <span class="n">charge</span> <span class="p">-=</span> <span class="n">Time</span><span class="p">.</span><span class="n">deltaTime</span> <span class="p">*</span> <span class="m">2</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">Number</code> is a <code class="language-plaintext highlighter-rouge">double</code>, so the C# field is a <code class="language-plaintext highlighter-rouge">double</code>. <code class="language-plaintext highlighter-rouge">Time.deltaTime</code> is a <code class="language-plaintext highlighter-rouge">float</code>, and the
-subtraction widens it. Both scripts subtract two times the scaled frame length. Battery sets no
-process mode, so the type default is Inherit, which is Pausable when no parent script names a mode.
-The block then runs while the runner is running and does not run while the runner is paused. A parent
-script that sets another mode is followed. The C# <code class="language-plaintext highlighter-rouge">Update</code> still runs while <code class="language-plaintext highlighter-rouge">timeScale</code> is 0 and adds
-0, because <code class="language-plaintext highlighter-rouge">deltaTime</code> is 0.</p>
+<p><code class="language-plaintext highlighter-rouge">Time.Delta</code> is the scaled frame length, so the drain stops while the game is paused. Battery sets
+no process mode, so it is <code class="language-plaintext highlighter-rouge">Pausable</code> unless a parent script names another mode;
+<a href="/LunyScript-Docs/manual/time-and-pausing.html">Time, pausing and gates</a> covers the modes.</p>
 
 <h2 id="what-a-variable-is">What a variable is</h2>
 
