@@ -1203,6 +1203,87 @@ still move the body.</p>
 
   <a id="CodeSmile_LunyScript_MotionFactory_TeleportTo_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo*"></a>
 
+  <h3 id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_AssetInput_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo(CodeSmile.LunyScript.AssetInput,System.String,System.Int32)">
+  TeleportTo(AssetInput, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L383"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Places the object at a landmark's world position: an object in the scene that the
+script declared as an asset input. The landmark's position is sampled each time the block
+runs. Dynamic bodies also clear both velocities. Position only unless <code>WithRotation</code> is
+written.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionTeleportBuilder TeleportTo(AssetInput landmark, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.AssetInput.html">AssetInput</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>landmark</code></dt></td>
+    <td style="width: 99%"><dd><p>A declared input holding an object in the scene, such as
+<code>[Asset] public Asset&lt;GameObject&gt; Pad</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionTeleportBuilder.html">MotionTeleportBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>WithRotation</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_AssetInput_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.TeleportTo(Pad).WithRotation(Pad));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_AssetInput_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>A landmark that is destroyed, in no loaded scene, or inactive when the block runs
+is reported once and the teleport is ignored. An unassigned input holds the inactive asset
+placeholder, so it is reported the same way.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">landmark</code> was never declared,
+was declared by another script's <code>Build()</code>, or is declared as a type that is not
+<code>GameObject</code> or a component, or this surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_MotionFactory_TeleportTo_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo*"></a>
+
   <h3 id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   TeleportTo(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/MotionFactory.cs/#L353"><i class="bi bi-code-slash"></i></a>
