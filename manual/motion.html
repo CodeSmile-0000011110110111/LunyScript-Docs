@@ -117,8 +117,10 @@ is queued for a later step.</p>
 <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">0.02</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">InWorldSpace</span><span class="p">();</span>
 <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">Pad</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>        <span class="c1">// world units per second</span>
 <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>   <span class="c1">// or Milliseconds, Minutes</span>
+<span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">().</span><span class="nf">Ease</span><span class="p">(</span><span class="n">Easing</span><span class="p">.</span><span class="n">InOutSine</span><span class="p">);</span>
 <span class="n">Motion</span><span class="p">.</span><span class="nf">RotateTo</span><span class="p">(</span><span class="n">Facing</span><span class="p">).</span><span class="nf">DegreesPerSecond</span><span class="p">(</span><span class="m">90</span><span class="p">);</span>
 <span class="n">Motion</span><span class="p">.</span><span class="nf">RotateTo</span><span class="p">(</span><span class="n">Facing</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>
+<span class="n">Motion</span><span class="p">.</span><span class="nf">RotateTo</span><span class="p">(</span><span class="n">Facing</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">().</span><span class="nf">Ease</span><span class="p">(</span><span class="n">Easing</span><span class="p">.</span><span class="n">OutBack</span><span class="p">);</span>
 <span class="n">Motion</span><span class="p">.</span><span class="nf">FaceTowards</span><span class="p">(</span><span class="n">Pad</span><span class="p">).</span><span class="nf">DegreesPerSecond</span><span class="p">(</span><span class="m">90</span><span class="p">);</span>
 <span class="n">Motion</span><span class="p">.</span><span class="nf">FaceTowards</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">DegreesPerSecond</span><span class="p">(</span><span class="m">180</span><span class="p">);</span>
 </code></pre></div></div>
@@ -129,6 +131,13 @@ is queued for a later step.</p>
 build. <code class="language-plaintext highlighter-rouge">FaceTowards</code> turns towards a world point at a fixed rate and keeps facing it for as long as
 the block keeps running; it uses world up, and a target that coincides with the object writes
 nothing.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Ease</code> follows a timed move only, after the unit, and takes one of the 31 named curves in
+<code class="language-plaintext highlighter-rouge">Easing</code>: <code class="language-plaintext highlighter-rouge">Linear</code>, and <code class="language-plaintext highlighter-rouge">In</code>, <code class="language-plaintext highlighter-rouge">Out</code> and <code class="language-plaintext highlighter-rouge">InOut</code> of Sine, Quad, Cubic, Quart, Quint, Expo, Circ,
+Back, Elastic and Bounce. The curve decides where along the path the object is at each point of the
+duration, and every curve ends on the destination. Back, Elastic and Bounce leave the straight path
+on purpose: <code class="language-plaintext highlighter-rouge">OutBack</code> goes past the destination and returns, and <code class="language-plaintext highlighter-rouge">OutBounce</code> reaches it and bounces
+back short of it three times. A move at <code class="language-plaintext highlighter-rouge">AtSpeed</code> or a turn at <code class="language-plaintext highlighter-rouge">DegreesPerSecond</code> takes no <code class="language-plaintext highlighter-rouge">Ease</code>.</p>
 
 <p>A kinematic Rigidbody must run these in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>. A CharacterController and an object with
 neither component accept them from any event.</p>
@@ -152,6 +161,7 @@ rather than a force-mode parameter on <code class="language-plaintext highlighte
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Motion</span><span class="p">.</span><span class="nf">TeleportTo</span><span class="p">(</span><span class="n">Landing</span><span class="p">);</span>
 <span class="n">Motion</span><span class="p">.</span><span class="nf">TeleportTo</span><span class="p">(</span><span class="n">Landing</span><span class="p">).</span><span class="nf">WithRotation</span><span class="p">(</span><span class="n">Facing</span><span class="p">);</span>
 <span class="n">Motion</span><span class="p">.</span><span class="nf">TeleportTo</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+<span class="n">Motion</span><span class="p">.</span><span class="nf">TeleportTo</span><span class="p">(</span><span class="n">Beacon</span><span class="p">).</span><span class="nf">WithRotation</span><span class="p">(</span><span class="n">Beacon</span><span class="p">);</span>
 
 <span class="n">Drift</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Body</span><span class="p">.</span><span class="n">PositionDelta</span><span class="p">);</span>
 </code></pre></div></div>
@@ -159,6 +169,12 @@ rather than a force-mode parameter on <code class="language-plaintext highlighte
 <p><code class="language-plaintext highlighter-rouge">TeleportTo</code> also clears both velocities on a dynamic body, and writes the pose on a kinematic one.
 Omit <code class="language-plaintext highlighter-rouge">WithRotation</code> and the current orientation is kept. A Rigidbody teleport must run in
 <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>; a CharacterController or an object with no body may run it from any event.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Beacon</code> above is a landmark: an object in the scene, declared as
+<code class="language-plaintext highlighter-rouge">[Asset] public Asset&lt;GameObject&gt; Beacon { get; private set; }</code> and assigned in the Inspector. Its
+world position, and with <code class="language-plaintext highlighter-rouge">WithRotation(Beacon)</code> its world rotation, are read each time the teleport
+runs. A landmark that was destroyed, is not in a loaded scene, or is inactive is reported once and
+the teleport does nothing.</p>
 
 <p><code class="language-plaintext highlighter-rouge">Body.PositionDelta</code> is the world position after the previous physics step minus the world position
 at the step before that, as a <code class="language-plaintext highlighter-rouge">Vec3</code>. The first reading after a spawn is zero. Reading it anywhere in
