@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Class ScriptBuildContext | LunyScript API Reference ">
       
-      <meta name="description" content="The state one Build() accumulates: the slots its variables declared and the blocks its event registrations produced. Exists for the duration of one build and is then turned into an immutable .">
+      <meta name="description" content="The build-time half of the collection try grammar: declared results, the tries this build created, and the checks that run when Build() finishes.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -85,9 +85,8 @@ Class ScriptBuildContext  <a class="header-action link-secondary" title="View so
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>The state one <code>Build()</code> accumulates: the slots its variables declared and the blocks its
-event registrations produced. Exists for the duration of one build and is then turned into an
-immutable <a class="xref" href="CodeSmile.LunyScript.ScriptProgram.html">ScriptProgram</a>.</p>
+  <div class="markdown summary"><p>The build-time half of the collection try grammar: declared results, the tries this build
+created, and the checks that run when <code>Build()</code> finishes.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -118,10 +117,10 @@ immutable <a class="xref" href="CodeSmile.LunyScript.ScriptProgram.html">ScriptP
 
 
   <h2 id="CodeSmile_LunyScript_ScriptBuildContext_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>Everything here allocates, and that is correct: a build runs once per script type at launch,
-never per object and never per frame. Calls made while <code>Build()</code> runs construct that
-shared program; the blocks they return execute later, per event and per Script instance.
-AGENTS.md rule 21 and rule 43.</p>
+  <div class="markdown level0 remarks"><p>Typestate refuses a wrong input kind and an unfinished chain where it is written. It cannot
+refuse a copied builder or prove where a block ends up, so three rules are checked here: a
+try has one consumer, the block its consumer returns is placed exactly once, and a result
+has exactly one producer. All of this runs once per script type; nothing here runs per frame.</p>
 </div>
 
 

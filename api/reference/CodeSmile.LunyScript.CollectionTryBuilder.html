@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct CollectionTryBuilder | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct CollectionTryBuilder | LunyScript API Reference ">
+      
+      <meta name="description" content="What Slots.TryAdd(item) returns: one synchronous collection call whose own outcome is read. It has two consumers and takes exactly one of them: If(Slots.TryAdd(item)) branches on the outcome, and  stores it in a .">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_CollectionTryBuilder.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.CollectionTryBuilder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.CollectionTryBuilder">
+
+
+
+  <h1 id="CodeSmile_LunyScript_CollectionTryBuilder" data-uid="CodeSmile.LunyScript.CollectionTryBuilder" class="text-break">
+Struct CollectionTryBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/CollectionTryBuilder.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>What <code>Slots.TryAdd(item)</code> returns: one synchronous collection call whose own outcome is
+read. It has two consumers and takes exactly one of them: <code>If(Slots.TryAdd(item))</code>
+branches on the outcome, and <a class="xref" href="CodeSmile.LunyScript.CollectionTryBuilder.html#CodeSmile_LunyScript_CollectionTryBuilder_As_CodeSmile_LunyScript_CollectionResult_System_String_System_Int32_">As(CollectionResult, string, int)</a> stores it in a <a class="xref" href="CodeSmile.LunyScript.CollectionResult.html">CollectionResult</a>.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct CollectionTryBuilder</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyScript_CollectionTryBuilder_examples">Examples</h2>
+  <pre><code class="lang-csharp">On.Ready(If(Slots.TryAdd(item)).Then(Hits.Add(1.0)).Else(ShowFull.Set(true)));
+On.Ready(Slots.TryAdd(item).As(Added), If(Added).Then(Hits.Add(1.0)));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_CollectionTryBuilder_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>Nothing runs while <code>Build()</code> runs.</b> The block the consumer produces evaluates the
+item once and performs the mutation once each time it executes, and the outcome it reads is
+the Boolean that one call returned. It is never inferred from the collection-wide
+<code>Failed()</code> flag, which the call still updates the way every collection call does.</p>
+<p>
+    The try is restricted on purpose. There is no conversion to a block and no condition
+    operator on this type, so it cannot be placed in an event list on its own or combined
+    with <code>&amp;</code>, <code>|</code> or <code>!</code>, where a condition could be evaluated more than
+    once or not at all. A refusal writes no log, because the branch or the bound result is
+    where the script handles it.
+</p>
+<p>
+    What the compiler cannot see is checked when <code>Build()</code> finishes: a try that is
+    never consumed, a try consumed twice, a consumer whose block is placed more than once or
+    nowhere, and a result that has no producer or two. Each is refused naming the line.
+</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_CollectionTryBuilder_As_" data-uid="CodeSmile.LunyScript.CollectionTryBuilder.As*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CollectionTryBuilder_As_CodeSmile_LunyScript_CollectionResult_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CollectionTryBuilder.As(CodeSmile.LunyScript.CollectionResult,System.String,System.Int32)">
+  As(CollectionResult, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/CollectionTryBuilder.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Binds this call's outcome to a declared result. The block this returns performs the
+call each time it runs and then stores Succeeded or Failed in <code class="paramref">result</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block As(CollectionResult result, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.CollectionResult.html">CollectionResult</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>result</code></dt></td>
+    <td style="width: 99%"><dd><p>The handle <code>CollectionResult.Define</code> returned. One result has
+one producer.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in one event list, once.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CollectionTryBuilder_As_CodeSmile_LunyScript_CollectionResult_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Slots.TryAdd(item).As(Added), If(Added).Then(Hits.Add(1.0)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This builder is a <code>default</code>, it was already
+consumed, <code class="paramref">result</code> was never declared or belongs to another script, or
+another call already produces <code class="paramref">result</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/CollectionTryBuilder.cs/#L35" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

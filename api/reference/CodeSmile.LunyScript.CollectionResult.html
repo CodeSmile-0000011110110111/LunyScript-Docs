@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct CollectionResult | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct CollectionResult | LunyScript API Reference ">
+      
+      <meta name="description" content="The read-only, named outcome of one synchronous collection call. Declared with CollectionResult.Define(nameof(X)) inside Build() and produced by exactly one Slots.TryAdd(item).As(X). Used as a condition, it stands for .">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_CollectionResult.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.CollectionResult%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.CollectionResult">
+
+
+
+  <h1 id="CodeSmile_LunyScript_CollectionResult" data-uid="CodeSmile.LunyScript.CollectionResult" class="text-break">
+Struct CollectionResult  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/CollectionResult.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The read-only, named outcome of one synchronous collection call. Declared with
+<code>CollectionResult.Define(nameof(X))</code> inside <code>Build()</code> and produced by exactly one
+<code>Slots.TryAdd(item).As(X)</code>. Used as a condition, it stands for <a class="xref" href="CodeSmile.LunyScript.CollectionResult.html#CodeSmile_LunyScript_CollectionResult_Succeeded">Succeeded</a>.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct CollectionResult</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyScript_CollectionResult_examples">Examples</h2>
+  <pre><code class="lang-csharp">public CollectionResult Added { get; private set; }
+
+// Inside Build():
+Added = CollectionResult.Define(nameof(Added));
+On.Ready(
+    Slots.TryAdd(item).As(Added),
+    If(Added).Then(Hits.Add(1.0)));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_CollectionResult_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>It starts not-run</b>, with <a class="xref" href="CodeSmile.LunyScript.CollectionResult.html#CodeSmile_LunyScript_CollectionResult_Succeeded">Succeeded</a> and <a class="xref" href="CodeSmile.LunyScript.CollectionResult.html#CodeSmile_LunyScript_CollectionResult_Failed">Failed</a> both false.
+Each time the bound call runs, it stores that call's own outcome, which the result keeps
+across frames until the bound call runs again. Every object running the script has its own
+result, and a pooled object that is reused starts not-run again. Reading the result performs
+no collection call, so a read placed before the bound call in the same event sees the
+previous outcome. A loop that runs the bound call leaves its last outcome; a loop that never
+runs it leaves the outcome it had before.</p>
+<p>
+    This is a synchronous result, which is a different category from
+    <a class="xref" href="CodeSmile.LunyScript.Operation.html">Operation</a>: the call has finished when the block that runs it returns, so
+    there is no pending state, no deadline, no generation and no <code>When.*</code> watch.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_CollectionResult_Failed_" data-uid="CodeSmile.LunyScript.CollectionResult.Failed*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CollectionResult_Failed" data-uid="CodeSmile.LunyScript.CollectionResult.Failed">
+  Failed
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/CollectionResult.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True when the latest run of the bound call was refused and left the collection
+unchanged. False before the bound call has run.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Failed { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CollectionResult_Failed_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Added.Failed).Then(ShowFull.Set(true)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The handle is one <code>Build()</code> never assigned,
+or it belongs to another script.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_CollectionResult_IsDeclared_" data-uid="CodeSmile.LunyScript.CollectionResult.IsDeclared*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CollectionResult_IsDeclared" data-uid="CodeSmile.LunyScript.CollectionResult.IsDeclared">
+  IsDeclared
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/CollectionResult.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>False for a handle <code>Build()</code> never assigned.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsDeclared { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CollectionResult_IsDeclared_examples">Examples</h4>
+  <pre><code class="lang-csharp">var declared = Added.IsDeclared;   // true after CollectionResult.Define</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_CollectionResult_Name_" data-uid="CodeSmile.LunyScript.CollectionResult.Name*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CollectionResult_Name" data-uid="CodeSmile.LunyScript.CollectionResult.Name">
+  Name
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/CollectionResult.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The name the script declared.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Name { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CollectionResult_Name_examples">Examples</h4>
+  <pre><code class="lang-csharp">var label = Added.Name;   // "Added"</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_CollectionResult_Succeeded_" data-uid="CodeSmile.LunyScript.CollectionResult.Succeeded*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CollectionResult_Succeeded" data-uid="CodeSmile.LunyScript.CollectionResult.Succeeded">
+  Succeeded
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/CollectionResult.cs/#L66"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True when the latest run of the bound call changed the collection. False before
+the bound call has run.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Succeeded { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CollectionResult_Succeeded_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Added.Succeeded).Then(Hits.Add(1.0)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The handle is one <code>Build()</code> never assigned,
+or it belongs to another script.</p>
+</dd>
+  </dl>
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_CollectionResult_ToString_" data-uid="CodeSmile.LunyScript.CollectionResult.ToString*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CollectionResult_ToString" data-uid="CodeSmile.LunyScript.CollectionResult.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/CollectionResult.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The name, for a diagnostic.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>For example: &quot;Added&quot;.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_CollectionResult_op_Implicit_" data-uid="CodeSmile.LunyScript.CollectionResult.op_Implicit*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CollectionResult_op_Implicit_CodeSmile_LunyScript_CollectionResult__CodeSmile_LunyScript_ConditionBlock" data-uid="CodeSmile.LunyScript.CollectionResult.op_Implicit(CodeSmile.LunyScript.CollectionResult)~CodeSmile.LunyScript.ConditionBlock">
+  implicit operator ConditionBlock(CollectionResult)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/CollectionResult.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads the result as its <a class="xref" href="CodeSmile.LunyScript.CollectionResult.html#CodeSmile_LunyScript_CollectionResult_Succeeded">Succeeded</a> condition, so <code>If(Added)</code>
+branches on the latest outcome of the bound call.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static implicit operator ConditionBlock(CollectionResult result)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.CollectionResult.html">CollectionResult</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>result</code></dt></td>
+    <td style="width: 99%"><dd><p>The declared result.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>The <a class="xref" href="CodeSmile.LunyScript.CollectionResult.html#CodeSmile_LunyScript_CollectionResult_Succeeded">Succeeded</a> condition of <code class="paramref">result</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CollectionResult_op_Implicit_CodeSmile_LunyScript_CollectionResult__CodeSmile_LunyScript_ConditionBlock_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Slots.TryAdd(item).As(Added), If(Added).Then(Hits.Add(1.0)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The handle is one <code>Build()</code> never assigned,
+or it belongs to another script.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/CollectionResult.cs/#L35" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
