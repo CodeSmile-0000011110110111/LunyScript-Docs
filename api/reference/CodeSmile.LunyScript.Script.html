@@ -818,6 +818,55 @@ probed. A scene-free editor host reports once and writes nothing.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_Script_Scene_" data-uid="CodeSmile.LunyScript.Script.Scene*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Script_Scene" data-uid="CodeSmile.LunyScript.Script.Scene">
+  Scene
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L244"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Loads and unloads Unity scenes named by a typed <a class="xref" href="CodeSmile.LunyScript.SceneReference.html">SceneReference</a>, each
+as an operation attempt. It hides <code>UnityEngine.SceneManagement.SceneManager</code> inside a
+<code>Script</code> the same way <code>Transform</code> hides <code>UnityEngine.Transform</code>. Available
+only inside <code>Build()</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">protected SceneFactory Scene { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SceneFactory.html">SceneFactory</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Script_Scene_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Scene.Load(Vault).Additive().As(LoadingVault));
+When.SceneLoaded(Vault).Do(VaultReady.Set(true));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Script_Scene_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Runtime-only. A replacement load releases every loaded scene; an additive load
+releases none. <code>docs/proposals/scene-flow.md</code> is the family.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_Script_Sync_" data-uid="CodeSmile.LunyScript.Script.Sync*"></a>
 
   <h3 id="CodeSmile_LunyScript_Script_Sync" data-uid="CodeSmile.LunyScript.Script.Sync">
@@ -995,7 +1044,7 @@ once.</p>
 
   <h3 id="CodeSmile_LunyScript_Script_SetProcessMode_CodeSmile_LunyScript_Process_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Script.SetProcessMode(CodeSmile.LunyScript.Process,System.String,System.Int32)">
   SetProcessMode(Process, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L243"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L258"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Sets this script type's default process mode. Inherit, the default, walks the

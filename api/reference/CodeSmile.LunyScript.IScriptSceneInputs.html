@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Struct NumberBindBuilder | LunyScript API Reference </title>
+      <title>Interface IScriptSceneInputs | LunyScript API Reference </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Struct NumberBindBuilder | LunyScript API Reference ">
+      <meta name="title" content="Interface IScriptSceneInputs | LunyScript API Reference ">
       
-      <meta name="description" content="What Bind.Number returns. It converts to no handle; Shared is required.">
+      <meta name="description" content="The part of a host that carries the scenes an author assigned to one object&#39;s scene inputs, so that two objects running the same script can name different scenes.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_NumberBindBuilder.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.NumberBindBuilder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_IScriptSceneInputs.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.IScriptSceneInputs%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -72,12 +72,12 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="CodeSmile.LunyScript.NumberBindBuilder">
+        <article data-uid="CodeSmile.LunyScript.IScriptSceneInputs">
 
 
 
-  <h1 id="CodeSmile_LunyScript_NumberBindBuilder" data-uid="CodeSmile.LunyScript.NumberBindBuilder" class="text-break">
-Struct NumberBindBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/BindFactory.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  <h1 id="CodeSmile_LunyScript_IScriptSceneInputs" data-uid="CodeSmile.LunyScript.IScriptSceneInputs" class="text-break">
+Interface IScriptSceneInputs  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptSceneInputs.cs/#L24"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,13 +85,13 @@ Struct NumberBindBuilder  <a class="header-action link-secondary" title="View so
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>What <code>Bind.Number</code> returns. It converts to no handle; <code>Shared</code> is
-required.</p>
+  <div class="markdown summary"><p>The part of a host that carries the scenes an author assigned to one object's scene inputs,
+so that two objects running the same script can name different scenes.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly struct NumberBindBuilder</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IScriptSceneInputs</code></pre>
   </div>
 
 
@@ -108,62 +108,40 @@ required.</p>
 
 
 
+  <h2 id="CodeSmile_LunyScript_IScriptSceneInputs_examples">Examples</h2>
+  <pre><code class="lang-csharp">var path = (host as IScriptSceneInputs)?.AssignedScenePath(nameof(MenuScript.Arena));</code></pre>
 
+
+  <h2 id="CodeSmile_LunyScript_IScriptSceneInputs_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>A second interface for the reason <a class="xref" href="CodeSmile.LunyScript.IScriptAssetInputs.html">IScriptAssetInputs</a> is one: a host that
+carries no assignments answers nothing to every name. A host that does not implement it
+leaves every scene input unassigned, which is reported once per script type and makes a load
+of that input fail as <code>NotFound</code>.</p>
+<p>
+    <b>A scene is answered by its asset path</b>, because a scene asset is an Editor type
+    that a built player does not carry; the path is what Unity loads a scene by.
+</p>
+</div>
 
 
   <h2 class="section" id="methods">Methods
 </h2>
 
 
-  <a id="CodeSmile_LunyScript_NumberBindBuilder_Shared_" data-uid="CodeSmile.LunyScript.NumberBindBuilder.Shared*"></a>
+  <a id="CodeSmile_LunyScript_IScriptSceneInputs_AssignedScenePath_" data-uid="CodeSmile.LunyScript.IScriptSceneInputs.AssignedScenePath*"></a>
 
-  <h3 id="CodeSmile_LunyScript_NumberBindBuilder_Shared" data-uid="CodeSmile.LunyScript.NumberBindBuilder.Shared">
-  Shared()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/BindFactory.cs/#L226"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_IScriptSceneInputs_AssignedScenePath_System_String_" data-uid="CodeSmile.LunyScript.IScriptSceneInputs.AssignedScenePath(System.String)">
+  AssignedScenePath(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptSceneInputs.cs/#L32"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Binds this number on the default shared store.</p>
+  <div class="markdown level1 summary"><p>The scene asset path this object stored under one declared scene input, or null
+when it stores none.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Var&lt;Number&gt; Shared()</code></pre>
-  </div>
-
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a>&gt;</dt>
-    <dd><p>The handle. Writes reuse <code>Set</code> and <code>Add</code>.</p>
-</dd>
-  </dl>
-
-
-
-
-
-
-  <h4 class="section" id="CodeSmile_LunyScript_NumberBindBuilder_Shared_examples">Examples</h4>
-  <pre><code class="lang-csharp">TeamScore = Bind.Number(nameof(TeamScore)).Shared();</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_LunyScript_NumberBindBuilder_Shared_" data-uid="CodeSmile.LunyScript.NumberBindBuilder.Shared*"></a>
-
-  <h3 id="CodeSmile_LunyScript_NumberBindBuilder_Shared_CodeSmile_LunyScript_SharedStore_" data-uid="CodeSmile.LunyScript.NumberBindBuilder.Shared(CodeSmile.LunyScript.SharedStore)">
-  Shared(SharedStore)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/BindFactory.cs/#L231"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Binds this number on a named shared store.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Var&lt;Number&gt; Shared(SharedStore store)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">string AssignedScenePath(string declaredName)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -175,9 +153,9 @@ required.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.SharedStore.html">SharedStore</a></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>store</code></dt></td>
-    <td style="width: 99%"><dd><p>The store identity.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>declaredName</code></dt></td>
+    <td style="width: 99%"><dd><p>The input's declared name.</p>
 </dd></td>
   </tr>
   </dl>
@@ -185,8 +163,8 @@ required.</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a>&gt;</dt>
-    <dd><p>The handle.</p>
+    <dt><span class="xref">string</span></dt>
+    <dd><p>The path, for example &quot;Assets/Scenes/Arena.unity&quot;, or null.</p>
 </dd>
   </dl>
 
@@ -196,6 +174,10 @@ required.</p>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_IScriptSceneInputs_AssignedScenePath_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Called once per declared scene input when the object spawns, and never
+afterwards.</p>
+</div>
 
 
 
@@ -204,7 +186,7 @@ required.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/BindFactory.cs/#L208" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptSceneInputs.cs/#L24" class="edit-link">Edit this page</a>
         </div>
 
 

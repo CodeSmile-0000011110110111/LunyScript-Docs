@@ -284,6 +284,13 @@ sends arrive in the other's queues.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.FakeSceneProvider.html">FakeSceneProvider</a></dt>
+      <dd><p>An in-memory scene backend: a list of scene paths that count as in the build, a list of
+loaded scene instances, and loads and unloads that complete when the gateway ticks or when a
+test says so. It reports the native Loaded and Unloaded phases the way Unity's callbacks do.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.FileCloudSaveProvider.html">FileCloudSaveProvider</a></dt>
       <dd><p>The file-based Cloud Save provider: one file per key, under a directory the caller names.
 <b>A first-class part of the product, not a test fixture</b>; AGENTS.md rule 52. It is how
@@ -423,6 +430,27 @@ never name <code>UnityEngine.Resources</code>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SceneGateway.html">SceneGateway</a></dt>
+      <dd><p>Owns in-flight <code>Scene.Load</code> and <code>Scene.Unload</code> attempts, the scene identities the
+runner's scripts declared, and one counter per identity and phase that the
+<code>When.Scene*</code> watches read. One per <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html">ScriptRunner</a>. Script code never sees
+a <code>Task</code>, an <code>AsyncOperation</code> or an exception type; AGENTS.md rules 50 and 51.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SceneLoadBlock.html">SceneLoadBlock</a></dt>
+      <dd><p>What <code>Scene.Load(scene).As(handle)</code> and <code>Scene.Load(scene).Additive().As(handle)</code>
+build: starts one scene load bound to an operation handle. The handle succeeds when the
+destination is loaded and active, and fails with a classified reason otherwise.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SceneUnloadBlock.html">SceneUnloadBlock</a></dt>
+      <dd><p>What <code>Scene.Unload(scene).As(handle)</code> builds: starts unloading the one loaded instance of
+a scene, bound to an operation handle. The handle succeeds when Unity has unloaded it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.Script.html">Script</a></dt>
       <dd><p>The runtime entry: a subclass whose <code>Build()</code> composes blocks that run on a game object.
 Editor workflows subclass <a class="xref" href="CodeSmile.LunyScript.EditorScript.html">EditorScript</a> instead.</p>
@@ -505,6 +533,12 @@ writes, reads and occurrence tests the UI blocks make.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.UnitySceneProvider.html">UnitySceneProvider</a></dt>
+      <dd><p>The scene provider the default runner uses: Unity's <code>SceneManager</code>, loading and
+unloading scenes that are in the build.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.VariableAttribute.html">VariableAttribute</a></dt>
       <dd><p>Declares a variable whose handle is assigned before Build, in declaration order.</p>
 </dd>
@@ -583,7 +617,7 @@ input of any Unity type, such as the camera rig a view renders.</p>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.AssetInputAssignment.html">AssetInputAssignment</a></dt>
       <dd><p>One row of the declared-input table a host component serializes: the name of a declared
-input and the asset this object assigns to it.</p>
+input and the asset this object assigns to it, or, for a scene input, the scene.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1337,6 +1371,45 @@ cancels them when that routine activation ends or is cancelled.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SceneAdditiveLoadBuilder.html">SceneAdditiveLoadBuilder</a></dt>
+      <dd><p>What <code>Scene.Load(destination).Additive()</code> returns: an additive load that becomes a block
+when <a class="xref" href="CodeSmile.LunyScript.SceneAdditiveLoadBuilder.html#CodeSmile_LunyScript_SceneAdditiveLoadBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SceneFactory.html">SceneFactory</a></dt>
+      <dd><p>The <code>Scene</code> surface inside <code>Build()</code>: loads and unloads Unity scenes named by a
+typed <a class="xref" href="CodeSmile.LunyScript.SceneReference.html">SceneReference</a>, each as an operation attempt.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SceneLoadBuilder.html">SceneLoadBuilder</a></dt>
+      <dd><p>What <code>Scene.Load(destination)</code> returns: a replacement load that becomes a block when
+<a class="xref" href="CodeSmile.LunyScript.SceneLoadBuilder.html#CodeSmile_LunyScript_SceneLoadBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle, or an additive load after
+<a class="xref" href="CodeSmile.LunyScript.SceneLoadBuilder.html#CodeSmile_LunyScript_SceneLoadBuilder_Additive">Additive()</a>. An unbound load is refused when <code>Build()</code> finishes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SceneReference.html">SceneReference</a></dt>
+      <dd><p>A handle to one scene input of a script: the typed scene identity that <code>Scene.Load</code>,
+<code>Scene.Unload</code> and the <code>When.Scene*</code> watches take. Returned by <code>Bind.Scene</code> at
+build time, or assigned before <code>Build()</code> by <code>[Asset]</code> on the property.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SceneUnloadBuilder.html">SceneUnloadBuilder</a></dt>
+      <dd><p>What <code>Scene.Unload(scene)</code> returns: an unload that becomes a block when <a class="xref" href="CodeSmile.LunyScript.SceneUnloadBuilder.html#CodeSmile_LunyScript_SceneUnloadBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a>
+binds the operation handle.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SceneWatchBuilder.html">SceneWatchBuilder</a></dt>
+      <dd><p>What <code>When.SceneLoading(scene)</code>, <code>When.SceneLoaded(scene)</code>,
+<code>When.SceneUnloading(scene)</code> and <code>When.SceneUnloaded(scene)</code> return. Its only method
+is <a class="xref" href="CodeSmile.LunyScript.SceneWatchBuilder.html#CodeSmile_LunyScript_SceneWatchBuilder_Do_CodeSmile_LunyScript_Block___">Do(params Block[])</a>, which registers the watch with the build.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.SharedFactory.html">SharedFactory</a></dt>
       <dd><p>The <code>Shared</code> surface inside <code>Build()</code>: operations on a shared store rather than
 on one variable.</p>
@@ -1685,6 +1758,20 @@ Adapter admission queries it at spawn, never per frame.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ISceneLoadOperation.html">ISceneLoadOperation</a></dt>
+      <dd><p>A scene load in flight. Completion means the destination is loaded and active, its
+objects have run <code>Awake</code> and <code>OnEnable</code>, and Unity has reported it loaded.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ISceneProvider.html">ISceneProvider</a></dt>
+      <dd><p>What a scene backend provides to <a class="xref" href="CodeSmile.LunyScript.SceneGateway.html">SceneGateway</a>: starting a load of one scene
+asset, ending one loaded instance, and reporting which scene instances are loaded. Script
+code never sees this type; it sees <code>Scene.Load</code>, <code>Scene.Unload</code> and
+<code>When.Operation</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.IScriptAssetInputs.html">IScriptAssetInputs</a></dt>
       <dd><p>The part of a host that carries the assets an author assigned to one object, so that two
 objects running the same script can hold different assets.</p>
@@ -1720,6 +1807,12 @@ the spawn is refused with a message naming the missing service.</p>
 declares <a class="xref" href="CodeSmile.LunyScript.ScriptServices.html#CodeSmile_LunyScript_ScriptServices_RuntimeObjectSpawning">RuntimeObjectSpawning</a> by implementing this interface;
 a host that does not cannot run a script containing an <code>Object.Spawn</code> block, and the
 spawn of that script is refused with a message naming the missing service.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.IScriptSceneInputs.html">IScriptSceneInputs</a></dt>
+      <dd><p>The part of a host that carries the scenes an author assigned to one object's scene inputs,
+so that two objects running the same script can name different scenes.</p>
 </dd>
     </dl>
     <dl class="jumplist">
