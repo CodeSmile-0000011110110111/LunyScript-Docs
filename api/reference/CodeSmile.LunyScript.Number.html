@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct Number | LunyScript API Reference ">
       
-      <meta name="description" content="A numeric literal and the type argument of a Var&amp;lt;Number&amp;gt;.">
+      <meta name="description" content="A number variable of a script: a handle to one slot backed by  storage, or a constant number. Build() declares it, and its methods and operators build blocks.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_Number" data-uid="CodeSmile.LunyScript.Number" class="text-break">
-Struct Number  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L8"><i class="bi bi-code-slash"></i></a>
+Struct Number  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L32"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,7 +85,8 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>A numeric literal and the type argument of a <code>Var&lt;Number&gt;</code>.</p>
+  <div class="markdown summary"><p>A number variable of a script: a handle to one slot backed by <span class="xref">double</span> storage,
+or a constant number. <code>Build()</code> declares it, and its methods and operators build blocks.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -108,81 +109,46 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
 
 
   <h2 id="CodeSmile_LunyScript_Number_examples">Examples</h2>
-  <pre><code class="lang-csharp">Number value = 1.5;</code></pre>
+  <pre><code class="lang-csharp">Health = Number.Define(nameof(Health), 100);
+On.FrameUpdate(If(Health &gt; 10).Then(Health.Subtract(1)).Else(Health.Set(0)));</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_Number_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>Used during Build. Runtime slots and blocks store <span class="xref">double</span> values.</p>
+  <div class="markdown level0 remarks"><p><b>A <a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a> is a handle, not the value.</b> The same handle reads a different
+value on every object running the script, because each object keeps its own slot. Writing
+<code>Number Five = 5;</code> makes a constant input: it reads 5 on every object, has no slot, and a
+write to it such as <code>Five.Add(1)</code> is refused while the script type is built.</p>
+<p>
+    A <code>partial</code> script declares a number on one line inside <code>Build()</code>, and the
+    generator writes the property: <code>Health = Number.Define(nameof(Health), 100);</code>.
+    <code>Define.Number</code> is the same call, and <code>[Variable(100)] public Number Health { get;
+    private set; }</code> declares it before <code>Build()</code> runs.
+</p>
+<p>
+    <code>operator ==</code> builds a condition block; it does not compare handles. Use
+    <a class="xref" href="CodeSmile.LunyScript.Number.html#CodeSmile_LunyScript_Number_Equals_System_Object_">Equals(object)</a> to compare two handles.
+</p>
 </div>
-
-
-  <h2 class="section" id="constructors">Constructors
-</h2>
-
-
-  <a id="CodeSmile_LunyScript_Number__ctor_" data-uid="CodeSmile.LunyScript.Number.#ctor*"></a>
-
-  <h3 id="CodeSmile_LunyScript_Number__ctor_System_Double_" data-uid="CodeSmile.LunyScript.Number.#ctor(System.Double)">
-  Number(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L17"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Creates a literal.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Number(double value)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <table>
-  <tr>
-  <th>Type</th>
-  <th>Name</th>
-  <th>Description</th>
-  </tr>
-  <dl class="parameters">
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
-    <td style="width: 99%"><dd><p>The primitive value.</p>
-</dd></td>
-  </tr>
-  </dl>
-  </table>
-
-
-
-
-
-
-
-  <h4 class="section" id="CodeSmile_LunyScript_Number__ctor_System_Double__examples">Examples</h4>
-  <pre><code class="lang-csharp">var value = new Number(1.5);</code></pre>
-
-
-
-
 
 
   <h2 class="section" id="properties">Properties
 </h2>
 
 
-  <a id="CodeSmile_LunyScript_Number_Value_" data-uid="CodeSmile.LunyScript.Number.Value*"></a>
+  <a id="CodeSmile_LunyScript_Number_Kind_" data-uid="CodeSmile.LunyScript.Number.Kind*"></a>
 
-  <h3 id="CodeSmile_LunyScript_Number_Value" data-uid="CodeSmile.LunyScript.Number.Value">
-  Value
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L12"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_Number_Kind" data-uid="CodeSmile.LunyScript.Number.Kind">
+  Kind
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L45"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>The primitive value. An uninitialised literal holds zero.</p>
+  <div class="markdown level1 summary"><p>Which slot array on the instance this variable lives in: <a class="xref" href="CodeSmile.LunyScript.SlotKind.html#CodeSmile_LunyScript_SlotKind_Number">Number</a>,
+or <a class="xref" href="CodeSmile.LunyScript.SlotKind.html#CodeSmile_LunyScript_SlotKind_Undefined">Undefined</a> before <code>Build()</code> assigns the handle.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double Value { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SlotKind Kind { get; }</code></pre>
   </div>
 
 
@@ -191,17 +157,93 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><span class="xref">double</span></dt>
+    <dt><a class="xref" href="CodeSmile.LunyScript.SlotKind.html">SlotKind</a></dt>
     <dd></dd>
   </dl>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_Number_Value_examples">Examples</h4>
-  <pre><code class="lang-csharp">var value = new Number(1.5).Value;</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Kind_examples">Examples</h4>
+  <pre><code class="lang-csharp">var kind = Health.Kind;</code></pre>
 
 
 
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Name_" data-uid="CodeSmile.LunyScript.Number.Name*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Name" data-uid="CodeSmile.LunyScript.Number.Name">
+  Name
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The declared name, used in diagnostics and by the runtime debugger.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Name { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Name_examples">Examples</h4>
+  <pre><code class="lang-csharp">var name = Health.Name;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_NumberSlot_" data-uid="CodeSmile.LunyScript.Number.NumberSlot*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_NumberSlot" data-uid="CodeSmile.LunyScript.Number.NumberSlot">
+  NumberSlot
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>This variable's slot.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NumberSlot NumberSlot { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberSlot.html">NumberSlot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_NumberSlot_examples">Examples</h4>
+  <pre><code class="lang-csharp">var slot = Health.NumberSlot;</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The handle is unassigned or a constant.</p>
+</dd>
+  </dl>
 
 
 
@@ -209,19 +251,19 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
 </h2>
 
 
-  <a id="CodeSmile_LunyScript_Number_Equals_" data-uid="CodeSmile.LunyScript.Number.Equals*"></a>
+  <a id="CodeSmile_LunyScript_Number_Abs_" data-uid="CodeSmile.LunyScript.Number.Abs*"></a>
 
-  <h3 id="CodeSmile_LunyScript_Number_Equals_CodeSmile_LunyScript_Number_" data-uid="CodeSmile.LunyScript.Number.Equals(CodeSmile.LunyScript.Number)">
-  Equals(Number)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_Number_Abs_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Abs(System.String,System.Int32)">
+  Abs(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L258"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Compares the stored values.</p>
+  <div class="markdown level1 summary"><p>Builds a block that replaces this variable with its absolute value.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Equals(Number other)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Abs(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -233,9 +275,15 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>other</code></dt></td>
-    <td style="width: 99%"><dd><p>The literal to compare.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
 </dd></td>
   </tr>
   </dl>
@@ -243,8 +291,8 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><span class="xref">bool</span></dt>
-    <dd><p>True when the primitive values are equal.</p>
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
 </dd>
   </dl>
 
@@ -253,8 +301,445 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_Number_Equals_CodeSmile_LunyScript_Number__examples">Examples</h4>
-  <pre><code class="lang-csharp">var equal = new Number(1.5).Equals(new Number(1.5));</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Abs_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Distance.Abs());</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Add_" data-uid="CodeSmile.LunyScript.Number.Add*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Add_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Add(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Add(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that adds an amount to this variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Add(NumberValueBlock amount, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>amount</code></dt></td>
+    <td style="width: 99%"><dd><p>A literal, another number variable or a number expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Add_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Age.Add(Time.Delta));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Ceiling_" data-uid="CodeSmile.LunyScript.Number.Ceiling*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Ceiling_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Ceiling(System.String,System.Int32)">
+  Ceiling(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L278"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that rounds this variable up to a whole number.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Ceiling(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Ceiling_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Seconds.Ceiling());</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Clamp_" data-uid="CodeSmile.LunyScript.Number.Clamp*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Clamp_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Clamp(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Clamp(NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L248"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that keeps this variable between two bounds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Clamp(NumberValueBlock minimum, NumberValueBlock maximum, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>minimum</code></dt></td>
+    <td style="width: 99%"><dd><p>The lower bound.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>maximum</code></dt></td>
+    <td style="width: 99%"><dd><p>The upper bound.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Clamp_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Health.Clamp(0, 100));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Dec_" data-uid="CodeSmile.LunyScript.Number.Dec*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Dec_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Dec(System.String,System.Int32)">
+  Dec(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L214"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The short spelling of <a class="xref" href="CodeSmile.LunyScript.Number.html#CodeSmile_LunyScript_Number_Decrement_System_String_System_Int32_">Decrement(string, int)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Dec(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Dec_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.TriggerEnter(Lives.Dec());</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Decrement_" data-uid="CodeSmile.LunyScript.Number.Decrement*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Decrement_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Decrement(System.String,System.Int32)">
+  Decrement(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L204"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that subtracts 1 from this variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Decrement(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Decrement_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.TriggerEnter(Lives.Decrement());</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Div_" data-uid="CodeSmile.LunyScript.Number.Div*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Div_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Div(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Div(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L163"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The short spelling of <a class="xref" href="CodeSmile.LunyScript.Number.html#CodeSmile_LunyScript_Number_Divide_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">Divide(NumberValueBlock, string, int)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Div(NumberValueBlock divisor, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>divisor</code></dt></td>
+    <td style="width: 99%"><dd><p>A literal, another number variable or a number expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Div_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Speed.Div(2));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Divide_" data-uid="CodeSmile.LunyScript.Number.Divide*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Divide_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Divide(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Divide(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L152"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that divides this variable by a divisor. Dividing by zero follows
+<span class="xref">double</span> arithmetic and stores an infinity or NaN.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Divide(NumberValueBlock divisor, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>divisor</code></dt></td>
+    <td style="width: 99%"><dd><p>A literal, another number variable or a number expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Divide_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Speed.Divide(2));</code></pre>
 
 
 
@@ -265,10 +750,10 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
 
   <h3 id="CodeSmile_LunyScript_Number_Equals_System_Object_" data-uid="CodeSmile.LunyScript.Number.Equals(System.Object)">
   Equals(object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L430"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Indicates whether this instance and a specified object are equal.</p>
+  <div class="markdown level1 summary"><p>True when both handles address the same slot, or are the same constant.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -287,7 +772,7 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">object</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>obj</code></dt></td>
-    <td style="width: 99%"><dd><p>The object to compare with the current instance.</p>
+    <td style="width: 99%"><dd><p>A <a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a> or a <code>Var&lt;Number&gt;</code>.</p>
 </dd></td>
   </tr>
   </dl>
@@ -296,7 +781,7 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><span class="xref">bool</span></dt>
-    <dd><p><a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">true</a> if <code class="paramref">obj</code> and this instance are the same type and represent the same value; otherwise, <a href="https://learn.microsoft.com/dotnet/csharp/language-reference/builtin-types/bool">false</a>.</p>
+    <dd><p>Whether the handles are equal.</p>
 </dd>
   </dl>
 
@@ -310,11 +795,69 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
 
 
 
+  <a id="CodeSmile_LunyScript_Number_Floor_" data-uid="CodeSmile.LunyScript.Number.Floor*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Floor_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Floor(System.String,System.Int32)">
+  Floor(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L268"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that rounds this variable down to a whole number.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Floor(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Floor_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Seconds.Floor());</code></pre>
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_Number_GetHashCode_" data-uid="CodeSmile.LunyScript.Number.GetHashCode*"></a>
 
   <h3 id="CodeSmile_LunyScript_Number_GetHashCode" data-uid="CodeSmile.LunyScript.Number.GetHashCode">
   GetHashCode()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L434"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Returns the hash code for this instance.</p>
@@ -343,18 +886,1380 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
 
 
 
+  <a id="CodeSmile_LunyScript_Number_Inc_" data-uid="CodeSmile.LunyScript.Number.Inc*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Inc_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Inc(System.String,System.Int32)">
+  Inc(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L194"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The short spelling of <a class="xref" href="CodeSmile.LunyScript.Number.html#CodeSmile_LunyScript_Number_Increment_System_String_System_Int32_">Increment(string, int)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Inc(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Inc_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.TriggerEnter(Hits.Inc());</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Increment_" data-uid="CodeSmile.LunyScript.Number.Increment*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Increment_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Increment(System.String,System.Int32)">
+  Increment(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L184"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that adds 1 to this variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Increment(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Increment_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.TriggerEnter(Hits.Increment());</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Max_" data-uid="CodeSmile.LunyScript.Number.Max*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Max_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Max(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Max(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L236"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that keeps the larger of this variable and another value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Max(NumberValueBlock other, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>other</code></dt></td>
+    <td style="width: 99%"><dd><p>A literal, another number variable or a number expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Max_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Health.Max(0));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Min_" data-uid="CodeSmile.LunyScript.Number.Min*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Min_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Min(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Min(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L225"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that keeps the smaller of this variable and another value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Min(NumberValueBlock other, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>other</code></dt></td>
+    <td style="width: 99%"><dd><p>A literal, another number variable or a number expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Min_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Health.Min(100));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Mul_" data-uid="CodeSmile.LunyScript.Number.Mul*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Mul_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Mul(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Mul(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L140"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The short spelling of <a class="xref" href="CodeSmile.LunyScript.Number.html#CodeSmile_LunyScript_Number_Multiply_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">Multiply(NumberValueBlock, string, int)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Mul(NumberValueBlock factor, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>factor</code></dt></td>
+    <td style="width: 99%"><dd><p>A literal, another number variable or a number expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Mul_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Speed.Mul(2));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Multiply_" data-uid="CodeSmile.LunyScript.Number.Multiply*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Multiply_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Multiply(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Multiply(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that multiplies this variable by a factor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Multiply(NumberValueBlock factor, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>factor</code></dt></td>
+    <td style="width: 99%"><dd><p>A literal, another number variable or a number expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Multiply_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Speed.Multiply(2));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Negate_" data-uid="CodeSmile.LunyScript.Number.Negate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Negate_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Negate(System.String,System.Int32)">
+  Negate(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that negates this variable in place.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Negate(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Negate_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.CollisionEnter(Direction.Negate());</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Remainder_" data-uid="CodeSmile.LunyScript.Number.Remainder*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Remainder_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Remainder(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Remainder(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L174"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that replaces this variable with its remainder after division.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Remainder(NumberValueBlock divisor, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>divisor</code></dt></td>
+    <td style="width: 99%"><dd><p>A literal, another number variable or a number expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Remainder_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Angle.Remainder(360));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Round_" data-uid="CodeSmile.LunyScript.Number.Round*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Round_CodeSmile_LunyScript_RoundingMode_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Round(CodeSmile.LunyScript.RoundingMode,System.String,System.Int32)">
+  Round(RoundingMode, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L311"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that rounds this variable to a whole number with the given midpoint
+rule.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Round(RoundingMode rounding, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.RoundingMode.html">RoundingMode</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>rounding</code></dt></td>
+    <td style="width: 99%"><dd><p>How a midpoint rounds.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Round_CodeSmile_LunyScript_RoundingMode_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Score.Round(RoundingMode.AwayFromZero));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Round_" data-uid="CodeSmile.LunyScript.Number.Round*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Round_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Round(System.String,System.Int32)">
+  Round(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L299"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that rounds this variable to the nearest whole number, a midpoint to
+the even neighbour.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Round(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Round_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Score.Round());</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Set_" data-uid="CodeSmile.LunyScript.Number.Set*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Set_CodeSmile_LunyScript_CollectionRead_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Set(CodeSmile.LunyScript.CollectionRead,System.String,System.Int32)">
+  Set(CollectionRead, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes one collection entry into this variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Set(CollectionRead value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.CollectionRead.html">CollectionRead</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The entry to read, such as <code>Scores.At(0)</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Set_CodeSmile_LunyScript_CollectionRead_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Best.Set(Scores.At(0)));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Set_" data-uid="CodeSmile.LunyScript.Number.Set*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Set_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Set(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Set(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a number into this variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Set(NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>A literal, another number variable or a number expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Set_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Health.Set(100), Shield.Set(Health / 2));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Sub_" data-uid="CodeSmile.LunyScript.Number.Sub*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Sub_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Sub(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Sub(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L118"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The short spelling of <a class="xref" href="CodeSmile.LunyScript.Number.html#CodeSmile_LunyScript_Number_Subtract_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">Subtract(NumberValueBlock, string, int)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Sub(NumberValueBlock amount, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>amount</code></dt></td>
+    <td style="width: 99%"><dd><p>A literal, another number variable or a number expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Sub_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.TriggerEnter(Health.Sub(25));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Subtract_" data-uid="CodeSmile.LunyScript.Number.Subtract*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Subtract_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Subtract(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Subtract(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that subtracts an amount from this variable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Subtract(NumberValueBlock amount, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>amount</code></dt></td>
+    <td style="width: 99%"><dd><p>A literal, another number variable or a number expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Subtract_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.TriggerEnter(Health.Subtract(25));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_ToString_" data-uid="CodeSmile.LunyScript.Number.ToString*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_ToString" data-uid="CodeSmile.LunyScript.Number.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L437"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns the fully qualified type name of this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>The fully qualified type name.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_Truncate_" data-uid="CodeSmile.LunyScript.Number.Truncate*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_Truncate_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Number.Truncate(System.String,System.Int32)">
+  Truncate(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L288"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that drops this variable's fractional part.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Truncate(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_Truncate_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Seconds.Truncate());</code></pre>
+
+
+
+
+
+
   <h2 class="section" id="operators">Operators
 </h2>
+
+
+  <a id="CodeSmile_LunyScript_Number_op_Addition_" data-uid="CodeSmile.LunyScript.Number.op_Addition*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_op_Addition_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number_" data-uid="CodeSmile.LunyScript.Number.op_Addition(CodeSmile.LunyScript.Number,CodeSmile.LunyScript.Number)">
+  operator +(Number, Number)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L343"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds the sum of two numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static NumberValueBlock operator +(Number left, Number right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>left</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>right</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_op_Addition_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Total.Set(Base + Bonus));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_op_Division_" data-uid="CodeSmile.LunyScript.Number.op_Division*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_op_Division_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number_" data-uid="CodeSmile.LunyScript.Number.op_Division(CodeSmile.LunyScript.Number,CodeSmile.LunyScript.Number)">
+  operator /(Number, Number)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L367"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds the quotient of two numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static NumberValueBlock operator /(Number left, Number right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>left</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>right</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_op_Division_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Ratio.Set(Charge / 10));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_op_Equality_" data-uid="CodeSmile.LunyScript.Number.op_Equality*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_op_Equality_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number_" data-uid="CodeSmile.LunyScript.Number.op_Equality(CodeSmile.LunyScript.Number,CodeSmile.LunyScript.Number)">
+  operator ==(Number, Number)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L416"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a condition that is true when the two numbers are equal. It does not compare
+handles; <a class="xref" href="CodeSmile.LunyScript.Number.html#CodeSmile_LunyScript_Number_Equals_System_Object_">Equals(object)</a> does.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static ConditionBlock operator ==(Number left, Number right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>left</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>right</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>A condition block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_op_Equality_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Lives == 0).Then(Over.Set(true)));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_op_GreaterThan_" data-uid="CodeSmile.LunyScript.Number.op_GreaterThan*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_op_GreaterThan_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number_" data-uid="CodeSmile.LunyScript.Number.op_GreaterThan(CodeSmile.LunyScript.Number,CodeSmile.LunyScript.Number)">
+  operator &gt;(Number, Number)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L383"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a condition that is true when the left number is greater.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static ConditionBlock operator &gt;(Number left, Number right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>left</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>right</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>A condition block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_op_GreaterThan_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Health &gt; 10).Then(Calm.Set(true)));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_op_GreaterThanOrEqual_" data-uid="CodeSmile.LunyScript.Number.op_GreaterThanOrEqual*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_op_GreaterThanOrEqual_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number_" data-uid="CodeSmile.LunyScript.Number.op_GreaterThanOrEqual(CodeSmile.LunyScript.Number,CodeSmile.LunyScript.Number)">
+  operator &gt;=(Number, Number)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L391"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a condition that is true when the left number is greater or equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static ConditionBlock operator &gt;=(Number left, Number right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>left</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>right</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>A condition block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_op_GreaterThanOrEqual_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Score &gt;= 100).Then(Won.Set(true)));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_op_Implicit_" data-uid="CodeSmile.LunyScript.Number.op_Implicit*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_op_Implicit_CodeSmile_LunyScript_Number__CodeSmile_LunyScript_ConditionBlock" data-uid="CodeSmile.LunyScript.Number.op_Implicit(CodeSmile.LunyScript.Number)~CodeSmile.LunyScript.ConditionBlock">
+  implicit operator ConditionBlock(Number)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L335"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads a number as a condition: true when it is not zero.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static implicit operator ConditionBlock(Number variable)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>variable</code></dt></td>
+    <td style="width: 99%"><dd><p>The number to test.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>A condition block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_op_Implicit_CodeSmile_LunyScript_Number__CodeSmile_LunyScript_ConditionBlock_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Ammo).Then(Shots.Increment()));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_op_Implicit_" data-uid="CodeSmile.LunyScript.Number.op_Implicit*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_op_Implicit_CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Number___CodeSmile_LunyScript_Number" data-uid="CodeSmile.LunyScript.Number.op_Implicit(CodeSmile.LunyScript.Var{CodeSmile.LunyScript.Number})~CodeSmile.LunyScript.Number">
+  implicit operator Number(Var&lt;Number&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L329"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Converts a handle from the generic factory, <code>Var.Define&lt;Number&gt;</code>, to the
+same variable's <a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a> handle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static implicit operator Number(Var&lt;Number&gt; variable)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Var-1.html">Var</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>variable</code></dt></td>
+    <td style="width: 99%"><dd><p>The generic handle.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt>
+    <dd><p>The same variable.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_op_Implicit_CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Number___CodeSmile_LunyScript_Number_examples">Examples</h4>
+  <pre><code class="lang-csharp">Health = Var.Define&lt;Number&gt;(nameof(Health), 100);</code></pre>
+
+
+
+
 
 
   <a id="CodeSmile_LunyScript_Number_op_Implicit_" data-uid="CodeSmile.LunyScript.Number.op_Implicit*"></a>
 
   <h3 id="CodeSmile_LunyScript_Number_op_Implicit_System_Double__CodeSmile_LunyScript_Number" data-uid="CodeSmile.LunyScript.Number.op_Implicit(System.Double)~CodeSmile.LunyScript.Number">
   implicit operator Number(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L321"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Converts a C# literal to a LunyScript literal.</p>
+  <div class="markdown level1 summary"><p>Makes a constant number input. It has no slot, reads the same value on every object,
+and a write to it is refused while the script type is built.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -373,7 +2278,7 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
-    <td style="width: 99%"><dd><p>The primitive value.</p>
+    <td style="width: 99%"><dd><p>The constant.</p>
 </dd></td>
   </tr>
   </dl>
@@ -382,7 +2287,7 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt>
-    <dd><p>The literal.</p>
+    <dd><p>The constant input.</p>
 </dd>
   </dl>
 
@@ -392,7 +2297,355 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
 
 
   <h4 class="section" id="CodeSmile_LunyScript_Number_op_Implicit_System_Double__CodeSmile_LunyScript_Number_examples">Examples</h4>
-  <pre><code class="lang-csharp">Number value = 1.5;</code></pre>
+  <pre><code class="lang-csharp">Number Five = 5;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_op_Inequality_" data-uid="CodeSmile.LunyScript.Number.op_Inequality*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_op_Inequality_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number_" data-uid="CodeSmile.LunyScript.Number.op_Inequality(CodeSmile.LunyScript.Number,CodeSmile.LunyScript.Number)">
+  operator !=(Number, Number)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L424"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a condition that is true when the two numbers differ.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static ConditionBlock operator !=(Number left, Number right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>left</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>right</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>A condition block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_op_Inequality_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Lives != 0).Then(Playing.Set(true)));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_op_LessThan_" data-uid="CodeSmile.LunyScript.Number.op_LessThan*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_op_LessThan_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number_" data-uid="CodeSmile.LunyScript.Number.op_LessThan(CodeSmile.LunyScript.Number,CodeSmile.LunyScript.Number)">
+  operator &lt;(Number, Number)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L399"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a condition that is true when the left number is smaller.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static ConditionBlock operator &lt;(Number left, Number right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>left</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>right</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>A condition block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_op_LessThan_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Charge &lt; 5).Then(Powered.Set(false)));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_op_LessThanOrEqual_" data-uid="CodeSmile.LunyScript.Number.op_LessThanOrEqual*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_op_LessThanOrEqual_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number_" data-uid="CodeSmile.LunyScript.Number.op_LessThanOrEqual(CodeSmile.LunyScript.Number,CodeSmile.LunyScript.Number)">
+  operator &lt;=(Number, Number)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L407"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a condition that is true when the left number is smaller or equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static ConditionBlock operator &lt;=(Number left, Number right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>left</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>right</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>A condition block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_op_LessThanOrEqual_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Health &lt;= 0).Then(Object.Despawn()));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_op_Modulus_" data-uid="CodeSmile.LunyScript.Number.op_Modulus*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_op_Modulus_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number_" data-uid="CodeSmile.LunyScript.Number.op_Modulus(CodeSmile.LunyScript.Number,CodeSmile.LunyScript.Number)">
+  operator %(Number, Number)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L375"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds the remainder of two numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static NumberValueBlock operator %(Number left, Number right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>left</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>right</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_op_Modulus_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Lane.Set(Index % 3));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_op_Multiply_" data-uid="CodeSmile.LunyScript.Number.op_Multiply*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_op_Multiply_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number_" data-uid="CodeSmile.LunyScript.Number.op_Multiply(CodeSmile.LunyScript.Number,CodeSmile.LunyScript.Number)">
+  operator *(Number, Number)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L359"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds the product of two numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static NumberValueBlock operator *(Number left, Number right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>left</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>right</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_op_Multiply_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Damage.Set(Power * 2));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Number_op_Subtraction_" data-uid="CodeSmile.LunyScript.Number.op_Subtraction*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Number_op_Subtraction_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number_" data-uid="CodeSmile.LunyScript.Number.op_Subtraction(CodeSmile.LunyScript.Number,CodeSmile.LunyScript.Number)">
+  operator -(Number, Number)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L351"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds the difference of two numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static NumberValueBlock operator -(Number left, Number right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>left</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>right</code></dt></td>
+    <td style="width: 99%"><dd><p>A number variable or constant.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd><p>A number expression.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Number_op_Subtraction_CodeSmile_LunyScript_Number_CodeSmile_LunyScript_Number__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Left.Set(Max - Used));</code></pre>
 
 
 
@@ -403,7 +2656,7 @@ Struct Number  <a class="header-action link-secondary" title="View source" href=
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L8" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Number.cs/#L32" class="edit-link">Edit this page</a>
         </div>
 
 
