@@ -123,15 +123,16 @@ type.</p>
 
   <h3 id="CodeSmile_LunyScript_TextFactory_Define_System_String_CodeSmile_LunyScript_TextCapacity_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TextFactory.Define(System.String,CodeSmile.LunyScript.TextCapacity,System.String,System.Int32)">
   Define(string, TextCapacity, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TextFactory.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TextFactory.cs/#L63"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Declares a text variable of the given fixed capacity.</p>
+  <div class="markdown level1 summary"><p>Declares a text variable of the given fixed capacity, object-local or on a shared
+store after <code>.Shared()</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Text Define(string name, TextCapacity capacity, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public TextCapacityDefineBuilder Define(string name, TextCapacity capacity, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -151,7 +152,7 @@ type.</p>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>capacity</code></dt></td>
-    <td style="width: 99%"><dd><p>How many bytes each object's slot holds.</p>
+    <td style="width: 99%"><dd><p>How many bytes each object's slot, or the shared slot, holds.</p>
 </dd></td>
   </tr>
   <tr>
@@ -171,8 +172,9 @@ type.</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a></dt>
-    <dd><p>The handle.</p>
+    <dt><a class="xref" href="CodeSmile.LunyScript.TextCapacityDefineBuilder.html">TextCapacityDefineBuilder</a></dt>
+    <dd><p>A builder that becomes the <a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a> handle when it is
+assigned, or a shared text after <code>.Shared()</code>.</p>
 </dd>
   </dl>
 
@@ -182,7 +184,8 @@ type.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TextFactory_Define_System_String_CodeSmile_LunyScript_TextCapacity_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">PlayerName = Text.Define(nameof(PlayerName), TextCapacity.Bytes128);</code></pre>
+  <pre><code class="lang-csharp">PlayerName = Text.Define(nameof(PlayerName), TextCapacity.Bytes128);
+Alert = Text.Define(nameof(Alert), TextCapacity.Bytes128).Shared();</code></pre>
 
 
 
@@ -200,12 +203,12 @@ already declared.</p>
 
   <h3 id="CodeSmile_LunyScript_TextFactory_Define_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TextFactory.Define(System.String,System.String,System.Int32)">
   Define(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TextFactory.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TextFactory.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Declares a text variable of 64 bytes, or of a bounded heap size after
-<code>.Allocating(maxBytes)</code>. In a <code>partial</code> script the generator writes the property
-this line assigns.</p>
+  <div class="markdown level1 summary"><p>Declares a text variable of 64 bytes, of a bounded heap size after
+<code>.Allocating(maxBytes)</code>, or on a shared store after <code>.Shared()</code>. In a <code>partial</code>
+script the generator writes the property this line assigns.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -246,7 +249,7 @@ this line assigns.</p>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.TextDefineBuilder.html">TextDefineBuilder</a></dt>
     <dd><p>A builder that becomes the <a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a> handle when it is
-assigned.</p>
+assigned, or a shared text after <code>.Shared()</code>.</p>
 </dd>
   </dl>
 
@@ -256,7 +259,8 @@ assigned.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TextFactory_Define_System_String_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">PlayerName = Text.Define(nameof(PlayerName));</code></pre>
+  <pre><code class="lang-csharp">PlayerName = Text.Define(nameof(PlayerName));
+Alert = Text.Define(nameof(Alert)).Shared();</code></pre>
 
 
 
@@ -274,7 +278,7 @@ already declared.</p>
 
   <h3 id="CodeSmile_LunyScript_TextFactory_Format_System_String_CodeSmile_LunyScript_TextArgument___" data-uid="CodeSmile.LunyScript.TextFactory.Format(System.String,CodeSmile.LunyScript.TextArgument[])">
   Format(string, params TextArgument[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TextFactory.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/TextFactory.cs/#L83"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The same call as <a class="xref" href="CodeSmile.LunyScript.Text.html#CodeSmile_LunyScript_Text_Format_System_String_CodeSmile_LunyScript_TextArgument___">Format(string, params TextArgument[])</a>, reached from inside a

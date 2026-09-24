@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_Vec3Slot" data-uid="CodeSmile.LunyScript.Vec3Slot" class="text-break">
-Struct Vec3Slot  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L218"><i class="bi bi-code-slash"></i></a>
+Struct Vec3Slot  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L238"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -126,7 +126,7 @@ and never at run time.</p>
 
   <h3 id="CodeSmile_LunyScript_Vec3Slot__ctor_System_Int32_" data-uid="CodeSmile.LunyScript.Vec3Slot.#ctor(System.Int32)">
   Vec3Slot(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L225"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L249"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Creates a handle. Called by the build context; script code never calls it.</p>
@@ -173,15 +173,48 @@ and never at run time.</p>
 
   <h3 id="CodeSmile_LunyScript_Vec3Slot_Index" data-uid="CodeSmile.LunyScript.Vec3Slot.Index">
   Index
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L221"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L241"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Index into the instance's <code>Vec3</code> slot array.</p>
+  <div class="markdown level1 summary"><p>Index into the instance's <code>Vec3</code> slot array, or into a shared store.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int Index { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_Vec3Slot_StoreId_" data-uid="CodeSmile.LunyScript.Vec3Slot.StoreId*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Vec3Slot_StoreId" data-uid="CodeSmile.LunyScript.Vec3Slot.StoreId">
+  StoreId
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L245"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Zero for an object-local slot. A positive id names a shared store on the
+runner.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int StoreId { get; }</code></pre>
   </div>
 
 
@@ -209,10 +242,10 @@ and never at run time.</p>
 
   <h3 id="CodeSmile_LunyScript_Vec3Slot_Equals_CodeSmile_LunyScript_Vec3Slot_" data-uid="CodeSmile.LunyScript.Vec3Slot.Equals(CodeSmile.LunyScript.Vec3Slot)">
   Equals(Vec3Slot)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L230"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L263"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Two handles are equal when they address the same slot.</p>
+  <div class="markdown level1 summary"><p>Two handles are equal when they address the same slot in the same store.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -240,7 +273,7 @@ and never at run time.</p>
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><span class="xref">bool</span></dt>
-    <dd><p>True when both indices are the same.</p>
+    <dd><p>True when both indices and store ids are the same.</p>
 </dd>
   </dl>
 
@@ -258,7 +291,7 @@ and never at run time.</p>
 
   <h3 id="CodeSmile_LunyScript_Vec3Slot_Equals_System_Object_" data-uid="CodeSmile.LunyScript.Vec3Slot.Equals(System.Object)">
   Equals(object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L233"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L266"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Indicates whether this instance and a specified object are equal.</p>
@@ -307,7 +340,7 @@ and never at run time.</p>
 
   <h3 id="CodeSmile_LunyScript_Vec3Slot_GetHashCode" data-uid="CodeSmile.LunyScript.Vec3Slot.GetHashCode">
   GetHashCode()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L236"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L269"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Returns the hash code for this instance.</p>
@@ -340,7 +373,7 @@ and never at run time.</p>
 
   <h3 id="CodeSmile_LunyScript_Vec3Slot_ToString" data-uid="CodeSmile.LunyScript.Vec3Slot.ToString">
   ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L240"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L273"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The kind and the index, so a diagnostic naming one reads as it was written.</p>
@@ -355,7 +388,7 @@ and never at run time.</p>
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><span class="xref">string</span></dt>
-    <dd><p>The handle described.</p>
+    <dd><p>For example: &quot;Vec3Slot(2)&quot; or &quot;Vec3Slot(2, store 1)&quot;.</p>
 </dd>
   </dl>
 
@@ -373,7 +406,7 @@ and never at run time.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L218" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L238" class="edit-link">Edit this page</a>
         </div>
 
 

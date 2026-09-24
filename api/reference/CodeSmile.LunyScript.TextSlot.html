@@ -122,7 +122,7 @@ The capacity is part of the handle because each capacity is a separate array on 
 
   <h3 id="CodeSmile_LunyScript_TextSlot__ctor_CodeSmile_LunyScript_TextCapacity_System_Int32_" data-uid="CodeSmile.LunyScript.TextSlot.#ctor(CodeSmile.LunyScript.TextCapacity,System.Int32)">
   TextSlot(TextCapacity, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L173"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L178"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Creates a handle. Called by the build context; script code never calls it.</p>
@@ -171,7 +171,7 @@ The capacity is part of the handle because each capacity is a separate array on 
 
   <h3 id="CodeSmile_LunyScript_TextSlot__ctor_CodeSmile_LunyScript_TextCapacity_System_Int32_System_Boolean_System_Int32_" data-uid="CodeSmile.LunyScript.TextSlot.#ctor(CodeSmile.LunyScript.TextCapacity,System.Int32,System.Boolean,System.Int32)">
   TextSlot(TextCapacity, int, bool, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L180"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L185"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Creates a handle, including allocating storage.</p>
@@ -268,11 +268,12 @@ The capacity is part of the handle because each capacity is a separate array on 
 
   <h3 id="CodeSmile_LunyScript_TextSlot_Index" data-uid="CodeSmile.LunyScript.TextSlot.Index">
   Index
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L161"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L162"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Index into the instance's array for <a class="xref" href="CodeSmile.LunyScript.TextSlot.html#CodeSmile_LunyScript_TextSlot_Capacity">Capacity</a>, or into the
-allocating-text array when <a class="xref" href="CodeSmile.LunyScript.TextSlot.html#CodeSmile_LunyScript_TextSlot_IsAllocating">IsAllocating</a> is true.</p>
+  <div class="markdown level1 summary"><p>Index into the instance's array for <a class="xref" href="CodeSmile.LunyScript.TextSlot.html#CodeSmile_LunyScript_TextSlot_Capacity">Capacity</a>, into a shared store's
+array for that capacity, or into the allocating-text array when <a class="xref" href="CodeSmile.LunyScript.TextSlot.html#CodeSmile_LunyScript_TextSlot_IsAllocating">IsAllocating</a> is
+true.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -301,7 +302,7 @@ allocating-text array when <a class="xref" href="CodeSmile.LunyScript.TextSlot.h
 
   <h3 id="CodeSmile_LunyScript_TextSlot_IsAllocating" data-uid="CodeSmile.LunyScript.TextSlot.IsAllocating">
   IsAllocating
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L165"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L166"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>True when this slot is the bounded heap buffer rather than a
@@ -334,7 +335,7 @@ allocating-text array when <a class="xref" href="CodeSmile.LunyScript.TextSlot.h
 
   <h3 id="CodeSmile_LunyScript_TextSlot_MaxBytes" data-uid="CodeSmile.LunyScript.TextSlot.MaxBytes">
   MaxBytes
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L168"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L169"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>UTF-8 byte bound for an allocating slot. Zero for a fixed-capacity slot.</p>
@@ -362,6 +363,39 @@ allocating-text array when <a class="xref" href="CodeSmile.LunyScript.TextSlot.h
 
 
 
+  <a id="CodeSmile_LunyScript_TextSlot_StoreId_" data-uid="CodeSmile.LunyScript.TextSlot.StoreId*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TextSlot_StoreId" data-uid="CodeSmile.LunyScript.TextSlot.StoreId">
+  StoreId
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L173"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Zero for an object-local slot. A positive id names a shared store on the runner. An
+allocating slot is always object-local.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int StoreId { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
   <h2 class="section" id="methods">Methods
 </h2>
 
@@ -370,10 +404,11 @@ allocating-text array when <a class="xref" href="CodeSmile.LunyScript.TextSlot.h
 
   <h3 id="CodeSmile_LunyScript_TextSlot_Equals_CodeSmile_LunyScript_TextSlot_" data-uid="CodeSmile.LunyScript.TextSlot.Equals(CodeSmile.LunyScript.TextSlot)">
   Equals(TextSlot)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L191"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L209"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Two handles are equal when they address the same slot in the same array.</p>
+  <div class="markdown level1 summary"><p>Two handles are equal when they address the same slot in the same array of the same
+store.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -401,7 +436,7 @@ allocating-text array when <a class="xref" href="CodeSmile.LunyScript.TextSlot.h
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><span class="xref">bool</span></dt>
-    <dd><p>True when capacity, index and storage mode are all the same.</p>
+    <dd><p>True when capacity, index, storage mode and store id are all the same.</p>
 </dd>
   </dl>
 
@@ -419,7 +454,7 @@ allocating-text array when <a class="xref" href="CodeSmile.LunyScript.TextSlot.h
 
   <h3 id="CodeSmile_LunyScript_TextSlot_Equals_System_Object_" data-uid="CodeSmile.LunyScript.TextSlot.Equals(System.Object)">
   Equals(object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L196"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L214"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Indicates whether this instance and a specified object are equal.</p>
@@ -468,7 +503,7 @@ allocating-text array when <a class="xref" href="CodeSmile.LunyScript.TextSlot.h
 
   <h3 id="CodeSmile_LunyScript_TextSlot_GetHashCode" data-uid="CodeSmile.LunyScript.TextSlot.GetHashCode">
   GetHashCode()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L199"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L217"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Returns the hash code for this instance.</p>
@@ -501,7 +536,7 @@ allocating-text array when <a class="xref" href="CodeSmile.LunyScript.TextSlot.h
 
   <h3 id="CodeSmile_LunyScript_TextSlot_ToString" data-uid="CodeSmile.LunyScript.TextSlot.ToString">
   ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L204"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/SlotHandles.cs/#L223"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Names the slot for a diagnostic message.</p>
@@ -516,7 +551,8 @@ allocating-text array when <a class="xref" href="CodeSmile.LunyScript.TextSlot.h
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><span class="xref">string</span></dt>
-    <dd><p>For example: &quot;TextSlot(Bytes64, 0)&quot; or &quot;TextSlot(Allocating, 0, max 256)&quot;.</p>
+    <dd><p>For example: &quot;TextSlot(Bytes64, 0)&quot;, &quot;TextSlot(Bytes64, 0, store 1)&quot; or
+&quot;TextSlot(Allocating, 0, max 256)&quot;.</p>
 </dd>
   </dl>
 
