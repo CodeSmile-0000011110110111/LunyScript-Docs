@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Reading scripts from C# | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Reading scripts from C#" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/reading-scripts-from-csharp.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/reading-scripts-from-csharp.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Reading scripts from C#" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Reading scripts from C#","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/reading-scripts-from-csharp.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Reading scripts from C#</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Show a script’s variable in an ordinary <code class="language-plaintext highlighter-rouge">MonoBehaviour</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">HealthBar</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">SerializeField</span><span class="p">]</span> <span class="k">private</span> <span class="n">LunyScriptBehaviour</span> <span class="n">m_Player</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">SerializeField</span><span class="p">]</span> <span class="k">private</span> <span class="n">Transform</span> <span class="n">m_Bar</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">ScriptView</span><span class="p">&lt;</span><span class="n">PlayerScript</span><span class="p">&gt;</span> <span class="n">m_View</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">ScriptObservation</span> <span class="n">m_Watch</span><span class="p">;</span>
+
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">m_View</span> <span class="p">=</span> <span class="n">Scripts</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">PlayerScript</span><span class="p">&gt;(</span><span class="n">m_Player</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">m_View</span><span class="p">.</span><span class="n">Exists</span> <span class="p">==</span> <span class="k">false</span><span class="p">)</span>
+            <span class="k">return</span><span class="p">;</span>
+
+        <span class="kt">var</span> <span class="n">player</span> <span class="p">=</span> <span class="n">m_View</span><span class="p">.</span><span class="n">Definition</span><span class="p">;</span>
+        <span class="nf">ShowHealth</span><span class="p">(</span><span class="n">m_View</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">player</span><span class="p">.</span><span class="n">Health</span><span class="p">));</span>
+        <span class="n">m_Watch</span> <span class="p">=</span> <span class="n">m_View</span><span class="p">.</span><span class="nf">Observe</span><span class="p">(</span><span class="n">player</span><span class="p">.</span><span class="n">Health</span><span class="p">,</span> <span class="n">ShowHealth</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">ShowHealth</span><span class="p">(</span><span class="kt">double</span> <span class="n">health</span><span class="p">)</span> <span class="p">=&gt;</span>
+        <span class="n">m_Bar</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Vector3</span><span class="p">((</span><span class="kt">float</span><span class="p">)(</span><span class="n">health</span> <span class="p">/</span> <span class="m">100</span><span class="p">),</span> <span class="m">1f</span><span class="p">,</span> <span class="m">1f</span><span class="p">);</span>
+
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">OnDestroy</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="n">m_Watch</span><span class="p">?.</span><span class="nf">Dispose</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Scripts.Find</code> looks up the script the player object runs and returns a view of it. <code class="language-plaintext highlighter-rouge">Read</code> returns
+the value <code class="language-plaintext highlighter-rouge">Health</code> holds now, and <code class="language-plaintext highlighter-rouge">Observe</code> calls <code class="language-plaintext highlighter-rouge">ShowHealth</code> again whenever that value changes. The
+C# code reads; it never writes the script’s variables. In the Inspector, drag the player object onto
+<code class="language-plaintext highlighter-rouge">m_Player</code>, which assigns its <code class="language-plaintext highlighter-rouge">LunyScriptBehaviour</code>, and the bar object onto <code class="language-plaintext highlighter-rouge">m_Bar</code>, whose width
+then follows <code class="language-plaintext highlighter-rouge">Health</code>.</p>
+
+<h2 id="finding-a-script">Finding a script</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Scripts.Find&lt;PlayerScript&gt;(behaviour)</code> returns a <code class="language-plaintext highlighter-rouge">ScriptView&lt;PlayerScript&gt;</code>. Check <code class="language-plaintext highlighter-rouge">Exists</code> before
+you use it:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">enemy</span> <span class="p">=</span> <span class="n">Scripts</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">EnemyScript</span><span class="p">&gt;(</span><span class="n">behaviour</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">Exists</span><span class="p">)</span>
+    <span class="n">damage</span> <span class="p">=</span> <span class="n">enemy</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">Damage</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Exists</code> is false when the object’s script is of another type, when <code class="language-plaintext highlighter-rouge">behaviour</code> is null or its
+object was destroyed, before the object’s <code class="language-plaintext highlighter-rouge">Awake</code>, and after the script despawned. A script type
+derived from the one you ask for is found too.</p>
+
+<p>From a <code class="language-plaintext highlighter-rouge">GameObject</code> or a <code class="language-plaintext highlighter-rouge">Collider</code>, reach the behaviour first:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="k">void</span> <span class="nf">OnTriggerEnter</span><span class="p">(</span><span class="n">Collider</span> <span class="n">other</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="nf">TryGetComponent</span><span class="p">(</span><span class="k">out</span> <span class="n">LunyScriptBehaviour</span> <span class="n">behaviour</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">enemy</span> <span class="p">=</span> <span class="n">Scripts</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">EnemyScript</span><span class="p">&gt;(</span><span class="n">behaviour</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">Exists</span><span class="p">)</span>
+            <span class="nf">TakeDamage</span><span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">Damage</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">TryGetComponent</code> finds the behaviour on the collider’s own object. A collider on a child object
+finds the child’s behaviour, not one on its parent.</p>
+
+<h2 id="the-definition-and-its-handles">The definition and its handles</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Definition</code> is the script object whose <code class="language-plaintext highlighter-rouge">Build()</code> ran. Its properties hold the variable handles:
+<code class="language-plaintext highlighter-rouge">player.Health</code> is the <code class="language-plaintext highlighter-rouge">Number</code> that <code class="language-plaintext highlighter-rouge">Build()</code> declared. Take the handles from the view you read
+through. A handle from another script type is refused with a <code class="language-plaintext highlighter-rouge">LunyScriptUsageException</code> that names
+both types, even when both scripts declare a variable of the same name:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">view</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">crate</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">Health</span><span class="p">);</span>   <span class="c1">// throws: CrateScript declared Health</span>
+</code></pre></div></div>
+
+<p>A script object you create with <code class="language-plaintext highlighter-rouge">new PlayerScript()</code> is not a definition. Its properties are
+unassigned, because <code class="language-plaintext highlighter-rouge">Build()</code> runs once per script type, on the first object of that type.</p>
+
+<h2 id="reading-a-value">Reading a value</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Read</code> has one form per kind of variable, and each returns that kind:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Variable</th>
+      <th><code class="language-plaintext highlighter-rouge">Read</code> returns</th>
+      <th>After the script ended</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Number</code></td>
+      <td><code class="language-plaintext highlighter-rouge">double</code></td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Flag</code></td>
+      <td><code class="language-plaintext highlighter-rouge">bool</code></td>
+      <td>false</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Var&lt;Vec3&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Vec3</code></td>
+      <td>(0, 0, 0)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Var&lt;Rotation&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Rotation</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Rotation.Identity</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Var&lt;Vec2&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Vec2</code></td>
+      <td>(0, 0)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Var&lt;YourEnum&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">YourEnum</code></td>
+      <td>the value whose code is 0</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Text</code></td>
+      <td>a copy into your fixed string</td>
+      <td>an empty string</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A text variable is copied into a fixed string you provide, so the read allocates nothing:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">name</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FixedString64Bytes</span><span class="p">();</span>
+<span class="n">view</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">PlayerName</span><span class="p">,</span> <span class="k">ref</span> <span class="n">name</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>That read returns <code class="language-plaintext highlighter-rouge">CopyError.Truncation</code>, and leaves the fixed string unchanged, when the text does
+not fit. <code class="language-plaintext highlighter-rouge">FixedString64Bytes</code> is in <code class="language-plaintext highlighter-rouge">Unity.Collections</code>. No read allocates, so a HUD can read every
+frame.</p>
+
+<h2 id="when-the-script-ends">When the script ends</h2>
+
+<p>A view belongs to one run of the script on one object. When that script despawns, or its object is
+destroyed, <code class="language-plaintext highlighter-rouge">Exists</code> becomes false and stays false. A read after that returns the value in the last
+column of the table above, and the first such read writes one warning to the Console naming the
+script and the variable. Later reads through the same view write nothing, so a view read every frame
+writes one line.</p>
+
+<p>LunyScript reuses a despawned script’s storage for the next object of the same script type. That
+next object is a new run, and an old view never reads it:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">first</span> <span class="p">=</span> <span class="n">Scripts</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">GuardScript</span><span class="p">&gt;(</span><span class="n">guardBehaviour</span><span class="p">);</span>
+<span class="c1">// the guard despawns; the relief guard starts and reuses its storage</span>
+<span class="kt">var</span> <span class="n">relief</span> <span class="p">=</span> <span class="n">Scripts</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">GuardScript</span><span class="p">&gt;(</span><span class="n">reliefBehaviour</span><span class="p">);</span>
+<span class="c1">// first.Exists is false and first.Read(...) returns 0;</span>
+<span class="c1">// relief.Exists is true</span>
+</code></pre></div></div>
+
+<p>Call <code class="language-plaintext highlighter-rouge">Scripts.Find</code> again to reach whatever the object runs now. Two views compare equal when they
+see the same run of a script, before and after it ends.</p>
+
+<h2 id="following-changes">Following changes</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Observe</code> calls your method with the new value each time the variable changes:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">m_Watch</span> <span class="p">=</span> <span class="n">view</span><span class="p">.</span><span class="nf">Observe</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">Health</span><span class="p">,</span> <span class="n">ShowHealth</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>It exists for <code class="language-plaintext highlighter-rouge">Number</code>, <code class="language-plaintext highlighter-rouge">Flag</code>, <code class="language-plaintext highlighter-rouge">Var&lt;Vec3&gt;</code>, <code class="language-plaintext highlighter-rouge">Var&lt;Rotation&gt;</code> and <code class="language-plaintext highlighter-rouge">Var&lt;Vec2&gt;</code>.</p>
+
+<ul>
+  <li><strong>It runs at most once per frame</strong>, after every script’s <code class="language-plaintext highlighter-rouge">On.LateUpdate</code>, and only when the value
+differs from the value at the previous check. It does not run for the value the variable held when
+you called <code class="language-plaintext highlighter-rouge">Observe</code>; read that with <code class="language-plaintext highlighter-rouge">Read</code>.</li>
+  <li><strong>You end it with <code class="language-plaintext highlighter-rouge">Dispose()</code></strong>, usually in <code class="language-plaintext highlighter-rouge">OnDestroy</code>. Disposing twice does nothing.</li>
+  <li><strong>It ends by itself when the script ends.</strong> <code class="language-plaintext highlighter-rouge">IsActive</code> becomes false and your method is not called
+again.</li>
+  <li><strong>It ends when your component is destroyed.</strong> When the method you passed belongs to a
+<code class="language-plaintext highlighter-rouge">MonoBehaviour</code> or another Unity object that has been destroyed, the next check ends the
+observation instead of calling it. A lambda is not a Unity object, so dispose a lambda’s
+observation yourself.</li>
+  <li><strong>A method that throws is reported once.</strong> The exception is logged as an error, that observation
+ends, and every other observation still runs.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">Observe</code> on a script that has already ended returns an observation whose <code class="language-plaintext highlighter-rouge">IsActive</code> is false, and
+writes the same one warning a read does.</p>
+
+<h2 id="changing-a-scripts-state">Changing a script’s state</h2>
+
+<p>There is no write through a view. To change another script’s state, send it a message and let its
+own <code class="language-plaintext highlighter-rouge">On.Message</code> blocks change it:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// in the script's Build():</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Heal</span><span class="p">),</span> <span class="n">Health</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">25</span><span class="p">));</span>
+
+<span class="c1">// in C#:</span>
+<span class="n">playerBehaviour</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="n">PlayerScript</span><span class="p">.</span><span class="n">Heal</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Heal</code> here is a <code class="language-plaintext highlighter-rouge">const string</code> the script declares, so the name is written once. The script
+decides what a heal does, including any limit it applies.</p>
+
+<h2 id="the-objects-own-script">The object’s own script</h2>
+
+<p><code class="language-plaintext highlighter-rouge">LunyScriptBehaviour</code> also reads the variables of the script on its own object, through
+<code class="language-plaintext highlighter-rouge">GetNumber</code>, <code class="language-plaintext highlighter-rouge">GetFlag</code>, <code class="language-plaintext highlighter-rouge">GetVec3</code>, <code class="language-plaintext highlighter-rouge">GetRotation</code>, <code class="language-plaintext highlighter-rouge">GetVec2</code>, <code class="language-plaintext highlighter-rouge">GetEnum</code>, <code class="language-plaintext highlighter-rouge">ReadText</code> and <code class="language-plaintext highlighter-rouge">GetAsset</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">script</span> <span class="p">=</span> <span class="p">(</span><span class="n">PlayerScript</span><span class="p">)</span><span class="n">behaviour</span><span class="p">.</span><span class="n">Script</span><span class="p">;</span>
+<span class="kt">var</span> <span class="n">health</span> <span class="p">=</span> <span class="n">behaviour</span><span class="p">.</span><span class="nf">GetNumber</span><span class="p">(</span><span class="n">script</span><span class="p">.</span><span class="n">Health</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>These reads throw a <code class="language-plaintext highlighter-rouge">LunyScriptUsageException</code> before <code class="language-plaintext highlighter-rouge">Awake</code> and after the object is destroyed,
+where a view returns a default. Use a view for an object whose script can end while you still hold a
+reference to it.</p>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/variables-and-values.html">Variables and values</a> — the variables a
+view reads.</li>
+  <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> —
+<code class="language-plaintext highlighter-rouge">On.Message</code>, and when a script despawns.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Scripts.html"><code class="language-plaintext highlighter-rouge">Scripts</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ScriptView-1.html"><code class="language-plaintext highlighter-rouge">ScriptView&lt;TScript&gt;</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ScriptObservation.html"><code class="language-plaintext highlighter-rouge">ScriptObservation</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.LunyScriptBehaviour.html"><code class="language-plaintext highlighter-rouge">LunyScriptBehaviour</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
