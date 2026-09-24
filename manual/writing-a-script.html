@@ -120,22 +120,24 @@ place to put declarations.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Battery</span> <span class="p">:</span> <span class="n">Script</span>
 <span class="p">{</span>
-    <span class="c1">// The [Variable] generator writes the DefineVariables override.</span>
-    <span class="p">[</span><span class="nf">Variable</span><span class="p">(</span><span class="m">40</span><span class="p">)]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;</span> <span class="n">Charge</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
     <span class="c1">// The [Asset] generator writes the DefineAssets override.</span>
     <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Prefab</span> <span class="n">Spark</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
+        <span class="c1">// The generator writes the Charge property this line assigns.</span>
+        <span class="n">Charge</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Charge</span><span class="p">),</span> <span class="m">40</span><span class="p">);</span>
+
         <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Charge</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Discharge"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Spark</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>The class is <code class="language-plaintext highlighter-rouge">partial</code> because the generators write the other half of it. A script that declares no
-<code class="language-plaintext highlighter-rouge">[Variable]</code> and no <code class="language-plaintext highlighter-rouge">[Asset]</code> property is written without <code class="language-plaintext highlighter-rouge">partial</code>. <code class="language-plaintext highlighter-rouge">Spark</code> gets its own field on
+<p>The class is <code class="language-plaintext highlighter-rouge">partial</code> because the generators write the other half of it: the <code class="language-plaintext highlighter-rouge">Charge</code> property that
+the <code class="language-plaintext highlighter-rouge">Number.Define</code> line assigns, and the <code class="language-plaintext highlighter-rouge">DefineAssets</code> override for <code class="language-plaintext highlighter-rouge">Spark</code>. A script that declares
+its variables and assets on properties it writes itself, with no <code class="language-plaintext highlighter-rouge">[Variable]</code> or <code class="language-plaintext highlighter-rouge">[Asset]</code>, is
+written without <code class="language-plaintext highlighter-rouge">partial</code>. <code class="language-plaintext highlighter-rouge">Spark</code> gets its own field on
 the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component, below the script, and that is where the object assigns a
 prefab to it.</p>
 

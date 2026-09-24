@@ -63,7 +63,7 @@
 
 <span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Beacon</span> <span class="p">:</span> <span class="n">Script</span>
 <span class="p">{</span>
-    <span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;</span> <span class="n">Flashes</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Number</span> <span class="n">Flashes</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Run</span><span class="p">(</span><span class="n">Flashes</span><span class="p">.</span><span class="nf">Increment</span><span class="p">()).</span><span class="nf">Every</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">().</span><span class="nf">Start</span><span class="p">());</span>
@@ -79,7 +79,7 @@
 <span class="nf">If</span><span class="p">(</span><span class="n">Armed</span> <span class="p">&amp;</span> <span class="n">Charge</span> <span class="p">&gt;</span> <span class="m">10</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Fire</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="n">Shots</span><span class="p">.</span><span class="nf">Increment</span><span class="p">());</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">If</code> takes a condition: a comparison, a <code class="language-plaintext highlighter-rouge">Var&lt;Flag&gt;</code>, or several combined with <code class="language-plaintext highlighter-rouge">&amp;</code>, <code class="language-plaintext highlighter-rouge">|</code> and <code class="language-plaintext highlighter-rouge">!</code>. It is
+<p><code class="language-plaintext highlighter-rouge">If</code> takes a condition: a comparison, a <code class="language-plaintext highlighter-rouge">Flag</code>, or several combined with <code class="language-plaintext highlighter-rouge">&amp;</code>, <code class="language-plaintext highlighter-rouge">|</code> and <code class="language-plaintext highlighter-rouge">!</code>. It is
 incomplete without <code class="language-plaintext highlighter-rouge">Then</code>; an <code class="language-plaintext highlighter-rouge">If</code> used as a block with no branch is refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs,
 with a message naming the branch you left out. The condition is evaluated each time the <code class="language-plaintext highlighter-rouge">If</code> runs,
 immediately before its children.</p>
