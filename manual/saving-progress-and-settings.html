@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Saving progress and settings | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Saving progress and settings" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/saving-progress-and-settings.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/saving-progress-and-settings.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Saving progress and settings" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Saving progress and settings","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/saving-progress-and-settings.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Saving progress and settings</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Keep a variable between sessions by listing it in a document, then saving and
+loading the document:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Scorer</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">Document</span> <span class="n">Career</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">Operation</span> <span class="n">LoadingCareer</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">Operation</span> <span class="n">SavingCareer</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Best</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Best</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>
+        <span class="n">Career</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Document</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Career</span><span class="p">)).</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Best</span><span class="p">),</span> <span class="n">Best</span><span class="p">);</span>
+        <span class="n">LoadingCareer</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">LoadingCareer</span><span class="p">));</span>
+        <span class="n">SavingCareer</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">SavingCareer</span><span class="p">));</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Progress</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Career</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">LoadingCareer</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">LoadingCareer</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Best</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Var</span><span class="p">(</span><span class="n">Best</span><span class="p">).</span><span class="nf">Changed</span><span class="p">(</span><span class="n">Progress</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">Career</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">SavingCareer</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The first time the game runs there is nothing to load, so the load fails and
+<code class="language-plaintext highlighter-rouge">Best</code> starts at 0. Every change to <code class="language-plaintext highlighter-rouge">Best</code> saves the document, and the next
+session’s load puts the saved value back.</p>
+
+<p>A document is stored on the player’s device, in a file of its own. <code class="language-plaintext highlighter-rouge">Progress</code>
+keeps what a player earned: unlocks, counters, quest flags and records.
+<code class="language-plaintext highlighter-rouge">Settings</code> keeps how a player configured the game: volume, sensitivity and
+difficulty. Both belong to the local user, and both work without a network.</p>
+
+<h2 id="declaring-a-document">Declaring a document</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Define.Document(name)</code> names the document, and each <code class="language-plaintext highlighter-rouge">Field(name, variable)</code>
+lists one variable it keeps:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Career</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Document</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Career</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Best</span><span class="p">),</span> <span class="n">Best</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Unlocked</span><span class="p">),</span> <span class="n">Unlocked</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Pilot</span><span class="p">),</span> <span class="n">Pilot</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Checkpoint</span><span class="p">),</span> <span class="n">Checkpoint</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The first argument of <code class="language-plaintext highlighter-rouge">Field</code> is the name stored in the file. It is usually
+<code class="language-plaintext highlighter-rouge">nameof</code> the variable; a fixed name keeps old saves loading after the variable
+is renamed. A field holds a <code class="language-plaintext highlighter-rouge">Number</code>, a <code class="language-plaintext highlighter-rouge">Flag</code>, a text, a <code class="language-plaintext highlighter-rouge">Vec3</code>, a <code class="language-plaintext highlighter-rouge">Rotation</code>
+or a <code class="language-plaintext highlighter-rouge">Vec2</code>, declared by the same script, object-local or shared.</p>
+
+<p>Assign the document to a property you declare:
+<code class="language-plaintext highlighter-rouge">public Document Career { get; private set; }</code>. Name it after what it holds: a
+property named like a member every script has, such as <code class="language-plaintext highlighter-rouge">Run</code>, <code class="language-plaintext highlighter-rouge">Time</code> or
+<code class="language-plaintext highlighter-rouge">Progress</code>, hides that member inside the script.</p>
+
+<p>Names use letters, digits, dash and underscore, 1 to 64 of them, and are case
+sensitive: <code class="language-plaintext highlighter-rouge">Career</code> and <code class="language-plaintext highlighter-rouge">career</code> are two documents. <code class="language-plaintext highlighter-rouge">Build()</code> refuses a document with
+no field, two fields of one name, one variable listed twice, a constant, a
+synchronised variable, and a document name Windows reserves for a device such
+as <code class="language-plaintext highlighter-rouge">NUL</code>.</p>
+
+<h2 id="saving-and-loading">Saving and loading</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Call</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Progress.Save(doc).As(op)</code></td>
+      <td>Stores every field’s current value among the user’s progress.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Progress.Load(doc).As(op)</code></td>
+      <td>Reads the stored copy and writes it into the fields.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Settings.Save(doc).As(op)</code></td>
+      <td>Stores the document among the user’s settings.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Settings.Load(doc).As(op)</code></td>
+      <td>Reads it back from the settings.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Every save and load is one attempt on an operation handle, so <code class="language-plaintext highlighter-rouge">.As(op)</code> is
+required. The block returns at once; the file is written or read when the next
+frame begins, and <code class="language-plaintext highlighter-rouge">When.Operation(op)</code> reports the outcome in that frame.
+<a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a>
+describes <code class="language-plaintext highlighter-rouge">Succeeded</code>, <code class="language-plaintext highlighter-rouge">Failed</code>, <code class="language-plaintext highlighter-rouge">Cancel()</code> and <code class="language-plaintext highlighter-rouge">Retry()</code>.</p>
+
+<p>A save stores the values the fields held when its block ran. Two saves of one
+document in the same frame write once, with the values of the later one. A
+load that follows a save of the same document reads what the save wrote. One
+document is either a <code class="language-plaintext highlighter-rouge">Progress</code> or a <code class="language-plaintext highlighter-rouge">Settings</code> document: naming it with both
+is refused.</p>
+
+<p>A failed attempt names why in <code class="language-plaintext highlighter-rouge">op.Failure</code>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Failure</th>
+      <th>Cause</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">NotFound</code></td>
+      <td>Nothing was saved yet.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Unreadable</code></td>
+      <td>The file is not a readable document, for example after a bad hand edit.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Unsupported</code></td>
+      <td>The file comes from a newer version of the script, or no migration step can bring it to this version.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Unknown</code></td>
+      <td>The device refused the read or the write, for example a full disk.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A failed load writes nothing, and a failed save leaves the previous copy as
+it was. <code class="language-plaintext highlighter-rouge">Unreadable</code> and <code class="language-plaintext highlighter-rouge">Unsupported</code> write a warning to the Console saying
+what is wrong with the file.</p>
+
+<h2 id="what-a-load-writes">What a load writes</h2>
+
+<p>A load writes every field it can read together, then succeeds, so the blocks
+of <code class="language-plaintext highlighter-rouge">When.Operation(op).Succeeded</code> already see the loaded values. A load
+cancelled with <code class="language-plaintext highlighter-rouge">op.Cancel()</code>, or completing after its object despawned, writes
+nothing.</p>
+
+<p>A stored copy may lack a field, when the field was added after the file was
+saved, or hold a value the field cannot take, such as a text longer than the
+variable holds. The load then writes the other fields and still succeeds. The
+fields it did not load keep their values:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">LoadingCareer</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Career</span><span class="p">.</span><span class="nf">Omitted</span><span class="p">(</span><span class="n">Pilot</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Pilot</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Pilot"</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p>When a script reads neither <code class="language-plaintext highlighter-rouge">HasOmissions</code> nor <code class="language-plaintext highlighter-rouge">Omitted</code> for a document, a
+load that omits fields writes one warning naming each of them.</p>
+
+<h2 id="knowing-what-is-unsaved">Knowing what is unsaved</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Condition</th>
+      <th>True when</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">doc.IsDirty</code></td>
+      <td>A field holds something other than what the last save wrote or the last load read, or the last load omitted a field.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">doc.Unsynced</code></td>
+      <td>The document is stored on this device and not uploaded. This version uploads no document, so once saved or loaded it stays true.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">doc.HasOmissions</code></td>
+      <td>The last load omitted at least one field.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">doc.Omitted(field)</code></td>
+      <td>The last load omitted that field.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Before any save or load, <code class="language-plaintext highlighter-rouge">IsDirty</code> compares each field with the value it was
+declared with. Changing a variable never saves by itself: the script saves when
+it chooses to.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Career</span><span class="p">.</span><span class="n">IsDirty</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Hint</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Unsaved progress"</span><span class="p">))</span>
+        <span class="p">.</span><span class="nf">Else</span><span class="p">(</span><span class="n">Hint</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">""</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<h2 id="changing-a-document-between-versions">Changing a document between versions</h2>
+
+<p>When a later version of your game renames or reshapes fields, raise the
+document’s version and register a migration step for each version before it:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Career</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Document</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Career</span><span class="p">)).</span><span class="nf">Version</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Best</span><span class="p">),</span> <span class="n">Best</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">PlayMinutes</span><span class="p">),</span> <span class="n">PlayMinutes</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Migration</span><span class="p">(</span><span class="k">new</span> <span class="nf">CareerVersion1To2</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>A step is an ordinary C# class. It converts the fields of one version into the
+next, on a copy of the stored fields:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">CareerVersion1To2</span> <span class="p">:</span> <span class="n">DocumentMigration</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">override</span> <span class="kt">int</span> <span class="n">FromVersion</span> <span class="p">=&gt;</span> <span class="m">1</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">override</span> <span class="n">MigrationResult</span> <span class="nf">Migrate</span><span class="p">(</span><span class="n">DocumentFields</span> <span class="n">fields</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">fields</span><span class="p">.</span><span class="nf">Rename</span><span class="p">(</span><span class="s">"best"</span><span class="p">,</span> <span class="s">"Best"</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">fields</span><span class="p">.</span><span class="nf">TryGetNumber</span><span class="p">(</span><span class="s">"seconds"</span><span class="p">,</span> <span class="k">out</span> <span class="kt">var</span> <span class="n">seconds</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">fields</span><span class="p">.</span><span class="nf">SetNumber</span><span class="p">(</span><span class="s">"PlayMinutes"</span><span class="p">,</span> <span class="n">seconds</span> <span class="p">/</span> <span class="m">60.0</span><span class="p">);</span>
+            <span class="n">fields</span><span class="p">.</span><span class="nf">Remove</span><span class="p">(</span><span class="s">"seconds"</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">MigrationResult</span><span class="p">.</span><span class="n">Converted</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">DocumentFields</code> reads with <code class="language-plaintext highlighter-rouge">TryGetNumber</code>, <code class="language-plaintext highlighter-rouge">TryGetFlag</code>, <code class="language-plaintext highlighter-rouge">TryGetText</code>,
+<code class="language-plaintext highlighter-rouge">TryGetVec3</code>, <code class="language-plaintext highlighter-rouge">TryGetRotation</code> and <code class="language-plaintext highlighter-rouge">TryGetVec2</code>, writes with the matching <code class="language-plaintext highlighter-rouge">Set</code>
+methods, adds a field only where it is missing with <code class="language-plaintext highlighter-rouge">DefaultNumber</code> and its
+siblings, and has <code class="language-plaintext highlighter-rouge">Rename</code>, <code class="language-plaintext highlighter-rouge">Remove</code> and <code class="language-plaintext highlighter-rouge">Contains</code>. A step that returns
+<code class="language-plaintext highlighter-rouge">MigrationResult.Rejected("why")</code>, or throws, fails the load as <code class="language-plaintext highlighter-rouge">Unsupported</code>.</p>
+
+<p>Loading a version 1 file into a version 3 script runs the step from 1, then
+the step from 2. After the steps, every declared field must be present and
+readable, or the load fails as <code class="language-plaintext highlighter-rouge">Unsupported</code> and nothing is written. A load
+never rewrites the file; the next save stores it at the new version. The steps
+must follow on from one another: registering a step from version 1 and none
+from version 2 of a version 3 document is refused when <code class="language-plaintext highlighter-rouge">Build()</code> runs.</p>
+
+<h2 id="where-the-files-are">Where the files are</h2>
+
+<p>Each document is one file under <code class="language-plaintext highlighter-rouge">Application.persistentDataPath</code>:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LunyScript/Users/Default/Progress/^Career.json
+LunyScript/Users/Default/Settings/^Options.json
+</code></pre></div></div>
+
+<p>A <code class="language-plaintext highlighter-rouge">^</code> marks each capital letter, which keeps <code class="language-plaintext highlighter-rouge">Career</code> and <code class="language-plaintext highlighter-rouge">career</code> apart on file
+systems that ignore case. The file is indented JSON, safe to read and to edit
+by hand:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"format"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"Best"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Pilot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ada"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"Checkpoint"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.5</span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>A save writes a temporary file and then replaces the document with it, so a
+save that stops half way leaves the previous copy intact. A number that is not
+finite is stored as the text <code class="language-plaintext highlighter-rouge">"NaN"</code>, <code class="language-plaintext highlighter-rouge">"Infinity"</code> or <code class="language-plaintext highlighter-rouge">"-Infinity"</code>.</p>
+
+<h2 id="what-is-not-included">What is not included</h2>
+
+<ul>
+  <li>Uploading a document to a cloud service. <code class="language-plaintext highlighter-rouge">Cloud.Save</code> and <code class="language-plaintext highlighter-rouge">Cloud.Load</code> store
+single numbers; see
+<a href="/LunyScript-Docs/manual/networking-and-cloud-save.html">Networking and cloud save</a>.</li>
+  <li>Choosing between several local users: every document belongs to the one
+default user.</li>
+  <li>Fields of an enum, list or map type.</li>
+  <li>Deleting a document, and reading one from C#.</li>
+</ul>
+
+<h2 id="a-worked-example">A worked example</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Options</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">Document</span> <span class="n">Sound</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">Operation</span> <span class="n">LoadingSound</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">Operation</span> <span class="n">SavingSound</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Volume</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Volume</span><span class="p">),</span> <span class="m">0.8</span><span class="p">);</span>
+        <span class="n">Muted</span> <span class="p">=</span> <span class="n">Flag</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Muted</span><span class="p">),</span> <span class="k">false</span><span class="p">);</span>
+        <span class="n">Saved</span> <span class="p">=</span> <span class="n">Flag</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Saved</span><span class="p">),</span> <span class="k">false</span><span class="p">);</span>
+        <span class="n">Sound</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Document</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Sound</span><span class="p">))</span>
+            <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Volume</span><span class="p">),</span> <span class="n">Volume</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Muted</span><span class="p">),</span> <span class="n">Muted</span><span class="p">);</span>
+        <span class="n">LoadingSound</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">LoadingSound</span><span class="p">));</span>
+        <span class="n">SavingSound</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">SavingSound</span><span class="p">));</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Settings</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Sound</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">LoadingSound</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">LoadingSound</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Volume</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0.8</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+            <span class="nf">If</span><span class="p">(</span><span class="n">Sound</span><span class="p">.</span><span class="n">IsDirty</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Saved</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">))</span>
+                <span class="p">.</span><span class="nf">Else</span><span class="p">(</span><span class="n">Saved</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"CloseOptions"</span><span class="p">,</span>
+            <span class="n">Settings</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">Sound</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">SavingSound</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The options menu loads the sound settings when it opens, shows whether they
+changed since the last save, and saves them when the menu closes. The API
+examples folder has a runnable scene, <code class="language-plaintext highlighter-rouge">Documents.unity</code>, that saves a career,
+restores it after Restart, migrates an older version and reports an omitted
+field.</p>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a>
+— the operation handles every save and load reports through.</li>
+  <li><a href="/LunyScript-Docs/manual/variables-and-values.html">Variables and values</a>
+— the variables a document lists.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Document.html"><code class="language-plaintext highlighter-rouge">Document</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ProgressFactory.html"><code class="language-plaintext highlighter-rouge">ProgressFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SettingsFactory.html"><code class="language-plaintext highlighter-rouge">SettingsFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.DocumentMigration.html"><code class="language-plaintext highlighter-rouge">DocumentMigration</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
