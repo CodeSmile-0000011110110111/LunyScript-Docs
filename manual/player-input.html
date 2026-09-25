@@ -129,8 +129,9 @@ give you back a handle to read:</p>
 <p><code class="language-plaintext highlighter-rouge">Vector2</code> and <code class="language-plaintext highlighter-rouge">Vector3</code> are the Input System’s control type names, which is why they carry those
 spellings rather than the product’s own <code class="language-plaintext highlighter-rouge">Vec2</code> and <code class="language-plaintext highlighter-rouge">Vec3</code>.</p>
 
-<p>The player is an index, from 0 upwards, that pairs a device set to a local player. A negative index is
-refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs. Declaring the same player, name and kind twice is one declaration;
+<p>The player is a number, from 0 upwards, that a set of devices is paired with. A negative number is
+refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs. <a href="#local-players">Local players</a> covers pairing and one script for
+every player. Declaring the same player, name and kind twice is one declaration;
 declaring one name as two kinds is refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs. The Input System’s <code class="language-plaintext highlighter-rouge">Axis</code> and
 <code class="language-plaintext highlighter-rouge">Analog</code> control types both map onto <code class="language-plaintext highlighter-rouge">Number</code>.</p>
 
@@ -185,12 +186,116 @@ operation handle in full.</p>
 <p>Lock and visibility are separate settings, so a locked cursor can still be visible. The last write
 wins. Before any write, the cursor is unlocked and visible.</p>
 
+<h2 id="local-players">Local players</h2>
+
+<p>A second player joins by pressing a button on their own gamepad. Give the input backend a number of
+local players where your C# installs it:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">provider</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">InputSystemProvider</span><span class="p">(</span><span class="n">actions</span><span class="p">,</span> <span class="m">4</span><span class="p">);</span>
+<span class="n">LunyScriptRuntime</span><span class="p">.</span><span class="n">DefaultRunner</span><span class="p">.</span><span class="n">InputGateway</span><span class="p">.</span><span class="nf">UseProvider</span><span class="p">(</span><span class="n">provider</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>With that setup nobody is present until a button press. A script opens pairing, and each press on a
+device that no player holds pairs that device with the lowest free player number. A key pairs the
+keyboard and the mouse together as one player. <code class="language-plaintext highlighter-rouge">new InputSystemProvider(actions)</code>, with no number,
+keeps player 0 present from the start on every device and pairs nothing.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">Pairing</span><span class="p">.</span><span class="nf">Open</span><span class="p">());</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 1 is in"</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 2 is in"</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Left</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 2 left"</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Lost</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 2: reconnect the controller"</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Returned</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 2 is back"</span><span class="p">));</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Call</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Input.Pairing.Open()</code>, <code class="language-plaintext highlighter-rouge">.Close()</code></td>
+      <td>Starts and stops pairing new players.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Input.Pairing.IsOpen</code></td>
+      <td>A condition: pairing is open.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Input.ForPlayer(n).Leave()</code></td>
+      <td>Releases that player’s devices and frees the number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Input.ForPlayer(n).IsPaired</code></td>
+      <td>A condition: someone holds that player number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Input.ForPlayer(n).IsLost</code></td>
+      <td>A condition: that player’s controller is unplugged.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Input.PlayerCount</code></td>
+      <td>How many player numbers are held.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.Player(n).Paired</code>, <code class="language-plaintext highlighter-rouge">.Left</code></td>
+      <td>Runs when someone takes the number, and when they leave it.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.Player(n).Lost</code>, <code class="language-plaintext highlighter-rouge">.Returned</code></td>
+      <td>Runs when that player’s controller disconnects, and when it is back.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A player whose controller is unplugged stays paired and reads resting values. Plugging the same
+controller back in returns it. Pressing a button on another controller that nobody holds also
+returns that player, with pairing open or closed. Player numbers are never renumbered: when player 2
+of 3 leaves, player 3 keeps number 3, and the next person takes number 2. A script that starts after
+a player paired still runs <code class="language-plaintext highlighter-rouge">Paired</code> for that player, so a game scene loaded after the lobby sees
+everyone who paired in the lobby.</p>
+
+<h3 id="one-script-for-every-player">One script for every player</h3>
+
+<p>Leave the player out, and an input read uses the player bound to the object the script runs on:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">move</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="nf">Vector2</span><span class="p">(</span><span class="s">"Move"</span><span class="p">);</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(!</span><span class="n">Input</span><span class="p">.</span><span class="n">IsLost</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span>
+    <span class="n">move</span><span class="p">.</span><span class="n">Value</span><span class="p">.</span><span class="n">X</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span> <span class="p">*</span> <span class="m">3.0</span><span class="p">,</span> <span class="m">0.0</span><span class="p">,</span> <span class="n">move</span><span class="p">.</span><span class="n">Value</span><span class="p">.</span><span class="n">Y</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span> <span class="p">*</span> <span class="m">3.0</span><span class="p">)));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Input</span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="nf">Button</span><span class="p">(</span><span class="s">"Leave"</span><span class="p">)).</span><span class="nf">Performed</span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="nf">Leave</span><span class="p">());</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">().</span><span class="nf">Left</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>Bind an object to a player when you spawn it, or with the <strong>Local Player</strong> field on its
+<strong>LunyScript Behaviour</strong>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Avatar</span><span class="p">).</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Avatar</span><span class="p">).</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">ForPlayer(n)</code> binds every script the spawned object starts, its children included. An object bound
+to no player reads resting values, and the Console says so once per script type.</p>
+
+<p>A button every player shares, such as pause, is <code class="language-plaintext highlighter-rouge">Input.AnyPlayer().Button(name)</code>. It is pressed while
+any player holds it.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">pause</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="nf">AnyPlayer</span><span class="p">().</span><span class="nf">Button</span><span class="p">(</span><span class="s">"Pause"</span><span class="p">);</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Input</span><span class="p">(</span><span class="n">pause</span><span class="p">).</span><span class="nf">Performed</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Pause</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>The <strong>LocalPlayers</strong> scene in the API examples runs a lobby and two avatars on one script. With fewer
+than two gamepads connected, the scene adds two virtual gamepads and presses their buttons, and says
+so on screen.</p>
+
 <h2 id="what-an-open-input-gate-changes">What an open input gate changes</h2>
 
 <p>An input gate makes every action read return its resting value, so <code class="language-plaintext highlighter-rouge">IsPressed</code> reads false and
 <code class="language-plaintext highlighter-rouge">Value</code> reads 0 or <code class="language-plaintext highlighter-rouge">Vec3.Zero</code>, and it makes every action occurrence read false. It leaves interactive
-rebind capture running and leaves the cursor as it is, so a rebinding screen can hold the gate open
-while it captures.</p>
+rebind capture running, leaves the cursor as it is, and leaves pairing running, so a rebinding
+screen can hold the gate open while it captures.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">"Menu"</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Input</span><span class="p">);</span>
 <span class="c1">// fire.IsPressed now reads false however hard the player holds the button.</span>
@@ -209,6 +314,8 @@ while a menu is open.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.InputFactory.html"><code class="language-plaintext highlighter-rouge">InputFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.PlayerInputFactory.html"><code class="language-plaintext highlighter-rouge">PlayerInputFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.PairingInputFactory.html"><code class="language-plaintext highlighter-rouge">PairingInputFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.PlayerWatchBuilder.html"><code class="language-plaintext highlighter-rouge">PlayerWatchBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CursorInputFactory.html"><code class="language-plaintext highlighter-rouge">CursorInputFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.WhenFactory.html"><code class="language-plaintext highlighter-rouge">WhenFactory</code></a>.</li>
 </ul>
