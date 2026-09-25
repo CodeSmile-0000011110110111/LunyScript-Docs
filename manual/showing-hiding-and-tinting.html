@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Showing, hiding and tinting objects | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Showing, hiding and tinting objects" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/showing-hiding-and-tinting.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/showing-hiding-and-tinting.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Showing, hiding and tinting objects" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Showing, hiding and tinting objects","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/showing-hiding-and-tinting.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Showing, hiding and tinting objects</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Hide an object, flash it when it is hit, and change a value its shader exposes. The material asset
+never changes:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Enemy</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Health</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Health</span><span class="p">),</span> <span class="m">3</span><span class="p">);</span>
+        <span class="n">Flash</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Flash</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="n">Flash</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0.15</span><span class="p">),</span>
+            <span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.25</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Flash</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Flash</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">),</span>
+            <span class="nf">If</span><span class="p">(</span><span class="n">Flash</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">ResetColor</span><span class="p">())));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Hide</span><span class="p">()));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Put the script on an object that has a <code class="language-plaintext highlighter-rouge">MeshRenderer</code> and a collider. Each hit tints the object red
+and starts a 0.15-second countdown in <code class="language-plaintext highlighter-rouge">Flash</code>; the frame the countdown reaches zero, <code class="language-plaintext highlighter-rouge">ResetColor</code>
+removes the tint. At zero health the object is no longer drawn, and its collider and its script keep
+running.</p>
+
+<h2 id="hiding-is-not-deactivating">Hiding is not deactivating</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Object.Hide()</code> disables the object’s <code class="language-plaintext highlighter-rouge">Renderer</code>, so the object is not drawn and casts no shadow.
+Everything else on it keeps running: colliders, scripts, audio, and its children.
+<code class="language-plaintext highlighter-rouge">Object.Show()</code> enables the renderer again, and <code class="language-plaintext highlighter-rouge">Object.IsVisible</code> reads whether it is enabled.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Object.Deactivate()</code>, on the <a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a>
+page, deactivates the whole GameObject, which stops all of those as well. Use <code class="language-plaintext highlighter-rouge">Hide</code> for a pickup
+that waits to respawn and <code class="language-plaintext highlighter-rouge">Deactivate</code> for an object that is gone.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">TriggerEnter</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Hide</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Respawn"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Show</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="n">IsVisible</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Seen</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">IsVisible</code> is the state <code class="language-plaintext highlighter-rouge">Hide</code> and <code class="language-plaintext highlighter-rouge">Show</code> write. Unity’s <code class="language-plaintext highlighter-rouge">Renderer.isVisible</code>, which says whether a
+camera sees the renderer, is a different reading and is not on this surface.</p>
+
+<h2 id="the-objects-own-renderer">The object’s own renderer</h2>
+
+<p>These calls reach the one <code class="language-plaintext highlighter-rouge">Renderer</code> on the object the script runs on. A model imported from a
+modelling tool often keeps its meshes on child objects; declare the child you want as an input and
+name it with <code class="language-plaintext highlighter-rouge">Object.For</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">Shield</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">var</span> <span class="n">shield</span> <span class="p">=</span> <span class="n">Object</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Shield</span><span class="p">);</span>
+
+    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">shield</span><span class="p">.</span><span class="nf">Hide</span><span class="p">());</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"ShieldUp"</span><span class="p">,</span> <span class="n">shield</span><span class="p">.</span><span class="nf">Show</span><span class="p">(),</span> <span class="n">shield</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="m">0.3</span><span class="p">,</span> <span class="m">0.6</span><span class="p">,</span> <span class="m">1</span><span class="p">));</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"ShieldDown"</span><span class="p">,</span> <span class="n">shield</span><span class="p">.</span><span class="nf">Hide</span><span class="p">());</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Assign <code class="language-plaintext highlighter-rouge">Shield</code> in the object’s Inspector. The handle <code class="language-plaintext highlighter-rouge">Object.For</code> returns has every call on this
+page, and it reaches the renderer on that object only.</p>
+
+<h2 id="colour">Colour</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Object.SetColor(red, green, blue)</code> tints the object. The channels run from 0 to 1, as Unity’s
+<code class="language-plaintext highlighter-rouge">Color</code> holds them, and each can be a number or any Number expression. The three-number form writes
+alpha 1; the four-number form writes the alpha too, which a transparent material uses and an opaque
+one ignores. A channel above 1 is allowed, because an HDR colour property uses it as intensity.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0.8</span><span class="p">,</span> <span class="m">0.2</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0.8</span><span class="p">,</span> <span class="m">0.2</span><span class="p">,</span> <span class="m">0.5</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">Health</span> <span class="p">/</span> <span class="m">3</span><span class="p">,</span> <span class="n">Health</span> <span class="p">/</span> <span class="m">3</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Healed"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">ResetColor</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>The colour is written to the material’s main colour: the colour property its shader marks
+<code class="language-plaintext highlighter-rouge">[MainColor]</code>, or <code class="language-plaintext highlighter-rouge">_Color</code> when it marks none. That is the property Unity’s own <code class="language-plaintext highlighter-rouge">Material.color</code>
+writes, <code class="language-plaintext highlighter-rouge">_BaseColor</code> on the Universal Render Pipeline’s Lit and Unlit shaders. <code class="language-plaintext highlighter-rouge">Object.ResetColor()</code>
+removes the tint, and the material’s own colour shows again.</p>
+
+<h2 id="material-numbers">Material numbers</h2>
+
+<p>A shader can expose a number such as a dissolve amount or an outline width.
+<code class="language-plaintext highlighter-rouge">Object.MaterialNumber(name)</code> names one by the name in the shader’s Properties block, which usually
+starts with an underscore:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">dissolve</span> <span class="p">=</span> <span class="n">Object</span><span class="p">.</span><span class="nf">MaterialNumber</span><span class="p">(</span><span class="s">"_Dissolve"</span><span class="p">);</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Fade</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">),</span> <span class="n">dissolve</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Fade</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Revive"</span><span class="p">,</span> <span class="n">dissolve</span><span class="p">.</span><span class="nf">Reset</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Set</code> writes the value, and <code class="language-plaintext highlighter-rouge">Reset</code> removes it so the material’s own value shows again. The property
+must be a Float or a Range. Each reset removes only its own value: resetting the colour leaves a
+running dissolve in place.</p>
+
+<h2 id="the-material-asset-stays-unchanged">The material asset stays unchanged</h2>
+
+<p>Every call on this page writes into the renderer’s <code class="language-plaintext highlighter-rouge">MaterialPropertyBlock</code>, a set of per-object values
+Unity draws with in place of the material’s own. The material asset and the renderer’s shared material
+do not change, so two objects that share a material keep sharing it, and a tint on one never appears on
+the other. When the last value is reset the block is removed, and the renderer draws exactly as it did
+before.</p>
+
+<p>Unity’s documentation states that the SRP Batcher does not batch a renderer while it has a property
+block, so an object is drawn outside that batch while a colour or number is set on it.</p>
+
+<p>Writing the same renderer’s property block from C# is outside what LunyScript supports on an object it
+runs. A reset rebuilds the block from the properties the renderer’s shaders declare, so a value written
+under any other name is removed.</p>
+
+<h2 id="when-the-renderer-or-the-property-is-missing">When the renderer or the property is missing</h2>
+
+<p>The object still runs. The first call that finds no renderer, no main colour or no property of that
+name writes one error to the Console, naming the script, the object and the property, and after that
+the calls do nothing. A colour channel that is negative or not a finite number, and a material number
+that is not finite, are refused the same way.</p>
+
+<h2 id="call-list">Call list</h2>
+
+<p>These lines are call signatures, not a script you can paste. Brackets mark an argument you may leave
+out.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Object</span><span class="p">.</span><span class="nf">Hide</span><span class="p">()</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">Show</span><span class="p">()</span>
+<span class="n">Object</span><span class="p">.</span><span class="n">IsVisible</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span> <span class="p">[</span> <span class="p">,</span> <span class="n">alpha</span> <span class="p">])</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">ResetColor</span><span class="p">()</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">MaterialNumber</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="nf">Set</span><span class="p">(</span><span class="k">value</span><span class="p">)</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">MaterialNumber</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="nf">Reset</span><span class="p">()</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">target</span><span class="p">).</span><span class="nf">Hide</span><span class="p">()</span>                    <span class="c1">// and every call above</span>
+</code></pre></div></div>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> —
+<code class="language-plaintext highlighter-rouge">Object.Deactivate</code>, and the contact events that start a flash.</li>
+  <li><a href="/LunyScript-Docs/manual/flow.html">Flow: conditions, timed work and routines</a> — conditions
+like the one that ends a flash.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectLifetimeFactory.html"><code class="language-plaintext highlighter-rouge">ObjectLifetimeFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectHandle.html"><code class="language-plaintext highlighter-rouge">ObjectHandle</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.MaterialNumber.html"><code class="language-plaintext highlighter-rouge">MaterialNumber</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
