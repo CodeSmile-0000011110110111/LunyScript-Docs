@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Interface IScriptHostCapabilities | LunyScript API Reference </title>
+      <title>Interface IScriptSceneObject | LunyScript API Reference </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Interface IScriptHostCapabilities | LunyScript API Reference ">
+      <meta name="title" content="Interface IScriptSceneObject | LunyScript API Reference ">
       
-      <meta name="description" content="Optional explicit host capability declaration. Legacy hosts remain runtime hosts.">
+      <meta name="description" content="The object in the scene a script runs on, as the Unity object an adapter acts on. A host that has one implements this interface.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_IScriptHostCapabilities.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.IScriptHostCapabilities%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_IScriptSceneObject.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.IScriptSceneObject%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -72,12 +72,12 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="CodeSmile.LunyScript.IScriptHostCapabilities">
+        <article data-uid="CodeSmile.LunyScript.IScriptSceneObject">
 
 
 
-  <h1 id="CodeSmile_LunyScript_IScriptHostCapabilities" data-uid="CodeSmile.LunyScript.IScriptHostCapabilities" class="text-break">
-Interface IScriptHostCapabilities  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptCapabilities.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  <h1 id="CodeSmile_LunyScript_IScriptSceneObject" data-uid="CodeSmile.LunyScript.IScriptSceneObject" class="text-break">
+Interface IScriptSceneObject  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptSceneObject.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,12 +85,13 @@ Interface IScriptHostCapabilities  <a class="header-action link-secondary" title
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>Optional explicit host capability declaration. Legacy hosts remain runtime hosts.</p>
+  <div class="markdown summary"><p>The object in the scene a script runs on, as the Unity object an adapter acts on. A host that
+has one implements this interface.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public interface IScriptHostCapabilities</code></pre>
+    <pre><code class="lang-csharp hljs">public interface IScriptSceneObject</code></pre>
   </div>
 
 
@@ -107,29 +108,41 @@ Interface IScriptHostCapabilities  <a class="header-action link-secondary" title
 
 
 
-  <h2 id="CodeSmile_LunyScript_IScriptHostCapabilities_examples">Examples</h2>
-  <pre><code class="lang-csharp">public ScriptContexts Context =&gt; ScriptContexts.Editor;</code></pre>
+  <h2 id="CodeSmile_LunyScript_IScriptSceneObject_examples">Examples</h2>
+  <pre><code class="lang-csharp">var actor = host is IScriptSceneObject scene ? scene.SceneObject : null;</code></pre>
 
 
+  <h2 id="CodeSmile_LunyScript_IScriptSceneObject_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>It is a separate interface rather than another member on <a class="xref" href="CodeSmile.LunyScript.IScriptHost.html">IScriptHost</a> for the
+reason <a class="xref" href="CodeSmile.LunyScript.IScriptTrackingTarget.html">IScriptTrackingTarget</a> is one: the scene-free editor host has no scene
+object, and a member on the main interface would make every host claim it has one. The
+navigation family reads it for a <code>Navigation.MoveTo</code> with no <code>.For(actor)</code>, and hands
+the object to the installed <a class="xref" href="CodeSmile.LunyScript.INavigationProvider.html">INavigationProvider</a>, which knows what it carries.</p>
+<p>
+    <b>The type is <code>UnityEngine.Object</code>.</b> The core may not name Unity's object model
+    outside <code>GameObjectHost</code>; AGENTS.md rule 24. <code>GameObjectHost</code> answers with its
+    GameObject.
+</p>
+</div>
 
 
   <h2 class="section" id="properties">Properties
 </h2>
 
 
-  <a id="CodeSmile_LunyScript_IScriptHostCapabilities_Context_" data-uid="CodeSmile.LunyScript.IScriptHostCapabilities.Context*"></a>
+  <a id="CodeSmile_LunyScript_IScriptSceneObject_SceneObject_" data-uid="CodeSmile.LunyScript.IScriptSceneObject.SceneObject*"></a>
 
-  <h3 id="CodeSmile_LunyScript_IScriptHostCapabilities_Context" data-uid="CodeSmile.LunyScript.IScriptHostCapabilities.Context">
-  Context
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptCapabilities.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_IScriptSceneObject_SceneObject" data-uid="CodeSmile.LunyScript.IScriptSceneObject.SceneObject">
+  SceneObject
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptSceneObject.cs/#L30"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>The host's single execution context.</p>
+  <div class="markdown level1 summary"><p>The object the script runs on, or null once it no longer exists.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">ScriptContexts Context { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">Object SceneObject { get; }</code></pre>
   </div>
 
 
@@ -138,39 +151,7 @@ Interface IScriptHostCapabilities  <a class="header-action link-secondary" title
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.ScriptContexts.html">ScriptContexts</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-  <a id="CodeSmile_LunyScript_IScriptHostCapabilities_Services_" data-uid="CodeSmile.LunyScript.IScriptHostCapabilities.Services*"></a>
-
-  <h3 id="CodeSmile_LunyScript_IScriptHostCapabilities_Services" data-uid="CodeSmile.LunyScript.IScriptHostCapabilities.Services">
-  Services
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptCapabilities.cs/#L72"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Effects the host can provide.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">ScriptServices Services { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.ScriptServices.html">ScriptServices</a></dt>
+    <dt><span class="xref">Object</span></dt>
     <dd></dd>
   </dl>
 
@@ -185,7 +166,7 @@ Interface IScriptHostCapabilities  <a class="header-action link-secondary" title
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/ScriptCapabilities.cs/#L67" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/IScriptSceneObject.cs/#L27" class="edit-link">Edit this page</a>
         </div>
 
 

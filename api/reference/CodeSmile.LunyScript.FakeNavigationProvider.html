@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class FakeNavigationProvider | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class FakeNavigationProvider | LunyScript API Reference ">
+      
+      <meta name="description" content="A navigation backend with no navigation mesh: each registered actor has a position, a speed and a stopping distance, and moves in a straight line to the end of the route a test chose.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_FakeNavigationProvider.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.FakeNavigationProvider%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.FakeNavigationProvider">
+
+
+
+  <h1 id="CodeSmile_LunyScript_FakeNavigationProvider" data-uid="CodeSmile.LunyScript.FakeNavigationProvider" class="text-break">
+Class FakeNavigationProvider  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>A navigation backend with no navigation mesh: each registered actor has a position, a speed
+and a stopping distance, and moves in a straight line to the end of the route a test chose.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class FakeNavigationProvider : INavigationProvider</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">FakeNavigationProvider</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="CodeSmile.LunyScript.INavigationProvider.html">INavigationProvider</a></div>
+    </dd>
+  </dl>
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyScript_FakeNavigationProvider_examples">Examples</h2>
+  <pre><code class="lang-csharp">var navigation = new FakeNavigationProvider();
+navigation.AddAgent(actor, new Vec3(0.0, 0.0, 0.0), 2.0);
+navigation.SetRoute(island, NavigationRouteState.Partial, shore);
+runner.NavigationGateway.UseProvider(navigation);</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_FakeNavigationProvider_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This is a second real implementation rather than a test mock, in the same way
+<a class="xref" href="CodeSmile.LunyScript.FakeCameraProvider.html">FakeCameraProvider</a> is: it answers every member of
+<a class="xref" href="CodeSmile.LunyScript.INavigationProvider.html">INavigationProvider</a> with the rules the NavMesh adapter answers them with, and
+it is what makes every navigation block testable in every gate with no navigation mesh.</p>
+<p>
+    <b>A test decides what the world is.</b> <a class="xref" href="CodeSmile.LunyScript.FakeNavigationProvider.html#CodeSmile_LunyScript_FakeNavigationProvider_AddAgent_UnityEngine_Object_CodeSmile_LunyScript_Vec3_System_Double_System_Double_">AddAgent(Object, Vec3, double, double)</a> registers an actor; an
+    object nothing registered carries no agent. <a class="xref" href="CodeSmile.LunyScript.FakeNavigationProvider.html#CodeSmile_LunyScript_FakeNavigationProvider_SetRoute_CodeSmile_LunyScript_Vec3_CodeSmile_LunyScript_NavigationRouteState_CodeSmile_LunyScript_Vec3_">SetRoute(Vec3, NavigationRouteState, Vec3)</a> decides which route a
+    destination gets and where that route ends; a destination with no rule gets a complete
+    route that ends at the destination. <a class="xref" href="CodeSmile.LunyScript.FakeNavigationProvider.html#CodeSmile_LunyScript_FakeNavigationProvider_PendingReads">PendingReads</a> is how many polls a new
+    route stays pending. <a class="xref" href="CodeSmile.LunyScript.FakeNavigationProvider.html#CodeSmile_LunyScript_FakeNavigationProvider_Advance_System_Double_">Advance(double)</a> moves every actor that follows a known route
+    and is not held, which is the part of a frame Unity's agent does by itself.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_PendingReads_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.PendingReads*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_PendingReads" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.PendingReads">
+  PendingReads
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many polls a route stays pending after <a class="xref" href="CodeSmile.LunyScript.FakeNavigationProvider.html#CodeSmile_LunyScript_FakeNavigationProvider_Start_UnityEngine_Object_CodeSmile_LunyScript_Vec3_">Start(Object, Vec3)</a>. Zero, the default,
+means the first poll already sees the route.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int PendingReads { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_PendingReads_examples">Examples</h4>
+  <pre><code class="lang-csharp">navigation.PendingReads = 2;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_RefusesDestinations_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.RefusesDestinations*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_RefusesDestinations" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.RefusesDestinations">
+  RefusesDestinations
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L212"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Makes <a class="xref" href="CodeSmile.LunyScript.FakeNavigationProvider.html#CodeSmile_LunyScript_FakeNavigationProvider_Start_UnityEngine_Object_CodeSmile_LunyScript_Vec3_">Start(Object, Vec3)</a> refuse every destination, as a backend does that can map no
+destination onto its navigation surface.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool RefusesDestinations { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_RefusesDestinations_examples">Examples</h4>
+  <pre><code class="lang-csharp">navigation.RefusesDestinations = true;</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_AddAgent_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.AddAgent*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_AddAgent_UnityEngine_Object_CodeSmile_LunyScript_Vec3_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.AddAgent(UnityEngine.Object,CodeSmile.LunyScript.Vec3,System.Double,System.Double)">
+  AddAgent(Object, Vec3, double, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers an actor with a navigation agent standing on the navigation surface.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void AddAgent(Object actor, Vec3 position, double speed = 1, double stoppingDistance = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>The object a script names as the actor, or runs on.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>position</code></dt></td>
+    <td style="width: 99%"><dd><p>Where it stands.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>speed</code></dt></td>
+    <td style="width: 99%"><dd><p>How far it moves per second of <a class="xref" href="CodeSmile.LunyScript.FakeNavigationProvider.html#CodeSmile_LunyScript_FakeNavigationProvider_Advance_System_Double_">Advance(double)</a>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>stoppingDistance</code></dt></td>
+    <td style="width: 99%"><dd><p>How far from a route's end it stops.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_AddAgent_UnityEngine_Object_CodeSmile_LunyScript_Vec3_System_Double_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">navigation.AddAgent(actor, new Vec3(0.0, 0.0, 0.0), 2.0);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">actor</code> is null, or
+<code class="paramref">speed</code> or <code class="paramref">stoppingDistance</code> is negative.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_Advance_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Advance*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_Advance_System_Double_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Advance(System.Double)">
+  Advance(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L155"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Moves every actor that follows a complete or partial route, is not held and has not
+reached the end, by its speed times <code class="paramref">seconds</code>, straight toward the end.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Advance(double seconds)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seconds</code></dt></td>
+    <td style="width: 99%"><dd><p>How much time passes.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_Advance_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">navigation.Advance(0.5);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_Check_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Check*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_Check_UnityEngine_Object_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Check(UnityEngine.Object)">
+  Check(Object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L240"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reports whether the actor can navigate. The gateway asks before every start and every
+control.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NavigationAgentState Check(Object actor)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>The actor, as the author assigned it or as the script's own object.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NavigationAgentState.html">NavigationAgentState</a></dt>
+    <dd><p><a class="xref" href="CodeSmile.LunyScript.NavigationAgentState.html#CodeSmile_LunyScript_NavigationAgentState_Ready">Ready</a>, or why it cannot.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_Clear_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Clear*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_Clear_UnityEngine_Object_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Clear(UnityEngine.Object)">
+  Clear(Object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L273"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Clears the actor's route, so it stops following it. The position the actor reached
+is kept.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Clear(Object actor)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>The actor.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_Clear_UnityEngine_Object__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>An actor that cannot navigate is left as it is.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_ClearCount_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.ClearCount*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_ClearCount_UnityEngine_Object_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.ClearCount(UnityEngine.Object)">
+  ClearCount(Object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L207"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many times an actor's route was cleared.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int ClearCount(Object actor)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>A registered actor.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd><p>The count.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_ClearCount_UnityEngine_Object__examples">Examples</h4>
+  <pre><code class="lang-csharp">Assert.That(navigation.ClearCount(actor), Is.EqualTo(1));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_Describe_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Describe*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_Describe" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Describe">
+  Describe()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Names the backend for the one log line <a class="xref" href="CodeSmile.LunyScript.NavigationGateway.html#CodeSmile_LunyScript_NavigationGateway_UseProvider_CodeSmile_LunyScript_INavigationProvider_">UseProvider(INavigationProvider)</a>
+writes. Called once, so it may allocate.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Describe()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>For example: &quot;Unity NavMesh&quot;.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_DestinationOf_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.DestinationOf*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_DestinationOf_UnityEngine_Object_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.DestinationOf(UnityEngine.Object)">
+  DestinationOf(Object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L195"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The destination of the latest <a class="xref" href="CodeSmile.LunyScript.FakeNavigationProvider.html#CodeSmile_LunyScript_FakeNavigationProvider_Start_UnityEngine_Object_CodeSmile_LunyScript_Vec3_">Start(Object, Vec3)</a> on an actor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Vec3 DestinationOf(Object actor)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>A registered actor.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>The destination.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_DestinationOf_UnityEngine_Object__examples">Examples</h4>
+  <pre><code class="lang-csharp">Assert.That(navigation.DestinationOf(actor), Is.EqualTo(pad));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_Hold_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Hold*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_Hold_UnityEngine_Object_System_Boolean_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Hold(UnityEngine.Object,System.Boolean)">
+  Hold(Object, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L266"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Holds the actor where it is, or releases it. A held actor keeps its route and moves
+along it again when it is released.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Hold(Object actor, bool hold)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>The actor.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">bool</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>hold</code></dt></td>
+    <td style="width: 99%"><dd><p>True to hold, false to release.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_Hold_UnityEngine_Object_System_Boolean__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>An actor that cannot navigate is left as it is.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_IsHeld_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.IsHeld*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_IsHeld_UnityEngine_Object_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.IsHeld(UnityEngine.Object)">
+  IsHeld(Object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L182"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether an actor is held in place.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsHeld(Object actor)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>A registered actor.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True while held.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_IsHeld_UnityEngine_Object__examples">Examples</h4>
+  <pre><code class="lang-csharp">Assert.That(navigation.IsHeld(actor), Is.True);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_PositionOf_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.PositionOf*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_PositionOf_UnityEngine_Object_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.PositionOf(UnityEngine.Object)">
+  PositionOf(Object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L176"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Where an actor stands.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Vec3 PositionOf(Object actor)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>A registered actor.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt>
+    <dd><p>Its position.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_PositionOf_UnityEngine_Object__examples">Examples</h4>
+  <pre><code class="lang-csharp">Assert.That(navigation.PositionOf(actor).X, Is.EqualTo(4.0));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_Read_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Read*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_Read_UnityEngine_Object_CodeSmile_LunyScript_Vec3_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Read(UnityEngine.Object,CodeSmile.LunyScript.Vec3)">
+  Read(Object, Vec3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L245"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reports the actor's route toward <code class="paramref">destination</code>, its movement and its end as
+they stand now.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NavigationReading Read(Object actor, Vec3 destination)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>The actor.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>destination</code></dt></td>
+    <td style="width: 99%"><dd><p>The destination the latest <a class="xref" href="CodeSmile.LunyScript.INavigationProvider.html#CodeSmile_LunyScript_INavigationProvider_Start_UnityEngine_Object_CodeSmile_LunyScript_Vec3_">Start(Object, Vec3)</a> asked for. A backend that
+moves a destination onto its navigation surface reports a route that ends away from this point as
+<a class="xref" href="CodeSmile.LunyScript.NavigationRouteState.html#CodeSmile_LunyScript_NavigationRouteState_Partial">Partial</a>, because it does not reach the destination.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NavigationReading.html">NavigationReading</a></dt>
+    <dd><p>The reading.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_Read_UnityEngine_Object_CodeSmile_LunyScript_Vec3__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The route is the one <a class="xref" href="CodeSmile.LunyScript.FakeNavigationProvider.html#CodeSmile_LunyScript_FakeNavigationProvider_SetRoute_CodeSmile_LunyScript_Vec3_CodeSmile_LunyScript_NavigationRouteState_CodeSmile_LunyScript_Vec3_">SetRoute(Vec3, NavigationRouteState, Vec3)</a> chose for the destination <a class="xref" href="CodeSmile.LunyScript.FakeNavigationProvider.html#CodeSmile_LunyScript_FakeNavigationProvider_Start_UnityEngine_Object_CodeSmile_LunyScript_Vec3_">Start(Object, Vec3)</a> was
+given, so <code class="paramref">destination</code> is not read.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_RouteOf_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.RouteOf*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_RouteOf_UnityEngine_Object_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.RouteOf(UnityEngine.Object)">
+  RouteOf(Object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The route an actor follows, as the next poll would report it apart from a pending
+count.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NavigationRouteState RouteOf(Object actor)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>A registered actor.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NavigationRouteState.html">NavigationRouteState</a></dt>
+    <dd><p>The route.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_RouteOf_UnityEngine_Object__examples">Examples</h4>
+  <pre><code class="lang-csharp">Assert.That(navigation.RouteOf(actor), Is.EqualTo(NavigationRouteState.None));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_SetEnabled_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.SetEnabled*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_SetEnabled_UnityEngine_Object_System_Boolean_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.SetEnabled(UnityEngine.Object,System.Boolean)">
+  SetEnabled(Object, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Disables or enables an actor's agent, which a disabled component or an inactive
+object does in Unity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void SetEnabled(Object actor, bool enabled)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>A registered actor.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">bool</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>enabled</code></dt></td>
+    <td style="width: 99%"><dd><p>False to disable.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_SetEnabled_UnityEngine_Object_System_Boolean__examples">Examples</h4>
+  <pre><code class="lang-csharp">navigation.SetEnabled(actor, false);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_SetOnSurface_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.SetOnSurface*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_SetOnSurface_UnityEngine_Object_System_Boolean_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.SetOnSurface(UnityEngine.Object,System.Boolean)">
+  SetOnSurface(Object, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Takes an actor off the navigation surface or puts it back on.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void SetOnSurface(Object actor, bool onSurface)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>A registered actor.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">bool</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>onSurface</code></dt></td>
+    <td style="width: 99%"><dd><p>False to take it off.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_SetOnSurface_UnityEngine_Object_System_Boolean__examples">Examples</h4>
+  <pre><code class="lang-csharp">navigation.SetOnSurface(actor, false);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_SetRoute_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.SetRoute*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_SetRoute_CodeSmile_LunyScript_Vec3_CodeSmile_LunyScript_NavigationRouteState_CodeSmile_LunyScript_Vec3_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.SetRoute(CodeSmile.LunyScript.Vec3,CodeSmile.LunyScript.NavigationRouteState,CodeSmile.LunyScript.Vec3)">
+  SetRoute(Vec3, NavigationRouteState, Vec3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Decides the route a destination gets. A later rule for the same destination
+replaces the earlier one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void SetRoute(Vec3 destination, NavigationRouteState route, Vec3 end)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>destination</code></dt></td>
+    <td style="width: 99%"><dd><p>The destination, compared exactly.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NavigationRouteState.html">NavigationRouteState</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>route</code></dt></td>
+    <td style="width: 99%"><dd><p><a class="xref" href="CodeSmile.LunyScript.NavigationRouteState.html#CodeSmile_LunyScript_NavigationRouteState_Complete">Complete</a>,
+<a class="xref" href="CodeSmile.LunyScript.NavigationRouteState.html#CodeSmile_LunyScript_NavigationRouteState_Partial">Partial</a> or <a class="xref" href="CodeSmile.LunyScript.NavigationRouteState.html#CodeSmile_LunyScript_NavigationRouteState_Invalid">Invalid</a>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>end</code></dt></td>
+    <td style="width: 99%"><dd><p>Where the route ends. Read only for a partial route; a complete route ends at
+the destination, and an invalid one ends nowhere.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_SetRoute_CodeSmile_LunyScript_Vec3_CodeSmile_LunyScript_NavigationRouteState_CodeSmile_LunyScript_Vec3__examples">Examples</h4>
+  <pre><code class="lang-csharp">navigation.SetRoute(island, NavigationRouteState.Partial, shore);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">route</code> is not one of the three
+resolved states.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_Start_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Start*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_Start_UnityEngine_Object_CodeSmile_LunyScript_Vec3_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.Start(UnityEngine.Object,CodeSmile.LunyScript.Vec3)">
+  Start(Object, Vec3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L215"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asks for a route from the actor's position to a destination and starts following it
+once it is known. A route the actor already follows is replaced. The gateway calls it only for an
+actor <a class="xref" href="CodeSmile.LunyScript.INavigationProvider.html#CodeSmile_LunyScript_INavigationProvider_Check_UnityEngine_Object_">Check(Object)</a> reported ready.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Start(Object actor, Vec3 destination)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>The actor.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vec3.html">Vec3</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>destination</code></dt></td>
+    <td style="width: 99%"><dd><p>The destination in world space. The gateway passes finite
+components only.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when the route was requested. False when the backend can request no route to
+<code class="paramref">destination</code> at all, which the gateway reports as an invalid route; nothing
+changed.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeNavigationProvider_StartCount_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.StartCount*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeNavigationProvider_StartCount_UnityEngine_Object_" data-uid="CodeSmile.LunyScript.FakeNavigationProvider.StartCount(UnityEngine.Object)">
+  StartCount(Object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L201"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many times a route was started for an actor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int StartCount(Object actor)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actor</code></dt></td>
+    <td style="width: 99%"><dd><p>A registered actor.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd><p>The count.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNavigationProvider_StartCount_UnityEngine_Object__examples">Examples</h4>
+  <pre><code class="lang-csharp">Assert.That(navigation.StartCount(actor), Is.EqualTo(1));</code></pre>
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Navigation/FakeNavigationProvider.cs/#L33" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -290,6 +290,12 @@ window and no Input System package.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.FakeNavigationProvider.html">FakeNavigationProvider</a></dt>
+      <dd><p>A navigation backend with no navigation mesh: each registered actor has a position, a speed
+and a stopping distance, and moves in a straight line to the end of the route a test chose.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html">FakeNetworkProvider</a></dt>
       <dd><p>A netcode backend that runs entirely in this process, with no network, no Editor and no
 Netcode for GameObjects. Two instances are paired with <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html#CodeSmile_LunyScript_FakeNetworkProvider_Pair_CodeSmile_LunyScript_FakeNetworkProvider__CodeSmile_LunyScript_FakeNetworkProvider__">Pair(out FakeNetworkProvider, out FakeNetworkProvider)</a> and each one's
@@ -395,6 +401,13 @@ share, and the hidden object that ticks it once per frame.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
       <dd><p>Thrown when script code asks LunyScript for something the API does not offer: a C# <code>if</code>
 around a condition block, an arithmetic operator on a text variable, a builder finished twice.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.NavigationGateway.html">NavigationGateway</a></dt>
+      <dd><p>The core's one entry point to navigation. Owns the <a class="xref" href="CodeSmile.LunyScript.INavigationProvider.html">INavigationProvider</a>, one
+record per actor with the attempt that drives it and whether it is paused, and polls every
+driven actor once per frame before any instance runs. One per <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html">ScriptRunner</a>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1156,6 +1169,56 @@ unit.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.MotionVelocityBuilder.html">MotionVelocityBuilder</a></dt>
       <dd><p>What <code>Motion.SetVelocity</code> returns: object-local axes unless
 <a class="xref" href="CodeSmile.LunyScript.MotionVelocityBuilder.html#CodeSmile_LunyScript_MotionVelocityBuilder_InWorldSpace">InWorldSpace()</a> is written.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.NavigationActorCompleteMoveToBuilder.html">NavigationActorCompleteMoveToBuilder</a></dt>
+      <dd><p>A move of a declared GameObject input that refuses a partial route. It is incomplete until
+<a class="xref" href="CodeSmile.LunyScript.NavigationActorCompleteMoveToBuilder.html#CodeSmile_LunyScript_NavigationActorCompleteMoveToBuilder_As_CodeSmile_LunyScript_Operation_">As(Operation)</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.NavigationActorMoveToBuilder.html">NavigationActorMoveToBuilder</a></dt>
+      <dd><p>A move of a declared GameObject input. It takes <a class="xref" href="CodeSmile.LunyScript.NavigationActorMoveToBuilder.html#CodeSmile_LunyScript_NavigationActorMoveToBuilder_RequireComplete">RequireComplete()</a> once and is
+incomplete until <a class="xref" href="CodeSmile.LunyScript.NavigationActorMoveToBuilder.html#CodeSmile_LunyScript_NavigationActorMoveToBuilder_As_CodeSmile_LunyScript_Operation_">As(Operation)</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.NavigationCompleteMoveToBuilder.html">NavigationCompleteMoveToBuilder</a></dt>
+      <dd><p>A move that refuses a partial route. It takes <a class="xref" href="CodeSmile.LunyScript.NavigationCompleteMoveToBuilder.html#CodeSmile_LunyScript_NavigationCompleteMoveToBuilder_For_CodeSmile_LunyScript_AssetInput_System_String_System_Int32_">For(AssetInput, string, int)</a> once and is incomplete
+until <a class="xref" href="CodeSmile.LunyScript.NavigationCompleteMoveToBuilder.html#CodeSmile_LunyScript_NavigationCompleteMoveToBuilder_As_CodeSmile_LunyScript_Operation_">As(Operation)</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.NavigationControlBuilder.html">NavigationControlBuilder</a></dt>
+      <dd><p>What <code>Navigation.Stop()</code>, <code>Pause()</code> and <code>Resume()</code> return: the control applied
+to the object the script runs on when it is used as a block, or to a declared GameObject input
+after <a class="xref" href="CodeSmile.LunyScript.NavigationControlBuilder.html#CodeSmile_LunyScript_NavigationControlBuilder_For_CodeSmile_LunyScript_AssetInput_System_String_System_Int32_">For(AssetInput, string, int)</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.NavigationFactory.html">NavigationFactory</a></dt>
+      <dd><p>The <code>Navigation</code> surface inside <code>Build()</code>: moves an actor along a route around
+obstacles, holds and stops it, and reads the route, the movement and where a move ended.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.NavigationMoveToBuilder.html">NavigationMoveToBuilder</a></dt>
+      <dd><p>What <code>Navigation.MoveTo</code> returns: the move toward a destination, incomplete until
+<a class="xref" href="CodeSmile.LunyScript.NavigationMoveToBuilder.html#CodeSmile_LunyScript_NavigationMoveToBuilder_As_CodeSmile_LunyScript_Operation_">As(Operation)</a> binds it to an operation handle.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.NavigationReading.html">NavigationReading</a></dt>
+      <dd><p>What a navigation backend reports about one actor when <a class="xref" href="CodeSmile.LunyScript.NavigationGateway.html">NavigationGateway</a> polls
+it once per frame: whether it can navigate, its route, whether it moves, and whether it
+reached the end of its route.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.NavigationRoute.html">NavigationRoute</a></dt>
+      <dd><p>What <code>Navigation.Route(operation)</code> returns: four conditions on the route of the latest
+attempt a <code>Navigation.MoveTo</code> bound to that handle started.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1948,6 +2011,13 @@ visibility are not on this interface.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.INavigationProvider.html">INavigationProvider</a></dt>
+      <dd><p>What a navigation backend provides to the <a class="xref" href="CodeSmile.LunyScript.NavigationGateway.html">NavigationGateway</a>: sending an actor
+toward a destination, reading its route and movement, holding it in place, and clearing its
+route. Script code never sees this type; it sees the <code>Navigation</code> surface.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.INetworkProvider.html">INetworkProvider</a></dt>
       <dd><p>What a netcode backend provides to the <a class="xref" href="CodeSmile.LunyScript.NetworkGateway.html">NetworkGateway</a>: a session to start and
 end, the connection facts a script is allowed to read, and two queues the gateway drains once
@@ -2017,6 +2087,12 @@ spawn of that script is refused with a message naming the missing service.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.IScriptSceneInputs.html">IScriptSceneInputs</a></dt>
       <dd><p>The part of a host that carries the scenes an author assigned to one object's scene inputs,
 so that two objects running the same script can name different scenes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.IScriptSceneObject.html">IScriptSceneObject</a></dt>
+      <dd><p>The object in the scene a script runs on, as the Unity object an adapter acts on. A host that
+has one implements this interface.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2158,6 +2234,19 @@ Button, Number, Vector2 and Vector3.</p>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.MotionMechanism.html">MotionMechanism</a></dt>
       <dd><p>Which movement component <a class="xref" href="CodeSmile.LunyScript.IScriptHost.html#CodeSmile_LunyScript_IScriptHost_ProbeMotionMechanism">ProbeMotionMechanism()</a> selected.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.NavigationAgentState.html">NavigationAgentState</a></dt>
+      <dd><p>Whether an actor can navigate, as a navigation backend reports it. Every value other than
+<a class="xref" href="CodeSmile.LunyScript.NavigationAgentState.html#CodeSmile_LunyScript_NavigationAgentState_Ready">Ready</a> is a reason a <code>Navigation.MoveTo</code> attempt fails as
+<code>OperationFailure.Denied</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.NavigationRouteState.html">NavigationRouteState</a></dt>
+      <dd><p>What a navigation backend knows about the route an actor follows. Script code reads it
+through <code>Navigation.Route(operation)</code>.</p>
 </dd>
     </dl>
     <dl class="jumplist">

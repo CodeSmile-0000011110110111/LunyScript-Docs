@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct NavigationFactory | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct NavigationFactory | LunyScript API Reference ">
+      
+      <meta name="description" content="The Navigation surface inside Build(): moves an actor along a route around obstacles, holds and stops it, and reads the route, the movement and where a move ended.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_NavigationFactory.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.NavigationFactory%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.NavigationFactory">
+
+
+
+  <h1 id="CodeSmile_LunyScript_NavigationFactory" data-uid="CodeSmile.LunyScript.NavigationFactory" class="text-break">
+Struct NavigationFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NavigationFactory.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The <code>Navigation</code> surface inside <code>Build()</code>: moves an actor along a route around
+obstacles, holds and stops it, and reads the route, the movement and where a move ended.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct NavigationFactory</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyScript_NavigationFactory_examples">Examples</h2>
+  <pre><code class="lang-csharp">On.Ready(Navigation.MoveTo(Post).As(Patrol));
+On.FrameUpdate(Navigation.MoveTo(PlayerPosition).As(Chase));
+When.Operation(Chase).Succeeded(If(Navigation.Arrived(Chase)).Then(Attack.Set(true)));
+On.Message(Stun, Navigation.Pause());</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_NavigationFactory_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>Navigation is not Motion.</b> <code>Motion.MoveTo</code> steps in a straight line and stops at
+the first wall; <code>Navigation.MoveTo</code> asks the installed navigation backend for a route and
+the actor's agent follows it. Speed, acceleration and stopping distance stay on the agent.</p>
+<p>
+    <b>Each move is an attempt on an operation handle.</b> The destination is read once, when
+    the block runs; a chase is a <code>MoveTo</code> the author runs again. A repeat of the pending
+    request coalesces; any other <code>MoveTo</code> on a pending handle ends that attempt as
+    cancelled and starts the next one. A partial route is followed to its reachable end unless
+    <code>RequireComplete()</code> is written. <code>docs/proposals/navigation.md</code> is the family.
+</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_NavigationFactory_Arrived_" data-uid="CodeSmile.LunyScript.NavigationFactory.Arrived*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NavigationFactory_Arrived_CodeSmile_LunyScript_Operation_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.Arrived(CodeSmile.LunyScript.Operation,System.String,System.Int32)">
+  Arrived(Operation, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NavigationFactory.cs/#L191"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the latest attempt bound to <code class="paramref">operation</code> ended with its actor
+at the destination, along a complete route.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Arrived(Operation operation, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Operation.html">Operation</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>operation</code></dt></td>
+    <td style="width: 99%"><dd><p>A handle a <code>Navigation.MoveTo(...).As</code> in this <code>Build()</code>
+binds.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>A condition.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_Arrived_CodeSmile_LunyScript_Operation_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">When.Operation(Chase).Succeeded(If(Navigation.Arrived(Chase)).Then(Attack.Set(true)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">operation</code> was never declared, or
+this surface was read outside <code>Build()</code>. When <code>Build()</code> finishes, a handle no
+<code>Navigation.MoveTo</code> binds is refused.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_NavigationFactory_IsMoving_" data-uid="CodeSmile.LunyScript.NavigationFactory.IsMoving*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NavigationFactory_IsMoving_CodeSmile_LunyScript_Operation_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.IsMoving(CodeSmile.LunyScript.Operation,System.String,System.Int32)">
+  IsMoving(Operation, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NavigationFactory.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the latest attempt bound to <code class="paramref">operation</code> is pending and its
+actor moves along the route this frame. False while the actor is held, while the route is
+pending, and once the attempt ended.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock IsMoving(Operation operation, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Operation.html">Operation</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>operation</code></dt></td>
+    <td style="width: 99%"><dd><p>A handle a <code>Navigation.MoveTo(...).As</code> in this <code>Build()</code>
+binds.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>A condition.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_IsMoving_CodeSmile_LunyScript_Operation_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Navigation.IsMoving(Chase)).Then(Steps.Add(1)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">operation</code> was never declared, or
+this surface was read outside <code>Build()</code>. When <code>Build()</code> finishes, a handle no
+<code>Navigation.MoveTo</code> binds is refused.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_NavigationFactory_MoveTo_" data-uid="CodeSmile.LunyScript.NavigationFactory.MoveTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NavigationFactory_MoveTo_CodeSmile_LunyScript_AssetInput_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.MoveTo(CodeSmile.LunyScript.AssetInput,System.String,System.Int32)">
+  MoveTo(AssetInput, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NavigationFactory.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Moves the actor to a landmark: an object in the scene that the script declared as an
+asset input. The landmark's world position is read once each time the block runs. Incomplete
+until <code>As</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NavigationMoveToBuilder MoveTo(AssetInput landmark, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.AssetInput.html">AssetInput</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>landmark</code></dt></td>
+    <td style="width: 99%"><dd><p>A declared input holding an object in the scene, such as
+<code>[Asset] public Asset&lt;GameObject&gt; Post</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NavigationMoveToBuilder.html">NavigationMoveToBuilder</a></dt>
+    <dd><p>A builder that takes <code>RequireComplete()</code>, <code>For(actor)</code> and <code>As(op)</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_MoveTo_CodeSmile_LunyScript_AssetInput_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Navigation.MoveTo(Post).As(Patrol));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_MoveTo_CodeSmile_LunyScript_AssetInput_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>A landmark that is destroyed, in no loaded scene, or inactive when the block runs fails
+the attempt as <code>Denied</code> and is reported once.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">landmark</code> was never declared,
+was declared by another script's <code>Build()</code>, or is declared as a type that is not
+<code>GameObject</code> or a component, or this surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_NavigationFactory_MoveTo_" data-uid="CodeSmile.LunyScript.NavigationFactory.MoveTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NavigationFactory_MoveTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.MoveTo(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  MoveTo(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NavigationFactory.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Moves the actor to a world position given as three numbers. Incomplete until
+<code>As</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NavigationMoveToBuilder MoveTo(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>x</code></dt></td>
+    <td style="width: 99%"><dd><p>The world x.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>y</code></dt></td>
+    <td style="width: 99%"><dd><p>The world y.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>z</code></dt></td>
+    <td style="width: 99%"><dd><p>The world z.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NavigationMoveToBuilder.html">NavigationMoveToBuilder</a></dt>
+    <dd><p>A builder that takes <code>RequireComplete()</code>, <code>For(actor)</code> and <code>As(op)</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_MoveTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Navigation.MoveTo(4.0, 0.0, 6.0).As(Patrol));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Any coordinate is null, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_NavigationFactory_MoveTo_" data-uid="CodeSmile.LunyScript.NavigationFactory.MoveTo*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NavigationFactory_MoveTo_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.MoveTo(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
+  MoveTo(Vec3ValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NavigationFactory.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Moves the actor to a world position along a route. Incomplete until <code>As</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NavigationMoveToBuilder MoveTo(Vec3ValueBlock destination, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>destination</code></dt></td>
+    <td style="width: 99%"><dd><p>The world position, read once each time the block runs.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NavigationMoveToBuilder.html">NavigationMoveToBuilder</a></dt>
+    <dd><p>A builder that takes <code>RequireComplete()</code>, <code>For(actor)</code> and <code>As(op)</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_MoveTo_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Navigation.MoveTo(PlayerPosition).As(Chase));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">destination</code> is null, or this
+surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_NavigationFactory_Pause_" data-uid="CodeSmile.LunyScript.NavigationFactory.Pause*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NavigationFactory_Pause_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.Pause(System.String,System.Int32)">
+  Pause(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NavigationFactory.cs/#L126"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Holds the actor where it is. Its route and the attempt that drives it stay; a
+<code>MoveTo</code> while it is held starts its attempt and the actor stays held until
+<code>Resume()</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NavigationControlBuilder Pause(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NavigationControlBuilder.html">NavigationControlBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>For(actor)</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_Pause_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Message(Stun, Navigation.Pause());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_NavigationFactory_ReachedPartialEnd_" data-uid="CodeSmile.LunyScript.NavigationFactory.ReachedPartialEnd*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NavigationFactory_ReachedPartialEnd_CodeSmile_LunyScript_Operation_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.ReachedPartialEnd(CodeSmile.LunyScript.Operation,System.String,System.Int32)">
+  ReachedPartialEnd(Operation, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NavigationFactory.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the latest attempt bound to <code class="paramref">operation</code> ended with its actor
+at the reachable end of a partial route, which is not the destination. The attempt succeeded
+and <a class="xref" href="CodeSmile.LunyScript.NavigationFactory.html#CodeSmile_LunyScript_NavigationFactory_Arrived_CodeSmile_LunyScript_Operation_System_String_System_Int32_">Arrived(Operation, string, int)</a> is false.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock ReachedPartialEnd(Operation operation, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Operation.html">Operation</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>operation</code></dt></td>
+    <td style="width: 99%"><dd><p>A handle a <code>Navigation.MoveTo(...).As</code> in this <code>Build()</code>
+binds.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>A condition.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_ReachedPartialEnd_CodeSmile_LunyScript_Operation_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">When.Operation(Approach).Succeeded(If(Navigation.ReachedPartialEnd(Approach)).Then(Shout.Set(true)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">operation</code> was never declared, or
+this surface was read outside <code>Build()</code>. When <code>Build()</code> finishes, a handle no
+<code>Navigation.MoveTo</code> binds is refused.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_NavigationFactory_Resume_" data-uid="CodeSmile.LunyScript.NavigationFactory.Resume*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NavigationFactory_Resume_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.Resume(System.String,System.Int32)">
+  Resume(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NavigationFactory.cs/#L138"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Releases the hold <code>Pause()</code> put on the actor, which continues along its
+route.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NavigationControlBuilder Resume(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NavigationControlBuilder.html">NavigationControlBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>For(actor)</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_Resume_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Message(Wake, Navigation.Resume());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_NavigationFactory_Route_" data-uid="CodeSmile.LunyScript.NavigationFactory.Route*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NavigationFactory_Route_CodeSmile_LunyScript_Operation_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.Route(CodeSmile.LunyScript.Operation,System.String,System.Int32)">
+  Route(Operation, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NavigationFactory.cs/#L154"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The route of the latest attempt a <code>Navigation.MoveTo</code> bound to
+<code class="paramref">operation</code> started: pending, complete, partial or invalid.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NavigationRoute Route(Operation operation, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Operation.html">Operation</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>operation</code></dt></td>
+    <td style="width: 99%"><dd><p>A handle a <code>Navigation.MoveTo(...).As</code> in this <code>Build()</code>
+binds.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NavigationRoute.html">NavigationRoute</a></dt>
+    <dd><p>A read whose four members are conditions.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_Route_CodeSmile_LunyScript_Operation_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Navigation.Route(Chase).IsPartial).Then(Alert.Set(true)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">operation</code> was never declared, or
+this surface was read outside <code>Build()</code>. When <code>Build()</code> finishes, a handle no
+<code>Navigation.MoveTo</code> binds is refused.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_NavigationFactory_Stop_" data-uid="CodeSmile.LunyScript.NavigationFactory.Stop*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NavigationFactory_Stop_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.Stop(System.String,System.Int32)">
+  Stop(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NavigationFactory.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Stops the actor: clears its route and ends the attempt that drives it as cancelled.
+The actor keeps the position it reached. A pause is kept.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NavigationControlBuilder Stop(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NavigationControlBuilder.html">NavigationControlBuilder</a></dt>
+    <dd><p>A builder that converts to a block, or takes <code>For(actor)</code> first.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_Stop_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Message(Halt, Navigation.Stop());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/NavigationFactory.cs/#L30" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

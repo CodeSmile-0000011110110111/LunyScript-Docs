@@ -469,7 +469,7 @@ Available only inside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_Script_Gate" data-uid="CodeSmile.LunyScript.Script.Gate">
   Gate
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L234"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L254"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Opens and closes named gates that suppress input or camera for every script on
@@ -596,6 +596,58 @@ On.FixedUpdate(Motion.AddForce(Thrust).InWorldSpace());</code></pre>
 physics. <code>Motion.MoveBy</code> is component-directed and refuses a dynamic Rigidbody.
 Dynamic bodies use <code>AddForce</code>, <code>AddImpulse</code>, <code>SetVelocity</code> and
 <code>StopMotion</code>. Relocation that is not traversed movement is <code>TeleportTo</code>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_Script_Navigation_" data-uid="CodeSmile.LunyScript.Script.Navigation*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Script_Navigation" data-uid="CodeSmile.LunyScript.Script.Navigation">
+  Navigation
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L243"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Moves the object this script runs on, or with <code>For</code> a declared GameObject input,
+along a route around obstacles, and reports the route, the movement and where the move ended.
+Each move is an attempt on an operation handle bound with <code>.As</code>. Available only inside
+<code>Build()</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">protected NavigationFactory Navigation { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NavigationFactory.html">NavigationFactory</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Script_Navigation_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Navigation.MoveTo(Post).As(Patrol));
+When.Operation(Patrol).Succeeded(If(Navigation.Arrived(Patrol)).Then(OnGuard.Set(true)));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Script_Navigation_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Runtime-only. The route comes from the navigation backend the C# code that owns the runner
+installs, <code>NavMeshNavigationProvider</code> for Unity's NavMesh; with none, every move fails as
+<code>Denied</code>. Speed, acceleration and stopping distance stay on the actor's agent.
+<code>Motion.MoveTo</code> is the straight-line move. <code>docs/proposals/navigation.md</code> is the
+family.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
@@ -783,7 +835,7 @@ other collider. A read outside those events throws when the block runs.
 
   <h3 id="CodeSmile_LunyScript_Script_Panel" data-uid="CodeSmile.LunyScript.Script.Panel">
   Panel
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L248"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L268"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds, places and opens UI Toolkit panels. It hides <code>PanelRenderer</code> inside a
@@ -882,7 +934,7 @@ is the family.</p>
 
   <h3 id="CodeSmile_LunyScript_Script_Progress" data-uid="CodeSmile.LunyScript.Script.Progress">
   Progress
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L277"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L297"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Saves and loads documents among the user's progress, in local storage. Each save and
@@ -930,7 +982,7 @@ script, so name a document after what it holds, such as <code>Career</code> or <
 
   <h3 id="CodeSmile_LunyScript_Script_Scene" data-uid="CodeSmile.LunyScript.Script.Scene">
   Scene
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L263"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L283"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Loads and unloads Unity scenes named by a typed <a class="xref" href="CodeSmile.LunyScript.SceneReference.html">SceneReference</a>, each
@@ -979,7 +1031,7 @@ releases none. <code>docs/proposals/scene-flow.md</code> is the family.</p>
 
   <h3 id="CodeSmile_LunyScript_Script_Settings" data-uid="CodeSmile.LunyScript.Script.Settings">
   Settings
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L291"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L311"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Saves and loads documents among the user's settings, in local storage. Each save and
@@ -1200,7 +1252,7 @@ once.</p>
 
   <h3 id="CodeSmile_LunyScript_Script_SetProcessMode_CodeSmile_LunyScript_Process_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Script.SetProcessMode(CodeSmile.LunyScript.Process,System.String,System.Int32)">
   SetProcessMode(Process, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L305"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script.cs/#L325"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Sets this script type's default process mode. Inherit, the default, walks the
