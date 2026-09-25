@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_InputFactory" data-uid="CodeSmile.LunyScript.InputFactory" class="text-break">
-Struct InputFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L39"><i class="bi bi-code-slash"></i></a>
+Struct InputFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L37"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -111,29 +111,27 @@ script reads. It hides <code>UnityEngine.Input</code> inside a <code>Script</cod
 
   <h2 id="CodeSmile_LunyScript_InputFactory_examples">Examples</h2>
   <pre><code class="lang-csharp">var move = Input.ForPlayer(0).Vector2("Move");
-var fire = Input.ForPlayer(0).Button("Fire");
-On.Ready(Input.Cursor.Lock(), Input.Cursor.Hide());</code></pre>
+var fire = Input.Button("Fire");
+On.Ready(Input.Pairing.Open(), Input.Cursor.Lock(), Input.Cursor.Hide());</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_InputFactory_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p><b>Action reads are always a named local player's input, never the machine's.</b> There is
-no member here that reads a key or a device: an action is resolved for one local player, so a
-four-player split screen is four declarations and not one global read that every player
+  <div class="markdown level0 remarks"><p><b>Action reads are always one local player's input, never the machine's.</b> There is no
+member here that reads a key or a device: an action is resolved for one local player, so a
+four-player split screen reads four players and not one global read that every player
 shares. That is what the accepted design means by not deriving local players from global
-device polling. The machine cursor is the exception: <a class="xref" href="CodeSmile.LunyScript.InputFactory.html#CodeSmile_LunyScript_InputFactory_Cursor">Cursor</a> is one lock and
-one visibility flag for the whole machine.</p>
+device polling. The player is named with <a class="xref" href="CodeSmile.LunyScript.InputFactory.html#CodeSmile_LunyScript_InputFactory_ForPlayer_System_Int32_System_String_System_Int32_">ForPlayer(int, string, int)</a>, or left out, in which
+case it is the player bound to the object the script runs on: <code>Input.Vector2(&quot;Move&quot;)</code>
+is the settled <code>contract-input-actions</code> answer's default form, and
+<code>Input.ForPlayer(n)</code> its explicit form. <a class="xref" href="CodeSmile.LunyScript.InputFactory.html#CodeSmile_LunyScript_InputFactory_AnyPlayer_System_String_System_Int32_">AnyPlayer(string, int)</a> is a shared button.
+The machine's own state is the exception: <a class="xref" href="CodeSmile.LunyScript.InputFactory.html#CodeSmile_LunyScript_InputFactory_Cursor">Cursor</a> is one lock and one
+visibility flag, and <a class="xref" href="CodeSmile.LunyScript.InputFactory.html#CodeSmile_LunyScript_InputFactory_Pairing">Pairing</a> and <a class="xref" href="CodeSmile.LunyScript.InputFactory.html#CodeSmile_LunyScript_InputFactory_PlayerCount">PlayerCount</a> are the machine's
+local players.</p>
 <p>
     <b>Which backend supplies the actions is a runner service, not a script's business.</b>
     The <code>Input</code> surface names no package. <code>CodeSmile.LunyScript.Input</code> is the
     Input System adapter and the only place in the product that references that package;
     with no adapter installed every action reads its resting value and says so once.
-</p>
-<p>
-    <b>This surface's shape is provisional.</b> It implements the recorded recommendation
-    of the open decision <code>contract-input-actions</code>, which is one player-scoped typed
-    action handle for both the values and the occurrences. The alternative that decision
-    holds open repeats the player and the name at each use instead. Nothing below this
-    surface depends on which of the two is chosen.
 </p>
 </div>
 
@@ -146,7 +144,7 @@ one visibility flag for the whole machine.</p>
 
   <h3 id="CodeSmile_LunyScript_InputFactory_Cursor" data-uid="CodeSmile.LunyScript.InputFactory.Cursor">
   Cursor
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L219"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The machine cursor: lock and visibility as two independent writes.</p>
@@ -187,15 +185,323 @@ one visibility flag for the whole machine.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_InputFactory_IsLost_" data-uid="CodeSmile.LunyScript.InputFactory.IsLost*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputFactory_IsLost" data-uid="CodeSmile.LunyScript.InputFactory.IsLost">
+  IsLost
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L149"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True while the device of the local player bound to the object is disconnected.
+That player's actions read resting values meanwhile.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock IsLost { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputFactory_IsLost_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(!Input.IsLost).Then(Transform.MoveBy(1.0, 0.0, 0.0)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The factory is a default one.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_InputFactory_IsPaired_" data-uid="CodeSmile.LunyScript.InputFactory.IsPaired*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputFactory_IsPaired" data-uid="CodeSmile.LunyScript.InputFactory.IsPaired">
+  IsPaired
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L136"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True while a participant holds the local player bound to the object. False for an
+object bound to nobody.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock IsPaired { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputFactory_IsPaired_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Input.IsPaired).Then(Transform.MoveBy(1.0, 0.0, 0.0)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The factory is a default one.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_InputFactory_Pairing_" data-uid="CodeSmile.LunyScript.InputFactory.Pairing*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputFactory_Pairing" data-uid="CodeSmile.LunyScript.InputFactory.Pairing">
+  Pairing
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L193"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The machine's pairing window: <code>Open</code>, <code>Close</code> and <code>IsOpen</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public PairingInputFactory Pairing { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.PairingInputFactory.html">PairingInputFactory</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputFactory_Pairing_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Input.Pairing.Open());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_InputFactory_PlayerCount_" data-uid="CodeSmile.LunyScript.InputFactory.PlayerCount*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputFactory_PlayerCount" data-uid="CodeSmile.LunyScript.InputFactory.PlayerCount">
+  PlayerCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L205"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many local player numbers a participant holds during this frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NumberValueBlock PlayerCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputFactory_PlayerCount_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Input.PlayerCount &gt;= 2.0).Then(Input.Pairing.Close()));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
   <h2 class="section" id="methods">Methods
 </h2>
+
+
+  <a id="CodeSmile_LunyScript_InputFactory_AnyPlayer_" data-uid="CodeSmile.LunyScript.InputFactory.AnyPlayer*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputFactory_AnyPlayer_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.InputFactory.AnyPlayer(System.String,System.Int32)">
+  AnyPlayer(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L181"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A shared button: read across every local player number the backend holds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public AnyPlayerInputFactory AnyPlayer(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.AnyPlayerInputFactory.html">AnyPlayerInputFactory</a></dt>
+    <dd><p>A builder whose <code>Button</code> declares the shared button.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputFactory_AnyPlayer_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var pause = Input.AnyPlayer().Button("Pause");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_InputFactory_Button_" data-uid="CodeSmile.LunyScript.InputFactory.Button*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputFactory_Button_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.InputFactory.Button(System.String,System.String,System.Int32)">
+  Button(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a pressed-or-not action of the local player bound to the object the script
+runs on.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public InputButton Button(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The action's name, as the configured action asset spells it.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.InputButton.html">InputButton</a></dt>
+    <dd><p>The handle its two readings come from.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputFactory_Button_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var fire = Input.Button("Fire");</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputFactory_Button_System_String_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The object is bound by <code>Object.Spawn(prefab).ForPlayer(n)</code> or by the
+<code>Local Player</code> field on its <code>LunyScriptBehaviour</code>. An object bound to nobody reads
+resting values, which is the settled answer's &quot;an instance without a participant gets an
+unavailable binding and neutral value; it does not borrow another player&quot;.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The name is null or whitespace, this script
+already declares that action as another kind, or the factory is a default one.</p>
+</dd>
+  </dl>
+
 
 
   <a id="CodeSmile_LunyScript_InputFactory_ForPlayer_" data-uid="CodeSmile.LunyScript.InputFactory.ForPlayer*"></a>
 
   <h3 id="CodeSmile_LunyScript_InputFactory_ForPlayer_System_Int32_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.InputFactory.ForPlayer(System.Int32,System.String,System.Int32)">
   ForPlayer(int, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L63"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Names the local player whose actions the declarations that follow belong to.</p>
@@ -253,9 +559,10 @@ one visibility flag for the whole machine.</p>
 
   <h4 class="section" id="CodeSmile_LunyScript_InputFactory_ForPlayer_System_Int32_System_String_System_Int32__remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>A local player is numbered from 0, which is the first player on this machine. The
-number is what the configured backend pairs a device with. A named player is not
-accepted here: <code>Define</code> has no player kind, and a typed player identity is the
-open decision <code>contract-player-identity</code>.</p>
+number is what the configured backend pairs a device with; the person holding it is a
+participant, and a number is reused after that person leaves. A named player is not
+accepted here yet: <code>Define</code> has no player kind, and the participant reference kind
+the settled <code>contract-player-identity</code> answer describes is not built.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
@@ -267,11 +574,287 @@ open decision <code>contract-player-identity</code>.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_InputFactory_Leave_" data-uid="CodeSmile.LunyScript.InputFactory.Leave*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputFactory_Leave_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.InputFactory.Leave(System.String,System.Int32)">
+  Leave(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L165"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Releases the devices of the local player bound to the object and frees the number.
+Applied at the start of the next frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Leave(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputFactory_Leave_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">When.Input(Input.Button("Leave")).Performed(Input.Leave(), Object.Despawn());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The factory is a default one.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_InputFactory_Number_" data-uid="CodeSmile.LunyScript.InputFactory.Number*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputFactory_Number_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.InputFactory.Number(System.String,System.String,System.Int32)">
+  Number(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a single-axis action of the local player bound to the object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public InputNumber Number(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The action's name, as the configured action asset spells it.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.InputNumber.html">InputNumber</a></dt>
+    <dd><p>The handle its reading comes from.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputFactory_Number_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var throttle = Input.Number("Throttle");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>As <a class="xref" href="CodeSmile.LunyScript.InputFactory.html#CodeSmile_LunyScript_InputFactory_Button_System_String_System_String_System_Int32_">Button(string, string, int)</a>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_InputFactory_Vector2_" data-uid="CodeSmile.LunyScript.InputFactory.Vector2*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputFactory_Vector2_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.InputFactory.Vector2(System.String,System.String,System.Int32)">
+  Vector2(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a two-axis action of the local player bound to the object. Its value is a
+<code>Vec3</code> whose third component is zero.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public InputVector2 Vector2(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The action's name, as the configured action asset spells it.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.InputVector2.html">InputVector2</a></dt>
+    <dd><p>The handle its reading comes from.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputFactory_Vector2_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var move = Input.Vector2("Move");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>As <a class="xref" href="CodeSmile.LunyScript.InputFactory.html#CodeSmile_LunyScript_InputFactory_Button_System_String_System_String_System_Int32_">Button(string, string, int)</a>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_InputFactory_Vector3_" data-uid="CodeSmile.LunyScript.InputFactory.Vector3*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputFactory_Vector3_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.InputFactory.Vector3(System.String,System.String,System.Int32)">
+  Vector3(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L126"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a three-axis action of the local player bound to the object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public InputVector3 Vector3(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The action's name, as the configured action asset spells it.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.InputVector3.html">InputVector3</a></dt>
+    <dd><p>The handle its reading comes from.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputFactory_Vector3_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var lean = Input.Vector3("Lean");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>As <a class="xref" href="CodeSmile.LunyScript.InputFactory.html#CodeSmile_LunyScript_InputFactory_Button_System_String_System_String_System_Int32_">Button(string, string, int)</a>.</p>
+</dd>
+  </dl>
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L39" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/InputFactory.cs/#L37" class="edit-link">Edit this page</a>
         </div>
 
 

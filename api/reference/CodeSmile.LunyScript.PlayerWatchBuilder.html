@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct PlayerWatchBuilder | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct PlayerWatchBuilder | LunyScript API Reference ">
+      
+      <meta name="description" content="What When.Player(n) and When.Player() return. Its four methods register the blocks that run when this script sees a local player pair, leave, lose a device or get it back.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_PlayerWatchBuilder.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.PlayerWatchBuilder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.PlayerWatchBuilder">
+
+
+
+  <h1 id="CodeSmile_LunyScript_PlayerWatchBuilder" data-uid="CodeSmile.LunyScript.PlayerWatchBuilder" class="text-break">
+Struct PlayerWatchBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/PlayerWatchBuilder.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>What <code>When.Player(n)</code> and <code>When.Player()</code> return. Its four methods register the
+blocks that run when this script sees a local player pair, leave, lose a device or get it
+back.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct PlayerWatchBuilder</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyScript_PlayerWatchBuilder_examples">Examples</h2>
+  <pre><code class="lang-csharp">When.Player(1).Paired(Status.Set("Player 2 is in"));
+When.Player().Lost(Status.Set("Reconnect your controller"));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_PlayerWatchBuilder_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>Each watch compares what this instance last saw with the players of the frame</b>, once
+per frame after the frame-update blocks, the way <code>When.Var(x).Changed</code> does. An
+instance that spawns after a player paired runs <code>Paired</code> for that player on its first
+tick, so a script in a scene loaded later still sees the players who paired earlier. A
+player who paired and left while the script was not ticking runs neither.
+<code>docs/proposals/local-player-pairing.md</code>, &quot;When the four watches run&quot;, is the contract.</p>
+<p>
+    <code>When.Player()</code> with no number watches the local player bound to the object the
+    script runs on, which is set by <code>Object.Spawn(prefab).ForPlayer(n)</code> or by the
+    object's <code>Local Player</code> field. An object bound to nobody runs none of the four.
+</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_PlayerWatchBuilder_Left_" data-uid="CodeSmile.LunyScript.PlayerWatchBuilder.Left*"></a>
+
+  <h3 id="CodeSmile_LunyScript_PlayerWatchBuilder_Left_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.PlayerWatchBuilder.Left(CodeSmile.LunyScript.Block[])">
+  Left(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/PlayerWatchBuilder.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers the blocks that run when the participant this script last saw no longer
+holds the number: the player left.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Left(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>blocks</code></dt></td>
+    <td style="width: 99%"><dd><p>The blocks, in order.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_PlayerWatchBuilder_Left_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">When.Player(1).Left(Input.Pairing.Open());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>As <a class="xref" href="CodeSmile.LunyScript.PlayerWatchBuilder.html#CodeSmile_LunyScript_PlayerWatchBuilder_Paired_CodeSmile_LunyScript_Block___">Paired(params Block[])</a>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_PlayerWatchBuilder_Lost_" data-uid="CodeSmile.LunyScript.PlayerWatchBuilder.Lost*"></a>
+
+  <h3 id="CodeSmile_LunyScript_PlayerWatchBuilder_Lost_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.PlayerWatchBuilder.Lost(CodeSmile.LunyScript.Block[])">
+  Lost(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/PlayerWatchBuilder.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers the blocks that run when the player's device disconnects. The player
+stays paired and reads resting values until the device is back.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Lost(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>blocks</code></dt></td>
+    <td style="width: 99%"><dd><p>The blocks, in order.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_PlayerWatchBuilder_Lost_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">When.Player().Lost(Status.Set("Reconnect your controller"));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>As <a class="xref" href="CodeSmile.LunyScript.PlayerWatchBuilder.html#CodeSmile_LunyScript_PlayerWatchBuilder_Paired_CodeSmile_LunyScript_Block___">Paired(params Block[])</a>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_PlayerWatchBuilder_Paired_" data-uid="CodeSmile.LunyScript.PlayerWatchBuilder.Paired*"></a>
+
+  <h3 id="CodeSmile_LunyScript_PlayerWatchBuilder_Paired_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.PlayerWatchBuilder.Paired(CodeSmile.LunyScript.Block[])">
+  Paired(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/PlayerWatchBuilder.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers the blocks that run when a participant this script has not seen holds
+the number, including one who paired before this object spawned.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Paired(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>blocks</code></dt></td>
+    <td style="width: 99%"><dd><p>The blocks, in order.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_PlayerWatchBuilder_Paired_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">When.Player(1).Paired(Object.Spawn(Avatar).ForPlayer(1));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">blocks</code> is null or contains
+null, or the builder is a default one.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_PlayerWatchBuilder_Returned_" data-uid="CodeSmile.LunyScript.PlayerWatchBuilder.Returned*"></a>
+
+  <h3 id="CodeSmile_LunyScript_PlayerWatchBuilder_Returned_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.PlayerWatchBuilder.Returned(CodeSmile.LunyScript.Block[])">
+  Returned(params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/PlayerWatchBuilder.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers the blocks that run when the same player has a device again: the lost
+one reconnected, or they pressed a button on another device nobody holds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Returned(params Block[] blocks)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>blocks</code></dt></td>
+    <td style="width: 99%"><dd><p>The blocks, in order.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_PlayerWatchBuilder_Returned_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">When.Player().Returned(Status.Set(""));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>As <a class="xref" href="CodeSmile.LunyScript.PlayerWatchBuilder.html#CodeSmile_LunyScript_PlayerWatchBuilder_Paired_CodeSmile_LunyScript_Block___">Paired(params Block[])</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/PlayerWatchBuilder.cs/#L29" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

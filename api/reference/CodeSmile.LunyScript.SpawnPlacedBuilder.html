@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_SpawnPlacedBuilder" data-uid="CodeSmile.LunyScript.SpawnPlacedBuilder" class="text-break">
-Struct SpawnPlacedBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L254"><i class="bi bi-code-slash"></i></a>
+Struct SpawnPlacedBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L295"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -126,7 +126,7 @@ whose frame is still the default, the parent's.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnPlacedBuilder_ChildOf_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnPlacedBuilder.ChildOf(System.String,System.String,System.Int32)">
   ChildOf(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L287"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L328"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Parents the produced object to the object this script runs on, or to one this
@@ -202,11 +202,89 @@ chain already names a parent, or this builder is a <code>default</code>.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_SpawnPlacedBuilder_ForPlayer_" data-uid="CodeSmile.LunyScript.SpawnPlacedBuilder.ForPlayer*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SpawnPlacedBuilder_ForPlayer_System_Int32_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnPlacedBuilder.ForPlayer(System.Int32,System.String,System.Int32)">
+  ForPlayer(int, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L342"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Binds every script the produced object starts to one local player, so its
+player-less input reads, <code>Input.Vector2(&quot;Move&quot;)</code>, <code>Input.IsPaired</code> and
+<code>When.Player()</code>, read that player.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnPlacedBuilder ForPlayer(int localPlayer, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>localPlayer</code></dt></td>
+    <td style="width: 99%"><dd><p>The local player number, from 0.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SpawnPlacedBuilder.html">SpawnPlacedBuilder</a></dt>
+    <dd><p>A builder that can still take the clauses it could take before.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_SpawnPlacedBuilder_ForPlayer_System_Int32_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">When.Player(1).Paired(Object.Spawn(Avatar).At(Pad).ForPlayer(1));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_SpawnPlacedBuilder_ForPlayer_System_Int32_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>It overrides the <code>Local Player</code> field the prefab's <code>LunyScriptBehaviour</code>
+carries, for every script <code>Instantiate</code> starts during this spawn, children included.
+The binding lasts for that incarnation.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">localPlayer</code> is negative,
+this chain already names a player, or this builder is a <code>default</code>.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_SpawnPlacedBuilder_InLocalSpace_" data-uid="CodeSmile.LunyScript.SpawnPlacedBuilder.InLocalSpace*"></a>
 
   <h3 id="CodeSmile_LunyScript_SpawnPlacedBuilder_InLocalSpace" data-uid="CodeSmile.LunyScript.SpawnPlacedBuilder.InLocalSpace">
   InLocalSpace()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L280"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L321"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>States the default frame explicitly: the placement is read in the parent's
@@ -254,7 +332,7 @@ that mixes framed and unframed spawns reads better when both say which frame the
 
   <h3 id="CodeSmile_LunyScript_SpawnPlacedBuilder_InWorldSpace" data-uid="CodeSmile.LunyScript.SpawnPlacedBuilder.InWorldSpace">
   InWorldSpace()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L266"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L307"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reads the placement as world coordinates rather than the parent's.</p>
@@ -300,7 +378,7 @@ of 2026-09-13, so a script names a frame one way rather than two.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnPlacedBuilder_Into_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnPlacedBuilder.Into(System.String,System.String,System.Int32)">
   Into(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L294"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L335"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Holds the produced object in this script's owned-object slot of that name, so later
@@ -387,7 +465,7 @@ this chain already names one, another call already produces that name, or this b
 
   <h3 id="CodeSmile_LunyScript_SpawnPlacedBuilder_op_Implicit_CodeSmile_LunyScript_SpawnPlacedBuilder__CodeSmile_LunyScript_Block" data-uid="CodeSmile.LunyScript.SpawnPlacedBuilder.op_Implicit(CodeSmile.LunyScript.SpawnPlacedBuilder)~CodeSmile.LunyScript.Block">
   implicit operator Block(SpawnPlacedBuilder)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L306"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L354"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finishes a spawn whose placement is read in the parent's frame.</p>
@@ -446,7 +524,7 @@ this chain already names one, another call already produces that name, or this b
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L254" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/SpawnBuilder.cs/#L295" class="edit-link">Edit this page</a>
         </div>
 
 

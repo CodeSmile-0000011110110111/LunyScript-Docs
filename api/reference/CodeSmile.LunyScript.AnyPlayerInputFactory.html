@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Struct VarWatchBuilder&lt;T&gt; | LunyScript API Reference </title>
+      <title>Struct AnyPlayerInputFactory | LunyScript API Reference </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Struct VarWatchBuilder&lt;T&gt; | LunyScript API Reference ">
+      <meta name="title" content="Struct AnyPlayerInputFactory | LunyScript API Reference ">
       
-      <meta name="description" content="What When.Var(x) returns. Its only method is , which registers the watch with the build.">
+      <meta name="description" content="What Input.AnyPlayer() returns: a shared button, read across every local player number the backend holds.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_VarWatchBuilder_1.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.VarWatchBuilder%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_AnyPlayerInputFactory.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.AnyPlayerInputFactory%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -72,12 +72,12 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="CodeSmile.LunyScript.VarWatchBuilder`1">
+        <article data-uid="CodeSmile.LunyScript.AnyPlayerInputFactory">
 
 
 
-  <h1 id="CodeSmile_LunyScript_VarWatchBuilder_1" data-uid="CodeSmile.LunyScript.VarWatchBuilder`1" class="text-break">
-Struct VarWatchBuilder&lt;T&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/WhenFactory.cs/#L427"><i class="bi bi-code-slash"></i></a>
+  <h1 id="CodeSmile_LunyScript_AnyPlayerInputFactory" data-uid="CodeSmile.LunyScript.AnyPlayerInputFactory" class="text-break">
+Struct AnyPlayerInputFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/AnyPlayerInputFactory.cs/#L23"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,22 +85,17 @@ Struct VarWatchBuilder&lt;T&gt;  <a class="header-action link-secondary" title="
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>What <code>When.Var(x)</code> returns. Its only method is <a class="xref" href="CodeSmile.LunyScript.VarWatchBuilder-1.html#CodeSmile_LunyScript_VarWatchBuilder_1_Changed_CodeSmile_LunyScript_Block___">Changed(params Block[])</a>, which registers
-the watch with the build.</p>
+  <div class="markdown summary"><p>What <code>Input.AnyPlayer()</code> returns: a shared button, read across every local player
+number the backend holds.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly struct VarWatchBuilder&lt;T&gt; where T : struct</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly struct AnyPlayerInputFactory</code></pre>
   </div>
 
 
 
-  <h4 class="section">Type Parameters</h4>
-  <dl class="parameters">
-    <dt><code>T</code></dt>
-    <dd></dd>
-  </dl>
 
   <details>
   <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
@@ -113,17 +108,18 @@ the watch with the build.</p>
 
 
 
-  <h2 id="CodeSmile_LunyScript_VarWatchBuilder_1_examples">Examples</h2>
-  <pre><code class="lang-csharp">When.Var(playerName).Changed(score.Set(0.0));</code></pre>
+  <h2 id="CodeSmile_LunyScript_AnyPlayerInputFactory_examples">Examples</h2>
+  <pre><code class="lang-csharp">var pause = Input.AnyPlayer().Button("Pause");
+When.Input(pause).Performed(Time.Pause());</code></pre>
 
 
-  <h2 id="CodeSmile_LunyScript_VarWatchBuilder_1_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p><b>A watch is polled once per frame, after the frame-update blocks.</b> It compares the
-variable against a second slot of the same kind, allocated at build time, that holds what the
-variable was the last time the watch ran. A value that changes and changes back within one
-frame therefore does not fire. That is the semantic, stated rather than hidden;
-<code>docs/execution-model.md</code> and <code>docs/slice-decisions.md</code> record why polling was
-chosen over notifying on write.</p>
+  <h2 id="CodeSmile_LunyScript_AnyPlayerInputFactory_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>This is the settled <code>contract-input-actions</code> answer's &quot;Shared buttons use explicit
+AnyPlayer()&quot;. <code>IsPressed</code> is true while any paired player holds the button,
+<code>Value</code> is the largest press among them, and <code>When.Input(pause).Performed</code> runs on
+a frame where any of them performed it, once however many did. Only a button is offered: a
+shared stick has no single value a script could use. Which player pressed it is not
+readable in this version.</p>
 </div>
 
 
@@ -131,20 +127,19 @@ chosen over notifying on write.</p>
 </h2>
 
 
-  <a id="CodeSmile_LunyScript_VarWatchBuilder_1_Changed_" data-uid="CodeSmile.LunyScript.VarWatchBuilder`1.Changed*"></a>
+  <a id="CodeSmile_LunyScript_AnyPlayerInputFactory_Button_" data-uid="CodeSmile.LunyScript.AnyPlayerInputFactory.Button*"></a>
 
-  <h3 id="CodeSmile_LunyScript_VarWatchBuilder_1_Changed_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.VarWatchBuilder`1.Changed(CodeSmile.LunyScript.Block[])">
-  Changed(params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/WhenFactory.cs/#L456"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_AnyPlayerInputFactory_Button_System_String_" data-uid="CodeSmile.LunyScript.AnyPlayerInputFactory.Button(System.String)">
+  Button(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/AnyPlayerInputFactory.cs/#L44"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Registers the blocks that run when the variable's value differs from what it was the
-last time the watch ran.</p>
+  <div class="markdown level1 summary"><p>Declares a shared pressed-or-not action.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Changed(params Block[] blocks)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public InputButton Button(string name)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -156,30 +151,37 @@ last time the watch ran.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>blocks</code></dt></td>
-    <td style="width: 99%"><dd><p>The blocks, in order.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The action's name, as the configured action asset spells it.</p>
 </dd></td>
   </tr>
   </dl>
   </table>
 
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.InputButton.html">InputButton</a></dt>
+    <dd><p>The handle its readings come from.</p>
+</dd>
+  </dl>
 
 
 
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_VarWatchBuilder_1_Changed_CodeSmile_LunyScript_Block____examples">Examples</h4>
-  <pre><code class="lang-csharp">When.Var(health).Changed(alive.Set(health &gt; 0.0));</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_AnyPlayerInputFactory_Button_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var pause = Input.AnyPlayer().Button("Pause");</code></pre>
 
 
 
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p><code class="paramref">blocks</code> is null or contains
-null, or the variable's kind is not one LunyScript can watch.</p>
+    <dd><p>The name is null or whitespace, this script
+already declares that shared action as another kind, or the builder is a default
+one.</p>
 </dd>
   </dl>
 
@@ -189,7 +191,7 @@ null, or the variable's kind is not one LunyScript can watch.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/WhenFactory.cs/#L427" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/AnyPlayerInputFactory.cs/#L23" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_FakeInputProvider" data-uid="CodeSmile.LunyScript.FakeInputProvider" class="text-break">
-Class FakeInputProvider  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L31"><i class="bi bi-code-slash"></i></a>
+Class FakeInputProvider  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L41"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -140,6 +140,16 @@ without the package still run a script that reads input.</p>
     occurrence as having happened. <a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_EndFrame">EndFrame()</a> clears the occurrences, which is
     what a real backend's next frame does.
 </p>
+<p>
+    <b>Players are fixed until <a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_UseLocalPlayers_System_Int32_">UseLocalPlayers(int)</a> is called.</b> By default the
+    first <a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_SetLocalPlayerCount_System_Int32_">SetLocalPlayerCount(int)</a> numbers are present from the start and pairing
+    is refused, which is what the Input System adapter's one-player setup does. After
+    <a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_UseLocalPlayers_System_Int32_">UseLocalPlayers(int)</a> nobody is present, and a test pairs players with the
+    same rules the adapter applies: <a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_PressDevice_System_String_">PressDevice(string)</a> is a button press on a named
+    device, <a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_DisconnectDevice_System_String_">DisconnectDevice(string)</a> and <a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_ReconnectDevice_System_String_">ReconnectDevice(string)</a> unplug and
+    replug it, and every change is applied by <a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_UpdatePairing">UpdatePairing()</a>, which the
+    gateway calls once per frame.
+</p>
 </div>
 
 
@@ -147,11 +157,80 @@ without the package still run a script that reads input.</p>
 </h2>
 
 
+  <a id="CodeSmile_LunyScript_FakeInputProvider_IsPairingOpen_" data-uid="CodeSmile.LunyScript.FakeInputProvider.IsPairingOpen*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeInputProvider_IsPairingOpen" data-uid="CodeSmile.LunyScript.FakeInputProvider.IsPairingOpen">
+  IsPairingOpen
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L149"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether a button press on a device no local player holds currently pairs it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsPairingOpen { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeInputProvider_LocalPlayerCapacity_" data-uid="CodeSmile.LunyScript.FakeInputProvider.LocalPlayerCapacity*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeInputProvider_LocalPlayerCapacity" data-uid="CodeSmile.LunyScript.FakeInputProvider.LocalPlayerCapacity">
+  LocalPlayerCapacity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L127"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many local player numbers this backend can hold, from 0. A one-player backend
+answers 1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int LocalPlayerCapacity { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeInputProvider_LocalPlayerCapacity_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The gateway reads the pairing state of every number below this once per frame, so
+it must allocate nothing.</p>
+</div>
+
+
+
+
   <a id="CodeSmile_LunyScript_FakeInputProvider_LocalPlayerCount_" data-uid="CodeSmile.LunyScript.FakeInputProvider.LocalPlayerCount*"></a>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_LocalPlayerCount" data-uid="CodeSmile.LunyScript.FakeInputProvider.LocalPlayerCount">
   LocalPlayerCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L85"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many local players this backend currently has. Zero is a valid answer and is
@@ -176,6 +255,10 @@ not a failure.</p>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_FakeInputProvider_LocalPlayerCount_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>While players are fixed, the number <a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_SetLocalPlayerCount_System_Int32_">SetLocalPlayerCount(int)</a> set. After
+<a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_UseLocalPlayers_System_Int32_">UseLocalPlayers(int)</a>, how many numbers are paired.</p>
+</div>
 
 
 
@@ -188,7 +271,7 @@ not a failure.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_AddAction_System_Int32_System_String_CodeSmile_LunyScript_InputValueKind_System_Boolean_" data-uid="CodeSmile.LunyScript.FakeInputProvider.AddAction(System.Int32,System.String,CodeSmile.LunyScript.InputValueKind,System.Boolean)">
   AddAction(int, string, InputValueKind, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L337"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Configures one action, the way an action asset configures one.</p>
@@ -258,7 +341,7 @@ name.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_BoundPath_System_Int32_System_String_" data-uid="CodeSmile.LunyScript.FakeInputProvider.BoundPath(System.Int32,System.String)">
   BoundPath(int, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L296"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L579"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The override path last applied to that action, or null when none has been.</p>
@@ -313,7 +396,7 @@ name.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_CancelAllRebinds" data-uid="CodeSmile.LunyScript.FakeInputProvider.CancelAllRebinds">
   CancelAllRebinds()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L229"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L512"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Stops every in-flight capture. A provider that is about to be replaced or
@@ -342,7 +425,7 @@ Input System updates.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_CancelRebind_System_Int32_" data-uid="CodeSmile.LunyScript.FakeInputProvider.CancelRebind(System.Int32)">
   CancelRebind(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L211"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L494"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Stops one capture without applying an override. A missing or already-terminal
@@ -386,7 +469,7 @@ identifier is a no-op.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_CancelRebind_System_Int32_System_String_" data-uid="CodeSmile.LunyScript.FakeInputProvider.CancelRebind(System.Int32,System.String)">
   CancelRebind(int, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L278"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L561"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Completes a pending capture as Cancelled, which is what Escape does.</p>
@@ -432,11 +515,45 @@ identifier is a no-op.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_FakeInputProvider_ClosePairing_" data-uid="CodeSmile.LunyScript.FakeInputProvider.ClosePairing*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeInputProvider_ClosePairing" data-uid="CodeSmile.LunyScript.FakeInputProvider.ClosePairing">
+  ClosePairing()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L162"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Stops pairing new players. A player whose device is lost still takes the next
+device pressed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public InputPairingResult ClosePairing()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.InputPairingResult.html">InputPairingResult</a></dt>
+    <dd><p><a class="xref" href="CodeSmile.LunyScript.InputPairingResult.html#CodeSmile_LunyScript_InputPairingResult_Applied">Applied</a>, or why this backend pairs nothing.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_FakeInputProvider_CompleteRebind_" data-uid="CodeSmile.LunyScript.FakeInputProvider.CompleteRebind*"></a>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_CompleteRebind_System_Int32_System_String_System_String_" data-uid="CodeSmile.LunyScript.FakeInputProvider.CompleteRebind(System.Int32,System.String,System.String)">
   CompleteRebind(int, string, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L244"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L527"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Completes a pending capture as success, applying <code class="paramref">path</code> as the
@@ -492,7 +609,7 @@ live override, or as Denied when another action of that player already uses that
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_DenyRebind_System_Int32_System_String_" data-uid="CodeSmile.LunyScript.FakeInputProvider.DenyRebind(System.Int32,System.String)">
   DenyRebind(int, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L265"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L548"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Completes a pending capture as Denied without applying an override.</p>
@@ -538,11 +655,110 @@ live override, or as Denied when another action of that player already uses that
 
 
 
+  <a id="CodeSmile_LunyScript_FakeInputProvider_DeviceOf_" data-uid="CodeSmile.LunyScript.FakeInputProvider.DeviceOf*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeInputProvider_DeviceOf_System_Int32_" data-uid="CodeSmile.LunyScript.FakeInputProvider.DeviceOf(System.Int32)">
+  DeviceOf(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L258"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The device a local player number holds, or null for nobody.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string DeviceOf(int localPlayerIndex)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>localPlayerIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>Which local player number.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>The device name, or null.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeInputProvider_DeviceOf_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Assert.That(provider.DeviceOf(1), Is.EqualTo("Pad2"));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeInputProvider_DisconnectDevice_" data-uid="CodeSmile.LunyScript.FakeInputProvider.DisconnectDevice*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeInputProvider_DisconnectDevice_System_String_" data-uid="CodeSmile.LunyScript.FakeInputProvider.DisconnectDevice(System.String)">
+  DisconnectDevice(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L235"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Unplugs the named device: the player holding it stays paired and their device is
+lost until <a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_ReconnectDevice_System_String_">ReconnectDevice(string)</a> or another device replaces it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void DisconnectDevice(string device)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>device</code></dt></td>
+    <td style="width: 99%"><dd><p>The name <a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_PressDevice_System_String_">PressDevice(string)</a> paired.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeInputProvider_DisconnectDevice_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">provider.DisconnectDevice("Pad2");</code></pre>
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_FakeInputProvider_EndFrame_" data-uid="CodeSmile.LunyScript.FakeInputProvider.EndFrame*"></a>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_EndFrame" data-uid="CodeSmile.LunyScript.FakeInputProvider.EndFrame">
   EndFrame()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L307"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L590"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Clears every occurrence, which is what a real backend's next frame does. Values
@@ -573,7 +789,7 @@ are left alone, because a held button is still held next frame.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_HasPendingRebind_System_Int32_System_String_" data-uid="CodeSmile.LunyScript.FakeInputProvider.HasPendingRebind(System.Int32,System.String)">
   HasPendingRebind(int, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L291"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L574"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether a capture is listening for that action.</p>
@@ -624,11 +840,61 @@ are left alone, because a held button is still held next frame.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_FakeInputProvider_IsLost_" data-uid="CodeSmile.LunyScript.FakeInputProvider.IsLost*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeInputProvider_IsLost_System_Int32_" data-uid="CodeSmile.LunyScript.FakeInputProvider.IsLost(System.Int32)">
+  IsLost(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L144"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the device the player on that number is paired with has disconnected.
+False for nobody. Must allocate nothing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsLost(int localPlayerIndex)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>localPlayerIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>Which local player number, from 0.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True while that player's device is lost.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_FakeInputProvider_IsPressed_" data-uid="CodeSmile.LunyScript.FakeInputProvider.IsPressed*"></a>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_IsPressed_System_Int32_" data-uid="CodeSmile.LunyScript.FakeInputProvider.IsPressed(System.Int32)">
   IsPressed(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L105"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L370"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether the action is held down now. Must allocate nothing; AGENTS.md rule 29.</p>
@@ -673,11 +939,62 @@ are left alone, because a held button is still held next frame.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_FakeInputProvider_Leave_" data-uid="CodeSmile.LunyScript.FakeInputProvider.Leave*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeInputProvider_Leave_System_Int32_" data-uid="CodeSmile.LunyScript.FakeInputProvider.Leave(System.Int32)">
+  Leave(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L172"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Asks to release one local player's devices and free the number. The release is
+applied by the next <a class="xref" href="CodeSmile.LunyScript.IInputProvider.html#CodeSmile_LunyScript_IInputProvider_UpdatePairing">UpdatePairing()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public InputPairingResult Leave(int localPlayerIndex)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>localPlayerIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>Which local player number, from 0.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.InputPairingResult.html">InputPairingResult</a></dt>
+    <dd><p><a class="xref" href="CodeSmile.LunyScript.InputPairingResult.html#CodeSmile_LunyScript_InputPairingResult_Applied">Applied</a>, <a class="xref" href="CodeSmile.LunyScript.InputPairingResult.html#CodeSmile_LunyScript_InputPairingResult_NoPlayer">NoPlayer</a>
+when nobody holds the number, or why this backend pairs nothing.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_FakeInputProvider_Occurred_" data-uid="CodeSmile.LunyScript.FakeInputProvider.Occurred*"></a>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_Occurred_System_Int32_CodeSmile_LunyScript_InputPhase_" data-uid="CodeSmile.LunyScript.FakeInputProvider.Occurred(System.Int32,CodeSmile.LunyScript.InputPhase)">
   Occurred(int, InputPhase)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L404"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether one occurrence happened during the frame that is running. Must allocate
@@ -729,11 +1046,102 @@ nothing.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_FakeInputProvider_OpenPairing_" data-uid="CodeSmile.LunyScript.FakeInputProvider.OpenPairing*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeInputProvider_OpenPairing" data-uid="CodeSmile.LunyScript.FakeInputProvider.OpenPairing">
+  OpenPairing()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L152"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts pairing: from now on a button press on a device no local player holds pairs
+it with the lowest free number.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public InputPairingResult OpenPairing()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.InputPairingResult.html">InputPairingResult</a></dt>
+    <dd><p><a class="xref" href="CodeSmile.LunyScript.InputPairingResult.html#CodeSmile_LunyScript_InputPairingResult_Applied">Applied</a>, or why this backend pairs nothing.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeInputProvider_ParticipantAt_" data-uid="CodeSmile.LunyScript.FakeInputProvider.ParticipantAt*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeInputProvider_ParticipantAt_System_Int32_" data-uid="CodeSmile.LunyScript.FakeInputProvider.ParticipantAt(System.Int32)">
+  ParticipantAt(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The backend's identity of the person on one local player number, or 0 when nobody
+holds it. Must allocate nothing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public long ParticipantAt(int localPlayerIndex)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>localPlayerIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>Which local player number, from 0.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">long</span></dt>
+    <dd><p>The identity, 0 for nobody and for a number the backend cannot hold.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeInputProvider_ParticipantAt_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The identity changes when a different person takes the number, and stays the same when
+the same person's device is lost and regained or re-paired, which is what the settled
+<code>contract-player-identity</code> answer asks of a participant. A backend must not hand
+out the same identity to two people during its lifetime; the gateway maps it to a
+counter of its own, so two backends may use the same numbers.</p>
+</div>
+
+
+
+
   <a id="CodeSmile_LunyScript_FakeInputProvider_PollRebind_" data-uid="CodeSmile.LunyScript.FakeInputProvider.PollRebind*"></a>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_PollRebind_System_Int32_" data-uid="CodeSmile.LunyScript.FakeInputProvider.PollRebind(System.Int32)">
   PollRebind(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L505"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Asks whether one capture has finished. Must allocate nothing while pending.</p>
@@ -778,11 +1186,65 @@ nothing.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_FakeInputProvider_PressDevice_" data-uid="CodeSmile.LunyScript.FakeInputProvider.PressDevice*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeInputProvider_PressDevice_System_String_" data-uid="CodeSmile.LunyScript.FakeInputProvider.PressDevice(System.String)">
+  PressDevice(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A button press on the named device, applied by the next
+<a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_UpdatePairing">UpdatePairing()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void PressDevice(string device)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>device</code></dt></td>
+    <td style="width: 99%"><dd><p>Any name that tells one device from another, such as &quot;Pad1&quot;.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeInputProvider_PressDevice_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">provider.PressDevice("Pad1");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Players are still fixed, or
+<code class="paramref">device</code> is null or empty.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_FakeInputProvider_Raise_" data-uid="CodeSmile.LunyScript.FakeInputProvider.Raise*"></a>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_Raise_System_Int32_System_String_CodeSmile_LunyScript_InputPhase_" data-uid="CodeSmile.LunyScript.FakeInputProvider.Raise(System.Int32,System.String,CodeSmile.LunyScript.InputPhase)">
   Raise(int, string, InputPhase)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L171"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L454"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Marks one occurrence as having happened during the frame that is running.</p>
@@ -840,7 +1302,7 @@ nothing.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_ReadNumber_System_Int32_" data-uid="CodeSmile.LunyScript.FakeInputProvider.ReadNumber(System.Int32)">
   ReadNumber(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L377"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The action's one-component value now. Must allocate nothing.</p>
@@ -889,7 +1351,7 @@ nothing.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_ReadVector_System_Int32_System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.FakeInputProvider.ReadVector(System.Int32,System.Double@,System.Double@,System.Double@)">
   ReadVector(int, out double, out double, out double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L115"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L387"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The action's spatial value now, with unused components zero. Must allocate
@@ -947,11 +1409,57 @@ nothing.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_FakeInputProvider_ReconnectDevice_" data-uid="CodeSmile.LunyScript.FakeInputProvider.ReconnectDevice*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeInputProvider_ReconnectDevice_System_String_" data-uid="CodeSmile.LunyScript.FakeInputProvider.ReconnectDevice(System.String)">
+  ReconnectDevice(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L246"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Plugs the named device back in: the player it was lost from has it again.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void ReconnectDevice(string device)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>device</code></dt></td>
+    <td style="width: 99%"><dd><p>The name <a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_DisconnectDevice_System_String_">DisconnectDevice(string)</a> unplugged.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeInputProvider_ReconnectDevice_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">provider.ReconnectDevice("Pad2");</code></pre>
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_FakeInputProvider_Resolve_" data-uid="CodeSmile.LunyScript.FakeInputProvider.Resolve*"></a>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_Resolve_System_Int32_System_String_CodeSmile_LunyScript_InputValueKind_System_Int32__" data-uid="CodeSmile.LunyScript.FakeInputProvider.Resolve(System.Int32,System.String,CodeSmile.LunyScript.InputValueKind,System.Int32@)">
   Resolve(int, string, InputValueKind, out int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L351"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finds the configured action one declaration names, and hands back the identifier every
@@ -1024,7 +1532,7 @@ the string work here and must do none of it afterwards.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_SetBoundPath_System_Int32_System_String_System_String_" data-uid="CodeSmile.LunyScript.FakeInputProvider.SetBoundPath(System.Int32,System.String,System.String)">
   SetBoundPath(int, string, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L301"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L584"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Sets the live override path a conflict check reads, without starting a capture.</p>
@@ -1079,7 +1587,7 @@ the string work here and must do none of it afterwards.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_SetLocalPlayerCount_System_Int32_" data-uid="CodeSmile.LunyScript.FakeInputProvider.SetLocalPlayerCount(System.Int32)">
   SetLocalPlayerCount(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L107"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Says how many local players this backend has, so that a test can exercise the
@@ -1126,7 +1634,7 @@ missing-player refusal without configuring devices.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_SetNumber_System_Int32_System_String_System_Double_" data-uid="CodeSmile.LunyScript.FakeInputProvider.SetNumber(System.Int32,System.String,System.Double)">
   SetNumber(int, string, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L148"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L431"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Writes a one-component action's value.</p>
@@ -1184,7 +1692,7 @@ missing-player refusal without configuring devices.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_SetPressed_System_Int32_System_String_System_Boolean_" data-uid="CodeSmile.LunyScript.FakeInputProvider.SetPressed(System.Int32,System.String,System.Boolean)">
   SetPressed(int, string, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L140"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L423"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Holds a button down or lets it up.</p>
@@ -1242,7 +1750,7 @@ missing-player refusal without configuring devices.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_SetVector_System_Int32_System_String_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.FakeInputProvider.SetVector(System.Int32,System.String,System.Double,System.Double,System.Double)">
   SetVector(int, string, double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L158"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L441"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Writes a spatial action's value.</p>
@@ -1312,7 +1820,7 @@ missing-player refusal without configuring devices.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeInputProvider_StartRebind_System_Int32_System_Int32__" data-uid="CodeSmile.LunyScript.FakeInputProvider.StartRebind(System.Int32,System.Int32@)">
   StartRebind(int, out int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L472"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts an interactive capture for one resolved action. The gateway allows one
@@ -1365,11 +1873,100 @@ this returns <a class="xref" href="CodeSmile.LunyScript.InputRebindStart.html#Co
 
 
 
+  <a id="CodeSmile_LunyScript_FakeInputProvider_UpdatePairing_" data-uid="CodeSmile.LunyScript.FakeInputProvider.UpdatePairing*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeInputProvider_UpdatePairing" data-uid="CodeSmile.LunyScript.FakeInputProvider.UpdatePairing">
+  UpdatePairing()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Applies every pairing change requested or detected since the last call. Called
+once per frame by the gateway before any script instance runs, so every script sees the
+same players during one frame. Must allocate nothing when nothing changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void UpdatePairing()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeInputProvider_UpdatePairing_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Leaves are applied first and then presses, in the order the test made them. A
+press on a device a player holds does nothing. Otherwise the device goes to the
+lowest-numbered player whose device is lost, who keeps their participant, and only then,
+while pairing is open, to the lowest free number as a new participant.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_FakeInputProvider_UseLocalPlayers_" data-uid="CodeSmile.LunyScript.FakeInputProvider.UseLocalPlayers*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FakeInputProvider_UseLocalPlayers_System_Int32_" data-uid="CodeSmile.LunyScript.FakeInputProvider.UseLocalPlayers(System.Int32)">
+  UseLocalPlayers(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L115"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Switches to paired players: nobody is present, and up to
+<code class="paramref">capacity</code> numbers pair through <a class="xref" href="CodeSmile.LunyScript.FakeInputProvider.html#CodeSmile_LunyScript_FakeInputProvider_PressDevice_System_String_">PressDevice(string)</a> while pairing
+is open. This is what <code>new InputSystemProvider(actions, capacity)</code> does.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void UseLocalPlayers(int capacity)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>capacity</code></dt></td>
+    <td style="width: 99%"><dd><p>How many local player numbers can be paired.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FakeInputProvider_UseLocalPlayers_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">provider.UseLocalPlayers(4);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">capacity</code> is below 1.</p>
+</dd>
+  </dl>
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L31" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/FakeInputProvider.cs/#L41" class="edit-link">Edit this page</a>
         </div>
 
 
