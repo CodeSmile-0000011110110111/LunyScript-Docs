@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Navigation | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Navigation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/navigation.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/navigation.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Navigation" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Navigation","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/navigation.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Navigation</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Send an object to a place along a route around walls, and find out whether it got there:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Guard</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">Post</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">Operation</span> <span class="n">Patrol</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Patrol</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Patrol</span><span class="p">));</span>
+        <span class="n">OnPost</span> <span class="p">=</span> <span class="n">Flag</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">OnPost</span><span class="p">));</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Navigation</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">Post</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Patrol</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Patrol</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span>
+            <span class="nf">If</span><span class="p">(</span><span class="n">Navigation</span><span class="p">.</span><span class="nf">Arrived</span><span class="p">(</span><span class="n">Patrol</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">OnPost</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Put the script on an object that has a <code class="language-plaintext highlighter-rouge">NavMeshAgent</code>, in a scene with a navigation mesh, and assign
+an object in the scene to <code class="language-plaintext highlighter-rouge">Post</code> in the Inspector. When the object becomes ready it asks the
+navigation mesh for a route to the post and follows it. The move is an attempt on the operation
+<code class="language-plaintext highlighter-rouge">Patrol</code>, so the operation’s watches and conditions report how it ended.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Motion.MoveTo</code>, on the <a href="/LunyScript-Docs/manual/motion.html">Motion</a> page, moves in a straight
+line and stops at the first wall. <code class="language-plaintext highlighter-rouge">Navigation.MoveTo</code> finds the way around it.</p>
+
+<h2 id="installing-the-navigation-backend">Installing the navigation backend</h2>
+
+<p>Navigation needs a backend, and nothing installs one by itself. The backend for Unity’s NavMesh is
+<code class="language-plaintext highlighter-rouge">NavMeshNavigationProvider</code> in the <code class="language-plaintext highlighter-rouge">CodeSmile.LunyScript.Navigation</code> assembly, which compiles when
+Unity’s AI module is enabled. Install it once, from C#, before the first script moves:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">CodeSmile.LunyScript.Navigation</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">GameSetup</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">Awake</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="kt">var</span> <span class="n">runner</span> <span class="p">=</span> <span class="n">LunyScriptRuntime</span><span class="p">.</span><span class="n">DefaultRunner</span><span class="p">;</span>
+        <span class="n">runner</span><span class="p">.</span><span class="n">NavigationGateway</span><span class="p">.</span><span class="nf">UseProvider</span><span class="p">(</span>
+            <span class="k">new</span> <span class="nf">NavMeshNavigationProvider</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Without a backend, every move fails as <code class="language-plaintext highlighter-rouge">Denied</code> and the Console says once which line to add. The
+script still runs.</p>
+
+<p>The navigation mesh is Unity’s. Bake it with the AI Navigation package’s <code class="language-plaintext highlighter-rouge">NavMeshSurface</code>, or build
+it at run time with <code class="language-plaintext highlighter-rouge">NavMeshBuilder</code>, which the example scene does. Speed, acceleration, stopping
+distance, turning and avoidance are the settings of each object’s <code class="language-plaintext highlighter-rouge">NavMeshAgent</code>.</p>
+
+<h2 id="where-to-go">Where to go</h2>
+
+<p>The destination is a <code class="language-plaintext highlighter-rouge">Vec3</code>, three numbers, or an object in the scene declared as an input. The
+position is read once, when the block runs:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Navigation</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">Post</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Patrol</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Home"</span><span class="p">,</span> <span class="n">Navigation</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">Home</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Patrol</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Corner"</span><span class="p">,</span> <span class="n">Navigation</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="p">-</span><span class="m">4</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Patrol</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>A moving target is not followed by itself. A chase runs the move again, and each run reads the
+target’s position anew:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Run</span><span class="p">(</span><span class="n">Navigation</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">PlayerPosition</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Chase</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">Every</span><span class="p">(</span><span class="m">0.25</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">().</span><span class="nf">Start</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>Running a move again while its attempt is still going does one of two things:</p>
+
+<ul>
+  <li><strong>The same request continues.</strong> The same destination, the same object and the same choice of
+<code class="language-plaintext highlighter-rouge">RequireComplete()</code> keep the attempt that is under way. A chase whose target stands still asks
+for no new route.</li>
+  <li><strong>Any other request replaces it.</strong> The attempt under way ends as <code class="language-plaintext highlighter-rouge">Cancelled</code> and a new one
+starts. <code class="language-plaintext highlighter-rouge">When.Operation(Chase).Cancelled</code> runs once for each replacement, so a chase after a
+moving target sees many; <code class="language-plaintext highlighter-rouge">Succeeded</code> is the watch that means the move ended.</li>
+</ul>
+
+<p>One object follows one route. A move of an object that another operation is moving ends that
+operation’s attempt as <code class="language-plaintext highlighter-rouge">Cancelled</code>.</p>
+
+<h2 id="partial-routes">Partial routes</h2>
+
+<p>When no route reaches the destination, the navigation mesh gives a partial route that ends at the
+reachable point closest to it. A destination that is not on the navigation mesh at all, such as a
+point inside a wall or beyond the mesh’s edge, gets a partial route to the nearest point of the mesh.
+The move follows it. The attempt ends as <code class="language-plaintext highlighter-rouge">Succeeded</code>, and
+<code class="language-plaintext highlighter-rouge">Navigation.ReachedPartialEnd</code> separates that end from arriving:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Patrol</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Navigation</span><span class="p">.</span><span class="nf">Arrived</span><span class="p">(</span><span class="n">Patrol</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">OnPost</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Navigation</span><span class="p">.</span><span class="nf">ReachedPartialEnd</span><span class="p">(</span><span class="n">Patrol</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Stuck</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">RequireComplete()</code> refuses a partial route instead. The object holds its position while the
+route is being worked out, never takes a step along a refused route, and the attempt fails as
+<code class="language-plaintext highlighter-rouge">Unreachable</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Cross"</span><span class="p">,</span> <span class="n">Navigation</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">Island</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">RequireComplete</span><span class="p">().</span><span class="nf">As</span><span class="p">(</span><span class="n">Crossing</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Crossing</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Stuck</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>With <code class="language-plaintext highlighter-rouge">RequireComplete()</code>, <code class="language-plaintext highlighter-rouge">Succeeded</code> means the object arrived.</p>
+
+<h2 id="stopping-pausing-and-resuming">Stopping, pausing and resuming</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Halt"</span><span class="p">,</span> <span class="n">Navigation</span><span class="p">.</span><span class="nf">Stop</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Stun"</span><span class="p">,</span> <span class="n">Navigation</span><span class="p">.</span><span class="nf">Pause</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Wake"</span><span class="p">,</span> <span class="n">Navigation</span><span class="p">.</span><span class="nf">Resume</span><span class="p">());</span>
+</code></pre></div></div>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Stop()</code> clears the route. The attempt that was moving the object ends as <code class="language-plaintext highlighter-rouge">Cancelled</code>, and the
+object stays where it stopped. <code class="language-plaintext highlighter-rouge">Patrol.Cancel()</code> does the same to the attempt it names.</li>
+  <li><code class="language-plaintext highlighter-rouge">Pause()</code> holds the object where it is. The route and the attempt stay. A move started while the
+object is paused waits too, so a stunned enemy stays stunned while its chase goes on asking.</li>
+  <li><code class="language-plaintext highlighter-rouge">Resume()</code> releases the hold and the object continues along its route.</li>
+</ul>
+
+<p>A pause lasts until <code class="language-plaintext highlighter-rouge">Resume()</code>; a new move and a <code class="language-plaintext highlighter-rouge">Stop()</code> both leave it in place.</p>
+
+<h2 id="another-object">Another object</h2>
+
+<p><code class="language-plaintext highlighter-rouge">For</code> moves, stops, pauses or resumes an object the script declares as an input, instead of the
+object the script runs on. That object carries its own <code class="language-plaintext highlighter-rouge">NavMeshAgent</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Heel"</span><span class="p">,</span> <span class="n">Navigation</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">Home</span><span class="p">).</span><span class="nf">For</span><span class="p">(</span><span class="n">Hound</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Heel</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Sit"</span><span class="p">,</span> <span class="n">Navigation</span><span class="p">.</span><span class="nf">Stop</span><span class="p">().</span><span class="nf">For</span><span class="p">(</span><span class="n">Hound</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">RequireComplete()</code> and <code class="language-plaintext highlighter-rouge">For</code> may be written in either order, each once, before <code class="language-plaintext highlighter-rouge">As</code>.</p>
+
+<h2 id="reading-the-route-and-the-end">Reading the route and the end</h2>
+
+<p>Every read describes the latest attempt the operation started:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">route</span> <span class="p">=</span> <span class="n">Navigation</span><span class="p">.</span><span class="nf">Route</span><span class="p">(</span><span class="n">Chase</span><span class="p">);</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">route</span><span class="p">.</span><span class="n">IsPending</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"thinking"</span><span class="p">)),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">route</span><span class="p">.</span><span class="n">IsPartial</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"out of reach"</span><span class="p">)),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Navigation</span><span class="p">.</span><span class="nf">IsMoving</span><span class="p">(</span><span class="n">Chase</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Steps</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">1</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Read</th>
+      <th>True when</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Navigation.Route(op).IsPending</code></td>
+      <td>the route is being worked out</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Navigation.Route(op).IsComplete</code></td>
+      <td>the route reaches the destination</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Navigation.Route(op).IsPartial</code></td>
+      <td>the route ends short of the destination</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Navigation.Route(op).IsInvalid</code></td>
+      <td>no route reaches anything</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Navigation.IsMoving(op)</code></td>
+      <td>the attempt is going and the object moves this frame</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Navigation.Arrived(op)</code></td>
+      <td>the attempt ended at the destination</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Navigation.ReachedPartialEnd(op)</code></td>
+      <td>the attempt ended at a partial route’s end</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Before the first attempt every read is false. After an attempt ends, the route stays readable and
+<code class="language-plaintext highlighter-rouge">IsMoving</code> is false. The operation’s own <code class="language-plaintext highlighter-rouge">IsPending</code>, <code class="language-plaintext highlighter-rouge">Succeeded</code>, <code class="language-plaintext highlighter-rouge">Failed</code>, <code class="language-plaintext highlighter-rouge">Cancelled</code> and
+<code class="language-plaintext highlighter-rouge">Failure</code> read the same attempt; the <a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a>
+page explains them.</p>
+
+<h2 id="when-a-move-fails">When a move fails</h2>
+
+<p>A move fails as <code class="language-plaintext highlighter-rouge">Denied</code> when:</p>
+
+<ul>
+  <li>no backend is installed;</li>
+  <li>the object has no agent, its agent is disabled, or it is not on the navigation mesh;</li>
+  <li>the object or the destination landmark is gone or inactive;</li>
+  <li>the destination is not a number.</li>
+</ul>
+
+<p>A move fails as <code class="language-plaintext highlighter-rouge">Unreachable</code> when the route is invalid, or when it is partial and the move requires a
+complete one.</p>
+
+<p>The first time each reason happens for a script and an object, the Console says which. A move has
+no time limit: a walk takes as long as its route. Where you need one, count it yourself:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Chase</span><span class="p">.</span><span class="n">IsPending</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Waited</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Waited</span> <span class="p">&gt;</span> <span class="m">20</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Chase</span><span class="p">.</span><span class="nf">Cancel</span><span class="p">(),</span> <span class="n">Waited</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">))));</span>
+</code></pre></div></div>
+
+<h2 id="call-list">Call list</h2>
+
+<p>These lines are call signatures, not a script you can paste. Brackets mark an argument you may leave
+out.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Navigation</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">destination</span><span class="p">)</span> <span class="p">[</span> <span class="p">.</span><span class="nf">RequireComplete</span><span class="p">()</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">actor</span><span class="p">)</span> <span class="p">]</span>
+    <span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span>
+<span class="n">Navigation</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="p">...</span>            <span class="c1">// the same clauses</span>
+<span class="n">Navigation</span><span class="p">.</span><span class="nf">Stop</span><span class="p">()</span> <span class="p">[</span> <span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">actor</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Navigation</span><span class="p">.</span><span class="nf">Pause</span><span class="p">()</span> <span class="p">[</span> <span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">actor</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Navigation</span><span class="p">.</span><span class="nf">Resume</span><span class="p">()</span> <span class="p">[</span> <span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">actor</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Navigation</span><span class="p">.</span><span class="nf">Route</span><span class="p">(</span><span class="n">operation</span><span class="p">).</span><span class="n">IsPending</span>     <span class="c1">// and IsComplete, IsPartial,</span>
+                                          <span class="c1">// IsInvalid</span>
+<span class="n">Navigation</span><span class="p">.</span><span class="nf">IsMoving</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span>
+<span class="n">Navigation</span><span class="p">.</span><span class="nf">Arrived</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span>
+<span class="n">Navigation</span><span class="p">.</span><span class="nf">ReachedPartialEnd</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/motion.html">Motion</a> — straight-line moves, forces and teleports.</li>
+  <li><a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> — operation
+handles and their watches.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.NavigationFactory.html"><code class="language-plaintext highlighter-rouge">NavigationFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.NavigationRoute.html"><code class="language-plaintext highlighter-rouge">NavigationRoute</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Navigation.NavMeshNavigationProvider.html"><code class="language-plaintext highlighter-rouge">NavMeshNavigationProvider</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
