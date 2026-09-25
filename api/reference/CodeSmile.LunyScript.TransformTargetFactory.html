@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_TransformTargetFactory" data-uid="CodeSmile.LunyScript.TransformTargetFactory" class="text-break">
-Struct TransformTargetFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L26"><i class="bi bi-code-slash"></i></a>
+Struct TransformTargetFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L28"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -120,7 +120,9 @@ every frame as soon as anything reparents, and <code>docs/positioning.md</code> 
 naming an object properly arrives. <a class="xref" href="CodeSmile.LunyScript.TransformRelation.html">TransformRelation</a> states the same thing.</p>
 <p>
     What it does offer is every verb the object's own surface offers, aimed at the object
-    the relation names.
+    the relation names. Each verb is written and documented once, here:
+    <a class="xref" href="CodeSmile.LunyScript.TransformFactory.html">TransformFactory</a> forwards its verbs to an instance of this type aimed at the
+    object the script runs on.
 </p>
 </div>
 
@@ -133,7 +135,7 @@ naming an object properly arrives. <a class="xref" href="CodeSmile.LunyScript.Tr
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_ChildCount" data-uid="CodeSmile.LunyScript.TransformTargetFactory.ChildCount">
   ChildCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L526"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L643"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many children this object has.</p>
@@ -157,7 +159,8 @@ naming an object properly arrives. <a class="xref" href="CodeSmile.LunyScript.Tr
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_ChildCount_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(If(Transform.Child(0).ChildCount &gt; 0.0).Then(Carrying.Set(true)));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(If(Transform.ChildCount &gt; 0.0).Then(Carrying.Set(true)));
+On.Ready(If(Transform.Child(0).ChildCount &gt; 0.0).Then(Carrying.Set(true)));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_ChildCount_remarks">Remarks</h4>
@@ -177,7 +180,7 @@ naming an object properly arrives. <a class="xref" href="CodeSmile.LunyScript.Tr
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_HasParent" data-uid="CodeSmile.LunyScript.TransformTargetFactory.HasParent">
   HasParent
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L533"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L655"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether this object is parented to another object rather than sitting at the
@@ -202,7 +205,8 @@ scene root.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_HasParent_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(If(Transform.Child(0).HasParent).Then(Held.Set(true)));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(If(Transform.HasParent).Then(Held.Set(true)));
+On.Ready(If(Transform.Child(0).HasParent).Then(Held.Set(true)));</code></pre>
 
 
 
@@ -219,7 +223,7 @@ scene root.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_LocalPositionX" data-uid="CodeSmile.LunyScript.TransformTargetFactory.LocalPositionX">
   LocalPositionX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L202"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L234"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The x of this object's position in its parent's frame.</p>
@@ -243,7 +247,8 @@ scene root.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_LocalPositionX_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Offset.Set(Transform.Child(0).LocalPositionX));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Offset.Set(Transform.LocalPositionX));
+On.FrameUpdate(Offset.Set(Transform.Child(0).LocalPositionX));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_LocalPositionX_remarks">Remarks</h4>
@@ -263,7 +268,7 @@ scene root.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_LocalPositionY" data-uid="CodeSmile.LunyScript.TransformTargetFactory.LocalPositionY">
   LocalPositionY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L245"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The y of this object's position in its parent's frame.</p>
@@ -287,7 +292,8 @@ scene root.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_LocalPositionY_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Offset.Set(Transform.Child(0).LocalPositionY));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Offset.Set(Transform.LocalPositionY));
+On.FrameUpdate(Offset.Set(Transform.Child(0).LocalPositionY));</code></pre>
 
 
 
@@ -304,7 +310,7 @@ scene root.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_LocalPositionZ" data-uid="CodeSmile.LunyScript.TransformTargetFactory.LocalPositionZ">
   LocalPositionZ
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L214"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L256"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The z of this object's position in its parent's frame.</p>
@@ -328,7 +334,8 @@ scene root.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_LocalPositionZ_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Offset.Set(Transform.Child(0).LocalPositionZ));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Offset.Set(Transform.LocalPositionZ));
+On.FrameUpdate(Offset.Set(Transform.Child(0).LocalPositionZ));</code></pre>
 
 
 
@@ -345,7 +352,7 @@ scene root.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_LocalRotationX" data-uid="CodeSmile.LunyScript.TransformTargetFactory.LocalRotationX">
   LocalRotationX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L242"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L304"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The x of this object's rotation in its parent's frame, in euler degrees.</p>
@@ -369,7 +376,8 @@ scene root.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_LocalRotationX_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Pitch.Set(Transform.Child(0).LocalRotationX));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Pitch.Set(Transform.LocalRotationX));
+On.FrameUpdate(Pitch.Set(Transform.Child(0).LocalRotationX));</code></pre>
 
 
 
@@ -386,7 +394,7 @@ scene root.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_LocalRotationY" data-uid="CodeSmile.LunyScript.TransformTargetFactory.LocalRotationY">
   LocalRotationY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L248"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L315"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The y of this object's rotation in its parent's frame, in euler degrees.</p>
@@ -410,7 +418,8 @@ scene root.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_LocalRotationY_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Heading.Set(Transform.Child(0).LocalRotationY));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Heading.Set(Transform.LocalRotationY));
+On.FrameUpdate(Heading.Set(Transform.Child(0).LocalRotationY));</code></pre>
 
 
 
@@ -427,7 +436,7 @@ scene root.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_LocalRotationZ" data-uid="CodeSmile.LunyScript.TransformTargetFactory.LocalRotationZ">
   LocalRotationZ
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L254"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L326"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The z of this object's rotation in its parent's frame, in euler degrees.</p>
@@ -451,7 +460,8 @@ scene root.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_LocalRotationZ_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Roll.Set(Transform.Child(0).LocalRotationZ));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Roll.Set(Transform.LocalRotationZ));
+On.FrameUpdate(Roll.Set(Transform.Child(0).LocalRotationZ));</code></pre>
 
 
 
@@ -468,7 +478,7 @@ scene root.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_ScaleX" data-uid="CodeSmile.LunyScript.TransformTargetFactory.ScaleX">
   ScaleX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L262"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L339"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The x of this object's own scale.</p>
@@ -492,7 +502,8 @@ scene root.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_ScaleX_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Width.Set(Transform.Child(0).ScaleX));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Width.Set(Transform.ScaleX));
+On.FrameUpdate(Width.Set(Transform.Child(0).ScaleX));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_ScaleX_remarks">Remarks</h4>
@@ -513,7 +524,7 @@ write. <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html#Co
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_ScaleY" data-uid="CodeSmile.LunyScript.TransformTargetFactory.ScaleY">
   ScaleY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L268"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L350"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The y of this object's own scale.</p>
@@ -537,7 +548,8 @@ write. <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html#Co
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_ScaleY_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Height.Set(Transform.Child(0).ScaleY));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Height.Set(Transform.ScaleY));
+On.FrameUpdate(Height.Set(Transform.Child(0).ScaleY));</code></pre>
 
 
 
@@ -554,7 +566,7 @@ write. <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html#Co
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_ScaleZ" data-uid="CodeSmile.LunyScript.TransformTargetFactory.ScaleZ">
   ScaleZ
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L274"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L361"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The z of this object's own scale.</p>
@@ -578,7 +590,8 @@ write. <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html#Co
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_ScaleZ_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Depth.Set(Transform.Child(0).ScaleZ));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Depth.Set(Transform.ScaleZ));
+On.FrameUpdate(Depth.Set(Transform.Child(0).ScaleZ));</code></pre>
 
 
 
@@ -595,7 +608,7 @@ write. <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html#Co
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_WorldPositionX" data-uid="CodeSmile.LunyScript.TransformTargetFactory.WorldPositionX">
   WorldPositionX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L183"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L200"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The x of this object's position in the scene's frame.</p>
@@ -619,7 +632,8 @@ write. <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html#Co
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_WorldPositionX_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Drift.Set(Transform.Child(0).WorldPositionX));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Drift.Set(Transform.WorldPositionX));
+On.FrameUpdate(Drift.Set(Transform.Child(0).WorldPositionX));</code></pre>
 
 
 
@@ -636,7 +650,7 @@ write. <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html#Co
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_WorldPositionY" data-uid="CodeSmile.LunyScript.TransformTargetFactory.WorldPositionY">
   WorldPositionY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L211"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The y of this object's position in the scene's frame.</p>
@@ -660,7 +674,8 @@ write. <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html#Co
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_WorldPositionY_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(If(Transform.Child(0).WorldPositionY &lt; 0.0).Then(Fell.Set(true)));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Transform.WorldPositionY &lt; 0.0).Then(Fell.Set(true)));
+On.FrameUpdate(If(Transform.Child(0).WorldPositionY &lt; 0.0).Then(Fell.Set(true)));</code></pre>
 
 
 
@@ -677,7 +692,7 @@ write. <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html#Co
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_WorldPositionZ" data-uid="CodeSmile.LunyScript.TransformTargetFactory.WorldPositionZ">
   WorldPositionZ
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L195"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L222"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The z of this object's position in the scene's frame.</p>
@@ -701,7 +716,8 @@ write. <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html#Co
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_WorldPositionZ_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Depth.Set(Transform.Child(0).WorldPositionZ));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Depth.Set(Transform.WorldPositionZ));
+On.FrameUpdate(Depth.Set(Transform.Child(0).WorldPositionZ));</code></pre>
 
 
 
@@ -718,7 +734,7 @@ write. <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html#Co
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_WorldRotationX" data-uid="CodeSmile.LunyScript.TransformTargetFactory.WorldRotationX">
   WorldRotationX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L224"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L271"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The x of this object's rotation in the scene's frame, in euler degrees.</p>
@@ -742,7 +758,8 @@ write. <a class="xref" href="CodeSmile.LunyScript.TransformTargetFactory.html#Co
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_WorldRotationX_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Pitch.Set(Transform.Child(0).WorldRotationX));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Pitch.Set(Transform.WorldRotationX));
+On.FrameUpdate(Pitch.Set(Transform.Child(0).WorldRotationX));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_WorldRotationX_remarks">Remarks</h4>
@@ -765,7 +782,7 @@ that turns the object the same way.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_WorldRotationY" data-uid="CodeSmile.LunyScript.TransformTargetFactory.WorldRotationY">
   WorldRotationY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L230"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L282"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The y of this object's rotation in the scene's frame, in euler degrees.</p>
@@ -789,7 +806,8 @@ that turns the object the same way.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_WorldRotationY_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Heading.Set(Transform.Child(0).WorldRotationY));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Heading.Set(Transform.WorldRotationY));
+On.FrameUpdate(Heading.Set(Transform.Child(0).WorldRotationY));</code></pre>
 
 
 
@@ -806,7 +824,7 @@ that turns the object the same way.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_WorldRotationZ" data-uid="CodeSmile.LunyScript.TransformTargetFactory.WorldRotationZ">
   WorldRotationZ
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L236"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L293"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The z of this object's rotation in the scene's frame, in euler degrees.</p>
@@ -830,7 +848,8 @@ that turns the object the same way.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_WorldRotationZ_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Roll.Set(Transform.Child(0).WorldRotationZ));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Roll.Set(Transform.WorldRotationZ));
+On.FrameUpdate(Roll.Set(Transform.Child(0).WorldRotationZ));</code></pre>
 
 
 
@@ -847,7 +866,7 @@ that turns the object the same way.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_WorldScaleX" data-uid="CodeSmile.LunyScript.TransformTargetFactory.WorldScaleX">
   WorldScaleX
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L283"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L375"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The x of this object's scale in the scene's frame.</p>
@@ -871,7 +890,8 @@ that turns the object the same way.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_WorldScaleX_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Width.Set(Transform.Child(0).WorldScaleX));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Width.Set(Transform.WorldScaleX));
+On.FrameUpdate(Width.Set(Transform.Child(0).WorldScaleX));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_WorldScaleX_remarks">Remarks</h4>
@@ -893,7 +913,7 @@ there is no world-space scale setter on this surface or any other.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_WorldScaleY" data-uid="CodeSmile.LunyScript.TransformTargetFactory.WorldScaleY">
   WorldScaleY
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L289"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L386"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The y of this object's scale in the scene's frame.</p>
@@ -917,7 +937,8 @@ there is no world-space scale setter on this surface or any other.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_WorldScaleY_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Height.Set(Transform.Child(0).WorldScaleY));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Height.Set(Transform.WorldScaleY));
+On.FrameUpdate(Height.Set(Transform.Child(0).WorldScaleY));</code></pre>
 
 
 
@@ -934,7 +955,7 @@ there is no world-space scale setter on this surface or any other.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_WorldScaleZ" data-uid="CodeSmile.LunyScript.TransformTargetFactory.WorldScaleZ">
   WorldScaleZ
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L295"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L397"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The z of this object's scale in the scene's frame.</p>
@@ -958,7 +979,8 @@ there is no world-space scale setter on this surface or any other.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_WorldScaleZ_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Depth.Set(Transform.Child(0).WorldScaleZ));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Depth.Set(Transform.WorldScaleZ));
+On.FrameUpdate(Depth.Set(Transform.Child(0).WorldScaleZ));</code></pre>
 
 
 
@@ -979,7 +1001,7 @@ there is no world-space scale setter on this surface or any other.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_LookAt_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.LookAt(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   LookAt(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L494"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L605"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a facing: turns this object so its forward axis points at a world
@@ -1045,7 +1067,8 @@ point.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_LookAt_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Transform.Child(0).LookAt(TargetX, TargetY, TargetZ));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.LookAt(TargetX, TargetY, TargetZ));
+On.FrameUpdate(Transform.Child(0).LookAt(TargetX, TargetY, TargetZ));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_LookAt_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
@@ -1068,7 +1091,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.MoveBy(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L68"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a displacement of this object's position.</p>
@@ -1135,7 +1158,8 @@ rather than LunyScript's own source.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Transform.Child(0).MoveBy(0.02, 0.0, 0.0));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.MoveBy(0.02, 0.0, 0.0));
+On.FrameUpdate(Transform.Child(0).MoveBy(0.02, 0.0, 0.0));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
@@ -1160,7 +1184,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_MoveTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.MoveTo(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   MoveTo(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L120"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a move of this object to a world position over a duration.</p>
@@ -1225,9 +1249,16 @@ outside <code>Build()</code>.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_MoveTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Transform.Child(0).MoveTo(3.0, 0.0, 0.0).Over(2.0));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.MoveTo(3.0, 0.0, 0.0).Over(2.0));
+On.FrameUpdate(Transform.Child(0).MoveTo(3.0, 0.0, 0.0).Over(2.0));</code></pre>
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_MoveTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The first run captures the current pose, the destination and the duration. Each
+later run in a process event adds <code>Time.Delta</code> and writes the interpolated world
+position. Place it in <code>On.FrameUpdate</code>. A script the pause system has stopped does
+not run this block. <code>Over</code> is required; without it this is not a block.</p>
+</div>
 
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
@@ -1243,7 +1274,7 @@ read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_RotateAround_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.RotateAround(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   RotateAround(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L515"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L627"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds an orbit: names the world point this object turns about.</p>
@@ -1308,7 +1339,8 @@ read outside <code>Build()</code>.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_RotateAround_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Transform.Child(0).RotateAround(0.0, 0.0, 0.0).By(0.0, 1.0, 0.0).KeepRotation());</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.RotateAround(0.0, 0.0, 0.0).By(0.0, 1.0, 0.0).KeepRotation());
+On.FrameUpdate(Transform.Child(0).RotateAround(0.0, 0.0, 0.0).By(0.0, 1.0, 0.0).KeepRotation());</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_RotateAround_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
@@ -1329,7 +1361,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_RotateBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.RotateBy(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   RotateBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L93"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a turn of this object's rotation, in euler degrees.</p>
@@ -1395,7 +1427,8 @@ runs.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_RotateBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Transform.Child(0).RotateBy(0.0, 1.5, 0.0));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.RotateBy(0.0, 1.5, 0.0));
+On.FrameUpdate(Transform.Child(0).RotateBy(0.0, 1.5, 0.0));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_RotateBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
@@ -1418,7 +1451,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_RotateTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.RotateTo(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   RotateTo(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L142"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a turn of this object to a world rotation over a duration, along the
@@ -1484,7 +1517,8 @@ shortest arc.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_RotateTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Transform.Child(0).RotateTo(0.0, 90.0, 0.0).Over(1.0));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.RotateTo(0.0, 90.0, 0.0).Over(1.0));
+On.FrameUpdate(Transform.Child(0).RotateTo(0.0, 90.0, 0.0).Over(1.0));</code></pre>
 
 
 
@@ -1502,7 +1536,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_ScaleBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.ScaleBy(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   ScaleBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L451"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L560"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that multiplies this object's own scale by one factor per
@@ -1568,7 +1602,8 @@ axis.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_ScaleBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Transform.Child(0).ScaleBy(2.0, 1.0, 2.0));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Transform.ScaleBy(2.0, 1.0, 2.0));
+On.Ready(Transform.Child(0).ScaleBy(2.0, 1.0, 2.0));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_ScaleBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
@@ -1592,7 +1627,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_ScaleBy_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.ScaleBy(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   ScaleBy(NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L470"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L580"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that multiplies this object's own scale by one factor on every
@@ -1646,7 +1681,8 @@ axis.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_ScaleBy_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Transform.Child(0).ScaleBy(2.0));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Transform.ScaleBy(2.0));
+On.Ready(Transform.Child(0).ScaleBy(2.0));</code></pre>
 
 
 
@@ -1664,7 +1700,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_ScaleTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.ScaleTo(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   ScaleTo(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L154"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L165"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a change of this object's own scale over a duration, one value per
@@ -1730,7 +1766,8 @@ axis.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_ScaleTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Transform.Child(0).ScaleTo(2.0, 1.0, 2.0).Over(0.5));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.ScaleTo(2.0, 1.0, 2.0).Over(0.5));
+On.FrameUpdate(Transform.Child(0).ScaleTo(2.0, 1.0, 2.0).Over(0.5));</code></pre>
 
 
 
@@ -1748,7 +1785,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_ScaleTo_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.ScaleTo(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   ScaleTo(NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L173"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L185"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a change of this object's own scale over a duration, one value on every
@@ -1802,7 +1839,8 @@ axis.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_ScaleTo_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Transform.Child(0).ScaleTo(2.0).Over(0.5));</code></pre>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.ScaleTo(2.0).Over(0.5));
+On.FrameUpdate(Transform.Child(0).ScaleTo(2.0).Over(0.5));</code></pre>
 
 
 
@@ -1820,7 +1858,7 @@ this surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_SetLocalPosition_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.SetLocalPosition(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   SetLocalPosition(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L333"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L437"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that places this object at a position in its parent's frame.</p>
@@ -1885,7 +1923,8 @@ this surface was read outside <code>Build()</code>.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_SetLocalPosition_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Transform.Child(0).SetLocalPosition(0.0, 1.0, 0.0));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetLocalPosition(0.0, 1.0, 0.0));
+On.Ready(Transform.Child(0).SetLocalPosition(0.0, 1.0, 0.0));</code></pre>
 
 
 
@@ -1903,7 +1942,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_SetLocalRotation_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.SetLocalRotation(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   SetLocalRotation(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L379"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L485"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that turns this object to a rotation in its parent's frame, in
@@ -1970,7 +2009,8 @@ runs.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_SetLocalRotation_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Transform.Child(0).SetLocalRotation(0.0, 90.0, 0.0));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetLocalRotation(0.0, 90.0, 0.0));
+On.Ready(Transform.Child(0).SetLocalRotation(0.0, 90.0, 0.0));</code></pre>
 
 
 
@@ -1988,7 +2028,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_SetParent_CodeSmile_LunyScript_TransformTargetFactory_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.SetParent(CodeSmile.LunyScript.TransformTargetFactory,System.String,System.Int32)">
   SetParent(TransformTargetFactory, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L551"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L674"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts a reparent of this object under another.</p>
@@ -2042,7 +2082,8 @@ first.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_SetParent_CodeSmile_LunyScript_TransformTargetFactory_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Transform.Child(0).SetParent(Transform.Root));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetParent(Transform.Root));
+On.Ready(Transform.Child(0).SetParent(Transform.Root));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_SetParent_CodeSmile_LunyScript_TransformTargetFactory_System_String_System_Int32__remarks">Remarks</h4>
@@ -2064,7 +2105,7 @@ factory call produced, or this surface was read outside <code>Build()</code>.</p
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_SetScale_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.SetScale(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   SetScale(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L404"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L511"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that sets this object's own scale, one value per axis.</p>
@@ -2129,7 +2170,8 @@ factory call produced, or this surface was read outside <code>Build()</code>.</p
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_SetScale_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Transform.Child(0).SetScale(2.0, 1.0, 2.0));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetScale(2.0, 1.0, 2.0));
+On.Ready(Transform.Child(0).SetScale(2.0, 1.0, 2.0));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_SetScale_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
@@ -2152,7 +2194,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_SetScale_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.SetScale(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   SetScale(NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L425"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L533"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that sets this object's own scale to one value on every
@@ -2207,7 +2249,8 @@ runs.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_SetScale_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Transform.Child(0).SetScale(2.0));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetScale(2.0));
+On.Ready(Transform.Child(0).SetScale(2.0));</code></pre>
 
 
 
@@ -2225,7 +2268,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_SetWorldPosition_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.SetWorldPosition(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   SetWorldPosition(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L312"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L415"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that places this object at a position in the scene's frame.</p>
@@ -2290,7 +2333,8 @@ surface was read outside <code>Build()</code>.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_SetWorldPosition_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Transform.Child(0).SetWorldPosition(0.0, 1.0, 0.0));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetWorldPosition(0.0, 1.0, 0.0));
+On.Ready(Transform.Child(0).SetWorldPosition(0.0, 1.0, 0.0));</code></pre>
 
 
 
@@ -2308,7 +2352,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_SetWorldRotation_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.SetWorldRotation(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   SetWorldRotation(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L355"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L460"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that turns this object to a rotation in the scene's frame, in
@@ -2374,7 +2418,8 @@ euler degrees.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_SetWorldRotation_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Transform.Child(0).SetWorldRotation(0.0, 90.0, 0.0));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Transform.SetWorldRotation(0.0, 90.0, 0.0));
+On.Ready(Transform.Child(0).SetWorldRotation(0.0, 90.0, 0.0));</code></pre>
 
 
 
@@ -2392,7 +2437,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformTargetFactory_Unparent_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TransformTargetFactory.Unparent(System.String,System.Int32)">
   Unparent(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L570"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L694"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts a move of this object to the scene root.</p>
@@ -2440,7 +2485,8 @@ first.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_Unparent_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Transform.Child(0).Unparent());</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Transform.Unparent());
+On.Ready(Transform.Child(0).Unparent());</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_TransformTargetFactory_Unparent_System_String_System_Int32__remarks">Remarks</h4>
@@ -2461,7 +2507,7 @@ object out; this moves the object itself out.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L26" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformTargetFactory.cs/#L28" class="edit-link">Edit this page</a>
         </div>
 
 
