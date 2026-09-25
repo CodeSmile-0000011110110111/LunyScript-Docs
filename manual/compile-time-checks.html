@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Compile-time checks | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Compile-time checks" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/compile-time-checks.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/compile-time-checks.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Compile-time checks" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Compile-time checks","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/compile-time-checks.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Compile-time checks</h1>
+  </header>
+
+  <div class="post-content">
+    <p>LunyScript checks your scripts while Unity compiles them. A mistake that would otherwise fail when
+the script type is built, or would silently do nothing, is reported on its own line in the Console
+and in your IDE, with an ID you can look up here:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Guard</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Health</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Health</span><span class="p">),</span> <span class="m">100</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">Health</span> <span class="p">&gt;</span> <span class="m">10</span><span class="p">)</span>                       <span class="c1">// LUNY002: an error</span>
+            <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+
+        <span class="n">Transform</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>             <span class="c1">// LUNY005: a warning</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&gt;</span> <span class="m">10</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">1</span><span class="p">)));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The last two lines are the forms the first two meant. The checks ship in the same DLL as the
+generator that writes your variable properties, so there is nothing to install or enable.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Severity</th>
+      <th>What it reports</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="#luny001">LUNY001</a></td>
+      <td>Error</td>
+      <td>A variable or asset declaration the generator cannot complete.</td>
+    </tr>
+    <tr>
+      <td><a href="#luny002">LUNY002</a></td>
+      <td>Error</td>
+      <td>A condition used as a C# <code class="language-plaintext highlighter-rouge">bool</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="#luny003">LUNY003</a></td>
+      <td>Warning</td>
+      <td>A variable whose name hides one of the script’s own surfaces.</td>
+    </tr>
+    <tr>
+      <td><a href="#luny004">LUNY004</a></td>
+      <td>Error</td>
+      <td>A builder written as a statement before it is finished.</td>
+    </tr>
+    <tr>
+      <td><a href="#luny005">LUNY005</a></td>
+      <td>Warning</td>
+      <td>A block written as a statement, where nothing runs it.</td>
+    </tr>
+    <tr>
+      <td><a href="#luny006">LUNY006</a></td>
+      <td>Warning</td>
+      <td>Unity engine API called from inside a script.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="luny001">LUNY001: a declaration the generator cannot complete</h2>
+
+<p>The generator writes a property for each <code class="language-plaintext highlighter-rouge">Define</code> line and each <code class="language-plaintext highlighter-rouge">[Variable]</code> or <code class="language-plaintext highlighter-rouge">[Asset]</code>
+property. When it cannot, it says why and what to write instead: the class is not <code class="language-plaintext highlighter-rouge">partial</code>, the
+<code class="language-plaintext highlighter-rouge">nameof</code> names a different property, the variable is used above the line that declares it, or a
+second line declares the same name.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Guard</span> <span class="p">:</span> <span class="n">Script</span>  <span class="c1">// LUNY001: Add partial to class Guard</span>
+</code></pre></div></div>
+
+<p>Where your IDE offers code fixes from the project’s analyzers, it offers <strong>Add partial</strong> on this
+error. The fix adds <code class="language-plaintext highlighter-rouge">partial</code> to the class, and to every class it is nested in that needs it. The
+compiler reports the error and applies no fix, so in Unity alone you add <code class="language-plaintext highlighter-rouge">partial</code> yourself.</p>
+
+<h2 id="luny002">LUNY002: a condition used as a C# <code class="language-plaintext highlighter-rouge">bool</code></h2>
+
+<p><code class="language-plaintext highlighter-rouge">Build()</code> composes blocks once, and the blocks run later, on every object that runs the script. A
+C# <code class="language-plaintext highlighter-rouge">if</code>, <code class="language-plaintext highlighter-rouge">while</code>, <code class="language-plaintext highlighter-rouge">for</code>, <code class="language-plaintext highlighter-rouge">do</code>, <code class="language-plaintext highlighter-rouge">?:</code>, a <code class="language-plaintext highlighter-rouge">bool</code> variable or a <code class="language-plaintext highlighter-rouge">(bool)</code> cast would have to decide a
+condition while <code class="language-plaintext highlighter-rouge">Build()</code> runs, when there is no object to ask. The message names the values the
+condition reads:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">Health</span> <span class="p">&gt;</span> <span class="m">10</span><span class="p">)</span> <span class="p">{</span> <span class="p">}</span>        <span class="c1">// Blocks (here: Health) cannot be compared</span>
+                            <span class="c1">// outside block sequences</span>
+<span class="kt">bool</span> <span class="n">alive</span> <span class="p">=</span> <span class="n">Alive</span><span class="p">.</span><span class="nf">IsTrue</span><span class="p">();</span>  <span class="c1">// the same error, here: Alive</span>
+</code></pre></div></div>
+
+<p>Pass the condition to <code class="language-plaintext highlighter-rouge">If(...)</code> instead. <code class="language-plaintext highlighter-rouge">&amp;&amp;</code>, <code class="language-plaintext highlighter-rouge">||</code>, <code class="language-plaintext highlighter-rouge">&amp;</code>, <code class="language-plaintext highlighter-rouge">|</code> and <code class="language-plaintext highlighter-rouge">!</code> between conditions build one
+combined condition, so they are not reported:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&gt;</span> <span class="m">10</span> <span class="p">&amp;&amp;</span> <span class="n">Alive</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">1</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p>The same line also throws when the script type is built, in every build configuration.</p>
+
+<h2 id="luny003">LUNY003: a name that hides a script surface</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Time</code>, <code class="language-plaintext highlighter-rouge">Object</code>, <code class="language-plaintext highlighter-rouge">Input</code>, <code class="language-plaintext highlighter-rouge">Run</code>, <code class="language-plaintext highlighter-rouge">Seconds</code>, <code class="language-plaintext highlighter-rouge">Progress</code> and every other surface you call inside
+<code class="language-plaintext highlighter-rouge">Build()</code> are members of the script. A property or field with the same name hides that member
+inside the script, so <code class="language-plaintext highlighter-rouge">Time.Delta</code> stops compiling there:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Number</span> <span class="n">Time</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>   <span class="c1">// LUNY003</span>
+</code></pre></div></div>
+
+<p>A <code class="language-plaintext highlighter-rouge">Define</code> line that uses a surface’s name cannot declare a variable at all, because the name
+already means the surface. The compiler reports that the member is read-only or a method, and
+LUNY003 on the same line says why:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Progress</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Progress</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>  <span class="c1">// LUNY003</span>
+</code></pre></div></div>
+
+<p>Name the variable after what it holds, such as <code class="language-plaintext highlighter-rouge">RoundTime</code> or <code class="language-plaintext highlighter-rouge">LevelProgress</code>. A declaration
+written with <code class="language-plaintext highlighter-rouge">new</code> hides the surface on purpose and is not reported.</p>
+
+<h2 id="luny004">LUNY004: a builder that is not finished</h2>
+
+<p>A call such as <code class="language-plaintext highlighter-rouge">When.Operation(Load)</code> or <code class="language-plaintext highlighter-rouge">If(Alive)</code> starts a builder, and the builder does nothing
+until its chain is finished. Written as a statement on its own, it is reported with the call that
+started it and what is still missing:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Load</span><span class="p">);</span>  <span class="c1">// Builder (here: When.Operation(..)) is</span>
+                       <span class="c1">// incomplete: it does not have blocks to run</span>
+<span class="n">Scene</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Arena</span><span class="p">);</span>     <span class="c1">// Builder (here: Scene.Load(..)) is</span>
+                       <span class="c1">// incomplete: finish it with .Additive() or .As(..)</span>
+</code></pre></div></div>
+
+<p>Finish the chain, and pass it to an event where it is a block:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Load</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Scene</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Arena</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Load</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>The script type is also refused when it is built, naming the builder and the line. That refusal
+still covers a builder that is stored in a variable or returned from a method and never finished,
+which the compile-time check does not follow.</p>
+
+<h2 id="luny005">LUNY005: a block that nothing runs</h2>
+
+<p>A block runs only when it is registered against an event or placed in a sequence. Written as a
+statement, it is composed and then dropped:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Transform</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>  <span class="c1">// Builder (here: Transform.MoveBy(..))</span>
+                            <span class="c1">// block is unused, it will not run</span>
+<span class="n">Health</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">);</span>              <span class="c1">// Block (here: Health.Set(..)) is unused,</span>
+                            <span class="c1">// it will not run</span>
+</code></pre></div></div>
+
+<p>Pass it to an event, or keep it in a variable and pass that:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">step</span> <span class="p">=</span> <span class="n">Transform</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">step</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>A builder written this way, such as <code class="language-plaintext highlighter-rouge">Transform.MoveBy(..)</code>, is also refused when the script type is
+built. A finished block such as <code class="language-plaintext highlighter-rouge">Health.Set(0)</code> is not, so this warning is the only report of it.</p>
+
+<h2 id="luny006">LUNY006: Unity engine API inside a script</h2>
+
+<p>A script’s own code runs once, when the script type is built, and reaches game objects only
+through LunyScript blocks. An engine call there acts on the whole game at that moment: it can
+change the time scale, load a scene, or destroy an object LunyScript manages. The warning names
+the member with its namespace, so a script surface and an engine class with the same name are
+told apart:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Time</span><span class="p">.</span><span class="n">timeScale</span> <span class="p">=</span> <span class="m">0f</span><span class="p">;</span>  <span class="c1">// LUNY006</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">SetScale</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>       <span class="c1">// the LunyScript surface</span>
+</code></pre></div></div>
+
+<p>Every member of the <code class="language-plaintext highlighter-rouge">UnityEngine</code>, <code class="language-plaintext highlighter-rouge">UnityEditor</code> and <code class="language-plaintext highlighter-rouge">Unity</code> namespaces is reported inside a class
+derived from <code class="language-plaintext highlighter-rouge">Script</code>, <code class="language-plaintext highlighter-rouge">EditorScript</code> or <code class="language-plaintext highlighter-rouge">ScriptBase</code>, including its helper methods and property
+getters. Engine types in declarations, such as <code class="language-plaintext highlighter-rouge">[Asset] public Asset&lt;Texture2D&gt; Poster</code>, and
+attributes are not calls and are not reported. Code in other classes is not checked, so the
+warning is a hint for the common case.</p>
+
+<h2 id="turning-a-check-off-for-a-few-lines">Turning a check off for a few lines</h2>
+
+<p>LUNY002 to LUNY006 are ordinary compiler diagnostics, so <code class="language-plaintext highlighter-rouge">#pragma warning</code> turns one off around the
+lines that need it and on again after them:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma warning disable LUNY005
+</span><span class="n">Transform</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+<span class="cp">#pragma warning restore LUNY005
+</span></code></pre></div></div>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/writing-a-script.html">Writing a script</a> — the class, <code class="language-plaintext highlighter-rouge">Build()</code>,
+and the surfaces a script calls.</li>
+  <li><a href="/LunyScript-Docs/manual/flow.html">Flow: conditions, timed work and routines</a> — <code class="language-plaintext highlighter-rouge">If</code>,
+combined conditions and the blocks that run in order.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
