@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct ObjectLifetimeFactory | LunyScript API Reference ">
       
-      <meta name="description" content="The Object surface inside Build(): builds the blocks that create, activate, deactivate and end objects this script owns.">
+      <meta name="description" content="The Object surface inside Build(): builds the blocks that create, activate, deactivate and end objects this script owns, and the blocks that hide, show and tint an object and write its material Number properties.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,16 +77,17 @@
 
 
   <h1 id="CodeSmile_LunyScript_ObjectLifetimeFactory" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory" class="text-break">
-Struct ObjectLifetimeFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L43"><i class="bi bi-code-slash"></i></a>
+Struct ObjectLifetimeFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.Visual.cs/#L9"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
-    <dl><dt>Namespace</dt><dd><a class="xref" href="CodeSmile.html">CodeSmile</a>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
   <div class="markdown summary"><p>The <code>Object</code> surface inside <code>Build()</code>: builds the blocks that create, activate,
-deactivate and end objects this script owns.</p>
+deactivate and end objects this script owns, and the blocks that hide, show and tint an object
+and write its material Number properties.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -134,12 +135,70 @@ the type name is never written in a script.</p>
     the two and addressed by the rest of this surface.
 </p>
 <p>
+    <b>The visual members</b> - <code>Hide</code>, <code>Show</code>, <code>IsVisible</code>, <code>SetColor</code>,
+    <code>ResetColor</code>, <code>MaterialNumber</code> and <code>For</code> - change how the object is drawn and
+    leave it running. They write through the renderer's property block, so no material asset
+    changes. <code>docs/proposals/visual-presentation.md</code> is their contract.
+</p>
+<p>
     The blocks reach the object through <a class="xref" href="CodeSmile.LunyScript.IScriptObjectLifetime.html">IScriptObjectLifetime</a>, never through
     a <code>UnityEngine.GameObject</code>; AGENTS.md rule 24. A host that does not implement that
     interface cannot run a script containing these blocks, and the spawn is refused rather
     than the block failing later.
 </p>
 </div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_IsVisible_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.IsVisible*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_IsVisible" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.IsVisible">
+  IsVisible
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.Visual.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the object this script runs on is drawn: true while its <code>Renderer</code> is
+enabled, which is the state <a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Hide_System_String_System_Int32_">Hide(string, int)</a> and <a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Show_System_String_System_Int32_">Show(string, int)</a> write. False when the
+object has no renderer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock IsVisible { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_IsVisible_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Object.IsVisible).Then(Seen.Set(true)));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_IsVisible_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Unity's <code>Renderer.isVisible</code>, whether any camera sees the renderer, is a
+different reading.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
 
 
   <h2 class="section" id="methods">Methods
@@ -150,7 +209,7 @@ the type name is never written in a script.</p>
 
   <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Activate_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Activate(System.String,System.String,System.Int32)">
   Activate(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L200"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L207"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that activates an object: the one this script runs on, or one this
@@ -236,7 +295,7 @@ one. Activating an already-active object delivers nothing.</p>
 
   <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Create_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Create(System.String,System.String,System.Int32)">
   Create(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L81"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that creates a new, empty, active object called <code class="paramref">name</code>,
@@ -316,7 +375,7 @@ or this script already creates an object under that name.</p>
 
   <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Deactivate_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Deactivate(System.String,System.String,System.Int32)">
   Deactivate(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L229"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L236"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that deactivates an object: the one this script runs on, or one this
@@ -395,7 +454,7 @@ delivers nothing. Passing a name acts on the owned object immediately.</p>
 
   <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Despawn_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Despawn(System.String,System.String,System.Int32)">
   Despawn(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L264"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L271"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that ends an object: the one this script runs on, or one this script
@@ -476,11 +535,548 @@ instance that is already despawned delivers nothing.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_For_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.For*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_For_CodeSmile_LunyScript_AssetInput_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.For(CodeSmile.LunyScript.AssetInput,System.String,System.Int32)">
+  For(AssetInput, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.Visual.cs/#L154"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A handle to the renderer on a declared GameObject input, such as a shield or a model's
+mesh on a child. The input's object is used as it is; its children are not searched.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ObjectHandle For(AssetInput target, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.AssetInput.html">AssetInput</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>target</code></dt></td>
+    <td style="width: 99%"><dd><p>The declared GameObject input that carries the renderer.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ObjectHandle.html">ObjectHandle</a></dt>
+    <dd><p>A handle whose members produce the blocks. It can be kept in a local and used many
+times.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_For_CodeSmile_LunyScript_AssetInput_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Message("ShieldDown", Object.For(Shield).Hide());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The input is one <code>Build()</code> never assigned, or this
+factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_Hide_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Hide*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Hide_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Hide(System.String,System.Int32)">
+  Hide(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.Visual.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Stops drawing the object this script runs on, which disables its <code>Renderer</code>. Its
+colliders, scripts, audio and children keep running; <a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_Deactivate_System_String_System_String_System_Int32_">Deactivate(string, string, int)</a> stops those
+too.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Hide(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Hide_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.TriggerEnter(Object.Hide());</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Hide_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Only the object's own renderer is reached; a renderer on a child is addressed with
+<a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_For_CodeSmile_LunyScript_AssetInput_System_String_System_Int32_">For(AssetInput, string, int)</a>. An object with no renderer is reported once per script type, and still
+runs.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_MaterialNumber_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.MaterialNumber*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_MaterialNumber_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.MaterialNumber(System.String,System.String,System.Int32)">
+  MaterialNumber(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.Visual.cs/#L135"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a Float or Range property of the materials on the object this script runs
+on, by the name in the shader's Properties block, such as a dissolve amount.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MaterialNumber MaterialNumber(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The property's name as the shader declares it, usually starting with an
+underscore.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MaterialNumber.html">MaterialNumber</a></dt>
+    <dd><p>The handle whose <code>Set</code> and <code>Reset</code> build the blocks.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_MaterialNumber_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Object.MaterialNumber("_Dissolve").Set(Fade));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_MaterialNumber_System_String_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The name is turned into Unity's property id once, while the script type is built. A
+renderer whose materials do not declare the property is reported once per script type and
+property, and its writes do nothing.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">name</code> is null or whitespace, or
+this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_ResetColor_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.ResetColor*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_ResetColor_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.ResetColor(System.String,System.Int32)">
+  ResetColor(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.Visual.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes the tint <a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html#CodeSmile_LunyScript_ObjectLifetimeFactory_SetColor_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">SetColor(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>
+wrote on the object this script runs on, so its materials draw their own colour again. Every
+other value in the renderer's property block stays.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block ResetColor(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_ResetColor_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Flash &gt; 0).Then(Flash.Subtract(Time.Delta), If(Flash &lt;= 0).Then(Object.ResetColor())));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_SetColor_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.SetColor*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_SetColor_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.SetColor(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  SetColor(NumberValueBlock, NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.Visual.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Tints the object this script runs on with an alpha: writes the main colour of its
+renderer's materials into the renderer's property block. A transparent material uses the alpha
+and an opaque one ignores it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block SetColor(NumberValueBlock red, NumberValueBlock green, NumberValueBlock blue, NumberValueBlock alpha, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>red</code></dt></td>
+    <td style="width: 99%"><dd><p>Red, evaluated each time the block runs.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>green</code></dt></td>
+    <td style="width: 99%"><dd><p>Green, evaluated each time the block runs.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>blue</code></dt></td>
+    <td style="width: 99%"><dd><p>Blue, evaluated each time the block runs.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>alpha</code></dt></td>
+    <td style="width: 99%"><dd><p>Alpha, evaluated each time the block runs.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_SetColor_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Object.SetColor(0.3, 0.6, 1, 0.5));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A channel is null, or this factory was not obtained
+inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_SetColor_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.SetColor*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_SetColor_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.SetColor(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  SetColor(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.Visual.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Tints the object this script runs on: writes the main colour of its renderer's
+materials, with alpha 1, into the renderer's property block. No material asset changes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block SetColor(NumberValueBlock red, NumberValueBlock green, NumberValueBlock blue, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>red</code></dt></td>
+    <td style="width: 99%"><dd><p>Red, evaluated each time the block runs.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>green</code></dt></td>
+    <td style="width: 99%"><dd><p>Green, evaluated each time the block runs.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>blue</code></dt></td>
+    <td style="width: 99%"><dd><p>Blue, evaluated each time the block runs.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_SetColor_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.CollisionEnter(Object.SetColor(1, 0.25, 0.25));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_SetColor_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The main colour is the colour property a material's shader marks <code>[MainColor]</code>, or
+<code>_Color</code>: the property Unity's own <code>Material.color</code> writes, <code>_BaseColor</code> on the
+Universal Lit shader. The channels are 0 to 1 as Unity's <code>Color</code> holds them, and above 1
+is allowed for HDR intensity. A negative or non-finite channel, and a renderer whose materials
+have no main colour, are reported once per script type and nothing is written.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A channel is null, or this factory was not obtained
+inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_Show_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Show*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Show_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Show(System.String,System.Int32)">
+  Show(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.Visual.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Draws the object this script runs on again, which enables its <code>Renderer</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Show(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Show_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Message("Respawn", Object.Show());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_Spawn_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Spawn*"></a>
 
   <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Spawn_CodeSmile_LunyScript_Operation_CodeSmile_LunyScript_Prefab__System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Spawn(CodeSmile.LunyScript.Operation{CodeSmile.LunyScript.Prefab},System.String,System.Int32)">
   Spawn(Operation&lt;Prefab&gt;, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L156"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L163"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts a spawn from a succeeded prefab acquisition. The payload is readable after
@@ -553,7 +1149,7 @@ declared.</p>
 
   <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Spawn_CodeSmile_LunyScript_Prefab_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Spawn(CodeSmile.LunyScript.Prefab,System.String,System.Int32)">
   Spawn(Prefab, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L131"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts a spawn: builds an object from a declared prefab input, which the returned
@@ -649,7 +1245,7 @@ script's <code>Build()</code> never declared.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.cs/#L43" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/ObjectLifetimeFactory.Visual.cs/#L9" class="edit-link">Edit this page</a>
         </div>
 
 
