@@ -246,6 +246,30 @@ The enclosing routine owns the survivor and cancels it when the routine ends or 
 an action result and a routine group all spell it the same way. <code class="language-plaintext highlighter-rouge">Canceled</code> carries one L, which is
 the spelling .NET and Unity use.</p>
 
+<h2 id="using-one-block-in-several-places">Using one block in several places</h2>
+
+<p>A block you hold in a local and place in two places behaves as if you had written it out at each
+place. A routine started from two events is two routines, each with its own progress, and a timed
+move placed in two events is two moves:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">tour</span> <span class="p">=</span> <span class="nf">Routine</span><span class="p">(</span><span class="s">"Tour"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">Starts</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(),</span> <span class="n">walk</span><span class="p">,</span> <span class="n">Ends</span><span class="p">.</span><span class="nf">Increment</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">tour</span><span class="p">);</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Again"</span><span class="p">,</span> <span class="n">tour</span><span class="p">);</span>    <span class="c1">// a second routine, as if written out here</span>
+</code></pre></div></div>
+
+<p>Inside one routine, a group’s <code class="language-plaintext highlighter-rouge">Succeeded</code>, <code class="language-plaintext highlighter-rouge">Failed</code> and <code class="language-plaintext highlighter-rouge">Canceled</code> read the copy of the group that
+the same routine runs, so the second routine above can read its own outcome.</p>
+
+<p>Something you declare keeps one identity wherever you name it: a variable, a <code class="language-plaintext highlighter-rouge">Run(...)</code> work, an
+audio voice, a UI element and an operation. Every <code class="language-plaintext highlighter-rouge">Start()</code> and <code class="language-plaintext highlighter-rouge">Stop()</code> of one <code class="language-plaintext highlighter-rouge">Run</code> names the one
+work, which is also how one routine is restarted from two events:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">go</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">tour</span><span class="p">).</span><span class="nf">For</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Times</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">go</span><span class="p">.</span><span class="nf">Start</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Again"</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="nf">Start</span><span class="p">());</span>    <span class="c1">// restarts the one routine</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Halt"</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="nf">Stop</span><span class="p">());</span>      <span class="c1">// stops the work both starts named</span>
+</code></pre></div></div>
+
 <h2 id="what-to-read-next">What to read next</h2>
 
 <ul>

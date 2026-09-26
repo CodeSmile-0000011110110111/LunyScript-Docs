@@ -185,11 +185,12 @@ change it.</p>
 Reading it adds nothing. Every object has its own result, and a pooled object that is reused
 starts over with both false.</p>
 
-<p>Each <code class="language-plaintext highlighter-rouge">TryAdd</code> is used once, by one <code class="language-plaintext highlighter-rouge">If</code> or one <code class="language-plaintext highlighter-rouge">.As</code>, and the block it produces goes in one place.
-A result has one <code class="language-plaintext highlighter-rouge">TryAdd</code> bound to it. <code class="language-plaintext highlighter-rouge">Build()</code> reports a <code class="language-plaintext highlighter-rouge">TryAdd</code> used twice, placed twice or
-never placed, and a result with no <code class="language-plaintext highlighter-rouge">TryAdd</code> or two, naming the line. A refused <code class="language-plaintext highlighter-rouge">TryAdd</code> writes
-nothing to the Console, because your <code class="language-plaintext highlighter-rouge">Else</code> or your result is where you handle it; a refused <code class="language-plaintext highlighter-rouge">Add</code>
-still reports its first refusal.</p>
+<p>Each <code class="language-plaintext highlighter-rouge">TryAdd</code> is used once, by one <code class="language-plaintext highlighter-rouge">If</code> or one <code class="language-plaintext highlighter-rouge">.As</code>. An <code class="language-plaintext highlighter-rouge">If</code> over a <code class="language-plaintext highlighter-rouge">TryAdd</code> that you place in two
+places adds once at each place, as writing it out twice would. A result has one <code class="language-plaintext highlighter-rouge">TryAdd</code> bound to
+it, so the block <code class="language-plaintext highlighter-rouge">.As</code> produces goes in one place. <code class="language-plaintext highlighter-rouge">Build()</code> reports a <code class="language-plaintext highlighter-rouge">TryAdd</code> used twice or never
+placed, an <code class="language-plaintext highlighter-rouge">.As</code> block placed twice, and a result with no <code class="language-plaintext highlighter-rouge">TryAdd</code> or two, naming the line. A
+refused <code class="language-plaintext highlighter-rouge">TryAdd</code> writes nothing to the Console, because your <code class="language-plaintext highlighter-rouge">Else</code> or your result is where you
+handle it; a refused <code class="language-plaintext highlighter-rouge">Add</code> still reports its first refusal.</p>
 
 <h2 id="visiting-every-entry">Visiting every entry</h2>
 
