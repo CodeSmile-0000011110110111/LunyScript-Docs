@@ -66,18 +66,18 @@
 <span class="p">{</span>
     <span class="p">[</span><span class="n">SerializeField</span><span class="p">]</span> <span class="k">private</span> <span class="n">LunyScriptBehaviour</span> <span class="n">m_Player</span><span class="p">;</span>
     <span class="p">[</span><span class="n">SerializeField</span><span class="p">]</span> <span class="k">private</span> <span class="n">Transform</span> <span class="n">m_Bar</span><span class="p">;</span>
-    <span class="k">private</span> <span class="n">ScriptView</span><span class="p">&lt;</span><span class="n">PlayerScript</span><span class="p">&gt;</span> <span class="n">m_View</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">LunyScriptReference</span><span class="p">&lt;</span><span class="n">PlayerScript</span><span class="p">&gt;</span> <span class="n">m_Reference</span><span class="p">;</span>
     <span class="k">private</span> <span class="n">ScriptObservation</span> <span class="n">m_Watch</span><span class="p">;</span>
 
     <span class="k">private</span> <span class="k">void</span> <span class="nf">Start</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="n">m_View</span> <span class="p">=</span> <span class="n">Scripts</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">PlayerScript</span><span class="p">&gt;(</span><span class="n">m_Player</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">m_View</span><span class="p">.</span><span class="n">Exists</span> <span class="p">==</span> <span class="k">false</span><span class="p">)</span>
+        <span class="n">m_Reference</span> <span class="p">=</span> <span class="n">LunyScript</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">PlayerScript</span><span class="p">&gt;(</span><span class="n">m_Player</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">m_Reference</span><span class="p">.</span><span class="n">IsRunning</span> <span class="p">==</span> <span class="k">false</span><span class="p">)</span>
             <span class="k">return</span><span class="p">;</span>
 
-        <span class="kt">var</span> <span class="n">player</span> <span class="p">=</span> <span class="n">m_View</span><span class="p">.</span><span class="n">Definition</span><span class="p">;</span>
-        <span class="nf">ShowHealth</span><span class="p">(</span><span class="n">m_View</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">player</span><span class="p">.</span><span class="n">Health</span><span class="p">));</span>
-        <span class="n">m_Watch</span> <span class="p">=</span> <span class="n">m_View</span><span class="p">.</span><span class="nf">Observe</span><span class="p">(</span><span class="n">player</span><span class="p">.</span><span class="n">Health</span><span class="p">,</span> <span class="n">ShowHealth</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">player</span> <span class="p">=</span> <span class="n">m_Reference</span><span class="p">.</span><span class="n">Definition</span><span class="p">;</span>
+        <span class="nf">ShowHealth</span><span class="p">(</span><span class="n">m_Reference</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">player</span><span class="p">.</span><span class="n">Health</span><span class="p">));</span>
+        <span class="n">m_Watch</span> <span class="p">=</span> <span class="n">m_Reference</span><span class="p">.</span><span class="nf">Observe</span><span class="p">(</span><span class="n">player</span><span class="p">.</span><span class="n">Health</span><span class="p">,</span> <span class="n">ShowHealth</span><span class="p">);</span>
     <span class="p">}</span>
 
     <span class="k">private</span> <span class="k">void</span> <span class="nf">ShowHealth</span><span class="p">(</span><span class="kt">double</span> <span class="n">health</span><span class="p">)</span> <span class="p">=&gt;</span>
@@ -87,25 +87,31 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">Scripts.Find</code> looks up the script the player object runs and returns a view of it. <code class="language-plaintext highlighter-rouge">Read</code> returns
-the value <code class="language-plaintext highlighter-rouge">Health</code> holds now, and <code class="language-plaintext highlighter-rouge">Observe</code> calls <code class="language-plaintext highlighter-rouge">ShowHealth</code> again whenever that value changes. The
-C# code reads; it never writes the script’s variables. In the Inspector, drag the player object onto
-<code class="language-plaintext highlighter-rouge">m_Player</code>, which assigns its <code class="language-plaintext highlighter-rouge">LunyScriptBehaviour</code>, and the bar object onto <code class="language-plaintext highlighter-rouge">m_Bar</code>, whose width
-then follows <code class="language-plaintext highlighter-rouge">Health</code>.</p>
+<p><code class="language-plaintext highlighter-rouge">LunyScript.Find</code> looks up the script the player object runs and returns a reference to it. <code class="language-plaintext highlighter-rouge">Read</code>
+returns the value <code class="language-plaintext highlighter-rouge">Health</code> holds now, and <code class="language-plaintext highlighter-rouge">Observe</code> calls <code class="language-plaintext highlighter-rouge">ShowHealth</code> again whenever that value
+changes. The C# code reads; it never writes the script’s variables. In the Inspector, drag the player
+object onto <code class="language-plaintext highlighter-rouge">m_Player</code>, which assigns its <code class="language-plaintext highlighter-rouge">LunyScriptBehaviour</code>, and the bar object onto <code class="language-plaintext highlighter-rouge">m_Bar</code>, whose
+width then follows <code class="language-plaintext highlighter-rouge">Health</code>.</p>
 
 <h2 id="finding-a-script">Finding a script</h2>
 
-<p><code class="language-plaintext highlighter-rouge">Scripts.Find&lt;PlayerScript&gt;(behaviour)</code> returns a <code class="language-plaintext highlighter-rouge">ScriptView&lt;PlayerScript&gt;</code>. Check <code class="language-plaintext highlighter-rouge">Exists</code> before
-you use it:</p>
+<p><code class="language-plaintext highlighter-rouge">LunyScript.Find&lt;PlayerScript&gt;(behaviour)</code> returns a <code class="language-plaintext highlighter-rouge">LunyScriptReference&lt;PlayerScript&gt;</code>. Check
+<code class="language-plaintext highlighter-rouge">IsRunning</code> before you read through it:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">enemy</span> <span class="p">=</span> <span class="n">Scripts</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">EnemyScript</span><span class="p">&gt;(</span><span class="n">behaviour</span><span class="p">);</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">Exists</span><span class="p">)</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">enemy</span> <span class="p">=</span> <span class="n">LunyScript</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">EnemyScript</span><span class="p">&gt;(</span><span class="n">behaviour</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">IsRunning</span><span class="p">)</span>
     <span class="n">damage</span> <span class="p">=</span> <span class="n">enemy</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">Damage</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">Exists</code> is false when the object’s script is of another type, when <code class="language-plaintext highlighter-rouge">behaviour</code> is null or its
-object was destroyed, before the object’s <code class="language-plaintext highlighter-rouge">Awake</code>, and after the script despawned. A script type
-derived from the one you ask for is found too.</p>
+<p><code class="language-plaintext highlighter-rouge">IsRunning</code> is false when the object’s script is of another type, when <code class="language-plaintext highlighter-rouge">behaviour</code> is null or its
+object was destroyed, before the object’s <code class="language-plaintext highlighter-rouge">Awake</code>, and after the script ended. A script type derived
+from the one you ask for is found too.</p>
+
+<p><code class="language-plaintext highlighter-rouge">LunyScript.Exists</code> asks the same question without keeping a reference:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">LunyScript</span><span class="p">.</span><span class="n">Exists</span><span class="p">&lt;</span><span class="n">EnemyScript</span><span class="p">&gt;(</span><span class="n">behaviour</span><span class="p">))</span>
+    <span class="n">enemiesInRange</span><span class="p">++;</span>
+</code></pre></div></div>
 
 <p>From a <code class="language-plaintext highlighter-rouge">GameObject</code> or a <code class="language-plaintext highlighter-rouge">Collider</code>, reach the behaviour first:</p>
 
@@ -113,8 +119,8 @@ derived from the one you ask for is found too.</p>
 <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">other</span><span class="p">.</span><span class="nf">TryGetComponent</span><span class="p">(</span><span class="k">out</span> <span class="n">LunyScriptBehaviour</span> <span class="n">behaviour</span><span class="p">))</span>
     <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">enemy</span> <span class="p">=</span> <span class="n">Scripts</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">EnemyScript</span><span class="p">&gt;(</span><span class="n">behaviour</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">Exists</span><span class="p">)</span>
+        <span class="kt">var</span> <span class="n">enemy</span> <span class="p">=</span> <span class="n">LunyScript</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">EnemyScript</span><span class="p">&gt;(</span><span class="n">behaviour</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">IsRunning</span><span class="p">)</span>
             <span class="nf">TakeDamage</span><span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">Damage</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -123,14 +129,39 @@ derived from the one you ask for is found too.</p>
 <p><code class="language-plaintext highlighter-rouge">TryGetComponent</code> finds the behaviour on the collider’s own object. A collider on a child object
 finds the child’s behaviour, not one on its parent.</p>
 
+<h3 id="in-a-namespace-that-starts-with-codesmile">In a namespace that starts with CodeSmile</h3>
+
+<p>Inside a namespace such as <code class="language-plaintext highlighter-rouge">CodeSmile.MyGame</code>, the name <code class="language-plaintext highlighter-rouge">LunyScript</code> means the namespace
+<code class="language-plaintext highlighter-rouge">CodeSmile.LunyScript</code>, so <code class="language-plaintext highlighter-rouge">LunyScript.Find</code> does not compile there when <code class="language-plaintext highlighter-rouge">using
+CodeSmile.LunyScript;</code> is at the top of the file. The compiler reports error CS0234. Write the full
+name, or put the <code class="language-plaintext highlighter-rouge">using</code> directive inside the namespace block:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">namespace</span> <span class="nn">CodeSmile.MyGame</span>
+<span class="p">{</span>
+    <span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">class</span> <span class="nc">Lookup</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">HasEnemy</span><span class="p">(</span><span class="n">LunyScriptBehaviour</span> <span class="n">behaviour</span><span class="p">)</span> <span class="p">=&gt;</span>
+            <span class="n">LunyScript</span><span class="p">.</span><span class="n">Exists</span><span class="p">&lt;</span><span class="n">EnemyScript</span><span class="p">&gt;(</span><span class="n">behaviour</span><span class="p">);</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">HasPlayer</span><span class="p">(</span><span class="n">LunyScriptBehaviour</span> <span class="n">behaviour</span><span class="p">)</span> <span class="p">=&gt;</span>
+            <span class="n">CodeSmile</span><span class="p">.</span><span class="n">LunyScript</span><span class="p">.</span><span class="n">LunyScript</span><span class="p">.</span><span class="n">Exists</span><span class="p">&lt;</span><span class="n">PlayerScript</span><span class="p">&gt;(</span><span class="n">behaviour</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Code in any other namespace, and code in no namespace, writes <code class="language-plaintext highlighter-rouge">LunyScript.Find</code> with the <code class="language-plaintext highlighter-rouge">using</code>
+directive at the top of the file.</p>
+
 <h2 id="the-definition-and-its-handles">The definition and its handles</h2>
 
 <p><code class="language-plaintext highlighter-rouge">Definition</code> is the script object whose <code class="language-plaintext highlighter-rouge">Build()</code> ran. Its properties hold the variable handles:
-<code class="language-plaintext highlighter-rouge">player.Health</code> is the <code class="language-plaintext highlighter-rouge">Number</code> that <code class="language-plaintext highlighter-rouge">Build()</code> declared. Take the handles from the view you read
+<code class="language-plaintext highlighter-rouge">player.Health</code> is the <code class="language-plaintext highlighter-rouge">Number</code> that <code class="language-plaintext highlighter-rouge">Build()</code> declared. Take the handles from the reference you read
 through. A handle from another script type is refused with a <code class="language-plaintext highlighter-rouge">LunyScriptUsageException</code> that names
 both types, even when both scripts declare a variable of the same name:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">view</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">crate</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">Health</span><span class="p">);</span>   <span class="c1">// throws: CrateScript declared Health</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">reference</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">crate</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">Health</span><span class="p">);</span>  <span class="c1">// throws: CrateScript declared Health</span>
 </code></pre></div></div>
 
 <p>A script object you create with <code class="language-plaintext highlighter-rouge">new PlayerScript()</code> is not a definition. Its properties are
@@ -145,44 +176,36 @@ unassigned, because <code class="language-plaintext highlighter-rouge">Build()</
     <tr>
       <th>Variable</th>
       <th><code class="language-plaintext highlighter-rouge">Read</code> returns</th>
-      <th>After the script ended</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Number</code></td>
       <td><code class="language-plaintext highlighter-rouge">double</code></td>
-      <td>0</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Flag</code></td>
       <td><code class="language-plaintext highlighter-rouge">bool</code></td>
-      <td>false</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Var&lt;Vec3&gt;</code></td>
       <td><code class="language-plaintext highlighter-rouge">Vec3</code></td>
-      <td>(0, 0, 0)</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Var&lt;Rotation&gt;</code></td>
       <td><code class="language-plaintext highlighter-rouge">Rotation</code></td>
-      <td><code class="language-plaintext highlighter-rouge">Rotation.Identity</code></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Var&lt;Vec2&gt;</code></td>
       <td><code class="language-plaintext highlighter-rouge">Vec2</code></td>
-      <td>(0, 0)</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Var&lt;YourEnum&gt;</code></td>
       <td><code class="language-plaintext highlighter-rouge">YourEnum</code></td>
-      <td>the value whose code is 0</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Text</code></td>
       <td>a copy into your fixed string</td>
-      <td>an empty string</td>
     </tr>
   </tbody>
 </table>
@@ -190,39 +213,60 @@ unassigned, because <code class="language-plaintext highlighter-rouge">Build()</
 <p>A text variable is copied into a fixed string you provide, so the read allocates nothing:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">name</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FixedString64Bytes</span><span class="p">();</span>
-<span class="n">view</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">PlayerName</span><span class="p">,</span> <span class="k">ref</span> <span class="n">name</span><span class="p">);</span>
+<span class="n">reference</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">reference</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">PlayerName</span><span class="p">,</span> <span class="k">ref</span> <span class="n">name</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>That read returns <code class="language-plaintext highlighter-rouge">CopyError.Truncation</code>, and leaves the fixed string unchanged, when the text does
-not fit. <code class="language-plaintext highlighter-rouge">FixedString64Bytes</code> is in <code class="language-plaintext highlighter-rouge">Unity.Collections</code>. No read allocates, so a HUD can read every
-frame.</p>
+not fit. <code class="language-plaintext highlighter-rouge">FixedString64Bytes</code> is in <code class="language-plaintext highlighter-rouge">Unity.Collections</code>. No read and no check allocates, so a HUD can
+check and read every frame.</p>
 
 <h2 id="when-the-script-ends">When the script ends</h2>
 
-<p>A view belongs to one run of the script on one object. When that script despawns, or its object is
-destroyed, <code class="language-plaintext highlighter-rouge">Exists</code> becomes false and stays false. A read after that returns the value in the last
-column of the table above, and the first such read writes one warning to the Console naming the
-script and the variable. Later reads through the same view write nothing, so a view read every frame
-writes one line.</p>
+<p>A reference belongs to one run of the script on one object. Two checks tell you where that run is,
+and neither throws:</p>
 
-<p>LunyScript reuses a despawned script’s storage for the next object of the same script type. That
-next object is a new run, and an old view never reads it:</p>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">IsRunning</code></strong> is true from the object’s creation until the object is destroyed. It stays true
+while the object is deactivated and while the game is paused.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">IsObjectSpawned</code></strong> is true while the object is spawned or created, and false once it is
+despawned or destroyed.</li>
+</ul>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">first</span> <span class="p">=</span> <span class="n">Scripts</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">GuardScript</span><span class="p">&gt;(</span><span class="n">guardBehaviour</span><span class="p">);</span>
-<span class="c1">// the guard despawns; the relief guard starts and reuses its storage</span>
-<span class="kt">var</span> <span class="n">relief</span> <span class="p">=</span> <span class="n">Scripts</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">GuardScript</span><span class="p">&gt;(</span><span class="n">reliefBehaviour</span><span class="p">);</span>
-<span class="c1">// first.Exists is false and first.Read(...) returns 0;</span>
-<span class="c1">// relief.Exists is true</span>
+<p>When the script despawns with <code class="language-plaintext highlighter-rouge">Object.Despawn()</code>, or its object is destroyed, or Play Mode ends, both
+become false and stay false. <code class="language-plaintext highlighter-rouge">Object.Despawn()</code> destroys the object, so both change at the same
+moment; Unity removes the GameObject at the end of that frame.</p>
+
+<p><strong>A read after that throws a <code class="language-plaintext highlighter-rouge">LunyScriptUsageException</code></strong>, on every call, the way C# throws when you
+read a destroyed Unity object or component. The message names the script, the variable and the
+object, and tells you to check <code class="language-plaintext highlighter-rouge">IsRunning</code> first. <code class="language-plaintext highlighter-rouge">Observe</code> throws the same way. Check before each
+read:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="k">void</span> <span class="nf">Update</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">m_Bar</span><span class="p">.</span><span class="n">gameObject</span><span class="p">.</span><span class="nf">SetActive</span><span class="p">(</span><span class="n">m_Reference</span><span class="p">.</span><span class="n">IsObjectSpawned</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">m_Reference</span><span class="p">.</span><span class="n">IsRunning</span><span class="p">)</span>
+        <span class="nf">ShowHealth</span><span class="p">(</span><span class="n">m_Reference</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">m_Reference</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">Health</span><span class="p">));</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
-<p>Call <code class="language-plaintext highlighter-rouge">Scripts.Find</code> again to reach whatever the object runs now. Two views compare equal when they
-see the same run of a script, before and after it ends.</p>
+<p>LunyScript reuses a despawned script’s storage for the next object of the same script type. That
+next object is a new run, and an old reference never reads it:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">first</span> <span class="p">=</span> <span class="n">LunyScript</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">GuardScript</span><span class="p">&gt;(</span><span class="n">guardBehaviour</span><span class="p">);</span>
+<span class="c1">// the guard despawns; the relief guard starts and reuses its storage</span>
+<span class="kt">var</span> <span class="n">relief</span> <span class="p">=</span> <span class="n">LunyScript</span><span class="p">.</span><span class="n">Find</span><span class="p">&lt;</span><span class="n">GuardScript</span><span class="p">&gt;(</span><span class="n">reliefBehaviour</span><span class="p">);</span>
+<span class="c1">// first.IsRunning is false, and first.Read(...) throws;</span>
+<span class="c1">// relief.IsRunning is true</span>
+</code></pre></div></div>
+
+<p>Call <code class="language-plaintext highlighter-rouge">LunyScript.Find</code> again to reach whatever the object runs now. Two references compare equal when
+they refer to the same run of a script, before and after it ends.</p>
 
 <h2 id="following-changes">Following changes</h2>
 
 <p><code class="language-plaintext highlighter-rouge">Observe</code> calls your method with the new value each time the variable changes:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">m_Watch</span> <span class="p">=</span> <span class="n">view</span><span class="p">.</span><span class="nf">Observe</span><span class="p">(</span><span class="n">view</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">Health</span><span class="p">,</span> <span class="n">ShowHealth</span><span class="p">);</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">m_Watch</span> <span class="p">=</span> <span class="n">reference</span><span class="p">.</span><span class="nf">Observe</span><span class="p">(</span><span class="n">reference</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">Health</span><span class="p">,</span> <span class="n">ShowHealth</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>It exists for <code class="language-plaintext highlighter-rouge">Number</code>, <code class="language-plaintext highlighter-rouge">Flag</code>, <code class="language-plaintext highlighter-rouge">Var&lt;Vec3&gt;</code>, <code class="language-plaintext highlighter-rouge">Var&lt;Rotation&gt;</code> and <code class="language-plaintext highlighter-rouge">Var&lt;Vec2&gt;</code>.</p>
@@ -242,13 +286,10 @@ observation yourself.</li>
 ends, and every other observation still runs.</li>
 </ul>
 
-<p><code class="language-plaintext highlighter-rouge">Observe</code> on a script that has already ended returns an observation whose <code class="language-plaintext highlighter-rouge">IsActive</code> is false, and
-writes the same one warning a read does.</p>
-
 <h2 id="changing-a-scripts-state">Changing a script’s state</h2>
 
-<p>There is no write through a view. To change another script’s state, send it a message and let its
-own <code class="language-plaintext highlighter-rouge">On.Message</code> blocks change it:</p>
+<p>There is no write through a reference. To change another script’s state, send it a message and let
+its own <code class="language-plaintext highlighter-rouge">On.Message</code> blocks change it:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// in the script's Build():</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Heal</span><span class="p">),</span> <span class="n">Health</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">25</span><span class="p">));</span>
@@ -266,23 +307,24 @@ decides what a heal does, including any limit it applies.</p>
 <code class="language-plaintext highlighter-rouge">GetNumber</code>, <code class="language-plaintext highlighter-rouge">GetFlag</code>, <code class="language-plaintext highlighter-rouge">GetVec3</code>, <code class="language-plaintext highlighter-rouge">GetRotation</code>, <code class="language-plaintext highlighter-rouge">GetVec2</code>, <code class="language-plaintext highlighter-rouge">GetEnum</code>, <code class="language-plaintext highlighter-rouge">ReadText</code> and <code class="language-plaintext highlighter-rouge">GetAsset</code>:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">script</span> <span class="p">=</span> <span class="p">(</span><span class="n">PlayerScript</span><span class="p">)</span><span class="n">behaviour</span><span class="p">.</span><span class="n">Script</span><span class="p">;</span>
-<span class="kt">var</span> <span class="n">health</span> <span class="p">=</span> <span class="n">behaviour</span><span class="p">.</span><span class="nf">GetNumber</span><span class="p">(</span><span class="n">script</span><span class="p">.</span><span class="n">Health</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">behaviour</span><span class="p">.</span><span class="n">IsRunning</span><span class="p">)</span>
+    <span class="n">health</span> <span class="p">=</span> <span class="n">behaviour</span><span class="p">.</span><span class="nf">GetNumber</span><span class="p">(</span><span class="n">script</span><span class="p">.</span><span class="n">Health</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>These reads throw a <code class="language-plaintext highlighter-rouge">LunyScriptUsageException</code> before <code class="language-plaintext highlighter-rouge">Awake</code> and after the object is destroyed,
-where a view returns a default. Use a view for an object whose script can end while you still hold a
-reference to it.</p>
+<p><code class="language-plaintext highlighter-rouge">LunyScriptBehaviour</code> has the same <code class="language-plaintext highlighter-rouge">IsRunning</code> and <code class="language-plaintext highlighter-rouge">IsObjectSpawned</code> checks. Its reads and <code class="language-plaintext highlighter-rouge">Send</code>
+throw a <code class="language-plaintext highlighter-rouge">LunyScriptUsageException</code> before <code class="language-plaintext highlighter-rouge">Awake</code>, after the object is despawned or destroyed, and
+after Play Mode ends, the same way a reference does.</p>
 
 <h2 id="what-to-read-next">What to read next</h2>
 
 <ul>
   <li><a href="/LunyScript-Docs/manual/variables-and-values.html">Variables and values</a> — the variables a
-view reads.</li>
+reference reads.</li>
   <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> —
 <code class="language-plaintext highlighter-rouge">On.Message</code>, and when a script despawns.</li>
   <li>Generated reference:
-<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Scripts.html"><code class="language-plaintext highlighter-rouge">Scripts</code></a>,
-<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ScriptView-1.html"><code class="language-plaintext highlighter-rouge">ScriptView&lt;TScript&gt;</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.LunyScript.html"><code class="language-plaintext highlighter-rouge">LunyScript</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.LunyScriptReference-1.html"><code class="language-plaintext highlighter-rouge">LunyScriptReference&lt;TScript&gt;</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ScriptObservation.html"><code class="language-plaintext highlighter-rouge">ScriptObservation</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.LunyScriptBehaviour.html"><code class="language-plaintext highlighter-rouge">LunyScriptBehaviour</code></a>.</li>
 </ul>
