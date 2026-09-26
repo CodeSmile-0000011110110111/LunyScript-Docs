@@ -1,0 +1,2647 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct DebugFactory | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct DebugFactory | LunyScript API Reference ">
+      
+      <meta name="description" content="The Debug surface: blocks that write a line to the Console when they run.  writes an ordinary entry, Warn a warning and Error an error.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_DebugFactory.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.DebugFactory%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.DebugFactory">
+
+
+
+  <h1 id="CodeSmile_LunyScript_DebugFactory" data-uid="CodeSmile.LunyScript.DebugFactory" class="text-break">
+Struct DebugFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The <code>Debug</code> surface: blocks that write a line to the Console when they run.
+<a class="xref" href="CodeSmile.LunyScript.DebugFactory.html#CodeSmile_LunyScript_DebugFactory_Log_System_String_System_String_System_Int32_">Log(string, string, int)</a> writes an ordinary entry, <code>Warn</code> a warning and
+<code>Error</code> an error.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct DebugFactory</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyScript_DebugFactory_examples">Examples</h2>
+  <pre><code class="lang-csharp">On.Ready(Debug.Log("ready"), Debug.Log(Health));
+On.FrameUpdate(If(Health &lt; 20).Then(Debug.Warn("low health", Health)));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_DebugFactory_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>It hides <code>UnityEngine.Debug</code> inside a script the same way <code>Time</code> hides
+<code>UnityEngine.Time</code>: inside a <code>Script</code> or an <code>EditorScript</code>, <code>Debug</code> means
+this one.</p>
+<p>
+    <b>Each call builds a block, and the block writes each time it runs.</b> A variable's
+    value is read then, for the object the block runs on, so <code>Debug.Log(Health)</code> placed
+    in <code>On.FrameUpdate</code> writes that object's health on every frame. The line is the
+    message and value, then <code>(Script: &lt;script&gt;, Object: &lt;object&gt;)</code>, then the
+    line the block was written on as a link: <code>Health = 15 (Script: PlayerScript, Object:
+    Player)</code>. A variable shows its declared name; an expression such as
+    <code>Health + 5</code> has none and shows its value alone. Text is quoted.
+</p>
+<p>
+    <b>The blocks write only where <code>DEBUG</code> is defined</b>: the Editor and every
+    development player. In a player built without it they read nothing and write nothing.
+    An error line is a message, not a failure: the script keeps running.
+</p>
+<p>
+    <code>Debug.Log("HP: " + Health)</code> compiles, because C# joins any value to a string, and
+    the string is made once while the script type is built, from the handle's description.
+    Write <code>Debug.Log("HP", Health)</code> to log the value.
+</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Error_" data-uid="CodeSmile.LunyScript.DebugFactory.Error*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Error_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Error(CodeSmile.LunyScript.ConditionBlock,System.String,System.Int32)">
+  Error(ConditionBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L460"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a condition's current value as an error. The script keeps
+running.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Error(ConditionBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The condition.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Error(Health &lt;= 0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this factory
+was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Error_" data-uid="CodeSmile.LunyScript.DebugFactory.Error*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Error_CodeSmile_LunyScript_Flag_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Error(CodeSmile.LunyScript.Flag,System.String,System.Int32)">
+  Error(Flag, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L418"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a Flag variable's name and current value as an error.
+The script keeps running.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Error(Flag value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Flag.html">Flag</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable, or a <code>true</code> or <code>false</code> literal.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_CodeSmile_LunyScript_Flag_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Error(Alive));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> was never assigned, or
+this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Error_" data-uid="CodeSmile.LunyScript.DebugFactory.Error*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Error_CodeSmile_LunyScript_Number_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Error(CodeSmile.LunyScript.Number,System.String,System.Int32)">
+  Error(Number, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L404"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a Number variable's name and current value as an
+error. The script keeps running.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Error(Number value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable, or a number literal.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_CodeSmile_LunyScript_Number_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Health &lt; 0).Then(Debug.Error(Health)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> was never assigned, or
+this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Error_" data-uid="CodeSmile.LunyScript.DebugFactory.Error*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Error_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Error(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Error(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L446"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a number expression's current value as an error. The
+script keeps running.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Error(NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Debug.Error(Health - Damage));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this factory
+was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Error_" data-uid="CodeSmile.LunyScript.DebugFactory.Error*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Error_CodeSmile_LunyScript_Text_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Error(CodeSmile.LunyScript.Text,System.String,System.Int32)">
+  Error(Text, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L432"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a Text variable's name and current content, in quotes, as
+an error. The script keeps running.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Error(Text value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_CodeSmile_LunyScript_Text_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Error(PlayerName));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> was never assigned, or
+this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Error_" data-uid="CodeSmile.LunyScript.DebugFactory.Error*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Error_System_String_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Error(System.String,CodeSmile.LunyScript.ConditionBlock,System.String,System.Int32)">
+  Error(string, ConditionBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L544"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a condition's current value, as an error.
+The script keeps running.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Error(string message, ConditionBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The condition.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_System_String_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Error("dead", Health &lt;= 0));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> or
+<code class="paramref">value</code> is null, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Error_" data-uid="CodeSmile.LunyScript.DebugFactory.Error*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Error_System_String_CodeSmile_LunyScript_Flag_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Error(System.String,CodeSmile.LunyScript.Flag,System.String,System.Int32)">
+  Error(string, Flag, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L493"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a Flag variable's name and current value,
+as an error. The script keeps running.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Error(string message, Flag value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Flag.html">Flag</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable, or a <code>true</code> or <code>false</code> literal.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_System_String_CodeSmile_LunyScript_Flag_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Error("spawned dead", Alive));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> is null,
+<code class="paramref">value</code> was never assigned, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Error_" data-uid="CodeSmile.LunyScript.DebugFactory.Error*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Error_System_String_CodeSmile_LunyScript_Number_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Error(System.String,CodeSmile.LunyScript.Number,System.String,System.Int32)">
+  Error(string, Number, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L476"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a Number variable's name and current
+value, as an error. The script keeps running.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Error(string message, Number value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable, or a number literal.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_System_String_CodeSmile_LunyScript_Number_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Health &lt; 0).Then(Debug.Error("below zero", Health)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> is null,
+<code class="paramref">value</code> was never assigned, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Error_" data-uid="CodeSmile.LunyScript.DebugFactory.Error*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Error_System_String_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Error(System.String,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Error(string, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L527"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a number expression's current value, as an
+error. The script keeps running.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Error(string message, NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_System_String_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Debug.Error("overkill", Damage - Health));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> or
+<code class="paramref">value</code> is null, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Error_" data-uid="CodeSmile.LunyScript.DebugFactory.Error*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Error_System_String_CodeSmile_LunyScript_Text_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Error(System.String,CodeSmile.LunyScript.Text,System.String,System.Int32)">
+  Error(string, Text, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L510"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a Text variable's name and current
+content, in quotes, as an error. The script keeps running.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Error(string message, Text value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_System_String_CodeSmile_LunyScript_Text_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Error("unknown level", LevelName));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> is null,
+<code class="paramref">value</code> was never assigned, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Error_" data-uid="CodeSmile.LunyScript.DebugFactory.Error*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Error_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Error(System.String,System.String,System.Int32)">
+  Error(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L390"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message to the Console as an error. The script keeps
+running.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Error(string message, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Error("no level loaded"));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> is null, or this
+factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Log_" data-uid="CodeSmile.LunyScript.DebugFactory.Log*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Log_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Log(CodeSmile.LunyScript.ConditionBlock,System.String,System.Int32)">
+  Log(ConditionBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a condition's current value, <code>true</code> or <code>false</code>.
+A condition has no declared name, so the line shows the value alone.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Log(ConditionBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The condition.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Log_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Log(Health &gt; 50));   // true (Script: ..., Object: ...)</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this factory
+was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Log_" data-uid="CodeSmile.LunyScript.DebugFactory.Log*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Log_CodeSmile_LunyScript_Flag_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Log(CodeSmile.LunyScript.Flag,System.String,System.Int32)">
+  Log(Flag, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a Flag variable's name and current value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Log(Flag value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Flag.html">Flag</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable, or a <code>true</code> or <code>false</code> literal.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Log_CodeSmile_LunyScript_Flag_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Log(Alive));   // Alive = true (Script: ..., Object: ...)</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> was never assigned, or
+this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Log_" data-uid="CodeSmile.LunyScript.DebugFactory.Log*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Log_CodeSmile_LunyScript_Number_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Log(CodeSmile.LunyScript.Number,System.String,System.Int32)">
+  Log(Number, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a Number variable's name and current value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Log(Number value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable, or a number literal.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Log_CodeSmile_LunyScript_Number_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Log(Health));   // Health = 100 (Script: ..., Object: ...)</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> was never assigned, or
+this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Log_" data-uid="CodeSmile.LunyScript.DebugFactory.Log*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Log_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Log(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Log(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a number expression's current value. An expression has no
+declared name, so the line shows the value alone.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Log(NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Log_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Log(Health + 5));   // 105 (Script: ..., Object: ...)</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this factory
+was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Log_" data-uid="CodeSmile.LunyScript.DebugFactory.Log*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Log_CodeSmile_LunyScript_Text_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Log(CodeSmile.LunyScript.Text,System.String,System.Int32)">
+  Log(Text, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a Text variable's name and current content, in
+quotes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Log(Text value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Log_CodeSmile_LunyScript_Text_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Log(PlayerName));   // PlayerName = "Ada" (Script: ...)</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> was never assigned, or
+this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Log_" data-uid="CodeSmile.LunyScript.DebugFactory.Log*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Log_System_String_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Log(System.String,CodeSmile.LunyScript.ConditionBlock,System.String,System.Int32)">
+  Log(string, ConditionBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a condition's current value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Log(string message, ConditionBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The condition.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Log_System_String_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Log("healthy", Health &gt; 50));   // healthy: true (Script: ...)</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> or
+<code class="paramref">value</code> is null, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Log_" data-uid="CodeSmile.LunyScript.DebugFactory.Log*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Log_System_String_CodeSmile_LunyScript_Flag_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Log(System.String,CodeSmile.LunyScript.Flag,System.String,System.Int32)">
+  Log(string, Flag, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L158"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a Flag variable's name and current
+value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Log(string message, Flag value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Flag.html">Flag</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable, or a <code>true</code> or <code>false</code> literal.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Log_System_String_CodeSmile_LunyScript_Flag_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Log("start", Alive));   // start: Alive = true (Script: ...)</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> is null,
+<code class="paramref">value</code> was never assigned, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Log_" data-uid="CodeSmile.LunyScript.DebugFactory.Log*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Log_System_String_CodeSmile_LunyScript_Number_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Log(System.String,CodeSmile.LunyScript.Number,System.String,System.Int32)">
+  Log(string, Number, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L141"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a Number variable's name and current
+value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Log(string message, Number value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable, or a number literal.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Log_System_String_CodeSmile_LunyScript_Number_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Log("start", Health));   // start: Health = 100 (Script: ...)</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> is null,
+<code class="paramref">value</code> was never assigned, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Log_" data-uid="CodeSmile.LunyScript.DebugFactory.Log*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Log_System_String_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Log(System.String,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Log(string, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L192"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a number expression's current
+value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Log(string message, NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Log_System_String_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Log("next", Health + 5));   // next: 105 (Script: ...)</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> or
+<code class="paramref">value</code> is null, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Log_" data-uid="CodeSmile.LunyScript.DebugFactory.Log*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Log_System_String_CodeSmile_LunyScript_Text_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Log(System.String,CodeSmile.LunyScript.Text,System.String,System.Int32)">
+  Log(string, Text, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a Text variable's name and current
+content, in quotes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Log(string message, Text value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Log_System_String_CodeSmile_LunyScript_Text_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Log("pilot", PlayerName));   // pilot: PlayerName = "Ada" (...)</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> is null,
+<code class="paramref">value</code> was never assigned, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Log_" data-uid="CodeSmile.LunyScript.DebugFactory.Log*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Log_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Log(System.String,System.String,System.Int32)">
+  Log(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message to the Console.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Log(string message, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Log_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Log("ready"));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> is null, or this
+factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Warn_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Warn_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn(CodeSmile.LunyScript.ConditionBlock,System.String,System.Int32)">
+  Warn(ConditionBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L291"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a condition's current value as a warning.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Warn(ConditionBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The condition.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Warn(Health &lt; 20));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this factory
+was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Warn_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Warn_CodeSmile_LunyScript_Flag_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn(CodeSmile.LunyScript.Flag,System.String,System.Int32)">
+  Warn(Flag, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L250"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a Flag variable's name and current value as a
+warning.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Warn(Flag value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Flag.html">Flag</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable, or a <code>true</code> or <code>false</code> literal.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_CodeSmile_LunyScript_Flag_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(!Alive).Then(Debug.Warn(Alive)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> was never assigned, or
+this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Warn_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Warn_CodeSmile_LunyScript_Number_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn(CodeSmile.LunyScript.Number,System.String,System.Int32)">
+  Warn(Number, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L236"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a Number variable's name and current value as a
+warning.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Warn(Number value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable, or a number literal.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_CodeSmile_LunyScript_Number_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Health &lt; 20).Then(Debug.Warn(Health)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> was never assigned, or
+this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Warn_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Warn_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Warn(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L278"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a number expression's current value as a
+warning.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Warn(NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Debug.Warn(Health - Damage));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> is null, or this factory
+was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Warn_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Warn_CodeSmile_LunyScript_Text_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn(CodeSmile.LunyScript.Text,System.String,System.Int32)">
+  Warn(Text, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L264"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a Text variable's name and current content, in quotes, as
+a warning.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Warn(Text value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_CodeSmile_LunyScript_Text_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Warn(PlayerName));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">value</code> was never assigned, or
+this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Warn_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn(System.String,CodeSmile.LunyScript.ConditionBlock,System.String,System.Int32)">
+  Warn(string, ConditionBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L375"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a condition's current value, as a
+warning.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Warn(string message, ConditionBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The condition.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Warn("low", Health &lt; 20));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> or
+<code class="paramref">value</code> is null, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Warn_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_CodeSmile_LunyScript_Flag_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn(System.String,CodeSmile.LunyScript.Flag,System.String,System.Int32)">
+  Warn(string, Flag, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L324"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a Flag variable's name and current value,
+as a warning.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Warn(string message, Flag value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Flag.html">Flag</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable, or a <code>true</code> or <code>false</code> literal.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_CodeSmile_LunyScript_Flag_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(!Alive).Then(Debug.Warn("down", Alive)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> is null,
+<code class="paramref">value</code> was never assigned, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Warn_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_CodeSmile_LunyScript_Number_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn(System.String,CodeSmile.LunyScript.Number,System.String,System.Int32)">
+  Warn(string, Number, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L307"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a Number variable's name and current
+value, as a warning.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Warn(string message, Number value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable, or a number literal.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_CodeSmile_LunyScript_Number_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Health &lt; 20).Then(Debug.Warn("low health", Health)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> is null,
+<code class="paramref">value</code> was never assigned, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Warn_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn(System.String,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Warn(string, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L358"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a number expression's current value, as a
+warning.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Warn(string message, NumberValueBlock value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Debug.Warn("after the hit", Health - Damage));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> or
+<code class="paramref">value</code> is null, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Warn_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_CodeSmile_LunyScript_Text_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn(System.String,CodeSmile.LunyScript.Text,System.String,System.Int32)">
+  Warn(string, Text, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L341"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message, then a Text variable's name and current
+content, in quotes, as a warning.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Warn(string message, Text value, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write in front of the value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_CodeSmile_LunyScript_Text_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Warn("unnamed pilot", PlayerName));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> is null,
+<code class="paramref">value</code> was never assigned, or this factory was not obtained inside
+<code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DebugFactory_Warn_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DebugFactory.Warn(System.String,System.String,System.Int32)">
+  Warn(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that writes a message to the Console as a warning.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Warn(string message, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>What to write.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Debug.Warn("no spawn point set"));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">message</code> is null, or this
+factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Debug/DebugFactory.cs/#L41" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

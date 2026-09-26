@@ -121,7 +121,7 @@ of the stream is written once rather than once per backend.</p>
   <div class="markdown level0 remarks"><p><b>Why this exists rather than a queue of byte arrays.</b> A stream arrives on every tick of
 every peer that is not the authority. Handing back a fresh array per stream would allocate
 on every one of those ticks, which <code>AGENTS.md</code> rule 29 forbids and which none of rule
-31's five relaxations covers. The arriving bytes are copied into one buffer instead, and
+31's six relaxations covers. The arriving bytes are copied into one buffer instead, and
 <a class="xref" href="CodeSmile.LunyScript.TransformStreamInbox.html#CodeSmile_LunyScript_TransformStreamInbox_TryDequeue_System_Byte____System_Int32__System_Int32__">TryDequeue(out byte[], out int, out int)</a> hands back the offset and length of a stream inside it.</p>
 <p>
     <b>How the buffer is reused.</b> The write cursor returns to the start on the first
