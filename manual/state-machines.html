@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>State machines | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="State machines" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/state-machines.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/state-machines.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="State machines" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"State machines","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/state-machines.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">State machines</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Open a door while the player is near and close it again when they leave:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Door</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">PlayerNear</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Flag</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">PlayerNear</span><span class="p">),</span> <span class="k">false</span><span class="p">);</span>
+        <span class="p">(</span><span class="n">Hatch</span><span class="p">,</span> <span class="n">Shut</span><span class="p">,</span> <span class="n">Open</span><span class="p">)</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">StateMachine</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Hatch</span><span class="p">))</span>
+            <span class="p">.</span><span class="nf">WithStates</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Shut</span><span class="p">),</span> <span class="k">nameof</span><span class="p">(</span><span class="n">Open</span><span class="p">));</span>
+
+        <span class="n">Hatch</span><span class="p">.</span><span class="nf">Initial</span><span class="p">(</span><span class="n">Shut</span><span class="p">);</span>
+        <span class="n">Hatch</span><span class="p">.</span><span class="nf">From</span><span class="p">(</span><span class="n">Shut</span><span class="p">).</span><span class="nf">To</span><span class="p">(</span><span class="n">Open</span><span class="p">).</span><span class="nf">When</span><span class="p">(</span><span class="n">PlayerNear</span><span class="p">);</span>
+        <span class="n">Hatch</span><span class="p">.</span><span class="nf">From</span><span class="p">(</span><span class="n">Open</span><span class="p">).</span><span class="nf">To</span><span class="p">(</span><span class="n">Shut</span><span class="p">).</span><span class="nf">When</span><span class="p">(!</span><span class="n">PlayerNear</span><span class="p">);</span>
+        <span class="n">Hatch</span><span class="p">.</span><span class="nf">State</span><span class="p">(</span><span class="n">Open</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">Enter</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">Child</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">SetLocalPosition</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">0</span><span class="p">))</span>
+            <span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">Child</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">SetLocalPosition</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Hatch</span><span class="p">.</span><span class="nf">Start</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The one line after <code class="language-plaintext highlighter-rouge">PlayerNear</code> declares the machine <code class="language-plaintext highlighter-rouge">Hatch</code> and its two states. <code class="language-plaintext highlighter-rouge">Hatch.Start()</code>
+enters <code class="language-plaintext highlighter-rouge">Shut</code>. While <code class="language-plaintext highlighter-rouge">PlayerNear</code> is true the machine moves to <code class="language-plaintext highlighter-rouge">Open</code>, whose Enter lifts the door;
+when it turns false the machine moves back, and <code class="language-plaintext highlighter-rouge">Open</code>’s Exit lowers the door.</p>
+
+<h2 id="what-a-state-machine-is-for">What a state machine is for</h2>
+
+<p>A state machine keeps an object in exactly one of a few named situations at a time, and says how it
+moves from one to another. Use it where the alternative is a Number that stores a phase and an <code class="language-plaintext highlighter-rouge">If</code>
+per phase, with extra flags to remember whether a phase’s first frame has run: a boss’s phases, a
+door, a character’s idle, walk and jump, a menu’s screens.</p>
+
+<p>Each state has three lists, all optional: <strong>Enter</strong> runs once when the machine enters the state,
+<strong>Update</strong> runs while it stays, and <strong>Exit</strong> runs once when it leaves. <strong>Transitions</strong> say when the
+machine leaves.</p>
+
+<h2 id="declaring-the-machine-and-its-states">Declaring the machine and its states</h2>
+
+<p>A machine and its states are declared on one line, and the generator writes a property for each
+name: a <code class="language-plaintext highlighter-rouge">StateMachine</code> for the machine and a <code class="language-plaintext highlighter-rouge">State</code> for each state. A state belongs to the machine
+that declared it, so a misspelt state does not compile and a state of one machine cannot be passed
+to another.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="n">Phases</span><span class="p">,</span> <span class="n">Calm</span><span class="p">,</span> <span class="n">Angry</span><span class="p">,</span> <span class="n">Beaten</span><span class="p">)</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">StateMachine</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Phases</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">WithStates</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Calm</span><span class="p">),</span> <span class="k">nameof</span><span class="p">(</span><span class="n">Angry</span><span class="p">),</span> <span class="k">nameof</span><span class="p">(</span><span class="n">Beaten</span><span class="p">));</span>
+<span class="n">Phases</span><span class="p">.</span><span class="nf">Initial</span><span class="p">(</span><span class="n">Calm</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Pass <code class="language-plaintext highlighter-rouge">nameof(...)</code> for each name, in the order the handles are written; the compiler reports a name
+that does not match its handle. A machine has one to sixteen states. Every machine names the state
+<code class="language-plaintext highlighter-rouge">Start</code> enters with <code class="language-plaintext highlighter-rouge">Initial</code>, once; a machine without one is refused when the script is built.</p>
+
+<p>Declaring a machine does nothing on its own. It runs after a <code class="language-plaintext highlighter-rouge">Start</code> block runs:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Phases</span><span class="p">.</span><span class="nf">Start</span><span class="p">());</span>
+</code></pre></div></div>
+
+<h2 id="enter-update-and-exit">Enter, Update and Exit</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Phases</span><span class="p">.</span><span class="nf">State</span><span class="p">(</span><span class="n">Angry</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Enter</span><span class="p">(</span><span class="n">Speed</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">3</span><span class="p">),</span> <span class="nf">Routine</span><span class="p">(</span><span class="s">"Roar"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">Roaring</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span>
+        <span class="nf">Wait</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="n">Roaring</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)))</span>
+    <span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">RotateBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">90</span><span class="p">,</span> <span class="m">0</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="n">Speed</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>Write the three lists in this order, each at most once per state. Enter runs in the frame the machine
+enters the state. Update runs once in every later frame the state is current and no transition is
+taken. Exit runs when the machine leaves the state.</p>
+
+<p><strong>A routine, <code class="language-plaintext highlighter-rouge">Choose</code> or <code class="language-plaintext highlighter-rouge">Run</code> started in Enter belongs to the state.</strong> The machine runs it in each
+frame before Update, and stops it when the machine leaves the state, so the roar above never outlives
+<code class="language-plaintext highlighter-rouge">Angry</code>. Entering the state again starts it again.</p>
+
+<p>The three lists run their blocks one after another in one frame, like an <code class="language-plaintext highlighter-rouge">If</code>’s <code class="language-plaintext highlighter-rouge">Then</code>. A <code class="language-plaintext highlighter-rouge">Wait</code> or an
+<code class="language-plaintext highlighter-rouge">InParallel</code> group written in them is refused; put the waiting in a routine that Enter starts, as the
+roar does.</p>
+
+<h2 id="transitions">Transitions</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Phases</span><span class="p">.</span><span class="nf">From</span><span class="p">(</span><span class="n">Calm</span><span class="p">).</span><span class="nf">To</span><span class="p">(</span><span class="n">Angry</span><span class="p">).</span><span class="nf">When</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;</span> <span class="m">60</span><span class="p">);</span>
+<span class="n">Phases</span><span class="p">.</span><span class="nf">From</span><span class="p">(</span><span class="n">Angry</span><span class="p">).</span><span class="nf">To</span><span class="p">(</span><span class="n">Beaten</span><span class="p">).</span><span class="nf">When</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Do</span><span class="p">(</span><span class="n">Score</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">100</span><span class="p">));</span>
+<span class="n">Phases</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">Calm</span><span class="p">).</span><span class="nf">When</span><span class="p">(</span><span class="n">Reset</span><span class="p">);</span>
+<span class="n">Phases</span><span class="p">.</span><span class="nf">State</span><span class="p">(</span><span class="n">Angry</span><span class="p">).</span><span class="nf">When</span><span class="p">(</span><span class="n">HitTaken</span><span class="p">).</span><span class="nf">Do</span><span class="p">(</span><span class="n">HitTaken</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Transition</th>
+      <th>When it is taken</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">From(a).To(b).When(condition)</code></td>
+      <td>In state <code class="language-plaintext highlighter-rouge">a</code>, while the condition is true.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">To(b).When(condition)</code></td>
+      <td>In any state except <code class="language-plaintext highlighter-rouge">b</code>, while the condition is true.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">State(a).When(condition)</code></td>
+      <td>In state <code class="language-plaintext highlighter-rouge">a</code>, while the condition is true. It stays in <code class="language-plaintext highlighter-rouge">a</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Each frame the machine reads the transitions in the order they are written and takes the first one
+that applies; it reads no condition after that one. Only when none applies does it run the state’s
+Update. So a write Update makes is seen by the transitions in the next frame.</p>
+
+<p>Taking a transition to another state stops the work the old state’s Enter started, runs the old
+state’s Exit, runs the transition’s <code class="language-plaintext highlighter-rouge">Do</code>, then runs the new state’s Enter. <code class="language-plaintext highlighter-rouge">Do</code> is optional. The new
+state’s Update runs from the next frame on.</p>
+
+<p>The last form, <code class="language-plaintext highlighter-rouge">State(a).When(...)</code>, stays in the state: it runs only its <code class="language-plaintext highlighter-rouge">Do</code>, with no Exit and no
+Enter, and the state keeps what its Enter started. <code class="language-plaintext highlighter-rouge">From(a).To(a)</code> does the same.</p>
+
+<h2 id="reading-the-state">Reading the state</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Phases</span><span class="p">.</span><span class="nf">IsIn</span><span class="p">(</span><span class="n">Angry</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Rage</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(!</span><span class="n">Phases</span><span class="p">.</span><span class="n">IsRunning</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Phases</span><span class="p">.</span><span class="nf">Start</span><span class="p">()));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">IsIn(state)</code> is true while the machine runs and that state is current. <code class="language-plaintext highlighter-rouge">IsRunning</code> is true after a
+<code class="language-plaintext highlighter-rouge">Start</code> and before a <code class="language-plaintext highlighter-rouge">Stop</code>. Another machine on the same object reads these, or a variable one of the
+states writes, to follow it.</p>
+
+<h2 id="starting-stopping-and-restarting">Starting, stopping and restarting</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Start()</code> enters the initial state and runs its Enter in the same frame. The machine takes its first
+transition or runs its first Update in the next frame. <code class="language-plaintext highlighter-rouge">Start()</code> on a running machine restarts it:
+it leaves the current state the way a transition does, then enters the initial state again.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Stop()</code> stops the current state’s work and runs its Exit, and the machine does nothing more until the
+next <code class="language-plaintext highlighter-rouge">Start()</code>. Stopping a stopped machine does nothing.</p>
+
+<p>A machine does not start or stop itself: <code class="language-plaintext highlighter-rouge">Phases.Stop()</code> written in one of <code class="language-plaintext highlighter-rouge">Phases</code>’ own lists is
+refused when the script is built. Stop it from outside:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Phases</span><span class="p">.</span><span class="nf">IsIn</span><span class="p">(</span><span class="n">Beaten</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Phases</span><span class="p">.</span><span class="nf">Stop</span><span class="p">()));</span>
+</code></pre></div></div>
+
+<p>A state with no transitions out of it keeps the machine there, which is usually all a final state
+needs.</p>
+
+<p>When the object is despawned, the machine ends with it and no Exit runs.</p>
+
+<h2 id="several-changes-in-one-frame">Several changes in one frame</h2>
+
+<p>By default the machine takes at most one transition per frame. <code class="language-plaintext highlighter-rouge">CascadeLimit(n)</code> lets it take up to
+<code class="language-plaintext highlighter-rouge">n</code>, running each new state’s transitions in the same frame:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Parser</span><span class="p">.</span><span class="nf">Initial</span><span class="p">(</span><span class="n">Scanning</span><span class="p">).</span><span class="nf">CascadeLimit</span><span class="p">(</span><span class="m">10</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>The machine stops before a transition back to a state it has already been in during that frame; that
+transition is read again in the next frame. <code class="language-plaintext highlighter-rouge">CascadeLimit(0)</code> is the largest limit, 100.</p>
+
+<h2 id="which-frame-update">Which frame update</h2>
+
+<p>A machine runs in the frame update, after <code class="language-plaintext highlighter-rouge">On.FrameUpdate</code>. Write <code class="language-plaintext highlighter-rouge">InFixedUpdate()</code> to run it in each
+fixed step instead, after <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>, where Motion’s physics writes are allowed; or
+<code class="language-plaintext highlighter-rouge">InLateUpdate()</code> to run it after <code class="language-plaintext highlighter-rouge">On.LateUpdate</code>, for a camera that follows something that already
+moved:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Movement</span><span class="p">.</span><span class="nf">Initial</span><span class="p">(</span><span class="n">Idle</span><span class="p">).</span><span class="nf">InFixedUpdate</span><span class="p">();</span>
+<span class="n">Follow</span><span class="p">.</span><span class="nf">Initial</span><span class="p">(</span><span class="n">Track</span><span class="p">).</span><span class="nf">InLateUpdate</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>A machine that moves a body and one that follows it with the camera are two machines, each on its own
+update. A paused script’s machines stand still, like its <code class="language-plaintext highlighter-rouge">On.FrameUpdate</code>.</p>
+
+<h2 id="call-list">Call list</h2>
+
+<p>These lines are signatures, not a script you can paste. <code class="language-plaintext highlighter-rouge">..</code> means one or more further blocks or
+names.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="n">machine</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="p">..)</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">StateMachine</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="nf">WithStates</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">..)</span>
+<span class="n">machine</span><span class="p">.</span><span class="nf">Initial</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="p">[</span> <span class="p">.</span><span class="nf">CascadeLimit</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">InFixedUpdate</span><span class="p">()</span>
+    <span class="p">|</span> <span class="p">.</span><span class="nf">InLateUpdate</span><span class="p">()</span> <span class="p">]</span>
+<span class="n">machine</span><span class="p">.</span><span class="nf">State</span><span class="p">(</span><span class="n">state</span><span class="p">)</span> <span class="p">[</span> <span class="p">.</span><span class="nf">Enter</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span> <span class="p">]</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">Exit</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span> <span class="p">]</span>
+<span class="n">machine</span><span class="p">.</span><span class="nf">From</span><span class="p">(</span><span class="n">state</span><span class="p">).</span><span class="nf">To</span><span class="p">(</span><span class="n">state</span><span class="p">).</span><span class="nf">When</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="p">[</span> <span class="p">.</span><span class="nf">Do</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span> <span class="p">]</span>
+<span class="n">machine</span><span class="p">.</span><span class="nf">To</span><span class="p">(</span><span class="n">state</span><span class="p">).</span><span class="nf">When</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="p">[</span> <span class="p">.</span><span class="nf">Do</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span> <span class="p">]</span>
+<span class="n">machine</span><span class="p">.</span><span class="nf">State</span><span class="p">(</span><span class="n">state</span><span class="p">).</span><span class="nf">When</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="p">[</span> <span class="p">.</span><span class="nf">Do</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span> <span class="p">]</span>
+<span class="n">machine</span><span class="p">.</span><span class="nf">Start</span><span class="p">()</span>      <span class="n">machine</span><span class="p">.</span><span class="nf">Stop</span><span class="p">()</span>
+<span class="n">machine</span><span class="p">.</span><span class="nf">IsIn</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>  <span class="n">machine</span><span class="p">.</span><span class="n">IsRunning</span>
+</code></pre></div></div>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/flow.html">Flow: conditions, timed work and routines</a> — the
+routines a state starts, and the <code class="language-plaintext highlighter-rouge">Wait</code> they hold for.</li>
+  <li><a href="/LunyScript-Docs/manual/choosing-between-options.html">Choosing between options</a> — score
+several actions each frame instead of naming states.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.StateMachine.html"><code class="language-plaintext highlighter-rouge">StateMachine</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.State.html"><code class="language-plaintext highlighter-rouge">State</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.StateBuilder.html"><code class="language-plaintext highlighter-rouge">StateBuilder</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

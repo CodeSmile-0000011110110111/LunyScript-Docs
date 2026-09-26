@@ -138,6 +138,15 @@ second line declares the same name.</p>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Guard</span> <span class="p">:</span> <span class="n">Script</span>  <span class="c1">// LUNY001: Add partial to class Guard</span>
 </code></pre></div></div>
 
+<p>A <a href="/LunyScript-Docs/manual/state-machines.html">state machine</a> line declares several handles
+at once, and each name is matched to the <code class="language-plaintext highlighter-rouge">nameof</code> in the same position, so the error names the
+position that does not match:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="n">Phases</span><span class="p">,</span> <span class="n">Calm</span><span class="p">,</span> <span class="n">Angry</span><span class="p">)</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">StateMachine</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Phases</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">WithStates</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Angry</span><span class="p">),</span> <span class="k">nameof</span><span class="p">(</span><span class="n">Calm</span><span class="p">));</span>
+    <span class="c1">// LUNY001: Pass nameof(Calm) as name 2 of this line</span>
+</code></pre></div></div>
+
 <p>Where your IDE offers code fixes from the project’s analyzers, it offers <strong>Add partial</strong> on this
 error. The fix adds <code class="language-plaintext highlighter-rouge">partial</code> to the class, and to every class it is nested in that needs it. The
 compiler reports the error and applies no fix, so in Unity alone you add <code class="language-plaintext highlighter-rouge">partial</code> yourself.</p>
@@ -244,8 +253,8 @@ warning is a hint for the common case.</p>
 <h2 id="luny007">LUNY007: a wait or a group where nothing waits for it</h2>
 
 <p>A <code class="language-plaintext highlighter-rouge">Wait</code> and an <code class="language-plaintext highlighter-rouge">InParallel</code> group finish over several frames, so they need an owner that waits for them: a routine, a group, a <code class="language-plaintext highlighter-rouge">Run</code>
-body or a <code class="language-plaintext highlighter-rouge">Choose</code> option’s action. <code class="language-plaintext highlighter-rouge">Then</code>, <code class="language-plaintext highlighter-rouge">Else</code> and an <code class="language-plaintext highlighter-rouge">On.*</code> event list run all of their blocks in the frame they are reached, so a
-wait or a group written directly in one of them is reported on its line:</p>
+body or a <code class="language-plaintext highlighter-rouge">Choose</code> option’s action. <code class="language-plaintext highlighter-rouge">Then</code>, <code class="language-plaintext highlighter-rouge">Else</code>, an <code class="language-plaintext highlighter-rouge">On.*</code> event list and a state machine’s <code class="language-plaintext highlighter-rouge">Enter</code>, <code class="language-plaintext highlighter-rouge">Update</code>, <code class="language-plaintext highlighter-rouge">Exit</code> and <code class="language-plaintext highlighter-rouge">Do</code> run
+all of their blocks in the frame they are reached, so a wait or a group written directly in one of them is reported on its line:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Blink"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">ShouldBlink</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="nf">Wait</span><span class="p">(</span><span class="m">1</span><span class="p">))));</span>   <span class="c1">// Wait (here: Wait(..)) inside Then cannot</span>
