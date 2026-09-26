@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct StateMachineDefineBuilder | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct StateMachineDefineBuilder | LunyScript API Reference ">
+      
+      <meta name="description" content="What Define.StateMachine(name) returns. Its one call, WithStates, names the machine&#39;s states and returns the machine and the states together, so one line declares all of them.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_StateMachineDefineBuilder.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.StateMachineDefineBuilder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder">
+
+
+
+  <h1 id="CodeSmile_LunyScript_StateMachineDefineBuilder" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder" class="text-break">
+Struct StateMachineDefineBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>What <code>Define.StateMachine(name)</code> returns. Its one call, <code>WithStates</code>, names the machine's states and
+returns the machine and the states together, so one line declares all of them.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct StateMachineDefineBuilder</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyScript_StateMachineDefineBuilder_examples">Examples</h2>
+  <pre><code class="lang-csharp">(Phases, Calm, Angry, Defeated) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(Calm), nameof(Angry), nameof(Defeated));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_StateMachineDefineBuilder_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>A state exists only in the machine that declared it, so the states are declared on the machine's own line. The
+line assigns a tuple, and the generator writes one property per name: <code>StateMachine Phases</code> and a
+<code>State</code> for each state. <code>WithStates</code> takes one to sixteen names, one overload per count, so a line whose
+names and handles differ in number does not compile.</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String)">
+  WithStates(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with one state. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State) WithStates(string first)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Door, Shut) = Define.StateMachine(nameof(Door)).WithStates(nameof(Shut));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String)">
+  WithStates(string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with two states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State) WithStates(string first, string second)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, Calm, Angry) = Define.StateMachine(nameof(Phases)).WithStates(nameof(Calm), nameof(Angry));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String)">
+  WithStates(string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with three states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State) WithStates(string first, string second, string third)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, Calm, Angry, Desperate) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(Calm), nameof(Angry), nameof(Desperate));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String,System.String)">
+  WithStates(string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L102"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with four states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State, State) WithStates(string first, string second, string third, string fourth)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, Calm, Angry, Desperate, Defeated) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(Calm), nameof(Angry), nameof(Desperate), nameof(Defeated));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String,System.String,System.String)">
+  WithStates(string, string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with five states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State, State, State) WithStates(string first, string second, string third, string fourth, string fifth)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, S1, S2, S3, S4, S5) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(S1), nameof(S2), nameof(S3), nameof(S4), nameof(S5));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String,System.String,System.String,System.String)">
+  WithStates(string, string, string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L150"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with six states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State, State, State, State) WithStates(string first, string second, string third, string fourth, string fifth, string sixth)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sixth</code></dt></td>
+    <td style="width: 99%"><dd><p>The sixth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, S1, S2, S3, S4, S5, S6) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(S1), nameof(S2), nameof(S3), nameof(S4), nameof(S5), nameof(S6));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+  WithStates(string, string, string, string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L176"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with seven states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State, State, State, State, State) WithStates(string first, string second, string third, string fourth, string fifth, string sixth, string seventh)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sixth</code></dt></td>
+    <td style="width: 99%"><dd><p>The sixth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The seventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, S1, S2, S3, S4, S5, S6, S7) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(S1), nameof(S2), nameof(S3), nameof(S4), nameof(S5), nameof(S6), nameof(S7));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+  WithStates(string, string, string, string, string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L204"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with eight states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State, State, State, State, State, State) WithStates(string first, string second, string third, string fourth, string fifth, string sixth, string seventh, string eighth)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sixth</code></dt></td>
+    <td style="width: 99%"><dd><p>The sixth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The seventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eighth</code></dt></td>
+    <td style="width: 99%"><dd><p>The eighth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, S1, S2, S3, S4, S5, S6, S7, S8) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(S1), nameof(S2), nameof(S3), nameof(S4), nameof(S5), nameof(S6), nameof(S7),
+        nameof(S8));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+  WithStates(string, string, string, string, string, string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L233"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with nine states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State, State, State, State, State, State, State) WithStates(string first, string second, string third, string fourth, string fifth, string sixth, string seventh, string eighth, string ninth)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sixth</code></dt></td>
+    <td style="width: 99%"><dd><p>The sixth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The seventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eighth</code></dt></td>
+    <td style="width: 99%"><dd><p>The eighth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>ninth</code></dt></td>
+    <td style="width: 99%"><dd><p>The ninth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, S1, S2, S3, S4, S5, S6, S7, S8, S9) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(S1), nameof(S2), nameof(S3), nameof(S4), nameof(S5), nameof(S6), nameof(S7),
+        nameof(S8), nameof(S9));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+  WithStates(string, string, string, string, string, string, string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L264"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with ten states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State, State, State, State, State, State, State, State) WithStates(string first, string second, string third, string fourth, string fifth, string sixth, string seventh, string eighth, string ninth, string tenth)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sixth</code></dt></td>
+    <td style="width: 99%"><dd><p>The sixth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The seventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eighth</code></dt></td>
+    <td style="width: 99%"><dd><p>The eighth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>ninth</code></dt></td>
+    <td style="width: 99%"><dd><p>The ninth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>tenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The tenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(S1), nameof(S2), nameof(S3), nameof(S4), nameof(S5), nameof(S6), nameof(S7),
+        nameof(S8), nameof(S9), nameof(S10));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+  WithStates(string, string, string, string, string, string, string, string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L298"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with eleven states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State, State, State, State, State, State, State, State, State) WithStates(string first, string second, string third, string fourth, string fifth, string sixth, string seventh, string eighth, string ninth, string tenth, string eleventh)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sixth</code></dt></td>
+    <td style="width: 99%"><dd><p>The sixth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The seventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eighth</code></dt></td>
+    <td style="width: 99%"><dd><p>The eighth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>ninth</code></dt></td>
+    <td style="width: 99%"><dd><p>The ninth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>tenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The tenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eleventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The eleventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(S1), nameof(S2), nameof(S3), nameof(S4), nameof(S5), nameof(S6), nameof(S7),
+        nameof(S8), nameof(S9), nameof(S10), nameof(S11));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+  WithStates(string, string, string, string, string, string, string, string, string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L333"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with twelve states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State, State, State, State, State, State, State, State, State, State) WithStates(string first, string second, string third, string fourth, string fifth, string sixth, string seventh, string eighth, string ninth, string tenth, string eleventh, string twelfth)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sixth</code></dt></td>
+    <td style="width: 99%"><dd><p>The sixth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The seventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eighth</code></dt></td>
+    <td style="width: 99%"><dd><p>The eighth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>ninth</code></dt></td>
+    <td style="width: 99%"><dd><p>The ninth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>tenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The tenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eleventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The eleventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>twelfth</code></dt></td>
+    <td style="width: 99%"><dd><p>The twelfth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(S1), nameof(S2), nameof(S3), nameof(S4), nameof(S5), nameof(S6), nameof(S7),
+        nameof(S8), nameof(S9), nameof(S10), nameof(S11), nameof(S12));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+  WithStates(string, string, string, string, string, string, string, string, string, string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L370"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with thirteen states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State, State, State, State, State, State, State, State, State, State, State) WithStates(string first, string second, string third, string fourth, string fifth, string sixth, string seventh, string eighth, string ninth, string tenth, string eleventh, string twelfth, string thirteenth)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sixth</code></dt></td>
+    <td style="width: 99%"><dd><p>The sixth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The seventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eighth</code></dt></td>
+    <td style="width: 99%"><dd><p>The eighth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>ninth</code></dt></td>
+    <td style="width: 99%"><dd><p>The ninth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>tenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The tenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eleventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The eleventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>twelfth</code></dt></td>
+    <td style="width: 99%"><dd><p>The twelfth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>thirteenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The thirteenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12,
+    S13) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(S1), nameof(S2), nameof(S3), nameof(S4), nameof(S5), nameof(S6), nameof(S7),
+        nameof(S8), nameof(S9), nameof(S10), nameof(S11), nameof(S12), nameof(S13));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+  WithStates(string, string, string, string, string, string, string, string, string, string, string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L408"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with fourteen states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State, State, State, State, State, State, State, State, State, State, State, State) WithStates(string first, string second, string third, string fourth, string fifth, string sixth, string seventh, string eighth, string ninth, string tenth, string eleventh, string twelfth, string thirteenth, string fourteenth)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sixth</code></dt></td>
+    <td style="width: 99%"><dd><p>The sixth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The seventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eighth</code></dt></td>
+    <td style="width: 99%"><dd><p>The eighth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>ninth</code></dt></td>
+    <td style="width: 99%"><dd><p>The ninth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>tenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The tenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eleventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The eleventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>twelfth</code></dt></td>
+    <td style="width: 99%"><dd><p>The twelfth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>thirteenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The thirteenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourteenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourteenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13,
+    S14) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(S1), nameof(S2), nameof(S3), nameof(S4), nameof(S5), nameof(S6), nameof(S7),
+        nameof(S8), nameof(S9), nameof(S10), nameof(S11), nameof(S12), nameof(S13), nameof(S14));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+  WithStates(string, string, string, string, string, string, string, string, string, string, string, string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L449"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with fifteen states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State, State, State, State, State, State, State, State, State, State, State, State, State) WithStates(string first, string second, string third, string fourth, string fifth, string sixth, string seventh, string eighth, string ninth, string tenth, string eleventh, string twelfth, string thirteenth, string fourteenth, string fifteenth)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sixth</code></dt></td>
+    <td style="width: 99%"><dd><p>The sixth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The seventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eighth</code></dt></td>
+    <td style="width: 99%"><dd><p>The eighth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>ninth</code></dt></td>
+    <td style="width: 99%"><dd><p>The ninth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>tenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The tenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eleventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The eleventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>twelfth</code></dt></td>
+    <td style="width: 99%"><dd><p>The twelfth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>thirteenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The thirteenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourteenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourteenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifteenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifteenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14,
+    S15) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(S1), nameof(S2), nameof(S3), nameof(S4), nameof(S5), nameof(S6), nameof(S7),
+        nameof(S8), nameof(S9), nameof(S10), nameof(S11), nameof(S12), nameof(S13), nameof(S14),
+        nameof(S15));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates*"></a>
+
+  <h3 id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_" data-uid="CodeSmile.LunyScript.StateMachineDefineBuilder.WithStates(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+  WithStates(string, string, string, string, string, string, string, string, string, string, string, string, string, string, string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L492"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the machine with sixteen states. The handles return in the order written: the machine, then each
+state.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public (StateMachine, State, State, State, State, State, State, State, State, State, State, State, State, State, State, State, State) WithStates(string first, string second, string third, string fourth, string fifth, string sixth, string seventh, string eighth, string ninth, string tenth, string eleventh, string twelfth, string thirteenth, string fourteenth, string fifteenth, string sixteenth)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>first</code></dt></td>
+    <td style="width: 99%"><dd><p>The first state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>second</code></dt></td>
+    <td style="width: 99%"><dd><p>The second state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>third</code></dt></td>
+    <td style="width: 99%"><dd><p>The third state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sixth</code></dt></td>
+    <td style="width: 99%"><dd><p>The sixth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The seventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eighth</code></dt></td>
+    <td style="width: 99%"><dd><p>The eighth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>ninth</code></dt></td>
+    <td style="width: 99%"><dd><p>The ninth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>tenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The tenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>eleventh</code></dt></td>
+    <td style="width: 99%"><dd><p>The eleventh state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>twelfth</code></dt></td>
+    <td style="width: 99%"><dd><p>The twelfth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>thirteenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The thirteenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fourteenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fourteenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>fifteenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The fifteenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sixteenth</code></dt></td>
+    <td style="width: 99%"><dd><p>The sixteenth state's name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt>(<a class="xref" href="CodeSmile.LunyScript.StateMachine.html">StateMachine</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>, <a class="xref" href="CodeSmile.LunyScript.State.html">State</a>)</dt>
+    <dd><p>The machine and its states, to assign on the same line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_StateMachineDefineBuilder_WithStates_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">(Phases, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12, S13, S14, S15,
+    S16) = Define.StateMachine(nameof(Phases))
+    .WithStates(nameof(S1), nameof(S2), nameof(S3), nameof(S4), nameof(S5), nameof(S6), nameof(S7),
+        nameof(S8), nameof(S9), nameof(S10), nameof(S11), nameof(S12), nameof(S13), nameof(S14),
+        nameof(S15), nameof(S16));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A name is empty or repeated, the machine's name is already taken, or
+this builder was never obtained from <code>Define.StateMachine</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/StateMachines/StateMachineDefineBuilder.cs/#L21" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
