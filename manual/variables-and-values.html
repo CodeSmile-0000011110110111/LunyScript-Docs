@@ -254,7 +254,10 @@ IEEE arithmetic and produces an infinity. <code class="language-plaintext highli
 because a short-circuit would have to pick a side while <code class="language-plaintext highlighter-rouge">Build()</code> runs, before any value exists.</p>
 
 <p>A <code class="language-plaintext highlighter-rouge">Flag</code> is itself a condition, so <code class="language-plaintext highlighter-rouge">If(Powered)</code> and <code class="language-plaintext highlighter-rouge">If(Powered.IsTrue())</code> are the same test.
-<code class="language-plaintext highlighter-rouge">IsFalse()</code> is the other direction.</p>
+<code class="language-plaintext highlighter-rouge">If(!Powered)</code> and <code class="language-plaintext highlighter-rouge">If(Powered.IsFalse())</code> are the opposite test, and are the same as each other:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(!</span><span class="n">Powered</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">OffSeconds</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)));</span>
+</code></pre></div></div>
 
 <h2 id="math-as-expressions">Math as expressions</h2>
 
