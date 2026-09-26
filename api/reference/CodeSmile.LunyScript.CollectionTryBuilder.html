@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_CollectionTryBuilder" data-uid="CodeSmile.LunyScript.CollectionTryBuilder" class="text-break">
-Struct CollectionTryBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Collections/CollectionTryBuilder.cs/#L35"><i class="bi bi-code-slash"></i></a>
+Struct CollectionTryBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Collections/CollectionTryBuilder.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -127,9 +127,12 @@ the Boolean that one call returned. It is never inferred from the collection-wid
     where the script handles it.
 </p>
 <p>
-    What the compiler cannot see is checked when <code>Build()</code> finishes: a try that is
-    never consumed, a try consumed twice, a consumer whose block is placed more than once or
-    nowhere, and a result that has no producer or two. Each is refused naming the line.
+    What the compiler cannot see is checked while <code>Build()</code> runs and when it
+    finishes: a try that is never consumed, a try consumed twice, a consumer whose block is
+    placed nowhere, a result that has no producer or two, and an <code>As</code> block placed a
+    second time, which would be a second producer. Each is refused naming the line. An
+    <code>If</code> over a try placed a second time is a second call, exactly as writing it again
+    would be.
 </p>
 </div>
 
@@ -142,7 +145,7 @@ the Boolean that one call returned. It is never inferred from the collection-wid
 
   <h3 id="CodeSmile_LunyScript_CollectionTryBuilder_As_CodeSmile_LunyScript_CollectionResult_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CollectionTryBuilder.As(CodeSmile.LunyScript.CollectionResult,System.String,System.Int32)">
   As(CollectionResult, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Collections/CollectionTryBuilder.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Collections/CollectionTryBuilder.cs/#L73"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds this call's outcome to a declared result. The block this returns performs the
@@ -187,7 +190,9 @@ one producer.</p>
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
-    <dd><p>A block to place in one event list, once.</p>
+    <dd><p>A block to place in one event list, once. A second place would run a copy of it,
+which would be a second producer of <code class="paramref">result</code>, so <code>Build()</code> refuses
+it.</p>
 </dd>
   </dl>
 
@@ -216,7 +221,7 @@ another call already produces <code class="paramref">result</code>.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Collections/CollectionTryBuilder.cs/#L35" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Collections/CollectionTryBuilder.cs/#L38" class="edit-link">Edit this page</a>
         </div>
 
 
