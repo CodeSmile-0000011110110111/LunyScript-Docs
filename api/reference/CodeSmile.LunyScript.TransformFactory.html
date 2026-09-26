@@ -1429,7 +1429,9 @@ On.FrameUpdate(Transform.Child(0).MoveTo(3.0, 0.0, 0.0).Over(2.0));</code></pre>
   <div class="markdown level1 remarks"><p>The first run captures the current pose, the destination and the duration. Each
 later run in a process event adds <code>Time.Delta</code> and writes the interpolated world
 position. Place it in <code>On.FrameUpdate</code>. A script the pause system has stopped does
-not run this block. <code>Over</code> is required; without it this is not a block.</p>
+not run this block. <code>Over</code> is required; without it this is not a block. A destination
+that changes during the interpolation takes effect when it ends: the object arrives at the
+destination it captured, and the next run moves it from there.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
