@@ -765,7 +765,7 @@ initialization or <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_Build" data-uid="CodeSmile.LunyScript.ScriptBase.Build">
   Build()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L618"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L625"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -791,7 +791,7 @@ initialization or <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_Choose_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ScriptBase.Choose(System.String,System.String,System.Int32)">
   Choose(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L557"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L564"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Opens a scored choice. <code>Highest</code> names the options; optional
@@ -861,7 +861,7 @@ on.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_DefineAssets" data-uid="CodeSmile.LunyScript.ScriptBase.DefineAssets">
   DefineAssets()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L639"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L646"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Assigns generated asset-input handles before Build, after the variables.
@@ -900,7 +900,7 @@ properties in a partial Script subclass, or keep explicit Bind.Asset calls insid
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_DefineVariables" data-uid="CodeSmile.LunyScript.ScriptBase.DefineVariables">
   DefineVariables()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L624"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L631"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Assigns generated variable handles before Build. Source-generated overrides call
@@ -1074,7 +1074,7 @@ refused.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_Hours_System_Double_" data-uid="CodeSmile.LunyScript.ScriptBase.Hours(System.Double)">
   Hours(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L612"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L619"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>An elapsed duration of this many hours, for <code>Hold</code> and <code>Wait</code>.</p>
@@ -1264,7 +1264,7 @@ whole <code>If</code> chain records the line it was written on, because <code>Th
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_InParallel_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.ScriptBase.InParallel(CodeSmile.LunyScript.Block[])">
   InParallel(params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L454"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L460"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A concurrent group: every child advances each frame, in the order they are written,
@@ -1319,6 +1319,12 @@ to keep the unfinished children running under the enclosing routine activation.<
     children and it captures no authored line; AGENTS.md rule 72. The routine step that
     carries the group is what a diagnostic names.
 </p>
+<p>
+    A group belongs in a routine, another group, a <code>Run</code> body or a Choose option's action. Placed inside
+    <code>Then</code> or <code>Else</code>, or directly in an event list, it is refused when the script type is built; inside
+    <code>Then</code> or <code>Else</code> the refusal names the line of the <code>If</code> that holds it. LUNY007 reports the same
+    placement at compile time where the group is written directly in the list.
+</p>
 </div>
 
 
@@ -1328,7 +1334,7 @@ to keep the unfinished children running under the enclosing routine activation.<
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_Milliseconds_System_Double_" data-uid="CodeSmile.LunyScript.ScriptBase.Milliseconds(System.Double)">
   Milliseconds(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L594"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L601"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>An elapsed duration of this many milliseconds, for <code>Hold</code> and <code>Wait</code>.</p>
@@ -1379,7 +1385,7 @@ to keep the unfinished children running under the enclosing routine activation.<
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_Minutes_System_Double_" data-uid="CodeSmile.LunyScript.ScriptBase.Minutes(System.Double)">
   Minutes(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L603"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L610"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>An elapsed duration of this many minutes, for <code>Hold</code> and <code>Wait</code>.</p>
@@ -1430,7 +1436,7 @@ to keep the unfinished children running under the enclosing routine activation.<
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_Option_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ScriptBase.Option(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   Option(NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L571"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L578"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>One scored option of a <code>Choose</code> selector. <code>Then</code> names the action that
@@ -1496,7 +1502,7 @@ wins.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_RequireContext_System_String_" data-uid="CodeSmile.LunyScript.ScriptBase.RequireContext(System.String)">
   RequireContext(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L675"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L682"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"></div>
@@ -1610,7 +1616,7 @@ on.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_Run_CodeSmile_LunyScript_Block_CodeSmile_LunyScript_Block_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.ScriptBase.Run(CodeSmile.LunyScript.Block,CodeSmile.LunyScript.Block,CodeSmile.LunyScript.Block[])">
   Run(Block, Block, params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L490"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L496"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Opens independently advanced repeating work whose body has more than one block.
@@ -1677,7 +1683,7 @@ finish the chain.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_Run_CodeSmile_LunyScript_Block_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ScriptBase.Run(CodeSmile.LunyScript.Block,System.String,System.Int32)">
   Run(Block, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L475"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L481"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Opens independently advanced repeating work. Qualifiers name a repetition count
@@ -1748,7 +1754,7 @@ On.Ready(pulse.Start(), tick.Start(), burst.Start(), continuous.Start());</code>
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_Seconds_System_Double_" data-uid="CodeSmile.LunyScript.ScriptBase.Seconds(System.Double)">
   Seconds(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L585"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L592"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>An elapsed duration of this many seconds, for <code>Hold</code> and <code>Wait</code>.</p>
@@ -1799,7 +1805,7 @@ On.Ready(pulse.Start(), tick.Start(), burst.Start(), continuous.Start());</code>
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_Wait_CodeSmile_LunyScript_Elapsed_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ScriptBase.Wait(CodeSmile.LunyScript.Elapsed,System.String,System.Int32)">
   Wait(Elapsed, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L535"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L542"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A routine step that holds its routine for a duration value, the one
@@ -1864,7 +1870,7 @@ On.Ready(pulse.Start(), tick.Start(), burst.Start(), continuous.Start());</code>
 
   <h3 id="CodeSmile_LunyScript_ScriptBase_Wait_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ScriptBase.Wait(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   Wait(NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L522"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/ScriptBase.cs/#L529"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A routine step that holds its routine for this much game time, then lets the next step
@@ -1926,8 +1932,9 @@ On.Ready(Routine("Blink").Run(Lamp.Set(true), Wait(500).Milliseconds(), Lamp.Set
   <h4 class="section" id="CodeSmile_LunyScript_ScriptBase_Wait_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>The wait counts game time from the moment the routine reaches it, and the amount is read then.
 Zero finishes at once; a negative amount, NaN or an infinity finishes at once and is reported as
-a warning. A wait belongs in a routine, a concurrent group or a <code>Run</code> body; placed directly
-in an event list it is refused when it runs.</p>
+a warning. A wait belongs in a routine, a concurrent group or a <code>Run</code> body; placed inside
+<code>Then</code> or <code>Else</code>, or directly in an event list, it is refused when the script type is built,
+naming its line, and LUNY007 reports it at compile time where it is written directly in the list.</p>
 </div>
 
 
