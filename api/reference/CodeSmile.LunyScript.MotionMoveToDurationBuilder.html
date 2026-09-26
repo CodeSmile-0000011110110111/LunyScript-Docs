@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct MotionMoveToDurationBuilder | LunyScript API Reference ">
       
-      <meta name="description" content="A MoveTo whose duration amount has been named. Incomplete until an elapsed unit.">
+      <meta name="description" content="A MoveTo whose duration amount has been named. Seconds unless a unit call names another unit: used as a block, or given , the amount is seconds.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_MotionMoveToDurationBuilder" data-uid="CodeSmile.LunyScript.MotionMoveToDurationBuilder" class="text-break">
-Struct MotionMoveToDurationBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L165"><i class="bi bi-code-slash"></i></a>
+Struct MotionMoveToDurationBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L177"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,7 +85,8 @@ Struct MotionMoveToDurationBuilder  <a class="header-action link-secondary" titl
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>A MoveTo whose duration amount has been named. Incomplete until an elapsed unit.</p>
+  <div class="markdown summary"><p>A MoveTo whose duration amount has been named. Seconds unless a unit call names another
+unit: used as a block, or given <a class="xref" href="CodeSmile.LunyScript.MotionMoveToDurationBuilder.html#CodeSmile_LunyScript_MotionMoveToDurationBuilder_Ease_CodeSmile_LunyScript_Easing_System_String_System_Int32_">Ease(Easing, string, int)</a>, the amount is seconds.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -108,7 +109,9 @@ Struct MotionMoveToDurationBuilder  <a class="header-action link-secondary" titl
 
 
   <h2 id="CodeSmile_LunyScript_MotionMoveToDurationBuilder_examples">Examples</h2>
-  <pre><code class="lang-csharp">On.FixedUpdate(Motion.MoveTo(Pad).Over(2).Seconds());</code></pre>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.MoveTo(Pad).Over(2));
+On.FixedUpdate(Motion.MoveTo(Pad).Over(2).Seconds());
+On.FixedUpdate(Motion.MoveTo(Pad).Over(2).Ease(Easing.InOutSine));</code></pre>
 
 
 
@@ -117,11 +120,83 @@ Struct MotionMoveToDurationBuilder  <a class="header-action link-secondary" titl
 </h2>
 
 
+  <a id="CodeSmile_LunyScript_MotionMoveToDurationBuilder_Ease_" data-uid="CodeSmile.LunyScript.MotionMoveToDurationBuilder.Ease*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionMoveToDurationBuilder_Ease_CodeSmile_LunyScript_Easing_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionMoveToDurationBuilder.Ease(CodeSmile.LunyScript.Easing,System.String,System.Int32)">
+  Ease(Easing, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L231"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Moves along a curve over the amount in seconds. The same as
+<code>Over(amount).Seconds().Ease(curve)</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Ease(Easing curve, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Easing.html">Easing</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>curve</code></dt></td>
+    <td style="width: 99%"><dd><p>One of the named curves.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>The finished arrival, which takes no second <code>Ease</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionMoveToDurationBuilder_Ease_CodeSmile_LunyScript_Easing_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.MoveTo(Pad).Over(2).Ease(Easing.InOutSine));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">curve</code> is not one of the
+named curves, or this builder is a <code>default</code> that no verb produced.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_MotionMoveToDurationBuilder_Hours_" data-uid="CodeSmile.LunyScript.MotionMoveToDurationBuilder.Hours*"></a>
 
   <h3 id="CodeSmile_LunyScript_MotionMoveToDurationBuilder_Hours" data-uid="CodeSmile.LunyScript.MotionMoveToDurationBuilder.Hours">
   Hours()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L207"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L220"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The amount is hours of game time.</p>
@@ -164,7 +239,7 @@ produced.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionMoveToDurationBuilder_Milliseconds" data-uid="CodeSmile.LunyScript.MotionMoveToDurationBuilder.Milliseconds">
   Milliseconds()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L193"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L206"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The amount is milliseconds of game time.</p>
@@ -207,7 +282,7 @@ produced.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionMoveToDurationBuilder_Minutes" data-uid="CodeSmile.LunyScript.MotionMoveToDurationBuilder.Minutes">
   Minutes()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L200"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L213"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The amount is minutes of game time.</p>
@@ -250,10 +325,11 @@ produced.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionMoveToDurationBuilder_Seconds" data-uid="CodeSmile.LunyScript.MotionMoveToDurationBuilder.Seconds">
   Seconds()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L186"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L199"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>The amount is seconds of game time.</p>
+  <div class="markdown level1 summary"><p>The amount is seconds of game time. The same arrival as using the builder as a block
+or giving it <code>Ease</code> directly.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -289,11 +365,75 @@ produced.</p>
 
 
 
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_MotionMoveToDurationBuilder_op_Implicit_" data-uid="CodeSmile.LunyScript.MotionMoveToDurationBuilder.op_Implicit*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionMoveToDurationBuilder_op_Implicit_CodeSmile_LunyScript_MotionMoveToDurationBuilder__CodeSmile_LunyScript_Block" data-uid="CodeSmile.LunyScript.MotionMoveToDurationBuilder.op_Implicit(CodeSmile.LunyScript.MotionMoveToDurationBuilder)~CodeSmile.LunyScript.Block">
+  implicit operator Block(MotionMoveToDurationBuilder)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L243"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Finishes a timed arrival in seconds, the default unit, with no <code>Ease</code>, which
+travels at constant speed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static implicit operator Block(MotionMoveToDurationBuilder builder)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.MotionMoveToDurationBuilder.html">MotionMoveToDurationBuilder</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>builder</code></dt></td>
+    <td style="width: 99%"><dd><p>The builder to finish.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>The finished block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionMoveToDurationBuilder_op_Implicit_CodeSmile_LunyScript_MotionMoveToDurationBuilder__CodeSmile_LunyScript_Block_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Motion.MoveTo(Pad).Over(2));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">builder</code> is a <code>default</code>
+that no verb produced.</p>
+</dd>
+  </dl>
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L165" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionBuilders.cs/#L177" class="edit-link">Edit this page</a>
         </div>
 
 

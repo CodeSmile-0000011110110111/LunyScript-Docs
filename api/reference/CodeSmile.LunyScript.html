@@ -163,7 +163,7 @@ each authored operation to it, and reports a refused one once.</p>
       <dd><p>Owns every in-flight Cloud Save request for one <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html">ScriptRunner</a>, keyed by the save
 key. Signs in when the first request arrives, queues requests made before the service is
 ready, coalesces duplicates, polls each operation once per frame, and classifies every failure
-once into an <a class="xref" href="CodeSmile.LunyScript.Platform.OperationFailure.html">OperationFailure</a>. No script and no block ever sees a <code>Task</code>
+once into an <a class="xref" href="CodeSmile.LunyScript.OperationFailure.html">OperationFailure</a>. No script and no block ever sees a <code>Task</code>
 or an exception type; AGENTS.md section 12.</p>
 </dd>
     </dl>
@@ -703,6 +703,12 @@ way <code>Transform</code> hides <code>UnityEngine.Transform</code>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.AudioListenerTargetDurationBuilder.html">AudioListenerTargetDurationBuilder</a></dt>
+      <dd><p>What <code>Audio.Listener.SetTarget(target).Over(amount)</code> returns: a transition whose
+amount is seconds unless a unit call names another unit.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.AudioMixerHandle.html">AudioMixerHandle</a></dt>
       <dd><p>What <code>Audio.Mixer(mixer)</code> returns: named exposed-parameter writes.</p>
 </dd>
@@ -731,6 +737,12 @@ further placement clause.</p>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.AudioVoiceVolumeBuilder.html">AudioVoiceVolumeBuilder</a></dt>
       <dd><p>What <code>voice.SetVolume(value)</code> returns.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.AudioVoiceVolumeDurationBuilder.html">AudioVoiceVolumeDurationBuilder</a></dt>
+      <dd><p>What <code>voice.SetVolume(value).Over(amount)</code> returns: a fade whose amount is seconds
+unless a unit call names another unit.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -776,6 +788,12 @@ tracked objects.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ChooseBiasedHoldAmountBuilder.html">ChooseBiasedHoldAmountBuilder</a></dt>
+      <dd><p>A <code>Choose</code> chain that has Bias and a Hold amount: the amount is seconds unless a unit call
+names another unit. Used as a block it starts the selector.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.ChooseBuilder.html">ChooseBuilder</a></dt>
       <dd><p>What <code>Choose(subject)</code> returns. Its one call, <a class="xref" href="CodeSmile.LunyScript.ChooseBuilder.html#CodeSmile_LunyScript_ChooseBuilder_Highest_CodeSmile_LunyScript_UtilityOption___">Highest(params UtilityOption[])</a>, names the scored
 options.</p>
@@ -795,6 +813,13 @@ options.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.ChooseHighestBuilder.html">ChooseHighestBuilder</a></dt>
       <dd><p>A <code>Choose(subject).Highest(...)</code> chain. Optional <a class="xref" href="CodeSmile.LunyScript.ChooseHighestBuilder.html#CodeSmile_LunyScript_ChooseHighestBuilder_Bias_System_Double_System_String_System_Int32_">Bias(double, string, int)</a> and
 <a class="xref" href="CodeSmile.LunyScript.ChooseHighestBuilder.html#CodeSmile_LunyScript_ChooseHighestBuilder_Hold_CodeSmile_LunyScript_Elapsed_System_String_System_Int32_">Hold(Elapsed, string, int)</a> follow; used as a block it starts the selector.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ChooseHoldAmountBuilder.html">ChooseHoldAmountBuilder</a></dt>
+      <dd><p>A <code>Choose(subject).Highest(...).Hold(amount)</code> chain: the Hold amount is seconds unless a
+unit call names another unit. Optional <a class="xref" href="CodeSmile.LunyScript.ChooseHoldAmountBuilder.html#CodeSmile_LunyScript_ChooseHoldAmountBuilder_Bias_System_Double_System_String_System_Int32_">Bias(double, string, int)</a> follows; used as a block it starts
+the selector.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1129,7 +1154,8 @@ unless <a class="xref" href="CodeSmile.LunyScript.MotionForceBuilder.html#CodeSm
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.MotionMoveToDurationBuilder.html">MotionMoveToDurationBuilder</a></dt>
-      <dd><p>A MoveTo whose duration amount has been named. Incomplete until an elapsed unit.</p>
+      <dd><p>A MoveTo whose duration amount has been named. Seconds unless a unit call names another
+unit: used as a block, or given <a class="xref" href="CodeSmile.LunyScript.MotionMoveToDurationBuilder.html#CodeSmile_LunyScript_MotionMoveToDurationBuilder_Ease_CodeSmile_LunyScript_Easing_System_String_System_Int32_">Ease(Easing, string, int)</a>, the amount is seconds.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1146,8 +1172,8 @@ unless <a class="xref" href="CodeSmile.LunyScript.MotionForceBuilder.html#CodeSm
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.MotionRotateToDurationBuilder.html">MotionRotateToDurationBuilder</a></dt>
-      <dd><p>A RotateTo whose duration amount has been named. Incomplete until an elapsed
-unit.</p>
+      <dd><p>A RotateTo whose duration amount has been named. Seconds unless a unit call names
+another unit: used as a block, or given <a class="xref" href="CodeSmile.LunyScript.MotionRotateToDurationBuilder.html#CodeSmile_LunyScript_MotionRotateToDurationBuilder_Ease_CodeSmile_LunyScript_Easing_System_String_System_Int32_">Ease(Easing, string, int)</a>, the amount is seconds.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1572,17 +1598,20 @@ cancels them when that routine activation ends or is cancelled.</p>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.RunCadenceBuilder.html">RunCadenceBuilder</a></dt>
       <dd><p>A cadence that has named its unit. <a class="xref" href="CodeSmile.LunyScript.RunCadenceBuilder.html#CodeSmile_LunyScript_RunCadenceBuilder_Start_System_String_System_Int32_">Start(string, int)</a> runs it indefinitely;
-<a class="xref" href="CodeSmile.LunyScript.RunCadenceBuilder.html#CodeSmile_LunyScript_RunCadenceBuilder_For_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">For(NumberValueBlock, string, int)</a> adds a duration or count bound.</p>
+<a class="xref" href="CodeSmile.LunyScript.RunCadenceBuilder.html#CodeSmile_LunyScript_RunCadenceBuilder_For_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">For(NumberValueBlock, string, int)</a> adds a count bound and <a class="xref" href="CodeSmile.LunyScript.RunCadenceBuilder.html#CodeSmile_LunyScript_RunCadenceBuilder_Over_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">Over(NumberValueBlock, string, int)</a> a duration bound.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.RunEveryAmountBuilder.html">RunEveryAmountBuilder</a></dt>
-      <dd><p>A <code>Run(body).Every(amount)</code> chain. Incomplete until a unit.</p>
+      <dd><p>A <code>Run(body).Every(amount)</code> chain: a cadence in seconds unless a unit call names another
+unit. <a class="xref" href="CodeSmile.LunyScript.RunEveryAmountBuilder.html#CodeSmile_LunyScript_RunEveryAmountBuilder_Start_System_String_System_Int32_">Start(string, int)</a> runs it indefinitely; <a class="xref" href="CodeSmile.LunyScript.RunEveryAmountBuilder.html#CodeSmile_LunyScript_RunEveryAmountBuilder_For_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">For(NumberValueBlock, string, int)</a> and <a class="xref" href="CodeSmile.LunyScript.RunEveryAmountBuilder.html#CodeSmile_LunyScript_RunEveryAmountBuilder_Over_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">Over(NumberValueBlock, string, int)</a> add
+a count or a duration bound.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.RunForAmountBuilder.html">RunForAmountBuilder</a></dt>
-      <dd><p>A <code>Run(body).For(amount)</code> chain. Incomplete until a unit or <code>Times</code>.</p>
+      <dd><p>A <code>Run(body).For(count)</code> chain: a repetition count. The count is the finished bound as it
+is; <a class="xref" href="CodeSmile.LunyScript.RunForAmountBuilder.html#CodeSmile_LunyScript_RunForAmountBuilder_Times">Times()</a> states it.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1592,8 +1621,14 @@ cancels them when that routine activation ends or is cancelled.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.RunOverAmountBuilder.html">RunOverAmountBuilder</a></dt>
+      <dd><p>A <code>Run(body).Over(amount)</code> chain: an elapsed-time bound, in seconds unless a unit call
+names another unit.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.RunWorkBuilder.html">RunWorkBuilder</a></dt>
-      <dd><p>What <code>Run(body)</code> returns. Qualifiers name a duration, a cadence, or a repetition count;
+      <dd><p>What <code>Run(body)</code> returns. Qualifiers name a repetition count, a duration or a cadence;
 <a class="xref" href="CodeSmile.LunyScript.RunWorkBuilder.html#CodeSmile_LunyScript_RunWorkBuilder_Start_System_String_System_Int32_">Start(string, int)</a> starts one activation and <a class="xref" href="CodeSmile.LunyScript.RunWorkBuilder.html#CodeSmile_LunyScript_RunWorkBuilder_Stop_System_String_System_Int32_">Stop(string, int)</a> interrupts it.</p>
 </dd>
     </dl>
@@ -1826,6 +1861,13 @@ the network tick needs. Built by <a class="xref" href="CodeSmile.LunyScript.Scri
       <dt><a class="xref" href="CodeSmile.LunyScript.TransformToBuilder.html">TransformToBuilder</a></dt>
       <dd><p>What <code>MoveTo</code>, <code>RotateTo</code> and <code>ScaleTo</code> return: the destination, waiting for
 the duration.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.TransformToDurationBuilder.html">TransformToDurationBuilder</a></dt>
+      <dd><p>What <code>MoveTo(...).Over(amount)</code>, <code>RotateTo(...).Over(amount)</code> and
+<code>ScaleTo(...).Over(amount)</code> return: a timed interpolation whose amount is seconds unless a
+unit call names another unit.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2190,8 +2232,8 @@ the application as a whole, rather than about one object.</p>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.Easing.html">Easing</a></dt>
       <dd><p>The curve an eased timed move follows: how far along its path the object is at each point of
-the duration. Written in <code>Ease(...)</code> after <code>Over(amount).Seconds()</code> on
-<code>Motion.MoveTo</code> and <code>Motion.RotateTo</code>.</p>
+the duration. Written in <code>Ease(...)</code> after <code>Over(amount)</code>, or after its unit call such
+as <code>Over(amount).Seconds()</code>, on <code>Motion.MoveTo</code> and <code>Motion.RotateTo</code>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2277,6 +2319,12 @@ NumberMutateBlock applies to its slot.</p>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.NumberState.html">NumberState</a></dt>
       <dd><p>Which question a <span class="xref">CodeSmile.LunyScript.NumberStateBlock</span> asks about one number.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.OperationFailure.html">OperationFailure</a></dt>
+      <dd><p>Every failure an operation can produce, classified once by the gateway so that no script and
+no block ever sees an exception type. See AGENTS.md section 12, rule 51.</p>
 </dd>
     </dl>
     <dl class="jumplist">

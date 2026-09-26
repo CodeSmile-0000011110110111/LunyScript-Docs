@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct RunCadenceBuilder | LunyScript API Reference ">
       
-      <meta name="description" content="A cadence that has named its unit.  runs it indefinitely;  adds a duration or count bound.">
+      <meta name="description" content="A cadence that has named its unit.  runs it indefinitely;  adds a count bound and  a duration bound.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_RunCadenceBuilder" data-uid="CodeSmile.LunyScript.RunCadenceBuilder" class="text-break">
-Struct RunCadenceBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RunBuilder.cs/#L264"><i class="bi bi-code-slash"></i></a>
+Struct RunCadenceBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RunBuilder.cs/#L449"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -86,7 +86,7 @@ Struct RunCadenceBuilder  <a class="header-action link-secondary" title="View so
   </div>
 
   <div class="markdown summary"><p>A cadence that has named its unit. <a class="xref" href="CodeSmile.LunyScript.RunCadenceBuilder.html#CodeSmile_LunyScript_RunCadenceBuilder_Start_System_String_System_Int32_">Start(string, int)</a> runs it indefinitely;
-<a class="xref" href="CodeSmile.LunyScript.RunCadenceBuilder.html#CodeSmile_LunyScript_RunCadenceBuilder_For_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">For(NumberValueBlock, string, int)</a> adds a duration or count bound.</p>
+<a class="xref" href="CodeSmile.LunyScript.RunCadenceBuilder.html#CodeSmile_LunyScript_RunCadenceBuilder_For_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">For(NumberValueBlock, string, int)</a> adds a count bound and <a class="xref" href="CodeSmile.LunyScript.RunCadenceBuilder.html#CodeSmile_LunyScript_RunCadenceBuilder_Over_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">Over(NumberValueBlock, string, int)</a> a duration bound.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -111,7 +111,7 @@ Struct RunCadenceBuilder  <a class="header-action link-secondary" title="View so
   <h2 id="CodeSmile_LunyScript_RunCadenceBuilder_examples">Examples</h2>
   <pre><code class="lang-csharp">var tick = Run(Hits.Add(1.0)).Every(3).Seconds();
 On.Ready(tick.Start());
-var burst = Run(Hits.Add(1.0)).Every(3).Seconds().For(5).Times();</code></pre>
+var burst = Run(Hits.Add(1.0)).Every(3).Seconds().For(5);</code></pre>
 
 
 
@@ -124,16 +124,16 @@ var burst = Run(Hits.Add(1.0)).Every(3).Seconds().For(5).Times();</code></pre>
 
   <h3 id="CodeSmile_LunyScript_RunCadenceBuilder_For_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.RunCadenceBuilder.For(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   For(NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RunBuilder.cs/#L295"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RunBuilder.cs/#L481"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Bounds this cadence by elapsed time or by a repetition count. Incomplete until
-a unit or <code>Times</code>.</p>
+  <div class="markdown level1 summary"><p>Bounds this cadence by a repetition count. The count is the finished bound as it
+is; <code>Times()</code> states it.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public RunForAmountBuilder For(NumberValueBlock amount, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public RunForAmountBuilder For(NumberValueBlock count, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -146,9 +146,8 @@ a unit or <code>Times</code>.</p>
   <dl class="parameters">
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>amount</code></dt></td>
-    <td style="width: 99%"><dd><p>How much elapsed time, or how many repetitions when <code>Times</code>
-follows.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>count</code></dt></td>
+    <td style="width: 99%"><dd><p>How many activations.</p>
 </dd></td>
   </tr>
   <tr>
@@ -169,7 +168,7 @@ follows.</p>
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.RunForAmountBuilder.html">RunForAmountBuilder</a></dt>
-    <dd><p>A builder that takes a unit or <code>Times</code>.</p>
+    <dd><p>A builder that takes <code>Start</code>, <code>Stop</code> or <code>Times</code>.</p>
 </dd>
   </dl>
 
@@ -179,10 +178,89 @@ follows.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_RunCadenceBuilder_For_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">var burst = Run(Hits.Add(1.0)).Every(3).Seconds().For(5).Times();</code></pre>
+  <pre><code class="lang-csharp">var burst = Run(Hits.Add(1.0)).Every(3).Seconds().For(5);</code></pre>
 
 
 
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This chain already has <code>Start</code> or
+<code>Stop</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_RunCadenceBuilder_Over_" data-uid="CodeSmile.LunyScript.RunCadenceBuilder.Over*"></a>
+
+  <h3 id="CodeSmile_LunyScript_RunCadenceBuilder_Over_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.RunCadenceBuilder.Over(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Over(NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RunBuilder.cs/#L503"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Bounds this cadence by elapsed game time. Seconds unless a unit call
+follows.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public RunOverAmountBuilder Over(NumberValueBlock amount, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>amount</code></dt></td>
+    <td style="width: 99%"><dd><p>How much elapsed time, in seconds unless a unit call follows.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.RunOverAmountBuilder.html">RunOverAmountBuilder</a></dt>
+    <dd><p>A builder that takes <code>Start</code>, <code>Stop</code>, or a unit call.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_RunCadenceBuilder_Over_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var drizzle = Run(Hits.Add(1.0)).Every(500).Milliseconds().Over(10);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This chain already has <code>Start</code> or
+<code>Stop</code>.</p>
+</dd>
+  </dl>
 
 
 
@@ -190,7 +268,7 @@ follows.</p>
 
   <h3 id="CodeSmile_LunyScript_RunCadenceBuilder_Start_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.RunCadenceBuilder.Start(System.String,System.Int32)">
   Start(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RunBuilder.cs/#L317"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RunBuilder.cs/#L521"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The block that starts or restarts one activation of this cadence.</p>
@@ -248,7 +326,7 @@ follows.</p>
 
   <h3 id="CodeSmile_LunyScript_RunCadenceBuilder_Stop_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.RunCadenceBuilder.Stop(System.String,System.Int32)">
   Stop(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RunBuilder.cs/#L327"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RunBuilder.cs/#L531"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The block that stops an activation of this cadence.</p>
@@ -306,7 +384,7 @@ follows.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RunBuilder.cs/#L264" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RunBuilder.cs/#L449" class="edit-link">Edit this page</a>
         </div>
 
 

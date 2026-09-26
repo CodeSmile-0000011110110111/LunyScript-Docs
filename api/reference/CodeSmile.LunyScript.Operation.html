@@ -215,10 +215,10 @@ assigned.</p>
 
   <h3 id="CodeSmile_LunyScript_Operation_Failure" data-uid="CodeSmile.LunyScript.Operation.Failure">
   Failure
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Operations/Operation.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Operations/Operation.cs/#L113"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>The classified <a class="xref" href="CodeSmile.LunyScript.Platform.OperationFailure.html">OperationFailure</a> of the current attempt, as a
+  <div class="markdown level1 summary"><p>The classified <a class="xref" href="CodeSmile.LunyScript.OperationFailure.html">OperationFailure</a> of the current attempt, as a
 number. <code>None</code> while pending or after success or cancellation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -442,7 +442,7 @@ assigned.</p>
 
   <h3 id="CodeSmile_LunyScript_Operation_Cancel_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Operation.Cancel(System.String,System.Int32)">
   Cancel(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Operations/Operation.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Operations/Operation.cs/#L130"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Cancels the current pending attempt. A terminal attempt is left as it is.
@@ -504,11 +504,86 @@ assigned.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_Operation_FailedAs_" data-uid="CodeSmile.LunyScript.Operation.FailedAs*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Operation_FailedAs_CodeSmile_LunyScript_OperationFailure_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Operation.FailedAs(CodeSmile.LunyScript.OperationFailure,System.String,System.Int32)">
+  FailedAs(OperationFailure, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Operations/Operation.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True when the current attempt ended with a failure of this classification. False
+while pending, after success and after a cancellation. <a class="xref" href="CodeSmile.LunyScript.Operation.html#CodeSmile_LunyScript_Operation_Failed">Failed</a> is true for a
+failure of any classification.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock FailedAs(OperationFailure failure, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.OperationFailure.html">OperationFailure</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>failure</code></dt></td>
+    <td style="width: 99%"><dd><p>The classification to test for. <code>OperationFailure.None</code> is not a
+failure and is refused.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd><p>A condition to pass to <code>If</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Operation_FailedAs_CodeSmile_LunyScript_OperationFailure_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(If(Load.FailedAs(OperationFailure.NotFound)).Then(Missing.Set(true)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The handle is one <code>Build()</code> never assigned, or
+<code class="paramref">failure</code> is <code>OperationFailure.None</code> or not one of its named
+values.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_Operation_Retry_" data-uid="CodeSmile.LunyScript.Operation.Retry*"></a>
 
   <h3 id="CodeSmile_LunyScript_Operation_Retry_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Operation.Retry(System.String,System.Int32)">
   Retry(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Operations/Operation.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Operations/Operation.cs/#L146"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts a fresh attempt after a classified failure or a cancellation. The new
@@ -574,7 +649,7 @@ assigned, or the current attempt is not a failure or a cancellation.</p>
 
   <h3 id="CodeSmile_LunyScript_Operation_ToString" data-uid="CodeSmile.LunyScript.Operation.ToString">
   ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Operations/Operation.cs/#L134"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Operations/Operation.cs/#L156"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The name, for a diagnostic.</p>
