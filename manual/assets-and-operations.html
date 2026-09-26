@@ -181,6 +181,22 @@ outcomes. A classified failure that no watch observes is logged once per attempt
 <code class="language-plaintext highlighter-rouge">RateLimited</code>, <code class="language-plaintext highlighter-rouge">Denied</code>, <code class="language-plaintext highlighter-rouge">NotFound</code>, <code class="language-plaintext highlighter-rouge">Timeout</code>, <code class="language-plaintext highlighter-rouge">Unknown</code>. It reads <code class="language-plaintext highlighter-rouge">None</code> while the attempt is
 pending, and after a success and after a cancellation.</p>
 
+<h2 id="telling-one-failure-from-another">Telling one failure from another</h2>
+
+<p><code class="language-plaintext highlighter-rouge">handle.FailedAs(reason)</code> is true when the current attempt ended as a failure of that one
+classification. It is false while the attempt is pending, after a success, after a cancellation, and
+after a failure of any other classification:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="nf">FailedAs</span><span class="p">(</span><span class="n">OperationFailure</span><span class="p">.</span><span class="n">NotFound</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Missing</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="nf">FailedAs</span><span class="p">(</span><span class="n">OperationFailure</span><span class="p">.</span><span class="n">Timeout</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="nf">Retry</span><span class="p">()));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">OperationFailure</code> is in the same namespace as <code class="language-plaintext highlighter-rouge">Script</code>, so a script names it without a <code class="language-plaintext highlighter-rouge">using</code>
+line. <code class="language-plaintext highlighter-rouge">Failed</code> stays true for a failure of any classification. <code class="language-plaintext highlighter-rouge">FailedAs(OperationFailure.None)</code> is
+refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs, because a failed attempt always carries a classification, and so is a
+number cast to <code class="language-plaintext highlighter-rouge">OperationFailure</code> that names none of its values.</p>
+
 <h2 id="cancelling-and-retrying">Cancelling and retrying</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Loading</span><span class="p">.</span><span class="nf">Cancel</span><span class="p">();</span>

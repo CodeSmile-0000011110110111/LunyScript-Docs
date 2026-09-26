@@ -126,7 +126,7 @@ either order.</p>
       <td>A challenger must exceed the current winner by this margin before it takes over.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">.Hold(duration)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.Hold(amount)</code></td>
       <td>The current winner is kept for at least this long, whatever the scores do.</td>
     </tr>
   </tbody>
@@ -145,17 +145,21 @@ either order.</p>
 <span class="c1">// The winner is kept for at least one second, whatever the scores do.</span>
 <span class="nf">Choose</span><span class="p">(</span><span class="s">"needs"</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span>
     <span class="nf">Option</span><span class="p">(</span><span class="n">WorkScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">work</span><span class="p">),</span>
-    <span class="nf">Option</span><span class="p">(</span><span class="n">RestScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">rest</span><span class="p">)).</span><span class="nf">Hold</span><span class="p">(</span><span class="nf">Seconds</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+    <span class="nf">Option</span><span class="p">(</span><span class="n">RestScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">rest</span><span class="p">)).</span><span class="nf">Hold</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
 
 <span class="c1">// Both: a one-second minimum, then a 0.1 margin to take over.</span>
 <span class="nf">Choose</span><span class="p">(</span><span class="s">"needs"</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span>
     <span class="nf">Option</span><span class="p">(</span><span class="n">WorkScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">work</span><span class="p">),</span>
-    <span class="nf">Option</span><span class="p">(</span><span class="n">RestScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">rest</span><span class="p">)).</span><span class="nf">Bias</span><span class="p">(</span><span class="m">0.1</span><span class="p">).</span><span class="nf">Hold</span><span class="p">(</span><span class="nf">Seconds</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+    <span class="nf">Option</span><span class="p">(</span><span class="n">RestScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">rest</span><span class="p">)).</span><span class="nf">Bias</span><span class="p">(</span><span class="m">0.1</span><span class="p">).</span><span class="nf">Hold</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">Bias</code> takes a finite margin of at least zero, in the same units as the scores; leaving it out is the
-same as zero. <code class="language-plaintext highlighter-rouge">Hold</code> takes a duration built by <code class="language-plaintext highlighter-rouge">Seconds</code>, <code class="language-plaintext highlighter-rouge">Milliseconds</code>, <code class="language-plaintext highlighter-rouge">Minutes</code> or <code class="language-plaintext highlighter-rouge">Hours</code>, which
-every script carries; leaving it out is the same as zero. The hold runs out first, and the bias then
+same as zero. <code class="language-plaintext highlighter-rouge">Hold</code> takes an amount in seconds, and a unit call may follow it: <code class="language-plaintext highlighter-rouge">Hold(1)</code> and
+<code class="language-plaintext highlighter-rouge">Hold(1).Seconds()</code> are the same hold, and <code class="language-plaintext highlighter-rouge">Hold(500).Milliseconds()</code>, <code class="language-plaintext highlighter-rouge">Hold(2).Minutes()</code> and
+<code class="language-plaintext highlighter-rouge">Hold(1).Hours()</code> name the other units. <code class="language-plaintext highlighter-rouge">Hold</code> also takes a duration value built by <code class="language-plaintext highlighter-rouge">Seconds</code>,
+<code class="language-plaintext highlighter-rouge">Milliseconds</code>, <code class="language-plaintext highlighter-rouge">Minutes</code> or <code class="language-plaintext highlighter-rouge">Hours</code>, which every script carries, so <code class="language-plaintext highlighter-rouge">Hold(Seconds(1))</code> is the same
+hold again. Leaving <code class="language-plaintext highlighter-rouge">Hold</code> out is the same as zero. The converted hold must be finite and at least
+zero; anything else is refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs. The hold runs out first, and the bias then
 governs the handover.</p>
 
 <h2 id="call-list">Call list</h2>
@@ -164,7 +168,12 @@ governs the handover.</p>
 working options are under Options, above.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Option</span><span class="p">(</span><span class="n">score</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span>
+<span class="nf">Choose</span><span class="p">(</span><span class="n">subject</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="p">..)</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">Bias</span><span class="p">(</span><span class="n">margin</span><span class="p">)</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">Hold</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="p">[</span> <span class="p">.</span><span class="nf">Seconds</span><span class="p">()</span> <span class="p">]</span> <span class="p">]</span>
 </code></pre></div></div>
+
+<p>Bias and Hold may be written in either order. In place of <code class="language-plaintext highlighter-rouge">.Seconds()</code>, <code class="language-plaintext highlighter-rouge">.Milliseconds()</code>,
+<code class="language-plaintext highlighter-rouge">.Minutes()</code> or <code class="language-plaintext highlighter-rouge">.Hours()</code> names another unit, and <code class="language-plaintext highlighter-rouge">.Hold(Seconds(amount))</code> takes a duration value.</p>
 
 <h2 id="what-to-read-next">What to read next</h2>
 

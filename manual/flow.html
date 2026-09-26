@@ -66,7 +66,7 @@
     <span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Number</span> <span class="n">Flashes</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Run</span><span class="p">(</span><span class="n">Flashes</span><span class="p">.</span><span class="nf">Increment</span><span class="p">()).</span><span class="nf">Every</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">().</span><span class="nf">Start</span><span class="p">());</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Run</span><span class="p">(</span><span class="n">Flashes</span><span class="p">.</span><span class="nf">Increment</span><span class="p">()).</span><span class="nf">Every</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Start</span><span class="p">());</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -101,29 +101,33 @@ immediately before its children.</p>
       <td>Runs the body every frame until stopped.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Run(body).For(3).Seconds()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Run(body).Over(3)</code></td>
       <td>Runs the body every frame for three seconds.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Run(body).For(5).Times()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Run(body).For(5)</code></td>
       <td>Runs the body on five frames.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Run(body).Every(1).Seconds()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Run(body).Every(1)</code></td>
       <td>Runs the body once per second, until stopped.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Run(body).Every(500).Milliseconds().For(5).Times()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Run(body).Every(500).Milliseconds().For(5)</code></td>
       <td>Runs the body five times, half a second apart.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Run(body).Every(1).Over(10)</code></td>
+      <td>Runs the body once per second for ten seconds.</td>
     </tr>
   </tbody>
 </table>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="kt">var</span> <span class="n">pulse</span>      <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Pulse</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()).</span><span class="nf">For</span><span class="p">(</span><span class="m">3</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>
-    <span class="kt">var</span> <span class="n">cadence</span>    <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Cadence</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()).</span><span class="nf">Every</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>
-    <span class="kt">var</span> <span class="n">burst</span>      <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Burst</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()).</span><span class="nf">Every</span><span class="p">(</span><span class="m">500</span><span class="p">).</span><span class="nf">Milliseconds</span><span class="p">().</span><span class="nf">For</span><span class="p">(</span><span class="m">5</span><span class="p">).</span><span class="nf">Times</span><span class="p">();</span>
+    <span class="kt">var</span> <span class="n">pulse</span>      <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Pulse</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()).</span><span class="nf">Over</span><span class="p">(</span><span class="m">3</span><span class="p">);</span>
+    <span class="kt">var</span> <span class="n">cadence</span>    <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Cadence</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()).</span><span class="nf">Every</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+    <span class="kt">var</span> <span class="n">burst</span>      <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Burst</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()).</span><span class="nf">Every</span><span class="p">(</span><span class="m">500</span><span class="p">).</span><span class="nf">Milliseconds</span><span class="p">().</span><span class="nf">For</span><span class="p">(</span><span class="m">5</span><span class="p">);</span>
     <span class="kt">var</span> <span class="n">continuous</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Continuous</span><span class="p">.</span><span class="nf">Inc</span><span class="p">());</span>
 
     <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">pulse</span><span class="p">.</span><span class="nf">Start</span><span class="p">(),</span> <span class="n">cadence</span><span class="p">.</span><span class="nf">Start</span><span class="p">(),</span>
@@ -133,9 +137,17 @@ immediately before its children.</p>
 </code></pre></div></div>
 
 <p>Declaring the work is separate from starting it, so you can hold the declaration in a local and start
-it from whichever event you like. <code class="language-plaintext highlighter-rouge">Start()</code> and <code class="language-plaintext highlighter-rouge">Stop()</code> are available on the bare declaration, on a
-cadence, and on the finished handle. The unit is a trailing call — <code class="language-plaintext highlighter-rouge">Seconds()</code>, <code class="language-plaintext highlighter-rouge">Milliseconds()</code>,
-<code class="language-plaintext highlighter-rouge">Minutes()</code>, <code class="language-plaintext highlighter-rouge">Hours()</code> — and the chain is incomplete until one of them, or <code class="language-plaintext highlighter-rouge">Times()</code>, follows.</p>
+it from whichever event you like. <code class="language-plaintext highlighter-rouge">Start()</code> and <code class="language-plaintext highlighter-rouge">Stop()</code> are available at every point of the chain.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Over</code> and <code class="language-plaintext highlighter-rouge">Every</code> measure game time, in seconds unless a unit call follows the amount: <code class="language-plaintext highlighter-rouge">Seconds()</code>,
+<code class="language-plaintext highlighter-rouge">Milliseconds()</code>, <code class="language-plaintext highlighter-rouge">Minutes()</code> or <code class="language-plaintext highlighter-rouge">Hours()</code>. <code class="language-plaintext highlighter-rouge">For</code> counts activations, and <code class="language-plaintext highlighter-rouge">Times()</code> may follow it to
+say so. <code class="language-plaintext highlighter-rouge">Over(3)</code> and <code class="language-plaintext highlighter-rouge">Over(3).Seconds()</code> are the same bound, and so are <code class="language-plaintext highlighter-rouge">For(5)</code> and
+<code class="language-plaintext highlighter-rouge">For(5).Times()</code>. A count takes no time unit and a duration takes no <code class="language-plaintext highlighter-rouge">Times()</code>, so
+<code class="language-plaintext highlighter-rouge">Run(body).For(3).Seconds()</code> does not compile: three seconds is <code class="language-plaintext highlighter-rouge">Over(3)</code>.</p>
+
+<p>The same rule, an amount followed by at most one unit call with seconds as the default, is how every
+duration is written: <code class="language-plaintext highlighter-rouge">Wait(2)</code>, <code class="language-plaintext highlighter-rouge">Transform.MoveTo(...).Over(2)</code>, <code class="language-plaintext highlighter-rouge">Motion.MoveTo(...).Over(2)</code>, a
+volume fade’s <code class="language-plaintext highlighter-rouge">Over(0.4)</code> and a selector’s <code class="language-plaintext highlighter-rouge">Hold(1)</code>.</p>
 
 <h2 id="routines-steps-in-order-over-several-frames">Routines: steps in order, over several frames</h2>
 
@@ -305,7 +317,7 @@ the same routine runs, so the second routine above can read its own outcome.</p>
 audio voice, a UI element and an operation. Every <code class="language-plaintext highlighter-rouge">Start()</code> and <code class="language-plaintext highlighter-rouge">Stop()</code> of one <code class="language-plaintext highlighter-rouge">Run</code> names the one
 work, which is also how one routine is restarted from two events:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">go</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">tour</span><span class="p">).</span><span class="nf">For</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Times</span><span class="p">();</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">go</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">tour</span><span class="p">).</span><span class="nf">For</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">go</span><span class="p">.</span><span class="nf">Start</span><span class="p">());</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Again"</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="nf">Start</span><span class="p">());</span>    <span class="c1">// restarts the one routine</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Halt"</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="nf">Stop</span><span class="p">());</span>      <span class="c1">// stops the work both starts named</span>

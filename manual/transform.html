@@ -101,12 +101,14 @@ takes no frame, because scale is always local.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Transform</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
 <span class="n">Transform</span><span class="p">.</span><span class="nf">RotateTo</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">180</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">1.5</span><span class="p">);</span>
-<span class="n">Transform</span><span class="p">.</span><span class="nf">ScaleTo</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">0.5</span><span class="p">);</span>
-<span class="n">Transform</span><span class="p">.</span><span class="nf">ScaleTo</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">0.5</span><span class="p">);</span>
+<span class="n">Transform</span><span class="p">.</span><span class="nf">ScaleTo</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">500</span><span class="p">).</span><span class="nf">Milliseconds</span><span class="p">();</span>
+<span class="n">Transform</span><span class="p">.</span><span class="nf">ScaleTo</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">0.5</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">Over(seconds)</code> is required; the chain is incomplete without it. These three interpolate the pose
-over the duration you give and remain transform writes throughout. A destination that changes while
+<p><code class="language-plaintext highlighter-rouge">Over(amount)</code> is required; the chain is incomplete without it. The amount is seconds unless a unit
+call follows: <code class="language-plaintext highlighter-rouge">Over(2)</code> and <code class="language-plaintext highlighter-rouge">Over(2).Seconds()</code> are the same, and <code class="language-plaintext highlighter-rouge">Milliseconds()</code>, <code class="language-plaintext highlighter-rouge">Minutes()</code> and
+<code class="language-plaintext highlighter-rouge">Hours()</code> name the other units. These three interpolate the pose over the duration you give and
+remain transform writes throughout. A destination that changes while
 one is under way takes effect when it ends: the object arrives where that interpolation was headed,
 and its next run starts a new one from there toward the new destination.</p>
 
