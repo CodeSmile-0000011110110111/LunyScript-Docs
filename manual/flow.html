@@ -202,14 +202,39 @@ as many frames as they need.</p>
 
 <p>A wait counts game time from the moment the routine reaches it: a paused game stops it, and
 <code class="language-plaintext highlighter-rouge">Time.SetScale(0.5)</code> makes it take twice as long. <code class="language-plaintext highlighter-rouge">Wait(0)</code> finishes at once. A negative amount, NaN
-or an infinity also finishes at once and writes a warning to the Console. A wait belongs in a routine, a group or a <code class="language-plaintext highlighter-rouge">Run</code> body. Placed directly in an
-event list, as in <code class="language-plaintext highlighter-rouge">On.FrameUpdate(Wait(1))</code>, it stops the object with an error when it runs, because
-an event list runs to its end in one frame and nothing would wait for it.</p>
+or an infinity also finishes at once and writes a warning to the Console.</p>
+
+<h3 id="where-a-wait-goes">Where a wait goes</h3>
+
+<p>A wait belongs in a routine, a group, a <code class="language-plaintext highlighter-rouge">Run</code> body or a <code class="language-plaintext highlighter-rouge">Choose</code> option’s action. Each of them waits for a wait to finish before it
+runs its next step. <code class="language-plaintext highlighter-rouge">Then</code>, <code class="language-plaintext highlighter-rouge">Else</code> and an event list run all of their blocks one after another in the frame they are reached, so nothing
+there waits for a wait:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Blink"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">ShouldBlink</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Light</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="n">Light</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">))));</span>   <span class="c1">// refused</span>
+</code></pre></div></div>
+
+<p>A <code class="language-plaintext highlighter-rouge">Then</code> inside a routine is still one step of that routine, and it runs its whole list in one frame. A wait written inside <code class="language-plaintext highlighter-rouge">Then</code> or
+<code class="language-plaintext highlighter-rouge">Else</code>, or directly in an event list, is refused when the script type is built, before the first object running that script runs any
+block. The error names the line of the wait and says what to do: move the wait out of <code class="language-plaintext highlighter-rouge">Then</code> so that it is a step of the routine. When
+the wait is written directly in the list, your IDE and Unity’s compiler also report it on its line as
+<a href="/LunyScript-Docs/manual/compile-time-checks.html#luny007">LUNY007</a>.</p>
+
+<p>To wait only when the condition holds, set a <code class="language-plaintext highlighter-rouge">Number</code> inside <code class="language-plaintext highlighter-rouge">Then</code> and give it to a wait written after the <code class="language-plaintext highlighter-rouge">If</code>. A wait of zero finishes
+at once, so the routine goes straight on when the condition is false:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Blink"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+    <span class="n">BlinkDelay</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">ShouldBlink</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Light</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="n">BlinkDelay</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1</span><span class="p">)),</span>
+    <span class="nf">Wait</span><span class="p">(</span><span class="n">BlinkDelay</span><span class="p">),</span>
+    <span class="n">Light</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
+</code></pre></div></div>
 
 <h2 id="running-steps-at-the-same-time">Running steps at the same time</h2>
 
-<p><code class="language-plaintext highlighter-rouge">InParallel</code> groups children that run at the same time. It belongs inside a routine; running it
-directly in an event list throws.</p>
+<p><code class="language-plaintext highlighter-rouge">InParallel</code> groups children that run at the same time. It belongs in a routine, another group, a
+<code class="language-plaintext highlighter-rouge">Run</code> body or a <code class="language-plaintext highlighter-rouge">Choose</code> option’s action. Inside <code class="language-plaintext highlighter-rouge">Then</code> or <code class="language-plaintext highlighter-rouge">Else</code>, or directly in an event list, it is
+refused the way a wait is, because nothing there waits for the group to end.</p>
 
 <table>
   <thead>

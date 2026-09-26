@@ -120,6 +120,11 @@ generator that writes your variable properties, so there is nothing to install o
       <td>Warning</td>
       <td>Unity engine API called from inside a script.</td>
     </tr>
+    <tr>
+      <td><a href="#luny007">LUNY007</a></td>
+      <td>Error</td>
+      <td>A <code class="language-plaintext highlighter-rouge">Wait</code> or an <code class="language-plaintext highlighter-rouge">InParallel</code> group written where nothing waits for it.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -236,9 +241,32 @@ getters. Engine types in declarations, such as <code class="language-plaintext h
 attributes are not calls and are not reported. Code in other classes is not checked, so the
 warning is a hint for the common case.</p>
 
+<h2 id="luny007">LUNY007: a wait or a group where nothing waits for it</h2>
+
+<p>A <code class="language-plaintext highlighter-rouge">Wait</code> and an <code class="language-plaintext highlighter-rouge">InParallel</code> group finish over several frames, so they need an owner that waits for them: a routine, a group, a <code class="language-plaintext highlighter-rouge">Run</code>
+body or a <code class="language-plaintext highlighter-rouge">Choose</code> option’s action. <code class="language-plaintext highlighter-rouge">Then</code>, <code class="language-plaintext highlighter-rouge">Else</code> and an <code class="language-plaintext highlighter-rouge">On.*</code> event list run all of their blocks in the frame they are reached, so a
+wait or a group written directly in one of them is reported on its line:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Blink"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">ShouldBlink</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="nf">Wait</span><span class="p">(</span><span class="m">1</span><span class="p">))));</span>   <span class="c1">// Wait (here: Wait(..)) inside Then cannot</span>
+                                       <span class="c1">// wait, Then runs its blocks in the frame it</span>
+                                       <span class="c1">// is reached: move the Wait out of Then so</span>
+                                       <span class="c1">// that it is a step of a routine</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">Wait</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>               <span class="c1">// Wait (here: Wait(..)) in an event list</span>
+                                       <span class="c1">// cannot wait, ...: make it a step of a</span>
+                                       <span class="c1">// routine, as in Routine("name").Run(Wait(..))</span>
+</code></pre></div></div>
+
+<p>Move the wait out of <code class="language-plaintext highlighter-rouge">Then</code> so that it is a step of the routine. To wait only when the condition holds, set a <code class="language-plaintext highlighter-rouge">Number</code> inside <code class="language-plaintext highlighter-rouge">Then</code>
+and give it to a wait after the <code class="language-plaintext highlighter-rouge">If</code>, as <a href="/LunyScript-Docs/manual/flow.html">Flow</a> shows under “Where a wait goes”.</p>
+
+<p>The script type is also refused when it is built, naming the line of the wait, or for a group the line of the <code class="language-plaintext highlighter-rouge">If</code> that holds it. That
+refusal covers a wait stored in a variable or returned from a method and then placed in <code class="language-plaintext highlighter-rouge">Then</code>, which the compile-time check does not
+follow, and a wait in a <code class="language-plaintext highlighter-rouge">When.*</code> body or a <code class="language-plaintext highlighter-rouge">ForEach</code> body.</p>
+
 <h2 id="turning-a-check-off-for-a-few-lines">Turning a check off for a few lines</h2>
 
-<p>LUNY002 to LUNY006 are ordinary compiler diagnostics, so <code class="language-plaintext highlighter-rouge">#pragma warning</code> turns one off around the
+<p>LUNY002 to LUNY007 are ordinary compiler diagnostics, so <code class="language-plaintext highlighter-rouge">#pragma warning</code> turns one off around the
 lines that need it and on again after them:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma warning disable LUNY005
