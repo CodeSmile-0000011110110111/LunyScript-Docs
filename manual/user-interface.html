@@ -277,6 +277,80 @@ view GameObject instead of the host panel: <code class="language-plaintext highl
 data asset LunyScript will not substitute. <code class="language-plaintext highlighter-rouge">Panel.Place(uxml)</code> without <code class="language-plaintext highlighter-rouge">.At</code> or <code class="language-plaintext highlighter-rouge">.In</code> is refused
 while <code class="language-plaintext highlighter-rouge">Build()</code> runs.</p>
 
+<h2 id="labels-at-world-positions">Labels at world positions</h2>
+
+<p>A damage number, a name over a character or a hint over a door stays over a point in the scene
+while the camera and the object move. <code class="language-plaintext highlighter-rouge">Panel.Place(uxml).Over()</code> clones the fragment into a screen
+panel and moves it to the screen point of the object the script runs on, every frame:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">VisualTreeAsset</span><span class="p">&gt;</span> <span class="n">DamageNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">VisualTreeAsset</span><span class="p">&gt;</span> <span class="n">HitMarker</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">var</span> <span class="n">popup</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Place</span><span class="p">(</span><span class="n">DamageNumber</span><span class="p">).</span><span class="nf">Over</span><span class="p">().</span><span class="nf">Offset</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">Rise</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">amount</span> <span class="p">=</span> <span class="n">popup</span><span class="p">.</span><span class="nf">Label</span><span class="p">(</span><span class="s">"amount"</span><span class="p">);</span>
+<span class="n">amount</span><span class="p">.</span><span class="nf">BindText</span><span class="p">(</span><span class="n">Damage</span><span class="p">);</span>
+
+<span class="kt">var</span> <span class="n">marker</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Place</span><span class="p">(</span><span class="n">HitMarker</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="n">LastHit</span><span class="p">);</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Call</th>
+      <th>What the clone is kept over</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.Over()</code></td>
+      <td>The object this script runs on.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.At(position)</code></td>
+      <td>A world position, read every frame, so a Vec3 variable moves it.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.Offset(x, y, z)</code></td>
+      <td>Optional, once: world units added to the point, read every frame.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The panel that receives the clone is the object’s own <code class="language-plaintext highlighter-rouge">PanelRenderer</code>, or the one <code class="language-plaintext highlighter-rouge">.In(panel)</code> names
+before the anchor. Give the object a <code class="language-plaintext highlighter-rouge">PanelRenderer</code> that uses the same screen <code class="language-plaintext highlighter-rouge">PanelSettings</code> as the
+HUD: every screen panel sharing one <code class="language-plaintext highlighter-rouge">PanelSettings</code> is drawn as one panel. The handle is the clone’s
+name scope, as it is for a region, and it is not a block.</p>
+
+<p>LunyScript writes the clone’s position and visibility and nothing else. The clone’s top-left corner
+sits on the projected point, so align the content in the fragment’s USS, for example
+<code class="language-plaintext highlighter-rouge">translate: -50% -100%</code> to centre a label above the point. A number that climbs is an <code class="language-plaintext highlighter-rouge">Offset</code> whose
+Number the script raises:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">climb</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Rise</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)).</span><span class="nf">Over</span><span class="p">(</span><span class="m">0.7</span><span class="p">);</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Hit</span><span class="p">,</span> <span class="n">Rise</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1.3</span><span class="p">),</span> <span class="n">climb</span><span class="p">.</span><span class="nf">Start</span><span class="p">(),</span> <span class="nf">Routine</span><span class="p">(</span><span class="s">"Show"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+    <span class="n">amount</span><span class="p">.</span><span class="nf">SetVisible</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">0.7</span><span class="p">),</span> <span class="n">amount</span><span class="p">.</span><span class="nf">SetVisible</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p>What each placement does, from spawn to despawn:</p>
+
+<ul>
+  <li><strong>Initial state.</strong> The clone is made when the object spawns and its panel has loaded, and it stays
+hidden until its first projection, so it never shows at the panel’s corner.</li>
+  <li><strong>Targeting.</strong> The point is projected through the camera on the panel’s GameObject, or through
+<code class="language-plaintext highlighter-rouge">Camera.main</code> when that GameObject has no camera.</li>
+  <li><strong>Ownership.</strong> The clone belongs to the object that placed it; two objects running one script
+each own their own clone.</li>
+  <li><strong>Lifetime.</strong> The clone moves once per frame, after every script’s <code class="language-plaintext highlighter-rouge">On.LateUpdate</code>. It is hidden
+while its object is disabled, it is made again when its panel rebuilds its tree, and it leaves the
+panel when its object despawns. It keeps following while its script is paused.</li>
+  <li><strong>Failure.</strong> A point behind the camera or outside its view hides the label and is not reported.
+No camera, or a position that is not a finite number, hides the label and is reported once. A
+panel whose <code class="language-plaintext highlighter-rouge">PanelSettings</code> render it in world space receives no clone, which is reported once.</li>
+</ul>
+
+<p>One placement is one label. A second hit while the number shows rewrites it; several numbers at
+once need several placements.</p>
+
 <h2 id="opening-and-closing-a-menu">Opening and closing a menu</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">PauseMenu</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
@@ -297,6 +371,8 @@ nothing.</p>
 
 <p>Code-only control creation (<code class="language-plaintext highlighter-rouge">Panel.Create</code>), Unity’s runtime DataBinding bridge, <code class="language-plaintext highlighter-rouge">AssignPlayer</code>,
 <code class="language-plaintext highlighter-rouge">Destroy</code>, <code class="language-plaintext highlighter-rouge">Slider</code>, class-list writes, <code class="language-plaintext highlighter-rouge">Focus</code> and <code class="language-plaintext highlighter-rouge">SetShared</code> are planned and not implemented.
+For labels at world positions, <code class="language-plaintext highlighter-rouge">Over(target)</code> for another object and a new label for each hit from a
+fixed number of clones are planned; world-space panels turned to face the camera are not.
 <code class="language-plaintext highlighter-rouge">docs/proposals/ui-toolkit.md</code> is the family document and records which of those are should-have.</p>
 
 <h2 id="seeing-it-run">Seeing it run</h2>
@@ -304,6 +380,10 @@ nothing.</p>
 <p><code class="language-plaintext highlighter-rouge">Assets/CodeSmile/LunyScript/ApiExamples/UserInterface.unity</code> runs everything on
 this page: the two bound controls, the three separately scoped <code class="language-plaintext highlighter-rouge">health</code> Labels, both <code class="language-plaintext highlighter-rouge">When.UI</code>
 watches, and <code class="language-plaintext highlighter-rouge">Panel.Open</code> and <code class="language-plaintext highlighter-rouge">Panel.Close</code> on a second <code class="language-plaintext highlighter-rouge">PanelRenderer</code>. Open it and press Play.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Assets/CodeSmile/LunyScript/ApiExamples/DamageNumbers.unity</code> runs the labels at world positions:
+two dummies walk, each with a name plate, a damage number struck every 0.9 seconds and a marker
+left where the last hit landed.</p>
 
 <h2 id="what-to-read-next">What to read next</h2>
 
