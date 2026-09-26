@@ -142,17 +142,57 @@ cadence, and on the finished handle. The unit is a trailing call — <code class
 <p>A routine runs its steps in the order you wrote them, each one finishing before the next begins, over
 as many frames as they need.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
-<span class="p">{</span>
-    <span class="n">Block</span> <span class="n">walkOut</span>   <span class="p">=</span> <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
-    <span class="n">Block</span> <span class="n">waitAtPost</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Ticks</span><span class="p">.</span><span class="nf">Increment</span><span class="p">()).</span><span class="nf">For</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>
-    <span class="n">Block</span> <span class="n">walkBack</span>  <span class="p">=</span> <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
-
-    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Patrol"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">walkOut</span><span class="p">,</span> <span class="n">waitAtPost</span><span class="p">,</span> <span class="n">walkBack</span><span class="p">));</span>
-<span class="p">}</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Door"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+        <span class="n">Opening</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">3</span><span class="p">),</span> <span class="n">Opening</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
 </code></pre></div></div>
 
 <p>The name you pass to <code class="language-plaintext highlighter-rouge">Routine</code> is what a diagnostic message and the runtime inspector call it.</p>
+
+<h2 id="waiting-inside-a-routine">Waiting inside a routine</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Wait</code> is a step that holds its routine for an amount of game time, then lets the next step run.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Form</th>
+      <th>Waits for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Wait(3)</code></td>
+      <td>Three seconds. Seconds is the default unit.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Wait(3).Seconds()</code></td>
+      <td>Three seconds, with the unit written out.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Wait(500).Milliseconds()</code></td>
+      <td>Half a second. <code class="language-plaintext highlighter-rouge">Minutes()</code> and <code class="language-plaintext highlighter-rouge">Hours()</code> follow the same way.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Wait(Delay)</code></td>
+      <td>As many seconds as the <code class="language-plaintext highlighter-rouge">Delay</code> variable holds when the routine reaches the wait.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Wait(Seconds(0.15))</code></td>
+      <td>A duration value, the one <code class="language-plaintext highlighter-rouge">Hold</code> takes.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Flash"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+    <span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.25</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">0.15</span><span class="p">),</span> <span class="n">Object</span><span class="p">.</span><span class="nf">ResetColor</span><span class="p">()));</span>
+</code></pre></div></div>
+
+<p>A wait counts game time from the moment the routine reaches it: a paused game stops it, and
+<code class="language-plaintext highlighter-rouge">Time.SetScale(0.5)</code> makes it take twice as long. <code class="language-plaintext highlighter-rouge">Wait(0)</code> finishes at once. A negative amount, NaN
+or an infinity also finishes at once and writes a warning to the Console. A wait belongs in a routine, a group or a <code class="language-plaintext highlighter-rouge">Run</code> body. Placed directly in an
+event list, as in <code class="language-plaintext highlighter-rouge">On.FrameUpdate(Wait(1))</code>, it stops the object with an error when it runs, because
+an event list runs to its end in one frame and nothing would wait for it.</p>
 
 <h2 id="running-steps-at-the-same-time">Running steps at the same time</h2>
 
@@ -201,18 +241,19 @@ The enclosing routine owns the survivor and cancels it when the routine ends or 
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="n">Block</span> <span class="n">reachExit</span> <span class="p">=</span> <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">12</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">4</span><span class="p">);</span>
-    <span class="n">Block</span> <span class="n">timeOut</span>   <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Ticks</span><span class="p">.</span><span class="nf">Increment</span><span class="p">()).</span><span class="nf">For</span><span class="p">(</span><span class="m">5</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>
-
-    <span class="kt">var</span> <span class="n">race</span> <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">reachExit</span><span class="p">,</span> <span class="n">timeOut</span><span class="p">).</span><span class="nf">UntilOneFinishes</span><span class="p">();</span>
+    <span class="kt">var</span> <span class="n">race</span> <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">reachExit</span><span class="p">,</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">5</span><span class="p">)).</span><span class="nf">UntilOneFinishes</span><span class="p">();</span>
 
     <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Escape"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
         <span class="n">race</span><span class="p">,</span>
-        <span class="nf">If</span><span class="p">(</span><span class="n">race</span><span class="p">.</span><span class="n">Succeeded</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Escaped</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)),</span>
+        <span class="nf">If</span><span class="p">(</span><span class="n">race</span><span class="p">.</span><span class="n">Succeeded</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">RaceOver</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)),</span>
         <span class="nf">If</span><span class="p">(</span><span class="n">race</span><span class="p">.</span><span class="n">Failed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Alarm</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)),</span>
         <span class="nf">If</span><span class="p">(</span><span class="n">race</span><span class="p">.</span><span class="n">Canceled</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Retryable</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">))));</span>
 <span class="p">}</span>
 </code></pre></div></div>
+
+<p>Here <code class="language-plaintext highlighter-rouge">reachExit</code> is a multi-frame action that can fail, and the group ends with whichever child
+finishes first. A wait that finishes reports Succeeded, so <code class="language-plaintext highlighter-rouge">race.Succeeded</code> is true after five
+seconds whether or not the exit was reached: a finished wait says only that the time passed.</p>
 
 <table>
   <thead>
@@ -281,6 +322,7 @@ outcome words on work that leaves the process.</li>
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.IfBuilder.html"><code class="language-plaintext highlighter-rouge">IfBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RunWorkBuilder.html"><code class="language-plaintext highlighter-rouge">RunBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RoutineBuilder.html"><code class="language-plaintext highlighter-rouge">RoutineBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.WaitBuilder.html"><code class="language-plaintext highlighter-rouge">WaitBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ActionResult.html"><code class="language-plaintext highlighter-rouge">ActionResult</code></a>.</li>
 </ul>
 
