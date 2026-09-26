@@ -138,13 +138,13 @@ target’s position anew:</p>
   <li><strong>The same request continues.</strong> The same destination, the same object and the same choice of
 <code class="language-plaintext highlighter-rouge">RequireComplete()</code> keep the attempt that is under way. A chase whose target stands still asks
 for no new route.</li>
-  <li><strong>Any other request replaces it.</strong> The attempt under way ends as <code class="language-plaintext highlighter-rouge">Cancelled</code> and a new one
-starts. <code class="language-plaintext highlighter-rouge">When.Operation(Chase).Cancelled</code> runs once for each replacement, so a chase after a
+  <li><strong>Any other request replaces it.</strong> The attempt under way ends as <code class="language-plaintext highlighter-rouge">Canceled</code> and a new one
+starts. <code class="language-plaintext highlighter-rouge">When.Operation(Chase).Canceled</code> runs once for each replacement, so a chase after a
 moving target sees many; <code class="language-plaintext highlighter-rouge">Succeeded</code> is the watch that means the move ended.</li>
 </ul>
 
 <p>One object follows one route. A move of an object that another operation is moving ends that
-operation’s attempt as <code class="language-plaintext highlighter-rouge">Cancelled</code>.</p>
+operation’s attempt as <code class="language-plaintext highlighter-rouge">Canceled</code>.</p>
 
 <h2 id="partial-routes">Partial routes</h2>
 
@@ -178,7 +178,7 @@ route is being worked out, never takes a step along a refused route, and the att
 </code></pre></div></div>
 
 <ul>
-  <li><code class="language-plaintext highlighter-rouge">Stop()</code> clears the route. The attempt that was moving the object ends as <code class="language-plaintext highlighter-rouge">Cancelled</code>, and the
+  <li><code class="language-plaintext highlighter-rouge">Stop()</code> clears the route. The attempt that was moving the object ends as <code class="language-plaintext highlighter-rouge">Canceled</code>, and the
 object stays where it stopped. <code class="language-plaintext highlighter-rouge">Patrol.Cancel()</code> does the same to the attempt it names.</li>
   <li><code class="language-plaintext highlighter-rouge">Pause()</code> holds the object where it is. The route and the attempt stay. A move started while the
 object is paused waits too, so a stunned enemy stays stunned while its chase goes on asking.</li>
@@ -249,7 +249,7 @@ object the script runs on. That object carries its own <code class="language-pla
 </table>
 
 <p>Before the first attempt every read is false. After an attempt ends, the route stays readable and
-<code class="language-plaintext highlighter-rouge">IsMoving</code> is false. The operation’s own <code class="language-plaintext highlighter-rouge">IsPending</code>, <code class="language-plaintext highlighter-rouge">Succeeded</code>, <code class="language-plaintext highlighter-rouge">Failed</code>, <code class="language-plaintext highlighter-rouge">Cancelled</code> and
+<code class="language-plaintext highlighter-rouge">IsMoving</code> is false. The operation’s own <code class="language-plaintext highlighter-rouge">IsPending</code>, <code class="language-plaintext highlighter-rouge">Succeeded</code>, <code class="language-plaintext highlighter-rouge">Failed</code>, <code class="language-plaintext highlighter-rouge">Canceled</code> and
 <code class="language-plaintext highlighter-rouge">Failure</code> read the same attempt; the <a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a>
 page explains them.</p>
 

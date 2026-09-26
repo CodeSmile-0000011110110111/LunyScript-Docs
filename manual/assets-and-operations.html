@@ -146,7 +146,7 @@ times out.</p>
       <td>The attempt reached a terminal state without meeting it.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">When.Operation(handle).Cancelled(block, ..)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">When.Operation(handle).Canceled(block, ..)</code></td>
       <td>The attempt was cancelled.</td>
     </tr>
     <tr>
@@ -158,11 +158,11 @@ times out.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span><span class="n">Ready</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">LastFailure</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">Failure</span><span class="p">));</span>
-<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Cancelled</span><span class="p">(</span><span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Cancelled."</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Canceled</span><span class="p">(</span><span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Canceled."</span><span class="p">));</span>
 <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Finished</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Release</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
 </code></pre></div></div>
 
-<p>Cancellation runs the <code class="language-plaintext highlighter-rouge">Cancelled</code> watch and leaves the <code class="language-plaintext highlighter-rouge">Failed</code> watch alone; the two are separate
+<p>Cancellation runs the <code class="language-plaintext highlighter-rouge">Canceled</code> watch and leaves the <code class="language-plaintext highlighter-rouge">Failed</code> watch alone; the two are separate
 outcomes. A classified failure that no watch observes is logged once per attempt.</p>
 
 <h2 id="reading-an-outcome-as-a-condition">Reading an outcome as a condition</h2>
@@ -173,7 +173,7 @@ outcomes. A classified failure that no watch observes is logged once per attempt
     <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">IsPending</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">State</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1</span><span class="p">)),</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">Succeeded</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">State</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">2</span><span class="p">)),</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">Failed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">State</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">3</span><span class="p">)),</span>
-    <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">Cancelled</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">State</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">4</span><span class="p">)),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">Canceled</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">State</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">4</span><span class="p">)),</span>
     <span class="n">Code</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">Failure</span><span class="p">));</span>
 </code></pre></div></div>
 
