@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_RunnerDiagnostics" data-uid="CodeSmile.LunyScript.RunnerDiagnostics" class="text-break">
-Class RunnerDiagnostics  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.Trace.cs/#L3"><i class="bi bi-code-slash"></i></a>
+Class RunnerDiagnostics  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.Trace.cs/#L5"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -123,6 +123,9 @@ Class RunnerDiagnostics  <a class="header-action link-secondary" title="View sou
 coverage is the default: in the Editor every instance records each block's last outcome, which a
 snapshot carries in <a class="xref" href="CodeSmile.LunyScript.DiagnosticSnapshot.html#CodeSmile_LunyScript_DiagnosticSnapshot_NodeOutcomes">NodeOutcomes</a>. BeginTrace explicitly collects
 ordered action records; current snapshots do not contain historical values or a condition preview.
+In the Editor every instance also records which script, object and block last changed each variable,
+which a snapshot carries in <a class="xref" href="CodeSmile.LunyScript.DiagnosticSnapshot.html#CodeSmile_LunyScript_DiagnosticSnapshot_ValueWrites">ValueWrites</a>, and breakpoints set with
+<a class="xref" href="CodeSmile.LunyScript.RunnerDiagnostics.html#CodeSmile_LunyScript_RunnerDiagnostics_SubmitBlockBreakpoint_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_System_Boolean_System_Boolean_System_Int32_">SubmitBlockBreakpoint(DiagnosticIdentity, int, bool, bool, int)</a> and <a class="xref" href="CodeSmile.LunyScript.RunnerDiagnostics.html#CodeSmile_LunyScript_RunnerDiagnostics_SubmitValueBreakpoint_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_System_Boolean_System_Boolean_System_Int32_">SubmitValueBreakpoint(DiagnosticIdentity, int, bool, bool, int)</a> pause Play Mode.
 Service work before a runtime provider is ready retains the existing gateway queue contract. Of the
 commands, only an applied <a class="xref" href="CodeSmile.LunyScript.RunnerDiagnostics.html#CodeSmile_LunyScript_RunnerDiagnostics_SubmitFireBlock_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_System_Boolean_System_Int32_">SubmitFireBlock(DiagnosticIdentity, int, bool, int)</a> runs an authored block.</p>
 </div>
@@ -136,7 +139,7 @@ commands, only an applied <a class="xref" href="CodeSmile.LunyScript.RunnerDiagn
 
   <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_FailedBuildScript" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.FailedBuildScript">
   FailedBuildScript
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L39"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Script type associated with the latest failed Build.</p>
@@ -171,7 +174,7 @@ commands, only an applied <a class="xref" href="CodeSmile.LunyScript.RunnerDiagn
 
   <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_LatestBuildFailure" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.LatestBuildFailure">
   LatestBuildFailure
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L35"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Most recent failed Build, available even though no program or lifetime was created.</p>
@@ -206,7 +209,7 @@ commands, only an applied <a class="xref" href="CodeSmile.LunyScript.RunnerDiagn
 
   <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_LatestDriverFailure" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.LatestDriverFailure">
   LatestDriverFailure
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L43"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Latest outer failure. A contained block error appears on its instance snapshot instead.</p>
@@ -237,6 +240,41 @@ commands, only an applied <a class="xref" href="CodeSmile.LunyScript.RunnerDiagn
 
 
 
+  <a id="CodeSmile_LunyScript_RunnerDiagnostics_PauseCount_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.PauseCount*"></a>
+
+  <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_PauseCount" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.PauseCount">
+  PauseCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.Breakpoints.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many breakpoint hits have paused the application in this diagnostic session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public long PauseCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">long</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_RunnerDiagnostics_PauseCount_examples">Examples</h4>
+  <pre><code class="lang-csharp">var paused = runner.Diagnostics.PauseCount &gt; seen;</code></pre>
+
+
+
+
+
+
   <h2 class="section" id="methods">Methods
 </h2>
 
@@ -245,7 +283,7 @@ commands, only an applied <a class="xref" href="CodeSmile.LunyScript.RunnerDiagn
 
   <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_Apply_CodeSmile_LunyScript_DiagnosticCommand_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.Apply(CodeSmile.LunyScript.DiagnosticCommand)">
   Apply(DiagnosticCommand)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L173"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L180"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Rechecks admission and applies the command once. A value edit writes backing state without
@@ -292,7 +330,7 @@ delivering gameplay or editor events; a fire runs its block as described on
 
   <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_BeginTrace_CodeSmile_LunyScript_DiagnosticIdentity_CodeSmile_LunyScript_DiagnosticBuffer_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.BeginTrace(CodeSmile.LunyScript.DiagnosticIdentity,CodeSmile.LunyScript.DiagnosticBuffer)">
   BeginTrace(DiagnosticIdentity, DiagnosticBuffer)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.Trace.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.Trace.cs/#L10"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts bounded action capture for a live target at an idle boundary. One attachment
@@ -348,7 +386,7 @@ per lifetime is permitted. Non-development players require LUNYSCRIPT_TRACE when
 
   <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_GetIdentity_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.GetIdentity(CodeSmile.LunyScript.ScriptInstance)">
   GetIdentity(ScriptInstance)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L64"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Captures the identity before pooling can reuse the instance.</p>
@@ -398,7 +436,7 @@ per lifetime is permitted. Non-development players require LUNYSCRIPT_TRACE when
 
   <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_LiveLifetimes" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.LiveLifetimes">
   LiveLifetimes()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L76"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Copies live lifetimes with their script and object names; discovering them neither builds
@@ -438,7 +476,7 @@ lifetime.</p>
 
   <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_ReadCatalog_CodeSmile_LunyScript_ScriptProgram_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.ReadCatalog(CodeSmile.LunyScript.ScriptProgram)">
   ReadCatalog(ScriptProgram)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L47"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Returns immutable declarations built with the program, without executing blocks.</p>
@@ -488,7 +526,7 @@ lifetime.</p>
 
   <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_ReadCurrent_CodeSmile_LunyScript_DiagnosticIdentity_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.ReadCurrent(CodeSmile.LunyScript.DiagnosticIdentity)">
   ReadCurrent(DiagnosticIdentity)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L91"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reads coherent stored state at an idle boundary. Busy, ended and failed boundaries report unavailable.</p>
@@ -534,11 +572,51 @@ lifetime.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_RunnerDiagnostics_ReadPauses_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.ReadPauses*"></a>
+
+  <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_ReadPauses" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.ReadPauses">
+  ReadPauses()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.Breakpoints.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Copies the most recent pauses, at most eight, oldest first.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public DiagnosticPause[] ReadPauses()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.DiagnosticPause.html">DiagnosticPause</a>[]</dt>
+    <dd><p>The retained pauses; empty when no breakpoint has hit.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_RunnerDiagnostics_ReadPauses_examples">Examples</h4>
+  <pre><code class="lang-csharp">var latest = runner.Diagnostics.ReadPauses().LastOrDefault();</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_RunnerDiagnostics_ReadPauses_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Each copy formats the host descriptions of the lifetimes it names, so this read
+allocates.</p>
+</div>
+
+
+
+
   <a id="CodeSmile_LunyScript_RunnerDiagnostics_Submit_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.Submit*"></a>
 
   <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_Submit_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_CodeSmile_LunyScript_DiagnosticValue_System_Boolean_System_Int32_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.Submit(CodeSmile.LunyScript.DiagnosticIdentity,System.Int32,CodeSmile.LunyScript.DiagnosticValue,System.Boolean,System.Int32)">
   Submit(DiagnosticIdentity, int, DiagnosticValue, bool, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L118"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Admits a single typed live edit without applying it. Refusals carry an explicit reason.</p>
@@ -608,11 +686,98 @@ queue refuses new work. This is a pending-command bound, not a history retention
 
 
 
+  <a id="CodeSmile_LunyScript_RunnerDiagnostics_SubmitBlockBreakpoint_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.SubmitBlockBreakpoint*"></a>
+
+  <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_SubmitBlockBreakpoint_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_System_Boolean_System_Boolean_System_Int32_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.SubmitBlockBreakpoint(CodeSmile.LunyScript.DiagnosticIdentity,System.Int32,System.Boolean,System.Boolean,System.Int32)">
+  SubmitBlockBreakpoint(DiagnosticIdentity, int, bool, bool, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.Breakpoints.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Admits setting or clearing a breakpoint on one catalog node's block, without setting it yet.
+Refusals carry an explicit reason.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public DiagnosticCommand SubmitBlockBreakpoint(DiagnosticIdentity target, int node, bool enabled, bool isLive = true, int major = 1)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.DiagnosticIdentity.html">DiagnosticIdentity</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>target</code></dt></td>
+    <td style="width: 99%"><dd><p>The lifetime.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>node</code></dt></td>
+    <td style="width: 99%"><dd><p>The block's catalog node.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">bool</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>enabled</code></dt></td>
+    <td style="width: 99%"><dd><p>True sets the breakpoint, false clears it.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">bool</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>isLive</code></dt></td>
+    <td style="width: 99%"><dd><p>False when the caller's view is paused on history, which refuses the command.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>major</code></dt></td>
+    <td style="width: 99%"><dd><p>The caller's protocol major.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.DiagnosticCommand.html">DiagnosticCommand</a></dt>
+    <dd><p>The receipt, admitted or rejected.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_RunnerDiagnostics_SubmitBlockBreakpoint_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_System_Boolean_System_Boolean_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">diagnostics.Apply(diagnostics.SubmitBlockBreakpoint(target, node.Id, true));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_RunnerDiagnostics_SubmitBlockBreakpoint_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_System_Boolean_System_Boolean_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Once applied, each time the block starts to run in this lifetime the runner records a pause
+and, when the dispatch it runs in has completed, asks the installed pause to pause the application:
+in the Editor, Play Mode pauses at the end of that frame, after every script the frame runs. The
+block and everything after it still run. A breakpoint lasts until it is cleared or the lifetime or
+the session ends; a pooled respawn starts with none. A block object placed twice breaks in both
+places, under its <a class="xref" href="CodeSmile.LunyScript.DiagnosticNode.html#CodeSmile_LunyScript_DiagnosticNode_OutcomeNode">OutcomeNode</a>. A condition or a value node has no
+block and is refused, and so is a runner with no pause installed, which is every runner outside the
+Editor's debugger.</p>
+</div>
+
+
+
+
   <a id="CodeSmile_LunyScript_RunnerDiagnostics_SubmitClearOverride_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.SubmitClearOverride*"></a>
 
   <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_SubmitClearOverride_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_System_Boolean_System_Int32_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.SubmitClearOverride(CodeSmile.LunyScript.DiagnosticIdentity,System.Int32,System.Boolean,System.Int32)">
   SubmitClearOverride(DiagnosticIdentity, int, bool, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L164"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L171"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Admits returning one forced If to evaluating its condition. A node that is not forced is
@@ -683,7 +848,7 @@ refused.</p>
 
   <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_SubmitFireBlock_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_System_Boolean_System_Int32_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.SubmitFireBlock(CodeSmile.LunyScript.DiagnosticIdentity,System.Int32,System.Boolean,System.Int32)">
   SubmitFireBlock(DiagnosticIdentity, int, bool, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L130"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L137"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Admits running one catalog node's block once, without running it. Refusals carry an
@@ -763,7 +928,7 @@ its forced branch, and that branch; firing a watch runs its check once.</p>
 
   <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_SubmitOverrideCondition_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_System_Boolean_System_Boolean_System_Int32_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.SubmitOverrideCondition(CodeSmile.LunyScript.DiagnosticIdentity,System.Int32,System.Boolean,System.Boolean,System.Int32)">
   SubmitOverrideCondition(DiagnosticIdentity, int, bool, bool, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L151"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.cs/#L158"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Admits forcing one If to take the requested branch, without forcing it yet. Refusals carry an
@@ -845,11 +1010,96 @@ Forcing an already forced If replaces its branch.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_RunnerDiagnostics_SubmitValueBreakpoint_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.SubmitValueBreakpoint*"></a>
+
+  <h3 id="CodeSmile_LunyScript_RunnerDiagnostics_SubmitValueBreakpoint_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_System_Boolean_System_Boolean_System_Int32_" data-uid="CodeSmile.LunyScript.RunnerDiagnostics.SubmitValueBreakpoint(CodeSmile.LunyScript.DiagnosticIdentity,System.Int32,System.Boolean,System.Boolean,System.Int32)">
+  SubmitValueBreakpoint(DiagnosticIdentity, int, bool, bool, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.Breakpoints.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Admits setting or clearing a breakpoint on one declared variable, without setting it yet.
+Refusals carry an explicit reason.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public DiagnosticCommand SubmitValueBreakpoint(DiagnosticIdentity target, int variable, bool enabled, bool isLive = true, int major = 1)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.DiagnosticIdentity.html">DiagnosticIdentity</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>target</code></dt></td>
+    <td style="width: 99%"><dd><p>The lifetime.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>variable</code></dt></td>
+    <td style="width: 99%"><dd><p>The variable's declaration id, a <a class="xref" href="CodeSmile.LunyScript.DiagnosticVariable.html#CodeSmile_LunyScript_DiagnosticVariable_Id">Id</a>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">bool</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>enabled</code></dt></td>
+    <td style="width: 99%"><dd><p>True sets the breakpoint, false clears it.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">bool</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>isLive</code></dt></td>
+    <td style="width: 99%"><dd><p>False when the caller's view is paused on history, which refuses the command.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>major</code></dt></td>
+    <td style="width: 99%"><dd><p>The caller's protocol major.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.DiagnosticCommand.html">DiagnosticCommand</a></dt>
+    <dd><p>The receipt, admitted or rejected.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_RunnerDiagnostics_SubmitValueBreakpoint_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_System_Boolean_System_Boolean_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">diagnostics.Apply(diagnostics.SubmitValueBreakpoint(target, variable.Id, true));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_RunnerDiagnostics_SubmitValueBreakpoint_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_System_Boolean_System_Boolean_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Once applied, each time the variable's value changes the runner records a pause naming the
+script, object and block that changed it, and pauses the application the way
+<a class="xref" href="CodeSmile.LunyScript.RunnerDiagnostics.html#CodeSmile_LunyScript_RunnerDiagnostics_SubmitBlockBreakpoint_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_System_Boolean_System_Boolean_System_Int32_">SubmitBlockBreakpoint(DiagnosticIdentity, int, bool, bool, int)</a> describes. A write that stores the value already held is no change,
+and a debugger value edit does not pause. A shared variable breaks on a change any script makes to its
+store, so the pause can name another script on another object. Internal storage is refused, and so is
+a lifetime that records no value changes, which is every lifetime outside the Editor.</p>
+</div>
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.Trace.cs/#L3" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/RunnerDiagnostics.Trace.cs/#L5" class="edit-link">Edit this page</a>
         </div>
 
 

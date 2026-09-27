@@ -124,6 +124,42 @@ Class DiagnosticSnapshot  <a class="header-action link-secondary" title="View so
 </h2>
 
 
+  <a id="CodeSmile_LunyScript_DiagnosticSnapshot_BlockBreakpoints_" data-uid="CodeSmile.LunyScript.DiagnosticSnapshot.BlockBreakpoints*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DiagnosticSnapshot_BlockBreakpoints" data-uid="CodeSmile.LunyScript.DiagnosticSnapshot.BlockBreakpoints">
+  BlockBreakpoints
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/DiagnosticRecords.cs/#L412"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The catalog nodes whose blocks have a breakpoint in this lifetime, in catalog order; each is the
+<a class="xref" href="CodeSmile.LunyScript.DiagnosticNode.html#CodeSmile_LunyScript_DiagnosticNode_OutcomeNode">OutcomeNode</a> of the node the breakpoint was set on.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public IReadOnlyList&lt;int&gt; BlockBreakpoints { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">IReadOnlyList</span>&lt;<span class="xref">int</span>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DiagnosticSnapshot_BlockBreakpoints_examples">Examples</h4>
+  <pre><code class="lang-csharp">var breaks = snapshot.BlockBreakpoints.Contains(node.OutcomeNode);</code></pre>
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_DiagnosticSnapshot_CanEdit_" data-uid="CodeSmile.LunyScript.DiagnosticSnapshot.CanEdit*"></a>
 
   <h3 id="CodeSmile_LunyScript_DiagnosticSnapshot_CanEdit" data-uid="CodeSmile.LunyScript.DiagnosticSnapshot.CanEdit">
@@ -830,19 +866,20 @@ not walk parents.</p>
 
 
 
-  <a id="CodeSmile_LunyScript_DiagnosticSnapshot_ValueProvenance_" data-uid="CodeSmile.LunyScript.DiagnosticSnapshot.ValueProvenance*"></a>
+  <a id="CodeSmile_LunyScript_DiagnosticSnapshot_ValueBreakpoints_" data-uid="CodeSmile.LunyScript.DiagnosticSnapshot.ValueBreakpoints*"></a>
 
-  <h3 id="CodeSmile_LunyScript_DiagnosticSnapshot_ValueProvenance" data-uid="CodeSmile.LunyScript.DiagnosticSnapshot.ValueProvenance">
-  ValueProvenance
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/DiagnosticRecords.cs/#L398"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_DiagnosticSnapshot_ValueBreakpoints" data-uid="CodeSmile.LunyScript.DiagnosticSnapshot.ValueBreakpoints">
+  ValueBreakpoints
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/DiagnosticRecords.cs/#L416"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Stored values have no per-write time capture in this foundation.</p>
+  <div class="markdown level1 summary"><p>The declaration ids of the variables that have a breakpoint in this lifetime, in declaration
+order.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string ValueProvenance { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public IReadOnlyList&lt;int&gt; ValueBreakpoints { get; }</code></pre>
   </div>
 
 
@@ -851,13 +888,58 @@ not walk parents.</p>
 
   <h4 class="section">Property Value</h4>
   <dl class="parameters">
-    <dt><span class="xref">string</span></dt>
+    <dt><span class="xref">IReadOnlyList</span>&lt;<span class="xref">int</span>&gt;</dt>
     <dd></dd>
   </dl>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_DiagnosticSnapshot_ValueBreakpoints_examples">Examples</h4>
+  <pre><code class="lang-csharp">var breaks = snapshot.ValueBreakpoints.Contains(variable.Id);</code></pre>
 
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_DiagnosticSnapshot_ValueWrites_" data-uid="CodeSmile.LunyScript.DiagnosticSnapshot.ValueWrites*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DiagnosticSnapshot_ValueWrites" data-uid="CodeSmile.LunyScript.DiagnosticSnapshot.ValueWrites">
+  ValueWrites
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/DiagnosticRecords.cs/#L404"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Each variable's last change in declaration order, parallel to <a class="xref" href="CodeSmile.LunyScript.DiagnosticSnapshot.html#CodeSmile_LunyScript_DiagnosticSnapshot_Values">Values</a>: which
+script, object and block changed it, and when. Empty when <a class="xref" href="CodeSmile.LunyScript.DiagnosticSnapshot.html#CodeSmile_LunyScript_DiagnosticSnapshot_WritesUnavailableReason">WritesUnavailableReason</a> is not
+null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public IReadOnlyList&lt;DiagnosticWrite&gt; ValueWrites { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="CodeSmile.LunyScript.DiagnosticWrite.html">DiagnosticWrite</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DiagnosticSnapshot_ValueWrites_examples">Examples</h4>
+  <pre><code class="lang-csharp">var write = snapshot.ValueWrites[variable.Id];</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DiagnosticSnapshot_ValueWrites_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The Editor records changes for every instance; a player records none. A variable nothing changed
+has a <a class="xref" href="CodeSmile.LunyScript.DiagnosticWrite.html">DiagnosticWrite</a> whose <a class="xref" href="CodeSmile.LunyScript.DiagnosticWrite.html#CodeSmile_LunyScript_DiagnosticWrite_Source">Source</a> is
+<a class="xref" href="CodeSmile.LunyScript.DiagnosticWriteSource.html#CodeSmile_LunyScript_DiagnosticWriteSource_None">None</a>.</p>
+</div>
 
 
 
@@ -888,6 +970,42 @@ not walk parents.</p>
   </dl>
 
 
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_DiagnosticSnapshot_WritesUnavailableReason_" data-uid="CodeSmile.LunyScript.DiagnosticSnapshot.WritesUnavailableReason*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DiagnosticSnapshot_WritesUnavailableReason" data-uid="CodeSmile.LunyScript.DiagnosticSnapshot.WritesUnavailableReason">
+  WritesUnavailableReason
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/DiagnosticRecords.cs/#L408"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Null when <a class="xref" href="CodeSmile.LunyScript.DiagnosticSnapshot.html#CodeSmile_LunyScript_DiagnosticSnapshot_ValueWrites">ValueWrites</a> holds this lifetime's recorded changes; otherwise why it
+holds none.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string WritesUnavailableReason { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DiagnosticSnapshot_WritesUnavailableReason_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (snapshot.WritesUnavailableReason == null) { var writes = snapshot.ValueWrites; }</code></pre>
 
 
 

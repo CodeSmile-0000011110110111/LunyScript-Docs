@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Enum DiagnosticCommandKind | LunyScript API Reference </title>
+      <title>Enum DiagnosticWriteSource | LunyScript API Reference </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Enum DiagnosticCommandKind | LunyScript API Reference ">
+      <meta name="title" content="Enum DiagnosticWriteSource | LunyScript API Reference ">
       
-      <meta name="description" content="What one command asks the runner to do to one lifetime.">
+      <meta name="description" content="What changed a variable&#39;s value the last time it changed.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_DiagnosticCommandKind.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.DiagnosticCommandKind%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_DiagnosticWriteSource.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.DiagnosticWriteSource%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -72,13 +72,13 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="CodeSmile.LunyScript.DiagnosticCommandKind">
+        <article data-uid="CodeSmile.LunyScript.DiagnosticWriteSource">
 
 
 
 
-  <h1 id="CodeSmile_LunyScript_DiagnosticCommandKind" data-uid="CodeSmile.LunyScript.DiagnosticCommandKind" class="text-break">
-Enum DiagnosticCommandKind  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/DiagnosticCommand.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  <h1 id="CodeSmile_LunyScript_DiagnosticWriteSource" data-uid="CodeSmile.LunyScript.DiagnosticWriteSource" class="text-break">
+Enum DiagnosticWriteSource  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/DiagnosticWrites.cs/#L8"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -86,12 +86,12 @@ Enum DiagnosticCommandKind  <a class="header-action link-secondary" title="View 
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>What one command asks the runner to do to one lifetime.</p>
+  <div class="markdown summary"><p>What changed a variable's value the last time it changed.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public enum DiagnosticCommandKind</code></pre>
+    <pre><code class="lang-csharp hljs">public enum DiagnosticWriteSource</code></pre>
   </div>
 
 
@@ -110,46 +110,40 @@ Enum DiagnosticCommandKind  <a class="header-action link-secondary" title="View 
   <h2 id="fields">Fields
 </h2>
   <dl class="parameters">
-    <dt id="CodeSmile_LunyScript_DiagnosticCommandKind_BlockBreakpoint"><code>BlockBreakpoint = 4</code></dt>
+    <dt id="CodeSmile_LunyScript_DiagnosticWriteSource_Block"><code>Block = 1</code></dt>
   
-  <dd><p>Sets or clears a breakpoint that pauses Play Mode when one block starts to run.</p>
+  <dd><p>A block of the writing script changed it; <a class="xref" href="CodeSmile.LunyScript.DiagnosticWrite.html#CodeSmile_LunyScript_DiagnosticWrite_Node">Node</a> names the
+block.</p>
 </dd>
-    <dt id="CodeSmile_LunyScript_DiagnosticCommandKind_ClearOverride"><code>ClearOverride = 3</code></dt>
+    <dt id="CodeSmile_LunyScript_DiagnosticWriteSource_Intervention"><code>Intervention = 2</code></dt>
   
-  <dd><p>Returns one forced If to evaluating its condition.</p>
+  <dd><p>A debugger value edit, applied through <a class="xref" href="CodeSmile.LunyScript.RunnerDiagnostics.html#CodeSmile_LunyScript_RunnerDiagnostics_Submit_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_CodeSmile_LunyScript_DiagnosticValue_System_Boolean_System_Int32_">Submit(DiagnosticIdentity, int, DiagnosticValue, bool, int)</a>, changed it.</p>
 </dd>
-    <dt id="CodeSmile_LunyScript_DiagnosticCommandKind_FireBlock"><code>FireBlock = 1</code></dt>
+    <dt id="CodeSmile_LunyScript_DiagnosticWriteSource_Network"><code>Network = 3</code></dt>
   
-  <dd><p>Runs one catalog node's block once, at an idle boundary, with the runner's containment.</p>
+  <dd><p>A value received from the network authority changed it.</p>
 </dd>
-    <dt id="CodeSmile_LunyScript_DiagnosticCommandKind_OverrideCondition"><code>OverrideCondition = 2</code></dt>
+    <dt id="CodeSmile_LunyScript_DiagnosticWriteSource_None"><code>None = 0</code></dt>
   
-  <dd><p>Makes one If take the requested branch without evaluating its condition, until cleared.</p>
+  <dd><p>No change was recorded: the variable holds the value it started with in this lifetime, or, for
+a shared variable, the value its store started with.</p>
 </dd>
-    <dt id="CodeSmile_LunyScript_DiagnosticCommandKind_SetValue"><code>SetValue = 0</code></dt>
+    <dt id="CodeSmile_LunyScript_DiagnosticWriteSource_Other"><code>Other = 4</code></dt>
   
-  <dd><p>Writes one declared variable and reads it back.</p>
-</dd>
-    <dt id="CodeSmile_LunyScript_DiagnosticCommandKind_ValueBreakpoint"><code>ValueBreakpoint = 5</code></dt>
-  
-  <dd><p>Sets or clears a breakpoint that pauses Play Mode when one variable's value changes.</p>
+  <dd><p>Code outside any block changed it: LunyScript's own bookkeeping, a gateway, a loaded
+document, or C# that wrote the instance directly.</p>
 </dd>
   </dl>
 
-  <h2 id="CodeSmile_LunyScript_DiagnosticCommandKind_examples">Examples</h2>
-  <pre><code class="lang-csharp">if (command.Kind == DiagnosticCommandKind.FireBlock) Show(command.Node);</code></pre>
+  <h2 id="CodeSmile_LunyScript_DiagnosticWriteSource_examples">Examples</h2>
+  <pre><code class="lang-csharp">if (write.Source == DiagnosticWriteSource.Block) Show(write.BlockType, write.Location);</code></pre>
 
 
-  <h2 id="CodeSmile_LunyScript_DiagnosticCommandKind_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>Every kind goes through the same admission, pending bound and recheck before it is applied;
-<a class="xref" href="CodeSmile.LunyScript.RunnerDiagnostics.html#CodeSmile_LunyScript_RunnerDiagnostics_Submit_CodeSmile_LunyScript_DiagnosticIdentity_System_Int32_CodeSmile_LunyScript_DiagnosticValue_System_Boolean_System_Int32_">Submit(DiagnosticIdentity, int, DiagnosticValue, bool, int)</a> admits a value edit, the three block methods admit a fire, a
-force and a clear, and the two breakpoint methods admit the breakpoints.</p>
-</div>
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/DiagnosticCommand.cs/#L26" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/DiagnosticWrites.cs/#L8" class="edit-link">Edit this page</a>
         </div>
 
 
