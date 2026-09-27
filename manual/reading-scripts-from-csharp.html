@@ -80,8 +80,8 @@
         <span class="n">m_Watch</span> <span class="p">=</span> <span class="n">m_Reference</span><span class="p">.</span><span class="nf">Observe</span><span class="p">(</span><span class="n">player</span><span class="p">.</span><span class="n">Health</span><span class="p">,</span> <span class="n">ShowHealth</span><span class="p">);</span>
     <span class="p">}</span>
 
-    <span class="k">private</span> <span class="k">void</span> <span class="nf">ShowHealth</span><span class="p">(</span><span class="kt">double</span> <span class="n">health</span><span class="p">)</span> <span class="p">=&gt;</span>
-        <span class="n">m_Bar</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Vector3</span><span class="p">((</span><span class="kt">float</span><span class="p">)(</span><span class="n">health</span> <span class="p">/</span> <span class="m">100</span><span class="p">),</span> <span class="m">1f</span><span class="p">,</span> <span class="m">1f</span><span class="p">);</span>
+    <span class="k">private</span> <span class="k">void</span> <span class="nf">ShowHealth</span><span class="p">(</span><span class="kt">double</span> <span class="n">health</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">m_Bar</span><span class="p">.</span><span class="n">localScale</span> <span class="p">=</span>
+        <span class="k">new</span> <span class="n">UnityEngine</span><span class="p">.</span><span class="nf">Vector3</span><span class="p">((</span><span class="kt">float</span><span class="p">)(</span><span class="n">health</span> <span class="p">/</span> <span class="m">100</span><span class="p">),</span> <span class="m">1f</span><span class="p">,</span> <span class="m">1f</span><span class="p">);</span>
 
     <span class="k">private</span> <span class="k">void</span> <span class="nf">OnDestroy</span><span class="p">()</span> <span class="p">=&gt;</span> <span class="n">m_Watch</span><span class="p">?.</span><span class="nf">Dispose</span><span class="p">();</span>
 <span class="p">}</span>
@@ -188,16 +188,16 @@ unassigned, because <code class="language-plaintext highlighter-rouge">Build()</
       <td><code class="language-plaintext highlighter-rouge">bool</code></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Var&lt;Vec3&gt;</code></td>
-      <td><code class="language-plaintext highlighter-rouge">Vec3</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Var&lt;Vector3&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Vector3</code></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Var&lt;Rotation&gt;</code></td>
       <td><code class="language-plaintext highlighter-rouge">Rotation</code></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Var&lt;Vec2&gt;</code></td>
-      <td><code class="language-plaintext highlighter-rouge">Vec2</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Var&lt;Vector2&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Vector2</code></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Var&lt;YourEnum&gt;</code></td>
@@ -209,6 +209,10 @@ unassigned, because <code class="language-plaintext highlighter-rouge">Build()</
     </tr>
   </tbody>
 </table>
+
+<p><code class="language-plaintext highlighter-rouge">Vector3</code> and <code class="language-plaintext highlighter-rouge">Vector2</code> in this table are LunyScript’s types. A <code class="language-plaintext highlighter-rouge">MonoBehaviour</code> that imports both
+<code class="language-plaintext highlighter-rouge">CodeSmile.LunyScript</code> and <code class="language-plaintext highlighter-rouge">UnityEngine</code> writes <code class="language-plaintext highlighter-rouge">UnityEngine.Vector3</code> for Unity’s type, as <code class="language-plaintext highlighter-rouge">ShowHealth</code>
+does above, because the compiler refuses the bare name in a file that imports both.</p>
 
 <p>A text variable is copied into a fixed string you provide, so the read allocates nothing:</p>
 
@@ -269,7 +273,7 @@ they refer to the same run of a script, before and after it ends.</p>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">m_Watch</span> <span class="p">=</span> <span class="n">reference</span><span class="p">.</span><span class="nf">Observe</span><span class="p">(</span><span class="n">reference</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">Health</span><span class="p">,</span> <span class="n">ShowHealth</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>It exists for <code class="language-plaintext highlighter-rouge">Number</code>, <code class="language-plaintext highlighter-rouge">Flag</code>, <code class="language-plaintext highlighter-rouge">Var&lt;Vec3&gt;</code>, <code class="language-plaintext highlighter-rouge">Var&lt;Rotation&gt;</code> and <code class="language-plaintext highlighter-rouge">Var&lt;Vec2&gt;</code>.</p>
+<p>It exists for <code class="language-plaintext highlighter-rouge">Number</code>, <code class="language-plaintext highlighter-rouge">Flag</code>, <code class="language-plaintext highlighter-rouge">Var&lt;Vector3&gt;</code>, <code class="language-plaintext highlighter-rouge">Var&lt;Rotation&gt;</code> and <code class="language-plaintext highlighter-rouge">Var&lt;Vector2&gt;</code>.</p>
 
 <ul>
   <li><strong>It runs at most once per frame</strong>, after every script’s <code class="language-plaintext highlighter-rouge">On.LateUpdate</code>, and only when the value
@@ -304,7 +308,7 @@ decides what a heal does, including any limit it applies.</p>
 <h2 id="the-objects-own-script">The object’s own script</h2>
 
 <p><code class="language-plaintext highlighter-rouge">LunyScriptBehaviour</code> also reads the variables of the script on its own object, through
-<code class="language-plaintext highlighter-rouge">GetNumber</code>, <code class="language-plaintext highlighter-rouge">GetFlag</code>, <code class="language-plaintext highlighter-rouge">GetVec3</code>, <code class="language-plaintext highlighter-rouge">GetRotation</code>, <code class="language-plaintext highlighter-rouge">GetVec2</code>, <code class="language-plaintext highlighter-rouge">GetEnum</code>, <code class="language-plaintext highlighter-rouge">ReadText</code> and <code class="language-plaintext highlighter-rouge">GetAsset</code>:</p>
+<code class="language-plaintext highlighter-rouge">GetNumber</code>, <code class="language-plaintext highlighter-rouge">GetFlag</code>, <code class="language-plaintext highlighter-rouge">GetVector3</code>, <code class="language-plaintext highlighter-rouge">GetRotation</code>, <code class="language-plaintext highlighter-rouge">GetVector2</code>, <code class="language-plaintext highlighter-rouge">GetEnum</code>, <code class="language-plaintext highlighter-rouge">ReadText</code> and <code class="language-plaintext highlighter-rouge">GetAsset</code>:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">script</span> <span class="p">=</span> <span class="p">(</span><span class="n">PlayerScript</span><span class="p">)</span><span class="n">behaviour</span><span class="p">.</span><span class="n">Script</span><span class="p">;</span>
 <span class="k">if</span> <span class="p">(</span><span class="n">behaviour</span><span class="p">.</span><span class="n">IsRunning</span><span class="p">)</span>
