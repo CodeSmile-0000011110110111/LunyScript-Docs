@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_OrbitPointBuilder" data-uid="CodeSmile.LunyScript.OrbitPointBuilder" class="text-break">
-Struct OrbitPointBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformBuilders.cs/#L284"><i class="bi bi-code-slash"></i></a>
+Struct OrbitPointBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformBuilders.cs/#L288"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -126,7 +126,7 @@ about it.</p>
 
   <h3 id="CodeSmile_LunyScript_OrbitPointBuilder_By_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.OrbitPointBuilder.By(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   By(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformBuilders.cs/#L323"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformBuilders.cs/#L322"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Names the rotation to apply about the pivot, in euler degrees about the world
@@ -207,11 +207,88 @@ choice cannot be left out.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_OrbitPointBuilder_By_" data-uid="CodeSmile.LunyScript.OrbitPointBuilder.By*"></a>
+
+  <h3 id="CodeSmile_LunyScript_OrbitPointBuilder_By_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.OrbitPointBuilder.By(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
+  By(Vector3ValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformBuilders.cs/#L354"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Names the rotation to apply about the pivot, as euler degrees about the world axes held in
+one value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public OrbitRotationBuilder By(Vector3ValueBlock degrees, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vector3ValueBlock.html">Vector3ValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>degrees</code></dt></td>
+    <td style="width: 99%"><dd><p>The degrees about the world axes, evaluated each time the block runs.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.OrbitRotationBuilder.html">OrbitRotationBuilder</a></dt>
+    <dd><p>A builder whose two methods are the two behaviours; it converts to no block, so the
+choice cannot be left out.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OrbitPointBuilder_By_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Transform.RotateAround(Pivot).By(Spin).KeepRotation());</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_OrbitPointBuilder_By_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The same clause as the three-number form, with the value's X, Y and Z as the degrees about
+the world X, Y and Z axes: the layout <code>Rotation.ToEuler()</code> returns.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">degrees</code> is null, or this builder is a
+<code>default</code> that no <code>RotateAround</code> call produced.</p>
+</dd>
+  </dl>
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformBuilders.cs/#L284" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Transform/TransformBuilders.cs/#L288" class="edit-link">Edit this page</a>
         </div>
 
 
