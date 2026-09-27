@@ -167,6 +167,39 @@ events such as <code class="language-plaintext highlighter-rouge">On.Enabled</co
 <p>Each object can override its script’s mode in the Inspector, through the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code>
 component’s <strong>Process Mode</strong> field. The field’s <code class="language-plaintext highlighter-rouge">Script Default</code> entry uses what <code class="language-plaintext highlighter-rouge">Build()</code> set.</p>
 
+<h2 id="collisions-while-the-game-is-paused">Collisions while the game is paused</h2>
+
+<p>A paused <code class="language-plaintext highlighter-rouge">Pausable</code> script still runs its six contact events, so a collision can resume the game:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Resume</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>Unity does the same for a <code class="language-plaintext highlighter-rouge">MonoBehaviour</code> that is not updating, so that a collision can wake it.
+The script’s tick events stay paused. A script whose component is disabled receives no contact
+event, paused or not.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Time.Pause()</code> also stops physics. At a time scale of zero Unity’s fixed step does not run, so
+with Unity’s default physics stepping nothing moves and nothing collides during a pause. A paused
+script meets a contact in two cases:</p>
+
+<ul>
+  <li>The game steps physics itself: <code class="language-plaintext highlighter-rouge">Physics.simulationMode</code> is <code class="language-plaintext highlighter-rouge">SimulationMode.Script</code> and the game
+calls <code class="language-plaintext highlighter-rouge">Physics.Simulate</code>, for example with the real frame time.</li>
+  <li>The contact comes from the physics step in which another script’s contact event paused the game.
+Unity sends every callback of one step after that step, and each of them still arrives.</li>
+</ul>
+
+<p>To pause contact events with the game, open <strong>Edit &gt; Project Settings &gt; LunyScript</strong> and turn on
+<strong>Time.Pause pauses contact events</strong>. A <code class="language-plaintext highlighter-rouge">Pausable</code> script then skips its contact events while
+<code class="language-plaintext highlighter-rouge">Time.Pause()</code> holds the game, as it skips <code class="language-plaintext highlighter-rouge">On.FrameUpdate</code>. <code class="language-plaintext highlighter-rouge">WhenPaused</code> and <code class="language-plaintext highlighter-rouge">Always</code> scripts
+receive them either way. The setting applies to the whole project; no script line changes it.
+<code class="language-plaintext highlighter-rouge">Time.SetScale(0)</code> pauses no script, so it leaves contact events alone under either setting.</p>
+
+<p>The setting is stored in <code class="language-plaintext highlighter-rouge">Assets/Resources/LunyScriptSettings.asset</code>, which the page creates the
+first time you change the value. A built game reads it when the first LunyScript object starts,
+and updating LunyScript leaves it as it is. It may live in any <code class="language-plaintext highlighter-rouge">Resources</code> folder; keep one asset
+of that name. Without the asset, the setting is off.</p>
+
 <h2 id="gates-suppressing-input-or-camera-writes">Gates: suppressing input or camera writes</h2>
 
 <p>A gate is a named suppression of one or more categories, opened and closed by name. It leaves the
@@ -238,7 +271,7 @@ opens both gates so the player’s movement input and the chase camera stop reac
 
 <ul>
   <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> — the
-tick events a process mode governs.</li>
+tick events a process mode governs, and the contact events.</li>
   <li><a href="/LunyScript-Docs/manual/player-input.html">Player input</a> — what an open input gate changes.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.TimeFactory.html"><code class="language-plaintext highlighter-rouge">TimeFactory</code></a>,

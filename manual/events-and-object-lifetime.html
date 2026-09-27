@@ -218,6 +218,11 @@ allocates nothing; a blank tag is refused while <code class="language-plaintext 
 <p><code class="language-plaintext highlighter-rouge">On.CollisionStay</code> and <code class="language-plaintext highlighter-rouge">On.TriggerStay</code> run on every fixed step while contact lasts.
 <code class="language-plaintext highlighter-rouge">On.TriggerStay</code> needs Unity’s contact-pair setting that generates stay callbacks for triggers.</p>
 
+<p>A paused <code class="language-plaintext highlighter-rouge">Pausable</code> script still runs its contact events, so <code class="language-plaintext highlighter-rouge">On.CollisionEnter(Time.Resume())</code>
+resumes the game when something hits it. A script whose component is disabled runs none of them.
+<a href="/LunyScript-Docs/manual/time-and-pausing.html#collisions-while-the-game-is-paused">Time, pausing and gates</a>
+says when a paused game meets a contact at all, and which project setting pauses contact events too.</p>
+
 <h2 id="application-authority-and-messages">Application, authority and messages</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="n">Application</span><span class="p">.</span><span class="nf">Paused</span><span class="p">(</span><span class="n">Autosave</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
