@@ -63,18 +63,19 @@
 
 <span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">PlayerCamera</span> <span class="p">:</span> <span class="n">Script</span>
 <span class="p">{</span>
-    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">Screen</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">ChaseRig</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Screen</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+        <span class="n">ChaseRig</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span>
             <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Screen</span><span class="p">).</span><span class="nf">SetCamera</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">),</span>
             <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">).</span><span class="nf">Follow</span><span class="p">());</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Assign <code class="language-plaintext highlighter-rouge">Screen</code> and <code class="language-plaintext highlighter-rouge">ChaseRig</code> on the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component in the Inspector, press Play,
-and the chase rig follows this object.</p>
+<p>Assign <code class="language-plaintext highlighter-rouge">Screen</code> and <code class="language-plaintext highlighter-rouge">ChaseRig</code> on the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component in the Inspector, or name the
+objects <code class="language-plaintext highlighter-rouge">Screen</code> and <code class="language-plaintext highlighter-rouge">ChaseRig</code>, press Play, and the chase rig follows this object.</p>
 
 <h2 id="the-two-surfaces">The two surfaces</h2>
 
@@ -82,8 +83,8 @@ and the chase rig follows this object.</p>
 screen it occupies. <code class="language-plaintext highlighter-rouge">Camera</code> is about what a rig is aimed at: what it follows, what it looks at, and
 which objects it keeps in frame.</p>
 
-<p>Both take a declared asset input, which
-<a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> explains. A camera
+<p>Both take an object binding, which
+<a href="/LunyScript-Docs/manual/binding-scene-objects.html">Binding scene objects</a> explains. A camera
 rig is a Cinemachine rig; where Cinemachine is absent, every <code class="language-plaintext highlighter-rouge">View</code> and <code class="language-plaintext highlighter-rouge">Camera</code> block writes nothing
 and reports that once.</p>
 
@@ -122,7 +123,7 @@ bottom edge, both from 0 to 1, and <code class="language-plaintext highlighter-r
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Camera.For(rig).Follow(target)</code></td>
-      <td>The rig follows the object in that declared input.</td>
+      <td>The rig follows the object that binding holds.</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Camera.For(rig).LookAt()</code></td>
@@ -130,20 +131,20 @@ bottom edge, both from 0 to 1, and <code class="language-plaintext highlighter-r
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Camera.For(rig).LookAt(target)</code></td>
-      <td>The rig aims at the object in that declared input.</td>
+      <td>The rig aims at the object that binding holds.</td>
     </tr>
   </tbody>
 </table>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span>
     <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">).</span><span class="nf">Follow</span><span class="p">(),</span>         <span class="c1">// this object</span>
-    <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="nf">Follow</span><span class="p">(</span><span class="n">Avatar</span><span class="p">),</span>   <span class="c1">// a declared input</span>
+    <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="nf">Follow</span><span class="p">(</span><span class="n">Avatar</span><span class="p">),</span>   <span class="c1">// a binding</span>
     <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">).</span><span class="nf">LookAt</span><span class="p">(),</span>         <span class="c1">// this object</span>
-    <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="nf">LookAt</span><span class="p">(</span><span class="n">Avatar</span><span class="p">));</span>  <span class="c1">// a declared input</span>
+    <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="nf">LookAt</span><span class="p">(</span><span class="n">Avatar</span><span class="p">));</span>  <span class="c1">// a binding</span>
 </code></pre></div></div>
 
-<p>Calling <code class="language-plaintext highlighter-rouge">Follow()</code> with no target on a script whose host has no scene object throws; name a declared
-input instead.</p>
+<p>Calling <code class="language-plaintext highlighter-rouge">Follow()</code> with no target on a script whose host has no scene object throws; name a binding
+instead.</p>
 
 <h2 id="keeping-several-objects-in-frame">Keeping several objects in frame</h2>
 
@@ -169,18 +170,19 @@ writes nothing.</p>
 
 <span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">ArenaCamera</span> <span class="p">:</span> <span class="n">Script</span>
 <span class="p">{</span>
-    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">Screen</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">ArenaRig</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">PlayerOne</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">PlayerTwo</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Screen</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+        <span class="n">ArenaRig</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+        <span class="n">PlayerOne</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+        <span class="n">PlayerTwo</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span>
             <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Screen</span><span class="p">).</span><span class="nf">SetViewport</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">),</span>
             <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Screen</span><span class="p">).</span><span class="nf">SetCamera</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">),</span>
             <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="n">Targets</span><span class="p">.</span><span class="nf">Clear</span><span class="p">(),</span>
             <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="n">Targets</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">PlayerOne</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">),</span>
             <span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ArenaRig</span><span class="p">).</span><span class="n">Targets</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">PlayerTwo</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">));</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -199,8 +201,8 @@ set while the rest of the game keeps running:</p>
 <ul>
   <li><a href="/LunyScript-Docs/manual/player-input.html">Player input</a> — pairing each viewport with a
 local player’s actions.</li>
-  <li><a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> — declaring the
-view and rig inputs these calls take.</li>
+  <li><a href="/LunyScript-Docs/manual/binding-scene-objects.html">Binding scene objects</a> — declaring the
+view and rig bindings these calls take.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ViewFactory.html"><code class="language-plaintext highlighter-rouge">ViewFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CameraFactory.html"><code class="language-plaintext highlighter-rouge">CameraFactory</code></a>,

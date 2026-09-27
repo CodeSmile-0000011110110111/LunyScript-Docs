@@ -60,15 +60,14 @@
     <p>Send an object to a place along a route around walls, and find out whether it got there:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
 
 <span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Guard</span> <span class="p">:</span> <span class="n">Script</span>
 <span class="p">{</span>
-    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">Post</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
     <span class="k">public</span> <span class="n">Operation</span> <span class="n">Patrol</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
+        <span class="n">Post</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
         <span class="n">Patrol</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Patrol</span><span class="p">));</span>
         <span class="n">OnPost</span> <span class="p">=</span> <span class="n">Flag</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">OnPost</span><span class="p">));</span>
 
@@ -79,8 +78,8 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Put the script on an object that has a <code class="language-plaintext highlighter-rouge">NavMeshAgent</code>, in a scene with a navigation mesh, and assign
-an object in the scene to <code class="language-plaintext highlighter-rouge">Post</code> in the Inspector. When the object becomes ready it asks the
+<p>Put the script on an object that has a <code class="language-plaintext highlighter-rouge">NavMeshAgent</code>, in a scene with a navigation mesh and an
+object named <code class="language-plaintext highlighter-rouge">Post</code>, or assign another object in the scene to <code class="language-plaintext highlighter-rouge">Post</code> in the Inspector. When the object becomes ready it asks the
 navigation mesh for a route to the post and follows it. The move is an attempt on the operation
 <code class="language-plaintext highlighter-rouge">Patrol</code>, so the operation’s watches and conditions report how it ended.</p>
 

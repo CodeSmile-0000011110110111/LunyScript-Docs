@@ -174,11 +174,12 @@ rather than a force-mode parameter on <code class="language-plaintext highlighte
 Omit <code class="language-plaintext highlighter-rouge">WithRotation</code> and the current orientation is kept. A Rigidbody teleport must run in
 <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>; a CharacterController or an object with no body may run it from any event.</p>
 
-<p><code class="language-plaintext highlighter-rouge">Beacon</code> above is a landmark: an object in the scene, declared as
-<code class="language-plaintext highlighter-rouge">[Asset] public Asset&lt;GameObject&gt; Beacon { get; private set; }</code> and assigned in the Inspector. Its
-world position, and with <code class="language-plaintext highlighter-rouge">WithRotation(Beacon)</code> its world rotation, are read each time the teleport
-runs. A landmark that was destroyed, is not in a loaded scene, or is inactive is reported once and
-the teleport does nothing.</p>
+<p><code class="language-plaintext highlighter-rouge">Beacon</code> above is a landmark: an object in the scene, declared with <code class="language-plaintext highlighter-rouge">Beacon = Bind.Object();</code> and
+assigned in the Inspector or found in the scene by its name. Its world position, and with
+<code class="language-plaintext highlighter-rouge">WithRotation(Beacon)</code> its world rotation, are read each time the teleport runs. While the binding
+is unavailable, because it found nothing or its object was destroyed, the teleport does nothing and
+nothing is logged. A landmark that is inactive is reported once and the teleport does nothing until
+it is active again.</p>
 
 <p><code class="language-plaintext highlighter-rouge">Body.PositionDelta</code> is the world position after the previous physics step minus the world position
 at the step before that, as a <code class="language-plaintext highlighter-rouge">Vector3</code>. The first reading after a spawn is zero. Reading it anywhere in

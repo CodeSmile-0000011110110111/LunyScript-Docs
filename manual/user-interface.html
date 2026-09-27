@@ -245,21 +245,21 @@ processing, because its process mode is suppressed, is dropped rather than queue
 
 <h2 id="a-second-panel-on-another-object">A second panel on another object</h2>
 
-<p><code class="language-plaintext highlighter-rouge">Panel.For(input)</code> targets the <code class="language-plaintext highlighter-rouge">PanelRenderer</code> on a declared GameObject input instead of the object
-the script runs on. Names then resolve inside that panel’s document.</p>
+<p><code class="language-plaintext highlighter-rouge">Panel.For(binding)</code> targets the <code class="language-plaintext highlighter-rouge">PanelRenderer</code> on a bound object instead of the object the script
+runs on. Names then resolve inside that panel’s document.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">Hud</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Hud</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
 
 <span class="kt">var</span> <span class="n">hudHealth</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Hud</span><span class="p">).</span><span class="nf">Label</span><span class="p">(</span><span class="s">"health"</span><span class="p">);</span>
 </code></pre></div></div>
 
 <h2 id="placing-an-authored-fragment">Placing an authored fragment</h2>
 
-<p><code class="language-plaintext highlighter-rouge">Panel.Place(uxml)</code> clones a <code class="language-plaintext highlighter-rouge">VisualTreeAsset</code> into one of the nine reserved HUD regions. The
+<p><code class="language-plaintext highlighter-rouge">Panel.Place(uxml)</code> clones a declared <code class="language-plaintext highlighter-rouge">VisualTreeAsset</code> input into one of the nine reserved HUD regions. The
 handle it returns is the name scope for names inside that clone, so two clones of the same asset do
 not collide.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">VisualTreeAsset</span><span class="p">&gt;</span> <span class="n">PlayerPortrait</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">PlayerPortrait</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">VisualTreeAsset</span><span class="p">();</span>
 
 <span class="kt">var</span> <span class="n">first</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Place</span><span class="p">(</span><span class="n">PlayerPortrait</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="n">Anchor</span><span class="p">.</span><span class="n">TopLeft</span><span class="p">);</span>
 <span class="kt">var</span> <span class="n">second</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Place</span><span class="p">(</span><span class="n">PlayerPortrait</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="n">Anchor</span><span class="p">.</span><span class="n">TopRight</span><span class="p">);</span>
@@ -271,7 +271,7 @@ not collide.</p>
 <code class="language-plaintext highlighter-rouge">Bottom</code> and <code class="language-plaintext highlighter-rouge">BottomRight</code>. Each name is the UXML name of the region that receives the clone, so
 the HUD document must contain an element with that name; a HUD that does not is reported once and
 the placement does nothing. Insert <code class="language-plaintext highlighter-rouge">.In(view)</code> before <code class="language-plaintext highlighter-rouge">.At</code> to place into the panel on a declared
-view GameObject instead of the host panel: <code class="language-plaintext highlighter-rouge">Panel.Place(Portrait).In(SecondView).At(Anchor.Top)</code>.</p>
+view binding instead of the host panel: <code class="language-plaintext highlighter-rouge">Panel.Place(Portrait).In(SecondView).At(Anchor.Top)</code>.</p>
 
 <p>A <code class="language-plaintext highlighter-rouge">Place</code> whose UXML input has no asset assigned refuses the spawn, because a UXML fragment is a
 data asset LunyScript will not substitute. <code class="language-plaintext highlighter-rouge">Panel.Place(uxml)</code> without <code class="language-plaintext highlighter-rouge">.At</code> or <code class="language-plaintext highlighter-rouge">.In</code> is refused
@@ -283,8 +283,8 @@ while <code class="language-plaintext highlighter-rouge">Build()</code> runs.</p
 while the camera and the object move. <code class="language-plaintext highlighter-rouge">Panel.Place(uxml).Over()</code> clones the fragment into a screen
 panel and moves it to the screen point of the object the script runs on, every frame:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">VisualTreeAsset</span><span class="p">&gt;</span> <span class="n">DamageNumber</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">VisualTreeAsset</span><span class="p">&gt;</span> <span class="n">HitMarker</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DamageNumber</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">VisualTreeAsset</span><span class="p">();</span>
+<span class="n">HitMarker</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">VisualTreeAsset</span><span class="p">();</span>
 
 <span class="kt">var</span> <span class="n">popup</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Place</span><span class="p">(</span><span class="n">DamageNumber</span><span class="p">).</span><span class="nf">Over</span><span class="p">().</span><span class="nf">Offset</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">Rise</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
 <span class="kt">var</span> <span class="n">amount</span> <span class="p">=</span> <span class="n">popup</span><span class="p">.</span><span class="nf">Label</span><span class="p">(</span><span class="s">"amount"</span><span class="p">);</span>
@@ -353,7 +353,7 @@ once need several placements.</p>
 
 <h2 id="opening-and-closing-a-menu">Opening and closing a menu</h2>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">PauseMenu</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">PauseMenu</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
 
 <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Panel</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="n">PauseMenu</span><span class="p">).</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">ClosePause</span><span class="p">,</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Close</span><span class="p">(</span><span class="n">PauseMenu</span><span class="p">).</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>

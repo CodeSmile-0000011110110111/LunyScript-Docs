@@ -107,10 +107,9 @@ camera sees the renderer, is a different reading and is not on this surface.</p>
 modelling tool often keeps its meshes on child objects; declare the child you want as an input and
 name it with <code class="language-plaintext highlighter-rouge">Object.For</code>:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">Shield</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-<span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
 <span class="p">{</span>
+    <span class="n">Shield</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
     <span class="kt">var</span> <span class="n">shield</span> <span class="p">=</span> <span class="n">Object</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Shield</span><span class="p">);</span>
 
     <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">shield</span><span class="p">.</span><span class="nf">Hide</span><span class="p">());</span>
@@ -119,7 +118,9 @@ name it with <code class="language-plaintext highlighter-rouge">Object.For</code
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Assign <code class="language-plaintext highlighter-rouge">Shield</code> in the object’s Inspector. The handle <code class="language-plaintext highlighter-rouge">Object.For</code> returns has every call on this
+<p>Assign the child to <code class="language-plaintext highlighter-rouge">Shield</code> in the object’s Inspector. With nothing assigned, the binding takes the
+first object named <code class="language-plaintext highlighter-rouge">Shield</code> in the scene, which can be another object’s child;
+<a href="/LunyScript-Docs/manual/binding-scene-objects.html">Binding scene objects</a> has the rules. The handle <code class="language-plaintext highlighter-rouge">Object.For</code> returns has every call on this
 page, and it reaches the renderer on that object only.</p>
 
 <h2 id="colour">Colour</h2>

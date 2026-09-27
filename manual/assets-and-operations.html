@@ -78,30 +78,49 @@ spawns that prefab whenever it receives the message.</p>
 <p>An asset a script uses is a declared input. The script names what it needs, and the object assigns
 it. Nothing is looked up by path while the game runs.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Prefab</span> <span class="n">Shell</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-<span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">Texture2D</span><span class="p">&gt;</span> <span class="n">Poster</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-<span class="p">[</span><span class="nf">Asset</span><span class="p">(</span><span class="n">Resources</span> <span class="p">=</span> <span class="s">"Posters/Stripe"</span><span class="p">)]</span>
-<span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">Texture2D</span><span class="p">&gt;</span> <span class="n">Stripe</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Shell</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Prefab</span><span class="p">();</span>
+    <span class="n">Poster</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Texture2D</span><span class="p">();</span>
+    <span class="n">Stripe</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Texture2D</span><span class="p">().</span><span class="nf">FromResources</span><span class="p">(</span><span class="s">"Posters/Stripe"</span><span class="p">);</span>
+    <span class="n">Shot</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">AudioClip</span><span class="p">();</span>
+    <span class="n">Master</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">AudioMixer</span><span class="p">();</span>
+    <span class="n">Effects</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">AudioMixerGroup</span><span class="p">();</span>
+    <span class="n">Hud</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">VisualTreeAsset</span><span class="p">();</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
-<p>Put <code class="language-plaintext highlighter-rouge">[Asset]</code> on a public auto-property of a <code class="language-plaintext highlighter-rouge">partial</code> script and the generator writes the
-<code class="language-plaintext highlighter-rouge">DefineAssets</code> override. <code class="language-plaintext highlighter-rouge">Prefab</code> is the type that <code class="language-plaintext highlighter-rouge">Object.Create</code> and <code class="language-plaintext highlighter-rouge">Define.Pool</code> take; <code class="language-plaintext highlighter-rouge">Asset&lt;T&gt;</code> is for everything
-else. <code class="language-plaintext highlighter-rouge">Resources = key</code> names a Resources-relative, extension-free key that is used when the object
-assigns nothing.</p>
+<p>A partial script needs no property for these lines: the generator writes <code class="language-plaintext highlighter-rouge">Shell</code>, <code class="language-plaintext highlighter-rouge">Poster</code> and the
+others, and gives each input its property’s name. <code class="language-plaintext highlighter-rouge">FromResources(key)</code> names a Resources-relative,
+extension-free key that is used when the object assigns nothing.</p>
 
-<p>The explicit form does the same thing inside <code class="language-plaintext highlighter-rouge">Build()</code>:</p>
+<p>The input types, such as <code class="language-plaintext highlighter-rouge">Texture2D</code> and <code class="language-plaintext highlighter-rouge">AudioClip</code>, are LunyScript’s own types with Unity’s names.
+A script imports only <code class="language-plaintext highlighter-rouge">CodeSmile.LunyScript</code>, so it names no engine type, and it compiles in an
+assembly definition with No Engine References checked. <code class="language-plaintext highlighter-rouge">Prefab</code> is the type <code class="language-plaintext highlighter-rouge">Object.Create</code> and
+<code class="language-plaintext highlighter-rouge">Define.Pool</code> take, <code class="language-plaintext highlighter-rouge">AudioClip</code> the type <code class="language-plaintext highlighter-rouge">Audio.PlayOneShot</code> takes, and <code class="language-plaintext highlighter-rouge">VisualTreeAsset</code> the type
+<code class="language-plaintext highlighter-rouge">Panel.Place</code> takes. An object in the scene is bound with <code class="language-plaintext highlighter-rouge">Bind.Object()</code>; see
+<a href="/LunyScript-Docs/manual/binding-scene-objects.html">Binding scene objects</a>.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Stripe</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="n">Asset</span><span class="p">&lt;</span><span class="n">Texture2D</span><span class="p">&gt;(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Stripe</span><span class="p">),</span>
-    <span class="n">AssetSource</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">Texture2D</span><span class="p">&gt;(</span><span class="s">"Posters/Stripe"</span><span class="p">));</span>
-<span class="n">Shell</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Prefab</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Shell</span><span class="p">));</span>
+<p><code class="language-plaintext highlighter-rouge">[Asset]</code> on a public auto-property declares the same input:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Prefab</span> <span class="n">Shell</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="p">[</span><span class="nf">Asset</span><span class="p">(</span><span class="n">Resources</span> <span class="p">=</span> <span class="s">"Posters/Stripe"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="n">Texture2D</span> <span class="n">Stripe</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p>A local or a hand-written property has no generated property to name it, so its line names the
+input with <code class="language-plaintext highlighter-rouge">As</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">banner</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Texture2D</span><span class="p">().</span><span class="nf">As</span><span class="p">(</span><span class="s">"Banner"</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>An object assigns its inputs on the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component, one field per declared input,
 below the script. An input the object leaves empty resolves to that input’s own declared source, and
 then to the registered placeholder for its type, and the resolution is reported. A <code class="language-plaintext highlighter-rouge">GameObject</code> that
 the object assigned but that is not a prefab asset is refused at spawn, because <code class="language-plaintext highlighter-rouge">Object.Create</code> takes
-<code class="language-plaintext highlighter-rouge">Prefab</code>.</p>
+<code class="language-plaintext highlighter-rouge">Prefab</code>. C# on the object reads an input with <code class="language-plaintext highlighter-rouge">behaviour.GetAsset(script.Poster)</code>, which returns the
+Unity asset.</p>
 
 <h2 id="operations-work-that-takes-more-than-one-frame">Operations: work that takes more than one frame</h2>
 
@@ -213,7 +232,7 @@ so a retry is normally followed by another <code class="language-plaintext highl
 <h2 id="loading-and-releasing-an-asset">Loading and releasing an asset</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Guard</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Loading</span><span class="p">);</span>        <span class="c1">// a declared Prefab</span>
-<span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Poster</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">PosterLoad</span><span class="p">);</span>    <span class="c1">// a declared Asset&lt;T&gt;</span>
+<span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Poster</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">PosterLoad</span><span class="p">);</span>    <span class="c1">// a declared Texture2D</span>
 <span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">AssetSource</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">Texture2D</span><span class="p">&gt;(</span><span class="s">"Posters/Stripe"</span><span class="p">))</span>
     <span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="n">PosterLoad</span><span class="p">);</span>
 <span class="n">Asset</span><span class="p">.</span><span class="nf">Release</span><span class="p">(</span><span class="n">Loading</span><span class="p">);</span>
@@ -223,9 +242,9 @@ so a retry is normally followed by another <code class="language-plaintext highl
 outcome. <code class="language-plaintext highlighter-rouge">Asset.Release(handle)</code> drops this owner’s hold on what the attempt produced, and is refused
 until that attempt has succeeded.</p>
 
-<p><code class="language-plaintext highlighter-rouge">AssetSource.Resources&lt;T&gt;(key)</code> takes a relative, extension-free Resources path with no leading
-slash. A bound Inspector reference and <code class="language-plaintext highlighter-rouge">AssetSource.Resources</code> are the two sources this version
-offers.</p>
+<p><code class="language-plaintext highlighter-rouge">AssetSource.Resources&lt;T&gt;(key)</code> takes an input kind, such as <code class="language-plaintext highlighter-rouge">Prefab</code> or <code class="language-plaintext highlighter-rouge">Texture2D</code>, and a relative,
+extension-free Resources path with no leading slash. A bound Inspector reference and
+<code class="language-plaintext highlighter-rouge">AssetSource.Resources</code> are the two sources this version offers.</p>
 
 <h2 id="a-worked-example">A worked example</h2>
 
@@ -256,6 +275,8 @@ offers.</p>
 <h2 id="what-to-read-next">What to read next</h2>
 
 <ul>
+  <li><a href="/LunyScript-Docs/manual/binding-scene-objects.html">Binding scene objects</a> — <code class="language-plaintext highlighter-rouge">Bind.Object()</code>
+and what a binding does when its object is missing.</li>
   <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> —
 <code class="language-plaintext highlighter-rouge">Object.Create</code> and the rest of the lifetime surface.</li>
   <li><a href="/LunyScript-Docs/manual/object-pools.html">Object pools</a> — reusing prefab copies with

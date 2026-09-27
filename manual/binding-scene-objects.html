@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Binding scene objects | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Binding scene objects" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/binding-scene-objects.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/binding-scene-objects.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Binding scene objects" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Binding scene objects","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/binding-scene-objects.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Binding scene objects</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Bind an object in the scene and act on it:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Lighthouse</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Beacon</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Beacon</span><span class="p">).</span><span class="nf">SetColor</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0.6</span><span class="p">,</span> <span class="m">0.1</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Beacon</code> binds the object the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code>’s Inspector assigns to the <code class="language-plaintext highlighter-rouge">Beacon</code> field. With
+nothing assigned, it binds the first object named <code class="language-plaintext highlighter-rouge">Beacon</code> in the same scene as the object the script
+runs on, whether that object is active or not.</p>
+
+<h2 id="where-the-object-comes-from">Where the object comes from</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Order</th>
+      <th>What the binding takes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>The object assigned in the Inspector, whatever its name</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>The first object in the script’s own scene that the search finds</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Nothing: the binding is unavailable</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A binding never creates an object in place of a missing one. The search finds objects by the
+declared name, or by the conditions the line writes instead:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Boss</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">().</span><span class="nf">WithTag</span><span class="p">(</span><span class="s">"Boss"</span><span class="p">);</span>
+<span class="n">Third</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">().</span><span class="nf">WithTag</span><span class="p">(</span><span class="s">"Boss"</span><span class="p">).</span><span class="nf">Named</span><span class="p">(</span><span class="s">"ThirdBoss"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">WithTag</code> and <code class="language-plaintext highlighter-rouge">Named</code> replace the declared name, and every condition written must hold, so <code class="language-plaintext highlighter-rouge">Third</code>
+binds an object named <code class="language-plaintext highlighter-rouge">ThirdBoss</code> that carries the <code class="language-plaintext highlighter-rouge">Boss</code> tag. An object assigned in the Inspector is
+used as it is: the conditions apply to the search only. When two objects match, the first one found
+is bound, the spawn reports both, and which one is first can differ between runs; give the object a
+name no other object in the scene has.</p>
+
+<h2 id="when-the-object-is-missing">When the object is missing</h2>
+
+<p>A binding that found nothing, or whose object was destroyed or despawned, is unavailable:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Witch</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Witch</span><span class="p">.</span><span class="n">IsValid</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Witch</span><span class="p">).</span><span class="nf">Show</span><span class="p">()));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">IsValid</code> is false, every block that acts through the binding does nothing, and nothing is logged:
+a level that has no witch is an ordinary level. A read through it gives its default, so
+<code class="language-plaintext highlighter-rouge">Object.For(Witch).IsVisible</code> is false. C# on the object reads the bound object with
+<code class="language-plaintext highlighter-rouge">(GameObject)behaviour.GetObject(script.Witch)</code>, which is null while the binding is unavailable.</p>
+
+<h2 id="requiring-the-object-or-finding-it-later">Requiring the object, or finding it later</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Door</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">().</span><span class="nf">MustExist</span><span class="p">();</span>
+<span class="n">Guard</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">().</span><span class="nf">WithTag</span><span class="p">(</span><span class="s">"Enemy"</span><span class="p">).</span><span class="nf">LiveRebind</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">MustExist()</code> refuses to start the script on an object whose binding found nothing, and the error
+names the binding. An object that ends later leaves the binding unavailable, and the script keeps
+running.</p>
+
+<p><code class="language-plaintext highlighter-rouge">LiveRebind()</code> searches again, before the script’s next update, while the binding holds nothing: after
+the search found nothing at the start, and after the object it found ended. It searches when a script
+spawned, when LunyScript created, spawned or destroyed an object, and when a scene finished loading.
+An object assigned in the Inspector is never replaced by a search. A binding cannot be both:
+<code class="language-plaintext highlighter-rouge">MustExist().LiveRebind()</code> does not compile.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Binding</span><span class="p">(</span><span class="n">Guard</span><span class="p">).</span><span class="nf">Changed</span><span class="p">(</span><span class="n">Swaps</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Binding</span><span class="p">(</span><span class="n">Guard</span><span class="p">).</span><span class="nf">Unavailable</span><span class="p">(</span><span class="n">Alarm</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Changed</code> runs after an update in which the binding took a different object or lost its object.
+<code class="language-plaintext highlighter-rouge">Unavailable</code> runs only when it lost it. A replacement found in the same update counts once, as a
+change.</p>
+
+<h2 id="naming-a-binding-yourself">Naming a binding yourself</h2>
+
+<p>A binding’s name is what the Inspector field is labelled and matched by. The property the generator
+writes for the line gives the binding its own name. A local or a hand-written property names it with
+<code class="language-plaintext highlighter-rouge">As</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">guard</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">().</span><span class="nf">As</span><span class="p">(</span><span class="s">"Guard"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="what-takes-a-binding">What takes a binding</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Object.For</code>, <code class="language-plaintext highlighter-rouge">Camera.For</code>, <code class="language-plaintext highlighter-rouge">View.For</code>, <code class="language-plaintext highlighter-rouge">Audio.For</code>, <code class="language-plaintext highlighter-rouge">Particles.For</code>, <code class="language-plaintext highlighter-rouge">Panel.For</code>, <code class="language-plaintext highlighter-rouge">Panel.Open</code>,
+<code class="language-plaintext highlighter-rouge">Panel.Close</code>, <code class="language-plaintext highlighter-rouge">Navigation.For</code>, <code class="language-plaintext highlighter-rouge">Motion.TeleportTo</code>, <code class="language-plaintext highlighter-rouge">Audio.Listener.SetTarget</code>, <code class="language-plaintext highlighter-rouge">AttachedTo</code>, and a
+spawn placed at a landmark all take an <code class="language-plaintext highlighter-rouge">ObjectBinding</code>. An asset such as an <code class="language-plaintext highlighter-rouge">AudioClip</code> passed to them
+does not compile.</p>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> — the asset inputs a
+script declares beside its bindings.</li>
+  <li><a href="/LunyScript-Docs/manual/compile-time-checks.html">Compile-time checks</a> — LUNY008, which asks
+for scripts in an assembly definition with No Engine References.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectBinding.html"><code class="language-plaintext highlighter-rouge">ObjectBinding</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectBindingBuilder.html"><code class="language-plaintext highlighter-rouge">ObjectBindingBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.BindingWatchBuilder.html"><code class="language-plaintext highlighter-rouge">BindingWatchBuilder</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
