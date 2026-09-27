@@ -84,6 +84,19 @@ a piece of scenery that animates on a fixed path.</p>
 <a href="/LunyScript-Docs/manual/motion.html">Motion</a> instead, which routes the same intent through
 whichever component the object actually has.</p>
 
+<h2 id="one-vector3-or-three-numbers">One Vector3 or three numbers</h2>
+
+<p>Every verb on this page that takes three numbers also takes one <code class="language-plaintext highlighter-rouge">Vector3</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Transform</span><span class="p">.</span><span class="nf">SetWorldPosition</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1.25</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+<span class="n">Transform</span><span class="p">.</span><span class="nf">SetWorldPosition</span><span class="p">(</span><span class="n">Spawn</span><span class="p">);</span>             <span class="c1">// a Vector3 variable</span>
+<span class="n">Transform</span><span class="p">.</span><span class="nf">SetWorldPosition</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1.25</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>The two forms write the same pose. A <code class="language-plaintext highlighter-rouge">Vector3</code> that holds a rotation holds degrees about the X, Y
+and Z axes, in the order <code class="language-plaintext highlighter-rouge">Rotation.ToEuler()</code> returns them. A <code class="language-plaintext highlighter-rouge">Vector2</code> is not accepted, because
+nothing says which of the three axes it would leave out.</p>
+
 <h2 id="moving-by-an-amount">Moving by an amount</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Transform</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">0.02</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>                 <span class="c1">// the object's own axes</span>
@@ -91,6 +104,9 @@ whichever component the object actually has.</p>
 <span class="n">Transform</span><span class="p">.</span><span class="nf">RotateBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">InLocalSpace</span><span class="p">();</span>   <span class="c1">// degrees, in the parent frame</span>
 <span class="n">Transform</span><span class="p">.</span><span class="nf">ScaleBy</span><span class="p">(</span><span class="m">1.1</span><span class="p">);</span>                       <span class="c1">// one factor on all three axes</span>
 <span class="n">Transform</span><span class="p">.</span><span class="nf">ScaleBy</span><span class="p">(</span><span class="m">1.1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">);</span>                 <span class="c1">// one factor per axis</span>
+<span class="n">Transform</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="n">Step</span><span class="p">);</span>                       <span class="c1">// Step, Spin and Stretch are</span>
+<span class="n">Transform</span><span class="p">.</span><span class="nf">RotateBy</span><span class="p">(</span><span class="n">Spin</span><span class="p">).</span><span class="nf">InWorldSpace</span><span class="p">();</span>      <span class="c1">// Vector3 variables</span>
+<span class="n">Transform</span><span class="p">.</span><span class="nf">ScaleBy</span><span class="p">(</span><span class="n">Stretch</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">MoveBy</code> and <code class="language-plaintext highlighter-rouge">RotateBy</code> default to the object’s own oriented axes. Add <code class="language-plaintext highlighter-rouge">InWorldSpace()</code> or
@@ -103,6 +119,7 @@ takes no frame, because scale is always local.</p>
 <span class="n">Transform</span><span class="p">.</span><span class="nf">RotateTo</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">180</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">1.5</span><span class="p">);</span>
 <span class="n">Transform</span><span class="p">.</span><span class="nf">ScaleTo</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">500</span><span class="p">).</span><span class="nf">Milliseconds</span><span class="p">();</span>
 <span class="n">Transform</span><span class="p">.</span><span class="nf">ScaleTo</span><span class="p">(</span><span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">0.5</span><span class="p">).</span><span class="nf">Seconds</span><span class="p">();</span>
+<span class="n">Transform</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">Home</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>               <span class="c1">// a Vector3 destination</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">Over(amount)</code> is required; the chain is incomplete without it. The amount is seconds unless a unit
@@ -116,9 +133,11 @@ and its next run starts a new one from there toward the new destination.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Transform</span><span class="p">.</span><span class="nf">LookAt</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
 <span class="n">Transform</span><span class="p">.</span><span class="nf">LookAt</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">WithUp</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="p">-</span><span class="m">1</span><span class="p">);</span>
+<span class="n">Transform</span><span class="p">.</span><span class="nf">LookAt</span><span class="p">(</span><span class="n">Target</span><span class="p">).</span><span class="nf">WithUp</span><span class="p">(</span><span class="n">Up</span><span class="p">);</span>
 
 <span class="n">Transform</span><span class="p">.</span><span class="nf">RotateAround</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">By</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">45</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">KeepRotation</span><span class="p">();</span>
 <span class="n">Transform</span><span class="p">.</span><span class="nf">RotateAround</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">By</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">45</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">RotateWithOrbit</span><span class="p">();</span>
+<span class="n">Transform</span><span class="p">.</span><span class="nf">RotateAround</span><span class="p">(</span><span class="n">Pivot</span><span class="p">).</span><span class="nf">By</span><span class="p">(</span><span class="n">Spin</span><span class="p">).</span><span class="nf">KeepRotation</span><span class="p">();</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">LookAt</code> uses world up unless <code class="language-plaintext highlighter-rouge">WithUp</code> names another direction. <code class="language-plaintext highlighter-rouge">RotateAround</code> is incomplete until
@@ -129,9 +148,9 @@ travelled.</p>
 <h2 id="writing-an-absolute-pose">Writing an absolute pose</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Transform</span><span class="p">.</span><span class="nf">SetWorldPosition</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1.25</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
-<span class="n">Transform</span><span class="p">.</span><span class="nf">SetLocalPosition</span><span class="p">(</span><span class="n">Probe</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Probe</span><span class="p">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">Probe</span><span class="p">.</span><span class="n">Z</span><span class="p">);</span>
+<span class="n">Transform</span><span class="p">.</span><span class="nf">SetLocalPosition</span><span class="p">(</span><span class="n">Probe</span><span class="p">);</span>
 <span class="n">Transform</span><span class="p">.</span><span class="nf">SetWorldRotation</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">90</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
-<span class="n">Transform</span><span class="p">.</span><span class="nf">SetLocalRotation</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">90</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+<span class="n">Transform</span><span class="p">.</span><span class="nf">SetLocalRotation</span><span class="p">(</span><span class="n">Heading</span><span class="p">);</span>
 <span class="n">Transform</span><span class="p">.</span><span class="nf">SetScale</span><span class="p">(</span><span class="m">1.5</span><span class="p">);</span>
 <span class="n">Transform</span><span class="p">.</span><span class="nf">SetScale</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">);</span>
 </code></pre></div></div>
@@ -158,7 +177,7 @@ verbs and reads, aimed at that object:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
     <span class="n">Transform</span><span class="p">.</span><span class="nf">Child</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">SetScale</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">Math</span><span class="p">.</span><span class="nf">Max</span><span class="p">(</span><span class="m">0.03</span><span class="p">,</span> <span class="n">Charge</span> <span class="p">/</span> <span class="m">25</span><span class="p">),</span> <span class="m">1</span><span class="p">),</span>
-    <span class="n">Transform</span><span class="p">.</span><span class="nf">Child</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">SetLocalPosition</span><span class="p">(</span><span class="n">Probe</span><span class="p">.</span><span class="n">X</span><span class="p">,</span> <span class="n">Probe</span><span class="p">.</span><span class="n">Y</span><span class="p">,</span> <span class="n">Probe</span><span class="p">.</span><span class="n">Z</span><span class="p">),</span>
+    <span class="n">Transform</span><span class="p">.</span><span class="nf">Child</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">SetLocalPosition</span><span class="p">(</span><span class="n">Probe</span><span class="p">),</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="n">HasParent</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Height</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="n">Parent</span><span class="p">.</span><span class="n">WorldPositionY</span><span class="p">)));</span>
 </code></pre></div></div>
 

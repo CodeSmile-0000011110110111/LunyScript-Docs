@@ -92,11 +92,14 @@ and reports that once.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Screen</span><span class="p">).</span><span class="nf">SetCamera</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">);</span>
 <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Screen</span><span class="p">).</span><span class="nf">SetViewport</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">);</span>
+<span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Screen</span><span class="p">).</span><span class="nf">SetViewport</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vector2</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.5</span><span class="p">),</span> <span class="k">new</span> <span class="nf">Vector2</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">));</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">SetCamera</code> selects which rig this view renders, replacing whatever it rendered before.
 <code class="language-plaintext highlighter-rouge">SetViewport(x, y, width, height)</code> takes fractions of the screen: <code class="language-plaintext highlighter-rouge">x</code> is the left edge and <code class="language-plaintext highlighter-rouge">y</code> the
-bottom edge, both from 0 to 1, and <code class="language-plaintext highlighter-rouge">width</code> and <code class="language-plaintext highlighter-rouge">height</code> are how much of the screen the view covers.</p>
+bottom edge, both from 0 to 1, and <code class="language-plaintext highlighter-rouge">width</code> and <code class="language-plaintext highlighter-rouge">height</code> are how much of the screen the view covers.
+<code class="language-plaintext highlighter-rouge">SetViewport(position, size)</code> takes the same four numbers as two <code class="language-plaintext highlighter-rouge">Vector2</code> values, the corner and the
+size, so the two lines above set the same viewport.</p>
 
 <p>Two-player split screen is two views, each with its own viewport and rig:</p>
 
