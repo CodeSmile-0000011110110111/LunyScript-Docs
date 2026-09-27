@@ -85,7 +85,7 @@ The <code class="language-plaintext highlighter-rouge">If</code> row reads “Fa
 checkbox under <strong>Values</strong> and press <strong>Apply</strong>: the window shows “Applied. Read back: true”, and from
 the next frame the <code class="language-plaintext highlighter-rouge">If</code> row reads “True: ran Then” with a green highlight. <code class="language-plaintext highlighter-rouge">Speed</code> shows 6.</p>
 
-<p><img src="/LunyScript-Docs/assets/runtime-debugger.png" alt="The Debugger window showing the Values example: running scripts, the script flow with results, ages and each block's Fire button and each If's Force list, and the values with their editors" /></p>
+<p><img src="/LunyScript-Docs/assets/runtime-debugger.png" alt="The Debugger window showing the Values example: running scripts, the script flow with results, ages and each block's Break toggle, Fire button and each If's Force list, and the values with their editors, Break toggles and the block that last changed each one" /></p>
 
 <p>The debugger shows what a script is doing while the game runs, without stopping the game or changing
 the script. It is a view of the running script, not a way to write one: the script stays C#.</p>
@@ -178,6 +178,65 @@ as any failure does.</p>
 <code class="language-plaintext highlighter-rouge">Speed</code> shows 6, while <code class="language-plaintext highlighter-rouge">Alert</code> stays false. The list shows the forced branch in amber until you
 choose <strong>Condition</strong>, which gives the <code class="language-plaintext highlighter-rouge">If</code> its condition back. An <code class="language-plaintext highlighter-rouge">If</code> also stops being forced when
 its object despawns and when Play Mode ends.</p>
+
+<h2 id="pausing-when-a-block-runs-or-a-value-changes">Pausing when a block runs or a value changes</h2>
+
+<p>Every block row also has a <strong>Break</strong> toggle, and so does every value under <strong>Values</strong>. Turn on
+<strong>Break</strong> on the guard’s <code class="language-plaintext highlighter-rouge">.Then(Speed.Set(6))</code> row, then tick <code class="language-plaintext highlighter-rouge">Alert</code> and press <strong>Apply</strong>: Play Mode
+pauses at the end of the next frame, because that frame ran the block. The rest of the frame still
+runs, including the other scripts, before Play Mode pauses. The toggle is red while it is on.</p>
+
+<p><strong>Break</strong> on a value pauses Play Mode at the end of the frame in which the value changes. A write that
+stores the value the variable already holds is not a change, so the guard’s <code class="language-plaintext highlighter-rouge">Speed.Set(2)</code> running
+every frame does not pause while <code class="language-plaintext highlighter-rouge">Speed</code> is already 2. Your own <strong>Apply</strong> does not pause either. A
+value declared with <code class="language-plaintext highlighter-rouge">.Shared()</code> pauses when any script that shares it changes it.</p>
+
+<p>While Play Mode is paused at a breakpoint, a red line under the header says why: which block ran, or
+which value changed and which script, object and block changed it. <strong>Show script</strong> shows that script
+when the window shows another one. Under the line, a list shows what the shown script did since the
+previous pause, oldest first, with each entry’s time relative to the breakpoint; the entry of the
+block whose breakpoint paused is red. Double-click an entry to open its line. The line and the list
+are shown only while Play Mode is paused at a breakpoint; press Play Mode’s pause button to continue.</p>
+
+<p><img src="/LunyScript-Docs/assets/runtime-debugger-breakpoint.png" alt="The Debugger window paused at a breakpoint on a shared value: the red line names the value, the script and object that changed it and the line of the block that did, and the list under it shows what the shown script did before the pause" /></p>
+
+<p>A breakpoint stays until you turn it off, its object despawns, Play Mode ends, or you close the
+Debugger window. Fire on a block with a breakpoint also pauses Play Mode, because the block ran.</p>
+
+<h2 id="who-changed-a-value">Who changed a value</h2>
+
+<p>Under every value, a line says what changed it last and how long ago:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Line</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Changed by this script, SetNumber at line 17</td>
+      <td>a block of the shown script, on the line given</td>
+    </tr>
+    <tr>
+      <td>Changed by PlayerScript on Player, AddNumber at line 31</td>
+      <td>a shared value another script changed</td>
+    </tr>
+    <tr>
+      <td>Changed by a debugger edit</td>
+      <td>your <strong>Apply</strong></td>
+    </tr>
+    <tr>
+      <td>Not changed in this lifetime</td>
+      <td>the value it started with</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A value shared with <code class="language-plaintext highlighter-rouge">.Shared()</code> names whichever script and object changed it, which can be another
+script on another object. A block written with a C# operator shows the line of the call it belongs
+to. The Editor keeps only the last change of each value, not a history.</p>
 
 <h2 id="the-console-window">The Console window</h2>
 
