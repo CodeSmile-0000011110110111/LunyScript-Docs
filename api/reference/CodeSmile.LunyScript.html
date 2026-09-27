@@ -187,6 +187,12 @@ that name.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CreatePrefabObjectBlock.html">CreatePrefabObjectBlock</a></dt>
+      <dd><p>What <code>Object.Create(prefab)</code> and its chain build: produces a fresh copy of a declared prefab
+input, places it, parents it, and holds it in an owned-object slot when the chain named one.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.DeactivateObjectBlock.html">DeactivateObjectBlock</a></dt>
       <dd><p>What <code>Object.Deactivate()</code> and <code>Object.Deactivate(name)</code> build: deactivates the
 object the script runs on, or one the script created.</p>
@@ -194,8 +200,14 @@ object the script runs on, or one the script created.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.DespawnObjectBlock.html">DespawnObjectBlock</a></dt>
-      <dd><p>What <code>Object.Despawn()</code> and <code>Object.Despawn(name)</code> build: ends the object the
-script runs on, or destroys one the script created.</p>
+      <dd><p>What <code>Object.Despawn()</code> and <code>Object.Despawn(name)</code> build: returns a pooled object to the
+pool it came from.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.DestroyObjectBlock.html">DestroyObjectBlock</a></dt>
+      <dd><p>What <code>Object.Destroy()</code> and <code>Object.Destroy(name)</code> build: permanently ends the object the
+script runs on, or one the script produced.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -529,9 +541,8 @@ across every instance.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html">SpawnObjectBlock</a></dt>
-      <dd><p>What <code>Object.Spawn(prefab)</code> and its chain build: produces an object from a declared
-prefab input, places it, parents it, and holds it in an owned-object slot when the chain
-named one.</p>
+      <dd><p>What <code>Object.Spawn(pool)</code> and its chain build: checks one entry out of a declared pool, places
+it, parents it, and holds it in an owned-object slot when the chain named one.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -880,6 +891,26 @@ synchronous collection call produces.</p>
       <dd><p>What <code>Slots.TryAdd(item)</code> returns: one synchronous collection call whose own outcome is
 read. It has two consumers and takes exactly one of them: <code>If(Slots.TryAdd(item))</code>
 branches on the outcome, and <a class="xref" href="CodeSmile.LunyScript.CollectionTryBuilder.html#CodeSmile_LunyScript_CollectionTryBuilder_As_CodeSmile_LunyScript_CollectionResult_System_String_System_Int32_">As(CollectionResult, string, int)</a> stores it in a <a class="xref" href="CodeSmile.LunyScript.CollectionResult.html">CollectionResult</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CreateBuilder.html">CreateBuilder</a></dt>
+      <dd><p>What <code>Object.Create(prefab)</code> returns: a fresh copy of a prefab with no placement yet. Add
+<a class="xref" href="CodeSmile.LunyScript.CreateBuilder.html#CodeSmile_LunyScript_CreateBuilder_At_CodeSmile_LunyScript_Vector3ValueBlock_">At(Vector3ValueBlock)</a>, <a class="xref" href="CodeSmile.LunyScript.CreateBuilder.html#CodeSmile_LunyScript_CreateBuilder_ChildOf_System_String_System_String_System_Int32_">ChildOf(string, string, int)</a>, <a class="xref" href="CodeSmile.LunyScript.CreateBuilder.html#CodeSmile_LunyScript_CreateBuilder_Into_System_String_System_String_System_Int32_">Into(string, string, int)</a>, <a class="xref" href="CodeSmile.LunyScript.CreateBuilder.html#CodeSmile_LunyScript_CreateBuilder_ForPlayer_System_Int32_System_String_System_Int32_">ForPlayer(int, string, int)</a>
+and <a class="xref" href="CodeSmile.LunyScript.CreateBuilder.html#CodeSmile_LunyScript_CreateBuilder_SurvivesCaller_System_String_System_Int32_">SurvivesCaller(string, int)</a> in any order, or use it as a block, which creates the copy at the
+prefab's own pose.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CreateFramedBuilder.html">CreateFramedBuilder</a></dt>
+      <dd><p>What a frame modifier returns: a create whose placement and frame are both stated. It offers
+no second frame clause, which is what makes a conflicting pair uncompilable.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CreatePlacedBuilder.html">CreatePlacedBuilder</a></dt>
+      <dd><p>What <code>Object.Create(prefab).At(...)</code> returns: a create whose placement is stated and
+whose frame is still the default, the parent's.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1330,7 +1361,7 @@ visual members the <code>Object</code> surface has for the object the script run
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.ObjectLifetimeFactory.html">ObjectLifetimeFactory</a></dt>
-      <dd><p>The <code>Object</code> surface inside <code>Build()</code>: builds the blocks that create, activate,
+      <dd><p>The <code>Object</code> surface inside <code>Build()</code>: builds the blocks that create, spawn, activate,
 deactivate and end objects this script owns, and the blocks that hide, show and tint an object
 and write its material Number properties.</p>
 </dd>
@@ -1472,6 +1503,42 @@ each declaring one action and handing back the typed handle that reads it.</p>
       <dd><p>What <code>When.Player(n)</code> and <code>When.Player()</code> return. Its four methods register the
 blocks that run when this script sees a local player pair, leave, lose a device or get it
 back.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.Pool.html">Pool</a></dt>
+      <dd><p>A handle to one declared object pool of a script: which prefab it reuses, how many entries it may
+hold, how many it prepares in advance, and where a spawn from it goes when the call names no
+placement. Returned by <code>Define.Pool</code> inside <code>Build()</code>; <code>Object.Spawn</code> takes it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.PoolBuilder.html">PoolBuilder</a></dt>
+      <dd><p>What <code>Define.Pool(name).From(prefab)</code> returns: a pool declaration that converts to its
+<a class="xref" href="CodeSmile.LunyScript.Pool.html">Pool</a> handle, or takes a hard cap, a prewarm count and a default placement first.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.PoolDefineBuilder.html">PoolDefineBuilder</a></dt>
+      <dd><p>What <code>Define.Pool(name)</code> returns: a pool declaration that still needs the prefab it reuses.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.PoolFramedBuilder.html">PoolFramedBuilder</a></dt>
+      <dd><p>What a frame modifier returns on a pool declaration: a default placement whose frame is stated, which
+can still take a hard cap and a prewarm count.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.PoolPlacedBuilder.html">PoolPlacedBuilder</a></dt>
+      <dd><p>What <code>SpawnAt</code> returns: a pool declaration with a default placement, which can still spread over a
+disk or a sphere, take a frame, and take a hard cap and a prewarm count.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.PoolShapedBuilder.html">PoolShapedBuilder</a></dt>
+      <dd><p>What a shape returns on a pool declaration: a spread default placement, which can still take a frame,
+a hard cap and a prewarm count.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1727,22 +1794,22 @@ clause.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html">SpawnBuilder</a></dt>
-      <dd><p>What <code>Object.Spawn(prefab)</code> returns: a spawn with no placement yet. Add
-<a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html#CodeSmile_LunyScript_SpawnBuilder_At_CodeSmile_LunyScript_Vector3ValueBlock_">At(Vector3ValueBlock)</a>, <a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html#CodeSmile_LunyScript_SpawnBuilder_ChildOf_System_String_System_String_System_Int32_">ChildOf(string, string, int)</a>, <a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html#CodeSmile_LunyScript_SpawnBuilder_Into_System_String_System_String_System_Int32_">Into(string, string, int)</a> and
-<a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html#CodeSmile_LunyScript_SpawnBuilder_ForPlayer_System_Int32_System_String_System_Int32_">ForPlayer(int, string, int)</a> in any order, or use it as a block, which spawns the prefab at its
-own pose.</p>
+      <dd><p>What <code>Object.Spawn(pool)</code> returns: a checkout of one pooled object with no placement of its own
+yet. Add <a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html#CodeSmile_LunyScript_SpawnBuilder_At_CodeSmile_LunyScript_Vector3ValueBlock_">At(Vector3ValueBlock)</a>, <a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html#CodeSmile_LunyScript_SpawnBuilder_ChildOf_System_String_System_String_System_Int32_">ChildOf(string, string, int)</a>, <a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html#CodeSmile_LunyScript_SpawnBuilder_Into_System_String_System_String_System_Int32_">Into(string, string, int)</a>,
+<a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html#CodeSmile_LunyScript_SpawnBuilder_ForPlayer_System_Int32_System_String_System_Int32_">ForPlayer(int, string, int)</a> and <a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html#CodeSmile_LunyScript_SpawnBuilder_SurvivesCaller_System_String_System_Int32_">SurvivesCaller(string, int)</a> in any order, finish with
+<a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html#CodeSmile_LunyScript_SpawnBuilder_As_CodeSmile_LunyScript_Operation_">As(Operation)</a> to observe the attempt, or use it as a block.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.SpawnFramedBuilder.html">SpawnFramedBuilder</a></dt>
-      <dd><p>What a frame modifier returns: a spawn whose placement and frame are both stated. It offers
-no second frame clause, which is what makes a conflicting pair uncompilable.</p>
+      <dd><p>What a frame modifier returns: a checkout whose placement and frame are both stated. It offers no
+second frame clause, which is what makes a conflicting pair uncompilable.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.SpawnPlacedBuilder.html">SpawnPlacedBuilder</a></dt>
-      <dd><p>What <code>Object.Spawn(prefab).At(...)</code> returns: a spawn whose placement is stated and
-whose frame is still the default, the parent's.</p>
+      <dd><p>What <code>Object.Spawn(pool).At(...)</code> returns: a checkout with its own exact placement, which can
+still spread over a disk or a sphere and take a frame.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1753,9 +1820,14 @@ coordinates are read.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.SpawnRequest.html">SpawnRequest</a></dt>
-      <dd><p>One authored <code>Object.Spawn</code> that has run and has not been applied yet: which prefab
-input to produce from, where the produced object goes, what it is parented to, and which
-owned-object slot holds it.</p>
+      <dd><p>One authored <code>Object.Create(prefab)</code> or <code>Object.Spawn(pool)</code> that has run and has not
+been applied yet: which prefab input or pool to produce from, where the produced object goes, what
+it is parented to, and which owned-object slot holds it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SpawnShapedBuilder.html">SpawnShapedBuilder</a></dt>
+      <dd><p>What a shape returns: a checkout spread over a disk or a sphere, which can still take a frame.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2196,6 +2268,14 @@ the spawn is refused with a message naming the missing service.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.IScriptObjectPooler.html">IScriptObjectPooler</a></dt>
+      <dd><p>The part of a host that can keep reusable copies of a prefab: a storage object in its scene, inactive
+entries under it, and the move of one entry out into the scene and back. A host that provides it
+declares <a class="xref" href="CodeSmile.LunyScript.ScriptServices.html#CodeSmile_LunyScript_ScriptServices_RuntimeObjectPooling">RuntimeObjectPooling</a> by implementing this interface; a host that
+does not cannot run a script containing an <code>Object.Spawn</code> block.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.IScriptObjectSpawner.html">IScriptObjectSpawner</a></dt>
       <dd><p>The part of a host that can produce a new object from a prefab. A host that provides it
 declares <a class="xref" href="CodeSmile.LunyScript.ScriptServices.html#CodeSmile_LunyScript_ScriptServices_RuntimeObjectSpawning">RuntimeObjectSpawning</a> by implementing this interface;
@@ -2294,6 +2374,12 @@ the application as a whole, rather than about one object.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.DiskPlane.html">DiskPlane</a></dt>
+      <dd><p>The two axes a spawn's <code>InRadius</code> disk lies on. The default is <a class="xref" href="CodeSmile.LunyScript.DiskPlane.html#CodeSmile_LunyScript_DiskPlane_XZ">XZ</a>, the ground
+plane of a 3D scene; <a class="xref" href="CodeSmile.LunyScript.DiskPlane.html#CodeSmile_LunyScript_DiskPlane_XY">XY</a> is the plane a 2D scene draws on.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.Easing.html">Easing</a></dt>
       <dd><p>The curve an eased timed move follows: how far along its path the object is at each point of
 the duration. Written in <code>Ease(...)</code> after <code>Over(amount)</code>, or after its unit call such
@@ -2342,7 +2428,7 @@ Button, Number, Vector2 and Vector3.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.LifetimeRequest.html">LifetimeRequest</a></dt>
-      <dd><p>What an authored <code>Object.Activate()</code>, <code>Object.Deactivate()</code> or
+      <dd><p>What an authored <code>Object.Activate()</code>, <code>Object.Deactivate()</code>, <code>Object.Destroy()</code> or
 <code>Object.Despawn()</code> asked the runner to do to the object a script runs on.</p>
 </dd>
     </dl>

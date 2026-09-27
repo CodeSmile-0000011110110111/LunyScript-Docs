@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Class SpawnObjectBlock | LunyScript API Reference ">
       
-      <meta name="description" content="What Object.Spawn(prefab) and its chain build: produces an object from a declared prefab input, places it, parents it, and holds it in an owned-object slot when the chain named one.">
+      <meta name="description" content="What Object.Spawn(pool) and its chain build: checks one entry out of a declared pool, places it, parents it, and holds it in an owned-object slot when the chain named one.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_SpawnObjectBlock" data-uid="CodeSmile.LunyScript.SpawnObjectBlock" class="text-break">
-Class SpawnObjectBlock  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L33"><i class="bi bi-code-slash"></i></a>
+Class SpawnObjectBlock  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L34"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,9 +85,8 @@ Class SpawnObjectBlock  <a class="header-action link-secondary" title="View sour
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>What <code>Object.Spawn(prefab)</code> and its chain build: produces an object from a declared
-prefab input, places it, parents it, and holds it in an owned-object slot when the chain
-named one.</p>
+  <div class="markdown summary"><p>What <code>Object.Spawn(pool)</code> and its chain build: checks one entry out of a declared pool, places
+it, parents it, and holds it in an owned-object slot when the chain named one.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -145,160 +144,29 @@ named one.</p>
 
 
   <h2 id="CodeSmile_LunyScript_SpawnObjectBlock_examples">Examples</h2>
-  <pre><code class="lang-csharp">On.Ready(Object.Spawn(Sentry).At(new Vector3(0.0, 1.0, 0.0)).ChildOf().Into("Guard"));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Object.Spawn(Guards).At(Portal).InRadius(5.0).Into("Escort").As(TakeGuard));</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_SpawnObjectBlock_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p><b>The block records the spawn; the runner applies it after the current dispatch.</b> A
-prefab can carry a <code>LunyScriptBehaviour</code>, and producing such an object runs its
-<code>Awake</code> inside the call, which re-enters <code>ScriptRunner.Spawn</code>. The runner refuses
-to be re-entered during dispatch, so an authored spawn takes effect between event
-invocations, which is also what the settled <code>contract-dispatch-order</code> answer asks for.
-<code>Object.Create(name)</code> is immediate instead, because a created object carries no script
-and can re-enter nothing.</p>
+  <div class="markdown level0 remarks"><p><b>The block records the spawn; the runner applies it after the current dispatch</b>, for the reason
+<a class="xref" href="CodeSmile.LunyScript.CreatePrefabObjectBlock.html">CreatePrefabObjectBlock</a> states: activating an entry runs the scripts it carries, and
+those re-enter the runner.</p>
 <p>
-    <b>The placement expressions are evaluated here, not when the spawn is applied.</b> A
-    position read from a variable is that variable's value at the line the author wrote.
+    <b>The placement is evaluated here.</b> The call's own <code>At</code> when it wrote one, otherwise the
+    pool's <code>SpawnAt</code>, otherwise this object's own world position and rotation. A call's
+    <code>At</code> replaces the pool's whole placement, shape included. A disk or sphere draws its random
+    offset when the runner has an entry for the spawn, so a refused spawn draws nothing.
 </p>
 <p>
-    <b>This block itself allocates nothing.</b> It writes one struct into the runner's
-    request list; the object, and everything the prefab carries, is allocated when the
-    runner applies the request, which is AGENTS.md rule 31's first boundary.
+    <b>A refused spawn produces nothing and fills no name.</b> A pool at its hard cap refuses with
+    <a class="xref" href="CodeSmile.LunyScript.OperationFailure.html#CodeSmile_LunyScript_OperationFailure_CapacityExhausted">CapacityExhausted</a>, and a landmark placement that cannot be read
+    refuses with <a class="xref" href="CodeSmile.LunyScript.OperationFailure.html#CodeSmile_LunyScript_OperationFailure_NotFound">NotFound</a>. The chain's <code>As(handle)</code> observes
+    that; without it the refusal is reported once per pool and reason.
+</p>
+<p>
+    <b>This block itself allocates nothing.</b> It writes one struct into the runner's request list.
 </p>
 </div>
-
-
-  <h2 class="section" id="fields">Fields
-</h2>
-
-
-
-  <h3 id="CodeSmile_LunyScript_SpawnObjectBlock_NoOperation" data-uid="CodeSmile.LunyScript.SpawnObjectBlock.NoOperation">
-  NoOperation
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L60"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>What <a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html">SpawnObjectBlock</a> holds in place of an operation index when
-the spawn reads a declared prefab input.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const int NoOperation = -1</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">int</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <h3 id="CodeSmile_LunyScript_SpawnObjectBlock_NoParent" data-uid="CodeSmile.LunyScript.SpawnObjectBlock.NoParent">
-  NoParent
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L52"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>What <a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html">SpawnObjectBlock</a> holds in place of a parent slot when the
-chain named no <code>ChildOf</code>. The produced object goes to the scene root.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const int NoParent = -2</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">int</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <h3 id="CodeSmile_LunyScript_SpawnObjectBlock_NoPrefabSlot" data-uid="CodeSmile.LunyScript.SpawnObjectBlock.NoPrefabSlot">
-  NoPrefabSlot
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L56"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>What <a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html">SpawnObjectBlock</a> holds in place of a prefab asset slot when
-the spawn reads a succeeded operation payload instead.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const int NoPrefabSlot = -1</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">int</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
-
-
-
-  <h3 id="CodeSmile_LunyScript_SpawnObjectBlock_NotHeld" data-uid="CodeSmile.LunyScript.SpawnObjectBlock.NotHeld">
-  NotHeld
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L48"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>What <a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html">SpawnObjectBlock</a> holds in place of an owned-object slot when
-the chain named no <code>Into</code>. A spawn that is not held is not owned by the instance that
-spawned it and outlives it.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const int NotHeld = -1</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">int</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
 
 
   <h2 class="section" id="properties">Properties
@@ -309,7 +177,7 @@ spawned it and outlives it.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnObjectBlock_RequiredServices" data-uid="CodeSmile.LunyScript.SpawnObjectBlock.RequiredServices">
   RequiredServices
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L46"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Services this node requires in addition to its children's requirements.</p>
@@ -348,10 +216,10 @@ spawned it and outlives it.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnObjectBlock_DescribeChildren_CodeSmile_LunyScript_NodeDescription_" data-uid="CodeSmile.LunyScript.SpawnObjectBlock.DescribeChildren(CodeSmile.LunyScript.NodeDescription)">
   DescribeChildren(NodeDescription)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L79"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Names the two placement expressions for the runtime inspector.</p>
+  <div class="markdown level1 summary"><p>Names the call's placement expressions for the runtime inspector.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -394,7 +262,7 @@ spawned it and outlives it.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnObjectBlock_Execute_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.SpawnObjectBlock.Execute(CodeSmile.LunyScript.ScriptInstance)">
   Execute(ScriptInstance)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L110"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L88"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Runs this block against one object's state. Called once per event per instance and
@@ -438,7 +306,7 @@ must allocate nothing after warm-up; AGENTS.md rule 29.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L33" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Objects/SpawnObjectBlock.cs/#L34" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct SpawnRequest | LunyScript API Reference ">
       
-      <meta name="description" content="One authored Object.Spawn that has run and has not been applied yet: which prefab input to produce from, where the produced object goes, what it is parented to, and which owned-object slot holds it.">
+      <meta name="description" content="One authored Object.Create(prefab) or Object.Spawn(pool) that has run and has not been applied yet: which prefab input or pool to produce from, where the produced object goes, what it is parented to, and which owned-object slot holds it.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_SpawnRequest" data-uid="CodeSmile.LunyScript.SpawnRequest" class="text-break">
-Struct SpawnRequest  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L22"><i class="bi bi-code-slash"></i></a>
+Struct SpawnRequest  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L23"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,9 +85,9 @@ Struct SpawnRequest  <a class="header-action link-secondary" title="View source"
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>One authored <code>Object.Spawn</code> that has run and has not been applied yet: which prefab
-input to produce from, where the produced object goes, what it is parented to, and which
-owned-object slot holds it.</p>
+  <div class="markdown summary"><p>One authored <code>Object.Create(prefab)</code> or <code>Object.Spawn(pool)</code> that has run and has not
+been applied yet: which prefab input or pool to produce from, where the produced object goes, what
+it is parented to, and which owned-object slot holds it.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -110,15 +110,16 @@ owned-object slot holds it.</p>
 
 
   <h2 id="CodeSmile_LunyScript_SpawnRequest_examples">Examples</h2>
-  <pre><code class="lang-csharp">instance.RequestSpawn(new SpawnRequest(0, "Sentry", SpawnObjectBlock.NotHeld,
-    SpawnObjectBlock.NoParent, SpawnPlacement.None));</code></pre>
+  <pre><code class="lang-csharp">instance.RequestSpawn(new SpawnRequest(0, "Sentry", CreatePrefabObjectBlock.NotHeld,
+    CreatePrefabObjectBlock.NoParent, SpawnPlacement.None));</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_SpawnRequest_remarks">Remarks</h2>
   <div class="markdown level0 remarks"><p>It is a struct held in a list on the runner rather than a field on the instance, because one
-event list may spawn several objects while <a class="xref" href="CodeSmile.LunyScript.LifetimeRequest.html">LifetimeRequest</a> is one state per
+event list may produce several objects while <a class="xref" href="CodeSmile.LunyScript.LifetimeRequest.html">LifetimeRequest</a> is one state per
 instance. Adding a struct to a list that has capacity allocates nothing, so an authored
-spawn costs no allocation until the runner produces the object.</p>
+create or spawn costs no allocation until the runner produces the object. Creates and spawns
+share the one list so the runner applies them in the order the blocks ran.</p>
 </div>
 
 
@@ -128,17 +129,17 @@ spawn costs no allocation until the runner produces the object.</p>
 
   <a id="CodeSmile_LunyScript_SpawnRequest__ctor_" data-uid="CodeSmile.LunyScript.SpawnRequest.#ctor*"></a>
 
-  <h3 id="CodeSmile_LunyScript_SpawnRequest__ctor_System_Int32_System_String_System_Int32_System_Int32_CodeSmile_LunyScript_SpawnPlacement__System_Int32_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnRequest.#ctor(System.Int32,System.String,System.Int32,System.Int32,CodeSmile.LunyScript.SpawnPlacement@,System.Int32,System.Int32)">
-  SpawnRequest(int, string, int, int, in SpawnPlacement, int, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_SpawnRequest__ctor_System_Int32_System_String_System_Int32_System_Int32_CodeSmile_LunyScript_SpawnPlacement__System_Int32_System_Int32_System_Boolean_" data-uid="CodeSmile.LunyScript.SpawnRequest.#ctor(System.Int32,System.String,System.Int32,System.Int32,CodeSmile.LunyScript.SpawnPlacement@,System.Int32,System.Int32,System.Boolean)">
+  SpawnRequest(int, string, int, int, in SpawnPlacement, int, int, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L94"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Records one request.</p>
+  <div class="markdown level1 summary"><p>Records one fresh copy of a prefab.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnRequest(int prefabSlotIndex, string prefabName, int intoSlotIndex, int parentSlotIndex, in SpawnPlacement placement, int operationIndex = -1, int localPlayer = -1)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnRequest(int prefabSlotIndex, string prefabName, int intoSlotIndex, int parentSlotIndex, in SpawnPlacement placement, int operationIndex = -1, int localPlayer = -1, bool survivesCaller = false)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -153,7 +154,7 @@ spawn costs no allocation until the runner produces the object.</p>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>prefabSlotIndex</code></dt></td>
     <td style="width: 99%"><dd><p>The prefab input's asset slot, or
-<a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html#CodeSmile_LunyScript_SpawnObjectBlock_NoPrefabSlot">NoPrefabSlot</a> when spawning from an acquisition.</p>
+<a class="xref" href="CodeSmile.LunyScript.CreatePrefabObjectBlock.html#CodeSmile_LunyScript_CreatePrefabObjectBlock_NoPrefabSlot">NoPrefabSlot</a> when copying from an acquisition.</p>
 </dd></td>
   </tr>
   <tr>
@@ -166,14 +167,14 @@ spawn costs no allocation until the runner produces the object.</p>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>intoSlotIndex</code></dt></td>
     <td style="width: 99%"><dd><p>The owned-object slot, or
-<a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html#CodeSmile_LunyScript_SpawnObjectBlock_NotHeld">NotHeld</a>.</p>
+<a class="xref" href="CodeSmile.LunyScript.CreatePrefabObjectBlock.html#CodeSmile_LunyScript_CreatePrefabObjectBlock_NotHeld">NotHeld</a>.</p>
 </dd></td>
   </tr>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>parentSlotIndex</code></dt></td>
     <td style="width: 99%"><dd><p>The parent slot, <a class="xref" href="CodeSmile.LunyScript.ActivateObjectBlock.html#CodeSmile_LunyScript_ActivateObjectBlock_Self">Self</a>, or
-<a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html#CodeSmile_LunyScript_SpawnObjectBlock_NoParent">NoParent</a>.</p>
+<a class="xref" href="CodeSmile.LunyScript.CreatePrefabObjectBlock.html#CodeSmile_LunyScript_CreatePrefabObjectBlock_NoParent">NoParent</a>.</p>
 </dd></td>
   </tr>
   <tr>
@@ -186,7 +187,7 @@ spawn costs no allocation until the runner produces the object.</p>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>operationIndex</code></dt></td>
     <td style="width: 99%"><dd><p>The acquisition handle, or
-<a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html#CodeSmile_LunyScript_SpawnObjectBlock_NoOperation">NoOperation</a>.</p>
+<a class="xref" href="CodeSmile.LunyScript.CreatePrefabObjectBlock.html#CodeSmile_LunyScript_CreatePrefabObjectBlock_NoOperation">NoOperation</a>.</p>
 </dd></td>
   </tr>
   <tr>
@@ -194,6 +195,12 @@ spawn costs no allocation until the runner produces the object.</p>
     <td style="width: fit-content;white-space: nowrap"><dt><code>localPlayer</code></dt></td>
     <td style="width: 99%"><dd><p>The local player the produced object's scripts are bound to, or
 <a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html#CodeSmile_LunyScript_ScriptInstance_NoLocalPlayer">NoLocalPlayer</a>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">bool</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>survivesCaller</code></dt></td>
+    <td style="width: 99%"><dd><p>Whether the copy outlives the instance that asked for it.</p>
 </dd></td>
   </tr>
   </dl>
@@ -218,11 +225,11 @@ spawn costs no allocation until the runner produces the object.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnRequest_IntoSlotIndex" data-uid="CodeSmile.LunyScript.SpawnRequest.IntoSlotIndex">
   IntoSlotIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L39"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The owned-object slot the produced object goes into, or
-<a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html#CodeSmile_LunyScript_SpawnObjectBlock_NotHeld">NotHeld</a>.</p>
+<a class="xref" href="CodeSmile.LunyScript.CreatePrefabObjectBlock.html#CodeSmile_LunyScript_CreatePrefabObjectBlock_NotHeld">NotHeld</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -251,7 +258,7 @@ spawn costs no allocation until the runner produces the object.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnRequest_LocalPlayer" data-uid="CodeSmile.LunyScript.SpawnRequest.LocalPlayer">
   LocalPlayer
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L55"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The local player every script the produced object starts is bound to, or
@@ -284,11 +291,11 @@ spawn costs no allocation until the runner produces the object.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnRequest_OperationIndex" data-uid="CodeSmile.LunyScript.SpawnRequest.OperationIndex">
   OperationIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L51"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>The operation handle whose succeeded prefab payload is spawned, or
-<a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html#CodeSmile_LunyScript_SpawnObjectBlock_NoOperation">NoOperation</a> for a declared prefab input.</p>
+  <div class="markdown level1 summary"><p>The operation handle whose succeeded prefab payload is copied, or
+<a class="xref" href="CodeSmile.LunyScript.CreatePrefabObjectBlock.html#CodeSmile_LunyScript_CreatePrefabObjectBlock_NoOperation">NoOperation</a> for a declared prefab input.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -317,11 +324,11 @@ spawn costs no allocation until the runner produces the object.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnRequest_ParentSlotIndex" data-uid="CodeSmile.LunyScript.SpawnRequest.ParentSlotIndex">
   ParentSlotIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L43"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The owned-object slot naming the parent,
-<a class="xref" href="CodeSmile.LunyScript.ActivateObjectBlock.html#CodeSmile_LunyScript_ActivateObjectBlock_Self">Self</a>, or <a class="xref" href="CodeSmile.LunyScript.SpawnObjectBlock.html#CodeSmile_LunyScript_SpawnObjectBlock_NoParent">NoParent</a>.</p>
+<a class="xref" href="CodeSmile.LunyScript.ActivateObjectBlock.html#CodeSmile_LunyScript_ActivateObjectBlock_Self">Self</a>, or <a class="xref" href="CodeSmile.LunyScript.CreatePrefabObjectBlock.html#CodeSmile_LunyScript_CreatePrefabObjectBlock_NoParent">NoParent</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -350,11 +357,11 @@ spawn costs no allocation until the runner produces the object.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnRequest_Placement" data-uid="CodeSmile.LunyScript.SpawnRequest.Placement">
   Placement
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L47"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Where the produced object goes, with the placement expressions already
-evaluated.</p>
+  <div class="markdown level1 summary"><p>Where a fresh copy goes, with the placement expressions already evaluated. A pool spawn
+carries its placement in <span class="xref">CodeSmile.LunyScript.SpawnRequest.PoolPlacement</span> instead.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -383,10 +390,10 @@ evaluated.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnRequest_PrefabName" data-uid="CodeSmile.LunyScript.SpawnRequest.PrefabName">
   PrefabName
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L35"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>The input's declared name, which is what a diagnostic names.</p>
+  <div class="markdown level1 summary"><p>The input's declared name, or the pool's, which is what a diagnostic names.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -415,7 +422,7 @@ evaluated.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnRequest_PrefabSlotIndex" data-uid="CodeSmile.LunyScript.SpawnRequest.PrefabSlotIndex">
   PrefabSlotIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L32"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The asset slot the declared prefab input occupies on the instance.</p>
@@ -443,11 +450,43 @@ evaluated.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_SpawnRequest_SurvivesCaller_" data-uid="CodeSmile.LunyScript.SpawnRequest.SurvivesCaller*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SpawnRequest_SurvivesCaller" data-uid="CodeSmile.LunyScript.SpawnRequest.SurvivesCaller">
+  SurvivesCaller
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the produced object outlives the instance that asked for it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool SurvivesCaller { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L22" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Objects/SpawnRequest.cs/#L23" class="edit-link">Edit this page</a>
         </div>
 
 
