@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct AssetSource&lt;T&gt; | LunyScript API Reference ">
       
-      <meta name="description" content="One provider-qualified place a declared asset input loads from when the host assigns nothing.">
+      <meta name="description" content="One provider-qualified place Asset.Load loads an asset of one kind from.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -85,13 +85,12 @@ Struct AssetSource&lt;T&gt;  <a class="header-action link-secondary" title="View
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>One provider-qualified place a declared asset input loads from when the host assigns
-nothing.</p>
+  <div class="markdown summary"><p>One provider-qualified place <code>Asset.Load</code> loads an asset of one kind from.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly struct AssetSource&lt;T&gt; where T : Object</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly struct AssetSource&lt;T&gt; where T : struct</code></pre>
   </div>
 
 
@@ -99,7 +98,8 @@ nothing.</p>
   <h4 class="section">Type Parameters</h4>
   <dl class="parameters">
     <dt><code>T</code></dt>
-    <dd><p>The asset type the source produces, which is the input's declared type.</p>
+    <dd><p>The input kind the source produces, such as <a class="xref" href="CodeSmile.LunyScript.Texture2D.html">Texture2D</a> or
+<a class="xref" href="CodeSmile.LunyScript.Prefab.html">Prefab</a>. Any other type is refused where <code>Asset.Load</code> is written.</p>
 </dd>
   </dl>
 
@@ -115,7 +115,7 @@ nothing.</p>
 
 
   <h2 id="CodeSmile_LunyScript_AssetSource_1_examples">Examples</h2>
-  <pre><code class="lang-csharp">Sentry = Bind.Asset&lt;GameObject&gt;(nameof(Sentry), AssetSource.Resources&lt;GameObject&gt;("Enemies/Sentry"));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Asset.Load(AssetSource.Resources&lt;Texture2D&gt;("UI/Portrait")).As(PortraitContent));</code></pre>
 
 
 

@@ -141,7 +141,7 @@ draws no random offset.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnBuilder_As_CodeSmile_LunyScript_Operation_" data-uid="CodeSmile.LunyScript.SpawnBuilder.As(CodeSmile.LunyScript.Operation)">
   As(Operation)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L312"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L311"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds the checkout to an operation handle, so the script can observe whether it succeeded
@@ -205,9 +205,9 @@ spawn produces nothing and fills no name.</p>
 
   <a id="CodeSmile_LunyScript_SpawnBuilder_At_" data-uid="CodeSmile.LunyScript.SpawnBuilder.At*"></a>
 
-  <h3 id="CodeSmile_LunyScript_SpawnBuilder_At_CodeSmile_LunyScript_AssetInput_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnBuilder.At(CodeSmile.LunyScript.AssetInput,System.String,System.Int32)">
-  At(AssetInput, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L218"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_SpawnBuilder_At_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnBuilder.At(CodeSmile.LunyScript.ObjectBinding,System.String,System.Int32)">
+  At(ObjectBinding, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L217"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Places the object on a landmark: at its world position and turned by its world rotation,
@@ -216,7 +216,7 @@ replacing the pool's own placement. The landmark's scale changes nothing.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnPlacedBuilder At(AssetInput landmark, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnPlacedBuilder At(ObjectBinding landmark, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -228,10 +228,9 @@ replacing the pool's own placement. The landmark's scale changes nothing.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.AssetInput.html">AssetInput</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>landmark</code></dt></td>
-    <td style="width: 99%"><dd><p>A declared input holding an object in the scene, such as
-<code>[Asset] public Asset&lt;GameObject&gt; Portal</code>.</p>
+    <td style="width: 99%"><dd><p>An object binding, such as <code>Portal = Bind.Object();</code>.</p>
 </dd></td>
   </tr>
   <tr>
@@ -261,13 +260,13 @@ replacing the pool's own placement. The landmark's scale changes nothing.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_SpawnBuilder_At_CodeSmile_LunyScript_AssetInput_System_String_System_Int32__examples">Examples</h4>
+  <h4 class="section" id="CodeSmile_LunyScript_SpawnBuilder_At_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__examples">Examples</h4>
   <pre><code class="lang-csharp">On.Ready(Object.Spawn(Guards).At(Portal));</code></pre>
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_SpawnBuilder_At_CodeSmile_LunyScript_AssetInput_System_String_System_Int32__remarks">Remarks</h4>
-  <div class="markdown level1 remarks"><p>The landmark is sampled where this block runs. One that is destroyed, in no loaded scene or
-inactive refuses the spawn as <a class="xref" href="CodeSmile.LunyScript.OperationFailure.html#CodeSmile_LunyScript_OperationFailure_NotFound">NotFound</a>.</p>
+  <h4 class="section" id="CodeSmile_LunyScript_SpawnBuilder_At_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The landmark is sampled where this block runs. A binding that holds no object, and one whose
+object is inactive, refuses the spawn as <a class="xref" href="CodeSmile.LunyScript.OperationFailure.html#CodeSmile_LunyScript_OperationFailure_NotFound">NotFound</a>.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
@@ -414,7 +413,7 @@ a <code>default</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnBuilder_ChildOf_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnBuilder.ChildOf(System.String,System.String,System.Int32)">
   ChildOf(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L241"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L240"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Parents the object to the object this script runs on, or to one this script owns.</p>
@@ -491,7 +490,7 @@ already names a parent, or this builder is a <code>default</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnBuilder_ForPlayer_System_Int32_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnBuilder.ForPlayer(System.Int32,System.String,System.Int32)">
   ForPlayer(int, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L277"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L276"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds every script the checked-out object starts to one local player.</p>
@@ -567,7 +566,7 @@ already names a player, or this builder is a <code>default</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnBuilder_Into_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnBuilder.Into(System.String,System.String,System.Int32)">
   Into(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L260"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L259"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Addresses the checked-out object by a name in this script, so later blocks can deactivate,
@@ -645,7 +644,7 @@ already names one, another call already produces that name, or this builder is a
 
   <h3 id="CodeSmile_LunyScript_SpawnBuilder_SurvivesCaller_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnBuilder.SurvivesCaller(System.String,System.Int32)">
   SurvivesCaller(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L295"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L294"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Lets the checked-out object outlive the instance that spawned it: it stays out of the pool
@@ -721,7 +720,7 @@ is built.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnBuilder_op_Implicit_CodeSmile_LunyScript_SpawnBuilder__CodeSmile_LunyScript_Block" data-uid="CodeSmile.LunyScript.SpawnBuilder.op_Implicit(CodeSmile.LunyScript.SpawnBuilder)~CodeSmile.LunyScript.Block">
   implicit operator Block(SpawnBuilder)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L320"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L319"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finishes a spawn that states no placement of its own, so the pool's placement or the

@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct SceneReference | LunyScript API Reference ">
       
-      <meta name="description" content="A handle to one scene input of a script: the typed scene identity that Scene.Load, Scene.Unload and the When.Scene* watches take. Returned by Bind.Scene at build time, or assigned before Build() by [Asset] on the property.">
+      <meta name="description" content="A handle to one scene input of a script: the typed scene identity that Scene.Load, Scene.Unload and the When.Scene* watches take. Returned by Bind.Scene() at build time, or assigned before Build() by [Asset] on the property.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -86,7 +86,7 @@ Struct SceneReference  <a class="header-action link-secondary" title="View sourc
   </div>
 
   <div class="markdown summary"><p>A handle to one scene input of a script: the typed scene identity that <code>Scene.Load</code>,
-<code>Scene.Unload</code> and the <code>When.Scene*</code> watches take. Returned by <code>Bind.Scene</code> at
+<code>Scene.Unload</code> and the <code>When.Scene*</code> watches take. Returned by <code>Bind.Scene()</code> at
 build time, or assigned before <code>Build()</code> by <code>[Asset]</code> on the property.</p>
 </div>
   <div class="markdown conceptual"></div>
@@ -110,7 +110,7 @@ build time, or assigned before <code>Build()</code> by <code>[Asset]</code> on t
 
 
   <h2 id="CodeSmile_LunyScript_SceneReference_examples">Examples</h2>
-  <pre><code class="lang-csharp">[Asset] public SceneReference Arena { get; private set; }
+  <pre><code class="lang-csharp">Arena = Bind.Scene();
 On.Ready(Scene.Load(Arena).As(LoadingArena));</code></pre>
 
 
@@ -150,8 +150,8 @@ scene identity, and no <code>UnityEngine.Object</code> cast in script values.</p
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Scenes/SceneReference.cs/#L56"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>False for a handle <code>Build()</code> never assigned, which is what the
-unassigned-member check reads.</p>
+  <div class="markdown level1 summary"><p>False for a handle <code>Build()</code> never assigned, or one still waiting for its
+name.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -217,7 +217,7 @@ what a diagnostic names.</p>
 
   <h3 id="CodeSmile_LunyScript_SceneReference_ToString" data-uid="CodeSmile.LunyScript.SceneReference.ToString">
   ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Scenes/SceneReference.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Scenes/SceneReference.cs/#L85"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The declared name, for a log line or a failure message.</p>
@@ -240,6 +240,63 @@ what a diagnostic names.</p>
 
 
 
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_SceneReference_op_Implicit_" data-uid="CodeSmile.LunyScript.SceneReference.op_Implicit*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SceneReference_op_Implicit_CodeSmile_LunyScript_SceneInputBuilder__CodeSmile_LunyScript_SceneReference" data-uid="CodeSmile.LunyScript.SceneReference.op_Implicit(CodeSmile.LunyScript.SceneInputBuilder)~CodeSmile.LunyScript.SceneReference">
+  implicit operator SceneReference(SceneInputBuilder)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Scenes/SceneReference.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the scene input a <code>Bind.Scene()</code> chain describes. The generated property of the
+line then gives it the member's name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static implicit operator SceneReference(SceneInputBuilder declaration)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.SceneInputBuilder.html">SceneInputBuilder</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>declaration</code></dt></td>
+    <td style="width: 99%"><dd><p>The chain.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SceneReference.html">SceneReference</a></dt>
+    <dd><p>The handle.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_SceneReference_op_Implicit_CodeSmile_LunyScript_SceneInputBuilder__CodeSmile_LunyScript_SceneReference_examples">Examples</h4>
+  <pre><code class="lang-csharp">Arena = Bind.Scene();</code></pre>
 
 
 

@@ -134,7 +134,7 @@ promise immediate physical reclamation.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.AssetSource.html">AssetSource</a></dt>
-      <dd><p>Names the provider-qualified sources a declared asset input can load from.</p>
+      <dd><p>Names the provider-qualified sources <code>Asset.Load</code> can load from.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -665,15 +665,16 @@ retention.</p>
 </dd>
     </dl>
     <dl class="jumplist">
-      <dt><a class="xref" href="CodeSmile.LunyScript.AssetInput.html">AssetInput</a></dt>
-      <dd><p>One declared asset input with its type forgotten: what a surface takes when it accepts an
-input of any Unity type, such as the camera rig a view renders.</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.AssetInputAssignment.html">AssetInputAssignment</a></dt>
       <dd><p>One row of the declared-input table a host component serializes: the name of a declared
 input and the asset this object assigns to it, or, for a scene input, the scene.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.AssetInputBuilder-1.html">AssetInputBuilder&lt;TInput&gt;</a></dt>
+      <dd><p>What <code>Bind.Prefab()</code>, <code>Bind.Texture2D()</code>, <code>Bind.AudioClip()</code>, <code>Bind.AudioMixer()</code>,
+<code>Bind.AudioMixerGroup()</code> and <code>Bind.VisualTreeAsset()</code> return: an input declaration that is
+complete once it is assigned or named.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -685,15 +686,13 @@ when <a class="xref" href="CodeSmile.LunyScript.AssetLoadBuilder.html#CodeSmile_
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.AssetSource-1.html">AssetSource&lt;T&gt;</a></dt>
-      <dd><p>One provider-qualified place a declared asset input loads from when the host assigns
-nothing.</p>
+      <dd><p>One provider-qualified place <code>Asset.Load</code> loads an asset of one kind from.</p>
 </dd>
     </dl>
     <dl class="jumplist">
-      <dt><a class="xref" href="CodeSmile.LunyScript.Asset-1.html">Asset&lt;T&gt;</a></dt>
-      <dd><p>A handle to one asset input of a script. Returned by <code>Bind.Asset</code> at build time; reading
-the asset itself is an instance read, because the value belongs to the object and not to the
-script type.</p>
+      <dt><a class="xref" href="CodeSmile.LunyScript.AudioClip.html">AudioClip</a></dt>
+      <dd><p>A handle to one AudioClip input of a script: an audio clip the object's Inspector assigns. Returned by
+<code>Bind.AudioClip()</code> at build time, or assigned before <code>Build()</code> by <code>[Asset]</code> on the property.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -717,6 +716,18 @@ way <code>Transform</code> hides <code>UnityEngine.Transform</code>.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.AudioListenerTargetDurationBuilder.html">AudioListenerTargetDurationBuilder</a></dt>
       <dd><p>What <code>Audio.Listener.SetTarget(target).Over(amount)</code> returns: a transition whose
 amount is seconds unless a unit call names another unit.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.AudioMixer.html">AudioMixer</a></dt>
+      <dd><p>A handle to one AudioMixer input of a script: an audio mixer the object's Inspector assigns. Returned by
+<code>Bind.AudioMixer()</code> at build time, or assigned before <code>Build()</code> by <code>[Asset]</code> on the property.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.AudioMixerGroup.html">AudioMixerGroup</a></dt>
+      <dd><p>A handle to one AudioMixerGroup input of a script: a group of an audio mixer the object's Inspector assigns. Returned by
+<code>Bind.AudioMixerGroup()</code> at build time, or assigned before <code>Build()</code> by <code>[Asset]</code> on the property.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -764,8 +775,14 @@ that tracked playback.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.BindFactory.html">BindFactory</a></dt>
-      <dd><p>The <code>Bind</code> surface inside <code>Build()</code>: declares the assets a script needs and hands
-back the typed handles that read them.</p>
+      <dd><p>The <code>Bind</code> surface inside <code>Build()</code>: declares the inputs a script needs - assets, scenes and
+objects in a scene - and hands back the typed handles that read them.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.BindingWatchBuilder.html">BindingWatchBuilder</a></dt>
+      <dd><p>What <code>When.Binding(binding)</code> returns: names the blocks that run when a <code>LiveRebind()</code>
+binding's object or availability changed.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1120,6 +1137,12 @@ starts at zero. The C# type is not <code>List&lt;T&gt;</code>, because that name
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LiveObjectBindingBuilder.html">LiveObjectBindingBuilder</a></dt>
+      <dd><p>What <code>Bind.Object().LiveRebind()</code> returns: a binding that searches again while it has no
+object.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.LookAtBuilder.html">LookAtBuilder</a></dt>
       <dd><p>What <code>LookAt</code> returns: the facing, about the world up unless <a class="xref" href="CodeSmile.LunyScript.LookAtBuilder.html#CodeSmile_LunyScript_LookAtBuilder_WithUp_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_">WithUp(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)</a>
 names another direction.</p>
@@ -1274,7 +1297,7 @@ incomplete until <a class="xref" href="CodeSmile.LunyScript.NavigationActorMoveT
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.NavigationCompleteMoveToBuilder.html">NavigationCompleteMoveToBuilder</a></dt>
-      <dd><p>A move that refuses a partial route. It takes <a class="xref" href="CodeSmile.LunyScript.NavigationCompleteMoveToBuilder.html#CodeSmile_LunyScript_NavigationCompleteMoveToBuilder_For_CodeSmile_LunyScript_AssetInput_System_String_System_Int32_">For(AssetInput, string, int)</a> once and is incomplete
+      <dd><p>A move that refuses a partial route. It takes <a class="xref" href="CodeSmile.LunyScript.NavigationCompleteMoveToBuilder.html#CodeSmile_LunyScript_NavigationCompleteMoveToBuilder_For_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_">For(ObjectBinding, string, int)</a> once and is incomplete
 until <a class="xref" href="CodeSmile.LunyScript.NavigationCompleteMoveToBuilder.html#CodeSmile_LunyScript_NavigationCompleteMoveToBuilder_As_CodeSmile_LunyScript_Operation_">As(Operation)</a>.</p>
 </dd>
     </dl>
@@ -1282,7 +1305,7 @@ until <a class="xref" href="CodeSmile.LunyScript.NavigationCompleteMoveToBuilder
       <dt><a class="xref" href="CodeSmile.LunyScript.NavigationControlBuilder.html">NavigationControlBuilder</a></dt>
       <dd><p>What <code>Navigation.Stop()</code>, <code>Pause()</code> and <code>Resume()</code> return: the control applied
 to the object the script runs on when it is used as a block, or to a declared GameObject input
-after <a class="xref" href="CodeSmile.LunyScript.NavigationControlBuilder.html#CodeSmile_LunyScript_NavigationControlBuilder_For_CodeSmile_LunyScript_AssetInput_System_String_System_Int32_">For(AssetInput, string, int)</a>.</p>
+after <a class="xref" href="CodeSmile.LunyScript.NavigationControlBuilder.html#CodeSmile_LunyScript_NavigationControlBuilder_For_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_">For(ObjectBinding, string, int)</a>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1369,6 +1392,20 @@ the way <code>Transform</code> means the script's transform surface; in a declar
       <dt><a class="xref" href="CodeSmile.LunyScript.NumberSlot.html">NumberSlot</a></dt>
       <dd><p>Where one <code>Number</code> variable lives on every instance of a program. Allocated at build time
 and never at run time.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt>
+      <dd><p>A handle to one object in a scene that a script binds to: the target <code>Object.For</code>,
+<code>Camera.For</code>, <code>Audio.For</code>, <code>Particles.For</code>, <code>Panel.For</code>, <code>Navigation.For</code> and
+a landmark take. Returned by <code>Bind.Object()</code> at build time.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ObjectBindingBuilder.html">ObjectBindingBuilder</a></dt>
+      <dd><p>What <code>Bind.Object()</code> returns: an object binding that is complete once it is assigned or
+named. <code>WithTag</code> and <code>Named</code> set what the scene search looks for; <code>MustExist</code> and
+<code>LiveRebind</code> each end the choice of what happens when nothing is found.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1494,7 +1531,7 @@ script runs on.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.ParticlesFactory.html">ParticlesFactory</a></dt>
       <dd><p>The <code>Particles</code> surface inside <code>Build()</code>: starts, pauses, stops, clears and bursts an
 authored Unity <code>ParticleSystem</code>, and reads whether it is playing or alive. Its own members
-target the system on the object the script runs on; <a class="xref" href="CodeSmile.LunyScript.ParticlesFactory.html#CodeSmile_LunyScript_ParticlesFactory_For_CodeSmile_LunyScript_AssetInput_System_String_System_Int32_">For(AssetInput, string, int)</a> targets the system on a
+target the system on the object the script runs on; <a class="xref" href="CodeSmile.LunyScript.ParticlesFactory.html#CodeSmile_LunyScript_ParticlesFactory_For_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_">For(ObjectBinding, string, int)</a> targets the system on a
 declared GameObject input.</p>
 </dd>
     </dl>
@@ -1561,9 +1598,9 @@ a hard cap and a prewarm count.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.Prefab.html">Prefab</a></dt>
-      <dd><p>A handle to one prefab input of a script. Returned by <code>Bind.Prefab</code> at build time; what
-the input holds is an instance read, because the value belongs to the object and not to the
-script type.</p>
+      <dd><p>A handle to one prefab input of a script. Returned by <code>Bind.Prefab()</code> at build time, or
+assigned before <code>Build()</code> by <code>[Asset]</code> on the property; what the input holds is an instance
+read, because the value belongs to the object and not to the script type.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1653,6 +1690,12 @@ object's world placement unless <a class="xref" href="CodeSmile.LunyScript.Repar
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.RequiredObjectBindingBuilder.html">RequiredObjectBindingBuilder</a></dt>
+      <dd><p>What <code>Bind.Object().MustExist()</code> returns: a binding the script cannot start
+without.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.Rotation.html">Rotation</a></dt>
       <dd><p>An orientation in three dimensions, held as a unit quaternion.</p>
 </dd>
@@ -1737,6 +1780,12 @@ typed <a class="xref" href="CodeSmile.LunyScript.SceneReference.html">SceneRefer
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SceneInputBuilder.html">SceneInputBuilder</a></dt>
+      <dd><p>What <code>Bind.Scene()</code> returns: a scene input declaration that is complete once it is
+assigned or named.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.SceneLoadBuilder.html">SceneLoadBuilder</a></dt>
       <dd><p>What <code>Scene.Load(destination)</code> returns: a replacement load that becomes a block when
 <a class="xref" href="CodeSmile.LunyScript.SceneLoadBuilder.html#CodeSmile_LunyScript_SceneLoadBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle, or an additive load after
@@ -1746,7 +1795,7 @@ typed <a class="xref" href="CodeSmile.LunyScript.SceneReference.html">SceneRefer
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.SceneReference.html">SceneReference</a></dt>
       <dd><p>A handle to one scene input of a script: the typed scene identity that <code>Scene.Load</code>,
-<code>Scene.Unload</code> and the <code>When.Scene*</code> watches take. Returned by <code>Bind.Scene</code> at
+<code>Scene.Unload</code> and the <code>When.Scene*</code> watches take. Returned by <code>Bind.Scene()</code> at
 build time, or assigned before <code>Build()</code> by <code>[Asset]</code> on the property.</p>
 </dd>
     </dl>
@@ -1965,6 +2014,12 @@ The capacity is part of the handle because each capacity is a separate array on 
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.Texture2D.html">Texture2D</a></dt>
+      <dd><p>A handle to one Texture2D input of a script: a texture the object's Inspector assigns. Returned by
+<code>Bind.Texture2D()</code> at build time, or assigned before <code>Build()</code> by <code>[Asset]</code> on the property.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.TimeFactory.html">TimeFactory</a></dt>
       <dd><p>The <code>Time</code> surface a script reads the game clock through, and the one place a script
 changes how fast that clock runs: <a class="xref" href="CodeSmile.LunyScript.TimeFactory.html#CodeSmile_LunyScript_TimeFactory_Delta">Delta</a>, <a class="xref" href="CodeSmile.LunyScript.TimeFactory.html#CodeSmile_LunyScript_TimeFactory_Elapsed">Elapsed</a>,
@@ -2153,6 +2208,12 @@ and never at run time.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.ViewFactory.html">ViewFactory</a></dt>
       <dd><p>The <code>View</code> surface inside <code>Build()</code>: what a local player sees, and which camera
 rig it renders.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.VisualTreeAsset.html">VisualTreeAsset</a></dt>
+      <dd><p>A handle to one VisualTreeAsset input of a script: a UXML document the object's Inspector assigns. Returned by
+<code>Bind.VisualTreeAsset()</code> at build time, or assigned before <code>Build()</code> by <code>[Asset]</code> on the property.</p>
 </dd>
     </dl>
     <dl class="jumplist">

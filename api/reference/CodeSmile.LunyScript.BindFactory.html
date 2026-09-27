@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct BindFactory | LunyScript API Reference ">
       
-      <meta name="description" content="The Bind surface inside Build(): declares the assets a script needs and hands back the typed handles that read them.">
+      <meta name="description" content="The Bind surface inside Build(): declares the inputs a script needs - assets, scenes and objects in a scene - and hands back the typed handles that read them.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_BindFactory" data-uid="CodeSmile.LunyScript.BindFactory" class="text-break">
-Struct BindFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L34"><i class="bi bi-code-slash"></i></a>
+Struct BindFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,8 +85,8 @@ Struct BindFactory  <a class="header-action link-secondary" title="View source" 
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>The <code>Bind</code> surface inside <code>Build()</code>: declares the assets a script needs and hands
-back the typed handles that read them.</p>
+  <div class="markdown summary"><p>The <code>Bind</code> surface inside <code>Build()</code>: declares the inputs a script needs - assets, scenes and
+objects in a scene - and hands back the typed handles that read them.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -111,8 +111,9 @@ back the typed handles that read them.</p>
   <h2 id="CodeSmile_LunyScript_BindFactory_examples">Examples</h2>
   <pre><code class="lang-csharp">protected override void Build()
 {
-    OpenSound = Bind.Asset&lt;AudioClip&gt;(nameof(OpenSound));
-    Sentry = Bind.Asset&lt;GameObject&gt;(nameof(Sentry), AssetSource.Resources&lt;GameObject&gt;("Enemies/Sentry"));
+    OpenSound = Bind.AudioClip();
+    Sentry = Bind.Prefab().FromResources("Enemies/Sentry");
+    Witch = Bind.Object();
 }</code></pre>
 
 
@@ -127,9 +128,16 @@ spawns.</p>
     what a scene stored under the old one.
 </p>
 <p>
-    <b>The attribute is the default declaration style</b>, the way <code>[Variable]</code> is for
-    variables: <code>[Asset] public Asset&lt;AudioClip&gt; OpenSound { get; private set; }</code>
-    produces exactly the call below. These calls remain the explicit alternative.
+    <b>A line without a name gets its member's name.</b> <code>OpenSound = Bind.AudioClip();</code> in a
+    partial script makes the generator write the <code>OpenSound</code> property, whose setter gives the
+    input the name <code>OpenSound</code>. <code>.As(name)</code> names a declaration explicitly, which a
+    hand-written property or a local needs. <code>[Asset]</code> on a property declares the same input.
+</p>
+<p>
+    <b>Every handle is a LunyScript type.</b> <a class="xref" href="CodeSmile.LunyScript.BindFactory.html#CodeSmile_LunyScript_BindFactory_Texture2D_System_String_System_Int32_">Texture2D(string, int)</a>, <a class="xref" href="CodeSmile.LunyScript.BindFactory.html#CodeSmile_LunyScript_BindFactory_AudioClip_System_String_System_Int32_">AudioClip(string, int)</a>,
+    <a class="xref" href="CodeSmile.LunyScript.BindFactory.html#CodeSmile_LunyScript_BindFactory_AudioMixer_System_String_System_Int32_">AudioMixer(string, int)</a>, <a class="xref" href="CodeSmile.LunyScript.BindFactory.html#CodeSmile_LunyScript_BindFactory_AudioMixerGroup_System_String_System_Int32_">AudioMixerGroup(string, int)</a> and <a class="xref" href="CodeSmile.LunyScript.BindFactory.html#CodeSmile_LunyScript_BindFactory_VisualTreeAsset_System_String_System_Int32_">VisualTreeAsset(string, int)</a> carry
+    Unity's names in LunyScript's namespace, so a script that uses them compiles without an engine
+    reference.
 </p>
 </div>
 
@@ -138,20 +146,20 @@ spawns.</p>
 </h2>
 
 
-  <a id="CodeSmile_LunyScript_BindFactory_Asset_" data-uid="CodeSmile.LunyScript.BindFactory.Asset*"></a>
+  <a id="CodeSmile_LunyScript_BindFactory_AudioClip_" data-uid="CodeSmile.LunyScript.BindFactory.AudioClip*"></a>
 
-  <h3 id="CodeSmile_LunyScript_BindFactory_Asset__1_System_String_" data-uid="CodeSmile.LunyScript.BindFactory.Asset``1(System.String)">
-  Asset&lt;T&gt;(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_BindFactory_AudioClip_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.AudioClip(System.String,System.Int32)">
+  AudioClip(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L114"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Declares an asset input the host supplies. An object that assigns nothing gets the
-asset placeholder for <code class="typeparamref">T</code>.</p>
+  <div class="markdown level1 summary"><p>Declares an audio clip input the host supplies. An object that assigns nothing gets a
+short low tone as its asset placeholder.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Asset&lt;T&gt; Asset&lt;T&gt;(string name) where T : Object</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public AssetInputBuilder&lt;AudioClip&gt; AudioClip(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -164,9 +172,14 @@ asset placeholder for <code class="typeparamref">T</code>.</p>
   <dl class="parameters">
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
-    <td style="width: 99%"><dd><p>The name, which should come from <code>nameof</code>. Unique within the script,
-and what a stored value is matched against.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
 </dd></td>
   </tr>
   </dl>
@@ -174,16 +187,8 @@ and what a stored value is matched against.</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.Asset-1.html">Asset</a>&lt;T&gt;</dt>
-    <dd><p>The typed handle.</p>
-</dd>
-  </dl>
-
-  <h4 class="section">Type Parameters</h4>
-  <dl class="parameters">
-    <dt><code>T</code></dt>
-    <dd><p>The Unity asset type this input accepts. An input declared as
-<code>GameObject</code> cannot be satisfied by a <code>Texture2D</code>.</p>
+    <dt><a class="xref" href="CodeSmile.LunyScript.AssetInputBuilder-1.html">AssetInputBuilder</a>&lt;<a class="xref" href="CodeSmile.LunyScript.AudioClip.html">AudioClip</a>&gt;</dt>
+    <dd><p>The declaration; assigning it declares the input.</p>
 </dd>
   </dl>
 
@@ -191,35 +196,29 @@ and what a stored value is matched against.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Asset__1_System_String__examples">Examples</h4>
-  <pre><code class="lang-csharp">OpenSound = Bind.Asset&lt;AudioClip&gt;(nameof(OpenSound));</code></pre>
+
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_AudioClip_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Shot = Bind.AudioClip();</code></pre>
 
 
 
-  <h4 class="section">Exceptions</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p>The name is null or whitespace, or this script
-already declares an input or a variable of that name.</p>
-</dd>
-  </dl>
 
 
 
-  <a id="CodeSmile_LunyScript_BindFactory_Asset_" data-uid="CodeSmile.LunyScript.BindFactory.Asset*"></a>
+  <a id="CodeSmile_LunyScript_BindFactory_AudioMixer_" data-uid="CodeSmile.LunyScript.BindFactory.AudioMixer*"></a>
 
-  <h3 id="CodeSmile_LunyScript_BindFactory_Asset__1_System_String_CodeSmile_LunyScript_AssetSource___0__" data-uid="CodeSmile.LunyScript.BindFactory.Asset``1(System.String,CodeSmile.LunyScript.AssetSource{``0})">
-  Asset&lt;T&gt;(string, AssetSource&lt;T&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_BindFactory_AudioMixer_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.AudioMixer(System.String,System.Int32)">
+  AudioMixer(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L125"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Declares an asset input the host supplies, naming where it loads from when the host
-assigns nothing.</p>
+  <div class="markdown level1 summary"><p>Declares an audio mixer input the host supplies, whose exposed parameters
+<code>Audio.Mixer</code> writes. No asset placeholder exists for a mixer.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Asset&lt;T&gt; Asset&lt;T&gt;(string name, AssetSource&lt;T&gt; whenUnassigned) where T : Object</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public AssetInputBuilder&lt;AudioMixer&gt; AudioMixer(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -232,15 +231,14 @@ assigns nothing.</p>
   <dl class="parameters">
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
-    <td style="width: 99%"><dd><p>The name, which should come from <code>nameof</code>.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
 </dd></td>
   </tr>
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.AssetSource-1.html">AssetSource</a>&lt;T&gt;</dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>whenUnassigned</code></dt></td>
-    <td style="width: 99%"><dd><p>Where to load from when the host assigns nothing. A source of
-no provider is the same as declaring none.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
 </dd></td>
   </tr>
   </dl>
@@ -248,15 +246,8 @@ no provider is the same as declaring none.</p>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.Asset-1.html">Asset</a>&lt;T&gt;</dt>
-    <dd><p>The typed handle.</p>
-</dd>
-  </dl>
-
-  <h4 class="section">Type Parameters</h4>
-  <dl class="parameters">
-    <dt><code>T</code></dt>
-    <dd><p>The Unity asset type this input accepts.</p>
+    <dt><a class="xref" href="CodeSmile.LunyScript.AssetInputBuilder-1.html">AssetInputBuilder</a>&lt;<a class="xref" href="CodeSmile.LunyScript.AudioMixer.html">AudioMixer</a>&gt;</dt>
+    <dd><p>The declaration; assigning it declares the input.</p>
 </dd>
   </dl>
 
@@ -264,24 +255,71 @@ no provider is the same as declaring none.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Asset__1_System_String_CodeSmile_LunyScript_AssetSource___0___examples">Examples</h4>
-  <pre><code class="lang-csharp">Sentry = Bind.Asset&lt;GameObject&gt;(nameof(Sentry), AssetSource.Resources&lt;GameObject&gt;("Enemies/Sentry"));</code></pre>
+
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_AudioMixer_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Master = Bind.AudioMixer();</code></pre>
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Asset__1_System_String_CodeSmile_LunyScript_AssetSource___0___remarks">Remarks</h4>
-  <div class="markdown level1 remarks"><p>The source names its provider, so nothing about it is looked up in a catalog and no
-second provider is tried when the first finds nothing. The source is read once, while
-this script type is built, because it names the same asset for every object running the
-script.</p>
+
+
+
+
+  <a id="CodeSmile_LunyScript_BindFactory_AudioMixerGroup_" data-uid="CodeSmile.LunyScript.BindFactory.AudioMixerGroup*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BindFactory_AudioMixerGroup_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.AudioMixerGroup(System.String,System.Int32)">
+  AudioMixerGroup(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L136"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares an input for one group of an audio mixer, which a one-shot plays
+<code>Through</code>. No asset placeholder exists for a mixer group.</p>
 </div>
+  <div class="markdown level1 conceptual"></div>
 
-  <h4 class="section">Exceptions</h4>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public AssetInputBuilder&lt;AudioMixerGroup&gt; AudioMixerGroup(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p>The name is null or whitespace, or this script
-already declares an input or a variable of that name.</p>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.AssetInputBuilder-1.html">AssetInputBuilder</a>&lt;<a class="xref" href="CodeSmile.LunyScript.AudioMixerGroup.html">AudioMixerGroup</a>&gt;</dt>
+    <dd><p>The declaration; assigning it declares the input.</p>
 </dd>
   </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_AudioMixerGroup_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Effects = Bind.AudioMixerGroup();</code></pre>
+
+
+
 
 
 
@@ -289,7 +327,7 @@ already declares an input or a variable of that name.</p>
 
   <h3 id="CodeSmile_LunyScript_BindFactory_Flag_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Flag(System.String,System.String,System.Int32)">
   Flag(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L193"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L238"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds a shared <code>Flag</code> this script did not define. Call <code>Shared</code> to
@@ -361,7 +399,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_BindFactory_Number_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Number(System.String,System.String,System.Int32)">
   Number(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L220"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds a shared <code>Number</code> this script did not define. Call <code>Shared</code> to
@@ -429,20 +467,20 @@ surface was read outside <code>Build()</code>.</p>
 
 
 
-  <a id="CodeSmile_LunyScript_BindFactory_Prefab_" data-uid="CodeSmile.LunyScript.BindFactory.Prefab*"></a>
+  <a id="CodeSmile_LunyScript_BindFactory_Object_" data-uid="CodeSmile.LunyScript.BindFactory.Object*"></a>
 
-  <h3 id="CodeSmile_LunyScript_BindFactory_Prefab_System_String_" data-uid="CodeSmile.LunyScript.BindFactory.Prefab(System.String)">
-  Prefab(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_BindFactory_Object_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Object(System.String,System.Int32)">
+  Object(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L195"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Declares a prefab input the host supplies: the same declared input
-<a class="xref" href="CodeSmile.LunyScript.BindFactory.html#CodeSmile_LunyScript_BindFactory_Asset__1_System_String_">Asset&lt;T&gt;(string)</a> is, narrowed so that only a prefab can satisfy it.</p>
+  <div class="markdown level1 summary"><p>Declares a binding to one object in a scene: the object the host's Inspector assigns, or else the
+first object in the spawning object's own scene whose name is the declared name.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Prefab Prefab(string name)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ObjectBindingBuilder Object(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -453,156 +491,6 @@ surface was read outside <code>Build()</code>.</p>
   <th>Description</th>
   </tr>
   <dl class="parameters">
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
-    <td style="width: 99%"><dd><p>The name, which should come from <code>nameof</code>. Unique within the script,
-and what a stored value is matched against.</p>
-</dd></td>
-  </tr>
-  </dl>
-  </table>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.Prefab.html">Prefab</a></dt>
-    <dd><p>The handle.</p>
-</dd>
-  </dl>
-
-
-
-
-
-
-  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Prefab_System_String__examples">Examples</h4>
-  <pre><code class="lang-csharp">Sentry = Bind.Prefab(nameof(Sentry));</code></pre>
-
-
-  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Prefab_System_String__remarks">Remarks</h4>
-  <div class="markdown level1 remarks"><p><b>A <code>GameObject</code> the host assigned that is not a prefab asset is refused</b>, with
-an error naming the input, and the input then resolves as if nothing had been assigned.
-An <code>Asset&lt;GameObject&gt;</code> accepts a scene object; a prefab input does not,
-because spawning from a scene object duplicates that object instead of producing a new
-one from an asset.</p>
-<p>
-    <code>Object.Spawn</code> takes this handle and no other, so a spawn from an input of
-    another kind does not compile.
-</p>
-</div>
-
-  <h4 class="section">Exceptions</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p>The name is null or whitespace, or this script
-already declares an input or a variable of that name.</p>
-</dd>
-  </dl>
-
-
-
-  <a id="CodeSmile_LunyScript_BindFactory_Prefab_" data-uid="CodeSmile.LunyScript.BindFactory.Prefab*"></a>
-
-  <h3 id="CodeSmile_LunyScript_BindFactory_Prefab_System_String_CodeSmile_LunyScript_AssetSource_UnityEngine_GameObject__" data-uid="CodeSmile.LunyScript.BindFactory.Prefab(System.String,CodeSmile.LunyScript.AssetSource{UnityEngine.GameObject})">
-  Prefab(string, AssetSource&lt;GameObject&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L133"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Declares a prefab input the host supplies, naming where it loads from when the host
-assigns nothing.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Prefab Prefab(string name, AssetSource&lt;GameObject&gt; whenUnassigned)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <table>
-  <tr>
-  <th>Type</th>
-  <th>Name</th>
-  <th>Description</th>
-  </tr>
-  <dl class="parameters">
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
-    <td style="width: 99%"><dd><p>The name, which should come from <code>nameof</code>.</p>
-</dd></td>
-  </tr>
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.AssetSource-1.html">AssetSource</a>&lt;<span class="xref">GameObject</span>&gt;</dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>whenUnassigned</code></dt></td>
-    <td style="width: 99%"><dd><p>Where to load from when the host assigns nothing. A source of
-no provider is the same as declaring none.</p>
-</dd></td>
-  </tr>
-  </dl>
-  </table>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.Prefab.html">Prefab</a></dt>
-    <dd><p>The handle.</p>
-</dd>
-  </dl>
-
-
-
-
-
-
-  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Prefab_System_String_CodeSmile_LunyScript_AssetSource_UnityEngine_GameObject___examples">Examples</h4>
-  <pre><code class="lang-csharp">Sentry = Bind.Prefab(nameof(Sentry), AssetSource.Resources&lt;GameObject&gt;("Enemies/Sentry"));</code></pre>
-
-
-  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Prefab_System_String_CodeSmile_LunyScript_AssetSource_UnityEngine_GameObject___remarks">Remarks</h4>
-  <div class="markdown level1 remarks"><p>The source is read once, while this script type is built, the way
-<a class="xref" href="CodeSmile.LunyScript.BindFactory.html#CodeSmile_LunyScript_BindFactory_Asset__1_System_String_">Asset&lt;T&gt;(string)</a>'s is, and what a <code>Resources</code> key names is always a project
-asset, so a prefab loaded that way needs no further check.</p>
-</div>
-
-  <h4 class="section">Exceptions</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p>The name is null or whitespace, or this script
-already declares an input or a variable of that name.</p>
-</dd>
-  </dl>
-
-
-
-  <a id="CodeSmile_LunyScript_BindFactory_Scene_" data-uid="CodeSmile.LunyScript.BindFactory.Scene*"></a>
-
-  <h3 id="CodeSmile_LunyScript_BindFactory_Scene_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Scene(System.String,System.String,System.Int32)">
-  Scene(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L158"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Declares a scene input: the typed scene identity <code>Scene.Load</code>, <code>Scene.Unload</code> and
-the <code>When.Scene*</code> watches take. The host's Inspector assigns the scene.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SceneReference Scene(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <table>
-  <tr>
-  <th>Type</th>
-  <th>Name</th>
-  <th>Description</th>
-  </tr>
-  <dl class="parameters">
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
-    <td style="width: 99%"><dd><p>The name, which should come from <code>nameof</code>.</p>
-</dd></td>
-  </tr>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
@@ -620,8 +508,8 @@ the <code>When.Scene*</code> watches take. The host's Inspector assigns the scen
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.SceneReference.html">SceneReference</a></dt>
-    <dd><p>The handle.</p>
+    <dt><a class="xref" href="CodeSmile.LunyScript.ObjectBindingBuilder.html">ObjectBindingBuilder</a></dt>
+    <dd><p>The declaration; assigning it declares the binding.</p>
 </dd>
   </dl>
 
@@ -630,25 +518,149 @@ the <code>When.Scene*</code> watches take. The host's Inspector assigns the scen
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Scene_System_String_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">Arena = Bind.Scene(nameof(Arena));</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Object_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Witch = Bind.Object();
+Enemy = Bind.Object().WithTag("Enemy").Named("Guard").LiveRebind();
+Door = Bind.Object().MustExist();</code></pre>
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Scene_System_String_System_String_System_Int32__remarks">Remarks</h4>
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Object_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>Nothing found is an ordinary state.</b> The binding is unavailable, <code>IsValid</code> is false, a
+write through it does nothing and no object is created in its place. <code>WithTag</code> and
+<code>Named</code> replace the name search, <code>MustExist()</code> refuses to start the script when nothing
+is found, and <code>LiveRebind()</code> searches again while the binding has no object.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_BindFactory_Prefab_" data-uid="CodeSmile.LunyScript.BindFactory.Prefab*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BindFactory_Prefab_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Prefab(System.String,System.Int32)">
+  Prefab(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a prefab input the host supplies. <code>Object.Create</code> and <code>Define.Pool</code> take it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public AssetInputBuilder&lt;Prefab&gt; Prefab(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.AssetInputBuilder-1.html">AssetInputBuilder</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Prefab.html">Prefab</a>&gt;</dt>
+    <dd><p>The declaration; assigning it declares the input.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Prefab_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Sentry = Bind.Prefab();
+Marker = Bind.Prefab().FromResources("Enemies/Sentry");</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Prefab_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>A <code>GameObject</code> the host assigned that is not a prefab asset is refused</b>, with an error
+naming the input, and the input then resolves as if nothing had been assigned: copying a scene
+object duplicates that object instead of producing a new one from an asset.
+<a class="xref" href="CodeSmile.LunyScript.BindFactory.html#CodeSmile_LunyScript_BindFactory_Object_System_String_System_Int32_">Object(string, int)</a> declares a binding to an object in the scene.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_BindFactory_Scene_" data-uid="CodeSmile.LunyScript.BindFactory.Scene*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BindFactory_Scene_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Scene(System.String,System.Int32)">
+  Scene(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L167"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a scene input: the typed scene identity <code>Scene.Load</code>, <code>Scene.Unload</code> and
+the <code>When.Scene*</code> watches take. The host's Inspector assigns the scene.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SceneInputBuilder Scene(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SceneInputBuilder.html">SceneInputBuilder</a></dt>
+    <dd><p>The declaration; assigning it declares the input.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Scene_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Arena = Bind.Scene();</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Scene_System_String_System_Int32__remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p><b>There is no source and no placeholder for a scene.</b> Substituting a scene would change
 what the game is, so an object that assigns none still spawns, the missing assignment is
 reported once per script type, and a <code>Scene.Load</code> of it fails as
-<code>OperationFailure.NotFound</code>. <code>[Asset]</code> on a <a class="xref" href="CodeSmile.LunyScript.SceneReference.html">SceneReference</a>
-property declares the same input.</p>
+<code>OperationFailure.NotFound</code>.</p>
 </div>
 
-  <h4 class="section">Exceptions</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p>The name is null or whitespace, or this script
-already declares an input or a variable of that name.</p>
-</dd>
-  </dl>
 
 
 
@@ -656,7 +668,7 @@ already declares an input or a variable of that name.</p>
 
   <h3 id="CodeSmile_LunyScript_BindFactory_Text_System_String_CodeSmile_LunyScript_TextCapacity_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Text(System.String,CodeSmile.LunyScript.TextCapacity,System.String,System.Int32)">
   Text(string, TextCapacity, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L248"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L293"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds a shared text of the given capacity this script did not define. The capacity
@@ -734,7 +746,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_BindFactory_Text_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Text(System.String,System.String,System.Int32)">
   Text(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L229"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L274"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds a shared 64-byte text this script did not define. Call <code>Shared</code> to
@@ -802,11 +814,70 @@ surface was read outside <code>Build()</code>.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_BindFactory_Texture2D_" data-uid="CodeSmile.LunyScript.BindFactory.Texture2D*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BindFactory_Texture2D_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Texture2D(System.String,System.Int32)">
+  Texture2D(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a texture input the host supplies. An object that assigns nothing gets the
+checkerboard asset placeholder.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public AssetInputBuilder&lt;Texture2D&gt; Texture2D(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.AssetInputBuilder-1.html">AssetInputBuilder</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Texture2D.html">Texture2D</a>&gt;</dt>
+    <dd><p>The declaration; assigning it declares the input.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Texture2D_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Portrait = Bind.Texture2D();</code></pre>
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_BindFactory_Vector3_" data-uid="CodeSmile.LunyScript.BindFactory.Vector3*"></a>
 
   <h3 id="CodeSmile_LunyScript_BindFactory_Vector3_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Vector3(System.String,System.String,System.Int32)">
   Vector3(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L211"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L256"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds a shared <code>Vector3</code> this script did not define. Call <code>Shared</code> to
@@ -874,11 +945,69 @@ surface was read outside <code>Build()</code>.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_BindFactory_VisualTreeAsset_" data-uid="CodeSmile.LunyScript.BindFactory.VisualTreeAsset*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BindFactory_VisualTreeAsset_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.VisualTreeAsset(System.String,System.Int32)">
+  VisualTreeAsset(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a UXML document input, which <code>Panel.Place</code> copies onto the screen.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public AssetInputBuilder&lt;VisualTreeAsset&gt; VisualTreeAsset(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.AssetInputBuilder-1.html">AssetInputBuilder</a>&lt;<a class="xref" href="CodeSmile.LunyScript.VisualTreeAsset.html">VisualTreeAsset</a>&gt;</dt>
+    <dd><p>The declaration; assigning it declares the input.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_VisualTreeAsset_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Portrait = Bind.VisualTreeAsset();</code></pre>
+
+
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L34" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L42" class="edit-link">Edit this page</a>
         </div>
 
 

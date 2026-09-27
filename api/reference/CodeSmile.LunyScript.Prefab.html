@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct Prefab | LunyScript API Reference ">
       
-      <meta name="description" content="A handle to one prefab input of a script. Returned by Bind.Prefab at build time; what the input holds is an instance read, because the value belongs to the object and not to the script type.">
+      <meta name="description" content="A handle to one prefab input of a script. Returned by Bind.Prefab() at build time, or assigned before Build() by [Asset] on the property; what the input holds is an instance read, because the value belongs to the object and not to the script type.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_Prefab" data-uid="CodeSmile.LunyScript.Prefab" class="text-break">
-Struct Prefab  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/Prefab.cs/#L46"><i class="bi bi-code-slash"></i></a>
+Struct Prefab  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/Prefab.cs/#L36"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,9 +85,9 @@ Struct Prefab  <a class="header-action link-secondary" title="View source" href=
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>A handle to one prefab input of a script. Returned by <code>Bind.Prefab</code> at build time; what
-the input holds is an instance read, because the value belongs to the object and not to the
-script type.</p>
+  <div class="markdown summary"><p>A handle to one prefab input of a script. Returned by <code>Bind.Prefab()</code> at build time, or
+assigned before <code>Build()</code> by <code>[Asset]</code> on the property; what the input holds is an instance
+read, because the value belongs to the object and not to the script type.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -110,33 +110,23 @@ script type.</p>
 
 
   <h2 id="CodeSmile_LunyScript_Prefab_examples">Examples</h2>
-  <pre><code class="lang-csharp">[Asset] public Prefab Sentry { get; private set; }
-On.Ready(Object.Spawn(Sentry).At(new Vector3(0.0, 1.0, 0.0)).Into("Guard"));</code></pre>
+  <pre><code class="lang-csharp">Sentry = Bind.Prefab();
+On.Ready(Object.Create(Sentry).At(new Vector3(0.0, 1.0, 0.0)).Into("Guard"));</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_Prefab_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p><b>This is the declared asset input of <a class="xref" href="CodeSmile.LunyScript.Asset-1.html">Asset&lt;T&gt;</a>, narrowed to a prefab.</b> It
-occupies an asset slot, it is declared in the same table, and it is resolved by the same
-three steps at spawn. The two differences are stated here because they are the whole reason
-the type exists.</p>
+  <div class="markdown level0 remarks"><p><b>A prefab input refuses a GameObject that is not a prefab.</b> A scene object assigned to an
+input a script copies from is a mistake that shows up as a duplicated scene object rather than as a
+message. A value the host assigned that is not a prefab asset is refused at spawn, and the input then
+resolves as if nothing had been assigned. A scene object is what <a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a> binds.</p>
 <p>
-    <b>A prefab input refuses a GameObject that is not a prefab.</b> An
-    <code>Asset&lt;GameObject&gt;</code> is satisfied by any <code>GameObject</code>, including one
-    dragged out of the Hierarchy, and a scene object assigned to an input a script spawns
-    from is a mistake that shows up as a duplicated scene object rather than as a message. A
-    value the host assigned that is not a prefab asset is refused at spawn, and the input
-    then resolves as if nothing had been assigned.
+    <b><code>Object.Create</code> and <code>Define.Pool</code> take this type and no other input kind</b>, so
+    passing an <a class="xref" href="CodeSmile.LunyScript.AudioClip.html">AudioClip</a> or an <a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a> to them does not compile.
 </p>
 <p>
-    <b><code>Object.Spawn</code> takes this type and nothing else</b>, so passing an
-    <code>Asset&lt;AudioClip&gt;</code> or an <code>Asset&lt;GameObject&gt;</code> to a spawn does not
-    compile.
-</p>
-<p>
-    <b>The declared name is the input's durable identity</b>, the way it is for
-    <a class="xref" href="CodeSmile.LunyScript.Asset-1.html">Asset&lt;T&gt;</a>: a value stored on a host is matched to an input by that name,
-    which is why the name comes from <code>nameof</code> and why renaming a declared input orphans
-    what a scene stored for the old name.
+    <b>The declared name is the input's durable identity</b>: a value stored on a host is matched to
+    an input by that name. A generated property gives the input its member's name, and
+    <code>.As(name)</code> names it explicitly. Renaming it orphans what a scene stored for the old name.
 </p>
 <p>
     <b>A handle is valid only inside the <code>Build</code> that declared it</b>, for the reason
@@ -154,11 +144,11 @@ the type exists.</p>
 
   <h3 id="CodeSmile_LunyScript_Prefab_IsDeclared" data-uid="CodeSmile.LunyScript.Prefab.IsDeclared">
   IsDeclared
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/Prefab.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/Prefab.cs/#L49"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>False for a handle <code>Build()</code> never assigned, which is what the
-unassigned-member check reads.</p>
+  <div class="markdown level1 summary"><p>False for a handle <code>Build()</code> never assigned, or one still waiting for its
+name.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -187,7 +177,7 @@ unassigned-member check reads.</p>
 
   <h3 id="CodeSmile_LunyScript_Prefab_Name" data-uid="CodeSmile.LunyScript.Prefab.Name">
   Name
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/Prefab.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/Prefab.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The name the script declared, which is what a stored value is matched against and
@@ -224,7 +214,7 @@ what a diagnostic names.</p>
 
   <h3 id="CodeSmile_LunyScript_Prefab_ToString" data-uid="CodeSmile.LunyScript.Prefab.ToString">
   ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/Prefab.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/Prefab.cs/#L78"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The declared name, for a log line or a failure message.</p>
@@ -253,11 +243,68 @@ what a diagnostic names.</p>
 
 
 
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Prefab_op_Implicit_" data-uid="CodeSmile.LunyScript.Prefab.op_Implicit*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Prefab_op_Implicit_CodeSmile_LunyScript_AssetInputBuilder_CodeSmile_LunyScript_Prefab___CodeSmile_LunyScript_Prefab" data-uid="CodeSmile.LunyScript.Prefab.op_Implicit(CodeSmile.LunyScript.AssetInputBuilder{CodeSmile.LunyScript.Prefab})~CodeSmile.LunyScript.Prefab">
+  implicit operator Prefab(AssetInputBuilder&lt;Prefab&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/Prefab.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares the prefab input a <code>Bind.Prefab()</code> chain describes. The generated property of
+the line then gives it the member's name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static implicit operator Prefab(AssetInputBuilder&lt;Prefab&gt; declaration)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.AssetInputBuilder-1.html">AssetInputBuilder</a>&lt;<a class="xref" href="CodeSmile.LunyScript.Prefab.html">Prefab</a>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>declaration</code></dt></td>
+    <td style="width: 99%"><dd><p>The chain.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Prefab.html">Prefab</a></dt>
+    <dd><p>The handle.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Prefab_op_Implicit_CodeSmile_LunyScript_AssetInputBuilder_CodeSmile_LunyScript_Prefab___CodeSmile_LunyScript_Prefab_examples">Examples</h4>
+  <pre><code class="lang-csharp">Sentry = Bind.Prefab();</code></pre>
+
+
+
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/Prefab.cs/#L46" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/Prefab.cs/#L36" class="edit-link">Edit this page</a>
         </div>
 
 
