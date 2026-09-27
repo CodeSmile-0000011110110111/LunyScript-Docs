@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Object pools | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Object pools" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/object-pools.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/object-pools.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Object pools" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Object pools","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/object-pools.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Object pools</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Launch enemies from a portal and reuse the ones that are done instead of making new ones:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Spawner</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Prefab</span> <span class="n">Enemy</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Asset</span><span class="p">&lt;</span><span class="n">UnityEngine</span><span class="p">.</span><span class="n">GameObject</span><span class="p">&gt;</span> <span class="n">Portal</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">Pool</span> <span class="n">Enemies</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Enemies</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Pool</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Enemies</span><span class="p">)).</span><span class="nf">From</span><span class="p">(</span><span class="n">Enemy</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">HardCap</span><span class="p">(</span><span class="m">8</span><span class="p">).</span><span class="nf">Prewarm</span><span class="p">(</span><span class="m">4</span><span class="p">).</span><span class="nf">SpawnAt</span><span class="p">(</span><span class="n">Portal</span><span class="p">).</span><span class="nf">InRadius</span><span class="p">(</span><span class="m">3.0</span><span class="p">);</span>
+        <span class="n">Wave</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Flag</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Wave</span><span class="p">),</span> <span class="k">false</span><span class="p">);</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Wave</span><span class="p">.</span><span class="nf">IsTrue</span><span class="p">())</span>
+            <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">),</span> <span class="n">Wave</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">EnemyAi</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Health</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Health</span><span class="p">),</span> <span class="m">100</span><span class="p">);</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Spawned</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">StopMotion</span><span class="p">());</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">()));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Assign the enemy prefab and a portal object in the scene on the spawner’s LunyScript Behaviour. Each
+time <code class="language-plaintext highlighter-rouge">Wave</code> is set, one enemy leaves the pool at a random point within three units of the portal. When
+an enemy’s health reaches zero it goes back to the pool, and a later spawn reuses it.</p>
+
+<h2 id="declaring-a-pool">Declaring a pool</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Define.Pool(nameof(X)).From(prefab)</code> declares a pool of copies of one prefab input and turns into
+the <code class="language-plaintext highlighter-rouge">Pool</code> handle you keep in a property. <code class="language-plaintext highlighter-rouge">Build()</code> makes no object: the pool fills when the
+game runs.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Clause</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.HardCap(n)</code></td>
+      <td>The most copies the pool holds, idle and in use together. Without it the pool has no limit.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.Prewarm(n)</code></td>
+      <td>How many inactive copies the pool prepares before the first spawn. At most the hard cap.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.SpawnAt(position)</code></td>
+      <td>Where a spawn goes when the spawn itself names no place. Also takes a rotation, or an object in the scene.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.InRadius(r)</code></td>
+      <td>Spreads <code class="language-plaintext highlighter-rouge">SpawnAt</code> over a disk of radius <code class="language-plaintext highlighter-rouge">r</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.InRadius(r, DiskPlane.XY)</code></td>
+      <td>The same disk on the X and Y axes, for a 2D scene. <code class="language-plaintext highlighter-rouge">DiskPlane.YZ</code> is the third plane.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.InSphere(r)</code></td>
+      <td>Spreads <code class="language-plaintext highlighter-rouge">SpawnAt</code> through a ball of radius <code class="language-plaintext highlighter-rouge">r</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.InWorldSpace()</code></td>
+      <td>Reads <code class="language-plaintext highlighter-rouge">SpawnAt</code> and its shape in world coordinates and axes.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The copies live in the scene of the object that runs the script, under an inactive object named after
+the pool. When that scene unloads, the pool and every copy go with it.</p>
+
+<h2 id="spawning-and-despawning">Spawning and despawning</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="s">"Boss"</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Retreat"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">(</span><span class="s">"Boss"</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">()));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Object.Spawn(pool)</code> takes one copy out of the pool. The pool reuses an idle copy when it has one and
+makes a new one below its hard cap. <code class="language-plaintext highlighter-rouge">Into(name)</code> gives the copy a name in this script. <code class="language-plaintext highlighter-rouge">Despawn</code> puts a
+copy back: with a name from the script that spawned it, or with no name from the copy’s own script.</p>
+
+<p>A spawn is applied after the current event’s blocks finish, so a copy held with <code class="language-plaintext highlighter-rouge">Into</code> is in its slot
+from the next event on. A copy that goes back becomes available to spawns made after that; a spawn
+written right after the despawn, in the same event, uses another copy.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Object.Destroy()</code> or <code class="language-plaintext highlighter-rouge">Object.Destroy(name)</code> ends a pooled copy for good and takes it out of its pool,
+which can then make a new one in its place. <code class="language-plaintext highlighter-rouge">Despawn</code> works only on pooled copies; a fresh
+<code class="language-plaintext highlighter-rouge">Object.Create</code> copy ends with <code class="language-plaintext highlighter-rouge">Destroy</code>.</p>
+
+<h2 id="where-a-spawn-goes">Where a spawn goes</h2>
+
+<p>A spawn goes, in order of preference, where its own <code class="language-plaintext highlighter-rouge">At</code> says, where the pool’s <code class="language-plaintext highlighter-rouge">SpawnAt</code> says, or at
+the position and rotation of the object whose script spawns it.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="n">Ambush</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="n">Ambush</span><span class="p">).</span><span class="nf">InRadius</span><span class="p">(</span><span class="m">2.0</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="n">Rotation</span><span class="p">.</span><span class="n">Identity</span><span class="p">));</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>An <code class="language-plaintext highlighter-rouge">At</code> replaces the pool’s placement.</strong> <code class="language-plaintext highlighter-rouge">At(Ambush)</code> puts the copy exactly on <code class="language-plaintext highlighter-rouge">Ambush</code>; to spread
+it, write a shape after the <code class="language-plaintext highlighter-rouge">At</code>.</li>
+  <li><strong>At an object in the scene</strong> the copy takes that object’s position and rotation. The object’s scale
+does not change the radius.</li>
+  <li><strong>A disk lies on the X and Z axes</strong> of the place it spreads around: the object’s own axes, or the
+rotation the <code class="language-plaintext highlighter-rouge">At</code> names. <code class="language-plaintext highlighter-rouge">InWorldSpace()</code> uses the world’s axes instead.</li>
+  <li><strong>Every point of a disk or a ball is equally likely</strong>, and an exact spawn draws no random number.</li>
+</ul>
+
+<h2 id="what-a-reused-copy-keeps">What a reused copy keeps</h2>
+
+<p>A copy’s script starts fresh on every spawn, and nothing else is reset for you.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Event</th>
+      <th>When it runs on a pooled copy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">On.Created</code></td>
+      <td>Once, on the copy’s first spawn.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">On.Spawned</code></td>
+      <td>On every spawn, before <code class="language-plaintext highlighter-rouge">Enabled</code> and <code class="language-plaintext highlighter-rouge">Ready</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">On.Enabled</code>, <code class="language-plaintext highlighter-rouge">On.Ready</code></td>
+      <td>On every spawn.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">On.Disabled</code>, <code class="language-plaintext highlighter-rouge">On.Despawned</code></td>
+      <td>On every despawn, while the copy is still where it was.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Every variable of the copy’s script is back at its declared value on each spawn. Native state is not:
+a Rigidbody keeps its velocity, an Animator its state, a particle system its particles, and the object
+its scale and anything else its last use changed. Reset what matters in <code class="language-plaintext highlighter-rouge">On.Spawned</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Spawned</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">StopMotion</span><span class="p">(),</span> <span class="n">Transform</span><span class="p">.</span><span class="nf">SetScale</span><span class="p">(</span><span class="m">1</span><span class="p">),</span>
+    <span class="n">Particles</span><span class="p">.</span><span class="nf">Play</span><span class="p">());</span>
+</code></pre></div></div>
+
+<h2 id="who-ends-the-copies">Who ends the copies</h2>
+
+<p>A copy belongs to the script that spawned it, with or without a name. When that script’s object ends,
+its copies go back to their pool. <code class="language-plaintext highlighter-rouge">SurvivesCaller()</code> leaves a copy out in the scene after its spawner
+ends:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Coins</span><span class="p">).</span><span class="nf">SurvivesCaller</span><span class="p">(),</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">()));</span>
+</code></pre></div></div>
+
+<p>Spawn before the spawner ends, as here: a spawn written in <code class="language-plaintext highlighter-rouge">On.Despawned</code> belongs to an object that is
+already ending, and is dropped.</p>
+
+<p>A copy that survives its spawner cannot be the spawner’s child, because Unity destroys a child with its
+parent, so <code class="language-plaintext highlighter-rouge">ChildOf()</code> together with <code class="language-plaintext highlighter-rouge">SurvivesCaller()</code> is refused when the script is built.</p>
+
+<h2 id="when-the-pool-is-full">When the pool is full</h2>
+
+<p>At the hard cap a spawn is refused: no copy is taken back from a use, and nothing is made. Bind the
+spawn to an operation to react to it:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">TakeEnemy</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">TakeEnemy</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Wave</span><span class="p">.</span><span class="nf">IsTrue</span><span class="p">())</span>
+    <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">TakeEnemy</span><span class="p">),</span> <span class="n">Wave</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">TakeEnemy</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Full</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>The failure is <code class="language-plaintext highlighter-rouge">OperationFailure.CapacityExhausted</code>, and
+<code class="language-plaintext highlighter-rouge">If(TakeEnemy.FailedAs(OperationFailure.CapacityExhausted))</code> tests for it. A spawn at an object in the
+scene that is inactive or gone fails as <code class="language-plaintext highlighter-rouge">NotFound</code>. A refused spawn with no <code class="language-plaintext highlighter-rouge">As</code> writes one error to the
+Console per pool and reason.</p>
+
+<h2 id="moving-from-objectspawnprefab">Moving from <code class="language-plaintext highlighter-rouge">Object.Spawn(prefab)</code></h2>
+
+<p><code class="language-plaintext highlighter-rouge">Object.Spawn</code> takes a pool. Code that passed it a prefab does not compile, and the compiler’s message
+names the two replacements:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>You wrote</th>
+      <th>Write</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.Spawn(prefab)</code> for a one-off object</td>
+      <td><code class="language-plaintext highlighter-rouge">Object.Create(prefab)</code>, with the same <code class="language-plaintext highlighter-rouge">At</code>, <code class="language-plaintext highlighter-rouge">ChildOf</code> and <code class="language-plaintext highlighter-rouge">Into</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.Spawn(prefab)</code> for objects that come and go</td>
+      <td>a <code class="language-plaintext highlighter-rouge">Define.Pool</code> and <code class="language-plaintext highlighter-rouge">Object.Spawn(pool)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.Despawn()</code> on an object that is not pooled</td>
+      <td><code class="language-plaintext highlighter-rouge">Object.Destroy()</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A copy made with <code class="language-plaintext highlighter-rouge">Object.Create(prefab)</code> is destroyed with the script that made it; add
+<code class="language-plaintext highlighter-rouge">SurvivesCaller()</code> to keep it.</p>
+
+<h2 id="call-list">Call list</h2>
+
+<p>These lines are call signatures, not a script you can paste. Brackets mark a clause you may leave out.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Define</span><span class="p">.</span><span class="nf">Pool</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="nf">From</span><span class="p">(</span><span class="n">prefab</span><span class="p">)</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">HardCap</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">Prewarm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">]</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">SpawnAt</span><span class="p">(</span> <span class="p">{</span> <span class="n">position</span> <span class="p">[</span> <span class="p">,</span> <span class="n">rotation</span> <span class="p">]</span> <span class="p">|</span> <span class="kt">object</span> <span class="p">}</span> <span class="p">)</span>
+        <span class="p">[</span> <span class="p">.</span><span class="nf">InRadius</span><span class="p">(</span><span class="n">r</span> <span class="p">[</span> <span class="p">,</span> <span class="n">plane</span> <span class="p">])</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InSphere</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="p">]</span>
+        <span class="p">[</span> <span class="p">.</span><span class="nf">InWorldSpace</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InLocalSpace</span><span class="p">()</span> <span class="p">]</span> <span class="p">]</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">At</span><span class="p">(</span> <span class="p">{</span> <span class="n">position</span> <span class="p">[</span> <span class="p">,</span> <span class="n">rotation</span> <span class="p">]</span> <span class="p">|</span> <span class="kt">object</span> <span class="p">}</span> <span class="p">)</span>
+        <span class="p">[</span> <span class="p">.</span><span class="nf">InRadius</span><span class="p">(</span><span class="n">r</span> <span class="p">[</span> <span class="p">,</span> <span class="n">plane</span> <span class="p">])</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InSphere</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="p">]</span>
+        <span class="p">[</span> <span class="p">.</span><span class="nf">InWorldSpace</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InLocalSpace</span><span class="p">()</span> <span class="p">]</span> <span class="p">]</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">ChildOf</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">Into</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">]</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">SurvivesCaller</span><span class="p">()</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> —
+<code class="language-plaintext highlighter-rouge">Object.Create</code> and the lifecycle events a copy receives.</li>
+  <li><a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> — declaring the
+prefab and scene inputs a pool reads, and operation handles.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.DefineFactory.html"><code class="language-plaintext highlighter-rouge">DefineFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectLifetimeFactory.html"><code class="language-plaintext highlighter-rouge">ObjectLifetimeFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SpawnBuilder.html"><code class="language-plaintext highlighter-rouge">SpawnBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.PoolBuilder.html"><code class="language-plaintext highlighter-rouge">PoolBuilder</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

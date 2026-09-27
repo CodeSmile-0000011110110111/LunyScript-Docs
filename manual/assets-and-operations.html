@@ -66,7 +66,7 @@
     <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Prefab</span> <span class="n">Shell</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Fire"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Shell</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">)));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Fire"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Shell</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">)));</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -86,7 +86,7 @@ it. Nothing is looked up by path while the game runs.</p>
 </code></pre></div></div>
 
 <p>Put <code class="language-plaintext highlighter-rouge">[Asset]</code> on a public auto-property of a <code class="language-plaintext highlighter-rouge">partial</code> script and the generator writes the
-<code class="language-plaintext highlighter-rouge">DefineAssets</code> override. <code class="language-plaintext highlighter-rouge">Prefab</code> is the type that <code class="language-plaintext highlighter-rouge">Object.Spawn</code> takes; <code class="language-plaintext highlighter-rouge">Asset&lt;T&gt;</code> is for everything
+<code class="language-plaintext highlighter-rouge">DefineAssets</code> override. <code class="language-plaintext highlighter-rouge">Prefab</code> is the type that <code class="language-plaintext highlighter-rouge">Object.Create</code> and <code class="language-plaintext highlighter-rouge">Define.Pool</code> take; <code class="language-plaintext highlighter-rouge">Asset&lt;T&gt;</code> is for everything
 else. <code class="language-plaintext highlighter-rouge">Resources = key</code> names a Resources-relative, extension-free key that is used when the object
 assigns nothing.</p>
 
@@ -100,7 +100,7 @@ assigns nothing.</p>
 <p>An object assigns its inputs on the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component, one field per declared input,
 below the script. An input the object leaves empty resolves to that input’s own declared source, and
 then to the registered placeholder for its type, and the resolution is reported. A <code class="language-plaintext highlighter-rouge">GameObject</code> that
-the object assigned but that is not a prefab asset is refused at spawn, because <code class="language-plaintext highlighter-rouge">Object.Spawn</code> takes
+the object assigned but that is not a prefab asset is refused at spawn, because <code class="language-plaintext highlighter-rouge">Object.Create</code> takes
 <code class="language-plaintext highlighter-rouge">Prefab</code>.</p>
 
 <h2 id="operations-work-that-takes-more-than-one-frame">Operations: work that takes more than one frame</h2>
@@ -116,7 +116,7 @@ classified outcome. An operation handle is how a script observes one.</p>
 
     <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Guard</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
 
-    <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Loading</span><span class="p">),</span> <span class="n">Ready</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+    <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Loading</span><span class="p">),</span> <span class="n">Ready</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
     <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Ready</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
     <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Finished</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Release</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
 <span class="p">}</span>
@@ -245,7 +245,7 @@ offers.</p>
         <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Guard</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
 
         <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span>
-            <span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">ChildOf</span><span class="p">().</span><span class="nf">Into</span><span class="p">(</span><span class="s">"Guard"</span><span class="p">),</span>
+            <span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">ChildOf</span><span class="p">().</span><span class="nf">Into</span><span class="p">(</span><span class="s">"Guard"</span><span class="p">),</span>
             <span class="n">Manned</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
         <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Manned</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
         <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Finished</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Release</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
@@ -257,7 +257,9 @@ offers.</p>
 
 <ul>
   <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> —
-<code class="language-plaintext highlighter-rouge">Object.Spawn</code> and the rest of the lifetime surface.</li>
+<code class="language-plaintext highlighter-rouge">Object.Create</code> and the rest of the lifetime surface.</li>
+  <li><a href="/LunyScript-Docs/manual/object-pools.html">Object pools</a> — reusing prefab copies with
+<code class="language-plaintext highlighter-rouge">Define.Pool</code> and <code class="language-plaintext highlighter-rouge">Object.Spawn</code>.</li>
   <li><a href="/LunyScript-Docs/manual/player-input.html">Player input</a> — rebinding, which uses the same
 operation handle.</li>
   <li><a href="/LunyScript-Docs/manual/networking-and-cloud-save.html">Networking and cloud save</a> — the

@@ -98,6 +98,10 @@ callbacks at all, so a script that only moves costs nothing on the physics side.
       <td>Once, at the first bind to a host object, after declared inputs are resolved and before <code class="language-plaintext highlighter-rouge">Ready</code>.</td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">On.Spawned(block, ..)</code></td>
+      <td>At the start of every incarnation: right after <code class="language-plaintext highlighter-rouge">Created</code> on the first, and alone each time a pool hands the object out again.</td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">On.Ready(block, ..)</code></td>
       <td>Once per spawn, before this object’s first update of any kind.</td>
     </tr>
@@ -117,13 +121,15 @@ callbacks at all, so a script that only moves costs nothing on the physics side.
 </table>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Created</span><span class="p">(</span><span class="n">Serial</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">NextSerial</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Spawned</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">StopMotion</span><span class="p">());</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">100</span><span class="p">),</span> <span class="n">Powered</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Enabled</span><span class="p">(</span><span class="n">Enables</span><span class="p">.</span><span class="nf">Inc</span><span class="p">());</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Disabled</span><span class="p">(</span><span class="n">Disables</span><span class="p">.</span><span class="nf">Inc</span><span class="p">());</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Despawned</span><span class="p">(</span><span class="n">Despawns</span><span class="p">.</span><span class="nf">Inc</span><span class="p">());</span>
 </code></pre></div></div>
 
-<p>A pooled object that respawns onto the same host raises <code class="language-plaintext highlighter-rouge">Ready</code> again and leaves <code class="language-plaintext highlighter-rouge">Created</code> alone.</p>
+<p>An object a pool hands out again raises <code class="language-plaintext highlighter-rouge">Spawned</code> and <code class="language-plaintext highlighter-rouge">Ready</code> again and leaves <code class="language-plaintext highlighter-rouge">Created</code> alone;
+<a href="/LunyScript-Docs/manual/object-pools.html">Object pools</a> shows that cycle.</p>
 
 <h2 id="tick-events">Tick events</h2>
 
@@ -249,8 +255,10 @@ sending side. Two <code class="language-plaintext highlighter-rouge">On.Message<
 
 <h2 id="creating-and-removing-objects">Creating and removing objects</h2>
 
-<p><code class="language-plaintext highlighter-rouge">Object</code> produces and disposes of game objects that this script owns. The signature of those calls
-is in the <a href="#call-list">call list</a> at the end of this page.</p>
+<p><code class="language-plaintext highlighter-rouge">Object</code> produces and ends game objects that this script owns. <code class="language-plaintext highlighter-rouge">Create</code> makes a fresh object and
+<code class="language-plaintext highlighter-rouge">Destroy</code> ends one for good. <code class="language-plaintext highlighter-rouge">Spawn</code> and <code class="language-plaintext highlighter-rouge">Despawn</code> do the same with reusable objects from a pool, on
+<a href="/LunyScript-Docs/manual/object-pools.html">Object pools</a>. The signatures are in the
+<a href="#call-list">call list</a> at the end of this page.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Prefab</span> <span class="n">Sentry</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
@@ -258,25 +266,38 @@ is in the <a href="#call-list">call list</a> at the end of this page.</p>
 <span class="p">{</span>
     <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"Marker"</span><span class="p">));</span>
     <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"PostGuard"</span><span class="p">,</span>
-        <span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Sentry</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.8</span><span class="p">,</span> <span class="m">0</span><span class="p">)).</span><span class="nf">ChildOf</span><span class="p">()</span>
+        <span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Sentry</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.8</span><span class="p">,</span> <span class="m">0</span><span class="p">)).</span><span class="nf">ChildOf</span><span class="p">()</span>
             <span class="p">.</span><span class="nf">Into</span><span class="p">(</span><span class="s">"Guard"</span><span class="p">));</span>
-    <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">()));</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">()));</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">Object.Create(name)</code> makes an empty object immediately. It carries no script, this object owns it,
-and it is destroyed when this object despawns.</p>
+<p><code class="language-plaintext highlighter-rouge">Object.Create(name)</code> makes an empty object immediately. It carries no script, and it is destroyed
+when this object’s script ends.</p>
 
-<p><code class="language-plaintext highlighter-rouge">Object.Spawn</code> takes a declared <code class="language-plaintext highlighter-rouge">Prefab</code> input or a succeeded <code class="language-plaintext highlighter-rouge">Operation&lt;Prefab&gt;</code> handle; see
+<p><code class="language-plaintext highlighter-rouge">Object.Create(prefab)</code> makes a fresh copy of a declared <code class="language-plaintext highlighter-rouge">Prefab</code> input or of a succeeded
+<code class="language-plaintext highlighter-rouge">Operation&lt;Prefab&gt;</code> handle; see
 <a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> for both. <code class="language-plaintext highlighter-rouge">At</code>
-places it, <code class="language-plaintext highlighter-rouge">ChildOf</code> with no name parents it to this object, and <code class="language-plaintext highlighter-rouge">Into(name)</code> keeps the result in a
-named slot so <code class="language-plaintext highlighter-rouge">Activate</code>, <code class="language-plaintext highlighter-rouge">Deactivate</code> and <code class="language-plaintext highlighter-rouge">Despawn</code> can name it later. Leave <code class="language-plaintext highlighter-rouge">At</code> out and the prefab
-keeps its own pose; leave <code class="language-plaintext highlighter-rouge">ChildOf</code> out and the object goes to the scene root.</p>
+places it, <code class="language-plaintext highlighter-rouge">ChildOf</code> with no name parents it to this object, and <code class="language-plaintext highlighter-rouge">Into(name)</code> keeps it in a named slot
+so <code class="language-plaintext highlighter-rouge">Activate</code>, <code class="language-plaintext highlighter-rouge">Deactivate</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> can name it later. Leave <code class="language-plaintext highlighter-rouge">At</code> out and the prefab keeps its own
+pose; leave <code class="language-plaintext highlighter-rouge">ChildOf</code> out and the object goes to the scene root. The copy is made after the current
+event’s blocks finish, so it is in its slot from the next event on.</p>
 
-<p><code class="language-plaintext highlighter-rouge">Activate</code>, <code class="language-plaintext highlighter-rouge">Deactivate</code> and <code class="language-plaintext highlighter-rouge">Despawn</code> with a name act on an owned object immediately. With no name
-they act on this object after the current dispatch finishes, so the rest of the block list still
-runs. <code class="language-plaintext highlighter-rouge">Object.Despawn()</code> on this object produces <code class="language-plaintext highlighter-rouge">On.Disabled</code>, then <code class="language-plaintext highlighter-rouge">On.Despawned</code>, and then
-destroys the host.</p>
+<p><strong>Everything this script makes is destroyed when this script’s object ends</strong>, with or without <code class="language-plaintext highlighter-rouge">Into</code>.
+Write <code class="language-plaintext highlighter-rouge">SurvivesCaller()</code> on a copy that should stay, such as a pickup a dying enemy drops:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Pickup</span><span class="p">).</span><span class="nf">SurvivesCaller</span><span class="p">(),</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">()));</span>
+</code></pre></div></div>
+
+<p>Write it before the object ends, as here: a create written in <code class="language-plaintext highlighter-rouge">On.Despawned</code> belongs to an object that
+is already ending, and is dropped.</p>
+
+<p>With a name, <code class="language-plaintext highlighter-rouge">Activate</code>, <code class="language-plaintext highlighter-rouge">Deactivate</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> act on that object after the current event’s
+blocks finish, and <code class="language-plaintext highlighter-rouge">Destroy</code> empties the slot where the block runs, so a later block sees it empty.
+With no name they act on this object after the current dispatch finishes, so the rest of the block
+list still runs. <code class="language-plaintext highlighter-rouge">Object.Destroy()</code> on this
+object produces <code class="language-plaintext highlighter-rouge">On.Disabled</code>, then <code class="language-plaintext highlighter-rouge">On.Despawned</code>, and then destroys the host.</p>
 
 <p><code class="language-plaintext highlighter-rouge">Object</code> also changes how an object is drawn while it keeps running: <code class="language-plaintext highlighter-rouge">Hide</code>, <code class="language-plaintext highlighter-rouge">Show</code>, <code class="language-plaintext highlighter-rouge">SetColor</code> and
 material numbers are on <a href="/LunyScript-Docs/manual/showing-hiding-and-tinting.html">Showing, hiding and tinting objects</a>.</p>
@@ -284,22 +305,25 @@ material numbers are on <a href="/LunyScript-Docs/manual/showing-hiding-and-tint
 <h2 id="call-list">Call list</h2>
 
 <p>These lines are call signatures, not a script you can paste. Brackets mark a clause you may leave
-out. The working spawn is under Creating and removing objects, above.</p>
+out. The working create is under Creating and removing objects, above.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-<span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span> <span class="p">{</span> <span class="n">prefab</span> <span class="p">|</span> <span class="n">handle</span> <span class="p">}</span> <span class="p">)</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span> <span class="p">{</span> <span class="n">prefab</span> <span class="p">|</span> <span class="n">handle</span> <span class="p">}</span> <span class="p">)</span>
     <span class="p">[</span> <span class="p">.</span><span class="nf">At</span><span class="p">(</span><span class="n">position</span> <span class="p">[</span> <span class="p">,</span> <span class="n">rotation</span> <span class="p">])</span> <span class="p">]</span>
     <span class="p">[</span> <span class="p">.</span><span class="nf">InWorldSpace</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InLocalSpace</span><span class="p">()</span> <span class="p">]</span>
     <span class="p">[</span> <span class="p">.</span><span class="nf">ChildOf</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span> <span class="p">]</span>
     <span class="p">[</span> <span class="p">.</span><span class="nf">Into</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">]</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">SurvivesCaller</span><span class="p">()</span> <span class="p">]</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">Activate</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">Deactivate</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
-<span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
 </code></pre></div></div>
 
 <h2 id="what-to-read-next">What to read next</h2>
 
 <ul>
+  <li><a href="/LunyScript-Docs/manual/object-pools.html">Object pools</a> — reuse spawned objects with
+<code class="language-plaintext highlighter-rouge">Define.Pool</code>, <code class="language-plaintext highlighter-rouge">Object.Spawn</code> and <code class="language-plaintext highlighter-rouge">Object.Despawn</code>.</li>
   <li><a href="/LunyScript-Docs/manual/time-and-pausing.html">Time, pausing and gates</a> — which tick events
 a paused game still delivers.</li>
   <li><a href="/LunyScript-Docs/manual/flow.html">Flow: conditions, timed work and routines</a> — work that
