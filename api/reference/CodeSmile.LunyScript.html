@@ -915,7 +915,7 @@ whose frame is still the default, the parent's.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.CursorInputFactory.html">CursorInputFactory</a></dt>
-      <dd><p>What <code>Input.Cursor</code> returns: lock and visibility as two independent writes on the
+      <dd><p>What <code>Input.Cursor</code> returns: lock mode and visibility as two independent writes on the
 machine cursor. Four local players share one cursor; this surface is not on
 <code>Input.ForPlayer</code>.</p>
 </dd>
@@ -1047,9 +1047,21 @@ block, which the implicit conversion does.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.InputBindingOverride.html">InputBindingOverride</a></dt>
+      <dd><p>One binding override a backend reports for a local player's actions, or applies to them: which
+binding, and the control path it uses instead of the action asset's.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.InputButton.html">InputButton</a></dt>
       <dd><p>A handle to one pressed-or-not action of one local player. Returned by
 <code>Input.ForPlayer(player).Button(name)</code> at build time; the members on it build blocks.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.InputControlText.html">InputControlText</a></dt>
+      <dd><p>The control path an action or a part uses now, for <code>FireKey.Set(fire.BoundControl)</code>.
+Returned by <code>handle.BoundControl</code>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1063,6 +1075,12 @@ script reads. It hides <code>UnityEngine.Input</code> inside a <code>Script</cod
       <dt><a class="xref" href="CodeSmile.LunyScript.InputNumber.html">InputNumber</a></dt>
       <dd><p>A handle to one single-axis action of one local player. Returned by
 <code>Input.ForPlayer(player).Number(name)</code> at build time.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.InputPart.html">InputPart</a></dt>
+      <dd><p>A handle to one part of an action's composite binding, such as the <code>Up</code> key of a W A S D
+<code>Move</code>. Returned by <code>handle.Part(name)</code> at build time.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2196,9 +2214,11 @@ and where its declaration sits in the program.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.IInputProvider.html">IInputProvider</a></dt>
       <dd><p>What an input backend provides to the <a class="xref" href="CodeSmile.LunyScript.InputGateway.html">InputGateway</a>: the resolution of a
 declared action name to something the backend can read, the four value reads, the three
-per-frame occurrence tests, interactive rebind start, cancel and poll, and local player
+per-frame occurrence tests, interactive rebind start, cancel and poll, the bound control path,
+binding reset, the binding overrides a Settings document saves and loads, and local player
 pairing. Script code never sees this type; it sees the <code>Input</code> surface,
-<code>When.Input</code>, <code>When.Player</code> and <code>handle.Rebind().As</code>. Cursor lock and
+<code>When.Input</code>, <code>When.Player</code>, <code>handle.Rebind().As</code>, <code>handle.BoundControl</code>,
+<code>handle.ResetBinding()</code> and <code>.Bindings(Input.ForPlayer(n))</code>. Cursor lock and
 visibility are not on this interface.</p>
 </dd>
     </dl>

@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Interface IInputProvider | LunyScript API Reference ">
       
-      <meta name="description" content="What an input backend provides to the : the resolution of a declared action name to something the backend can read, the four value reads, the three per-frame occurrence tests, interactive rebind start, cancel and poll, and local player pairing. Script code never sees this type; it sees the Input surface, When.Input, When.Player and handle.Rebind().As. Cursor lock and visibility are not on this interface.">
+      <meta name="description" content="What an input backend provides to the : the resolution of a declared action name to something the backend can read, the four value reads, the three per-frame occurrence tests, interactive rebind start, cancel and poll, the bound control path, binding reset, the binding overrides a Settings document saves and loads, and local player pairing. Script code never sees this type; it sees the Input surface, When.Input, When.Player, handle.Rebind().As, handle.BoundControl, handle.ResetBinding() and .Bindings(Input.ForPlayer(n)). Cursor lock and visibility are not on this interface.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_IInputProvider" data-uid="CodeSmile.LunyScript.IInputProvider" class="text-break">
-Interface IInputProvider  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L38"><i class="bi bi-code-slash"></i></a>
+Interface IInputProvider  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L41"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -87,9 +87,11 @@ Interface IInputProvider  <a class="header-action link-secondary" title="View so
 
   <div class="markdown summary"><p>What an input backend provides to the <a class="xref" href="CodeSmile.LunyScript.InputGateway.html">InputGateway</a>: the resolution of a
 declared action name to something the backend can read, the four value reads, the three
-per-frame occurrence tests, interactive rebind start, cancel and poll, and local player
+per-frame occurrence tests, interactive rebind start, cancel and poll, the bound control path,
+binding reset, the binding overrides a Settings document saves and loads, and local player
 pairing. Script code never sees this type; it sees the <code>Input</code> surface,
-<code>When.Input</code>, <code>When.Player</code> and <code>handle.Rebind().As</code>. Cursor lock and
+<code>When.Input</code>, <code>When.Player</code>, <code>handle.Rebind().As</code>, <code>handle.BoundControl</code>,
+<code>handle.ResetBinding()</code> and <code>.Bindings(Input.ForPlayer(n))</code>. Cursor lock and
 visibility are not on this interface.</p>
 </div>
   <div class="markdown conceptual"></div>
@@ -146,7 +148,7 @@ System one, and it is the only place in the product that references that package
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_IsPairingOpen" data-uid="CodeSmile.LunyScript.IInputProvider.IsPairingOpen">
   IsPairingOpen
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L187"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether a button press on a device no local player holds currently pairs it.</p>
@@ -178,7 +180,7 @@ System one, and it is the only place in the product that references that package
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_LocalPlayerCapacity" data-uid="CodeSmile.LunyScript.IInputProvider.LocalPlayerCapacity">
   LocalPlayerCapacity
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L165"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many local player numbers this backend can hold, from 0. A one-player backend
@@ -215,7 +217,7 @@ it must allocate nothing.</p>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_LocalPlayerCount" data-uid="CodeSmile.LunyScript.IInputProvider.LocalPlayerCount">
   LocalPlayerCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L45"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many local players this backend currently has. Zero is a valid answer and is
@@ -248,11 +250,134 @@ not a failure.</p>
 </h2>
 
 
+  <a id="CodeSmile_LunyScript_IInputProvider_ApplyOverrides_" data-uid="CodeSmile.LunyScript.IInputProvider.ApplyOverrides*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IInputProvider_ApplyOverrides_System_Int32_System_Collections_Generic_List_CodeSmile_LunyScript_InputBindingOverride__System_Collections_Generic_List_CodeSmile_LunyScript_InputBindingOverride__" data-uid="CodeSmile.LunyScript.IInputProvider.ApplyOverrides(System.Int32,System.Collections.Generic.List{CodeSmile.LunyScript.InputBindingOverride},System.Collections.Generic.List{CodeSmile.LunyScript.InputBindingOverride})">
+  ApplyOverrides(int, List&lt;InputBindingOverride&gt;, List&lt;InputBindingOverride&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L143"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Replaces every binding override of one local player's actions with
+<code class="paramref">overrides</code>: removes them all, then applies each entry whose key names a
+binding of that player's actions.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">bool ApplyOverrides(int localPlayerIndex, List&lt;InputBindingOverride&gt; overrides, List&lt;InputBindingOverride&gt; stale)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>localPlayerIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>Which local player number, from 0.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">List</span>&lt;<a class="xref" href="CodeSmile.LunyScript.InputBindingOverride.html">InputBindingOverride</a>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>overrides</code></dt></td>
+    <td style="width: 99%"><dd><p>The overrides to apply.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">List</span>&lt;<a class="xref" href="CodeSmile.LunyScript.InputBindingOverride.html">InputBindingOverride</a>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>stale</code></dt></td>
+    <td style="width: 99%"><dd><p>Receives each entry whose key names no binding, or whose path is empty;
+those are not applied.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when this backend has no actions for that local player; nothing changes
+then.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_IInputProvider_BoundPath_" data-uid="CodeSmile.LunyScript.IInputProvider.BoundPath*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IInputProvider_BoundPath_System_Int32_System_Int32_" data-uid="CodeSmile.LunyScript.IInputProvider.BoundPath(System.Int32,System.Int32)">
+  BoundPath(int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L117"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The control path one binding uses now: its override when one is applied, the action
+asset's path otherwise. Must allocate nothing, because a settings row reads it every
+frame.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">string BoundPath(int actionId, int partId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actionId</code></dt></td>
+    <td style="width: 99%"><dd><p>The identifier <a class="xref" href="CodeSmile.LunyScript.IInputProvider.html#CodeSmile_LunyScript_IInputProvider_Resolve_System_Int32_System_String_CodeSmile_LunyScript_InputValueKind_System_Int32__">Resolve(int, string, InputValueKind, out int)</a> produced.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>partId</code></dt></td>
+    <td style="width: 99%"><dd><p>A part's identifier, or <a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_Unresolved">Unresolved</a> for the
+action's first binding that is not part of a composite.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>The path, or null when the action has no such binding.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_IInputProvider_CancelAllRebinds_" data-uid="CodeSmile.LunyScript.IInputProvider.CancelAllRebinds*"></a>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_CancelAllRebinds" data-uid="CodeSmile.LunyScript.IInputProvider.CancelAllRebinds">
   CancelAllRebinds()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L105"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L159"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Stops every in-flight capture. A provider that is about to be replaced or
@@ -281,7 +406,7 @@ Input System updates.</p>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_CancelRebind_System_Int32_" data-uid="CodeSmile.LunyScript.IInputProvider.CancelRebind(System.Int32)">
   CancelRebind(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L149"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Stops one capture without applying an override. A missing or already-terminal
@@ -304,7 +429,7 @@ identifier is a no-op.</p>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>rebindId</code></dt></td>
-    <td style="width: 99%"><dd><p>The identifier <a class="xref" href="CodeSmile.LunyScript.IInputProvider.html#CodeSmile_LunyScript_IInputProvider_StartRebind_System_Int32_System_Int32__">StartRebind(int, out int)</a> produced.</p>
+    <td style="width: 99%"><dd><p>The identifier <a class="xref" href="CodeSmile.LunyScript.IInputProvider.html#CodeSmile_LunyScript_IInputProvider_StartRebind_System_Int32_System_Int32_System_Int32__">StartRebind(int, int, out int)</a> produced.</p>
 </dd></td>
   </tr>
   </dl>
@@ -325,7 +450,7 @@ identifier is a no-op.</p>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_ClosePairing" data-uid="CodeSmile.LunyScript.IInputProvider.ClosePairing">
   ClosePairing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L143"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L197"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Stops pairing new players. A player whose device is lost still takes the next
@@ -359,7 +484,7 @@ device pressed.</p>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_IsLost_System_Int32_" data-uid="CodeSmile.LunyScript.IInputProvider.IsLost(System.Int32)">
   IsLost(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L130"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L184"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether the device the player on that number is paired with has disconnected.
@@ -409,7 +534,7 @@ False for nobody. Must allocate nothing.</p>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_IsPressed_System_Int32_" data-uid="CodeSmile.LunyScript.IInputProvider.IsPressed(System.Int32)">
   IsPressed(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L65"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether the action is held down now. Must allocate nothing; AGENTS.md rule 29.</p>
@@ -458,7 +583,7 @@ False for nobody. Must allocate nothing.</p>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_Leave_System_Int32_" data-uid="CodeSmile.LunyScript.IInputProvider.Leave(System.Int32)">
   Leave(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L150"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L204"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Asks to release one local player's devices and free the number. The release is
@@ -509,7 +634,7 @@ when nobody holds the number, or why this backend pairs nothing.</p>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_Occurred_System_Int32_CodeSmile_LunyScript_InputPhase_" data-uid="CodeSmile.LunyScript.IInputProvider.Occurred(System.Int32,CodeSmile.LunyScript.InputPhase)">
   Occurred(int, InputPhase)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L82"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L85"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether one occurrence happened during the frame that is running. Must allocate
@@ -565,7 +690,7 @@ nothing.</p>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_OpenPairing" data-uid="CodeSmile.LunyScript.IInputProvider.OpenPairing">
   OpenPairing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L138"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L192"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts pairing: from now on a button press on a device no local player holds pairs
@@ -599,7 +724,7 @@ it with the lowest free number.</p>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_ParticipantAt_System_Int32_" data-uid="CodeSmile.LunyScript.IInputProvider.ParticipantAt(System.Int32)">
   ParticipantAt(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L178"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The backend's identity of the person on one local player number, or 0 when nobody
@@ -656,7 +781,7 @@ counter of its own, so two backends may use the same numbers.</p>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_PollRebind_System_Int32_" data-uid="CodeSmile.LunyScript.IInputProvider.PollRebind(System.Int32)">
   PollRebind(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L100"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L154"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Asks whether one capture has finished. Must allocate nothing while pending.</p>
@@ -678,7 +803,7 @@ counter of its own, so two backends may use the same numbers.</p>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>rebindId</code></dt></td>
-    <td style="width: 99%"><dd><p>The identifier <a class="xref" href="CodeSmile.LunyScript.IInputProvider.html#CodeSmile_LunyScript_IInputProvider_StartRebind_System_Int32_System_Int32__">StartRebind(int, out int)</a> produced.</p>
+    <td style="width: 99%"><dd><p>The identifier <a class="xref" href="CodeSmile.LunyScript.IInputProvider.html#CodeSmile_LunyScript_IInputProvider_StartRebind_System_Int32_System_Int32_System_Int32__">StartRebind(int, int, out int)</a> produced.</p>
 </dd></td>
   </tr>
   </dl>
@@ -705,7 +830,7 @@ counter of its own, so two backends may use the same numbers.</p>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_ReadNumber_System_Int32_" data-uid="CodeSmile.LunyScript.IInputProvider.ReadNumber(System.Int32)">
   ReadNumber(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L70"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The action's one-component value now. Must allocate nothing.</p>
@@ -750,11 +875,68 @@ counter of its own, so two backends may use the same numbers.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_IInputProvider_ReadOverrides_" data-uid="CodeSmile.LunyScript.IInputProvider.ReadOverrides*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IInputProvider_ReadOverrides_System_Int32_System_Collections_Generic_List_CodeSmile_LunyScript_InputBindingOverride__" data-uid="CodeSmile.LunyScript.IInputProvider.ReadOverrides(System.Int32,System.Collections.Generic.List{CodeSmile.LunyScript.InputBindingOverride})">
+  ReadOverrides(int, List&lt;InputBindingOverride&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds every binding override one local player's actions carry to
+<code class="paramref">into</code>, in the backend's own order.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">bool ReadOverrides(int localPlayerIndex, List&lt;InputBindingOverride&gt; into)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>localPlayerIndex</code></dt></td>
+    <td style="width: 99%"><dd><p>Which local player number, from 0.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">List</span>&lt;<a class="xref" href="CodeSmile.LunyScript.InputBindingOverride.html">InputBindingOverride</a>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>into</code></dt></td>
+    <td style="width: 99%"><dd><p>The list to add to. The gateway clears it first.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when this backend has no actions for that local player; nothing is added
+then.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_IInputProvider_ReadVector_" data-uid="CodeSmile.LunyScript.IInputProvider.ReadVector*"></a>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_ReadVector_System_Int32_System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.IInputProvider.ReadVector(System.Int32,System.Double@,System.Double@,System.Double@)">
   ReadVector(int, out double, out double, out double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L78"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The action's spatial value now, with unused components zero. Must allocate
@@ -812,11 +994,62 @@ nothing.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_IInputProvider_ResetBinding_" data-uid="CodeSmile.LunyScript.IInputProvider.ResetBinding*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IInputProvider_ResetBinding_System_Int32_System_Int32_" data-uid="CodeSmile.LunyScript.IInputProvider.ResetBinding(System.Int32,System.Int32)">
+  ResetBinding(int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes the override of one part, or of every binding of the action, so the action
+asset's paths return.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">void ResetBinding(int actionId, int partId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actionId</code></dt></td>
+    <td style="width: 99%"><dd><p>The identifier <a class="xref" href="CodeSmile.LunyScript.IInputProvider.html#CodeSmile_LunyScript_IInputProvider_Resolve_System_Int32_System_String_CodeSmile_LunyScript_InputValueKind_System_Int32__">Resolve(int, string, InputValueKind, out int)</a> produced.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>partId</code></dt></td>
+    <td style="width: 99%"><dd><p>A part's identifier, or <a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_Unresolved">Unresolved</a> for every
+binding of the action, its composite parts included.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_IInputProvider_Resolve_" data-uid="CodeSmile.LunyScript.IInputProvider.Resolve*"></a>
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_Resolve_System_Int32_System_String_CodeSmile_LunyScript_InputValueKind_System_Int32__" data-uid="CodeSmile.LunyScript.IInputProvider.Resolve(System.Int32,System.String,CodeSmile.LunyScript.InputValueKind,System.Int32@)">
   Resolve(int, string, InputValueKind, out int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L59"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finds the configured action one declaration names, and hands back the identifier every
@@ -885,20 +1118,89 @@ the string work here and must do none of it afterwards.</p>
 
 
 
-  <a id="CodeSmile_LunyScript_IInputProvider_StartRebind_" data-uid="CodeSmile.LunyScript.IInputProvider.StartRebind*"></a>
+  <a id="CodeSmile_LunyScript_IInputProvider_ResolvePart_" data-uid="CodeSmile.LunyScript.IInputProvider.ResolvePart*"></a>
 
-  <h3 id="CodeSmile_LunyScript_IInputProvider_StartRebind_System_Int32_System_Int32__" data-uid="CodeSmile.LunyScript.IInputProvider.StartRebind(System.Int32,System.Int32@)">
-  StartRebind(int, out int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L90"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_IInputProvider_ResolvePart_System_Int32_System_String_System_Int32__" data-uid="CodeSmile.LunyScript.IInputProvider.ResolvePart(System.Int32,System.String,System.Int32@)">
+  ResolvePart(int, string, out int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L97"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Starts an interactive capture for one resolved action. The gateway allows one
-in-flight capture per local player; this method starts the backend listening.</p>
+  <div class="markdown level1 summary"><p>Finds one part of a composite binding of a resolved action, by the part's name in the
+action asset, compared ordinally. The first composite part of that name is the one.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">InputRebindStart StartRebind(int actionId, out int rebindId)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">InputActionResolution ResolvePart(int actionId, string partName, out int partId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actionId</code></dt></td>
+    <td style="width: 99%"><dd><p>The identifier <a class="xref" href="CodeSmile.LunyScript.IInputProvider.html#CodeSmile_LunyScript_IInputProvider_Resolve_System_Int32_System_String_CodeSmile_LunyScript_InputValueKind_System_Int32__">Resolve(int, string, InputValueKind, out int)</a> produced for the action.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>partName</code></dt></td>
+    <td style="width: 99%"><dd><p>The part's name, such as <code>Up</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>partId</code></dt></td>
+    <td style="width: 99%"><dd><p>The identifier the binding members take for this part, meaningful only
+when this returns <a class="xref" href="CodeSmile.LunyScript.InputActionResolution.html#CodeSmile_LunyScript_InputActionResolution_Resolved">Resolved</a>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.InputActionResolution.html">InputActionResolution</a></dt>
+    <dd><p><a class="xref" href="CodeSmile.LunyScript.InputActionResolution.html#CodeSmile_LunyScript_InputActionResolution_Resolved">Resolved</a>, or
+<a class="xref" href="CodeSmile.LunyScript.InputActionResolution.html#CodeSmile_LunyScript_InputActionResolution_NoSuchPart">NoSuchPart</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_IInputProvider_ResolvePart_System_Int32_System_String_System_Int32___remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Called once per part declaration, as <a class="xref" href="CodeSmile.LunyScript.IInputProvider.html#CodeSmile_LunyScript_IInputProvider_Resolve_System_Int32_System_String_CodeSmile_LunyScript_InputValueKind_System_Int32__">Resolve(int, string, InputValueKind, out int)</a> is once per action
+declaration, so an implementation may do the string work here and none afterwards.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_IInputProvider_StartRebind_" data-uid="CodeSmile.LunyScript.IInputProvider.StartRebind*"></a>
+
+  <h3 id="CodeSmile_LunyScript_IInputProvider_StartRebind_System_Int32_System_Int32_System_Int32__" data-uid="CodeSmile.LunyScript.IInputProvider.StartRebind(System.Int32,System.Int32,System.Int32@)">
+  StartRebind(int, int, out int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts an interactive capture for one resolved action, or for one part of its
+composite. The gateway allows one in-flight capture per local player; this method starts the
+backend listening.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">InputRebindStart StartRebind(int actionId, int partId, out int rebindId)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -913,6 +1215,13 @@ in-flight capture per local player; this method starts the backend listening.</p
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>actionId</code></dt></td>
     <td style="width: 99%"><dd><p>The identifier <a class="xref" href="CodeSmile.LunyScript.IInputProvider.html#CodeSmile_LunyScript_IInputProvider_Resolve_System_Int32_System_String_CodeSmile_LunyScript_InputValueKind_System_Int32__">Resolve(int, string, InputValueKind, out int)</a> produced.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>partId</code></dt></td>
+    <td style="width: 99%"><dd><p>The identifier <a class="xref" href="CodeSmile.LunyScript.IInputProvider.html#CodeSmile_LunyScript_IInputProvider_ResolvePart_System_Int32_System_String_System_Int32__">ResolvePart(int, string, out int)</a> produced, or
+<a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_Unresolved">Unresolved</a> to capture for the whole action.</p>
 </dd></td>
   </tr>
   <tr>
@@ -946,7 +1255,7 @@ this returns <a class="xref" href="CodeSmile.LunyScript.InputRebindStart.html#Co
 
   <h3 id="CodeSmile_LunyScript_IInputProvider_UpdatePairing" data-uid="CodeSmile.LunyScript.IInputProvider.UpdatePairing">
   UpdatePairing()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L155"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L209"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Applies every pairing change requested or detected since the last call. Called
@@ -975,7 +1284,7 @@ same players during one frame. Must allocate nothing when nothing changed.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L38" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/IInputProvider.cs/#L41" class="edit-link">Edit this page</a>
         </div>
 
 
