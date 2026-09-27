@@ -85,7 +85,7 @@ The <code class="language-plaintext highlighter-rouge">If</code> row reads “Fa
 checkbox under <strong>Values</strong> and press <strong>Apply</strong>: the window shows “Applied. Read back: true”, and from
 the next frame the <code class="language-plaintext highlighter-rouge">If</code> row reads “True: ran Then” with a green highlight. <code class="language-plaintext highlighter-rouge">Speed</code> shows 6.</p>
 
-<p><img src="/LunyScript-Docs/assets/runtime-debugger.png" alt="The Debugger window showing the Values example: running scripts, the script flow with results, ages and each block's Break toggle, Fire button and each If's Force list, and the values with their editors, Break toggles and the block that last changed each one" /></p>
+<p><img src="/LunyScript-Docs/assets/runtime-debugger.png" alt="The Debugger window showing the Values example: running scripts, the script flow with results, ages, each condition's live reading and each block's Break toggle, Fire button and each If's Force list, and the values with their editors, Break toggles and the block that last changed each one" /></p>
 
 <p>The debugger shows what a script is doing while the game runs, without stopping the game or changing
 the script. It is a view of the running script, not a way to write one: the script stays C#.</p>
@@ -118,12 +118,16 @@ number a <code class="language-plaintext highlighter-rouge">Set</code> writes, s
   </thead>
   <tbody>
     <tr>
-      <td>Last result</td>
+      <td>Last executed</td>
       <td>Completed, Running for a step that continues next frame, Failed, or which branch an <code class="language-plaintext highlighter-rouge">If</code> ran</td>
     </tr>
     <tr>
       <td>Age</td>
       <td>How long ago the block last ran</td>
+    </tr>
+    <tr>
+      <td>Live now</td>
+      <td>What a condition says about the values stored now, and the value of each of its parts</td>
     </tr>
     <tr>
       <td>Line</td>
@@ -140,9 +144,23 @@ as <code class="language-plaintext highlighter-rouge">Health &gt; 10</code>, has
 condition, and a light background for any other block. A block that runs every frame stays
 highlighted.</p>
 
-<p>Every result is the one recorded when the block ran. The debugger never evaluates a condition to
-fill in a row, and it runs a block only when you press Fire, so a condition that has not run since
-the player moved still shows its last result, with its age.</p>
+<p>Every result under Last executed is the one recorded when the block ran, and the debugger runs a
+block only when you press Fire, so a condition that has not run since the player moved still shows
+its last result, with its age.</p>
+
+<p><strong>Live now</strong> shows whether that result still holds. It is computed from the debugger’s own copy of
+the values, ten times a second, without running any block or any of your code. A condition that only
+an event checks, such as one inside <code class="language-plaintext highlighter-rouge">On.Ready</code>, keeps the result it recorded then; when the values
+say otherwise, its Live now reading is shown in blue. Fire its <code class="language-plaintext highlighter-rouge">If</code> to record the current answer.</p>
+
+<p><img src="/LunyScript-Docs/assets/runtime-debugger-live-now.png" alt="The Debugger window on a script whose On.Ready If checked Charge &gt;= 3 while Charge was 0: under Last executed its condition reads false from 5.8 seconds ago, under Live now it reads true in blue, with Charge at 3.45 and the constant 3 on the rows below it, and a condition over Time.IsPaused reads unavailable" /></p>
+
+<p>A condition built from your script’s variables, numbers, text, enums and spatial values, with
+comparisons, <code class="language-plaintext highlighter-rouge">&amp;</code>, <code class="language-plaintext highlighter-rouge">|</code> and <code class="language-plaintext highlighter-rouge">!</code>, has a Live now reading, and so does each part of it when you unfold
+its row. A condition that reads anything else, such as the object’s position, the game clock, input,
+the network, the other collider of a collision or a list, reads <strong>unavailable</strong>, and so does a
+condition you wrote as your own C# class, because the debugger never runs your code to find out.
+The row’s tooltip says why.</p>
 
 <p>Double-click a row to open its line in your code editor.</p>
 
@@ -175,7 +193,7 @@ as any failure does.</p>
 
 <p><strong>Force</strong> makes an <code class="language-plaintext highlighter-rouge">If</code> run the branch you choose without evaluating its condition. Choose
 <strong>Forced true</strong> in the guard’s <code class="language-plaintext highlighter-rouge">If</code> row: from the next frame the row reads “True: ran Then” and
-<code class="language-plaintext highlighter-rouge">Speed</code> shows 6, while <code class="language-plaintext highlighter-rouge">Alert</code> stays false. The list shows the forced branch in amber until you
+<code class="language-plaintext highlighter-rouge">Speed</code> shows 6, while <code class="language-plaintext highlighter-rouge">Alert</code> stays false, and the condition’s row reads false under Live now. The list shows the forced branch in amber until you
 choose <strong>Condition</strong>, which gives the <code class="language-plaintext highlighter-rouge">If</code> its condition back. An <code class="language-plaintext highlighter-rouge">If</code> also stops being forced when
 its object despawns and when Play Mode ends.</p>
 
