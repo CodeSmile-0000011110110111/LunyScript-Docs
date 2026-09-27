@@ -134,7 +134,7 @@ rule permits; AGENTS.md rule 33 forbids <code>params</code> on the run-time path
 
   <h3 id="CodeSmile_LunyScript_OnFactory_Application" data-uid="CodeSmile.LunyScript.OnFactory.Application">
   Application
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L316"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L324"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The five application observations: pause, resume, focus and quit.</p>
@@ -169,7 +169,7 @@ rule permits; AGENTS.md rule 33 forbids <code>params</code> on the run-time path
 
   <h3 id="CodeSmile_LunyScript_OnFactory_Authority" data-uid="CodeSmile.LunyScript.OnFactory.Authority">
   Authority
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L345"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L353"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The two authority events: gaining authority over this object, and losing it.</p>
@@ -208,7 +208,7 @@ rule permits; AGENTS.md rule 33 forbids <code>params</code> on the run-time path
 
   <h3 id="CodeSmile_LunyScript_OnFactory_CollisionEnter_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.CollisionEnter(CodeSmile.LunyScript.Block[])">
   CollisionEnter(params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L211"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L219"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Registers blocks that run when this object's collider begins touching another
@@ -257,8 +257,16 @@ callbacks at all.</p>
     The blocks run against this object. <code>Other</code> is the other collider, the same
     surface on all six contact events. Unity still allocates the <code>Collision</code>
     argument it passes into its own callback; LunyScript copies primitives from the
-    other collider and does not store that argument. Contact events are process
-    events: a Pausable script does not run these blocks while the runner is paused.
+    other collider and does not store that argument.
+</p>
+<p>
+    A Pausable script that <code>Time.Pause()</code> has stopped still runs these blocks, the
+    way Unity sends a collision to a <code>MonoBehaviour</code> that is not updating, so
+    <code>On.CollisionEnter(Time.Resume())</code> can resume the game. The project setting
+    "Time.Pause pauses contact events" in Edit, Project Settings, LunyScript makes a pause
+    skip them on a Pausable script, as it skips <code>On.FrameUpdate</code>. A script whose
+    component is disabled runs none of the six. <code>Time.Pause()</code> also stops Unity's
+    fixed step, so a paused game meets a contact only when it steps physics itself.
 </p>
 </div>
 
@@ -276,7 +284,7 @@ null.</p>
 
   <h3 id="CodeSmile_LunyScript_OnFactory_CollisionExit_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.CollisionExit(CodeSmile.LunyScript.Block[])">
   CollisionExit(params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L249"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L257"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Registers blocks that run when this object's collider stops touching another
@@ -335,7 +343,7 @@ null.</p>
 
   <h3 id="CodeSmile_LunyScript_OnFactory_CollisionStay_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.CollisionStay(CodeSmile.LunyScript.Block[])">
   CollisionStay(params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L230"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L238"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Registers blocks that run every fixed step while this object's collider is
@@ -813,7 +821,7 @@ null.</p>
 
   <h3 id="CodeSmile_LunyScript_OnFactory_Message_System_String_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.Message(System.String,CodeSmile.LunyScript.Block[])">
   Message(string, params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L332"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L340"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Registers blocks that run on the peer this message is delivered to, which is the
@@ -931,7 +939,7 @@ null.</p>
 
   <h3 id="CodeSmile_LunyScript_OnFactory_TriggerEnter_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.TriggerEnter(CodeSmile.LunyScript.Block[])">
   TriggerEnter(params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L268"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L276"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Registers blocks that run when this object's collider begins overlapping a
@@ -990,7 +998,7 @@ null.</p>
 
   <h3 id="CodeSmile_LunyScript_OnFactory_TriggerExit_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.TriggerExit(CodeSmile.LunyScript.Block[])">
   TriggerExit(params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L306"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L314"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Registers blocks that run when this object's collider stops overlapping a
@@ -1049,7 +1057,7 @@ null.</p>
 
   <h3 id="CodeSmile_LunyScript_OnFactory_TriggerStay_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.TriggerStay(CodeSmile.LunyScript.Block[])">
   TriggerStay(params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L287"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L295"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Registers blocks that run every fixed step while this object's collider overlaps
