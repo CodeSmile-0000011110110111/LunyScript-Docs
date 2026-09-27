@@ -113,6 +113,17 @@ or a <code class="language-plaintext highlighter-rouge">Vector2</code>, declared
 property named like a member every script has, such as <code class="language-plaintext highlighter-rouge">Run</code>, <code class="language-plaintext highlighter-rouge">Time</code> or
 <code class="language-plaintext highlighter-rouge">Progress</code>, hides that member inside the script.</p>
 
+<p>A Settings document can also keep a player’s rebound controls. <code class="language-plaintext highlighter-rouge">Bindings</code>
+lists them as one more field, stored under <code class="language-plaintext highlighter-rouge">Player0Bindings</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Options</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Document</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Options</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">MusicVolume</span><span class="p">),</span> <span class="n">MusicVolume</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Bindings</span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><a href="/LunyScript-Docs/manual/player-input.html">Player input</a> says what a
+save and a load do with the controls.</p>
+
 <p>Names use letters, digits, dash and underscore, 1 to 64 of them, and are case
 sensitive: <code class="language-plaintext highlighter-rouge">Career</code> and <code class="language-plaintext highlighter-rouge">career</code> are two documents. <code class="language-plaintext highlighter-rouge">Build()</code> refuses a document with
 no field, two fields of one name, one variable listed twice, a constant, a
@@ -285,7 +296,9 @@ next, on a copy of the stored fields:</p>
 <p><code class="language-plaintext highlighter-rouge">DocumentFields</code> reads with <code class="language-plaintext highlighter-rouge">TryGetNumber</code>, <code class="language-plaintext highlighter-rouge">TryGetFlag</code>, <code class="language-plaintext highlighter-rouge">TryGetText</code>,
 <code class="language-plaintext highlighter-rouge">TryGetVector3</code>, <code class="language-plaintext highlighter-rouge">TryGetRotation</code> and <code class="language-plaintext highlighter-rouge">TryGetVector2</code>, writes with the matching <code class="language-plaintext highlighter-rouge">Set</code>
 methods, adds a field only where it is missing with <code class="language-plaintext highlighter-rouge">DefaultNumber</code> and its
-siblings, and has <code class="language-plaintext highlighter-rouge">Rename</code>, <code class="language-plaintext highlighter-rouge">Remove</code> and <code class="language-plaintext highlighter-rouge">Contains</code>. A step that returns
+siblings, and has <code class="language-plaintext highlighter-rouge">Rename</code>, <code class="language-plaintext highlighter-rouge">Remove</code> and <code class="language-plaintext highlighter-rouge">Contains</code>. A step into a version that
+adds <code class="language-plaintext highlighter-rouge">Bindings</code> calls <code class="language-plaintext highlighter-rouge">fields.DefaultBindings("Player0Bindings")</code>, which adds
+the field with no controls, because a migrated document must hold every field. A step that returns
 <code class="language-plaintext highlighter-rouge">MigrationResult.Rejected("why")</code>, or throws, fails the load as <code class="language-plaintext highlighter-rouge">Unsupported</code>.</p>
 
 <p>Loading a version 1 file into a version 3 script runs the step from 1, then
@@ -315,6 +328,13 @@ by hand:</p>
     </span><span class="nl">"Pilot"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ada"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"Checkpoint"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">2.5</span><span class="p">]</span><span class="w">
   </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>A player’s controls are an object of control paths, one per rebound binding:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"Player0Bindings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nl">"Player/Fire/0c8e0f5a-8f7d-4c1b-9d52-0e4b5f4d8a11"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;Mouse&gt;/rightButton"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 

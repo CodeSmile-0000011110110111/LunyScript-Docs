@@ -170,12 +170,86 @@ takes more than one frame, so its outcome is observed through an operation handl
 <p><a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> explains the
 operation handle in full.</p>
 
+<p>A control that another action of the same player already uses is refused: the
+rebind fails as <code class="language-plaintext highlighter-rouge">Denied</code> and the action keeps its old control. Escape cancels a
+capture, and so does <code class="language-plaintext highlighter-rouge">Rebinding.Cancel()</code>.</p>
+
+<h3 id="showing-the-control-an-action-uses">Showing the control an action uses</h3>
+
+<p><code class="language-plaintext highlighter-rouge">BoundControl</code> is the control path an action uses now, such as
+<code class="language-plaintext highlighter-rouge">&lt;Keyboard&gt;/space</code>. Write it into a text variable for a settings row:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">FireKey</span> <span class="p">=</span> <span class="n">Text</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">FireKey</span><span class="p">));</span>
+<span class="kt">var</span> <span class="n">fire</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">Button</span><span class="p">(</span><span class="s">"Fire"</span><span class="p">);</span>
+<span class="n">Panel</span><span class="p">.</span><span class="nf">Label</span><span class="p">(</span><span class="s">"fire-control"</span><span class="p">).</span><span class="nf">BindText</span><span class="p">(</span><span class="n">FireKey</span><span class="p">);</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">FireKey</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">fire</span><span class="p">.</span><span class="n">BoundControl</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>It reads the control a rebind or a load applied, and the action asset’s
+control otherwise. An action whose only binding is a composite, such as
+W A S D, has no one control and reads empty text; read each part instead.</p>
+
+<h3 id="resetting-a-control">Resetting a control</h3>
+
+<p><code class="language-plaintext highlighter-rouge">ResetBinding()</code> returns an action to the control the action asset gives it:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">reset</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Button</span><span class="p">(</span><span class="s">"fire-reset"</span><span class="p">);</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">UI</span><span class="p">(</span><span class="n">reset</span><span class="p">).</span><span class="nf">Activated</span><span class="p">(</span><span class="n">fire</span><span class="p">.</span><span class="nf">ResetBinding</span><span class="p">());</span>
+</code></pre></div></div>
+
+<h3 id="rebinding-one-key-of-w-a-s-d">Rebinding one key of W A S D</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Part(name)</code> names one part of an action’s composite binding. The part has its
+own <code class="language-plaintext highlighter-rouge">Rebind()</code>, <code class="language-plaintext highlighter-rouge">BoundControl</code> and <code class="language-plaintext highlighter-rouge">ResetBinding()</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">move</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">Vector2</span><span class="p">(</span><span class="s">"Move"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">up</span> <span class="p">=</span> <span class="n">move</span><span class="p">.</span><span class="nf">Part</span><span class="p">(</span><span class="s">"up"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">upRow</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Button</span><span class="p">(</span><span class="s">"up-rebind"</span><span class="p">);</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">UI</span><span class="p">(</span><span class="n">upRow</span><span class="p">).</span><span class="nf">Activated</span><span class="p">(</span><span class="n">up</span><span class="p">.</span><span class="nf">Rebind</span><span class="p">().</span><span class="nf">As</span><span class="p">(</span><span class="n">RebindUp</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">UpKey</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">up</span><span class="p">.</span><span class="n">BoundControl</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>Write the part’s name the way the action asset spells it. Unity’s action
+editor names the parts of a 2D vector <code class="language-plaintext highlighter-rouge">up</code>, <code class="language-plaintext highlighter-rouge">down</code>, <code class="language-plaintext highlighter-rouge">left</code> and <code class="language-plaintext highlighter-rouge">right</code>, and the
+name is case sensitive. A part rebind refuses a control another part of the
+same composite uses, so W cannot become both up and down. Rebinding the whole
+<code class="language-plaintext highlighter-rouge">move</code> fails as <code class="language-plaintext highlighter-rouge">Denied</code>, because a composite has one control per part.</p>
+
+<h3 id="keeping-rebound-controls-between-sessions">Keeping rebound controls between sessions</h3>
+
+<p>A rebind lasts until the game quits. List the player’s bindings in a Settings
+document and they are saved and loaded with the document’s other fields:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Options</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Document</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Options</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">MusicVolume</span><span class="p">),</span> <span class="n">MusicVolume</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Bindings</span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Settings</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Options</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">LoadingOptions</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">RebindFire</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span>
+    <span class="n">Settings</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">Options</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">SavingOptions</span><span class="p">));</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Nothing is written until the script saves the document. <code class="language-plaintext highlighter-rouge">Options.IsDirty</code>
+is true after a rebind or a reset, until the next save.</li>
+  <li>A load replaces the player’s controls with the saved ones. A control the
+saved copy does not mention returns to the action asset’s.</li>
+  <li>A saved control whose binding a newer version of the game removed is
+skipped, and <code class="language-plaintext highlighter-rouge">Options.Omitted(Input.ForPlayer(0))</code> is true after that load.</li>
+  <li>Only a Settings document lists bindings, and each player once. List several
+players with <code class="language-plaintext highlighter-rouge">.Bindings(Input.ForPlayer(1))</code> and so on.</li>
+</ul>
+
+<p><a href="/LunyScript-Docs/manual/saving-progress-and-settings.html">Saving progress and settings</a>
+covers documents in full.</p>
+
 <h2 id="the-cursor">The cursor</h2>
 
 <p>Cursor lock and visibility are machine-wide writes, so four local players share one cursor.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Input</span><span class="p">.</span><span class="n">Cursor</span><span class="p">.</span><span class="nf">Lock</span><span class="p">();</span>       <span class="c1">// CursorLockMode.Locked</span>
 <span class="n">Input</span><span class="p">.</span><span class="n">Cursor</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">();</span>     <span class="c1">// CursorLockMode.None</span>
+<span class="n">Input</span><span class="p">.</span><span class="n">Cursor</span><span class="p">.</span><span class="nf">Confine</span><span class="p">();</span>    <span class="c1">// CursorLockMode.Confined</span>
 <span class="n">Input</span><span class="p">.</span><span class="n">Cursor</span><span class="p">.</span><span class="nf">Show</span><span class="p">();</span>
 <span class="n">Input</span><span class="p">.</span><span class="n">Cursor</span><span class="p">.</span><span class="nf">Hide</span><span class="p">();</span>
 
@@ -183,8 +257,9 @@ operation handle in full.</p>
 <span class="nf">If</span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">Cursor</span><span class="p">.</span><span class="n">IsVisible</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Pointer</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 </code></pre></div></div>
 
-<p>Lock and visibility are separate settings, so a locked cursor can still be visible. The last write
-wins. Before any write, the cursor is unlocked and visible.</p>
+<p>Lock and visibility are separate settings, so a locked cursor can still be visible. A confined
+cursor stays inside the game window and moves; <code class="language-plaintext highlighter-rouge">IsLocked</code> reads false while it is confined. The last
+write wins. Before any write, the cursor is unlocked and visible.</p>
 
 <h2 id="local-players">Local players</h2>
 
@@ -291,6 +366,9 @@ any player holds it.</p>
 than two gamepads connected, the scene adds two virtual gamepads and presses their buttons, and says
 so on screen.</p>
 
+<p>The <strong>Rebinding</strong> scene in the API examples is a controls screen: one row per control with its bound
+control, Rebind and Reset, and Save and Load for a Settings document that keeps the controls.</p>
+
 <h2 id="what-an-open-input-gate-changes">What an open input gate changes</h2>
 
 <p>An input gate makes every action read return its resting value, so <code class="language-plaintext highlighter-rouge">IsPressed</code> reads false and
@@ -318,6 +396,7 @@ while a menu is open.</li>
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.PairingInputFactory.html"><code class="language-plaintext highlighter-rouge">PairingInputFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.PlayerWatchBuilder.html"><code class="language-plaintext highlighter-rouge">PlayerWatchBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CursorInputFactory.html"><code class="language-plaintext highlighter-rouge">CursorInputFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.InputPart.html"><code class="language-plaintext highlighter-rouge">InputPart</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.WhenFactory.html"><code class="language-plaintext highlighter-rouge">WhenFactory</code></a>.</li>
 </ul>
 
