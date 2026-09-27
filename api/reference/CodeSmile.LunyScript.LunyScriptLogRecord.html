@@ -269,7 +269,7 @@ the LunyScript console displays the same record through its own reader.</p>
 
   <h3 id="CodeSmile_LunyScript_LunyScriptLogRecord__ctor_CodeSmile_LunyScript_LunyScriptLogSeverity_System_String_System_String_System_String_System_String_CodeSmile_LunyScript_SourceLocation_CodeSmile_LunyScript_DiagnosticIdentity_CodeSmile_LunyScript_DiagnosticRecordKind_System_Int64_System_String_" data-uid="CodeSmile.LunyScript.LunyScriptLogRecord.#ctor(CodeSmile.LunyScript.LunyScriptLogSeverity,System.String,System.String,System.String,System.String,CodeSmile.LunyScript.SourceLocation,CodeSmile.LunyScript.DiagnosticIdentity,CodeSmile.LunyScript.DiagnosticRecordKind,System.Int64,System.String)">
   LunyScriptLogRecord(LunyScriptLogSeverity, string, string, string, string, SourceLocation, DiagnosticIdentity, DiagnosticRecordKind, long, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLogRecord.Context.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLogRecord.Context.cs/#L45"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Creates a correlated observation without changing Unity's existing text format.</p>
@@ -629,6 +629,47 @@ the LunyScript console displays the same record through its own reader.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_LunyScriptLogRecord_Node_" data-uid="CodeSmile.LunyScript.LunyScriptLogRecord.Node*"></a>
+
+  <h3 id="CodeSmile_LunyScript_LunyScriptLogRecord_Node" data-uid="CodeSmile.LunyScript.LunyScriptLogRecord.Node">
+  Node
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLogRecord.Context.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The catalog node of the block this record concerns, an index into the lifetime's
+<a class="xref" href="CodeSmile.LunyScript.DiagnosticCatalog.html#CodeSmile_LunyScript_DiagnosticCatalog_Nodes">Nodes</a>, or -1 when it names none.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int Node { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_LunyScriptLogRecord_Node_examples">Examples</h4>
+  <pre><code class="lang-csharp">var row = catalog.Nodes[record.Node];</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_LunyScriptLogRecord_Node_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>A block object placed more than once records under its first placement;
+<a class="xref" href="CodeSmile.LunyScript.DiagnosticNode.html#CodeSmile_LunyScript_DiagnosticNode_OutcomeNode">OutcomeNode</a>. A player built without <code>DEBUG</code> or
+<code>LUNYSCRIPT_TRACE</code> has no node index and writes -1.</p>
+</div>
+
+
+
+
   <a id="CodeSmile_LunyScript_LunyScriptLogRecord_ObjectName_" data-uid="CodeSmile.LunyScript.LunyScriptLogRecord.ObjectName*"></a>
 
   <h3 id="CodeSmile_LunyScript_LunyScriptLogRecord_ObjectName" data-uid="CodeSmile.LunyScript.LunyScriptLogRecord.ObjectName">
@@ -758,6 +799,42 @@ record.</p>
   </dl>
 
 
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_LunyScriptLogRecord_Time_" data-uid="CodeSmile.LunyScript.LunyScriptLogRecord.Time*"></a>
+
+  <h3 id="CodeSmile_LunyScript_LunyScriptLogRecord_Time" data-uid="CodeSmile.LunyScript.LunyScriptLogRecord.Time">
+  Time
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLogRecord.Context.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The runner clock's unscaled seconds at observation, or zero for a record that names no
+lifetime.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double Time { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_LunyScriptLogRecord_Time_examples">Examples</h4>
+  <pre><code class="lang-csharp">var age = snapshot.Time - record.Time;</code></pre>
 
 
 
