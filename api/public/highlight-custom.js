@@ -91,9 +91,9 @@ const lunyScriptTypes = [
     'TransformChannel', 'TransformFactory', 'TransformOffsetBuilder', 'TransformPart', 'TransformRelation',
     'TransformSpace', 'TransformStreamInbox', 'TransformSyncDeclaration', 'TransformTargetFactory',
     'TransformToBuilder', 'TransformToDurationBuilder', 'UgsCloudSaveProvider', 'UnityTimeSource', 'UtilityOption', 'UtilityOptionBuilder',
-    'Var', 'VarFactory', 'VarWatchBuilder', 'VariableAttribute', 'Vec2', 'Vec2Arithmetic', 'Vec2Component',
-    'Vec2Scalar', 'Vec2Slot', 'Vec2Unary', 'Vec2ValueBlock', 'Vec3', 'Vec3Arithmetic', 'Vec3Component',
-    'Vec3Scalar', 'Vec3Slot', 'Vec3Unary', 'Vec3ValueBlock', 'ViewBuilder', 'ViewFactory', 'WhenFactory',
+    'Var', 'VarFactory', 'VarWatchBuilder', 'VariableAttribute', 'Vector2', 'Vector2Arithmetic', 'Vector2Component',
+    'Vector2Scalar', 'Vector2Slot', 'Vector2Unary', 'Vector2ValueBlock', 'Vector3', 'Vector3Arithmetic', 'Vector3Component',
+    'Vector3Scalar', 'Vector3Slot', 'Vector3Unary', 'Vector3ValueBlock', 'ViewBuilder', 'ViewFactory', 'WhenFactory',
     'XorshiftRandomSource'
 ];
 

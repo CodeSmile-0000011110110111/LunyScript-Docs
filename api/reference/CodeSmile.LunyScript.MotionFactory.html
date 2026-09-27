@@ -118,9 +118,9 @@ On.Ready(Motion.TeleportTo(Spawn));</code></pre>
   <div class="markdown level0 remarks"><p><b>Motion is not Transform.</b> <code>Transform.MoveBy</code> writes pose immediately, with no
 physics. <code>Motion.MoveBy</code> selects a CharacterController, a kinematic Rigidbody, or a
 direct transform, and refuses a dynamic Rigidbody. Dynamic bodies use
-<a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_AddForce_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_">AddForce(Vec3ValueBlock, string, int)</a>, <a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_AddImpulse_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_">AddImpulse(Vec3ValueBlock, string, int)</a>, <a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_SetVelocity_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_">SetVelocity(Vec3ValueBlock, string, int)</a> and
+<a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_AddForce_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_">AddForce(Vector3ValueBlock, string, int)</a>, <a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_AddImpulse_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_">AddImpulse(Vector3ValueBlock, string, int)</a>, <a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_SetVelocity_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_">SetVelocity(Vector3ValueBlock, string, int)</a> and
 <a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_StopMotion_System_String_System_Int32_">StopMotion(string, int)</a>. Relocation that is not traversed movement is
-<a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_">TeleportTo(Vec3ValueBlock, string, int)</a>. API-semantics M20.</p>
+<a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_">TeleportTo(Vector3ValueBlock, string, int)</a>. API-semantics M20.</p>
 <p>
     Kinematic displacement, every physical input, and a Rigidbody teleport belong in
     <code>On.FixedUpdate</code>. Written in any other event they are reported once and ignored;
@@ -218,8 +218,8 @@ outside <code>Build()</code>.</p>
 
   <a id="CodeSmile_LunyScript_MotionFactory_AddForce_" data-uid="CodeSmile.LunyScript.MotionFactory.AddForce*"></a>
 
-  <h3 id="CodeSmile_LunyScript_MotionFactory_AddForce_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.AddForce(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
-  AddForce(Vec3ValueBlock, string, int)
+  <h3 id="CodeSmile_LunyScript_MotionFactory_AddForce_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.AddForce(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
+  AddForce(Vector3ValueBlock, string, int)
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L197"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -229,7 +229,7 @@ axes unless <code>InWorldSpace()</code> is written.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionForceBuilder AddForce(Vec3ValueBlock force, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionForceBuilder AddForce(Vector3ValueBlock force, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -241,7 +241,7 @@ axes unless <code>InWorldSpace()</code> is written.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vector3ValueBlock.html">Vector3ValueBlock</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>force</code></dt></td>
     <td style="width: 99%"><dd><p>The force.</p>
 </dd></td>
@@ -273,7 +273,7 @@ axes unless <code>InWorldSpace()</code> is written.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_AddForce_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_AddForce_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32__examples">Examples</h4>
   <pre><code class="lang-csharp">On.FixedUpdate(Motion.AddForce(Thrust).InWorldSpace());</code></pre>
 
 
@@ -373,8 +373,8 @@ outside <code>Build()</code>.</p>
 
   <a id="CodeSmile_LunyScript_MotionFactory_AddImpulse_" data-uid="CodeSmile.LunyScript.MotionFactory.AddImpulse*"></a>
 
-  <h3 id="CodeSmile_LunyScript_MotionFactory_AddImpulse_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.AddImpulse(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
-  AddImpulse(Vec3ValueBlock, string, int)
+  <h3 id="CodeSmile_LunyScript_MotionFactory_AddImpulse_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.AddImpulse(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
+  AddImpulse(Vector3ValueBlock, string, int)
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L235"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -384,7 +384,7 @@ axes unless <code>InWorldSpace()</code> is written. Named instead of a force-mod
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionForceBuilder AddImpulse(Vec3ValueBlock impulse, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionForceBuilder AddImpulse(Vector3ValueBlock impulse, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -396,7 +396,7 @@ axes unless <code>InWorldSpace()</code> is written. Named instead of a force-mod
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vector3ValueBlock.html">Vector3ValueBlock</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>impulse</code></dt></td>
     <td style="width: 99%"><dd><p>The impulse.</p>
 </dd></td>
@@ -428,7 +428,7 @@ axes unless <code>InWorldSpace()</code> is written. Named instead of a force-mod
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_AddImpulse_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_AddImpulse_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32__examples">Examples</h4>
   <pre><code class="lang-csharp">On.FixedUpdate(Motion.AddImpulse(Kick));</code></pre>
 
 
@@ -529,8 +529,8 @@ outside <code>Build()</code>.</p>
 
   <a id="CodeSmile_LunyScript_MotionFactory_FaceTowards_" data-uid="CodeSmile.LunyScript.MotionFactory.FaceTowards*"></a>
 
-  <h3 id="CodeSmile_LunyScript_MotionFactory_FaceTowards_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.FaceTowards(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
-  FaceTowards(Vec3ValueBlock, string, int)
+  <h3 id="CodeSmile_LunyScript_MotionFactory_FaceTowards_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.FaceTowards(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
+  FaceTowards(Vector3ValueBlock, string, int)
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L134"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -540,7 +540,7 @@ outside <code>Build()</code>.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionFaceTowardsBuilder FaceTowards(Vec3ValueBlock target, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionFaceTowardsBuilder FaceTowards(Vector3ValueBlock target, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -552,7 +552,7 @@ outside <code>Build()</code>.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vector3ValueBlock.html">Vector3ValueBlock</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>target</code></dt></td>
     <td style="width: 99%"><dd><p>The world point to face.</p>
 </dd></td>
@@ -584,7 +584,7 @@ outside <code>Build()</code>.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_FaceTowards_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_FaceTowards_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32__examples">Examples</h4>
   <pre><code class="lang-csharp">On.FixedUpdate(Motion.FaceTowards(Pad).DegreesPerSecond(90.0));</code></pre>
 
 
@@ -686,8 +686,8 @@ outside <code>Build()</code>.</p>
 
   <a id="CodeSmile_LunyScript_MotionFactory_MoveBy_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveBy*"></a>
 
-  <h3 id="CodeSmile_LunyScript_MotionFactory_MoveBy_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveBy(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
-  MoveBy(Vec3ValueBlock, string, int)
+  <h3 id="CodeSmile_LunyScript_MotionFactory_MoveBy_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveBy(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
+  MoveBy(Vector3ValueBlock, string, int)
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L72"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -696,7 +696,7 @@ outside <code>Build()</code>.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionDisplacementBuilder MoveBy(Vec3ValueBlock delta, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionDisplacementBuilder MoveBy(Vector3ValueBlock delta, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -708,7 +708,7 @@ outside <code>Build()</code>.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vector3ValueBlock.html">Vector3ValueBlock</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>delta</code></dt></td>
     <td style="width: 99%"><dd><p>The displacement.</p>
 </dd></td>
@@ -740,7 +740,7 @@ outside <code>Build()</code>.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_MoveBy_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_MoveBy_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32__examples">Examples</h4>
   <pre><code class="lang-csharp">On.FixedUpdate(Motion.MoveBy(Step));</code></pre>
 
 
@@ -841,8 +841,8 @@ outside <code>Build()</code>.</p>
 
   <a id="CodeSmile_LunyScript_MotionFactory_MoveTo_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveTo*"></a>
 
-  <h3 id="CodeSmile_LunyScript_MotionFactory_MoveTo_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveTo(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
-  MoveTo(Vec3ValueBlock, string, int)
+  <h3 id="CodeSmile_LunyScript_MotionFactory_MoveTo_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveTo(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
+  MoveTo(Vector3ValueBlock, string, int)
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L90"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -851,7 +851,7 @@ outside <code>Build()</code>.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionMoveToBuilder MoveTo(Vec3ValueBlock destination, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionMoveToBuilder MoveTo(Vector3ValueBlock destination, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -863,7 +863,7 @@ outside <code>Build()</code>.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vector3ValueBlock.html">Vector3ValueBlock</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>destination</code></dt></td>
     <td style="width: 99%"><dd><p>The world point to reach.</p>
 </dd></td>
@@ -895,7 +895,7 @@ outside <code>Build()</code>.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_MoveTo_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_MoveTo_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32__examples">Examples</h4>
   <pre><code class="lang-csharp">On.FixedUpdate(Motion.MoveTo(Pad).AtSpeed(4.0));</code></pre>
 
 
@@ -1066,8 +1066,8 @@ outside <code>Build()</code>.</p>
 
   <a id="CodeSmile_LunyScript_MotionFactory_SetVelocity_" data-uid="CodeSmile.LunyScript.MotionFactory.SetVelocity*"></a>
 
-  <h3 id="CodeSmile_LunyScript_MotionFactory_SetVelocity_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.SetVelocity(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
-  SetVelocity(Vec3ValueBlock, string, int)
+  <h3 id="CodeSmile_LunyScript_MotionFactory_SetVelocity_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.SetVelocity(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
+  SetVelocity(Vector3ValueBlock, string, int)
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L273"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -1077,7 +1077,7 @@ world write.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionVelocityBuilder SetVelocity(Vec3ValueBlock velocity, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionVelocityBuilder SetVelocity(Vector3ValueBlock velocity, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1089,7 +1089,7 @@ world write.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vector3ValueBlock.html">Vector3ValueBlock</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>velocity</code></dt></td>
     <td style="width: 99%"><dd><p>The velocity.</p>
 </dd></td>
@@ -1121,7 +1121,7 @@ world write.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_SetVelocity_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_SetVelocity_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32__examples">Examples</h4>
   <pre><code class="lang-csharp">On.FixedUpdate(Motion.SetVelocity(Wind).InWorldSpace());</code></pre>
 
 
@@ -1367,8 +1367,8 @@ outside <code>Build()</code>.</p>
 
   <a id="CodeSmile_LunyScript_MotionFactory_TeleportTo_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo*"></a>
 
-  <h3 id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo(CodeSmile.LunyScript.Vec3ValueBlock,System.String,System.Int32)">
-  TeleportTo(Vec3ValueBlock, string, int)
+  <h3 id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
+  TeleportTo(Vector3ValueBlock, string, int)
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L333"><i class="bi bi-code-slash"></i></a>
   </h3>
 
@@ -1379,7 +1379,7 @@ Kinematic bodies receive a pose write and no velocity setter. Position only unle
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionTeleportBuilder TeleportTo(Vec3ValueBlock position, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionTeleportBuilder TeleportTo(Vector3ValueBlock position, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1391,7 +1391,7 @@ Kinematic bodies receive a pose write and no velocity setter. Position only unle
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vec3ValueBlock.html">Vec3ValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vector3ValueBlock.html">Vector3ValueBlock</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>position</code></dt></td>
     <td style="width: 99%"><dd><p>The world point.</p>
 </dd></td>
@@ -1423,7 +1423,7 @@ Kinematic bodies receive a pose write and no velocity setter. Position only unle
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_Vec3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32__examples">Examples</h4>
   <pre><code class="lang-csharp">On.FixedUpdate(Motion.TeleportTo(Spawn));</code></pre>
 
 
