@@ -57,7 +57,7 @@
   </header>
 
   <div class="post-content">
-    <p>A guard that runs faster while it is alert:</p>
+    <p>A guard that runs faster while it is alert, and counts hits:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
 
@@ -67,11 +67,13 @@
     <span class="p">{</span>
         <span class="n">Alert</span> <span class="p">=</span> <span class="n">Flag</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Alert</span><span class="p">));</span>
         <span class="n">Speed</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Speed</span><span class="p">),</span> <span class="m">2</span><span class="p">);</span>
+        <span class="n">Hits</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Hits</span><span class="p">));</span>
 
         <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
             <span class="nf">If</span><span class="p">(</span><span class="n">Alert</span><span class="p">.</span><span class="nf">IsTrue</span><span class="p">())</span>
                 <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Speed</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">6</span><span class="p">))</span>
                 <span class="p">.</span><span class="nf">Else</span><span class="p">(</span><span class="n">Speed</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">2</span><span class="p">)));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Hit"</span><span class="p">,</span> <span class="n">Hits</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -83,7 +85,7 @@ The <code class="language-plaintext highlighter-rouge">If</code> row reads “Fa
 checkbox under <strong>Values</strong> and press <strong>Apply</strong>: the window shows “Applied. Read back: true”, and from
 the next frame the <code class="language-plaintext highlighter-rouge">If</code> row reads “True: ran Then” with a green highlight. <code class="language-plaintext highlighter-rouge">Speed</code> shows 6.</p>
 
-<p><img src="/LunyScript-Docs/assets/runtime-debugger.png" alt="The Debugger window showing the Values example: running scripts, the script flow with results and ages, and the values with their editors" /></p>
+<p><img src="/LunyScript-Docs/assets/runtime-debugger.png" alt="The Debugger window showing the Values example: running scripts, the script flow with results, ages and each block's Fire button and each If's Force list, and the values with their editors" /></p>
 
 <p>The debugger shows what a script is doing while the game runs, without stopping the game or changing
 the script. It is a view of the running script, not a way to write one: the script stays C#.</p>
@@ -138,9 +140,9 @@ as <code class="language-plaintext highlighter-rouge">Health &gt; 10</code>, has
 condition, and a light background for any other block. A block that runs every frame stays
 highlighted.</p>
 
-<p>Every result is the one recorded when the block ran. The debugger never runs a block and never
-evaluates a condition to fill in a row, so a condition that has not run since the player moved
-still shows its last result, with its age.</p>
+<p>Every result is the one recorded when the block ran. The debugger never evaluates a condition to
+fill in a row, and it runs a block only when you press Fire, so a condition that has not run since
+the player moved still shows its last result, with its age.</p>
 
 <p>Double-click a row to open its line in your code editor.</p>
 
@@ -155,6 +157,27 @@ runs no block.</p>
 
 <p>A synchronized value that another peer has authority over cannot be changed from this Editor; its
 editor is disabled and says why.</p>
+
+<h2 id="running-a-block-and-forcing-an-if">Running a block and forcing an If</h2>
+
+<p>The row of a block that acts, such as a <code class="language-plaintext highlighter-rouge">Set</code>, an <code class="language-plaintext highlighter-rouge">Add</code> or an <code class="language-plaintext highlighter-rouge">If</code>, has a <strong>Fire</strong> button, and an
+<code class="language-plaintext highlighter-rouge">If</code> row also has a <strong>Force</strong> list; the rows of a condition and of a value have neither. Both act on
+the running script at once, between two frames, and neither changes the script.</p>
+
+<p><strong>Fire</strong> runs that one block once, as its event would. Nothing sends the guard’s <code class="language-plaintext highlighter-rouge">Hit</code> message yet,
+so its <code class="language-plaintext highlighter-rouge">Hits.Add(1)</code> block never runs on its own: press Fire on its row, and <code class="language-plaintext highlighter-rouge">Hits</code> under <strong>Values</strong>
+goes up by one each time. Fire on an <code class="language-plaintext highlighter-rouge">If</code> runs its condition and the branch the condition picks.
+A block that runs over several frames cannot be fired: a routine and its steps, a timed <code class="language-plaintext highlighter-rouge">Run</code>, a
+state machine, <code class="language-plaintext highlighter-rouge">Choose</code>, a <code class="language-plaintext highlighter-rouge">Wait</code>, and every block inside them. Neither can a block of a contact
+event such as <code class="language-plaintext highlighter-rouge">On.CollisionEnter</code>, which can read the other collider only a collision supplies.
+Their Fire button is disabled, and its tooltip says why. A fired block that fails stops the script,
+as any failure does.</p>
+
+<p><strong>Force</strong> makes an <code class="language-plaintext highlighter-rouge">If</code> run the branch you choose without evaluating its condition. Choose
+<strong>Forced true</strong> in the guard’s <code class="language-plaintext highlighter-rouge">If</code> row: from the next frame the row reads “True: ran Then” and
+<code class="language-plaintext highlighter-rouge">Speed</code> shows 6, while <code class="language-plaintext highlighter-rouge">Alert</code> stays false. The list shows the forced branch in amber until you
+choose <strong>Condition</strong>, which gives the <code class="language-plaintext highlighter-rouge">If</code> its condition back. An <code class="language-plaintext highlighter-rouge">If</code> also stops being forced when
+its object despawns and when Play Mode ends.</p>
 
 <h2 id="the-console-window">The Console window</h2>
 
