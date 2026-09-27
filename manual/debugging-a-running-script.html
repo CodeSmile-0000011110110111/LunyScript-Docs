@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Debugging a running script | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Debugging a running script" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/debugging-a-running-script.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/debugging-a-running-script.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Debugging a running script" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Debugging a running script","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/debugging-a-running-script.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Debugging a running script</h1>
+  </header>
+
+  <div class="post-content">
+    <p>A guard that runs faster while it is alert:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">GuardScript</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Alert</span> <span class="p">=</span> <span class="n">Flag</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Alert</span><span class="p">));</span>
+        <span class="n">Speed</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Speed</span><span class="p">),</span> <span class="m">2</span><span class="p">);</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+            <span class="nf">If</span><span class="p">(</span><span class="n">Alert</span><span class="p">.</span><span class="nf">IsTrue</span><span class="p">())</span>
+                <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Speed</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">6</span><span class="p">))</span>
+                <span class="p">.</span><span class="nf">Else</span><span class="p">(</span><span class="n">Speed</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">2</span><span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Press Play, open <strong>Tools &gt; LunyScript &gt; Debugger</strong> and select the guard in the Hierarchy. The
+window shows the guard’s <code class="language-plaintext highlighter-rouge">On.FrameUpdate</code> with the <code class="language-plaintext highlighter-rouge">If</code> under it, then the <code class="language-plaintext highlighter-rouge">If</code>’s condition, a Then
+row and an Else row, and under those the lines <code class="language-plaintext highlighter-rouge">.Then(Speed.Set(6))</code> and <code class="language-plaintext highlighter-rouge">.Else(Speed.Set(2)));</code>.
+The <code class="language-plaintext highlighter-rouge">If</code> row reads “False: ran Else” and “0.0 s ago”, and the Else row reads Taken. Tick the <code class="language-plaintext highlighter-rouge">Alert</code>
+checkbox under <strong>Values</strong> and press <strong>Apply</strong>: the window shows “Applied. Read back: true”, and from
+the next frame the <code class="language-plaintext highlighter-rouge">If</code> row reads “True: ran Then” with a green highlight. <code class="language-plaintext highlighter-rouge">Speed</code> shows 6.</p>
+
+<p><img src="/LunyScript-Docs/assets/runtime-debugger.png" alt="The Debugger window showing the Values example: running scripts, the script flow with results and ages, and the values with their editors" /></p>
+
+<p>The debugger shows what a script is doing while the game runs, without stopping the game or changing
+the script. It is a view of the running script, not a way to write one: the script stays C#.</p>
+
+<h2 id="choosing-a-script">Choosing a script</h2>
+
+<p><strong>Running scripts</strong> lists every running script by its object and script name, with a state word:
+Running, Not ticking when its process mode skips process events, Component off when the component
+is disabled, or Stopped after an error. Click a row to show that script.</p>
+
+<p>With <strong>Follow selection</strong> on, which is the default, selecting a GameObject in the Hierarchy shows its
+script. <strong>Lock</strong> keeps the shown script while you select other objects. The header names the script
+and its object and shows its state, its process mode, whether <code class="language-plaintext highlighter-rouge">On.Ready</code> has run, and how many updates
+it received. When a block fails, a line under the header names the block, the line it was written
+on, the error, and what LunyScript did about it.</p>
+
+<h2 id="reading-what-ran">Reading what ran</h2>
+
+<p><strong>Script flow</strong> has one row per event and one row per block, in the order the script wrote them.
+A block’s row shows the text of the line it was written on; when several blocks were written on one
+line, the later ones show their block type instead. A block whose parts record nothing, such as the
+number a <code class="language-plaintext highlighter-rouge">Set</code> writes, starts folded; its arrow shows those parts.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>What it shows</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Last result</td>
+      <td>Completed, Running for a step that continues next frame, Failed, or which branch an <code class="language-plaintext highlighter-rouge">If</code> ran</td>
+    </tr>
+    <tr>
+      <td>Age</td>
+      <td>How long ago the block last ran</td>
+    </tr>
+    <tr>
+      <td>Line</td>
+      <td>The line the block was written on</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A condition shows the <code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code> its <code class="language-plaintext highlighter-rouge">If</code> recorded. A value built with a C# operator, such
+as <code class="language-plaintext highlighter-rouge">Health &gt; 10</code>, has no line of its own and shows the line of the call it belongs to as “owner 18”.
+<strong>Details</strong> adds each block’s type, how many times it ran, and its place in the script.</p>
+
+<p>A row that just ran is highlighted for half a second: green for an <code class="language-plaintext highlighter-rouge">If</code> that ran Then and for its
+condition, and a light background for any other block. A block that runs every frame stays
+highlighted.</p>
+
+<p>Every result is the one recorded when the block ran. The debugger never runs a block and never
+evaluates a condition to fill in a row, so a condition that has not run since the player moved
+still shows its last result, with its age.</p>
+
+<p>Double-click a row to open its line in your code editor.</p>
+
+<h2 id="changing-a-value">Changing a value</h2>
+
+<p><strong>Values</strong> lists the script’s variables with an editor for each kind: a number field, a checkbox, a
+text field, three fields for a <code class="language-plaintext highlighter-rouge">Vector3</code>, two for a <code class="language-plaintext highlighter-rouge">Vector2</code>, three angles in degrees for a
+<code class="language-plaintext highlighter-rouge">Rotation</code>, and a list of names for an enum. Change a value and press <strong>Apply</strong>. The window writes
+the value once and shows the value it read back, or why the write was refused, such as text longer
+than the variable holds. <strong>Revert</strong> puts the stored value back into the editor. Applying a value
+runs no block.</p>
+
+<p>A synchronized value that another peer has authority over cannot be changed from this Editor; its
+editor is disabled and says why.</p>
+
+<h2 id="the-console-window">The Console window</h2>
+
+<p><strong>Tools &gt; LunyScript &gt; Console</strong> lists what LunyScript reported and what your
+<a href="/LunyScript-Docs/manual/writing-to-the-console.html">Debug lines</a> wrote. Double-click a line
+to open the line of your script it came from.</p>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/flow.html">Flow: conditions, timed work and routines</a> — the
+<code class="language-plaintext highlighter-rouge">If</code>, Then and Else the debugger shows.</li>
+  <li><a href="/LunyScript-Docs/manual/variables-and-values.html">Variables and values</a> — the kinds of
+value the Values list edits.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RunnerDiagnostics.html"><code class="language-plaintext highlighter-rouge">RunnerDiagnostics</code></a>,
+the diagnostics the window reads.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
