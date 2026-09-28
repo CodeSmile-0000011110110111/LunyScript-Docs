@@ -237,7 +237,8 @@ saved copy does not mention returns to the action asset’s.</li>
   <li>A saved control whose binding a newer version of the game removed is
 skipped, and <code class="language-plaintext highlighter-rouge">Options.Omitted(Input.ForPlayer(0))</code> is true after that load.</li>
   <li>Only a Settings document lists bindings, and each player once. List several
-players with <code class="language-plaintext highlighter-rouge">.Bindings(Input.ForPlayer(1))</code> and so on.</li>
+players with <code class="language-plaintext highlighter-rouge">.Bindings(Input.ForPlayer(2))</code> and so on. With local players,
+numbers 0 and 1 both name the host, so list the host under one of them.</li>
 </ul>
 
 <p><a href="/LunyScript-Docs/manual/saving-progress-and-settings.html">Saving progress and settings</a>
@@ -270,18 +271,25 @@ local players where your C# installs it:</p>
 <span class="n">LunyScriptRuntime</span><span class="p">.</span><span class="n">DefaultRunner</span><span class="p">.</span><span class="n">InputGateway</span><span class="p">.</span><span class="nf">UseProvider</span><span class="p">(</span><span class="n">provider</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>With that setup nobody is present until a button press. A script opens pairing, and each press on a
-device that no player holds pairs that device with the lowest free player number. A key pairs the
-keyboard and the mouse together as one player. <code class="language-plaintext highlighter-rouge">new InputSystemProvider(actions)</code>, with no number,
-keeps player 0 present from the start on every device and pairs nothing.</p>
+<p>With that setup nobody is present until a button press. A script opens pairing, and the first press
+on a device that no player holds makes that player the host. Each later press pairs a guest with the
+lowest free number from 2. The number 4 in the line above allows the host and three guests. A key
+pairs the keyboard and the mouse together as one player. <code class="language-plaintext highlighter-rouge">new InputSystemProvider(actions)</code>, with no
+number, keeps player 0 present from the start on every device and pairs nothing.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="n">Pairing</span><span class="p">.</span><span class="nf">Open</span><span class="p">());</span>
-<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 1 is in"</span><span class="p">));</span>
-<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 2 is in"</span><span class="p">));</span>
-<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Left</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 2 left"</span><span class="p">));</span>
-<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Lost</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 2: reconnect the controller"</span><span class="p">));</span>
-<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Returned</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 2 is back"</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 1 is in"</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 2 is in"</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Left</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 2 left"</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Lost</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 2: reconnect the controller"</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Returned</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Player 2 is back"</span><span class="p">));</span>
 </code></pre></div></div>
+
+<p>Player numbers 0 and 1 both name the host, so a script written for <code class="language-plaintext highlighter-rouge">Input.ForPlayer(0)</code> reads the host
+too. <code class="language-plaintext highlighter-rouge">Input.PlayerCount</code> counts the host once. The host stays for the whole session: a leave of player
+0 or 1 changes nothing, so show a Leave button only the host could press as disabled. A script that
+watches the same change on both numbers, such as <code class="language-plaintext highlighter-rouge">When.Player(0).Paired</code> and <code class="language-plaintext highlighter-rouge">When.Player(1).Paired</code>,
+runs it once for the host, through <code class="language-plaintext highlighter-rouge">When.Player(1)</code>, and the Console says so once.</p>
 
 <table>
   <thead>
@@ -301,7 +309,7 @@ keeps player 0 present from the start on every device and pairs nothing.</p>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Input.ForPlayer(n).Leave()</code></td>
-      <td>Releases that player’s devices and frees the number.</td>
+      <td>Releases a guest’s devices and frees the number. The host stays.</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Input.ForPlayer(n).IsPaired</code></td>
@@ -313,7 +321,7 @@ keeps player 0 present from the start on every device and pairs nothing.</p>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Input.PlayerCount</code></td>
-      <td>How many player numbers are held.</td>
+      <td>How many players are in, the host counted once.</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">When.Player(n).Paired</code>, <code class="language-plaintext highlighter-rouge">.Left</code></td>
@@ -347,8 +355,8 @@ everyone who paired in the lobby.</p>
 <p>Bind an object to a player when you create or spawn it, or with the <strong>Local Player</strong> field on its
 <strong>LunyScript Behaviour</strong>:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Avatar</span><span class="p">).</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>
-<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Avatar</span><span class="p">).</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Avatar</span><span class="p">).</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Avatar</span><span class="p">).</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">2</span><span class="p">));</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">ForPlayer(n)</code> binds every script the new object starts, its children included. <code class="language-plaintext highlighter-rouge">Object.Spawn(pool)</code>
@@ -362,9 +370,9 @@ any player holds it.</p>
 <span class="n">When</span><span class="p">.</span><span class="nf">Input</span><span class="p">(</span><span class="n">pause</span><span class="p">).</span><span class="nf">Performed</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Pause</span><span class="p">());</span>
 </code></pre></div></div>
 
-<p>The <strong>LocalPlayers</strong> scene in the API examples runs a lobby and two avatars on one script. With fewer
-than two gamepads connected, the scene adds two virtual gamepads and presses their buttons, and says
-so on screen.</p>
+<p>The <strong>LocalPlayers</strong> scene in the API examples runs a lobby and two avatars on one script: the host,
+player 1, and one guest, player 2. With fewer than two gamepads connected, the scene adds two virtual
+gamepads and presses their buttons, and says so on screen.</p>
 
 <p>The <strong>Rebinding</strong> scene in the API examples is a controls screen: one row per control with its bound
 control, Rebind and Reset, and Save and Load for a Settings document that keeps the controls.</p>
