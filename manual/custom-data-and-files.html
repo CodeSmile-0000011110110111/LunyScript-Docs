@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Custom data and files | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Custom data and files" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/custom-data-and-files.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/custom-data-and-files.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Custom data and files" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Custom data and files","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/custom-data-and-files.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Custom data and files</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Declare a struct of your own game data and give each object its own copy:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="p">[</span><span class="n">LunyScriptData</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">partial</span> <span class="k">struct</span> <span class="nc">WeaponStats</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">double</span> <span class="n">Damage</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">double</span> <span class="n">Cooldown</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Weapon</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Stats</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Data</span><span class="p">(</span><span class="k">new</span> <span class="n">WeaponStats</span> <span class="p">{</span> <span class="n">Damage</span> <span class="p">=</span> <span class="m">10</span><span class="p">,</span> <span class="n">Cooldown</span> <span class="p">=</span> <span class="m">0.4</span> <span class="p">});</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Stats</span><span class="p">.</span><span class="n">Damage</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">5</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">[LunyScriptData]</code> makes <code class="language-plaintext highlighter-rouge">WeaponStats</code> a data schema. Each field of <code class="language-plaintext highlighter-rouge">Stats</code> is a variable of the
+object the script runs on: <code class="language-plaintext highlighter-rouge">Stats.Damage</code> is a <code class="language-plaintext highlighter-rouge">Number</code> named <code class="language-plaintext highlighter-rouge">Stats.Damage</code>, and every block and
+comparison that takes a <code class="language-plaintext highlighter-rouge">Number</code> takes it. Every object starts from 10 and 0.4, and changing one
+object’s copy changes no other object’s.</p>
+
+<h2 id="what-a-schema-holds">What a schema holds</h2>
+
+<p>A schema is a <code class="language-plaintext highlighter-rouge">partial struct</code>. Its public fields, in the order you declare them, are:</p>
+
+<ul>
+  <li>numbers of any C# number type except <code class="language-plaintext highlighter-rouge">decimal</code>, each a <code class="language-plaintext highlighter-rouge">Number</code>;</li>
+  <li><code class="language-plaintext highlighter-rouge">bool</code>, a <code class="language-plaintext highlighter-rouge">Flag</code>;</li>
+  <li>a C# <code class="language-plaintext highlighter-rouge">enum</code>, a variable of that enum;</li>
+  <li>LunyScript’s <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code> and <code class="language-plaintext highlighter-rouge">Rotation</code>;</li>
+  <li><code class="language-plaintext highlighter-rouge">string</code>, a <code class="language-plaintext highlighter-rouge">Text</code> of 64 bytes, or of the capacity
+<code class="language-plaintext highlighter-rouge">[LunyScriptDataField(Capacity = TextCapacity.Bytes128)]</code> names;</li>
+  <li>another <code class="language-plaintext highlighter-rouge">[LunyScriptData]</code> struct, whose fields are named such as <code class="language-plaintext highlighter-rouge">Stats.Muzzle.Speed</code>.</li>
+</ul>
+
+<p>Any other field is reported by the compiler as LUNY001. The script and the schema name no engine
+type, so both compile in an assembly definition with No Engine References checked.</p>
+
+<h2 id="data-from-an-asset">Data from an asset</h2>
+
+<p>A <code class="language-plaintext highlighter-rouge">ScriptableObject</code> can hold the data. Mark the fields a script may read:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="p">[</span><span class="n">Serializable</span><span class="p">,</span> <span class="n">LunyScriptData</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">partial</span> <span class="k">struct</span> <span class="nc">WeaponBalance</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">double</span> <span class="n">Damage</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">double</span> <span class="n">Cooldown</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">WeaponAsset</span> <span class="p">:</span> <span class="n">ScriptableObject</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">LunyScriptDataField</span><span class="p">]</span> <span class="k">public</span> <span class="kt">int</span> <span class="n">SomeValue</span> <span class="p">=</span> <span class="m">7</span><span class="p">;</span>
+    <span class="p">[</span><span class="n">LunyScriptDataField</span><span class="p">]</span> <span class="k">public</span> <span class="n">WeaponBalance</span> <span class="n">Balance</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The class is <code class="language-plaintext highlighter-rouge">partial</code> because LunyScript writes the code that reads those fields; no field is read
+by reflection. <code class="language-plaintext highlighter-rouge">[Serializable]</code> is what lets Unity save the struct in the asset. A script declares
+two inputs that read the asset:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Balance</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Data</span><span class="p">(</span><span class="n">WeaponBalance</span><span class="p">.</span><span class="n">Schema</span><span class="p">);</span>
+<span class="n">Power</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Number</span><span class="p">().</span><span class="nf">FromDataField</span><span class="p">(</span><span class="s">"SomeValue"</span><span class="p">);</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Power</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">5</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> shows a field for each, and you assign the asset to both. When an object
+spawns, before <code class="language-plaintext highlighter-rouge">On.Ready</code>, <code class="language-plaintext highlighter-rouge">Balance</code> copies the asset’s one <code class="language-plaintext highlighter-rouge">WeaponBalance</code> field and <code class="language-plaintext highlighter-rouge">Power</code> copies
+<code class="language-plaintext highlighter-rouge">SomeValue</code> into that object’s own variables. After <code class="language-plaintext highlighter-rouge">On.Ready</code> this object’s <code class="language-plaintext highlighter-rouge">Power</code> is 12, and the
+asset still holds 7; the next object starts from 7 again, and a pooled object copies the asset again
+each time it is reused.</p>
+
+<p>An object whose field is empty does not start: rules data has no placeholder. The spawn is refused,
+with an error naming the input, when nothing is assigned, when the asset has no annotated field of
+that name or that schema, when the named field holds no number, or when the asset has two fields of
+the schema.</p>
+
+<h2 id="files">Files</h2>
+
+<p>A file is read when the load that names it runs, and never before:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Notice</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Notice</span><span class="p">),</span> <span class="n">TextCapacity</span><span class="p">.</span><span class="n">Bytes4096</span><span class="p">);</span>
+<span class="n">NoticeFile</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">TextFile</span><span class="p">().</span><span class="nf">FromUserData</span><span class="p">(</span><span class="s">"notice.txt"</span><span class="p">);</span>
+<span class="n">Reading</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Reading</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">NoticeFile</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Notice</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Reading</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Reading</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Notice</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"No notice today."</span><span class="p">));</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>The folder it reads</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FromStreamingAssets(path)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Assets/StreamingAssets</code>, which Unity copies into the build</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FromUserData(path)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Application.persistentDataPath</code>, which survives between runs</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">FromTemp(path)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Application.temporaryCachePath</code>, which the platform may clear</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The path is relative to its folder, uses <code class="language-plaintext highlighter-rouge">/</code> between folder names, and may not leave the folder.
+<code class="language-plaintext highlighter-rouge">When.Operation</code> reports the load: Succeeded once the destination was written, Failed with
+<code class="language-plaintext highlighter-rouge">NotFound</code> for a missing file and with <code class="language-plaintext highlighter-rouge">Denied</code> for content that is not valid or does not fit.</p>
+
+<p>A text file is UTF-8, with or without a byte-order mark. Text longer than the destination holds,
+or bytes that are not UTF-8, fail the load and leave the text as it was.</p>
+
+<h3 id="json-into-data">JSON into data</h3>
+
+<p>A JSON file fills a <code class="language-plaintext highlighter-rouge">Define.Data</code> of the same schema:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Stats</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Data</span><span class="p">(</span><span class="k">new</span> <span class="n">WeaponStats</span> <span class="p">{</span> <span class="n">Damage</span> <span class="p">=</span> <span class="m">10</span><span class="p">,</span> <span class="n">Cooldown</span> <span class="p">=</span> <span class="m">0.4</span> <span class="p">});</span>
+<span class="n">StatsFile</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Data</span><span class="p">(</span><span class="n">WeaponStats</span><span class="p">.</span><span class="n">Schema</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">FromStreamingAssets</span><span class="p">(</span><span class="s">"weapon.json"</span><span class="p">);</span>
+<span class="n">LoadingStats</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">LoadingStats</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">StatsFile</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Stats</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">LoadingStats</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>With <code class="language-plaintext highlighter-rouge">weapon.json</code> holding <code class="language-plaintext highlighter-rouge">{"Damage": 12, "Unused": 99}</code>, <code class="language-plaintext highlighter-rouge">Stats.Damage</code> becomes 12 and
+<code class="language-plaintext highlighter-rouge">Stats.Cooldown</code> stays 0.4. Every load starts from the values <code class="language-plaintext highlighter-rouge">Define.Data</code> declared, replaces the
+fields the file names, and ignores members the schema does not have, so loading <code class="language-plaintext highlighter-rouge">{}</code> restores all
+of the declared values. A field name in the file matches its C# name exactly, including case. A
+number goes into a number field, <code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code> into a <code class="language-plaintext highlighter-rouge">bool</code>, text into a <code class="language-plaintext highlighter-rouge">string</code>, the number of
+a declared constant into an enum, an array of 3, 2 or 4 numbers into a <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code> or
+<code class="language-plaintext highlighter-rouge">Rotation</code>, and an object into a nested schema. A value of the wrong kind, a fraction in an integer
+field, or text longer than its field fails the whole load, and no field changes.</p>
+
+<h3 id="pictures-and-sounds">Pictures and sounds</h3>
+
+<p>A <code class="language-plaintext highlighter-rouge">Texture2D</code> input decodes a PNG file, and an <code class="language-plaintext highlighter-rouge">AudioClip</code> input a WAV file of PCM samples:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Chime</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">AudioClip</span><span class="p">().</span><span class="nf">FromStreamingAssets</span><span class="p">(</span><span class="s">"chime.wav"</span><span class="p">);</span>
+<span class="n">LoadingChime</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="n">Define</span><span class="p">&lt;</span><span class="n">AudioClip</span><span class="p">&gt;(</span><span class="k">nameof</span><span class="p">(</span><span class="n">LoadingChime</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Chime</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">LoadingChime</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">LoadingChime</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span><span class="n">Audio</span><span class="p">.</span><span class="nf">PlayOneShot</span><span class="p">(</span><span class="n">Chime</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>A clip or texture assigned in the Inspector is used instead of the file. Until the load succeeds,
+an input with nothing assigned holds its placeholder, a short low tone or a checkered texture. The
+decoded clip belongs to the object and is destroyed when the object ends.</p>
+
+<h2 id="limits">Limits</h2>
+
+<ul>
+  <li>A <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code> or <code class="language-plaintext highlighter-rouge">Rotation</code> field of a schema stored in an asset keeps its default
+value, because Unity does not save those types’ components. Store such values as number fields.</li>
+  <li>A text or JSON load reads a file; it cannot read a <code class="language-plaintext highlighter-rouge">TextAsset</code> assigned in the Inspector.</li>
+</ul>
+
+<p>The <code class="language-plaintext highlighter-rouge">DataInputs</code> scene in <code class="language-plaintext highlighter-rouge">ApiExamples</code> shows every call on this page.</p>
+
+<p>Next: <a href="/LunyScript-Docs/manual/saving-progress-and-settings.html">Saving progress and settings</a>,
+or the <a href="/LunyScript-Docs/api/">API Reference</a>.</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -152,6 +152,16 @@ position that does not match:</p>
     <span class="c1">// LUNY001: Pass nameof(Calm) as name 2 of this line</span>
 </code></pre></div></div>
 
+<p>It also writes the members of a <a href="/LunyScript-Docs/manual/custom-data-and-files.html">data schema</a>
+and the reader of a class with <code class="language-plaintext highlighter-rouge">[LunyScriptDataField]</code> fields, and reports a field it cannot hold:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">LunyScriptData</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">partial</span> <span class="k">struct</span> <span class="nc">WeaponStats</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span><span class="p">[]</span> <span class="n">Upgrades</span><span class="p">;</span>  <span class="c1">// LUNY001: the field's type is int[]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
 <p>Where your IDE offers code fixes from the project’s analyzers, it offers <strong>Add partial</strong> on this
 error. The fix adds <code class="language-plaintext highlighter-rouge">partial</code> to the class, and to every class it is nested in that needs it. The
 compiler reports the error and applies no fix, so in Unity alone you add <code class="language-plaintext highlighter-rouge">partial</code> yourself.</p>
