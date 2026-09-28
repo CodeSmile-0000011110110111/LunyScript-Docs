@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Class AssetLoadBlock | LunyScript API Reference </title>
+      <title>Class FileLoadBlock | LunyScript API Reference </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class AssetLoadBlock | LunyScript API Reference ">
+      <meta name="title" content="Class FileLoadBlock | LunyScript API Reference ">
       
-      <meta name="description" content="What Asset.Load(source).As(handle) builds: starts one asynchronous content acquisition bound to an operation handle. Completion yields an owned typed asset on that handle, or a classified failure. Failure does not fall through to an asset placeholder.">
+      <meta name="description" content="What Asset.Load(file).Into(destination).As(handle) builds: starts reading one declared text or JSON file and, when the read and the decoding succeed, writes the destination in one step.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_AssetLoadBlock.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.AssetLoadBlock%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_FileLoadBlock.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.FileLoadBlock%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -72,12 +72,12 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="CodeSmile.LunyScript.AssetLoadBlock">
+        <article data-uid="CodeSmile.LunyScript.FileLoadBlock">
 
 
 
-  <h1 id="CodeSmile_LunyScript_AssetLoadBlock" data-uid="CodeSmile.LunyScript.AssetLoadBlock" class="text-break">
-Class AssetLoadBlock  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Assets/AssetLoadBlock.cs/#L20"><i class="bi bi-code-slash"></i></a>
+  <h1 id="CodeSmile_LunyScript_FileLoadBlock" data-uid="CodeSmile.LunyScript.FileLoadBlock" class="text-break">
+Class FileLoadBlock  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Assets/FileLoadBlock.cs/#L15"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,14 +85,13 @@ Class AssetLoadBlock  <a class="header-action link-secondary" title="View source
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>What <code>Asset.Load(source).As(handle)</code> builds: starts one asynchronous content
-acquisition bound to an operation handle. Completion yields an owned typed asset on that
-handle, or a classified failure. Failure does not fall through to an asset placeholder.</p>
+  <div class="markdown summary"><p>What <code>Asset.Load(file).Into(destination).As(handle)</code> builds: starts reading one declared text or JSON file
+and, when the read and the decoding succeed, writes the destination in one step.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class AssetLoadBlock : Block, IScriptNode</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class FileLoadBlock : Block, IScriptNode</code></pre>
   </div>
 
 
@@ -106,7 +105,7 @@ handle, or a classified failure. Failure does not fall through to an asset place
     <dd>
       <div><span class="xref">object</span></div>
       <div><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></div>
-      <div><span class="xref">AssetLoadBlock</span></div>
+      <div><span class="xref">FileLoadBlock</span></div>
     </dd>
   </dl>
 
@@ -147,62 +146,26 @@ handle, or a classified failure. Failure does not fall through to an asset place
 
 
 
-  <h2 id="CodeSmile_LunyScript_AssetLoadBlock_examples">Examples</h2>
-  <pre><code class="lang-csharp">On.Ready(Asset.Load(EnemyPrefab).As(EnemyContent));</code></pre>
+  <h2 id="CodeSmile_LunyScript_FileLoadBlock_examples">Examples</h2>
+  <pre><code class="lang-csharp">On.Ready(Asset.Load(NoticeFile).Into(Notice).As(Reading));</code></pre>
 
 
-  <h2 id="CodeSmile_LunyScript_AssetLoadBlock_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>A start while pending coalesces. Native completion is owned by the gateway and does not
-follow process mode. <code>Resources.Load</code> stays behind the start boundary. A <code>Texture2D</code> or
-<code>AudioClip</code> input that names a file is read and decoded on an object that assigns nothing.</p>
+  <h2 id="CodeSmile_LunyScript_FileLoadBlock_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>A start while pending coalesces, as every load does. The read is owned by the asset gateway, which checks
+that the attempt is still pending and the instance is the same incarnation before it writes anything, so a
+canceled load, a timed-out one, and one whose object was despawned or reused change no variable.</p>
 </div>
-
-
-  <h2 class="section" id="fields">Fields
-</h2>
-
-
-
-  <h3 id="CodeSmile_LunyScript_AssetLoadBlock_NoBoundSlot" data-uid="CodeSmile.LunyScript.AssetLoadBlock.NoBoundSlot">
-  NoBoundSlot
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Assets/AssetLoadBlock.cs/#L24"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>What this block holds in place of an asset slot when the source is Resources
-rather than a bound Inspector input.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const int NoBoundSlot = -1</code></pre>
-  </div>
-
-
-
-
-  <h4 class="section">Field Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">int</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-
 
 
   <h2 class="section" id="properties">Properties
 </h2>
 
 
-  <a id="CodeSmile_LunyScript_AssetLoadBlock_Contexts_" data-uid="CodeSmile.LunyScript.AssetLoadBlock.Contexts*"></a>
+  <a id="CodeSmile_LunyScript_FileLoadBlock_Contexts_" data-uid="CodeSmile.LunyScript.FileLoadBlock.Contexts*"></a>
 
-  <h3 id="CodeSmile_LunyScript_AssetLoadBlock_Contexts" data-uid="CodeSmile.LunyScript.AssetLoadBlock.Contexts">
+  <h3 id="CodeSmile_LunyScript_FileLoadBlock_Contexts" data-uid="CodeSmile.LunyScript.FileLoadBlock.Contexts">
   Contexts
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Assets/AssetLoadBlock.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Assets/FileLoadBlock.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Legacy custom nodes are runtime-only until explicitly declared shared or Editor-only.</p>
@@ -225,7 +188,7 @@ rather than a bound Inspector input.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_AssetLoadBlock_Contexts_examples">Examples</h4>
+  <h4 class="section" id="CodeSmile_LunyScript_FileLoadBlock_Contexts_examples">Examples</h4>
   <pre><code class="lang-csharp">public override ScriptContexts Contexts =&gt; ScriptContexts.Shared;</code></pre>
 
 
@@ -237,11 +200,11 @@ rather than a bound Inspector input.</p>
 </h2>
 
 
-  <a id="CodeSmile_LunyScript_AssetLoadBlock_Execute_" data-uid="CodeSmile.LunyScript.AssetLoadBlock.Execute*"></a>
+  <a id="CodeSmile_LunyScript_FileLoadBlock_Execute_" data-uid="CodeSmile.LunyScript.FileLoadBlock.Execute*"></a>
 
-  <h3 id="CodeSmile_LunyScript_AssetLoadBlock_Execute_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.AssetLoadBlock.Execute(CodeSmile.LunyScript.ScriptInstance)">
+  <h3 id="CodeSmile_LunyScript_FileLoadBlock_Execute_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.FileLoadBlock.Execute(CodeSmile.LunyScript.ScriptInstance)">
   Execute(ScriptInstance)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Assets/AssetLoadBlock.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Assets/FileLoadBlock.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Runs this block against one object's state. Called once per event per instance and
@@ -285,7 +248,7 @@ must allocate nothing after warm-up; AGENTS.md rule 29.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Assets/AssetLoadBlock.cs/#L20" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Blocks/Assets/FileLoadBlock.cs/#L15" class="edit-link">Edit this page</a>
         </div>
 
 

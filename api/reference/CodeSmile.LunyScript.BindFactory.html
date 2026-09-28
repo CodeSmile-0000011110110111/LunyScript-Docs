@@ -323,11 +323,87 @@ short low tone as its asset placeholder.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_BindFactory_Data_" data-uid="CodeSmile.LunyScript.BindFactory.Data*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BindFactory_Data__2_CodeSmile_LunyScript_DataSchema___0___1__System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Data``2(CodeSmile.LunyScript.DataSchema{``0,``1},System.String,System.Int32)">
+  Data&lt;TValue, THandle&gt;(DataSchema&lt;TValue, THandle&gt;, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L242"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts a data input of <code class="paramref">schema</code>: an Inspector-assigned data asset whose field of
+that schema each object copies when it spawns, or with <code>FromStreamingAssets</code>, <code>FromUserData</code> or
+<code>FromTemp</code> a JSON file that <code>Asset.Load(file).Into(data)</code> reads.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public DataInputBuilder&lt;TValue, THandle&gt; Data&lt;TValue, THandle&gt;(DataSchema&lt;TValue, THandle&gt; schema, string callerFilePath = null, int callerLineNumber = 0) where TValue : struct where THandle : struct, ILunyScriptDataVariables</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.DataSchema-2.html">DataSchema</a>&lt;TValue, THandle&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>schema</code></dt></td>
+    <td style="width: 99%"><dd><p>The struct's generated <code>Schema</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.DataInputBuilder-2.html">DataInputBuilder</a>&lt;TValue, THandle&gt;</dt>
+    <dd><p>The unfinished declaration.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TValue</code></dt>
+    <dd><p>The schema struct, inferred from the schema.</p>
+</dd>
+    <dt><code>THandle</code></dt>
+    <dd><p>Its generated <code>Variables</code>, inferred from the schema.</p>
+</dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Data__2_CodeSmile_LunyScript_DataSchema___0___1__System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Balance = Bind.Data(WeaponStats.Schema);
+StatsFile = Bind.Data(WeaponStats.Schema).FromStreamingAssets("weapon.json");</code></pre>
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_BindFactory_Flag_" data-uid="CodeSmile.LunyScript.BindFactory.Flag*"></a>
 
   <h3 id="CodeSmile_LunyScript_BindFactory_Flag_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Flag(System.String,System.String,System.Int32)">
   Flag(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L238"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L294"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds a shared <code>Flag</code> this script did not define. Call <code>Shared</code> to
@@ -397,9 +473,72 @@ surface was read outside <code>Build()</code>.</p>
 
   <a id="CodeSmile_LunyScript_BindFactory_Number_" data-uid="CodeSmile.LunyScript.BindFactory.Number*"></a>
 
+  <h3 id="CodeSmile_LunyScript_BindFactory_Number_System_Int32_System_String_" data-uid="CodeSmile.LunyScript.BindFactory.Number(System.Int32,System.String)">
+  Number(int, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L219"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts a number input that copies a field of an Inspector-assigned data asset;
+<code>FromDataField(field)</code> names the field.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NumberInputBuilder Number(int callerLineNumber = 0, string callerFilePath = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberInputBuilder.html">NumberInputBuilder</a></dt>
+    <dd><p>The unfinished declaration.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Number_System_Int32_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">Power = Bind.Number().FromDataField("SomeValue");</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_Number_System_Int32_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The caller information comes first so that <code>Bind.Number(name)</code>, the shared-number form, stays
+the only overload a string argument selects.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_BindFactory_Number_" data-uid="CodeSmile.LunyScript.BindFactory.Number*"></a>
+
   <h3 id="CodeSmile_LunyScript_BindFactory_Number_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Number(System.String,System.String,System.Int32)">
   Number(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L220"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L276"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds a shared <code>Number</code> this script did not define. Call <code>Shared</code> to
@@ -668,7 +807,7 @@ reported once per script type, and a <code>Scene.Load</code> of it fails as
 
   <h3 id="CodeSmile_LunyScript_BindFactory_Text_System_String_CodeSmile_LunyScript_TextCapacity_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Text(System.String,CodeSmile.LunyScript.TextCapacity,System.String,System.Int32)">
   Text(string, TextCapacity, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L293"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L349"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds a shared text of the given capacity this script did not define. The capacity
@@ -746,7 +885,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_BindFactory_Text_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Text(System.String,System.String,System.Int32)">
   Text(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L274"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L330"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds a shared 64-byte text this script did not define. Call <code>Shared</code> to
@@ -814,6 +953,65 @@ surface was read outside <code>Build()</code>.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_BindFactory_TextFile_" data-uid="CodeSmile.LunyScript.BindFactory.TextFile*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BindFactory_TextFile_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.TextFile(System.String,System.Int32)">
+  TextFile(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L259"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts a UTF-8 text file declaration; <code>FromStreamingAssets</code>, <code>FromUserData</code> or
+<code>FromTemp</code> names the file, and <code>Asset.Load(file).Into(text)</code> reads it into a <code>Text</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public TextFileInputBuilder TextFile(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TextFileInputBuilder.html">TextFileInputBuilder</a></dt>
+    <dd><p>The unfinished declaration.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BindFactory_TextFile_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">NoticeFile = Bind.TextFile().FromUserData("notice.txt");</code></pre>
+
+
+
+
+
+
   <a id="CodeSmile_LunyScript_BindFactory_Texture2D_" data-uid="CodeSmile.LunyScript.BindFactory.Texture2D*"></a>
 
   <h3 id="CodeSmile_LunyScript_BindFactory_Texture2D_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Texture2D(System.String,System.Int32)">
@@ -877,7 +1075,7 @@ checkerboard asset placeholder.</p>
 
   <h3 id="CodeSmile_LunyScript_BindFactory_Vector3_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BindFactory.Vector3(System.String,System.String,System.Int32)">
   Vector3(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L256"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/BindFactory.cs/#L312"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds a shared <code>Vector3</code> this script did not define. Call <code>Shared</code> to
