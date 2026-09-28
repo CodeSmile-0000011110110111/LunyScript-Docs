@@ -378,7 +378,8 @@ and, when the read and the decoding succeed, writes the destination in one step.
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.GameObjectHost.html">GameObjectHost</a></dt>
-      <dd><p>The runtime <a class="xref" href="CodeSmile.LunyScript.IScriptHost.html">IScriptHost</a> for a GameObject, as the blocks see it.</p>
+      <dd><p>The Collision queries of a GameObject's host: Unity's buffer-taking physics queries on the default
+physics scene, with each result copied into a <span class="xref">CodeSmile.LunyScript.RawCollisionHit</span>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -846,6 +847,18 @@ to the object this script runs on.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.BoxCastBuilder.html">BoxCastBuilder</a></dt>
+      <dd><p>What <code>Collision.BoxCast()</code> returns: a box cast that takes its clauses in any order, each once,
+and is finished by <code>Into</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.BoxOverlapBuilder.html">BoxOverlapBuilder</a></dt>
+      <dd><p>What <code>Collision.BoxOverlap()</code> returns: a box overlap that takes its clauses in any order, each
+once, and is finished by <code>Into</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.CameraFactory.html">CameraFactory</a></dt>
       <dd><p>The <code>Camera</code> surface inside <code>Build()</code>: what one camera rig tracks. It hides
 <code>UnityEngine.Camera</code> inside a <code>Script</code> the same way <code>Transform</code> hides
@@ -862,6 +875,18 @@ group.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.CameraTargetsBuilder.html">CameraTargetsBuilder</a></dt>
       <dd><p>What <code>Camera.For(rig).Targets</code> returns: the five operations on a rig's group of
 tracked objects.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CapsuleCastBuilder.html">CapsuleCastBuilder</a></dt>
+      <dd><p>What <code>Collision.CapsuleCast()</code> returns: a capsule cast that takes its clauses in any order, each
+once, and is finished by <code>Into</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CapsuleOverlapBuilder.html">CapsuleOverlapBuilder</a></dt>
+      <dd><p>What <code>Collision.CapsuleOverlap()</code> returns: a capsule overlap that takes its clauses in any order,
+each once, and is finished by <code>Into</code>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -962,6 +987,12 @@ synchronous collection call produces.</p>
       <dd><p>What <code>Slots.TryAdd(item)</code> returns: one synchronous collection call whose own outcome is
 read. It has two consumers and takes exactly one of them: <code>If(Slots.TryAdd(item))</code>
 branches on the outcome, and <a class="xref" href="CodeSmile.LunyScript.CollectionTryBuilder.html#CodeSmile_LunyScript_CollectionTryBuilder_As_CodeSmile_LunyScript_CollectionResult_System_String_System_Int32_">As(CollectionResult, string, int)</a> stores it in a <a class="xref" href="CodeSmile.LunyScript.CollectionResult.html">CollectionResult</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CollisionFactory.html">CollisionFactory</a></dt>
+      <dd><p>The Collision surface: seven verbs that ask the physics world what is in front of an object or around
+it, each writing into a result the script declared.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1151,6 +1182,12 @@ time and never at run time.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ForEachHitsBuilder.html">ForEachHitsBuilder</a></dt>
+      <dd><p>What <code>ForEach(hits)</code> returns: <a class="xref" href="CodeSmile.LunyScript.ForEachHitsBuilder.html#CodeSmile_LunyScript_ForEachHitsBuilder_Do_System_Func_CodeSmile_LunyScript_HitEntry_CodeSmile_LunyScript_Block__">Do(Func&lt;HitEntry, Block&gt;)</a> takes the body run once
+per stored entry, nearest first.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.ForEachListBuilder-1.html">ForEachListBuilder&lt;T&gt;</a></dt>
       <dd><p>What <code>ForEach(list)</code> returns. Its only method is <a class="xref" href="CodeSmile.LunyScript.ForEachListBuilder-1.html#CodeSmile_LunyScript_ForEachListBuilder_1_Do_System_Func_CodeSmile_LunyScript_CollectionRead_CodeSmile_LunyScript_Block__">Do(Func&lt;CollectionRead, Block&gt;)</a>.</p>
 </dd>
@@ -1161,8 +1198,38 @@ time and never at run time.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ForEachOverlapsBuilder.html">ForEachOverlapsBuilder</a></dt>
+      <dd><p>What <code>ForEach(overlaps)</code> returns: <a class="xref" href="CodeSmile.LunyScript.ForEachOverlapsBuilder.html#CodeSmile_LunyScript_ForEachOverlapsBuilder_Do_System_Func_CodeSmile_LunyScript_OverlapEntry_CodeSmile_LunyScript_Block__">Do(Func&lt;OverlapEntry, Block&gt;)</a> takes the body
+run once per stored entry, in Unity's order.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.GateFactory.html">GateFactory</a></dt>
       <dd><p>The <code>Gate</code> surface: named, nested, runner-wide masks of suppressed categories.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.HitEntry.html">HitEntry</a></dt>
+      <dd><p>One entry of a <a class="xref" href="CodeSmile.LunyScript.HitsResult.html">HitsResult</a>: what <code>hits.At(index)</code> and a <code>ForEach(hits)</code> body's
+entry read.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.HitResult.html">HitResult</a></dt>
+      <dd><p>The nearest collider one cast touched: what <code>Define.Hit</code> declares and a cast's
+<code>Into(hit)</code> writes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.HitsDefineBuilder.html">HitsDefineBuilder</a></dt>
+      <dd><p>What <code>Define.Hits(name)</code> returns: a declaration that takes the project's default capacity,
+or states its own with <a class="xref" href="CodeSmile.LunyScript.HitsDefineBuilder.html#CodeSmile_LunyScript_HitsDefineBuilder_Capacity_System_Int32_System_String_System_Int32_">Capacity(int, string, int)</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.HitsResult.html">HitsResult</a></dt>
+      <dd><p>Every collider one cast touched, up to a capacity, nearest first: what <code>Define.Hits</code> declares
+and a cast's <code>Into(hits)</code> writes.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1236,6 +1303,12 @@ script reads. It hides <code>UnityEngine.Input</code> inside a <code>Script</cod
       <dt><a class="xref" href="CodeSmile.LunyScript.InputWatchBuilder.html">InputWatchBuilder</a></dt>
       <dd><p>What <code>When.Input(action)</code> returns. Its three methods register the blocks that run on
 a frame where the action reported that occurrence.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LayerMask.html">LayerMask</a></dt>
+      <dd><p>A set of the project's layers that a Collision query searches: what <code>Define.LayerMask</code> makes
+and a query's <code>Layers(mask)</code> takes.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1619,6 +1692,24 @@ currently running.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.OverlapEntry.html">OverlapEntry</a></dt>
+      <dd><p>One entry of an <a class="xref" href="CodeSmile.LunyScript.OverlapsResult.html">OverlapsResult</a>: what <code>overlaps.At(index)</code> and a
+<code>ForEach(overlaps)</code> body's entry read.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.OverlapsDefineBuilder.html">OverlapsDefineBuilder</a></dt>
+      <dd><p>What <code>Define.Overlaps(name)</code> returns: a declaration that takes the project's default
+capacity, or states its own with <a class="xref" href="CodeSmile.LunyScript.OverlapsDefineBuilder.html#CodeSmile_LunyScript_OverlapsDefineBuilder_Capacity_System_Int32_System_String_System_Int32_">Capacity(int, string, int)</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.OverlapsResult.html">OverlapsResult</a></dt>
+      <dd><p>Every collider one overlap found, up to a capacity: what <code>Define.Overlaps</code> declares and an
+overlap's <code>Into(overlaps)</code> writes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.PairingInputFactory.html">PairingInputFactory</a></dt>
       <dd><p>What <code>Input.Pairing</code> returns: the machine's pairing window. While it is open, a button
 press on a device no local player holds pairs that device with the host while nobody holds
@@ -1812,6 +1903,12 @@ this handle is an index, the same way a variable handle is.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.RayCastBuilder.html">RayCastBuilder</a></dt>
+      <dd><p>What <code>Collision.RayCast()</code> returns: a ray cast that takes its clauses in any order, each once,
+and is finished by <code>Into</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.ReparentBuilder.html">ReparentBuilder</a></dt>
       <dd><p>What <code>SetParent(...)</code> and <code>Unparent()</code> return: the reparent, which keeps the
 object's world placement unless <a class="xref" href="CodeSmile.LunyScript.ReparentBuilder.html#CodeSmile_LunyScript_ReparentBuilder_KeepLocal">KeepLocal()</a> says otherwise.</p>
@@ -1966,6 +2063,30 @@ the current level.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SpacedBoxCastBuilder.html">SpacedBoxCastBuilder</a></dt>
+      <dd><p>A <code>Collision.BoxCast()</code> whose frame has been named: every clause but a second space
+clause.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SpacedBoxOverlapBuilder.html">SpacedBoxOverlapBuilder</a></dt>
+      <dd><p>A <code>Collision.BoxOverlap()</code> whose frame has been named: every clause but a second space
+clause.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SpacedCapsuleCastBuilder.html">SpacedCapsuleCastBuilder</a></dt>
+      <dd><p>A <code>Collision.CapsuleCast()</code> whose frame has been named: every clause but a second space
+clause.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SpacedCapsuleOverlapBuilder.html">SpacedCapsuleOverlapBuilder</a></dt>
+      <dd><p>A <code>Collision.CapsuleOverlap()</code> whose frame has been named: every clause but a second space
+clause.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.SpacedMotionDisplacementBuilder.html">SpacedMotionDisplacementBuilder</a></dt>
       <dd><p>A Motion displacement whose frame has been named. It converts to a block and takes no
 further clause.</p>
@@ -1979,6 +2100,24 @@ further clause.</p>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.SpacedMotionVelocityBuilder.html">SpacedMotionVelocityBuilder</a></dt>
       <dd><p>A velocity whose frame has been named.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SpacedRayCastBuilder.html">SpacedRayCastBuilder</a></dt>
+      <dd><p>A <code>Collision.RayCast()</code> whose frame has been named: every clause but a second space
+clause.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SpacedSphereCastBuilder.html">SpacedSphereCastBuilder</a></dt>
+      <dd><p>A <code>Collision.SphereCast()</code> whose frame has been named: every clause but a second space
+clause.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SpacedSphereOverlapBuilder.html">SpacedSphereOverlapBuilder</a></dt>
+      <dd><p>A <code>Collision.SphereOverlap()</code> whose frame has been named: every clause but a second space
+clause.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2023,6 +2162,18 @@ it is parented to, and which owned-object slot holds it.</p>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.SpawnShapedBuilder.html">SpawnShapedBuilder</a></dt>
       <dd><p>What a shape returns: a checkout spread over a disk or a sphere, which can still take a frame.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SphereCastBuilder.html">SphereCastBuilder</a></dt>
+      <dd><p>What <code>Collision.SphereCast()</code> returns: a sphere cast that takes its clauses in any order, each
+once, and is finished by <code>Into</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.SphereOverlapBuilder.html">SphereOverlapBuilder</a></dt>
+      <dd><p>What <code>Collision.SphereOverlap()</code> returns: a sphere overlap that takes its clauses in any order,
+each once, and is finished by <code>Into</code>.</p>
 </dd>
     </dl>
     <dl class="jumplist">

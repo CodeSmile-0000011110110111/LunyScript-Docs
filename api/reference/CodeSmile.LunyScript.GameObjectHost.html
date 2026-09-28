@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Class GameObjectHost | LunyScript API Reference ">
       
-      <meta name="description" content="The runtime  for a GameObject, as the blocks see it.">
+      <meta name="description" content="The Collision queries of a GameObject&#39;s host: Unity&#39;s buffer-taking physics queries on the default physics scene, with each result copied into a .">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_GameObjectHost" data-uid="CodeSmile.LunyScript.GameObjectHost" class="text-break">
-Class GameObjectHost  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L34"><i class="bi bi-code-slash"></i></a>
+Class GameObjectHost  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L35"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,7 +85,8 @@ Class GameObjectHost  <a class="header-action link-secondary" title="View source
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>The runtime <a class="xref" href="CodeSmile.LunyScript.IScriptHost.html">IScriptHost</a> for a GameObject, as the blocks see it.</p>
+  <div class="markdown summary"><p>The Collision queries of a GameObject's host: Unity's buffer-taking physics queries on the default
+physics scene, with each result copied into a <span class="xref">CodeSmile.LunyScript.RawCollisionHit</span>.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -133,21 +134,11 @@ var instance = runner.Spawn(program, host);</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_GameObjectHost_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p><b>This file and <code>LunyScriptContactBehaviour</code> are the two in the runtime core that
-name a <code>GameObject</code>, a <code>Transform</code> or a <code>Component</code> in a field or a
-parameter</b>, and a structural test enforces that. AGENTS.md rule 24: the interface is
-what keeps the core testable without a scene. The contact behaviour is a second file
-because Unity requires a <code>MonoBehaviour</code> class to live in a file of the same name,
-and the trigger callback's <code>Collider</code> parameter is that signature.</p>
-<p>
-    <b>The <code>Transform</code> is looked up once, in the constructor, and every transform call
-    uses that cached reference instead of <code>GameObject.transform</code>.</b> What the cache
-    assumes, what invalidates it and what it was measured to save are in
-    <code>docs/host-transform-cache.md</code>; read that before changing any field here.
-</p>
-<p>
-    The editor host boundary is documented in <code>docs/editor-foundation.md</code>.
-</p>
+  <div class="markdown level0 remarks"><p>A second file of <a class="xref" href="CodeSmile.LunyScript.GameObjectHost.html">GameObjectHost</a> rather than a type of its own, because a query result
+names a <code>Collider</code> and the core admits that type in this one type; AGENTS.md rule 24 and
+<code>StructuralTests.NoUnityObjectTypesLeakOutsideGameObjectHost</code>. Every query is non-allocating:
+the native buffers are allocated once and every call overwrites them before it reads them.
+<code>docs/proposals/collision-queries.md</code> is the family.</p>
 </div>
 
 
@@ -159,7 +150,7 @@ and the trigger callback's <code>Collider</code> parameter is that signature.</p
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost__ctor_UnityEngine_GameObject_" data-uid="CodeSmile.LunyScript.GameObjectHost.#ctor(UnityEngine.GameObject)">
   GameObjectHost(GameObject)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L119"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L120"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Creates a host for one GameObject.</p>
@@ -209,7 +200,7 @@ destroyed.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost__ctor_UnityEngine_GameObject_CodeSmile_LunyScript_AssetInputAssignment___" data-uid="CodeSmile.LunyScript.GameObjectHost.#ctor(UnityEngine.GameObject,CodeSmile.LunyScript.AssetInputAssignment[])">
   GameObjectHost(GameObject, AssetInputAssignment[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L134"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L135"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Creates a host for one GameObject, carrying the assets that object assigns to its
@@ -275,7 +266,7 @@ destroyed.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_IsActive" data-uid="CodeSmile.LunyScript.GameObjectHost.IsActive">
   IsActive
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L297"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L298"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether the object is active. Reads the object's own state rather than a flag
@@ -314,7 +305,7 @@ first.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_IsAlive" data-uid="CodeSmile.LunyScript.GameObjectHost.IsAlive">
   IsAlive
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L106"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L107"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>False once the underlying object no longer exists. The Editor and DEBUG frame loop polls
@@ -352,7 +343,7 @@ best-effort.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_MotionBodyIsActive" data-uid="CodeSmile.LunyScript.GameObjectHost.MotionBodyIsActive">
   MotionBodyIsActive
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L716"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L717"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether the object's GameObject is active in the hierarchy. Physical Motion
@@ -385,7 +376,7 @@ inputs on an inactive body are refused.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_SceneObject" data-uid="CodeSmile.LunyScript.GameObjectHost.SceneObject">
   SceneObject
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L185"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L186"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The object the script runs on, or null once it no longer exists.</p>
@@ -422,7 +413,7 @@ keeps <code>GameObject</code> inside this file.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_TrackingTarget" data-uid="CodeSmile.LunyScript.GameObjectHost.TrackingTarget">
   TrackingTarget
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L179"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L180"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>What a camera should follow or aim at to track this object, or null once the
@@ -466,7 +457,7 @@ file.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_AssignedAsset_System_String_" data-uid="CodeSmile.LunyScript.GameObjectHost.AssignedAsset(System.String)">
   AssignedAsset(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1902"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1903"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The asset this object has stored under one declared input name, or null when it stores
@@ -521,7 +512,7 @@ it.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_AssignedScenePath_System_String_" data-uid="CodeSmile.LunyScript.GameObjectHost.AssignedScenePath(System.String)">
   AssignedScenePath(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1919"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1920"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The scene asset path this object stored under one declared scene input, or null
@@ -575,7 +566,7 @@ afterwards.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_AudioIsPlaying" data-uid="CodeSmile.LunyScript.GameObjectHost.AudioIsPlaying">
   AudioIsPlaying()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1234"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1235"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether the bound <code>AudioSource</code> is playing. False while it is paused, stopped,
@@ -608,7 +599,7 @@ or missing.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_CreateOwnedObject_System_String_" data-uid="CodeSmile.LunyScript.GameObjectHost.CreateOwnedObject(System.String)">
   CreateOwnedObject(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L314"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L315"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Creates a new, empty, active object and returns the host that names it.</p>
@@ -662,7 +653,7 @@ first boundary, spawn.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_Describe" data-uid="CodeSmile.LunyScript.GameObjectHost.Describe">
   Describe()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L160"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L161"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Names this host for a diagnostic message. <b>Allocates</b>, and is called only where
@@ -704,7 +695,7 @@ docs/proposals/review-proposals.md states the capture and native-rename boundari
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_DestroyObject" data-uid="CodeSmile.LunyScript.GameObjectHost.DestroyObject">
   DestroyObject()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L499"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L500"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Destroys the object this host names.</p>
@@ -737,7 +728,7 @@ inside it.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_HasParent_CodeSmile_LunyScript_TransformRelation_System_Int32_" data-uid="CodeSmile.LunyScript.GameObjectHost.HasParent(CodeSmile.LunyScript.TransformRelation,System.Int32)">
   HasParent(TransformRelation, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L515"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L516"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether the named object has a parent.</p>
@@ -805,7 +796,7 @@ practice, because destroying an object destroys its children with it.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_LookAt_CodeSmile_LunyScript_TransformRelation_System_Int32_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.LookAt(CodeSmile.LunyScript.TransformRelation,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
   LookAt(TransformRelation, int, double, double, double, double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L662"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L663"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Turns the named object to face a world point, about a stated up direction.</p>
@@ -911,7 +902,7 @@ allows. Must allocate nothing; AGENTS.md rule 29.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_MotionAddForce_System_Double_System_Double_System_Double_CodeSmile_LunyScript_TransformSpace_System_Boolean_" data-uid="CodeSmile.LunyScript.GameObjectHost.MotionAddForce(System.Double,System.Double,System.Double,CodeSmile.LunyScript.TransformSpace,System.Boolean)">
   MotionAddForce(double, double, double, TransformSpace, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L749"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L750"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A force or impulse on a dynamic body. Local space is the body's physics
@@ -974,7 +965,7 @@ orientation.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_MotionFaceTowards_System_Double_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.MotionFaceTowards(System.Double,System.Double,System.Double,System.Double)">
   MotionFaceTowards(double, double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L795"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L796"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Turns toward a world point by at most <code class="paramref">maxDegrees</code> without
@@ -1033,7 +1024,7 @@ writes nothing.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_MotionMoveBy_System_Double_System_Double_System_Double_CodeSmile_LunyScript_TransformSpace_" data-uid="CodeSmile.LunyScript.GameObjectHost.MotionMoveBy(System.Double,System.Double,System.Double,CodeSmile.LunyScript.TransformSpace)">
   MotionMoveBy(double, double, double, TransformSpace)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L719"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L720"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>One Motion.MoveBy displacement. Local space is the object's physics orientation
@@ -1091,7 +1082,7 @@ and is unaffected by scale.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_MotionMoveTowards_System_Double_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.MotionMoveTowards(System.Double,System.Double,System.Double,System.Double)">
   MotionMoveTowards(double, double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L726"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L727"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>One Motion.MoveTo step: move toward a world point by at most
@@ -1149,7 +1140,7 @@ and is unaffected by scale.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_MotionRotateTowards_System_Double_System_Double_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.MotionRotateTowards(System.Double,System.Double,System.Double,System.Double,System.Double)">
   MotionRotateTowards(double, double, double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L735"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L736"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>One Motion.RotateTo step: turn toward an orientation by at most
@@ -1212,7 +1203,7 @@ and is unaffected by scale.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_MotionSetVelocity_System_Double_System_Double_System_Double_CodeSmile_LunyScript_TransformSpace_" data-uid="CodeSmile.LunyScript.GameObjectHost.MotionSetVelocity(System.Double,System.Double,System.Double,CodeSmile.LunyScript.TransformSpace)">
   MotionSetVelocity(double, double, double, TransformSpace)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L763"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L764"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Absolute linear velocity, converted from <code class="paramref">space</code> before the
@@ -1270,7 +1261,7 @@ world write.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_MotionStop" data-uid="CodeSmile.LunyScript.GameObjectHost.MotionStop">
   MotionStop()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L776"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L777"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Clears linear and angular velocity once.</p>
@@ -1297,7 +1288,7 @@ world write.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_MotionTeleport_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.MotionTeleport(System.Double,System.Double,System.Double)">
   MotionTeleport(double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L786"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L787"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Places the object. A dynamic body also clears both velocities. A kinematic body
@@ -1350,7 +1341,7 @@ receives a pose write and no velocity setter.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_MotionTeleport_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.MotionTeleport(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
   MotionTeleport(double, double, double, double, double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L790"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L791"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Places the object and writes this orientation. A dynamic body also clears both
@@ -1423,7 +1414,7 @@ velocities. A kinematic body receives a pose write and no velocity setter.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_MoveBy_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.MoveBy(System.Double,System.Double,System.Double)">
   MoveBy(double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L240"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L241"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Adds to the object's world-space position. Called by <code>MoveByBlock</code> once per frame
@@ -1484,7 +1475,7 @@ one site to be tested at. AGENTS.md rules 12 and 13.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_OffsetTransform_CodeSmile_LunyScript_TransformRelation_System_Int32_CodeSmile_LunyScript_TransformSpace_CodeSmile_LunyScript_TransformPart_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.OffsetTransform(CodeSmile.LunyScript.TransformRelation,System.Int32,CodeSmile.LunyScript.TransformSpace,CodeSmile.LunyScript.TransformPart,System.Double,System.Double,System.Double)">
   OffsetTransform(TransformRelation, int, TransformSpace, TransformPart, double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L609"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L610"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Adds to one of the named object's three transform values, in one of the two
@@ -1578,7 +1569,7 @@ motion verb this version does not define, and the script surface offers none.</p
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_ProbeMotionMechanism" data-uid="CodeSmile.LunyScript.GameObjectHost.ProbeMotionMechanism">
   ProbeMotionMechanism()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L700"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L701"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Which movement component this object has, so Motion can refuse a mismatched
@@ -1615,7 +1606,7 @@ and a Rigidbody reports the CharacterController.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_ReadChildCount_CodeSmile_LunyScript_TransformRelation_System_Int32_" data-uid="CodeSmile.LunyScript.GameObjectHost.ReadChildCount(CodeSmile.LunyScript.TransformRelation,System.Int32)">
   ReadChildCount(TransformRelation, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L508"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L509"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many children the named object has.</p>
@@ -1681,7 +1672,7 @@ parent, or the child index is outside the child count.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_ReadMotionPosition_System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.GameObjectHost.ReadMotionPosition(System.Double@,System.Double@,System.Double@)">
   ReadMotionPosition(out double, out double, out double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L815"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L816"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The object's physics world position when a Rigidbody is present, otherwise the
@@ -1734,7 +1725,7 @@ transform world position.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_ReadMotionRotation_System_Double__System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.GameObjectHost.ReadMotionRotation(System.Double@,System.Double@,System.Double@,System.Double@)">
   ReadMotionRotation(out double, out double, out double, out double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L824"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L825"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The object's physics world rotation when a Rigidbody is present, otherwise the
@@ -1792,7 +1783,7 @@ transform world rotation.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_ReadPosition_System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.GameObjectHost.ReadPosition(System.Double@,System.Double@,System.Double@)">
   ReadPosition(out double, out double, out double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L250"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L251"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The object's world position, which the transform stream sends and applies.</p>
@@ -1852,7 +1843,7 @@ moved, so that a dropped tick does not leave the two ends apart forever.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_ReadRotation_System_Double__System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.GameObjectHost.ReadRotation(System.Double@,System.Double@,System.Double@,System.Double@)">
   ReadRotation(out double, out double, out double, out double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L265"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L266"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The object's world rotation, as a quaternion.</p>
@@ -1918,7 +1909,7 @@ one whenever the second angle passes 90 degrees.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_ReadScale_System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.GameObjectHost.ReadScale(System.Double@,System.Double@,System.Double@)">
   ReadScale(out double, out double, out double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L280"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L281"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The object's local scale.</p>
@@ -1978,7 +1969,7 @@ scale too.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_ReadTransform_CodeSmile_LunyScript_TransformRelation_System_Int32_CodeSmile_LunyScript_TransformSpace_CodeSmile_LunyScript_TransformPart_System_Double__System_Double__System_Double__" data-uid="CodeSmile.LunyScript.GameObjectHost.ReadTransform(CodeSmile.LunyScript.TransformRelation,System.Int32,CodeSmile.LunyScript.TransformSpace,CodeSmile.LunyScript.TransformPart,System.Double@,System.Double@,System.Double@)">
   ReadTransform(TransformRelation, int, TransformSpace, TransformPart, out double, out double, out double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L545"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L546"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reads one of the named object's three transform values, in one of the two
@@ -2071,7 +2062,7 @@ parent in the chain is rotated and scaled non-uniformly.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_Rename_System_String_" data-uid="CodeSmile.LunyScript.GameObjectHost.Rename(System.String)">
   Rename(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L223"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Renames the live object and refreshes its captured diagnostic name when enabled.</p>
@@ -2123,7 +2114,7 @@ parent in the chain is rotated and scaled non-uniformly.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_RotateAround_CodeSmile_LunyScript_TransformRelation_System_Int32_System_Double_System_Double_System_Double_System_Double_System_Double_System_Double_System_Boolean_" data-uid="CodeSmile.LunyScript.GameObjectHost.RotateAround(CodeSmile.LunyScript.TransformRelation,System.Int32,System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Boolean)">
   RotateAround(TransformRelation, int, double, double, double, double, double, double, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L684"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L685"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Turns the named object about a world point.</p>
@@ -2227,7 +2218,7 @@ which one it wants, which is the captain's answer to API-semantics row T05.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_RotateBy_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.RotateBy(System.Double,System.Double,System.Double)">
   RotateBy(double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L246"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L247"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Adds a world-space rotation, in euler degrees. Called by <code>RotateByBlock</code> once per
@@ -2287,7 +2278,7 @@ world space; Unity's own default for <code>Rotate</code> is local space, AGENTS.
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_ScaleBy_CodeSmile_LunyScript_TransformRelation_System_Int32_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.ScaleBy(CodeSmile.LunyScript.TransformRelation,System.Int32,System.Double,System.Double,System.Double)">
   ScaleBy(TransformRelation, int, double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L649"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L650"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Multiplies the named object's local scale by three factors.</p>
@@ -2365,7 +2356,7 @@ world space; Unity's own default for <code>Rotate</code> is local space, AGENTS.
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_SetActive_System_Boolean_" data-uid="CodeSmile.LunyScript.GameObjectHost.SetActive(System.Boolean)">
   SetActive(bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L304"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L305"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Activates or deactivates the object.</p>
@@ -2413,7 +2404,7 @@ calls it outside its own dispatch, never from inside a block.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_SetParent_CodeSmile_LunyScript_TransformRelation_System_Int32_CodeSmile_LunyScript_TransformRelation_System_Int32_System_Boolean_" data-uid="CodeSmile.LunyScript.GameObjectHost.SetParent(CodeSmile.LunyScript.TransformRelation,System.Int32,CodeSmile.LunyScript.TransformRelation,System.Int32,System.Boolean)">
   SetParent(TransformRelation, int, TransformRelation, int, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L526"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L527"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Moves the named object to another parent, or to the scene root.</p>
@@ -2499,7 +2490,7 @@ destination is the object itself or one of its own descendants.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_SpawnObject_UnityEngine_Object_CodeSmile_LunyScript_IScriptHost_CodeSmile_LunyScript_SpawnPlacement__" data-uid="CodeSmile.LunyScript.GameObjectHost.SpawnObject(UnityEngine.Object,CodeSmile.LunyScript.IScriptHost,CodeSmile.LunyScript.SpawnPlacement@)">
   SpawnObject(Object, IScriptHost, in SpawnPlacement)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L345"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L346"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Produces a new object from <code class="paramref">prefab</code> and returns the host that
@@ -2570,7 +2561,7 @@ asked for it.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_TryAudioPause" data-uid="CodeSmile.LunyScript.GameObjectHost.TryAudioPause">
   TryAudioPause()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1179"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1180"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Pauses the bound <code>AudioSource</code>. False when this object has no
@@ -2603,7 +2594,7 @@ asked for it.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_TryAudioPlay" data-uid="CodeSmile.LunyScript.GameObjectHost.TryAudioPlay">
   TryAudioPlay()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1168"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1169"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts the bound <code>AudioSource</code> on this object. Restarts it when it is already
@@ -2636,7 +2627,7 @@ playing. False when this object has no <code>AudioSource</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_TryAudioResume" data-uid="CodeSmile.LunyScript.GameObjectHost.TryAudioResume">
   TryAudioResume()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1190"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1191"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Resumes a paused bound <code>AudioSource</code>, which is Unity <code>UnPause</code>. False
@@ -2669,7 +2660,7 @@ when this object has no <code>AudioSource</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_TryAudioSetPitch_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.TryAudioSetPitch(System.Double)">
   TryAudioSetPitch(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1223"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1224"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Writes pitch on the bound <code>AudioSource</code>. 1 is the authored rate. False when
@@ -2717,7 +2708,7 @@ this object has no <code>AudioSource</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_TryAudioSetVolume_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.TryAudioSetVolume(System.Double)">
   TryAudioSetVolume(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1212"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1213"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Writes linear volume 0–1 on the bound <code>AudioSource</code>. False when this object
@@ -2765,7 +2756,7 @@ has no <code>AudioSource</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_TryAudioStop" data-uid="CodeSmile.LunyScript.GameObjectHost.TryAudioStop">
   TryAudioStop()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1201"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L1202"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Stops the bound <code>AudioSource</code>. False when this object has no
@@ -2798,7 +2789,7 @@ has no <code>AudioSource</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_WritePosition_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.WritePosition(System.Double,System.Double,System.Double)">
   WritePosition(double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L261"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L262"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Places the object at a world position.</p>
@@ -2853,7 +2844,7 @@ has no <code>AudioSource</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_WriteRotation_System_Double_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.WriteRotation(System.Double,System.Double,System.Double,System.Double)">
   WriteRotation(double, double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L275"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L276"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Turns the object to a world rotation.</p>
@@ -2914,7 +2905,7 @@ has no <code>AudioSource</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_WriteScale_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.WriteScale(System.Double,System.Double,System.Double)">
   WriteScale(double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L289"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L290"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Sets the object's local scale.</p>
@@ -2969,7 +2960,7 @@ has no <code>AudioSource</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_GameObjectHost_WriteTransform_CodeSmile_LunyScript_TransformRelation_System_Int32_CodeSmile_LunyScript_TransformSpace_CodeSmile_LunyScript_TransformPart_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.GameObjectHost.WriteTransform(CodeSmile.LunyScript.TransformRelation,System.Int32,CodeSmile.LunyScript.TransformSpace,CodeSmile.LunyScript.TransformPart,System.Double,System.Double,System.Double)">
   WriteTransform(TransformRelation, int, TransformSpace, TransformPart, double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L574"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L575"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Writes one of the named object's three transform values, in one of the two
@@ -3064,7 +3055,7 @@ on this interface.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L34" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/GameObjectHost.cs/#L35" class="edit-link">Edit this page</a>
         </div>
 
 

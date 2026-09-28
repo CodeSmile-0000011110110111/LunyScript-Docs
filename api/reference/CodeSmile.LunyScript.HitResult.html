@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct HitResult | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct HitResult | LunyScript API Reference ">
+      
+      <meta name="description" content="The nearest collider one cast touched: what Define.Hit declares and a cast&#39;s Into(hit) writes.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_HitResult.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.HitResult%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.HitResult">
+
+
+
+  <h1 id="CodeSmile_LunyScript_HitResult" data-uid="CodeSmile.LunyScript.HitResult" class="text-break">
+Struct HitResult  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/HitResult.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The nearest collider one cast touched: what <code>Define.Hit</code> declares and a cast's
+<code>Into(hit)</code> writes.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct HitResult</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyScript_HitResult_examples">Examples</h2>
+  <pre><code class="lang-csharp">Ground = Define.Hit(nameof(Ground));
+On.FixedUpdate(
+    Collision.RayCast().InLocalSpace().Towards(-Vector3.Up).Length(1.1).Into(Ground),
+    Grounded.Set(Ground.HasHit));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_HitResult_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>Each object running the script holds its own result. A cast replaces the whole result each time its
+block runs; a miss, or an origin that names no object, empties it, and so does a pooled respawn.
+Before the first cast, <a class="xref" href="CodeSmile.LunyScript.HitResult.html#CodeSmile_LunyScript_HitResult_HasHit">HasHit</a> is false and every other read is zero. A single hit leaves
+out every collider the shape starts inside. <code>docs/proposals/collision-queries.md</code> is the family.</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_HitResult_Distance_" data-uid="CodeSmile.LunyScript.HitResult.Distance*"></a>
+
+  <h3 id="CodeSmile_LunyScript_HitResult_Distance" data-uid="CodeSmile.LunyScript.HitResult.Distance">
+  Distance
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/HitResult.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How far the shape travelled from its start before it touched; zero after a miss.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NumberValueBlock Distance { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_HitResult_Distance_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Clearance.Set(Sight.Distance));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This handle was never declared, or another script's
+<code>Build()</code> declared it.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_HitResult_HasHit_" data-uid="CodeSmile.LunyScript.HitResult.HasHit*"></a>
+
+  <h3 id="CodeSmile_LunyScript_HitResult_HasHit" data-uid="CodeSmile.LunyScript.HitResult.HasHit">
+  HasHit
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/HitResult.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the last cast found a collider.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public FlagValueBlock HasHit { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.FlagValueBlock.html">FlagValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_HitResult_HasHit_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Grounded.Set(Ground.HasHit));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This handle was never declared, or another script's
+<code>Build()</code> declared it.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_HitResult_IsDeclared_" data-uid="CodeSmile.LunyScript.HitResult.IsDeclared*"></a>
+
+  <h3 id="CodeSmile_LunyScript_HitResult_IsDeclared" data-uid="CodeSmile.LunyScript.HitResult.IsDeclared">
+  IsDeclared
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/HitResult.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether a <code>Define.Hit</code> made this handle.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsDeclared { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_HitResult_IsDeclared_examples">Examples</h4>
+  <pre><code class="lang-csharp">var declared = Ground.IsDeclared;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_HitResult_Name_" data-uid="CodeSmile.LunyScript.HitResult.Name*"></a>
+
+  <h3 id="CodeSmile_LunyScript_HitResult_Name" data-uid="CodeSmile.LunyScript.HitResult.Name">
+  Name
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/HitResult.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The declared name, or null for a handle no <code>Define.Hit</code> made.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Name { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_HitResult_Name_examples">Examples</h4>
+  <pre><code class="lang-csharp">var name = Ground.Name;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_HitResult_Normal_" data-uid="CodeSmile.LunyScript.HitResult.Normal*"></a>
+
+  <h3 id="CodeSmile_LunyScript_HitResult_Normal" data-uid="CodeSmile.LunyScript.HitResult.Normal">
+  Normal
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/HitResult.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The surface normal at the contact point, in world space; zero after a miss.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Vector3ValueBlock Normal { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vector3ValueBlock.html">Vector3ValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_HitResult_Normal_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(Slope.Set(Ground.Normal));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This handle was never declared, or another script's
+<code>Build()</code> declared it.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_HitResult_Point_" data-uid="CodeSmile.LunyScript.HitResult.Point*"></a>
+
+  <h3 id="CodeSmile_LunyScript_HitResult_Point" data-uid="CodeSmile.LunyScript.HitResult.Point">
+  Point
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/HitResult.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Where the cast touched the collider, in world space; zero after a miss.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Vector3ValueBlock Point { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Vector3ValueBlock.html">Vector3ValueBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_HitResult_Point_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(If(Sight.HasHit).Then(Mark.Set(Sight.Point)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This handle was never declared, or another script's
+<code>Build()</code> declared it.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/HitResult.cs/#L21" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
