@@ -167,6 +167,38 @@ the rig keeps clear. Both are required on <code class="language-plaintext highli
 <code class="language-plaintext highlighter-rouge">SetRadius</code> always name a target. A rig with no target group refuses these calls when they run and
 writes nothing.</p>
 
+<h2 id="following-every-player-and-keeping-them-together">Following every player, and keeping them together</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Camera.FollowGroup()</code> keeps a rig’s target group on every local player’s object, so a shared
+camera frames whoever is playing without a script adding and removing each one:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Camera</span><span class="p">.</span><span class="nf">FollowGroup</span><span class="p">().</span><span class="nf">For</span><span class="p">(</span><span class="n">GroupRig</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Camera</span><span class="p">.</span><span class="nf">FollowGroup</span><span class="p">().</span><span class="nf">Bounds</span><span class="p">(</span><span class="m">20</span><span class="p">,</span> <span class="m">12</span><span class="p">).</span><span class="nf">For</span><span class="p">(</span><span class="n">GroupRig</span><span class="p">));</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>Who is in the group.</strong> The object <code class="language-plaintext highlighter-rouge">Object.Create(prefab).ForPlayer(n)</code> produced, or whose
+LunyScript Behaviour’s Local Player field names <code class="language-plaintext highlighter-rouge">n</code>, while player <code class="language-plaintext highlighter-rouge">n</code> is paired. An object
+joins in the frame its player pairs and leaves when the player leaves or the object ends. Each
+goes in with weight 1 and its footprint as its radius; targets the scene authored stay.</li>
+  <li><strong>The rig does the framing.</strong> Its Follow, LookAt, framing and damping stay as authored, so the rig
+has to follow its own target group.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Bounds(width, height)</code> keeps the players together.</strong> The group, from its outermost footprint
+edges, stays within <code class="language-plaintext highlighter-rouge">width</code> on world X and <code class="language-plaintext highlighter-rouge">height</code> on world Z. <code class="language-plaintext highlighter-rouge">Bounds(size)</code> takes the two as one
+<code class="language-plaintext highlighter-rouge">Vector2</code>. The rectangle is centred on the
+group and moves with it. A player walking away from the others stops at the limit; a group
+walking the same way moves as one; a player who does not move stays put.</li>
+  <li><strong>Bounds limits Motion.</strong> <code class="language-plaintext highlighter-rouge">Motion.MoveBy</code> and <code class="language-plaintext highlighter-rouge">Motion.MoveTo</code> of a member are applied together at
+the end of each tick and shortened where they would spread the group too far. A <code class="language-plaintext highlighter-rouge">Transform</code>
+write, a teleport or a placement is not limited: a group found wider than its Bounds is reported
+once, and the players can then close up but not spread further.</li>
+  <li><strong>How long.</strong> The registration belongs to the script that ran it and ends with it, or when a
+<code class="language-plaintext highlighter-rouge">Camera.For(rig).Targets</code> call reaches the same rig. Ending it writes nothing to the rig.</li>
+</ul>
+
+<p>A paired player with no object for 60 frames is reported once, naming the missing <code class="language-plaintext highlighter-rouge">ForPlayer</code>
+create or Local Player field.</p>
+
 <h2 id="a-worked-example">A worked example</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>

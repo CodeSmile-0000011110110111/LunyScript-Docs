@@ -146,6 +146,11 @@ back short of it three times. A move at <code class="language-plaintext highligh
 <p>A kinematic Rigidbody must run these in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>. A CharacterController and an object with
 neither component accept them from any event.</p>
 
+<p>On a player’s object that a <code class="language-plaintext highlighter-rouge">Camera.FollowGroup().Bounds(width, height)</code> keeps together with the
+other players, <code class="language-plaintext highlighter-rouge">MoveBy</code> and <code class="language-plaintext highlighter-rouge">MoveTo</code> are applied at the end of the tick with the other players’
+moves, and a step that would spread the group past its Bounds is shortened;
+<a href="/LunyScript-Docs/manual/cameras-and-viewports.html">Cameras and viewports</a> has the rule.</p>
+
 <h2 id="driving-a-dynamic-body">Driving a dynamic body</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span>

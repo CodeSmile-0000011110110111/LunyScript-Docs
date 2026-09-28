@@ -293,6 +293,22 @@ Write <code class="language-plaintext highlighter-rouge">SurvivesCaller()</code>
 <p>Write it before the object ends, as here: a create written in <code class="language-plaintext highlighter-rouge">On.Despawned</code> belongs to an object that
 is already ending, and is dropped.</p>
 
+<p><code class="language-plaintext highlighter-rouge">NearPlayer(player, radius)</code> places a joining player’s object near the object another player
+controls, on the same floor, facing the same way:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Avatar</span><span class="p">).</span><span class="nf">NearPlayer</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="s">"Guest2"</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>Up to 16 points within <code class="language-plaintext highlighter-rouge">radius</code> metres are tried; the first with the target player’s floor under it,
+within 0.25 metres of that player’s floor height, is used, so a player joining beside a wall appears
+on the floor and not in or behind the wall. With none, the object appears where the target player
+stands; players pass through each other. With a <code class="language-plaintext highlighter-rouge">Camera.FollowGroup().Bounds</code> in force the point
+also stays where the group fits its Bounds. The target is the object <code class="language-plaintext highlighter-rouge">ForPlayer(player)</code> produced or
+whose Local Player field names the player. No such object, no floor under it, or a radius that is not
+above zero is reported as an error and nothing is created. <code class="language-plaintext highlighter-rouge">NearPlayer</code> is the placement, so <code class="language-plaintext highlighter-rouge">At</code>
+and a frame do not follow it.</p>
+
 <p>With a name, <code class="language-plaintext highlighter-rouge">Activate</code>, <code class="language-plaintext highlighter-rouge">Deactivate</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> act on that object after the current event’s
 blocks finish, and <code class="language-plaintext highlighter-rouge">Destroy</code> empties the slot where the block runs, so a later block sees it empty.
 With no name they act on this object after the current dispatch finishes, so the rest of the block
@@ -309,8 +325,10 @@ out. The working create is under Creating and removing objects, above.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span> <span class="p">{</span> <span class="n">prefab</span> <span class="p">|</span> <span class="n">handle</span> <span class="p">}</span> <span class="p">)</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">At</span><span class="p">(</span> <span class="p">{</span> <span class="n">position</span> <span class="p">|</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="p">}</span> <span class="p">[</span> <span class="p">,</span> <span class="n">rotation</span> <span class="p">])</span> <span class="p">]</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">InWorldSpace</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InLocalSpace</span><span class="p">()</span> <span class="p">]</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">At</span><span class="p">(</span> <span class="p">{</span> <span class="n">position</span> <span class="p">|</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="p">}</span> <span class="p">[</span> <span class="p">,</span> <span class="n">rotation</span> <span class="p">])</span>
+      <span class="p">[</span> <span class="p">.</span><span class="nf">InWorldSpace</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InLocalSpace</span><span class="p">()</span> <span class="p">]</span>
+    <span class="p">|</span> <span class="p">.</span><span class="nf">NearPlayer</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">radius</span><span class="p">)</span> <span class="p">]</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="n">player</span><span class="p">)</span> <span class="p">]</span>
     <span class="p">[</span> <span class="p">.</span><span class="nf">ChildOf</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span> <span class="p">]</span>
     <span class="p">[</span> <span class="p">.</span><span class="nf">Into</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">]</span>
     <span class="p">[</span> <span class="p">.</span><span class="nf">SurvivesCaller</span><span class="p">()</span> <span class="p">]</span>
