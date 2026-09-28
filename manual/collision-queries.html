@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Collision queries | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Collision queries" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/collision-queries.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/collision-queries.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Collision queries" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Collision queries","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/collision-queries.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Collision queries</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Ask the physics world what is in front of an object or around it:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">GroundProbe</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">HitResult</span> <span class="n">Ground</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Ground</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Hit</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Ground</span><span class="p">));</span>
+        <span class="n">Grounded</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Flag</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Grounded</span><span class="p">),</span> <span class="k">false</span><span class="p">);</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span>
+            <span class="n">Collision</span><span class="p">.</span><span class="nf">RayCast</span><span class="p">().</span><span class="nf">InLocalSpace</span><span class="p">()</span>
+                <span class="p">.</span><span class="nf">Towards</span><span class="p">(-</span><span class="n">Vector3</span><span class="p">.</span><span class="n">Up</span><span class="p">).</span><span class="nf">Length</span><span class="p">(</span><span class="m">1.1</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Ground</span><span class="p">),</span>
+            <span class="n">Grounded</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Ground</span><span class="p">.</span><span class="n">HasHit</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Every fixed step the object casts a ray 1.1 units down from its own position, and <code class="language-plaintext highlighter-rouge">Ground</code> holds
+the nearest collider the ray touched. <code class="language-plaintext highlighter-rouge">Grounded</code> copies whether there was one.</p>
+
+<h2 id="the-seven-verbs">The seven verbs</h2>
+
+<p>A cast moves a shape along a direction and reports what it touches. An overlap tests a shape where
+it stands and reports every collider inside it.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Verb</th>
+      <th>Measured by</th>
+      <th>Starts at</th>
+      <th>Writes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Collision.RayCast()</code></td>
+      <td>nothing</td>
+      <td><code class="language-plaintext highlighter-rouge">From</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Define.Hit</code> or <code class="language-plaintext highlighter-rouge">Define.Hits</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Collision.SphereCast()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Radius</code></td>
+      <td><code class="language-plaintext highlighter-rouge">From</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Define.Hit</code> or <code class="language-plaintext highlighter-rouge">Define.Hits</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Collision.BoxCast()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Size</code></td>
+      <td><code class="language-plaintext highlighter-rouge">From</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Define.Hit</code> or <code class="language-plaintext highlighter-rouge">Define.Hits</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Collision.CapsuleCast()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Height</code>, <code class="language-plaintext highlighter-rouge">Radius</code></td>
+      <td><code class="language-plaintext highlighter-rouge">From</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Define.Hit</code> or <code class="language-plaintext highlighter-rouge">Define.Hits</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Collision.SphereOverlap()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Radius</code></td>
+      <td><code class="language-plaintext highlighter-rouge">At</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Define.Overlaps</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Collision.BoxOverlap()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Size</code></td>
+      <td><code class="language-plaintext highlighter-rouge">At</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Define.Overlaps</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Collision.CapsuleOverlap()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Height</code>, <code class="language-plaintext highlighter-rouge">Radius</code></td>
+      <td><code class="language-plaintext highlighter-rouge">At</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Define.Overlaps</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">Size</code> is the box’s full width, height and depth. A capsule’s <code class="language-plaintext highlighter-rouge">Height</code> includes both rounded ends;
+a <code class="language-plaintext highlighter-rouge">Height</code> at or below twice the radius gives the sphere of that radius. A cast travels along
+<code class="language-plaintext highlighter-rouge">Towards</code> for <code class="language-plaintext highlighter-rouge">Length</code>, or for 1000 units without it. <code class="language-plaintext highlighter-rouge">Oriented(rotation)</code> turns a box or a
+capsule, whose axis is otherwise the frame’s up axis. The clauses follow in any order, each once,
+and <code class="language-plaintext highlighter-rouge">Into</code> finishes the query.</p>
+
+<p>A query runs every time its block runs, in whatever event holds it, and replaces its result. The
+result belongs to the object that ran it: two enemies running one script keep two results.</p>
+
+<h2 id="world-space-and-local-space">World space and local space</h2>
+
+<p>Without a space clause a query is in world space: it names where it starts and, for a cast, where
+it goes.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Collision</span><span class="p">.</span><span class="nf">RayCast</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">From</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="n">WorldPosition</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Towards</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="n">Forward</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Length</span><span class="p">(</span><span class="m">20</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Sight</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">InLocalSpace()</code> expresses the query in an object’s axes. Without <code class="language-plaintext highlighter-rouge">From</code> or <code class="language-plaintext highlighter-rouge">At</code> it starts at the
+object, and without <code class="language-plaintext highlighter-rouge">Towards</code> a cast travels along the object’s forward:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Collision</span><span class="p">.</span><span class="nf">BoxCast</span><span class="p">().</span><span class="nf">Size</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">1</span><span class="p">).</span><span class="nf">InLocalSpace</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">Offset</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">Length</span><span class="p">(</span><span class="m">3</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Sight</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Offset</code> moves the start along those axes, in world units that scale does not stretch. An object
+named in <code class="language-plaintext highlighter-rouge">From</code> or <code class="language-plaintext highlighter-rouge">At</code> supplies both the position and the axes:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Muzzle</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+<span class="n">Collision</span><span class="p">.</span><span class="nf">SphereCast</span><span class="p">().</span><span class="nf">Radius</span><span class="p">(</span><span class="m">0.2</span><span class="p">).</span><span class="nf">From</span><span class="p">(</span><span class="n">Muzzle</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">InLocalSpace</span><span class="p">().</span><span class="nf">Length</span><span class="p">(</span><span class="m">30</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Sight</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>That cast travels along the muzzle’s forward, whichever way the object running the script faces.
+<code class="language-plaintext highlighter-rouge">From</code> and <code class="language-plaintext highlighter-rouge">At</code> also take <code class="language-plaintext highlighter-rouge">Transform.Child(0)</code>, <code class="language-plaintext highlighter-rouge">Transform.Parent</code> and <code class="language-plaintext highlighter-rouge">Transform.Root</code>.
+<code class="language-plaintext highlighter-rouge">Towards(Target)</code> aims at a bound object from wherever the query starts.</p>
+
+<h2 id="reading-a-result">Reading a result</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Sight</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Hit</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Sight</span><span class="p">));</span>
+<span class="n">Pierced</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Hits</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Pierced</span><span class="p">)).</span><span class="nf">Capacity</span><span class="p">(</span><span class="m">16</span><span class="p">);</span>
+<span class="n">Nearby</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Overlaps</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Nearby</span><span class="p">));</span>
+</code></pre></div></div>
+
+<ul>
+  <li>A <strong><code class="language-plaintext highlighter-rouge">Define.Hit</code></strong> holds the nearest collider a cast touched: <code class="language-plaintext highlighter-rouge">HasHit</code>, <code class="language-plaintext highlighter-rouge">Point</code>, <code class="language-plaintext highlighter-rouge">Normal</code> and
+<code class="language-plaintext highlighter-rouge">Distance</code>. It leaves out any collider the shape started inside.</li>
+  <li>A <strong><code class="language-plaintext highlighter-rouge">Define.Hits</code></strong> holds every collider a cast touched, nearest first, up to its capacity. A
+collider the shape started inside is an entry at distance 0 whose <code class="language-plaintext highlighter-rouge">Point</code> is where the cast
+started. Each entry has <code class="language-plaintext highlighter-rouge">Point</code>, <code class="language-plaintext highlighter-rouge">Normal</code>, <code class="language-plaintext highlighter-rouge">Distance</code> and <code class="language-plaintext highlighter-rouge">WorldPosition</code>.</li>
+  <li>A <strong><code class="language-plaintext highlighter-rouge">Define.Overlaps</code></strong> holds every collider an overlap found, up to its capacity. Each entry has
+<code class="language-plaintext highlighter-rouge">WorldPosition</code> only: an overlapping collider has no contact point.</li>
+</ul>
+
+<p>Read the entries of either kind the way a list is read:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+    <span class="n">Close</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">),</span>
+    <span class="nf">ForEach</span><span class="p">(</span><span class="n">Nearby</span><span class="p">).</span><span class="nf">Do</span><span class="p">(</span><span class="n">entry</span> <span class="p">=&gt;</span>
+        <span class="nf">If</span><span class="p">(</span><span class="n">entry</span><span class="p">.</span><span class="n">WorldPosition</span><span class="p">.</span><span class="nf">DistanceTo</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="n">WorldPosition</span><span class="p">)</span> <span class="p">&lt;</span> <span class="m">2</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Close</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">1</span><span class="p">))),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Pierced</span><span class="p">.</span><span class="n">Count</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">First</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Pierced</span><span class="p">.</span><span class="nf">At</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="n">Point</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Count</code> says how many entries the last query stored. When more colliders qualified than the
+capacity holds, <code class="language-plaintext highlighter-rouge">Overflowed</code> is true: a cast keeps the nearest ones, an overlap keeps them in
+Unity’s order. The capacity is 8 unless <code class="language-plaintext highlighter-rouge">Capacity(n)</code> says otherwise, from 2 to 32.</p>
+
+<p>A miss empties the result, and so does an origin whose bound object is missing. Before the first
+query, and after a pooled object is reused, the result is empty.</p>
+
+<h2 id="filters">Filters</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">water</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">LayerMask</span><span class="p">(</span><span class="s">"Water"</span><span class="p">);</span>
+<span class="n">Collision</span><span class="p">.</span><span class="nf">SphereOverlap</span><span class="p">().</span><span class="nf">Radius</span><span class="p">(</span><span class="m">5</span><span class="p">).</span><span class="nf">InLocalSpace</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">Layers</span><span class="p">(</span><span class="n">water</span><span class="p">).</span><span class="nf">IgnoreTriggers</span><span class="p">().</span><span class="nf">ExcludeSelf</span><span class="p">().</span><span class="nf">Into</span><span class="p">(</span><span class="n">Nearby</span><span class="p">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">Layers(mask)</code></strong> searches only the layers of a mask <code class="language-plaintext highlighter-rouge">Define.LayerMask</code> made, from layer names or
+indices from 0 to 31. Without it a query searches every layer except Ignore Raycast.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">IncludeTriggers()</code></strong> and <strong><code class="language-plaintext highlighter-rouge">IgnoreTriggers()</code></strong> override the project’s Queries Hit Triggers
+physics setting.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">ExcludeSelf()</code></strong> leaves out the object’s own colliders: every collider of its nearest enclosing
+Rigidbody, or the object’s own colliders when it has none.</li>
+</ul>
+
+<h2 id="what-a-query-sees">What a query sees</h2>
+
+<p>A query sees each collider where the physics world last placed it. An object spawned earlier in the
+same list is not there yet, and a Transform write since the last physics step is seen after the
+next one. Put a query that must see a fresh spawn in a later event.</p>
+
+<h2 id="drawing-what-a-query-tested">Drawing what a query tested</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Draw()</code> shows each execution in the Scene view:
+the volume where a cast starts, lines along its full length, and each hit at the place the shape
+touched, with a marker at the contact point. An overlap draws the volume it tested.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Collision</span><span class="p">.</span><span class="nf">CapsuleCast</span><span class="p">().</span><span class="nf">Height</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Radius</span><span class="p">(</span><span class="m">0.5</span><span class="p">).</span><span class="nf">InLocalSpace</span><span class="p">()</span>
+    <span class="p">.</span><span class="nf">Length</span><span class="p">(</span><span class="m">4</span><span class="p">).</span><span class="nf">Draw</span><span class="p">().</span><span class="nf">Into</span><span class="p">(</span><span class="n">Sight</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>A drawing stays for two seconds of game time after the execution that made it, and the next
+execution replaces it. A paused game keeps it on screen. The first drawing adds an object named
+LunyScript Collision Drawings under DontDestroyOnLoad in the Hierarchy, which draws them all and
+is removed when Play stops. A player build compiles none of the drawing code, so a script that
+draws runs there unchanged.</p>
+
+<h2 id="project-settings">Project settings</h2>
+
+<p>Edit, Project Settings, LunyScript holds three Collision values: the length a cast without
+<code class="language-plaintext highlighter-rouge">Length</code> travels, the capacity a result without <code class="language-plaintext highlighter-rouge">Capacity</code> holds, and how many seconds a drawing
+stays. A running game reads them when Play starts.</p>
+
+<h2 id="call-list">Call list</h2>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Collision.RayCast() | SphereCast() | BoxCast() | CapsuleCast()
+Collision.SphereOverlap() | BoxOverlap() | CapsuleOverlap()
+    .Radius(r) .Height(h) .Size(x, y, z) .Oriented(rotation)
+    .From(position | object | relation)       // casts
+    .At(position | object | relation)         // overlaps
+    .Offset(x, y, z) .Towards(direction | object) .Length(n)
+    .InLocalSpace() | .InWorldSpace()
+    .Layers(mask) .IncludeTriggers() | .IgnoreTriggers()
+    .ExcludeSelf() .Draw()
+    .Into(hit) | .Into(hits) | .Into(overlaps)
+Define.Hit(name)   Define.Hits(name).Capacity(n)
+Define.Overlaps(name).Capacity(n)
+Define.LayerMask("Water", ...)   Define.LayerMask(8, ...)
+hit.HasHit  hit.Point  hit.Normal  hit.Distance
+hits.Count  hits.Overflowed  hits.At(i)  ForEach(hits)
+entry.Point  entry.Normal  entry.Distance  entry.WorldPosition
+Transform.WorldPosition  WorldRotation  Forward  Right  Up
+Vector3.Forward  Vector3.Right  Vector3.Up
+</code></pre></div></div>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/motion.html">Motion</a> — moving the object a query probes from.</li>
+  <li><a href="/LunyScript-Docs/manual/binding-scene-objects.html">Binding scene objects</a> — the bound
+objects <code class="language-plaintext highlighter-rouge">From</code>, <code class="language-plaintext highlighter-rouge">At</code> and <code class="language-plaintext highlighter-rouge">Towards</code> take.</li>
+  <li><a href="/LunyScript-Docs/manual/lists-and-maps.html">Lists and maps</a> — <code class="language-plaintext highlighter-rouge">ForEach</code> and <code class="language-plaintext highlighter-rouge">At</code>.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CollisionFactory.html"><code class="language-plaintext highlighter-rouge">CollisionFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.HitResult.html"><code class="language-plaintext highlighter-rouge">HitResult</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.HitsResult.html"><code class="language-plaintext highlighter-rouge">HitsResult</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OverlapsResult.html"><code class="language-plaintext highlighter-rouge">OverlapsResult</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
