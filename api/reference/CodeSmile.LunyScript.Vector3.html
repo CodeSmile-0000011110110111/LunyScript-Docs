@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_Vector3" data-uid="CodeSmile.LunyScript.Vector3" class="text-break">
-Struct Vector3  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L38"><i class="bi bi-code-slash"></i></a>
+Struct Vector3  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L47"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -91,7 +91,8 @@ scale.</p>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly struct Vector3</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+public struct Vector3</code></pre>
   </div>
 
 
@@ -125,14 +126,23 @@ namespace, such as <code>UnityEngine.Vector3</code> in host code.</p>
     <b>The components are <code>Single</code> while <code>Number</code> is <code>Double</code>.</b> That is
     the precision split the API semantics record carries: scalars use double, and spatial
     payload and spatial math use float, narrowing at the destination that declares it.
-    Every member here takes and returns <code>Double</code> at its edges, so a script never
-    writes an <code>f</code> suffix, and the narrowing happens in one place.
+    Every constructor, method and operator here takes and returns <code>Double</code> at its
+    edges, so a script never writes an <code>f</code> suffix, and the narrowing happens in the
+    constructor. The component fields below hold the <code>Single</code> itself.
 </p>
 <p>
-    <b>A component is replaced, never written.</b> <code>WithX</code>, <code>WithY</code> and
-    <code>WithZ</code> return a copy with one component changed, which is what a spatial
-    variable's <code>Set</code> takes. There is no writable component handle; the API semantics
-    board ruled that out on 2026-09-13.
+    <b>The components are public fields, so Unity saves them.</b> A field of this type in a
+    <code>ScriptableObject</code>, or in a <code>[Serializable, LunyScriptData]</code> struct such an asset
+    holds, keeps the three components the Inspector wrote through a save and a reload, and
+    <code>Bind.Data</code> copies them into the script's variables unchanged. A value is a copy:
+    writing a component of a local changes that local only. C# that writes a fractional
+    literal into a component writes the <code>f</code> suffix, <code>offset.Y = 2.5f</code>, because the
+    field holds a <code>Single</code>; <code>WithY(2.5)</code> takes a <code>Double</code>.
+</p>
+<p>
+    <b>A script variable of this type is written whole.</b> <code>WithX</code>, <code>WithY</code> and
+    <code>WithZ</code> return a copy with one component changed, which is what the variable's
+    <code>Set</code> takes, and the variable handle has no writable component.
 </p>
 </div>
 
@@ -145,7 +155,7 @@ namespace, such as <code>UnityEngine.Vector3</code> in host code.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3__ctor_System_Double_System_Double_System_Double_" data-uid="CodeSmile.LunyScript.Vector3.#ctor(System.Double,System.Double,System.Double)">
   Vector3(double, double, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L93"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a value from three numbers, narrowing each to the component's single
@@ -207,7 +217,7 @@ precision.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_Forward" data-uid="CodeSmile.LunyScript.Vector3.Forward">
   Forward
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L65"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The unit value along the third axis, (0, 0, 1): forward in a frame whose +Z faces forward,
@@ -247,7 +257,7 @@ object's orientation is never applied twice.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_One" data-uid="CodeSmile.LunyScript.Vector3.One">
   One
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L57"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The value whose three components are one.</p>
@@ -281,7 +291,7 @@ object's orientation is never applied twice.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_Right" data-uid="CodeSmile.LunyScript.Vector3.Right">
   Right
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L69"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The unit value along the first axis, (1, 0, 0): right in Unity's convention.</p>
@@ -315,7 +325,7 @@ object's orientation is never applied twice.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_Up" data-uid="CodeSmile.LunyScript.Vector3.Up">
   Up
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L73"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The unit value along the second axis, (0, 1, 0): up in Unity's convention.</p>
@@ -347,9 +357,111 @@ object's orientation is never applied twice.</p>
 
 
 
+  <h3 id="CodeSmile_LunyScript_Vector3_X" data-uid="CodeSmile.LunyScript.Vector3.X">
+  X
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L77"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The first component. A public field, which is what Unity saves.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public float X</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">float</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vector3_X_examples">Examples</h4>
+  <pre><code class="lang-csharp">var x = offset.X;</code></pre>
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_Vector3_Y" data-uid="CodeSmile.LunyScript.Vector3.Y">
+  Y
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The second component. A public field, which is what Unity saves.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public float Y</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">float</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vector3_Y_examples">Examples</h4>
+  <pre><code class="lang-csharp">offset.Y = 2.5f;</code></pre>
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyScript_Vector3_Z" data-uid="CodeSmile.LunyScript.Vector3.Z">
+  Z
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The third component. A public field, which is what Unity saves.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public float Z</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">float</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Vector3_Z_examples">Examples</h4>
+  <pre><code class="lang-csharp">var z = offset.Z;</code></pre>
+
+
+
+
+
+
+
   <h3 id="CodeSmile_LunyScript_Vector3_Zero" data-uid="CodeSmile.LunyScript.Vector3.Zero">
   Zero
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L53"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The value whose three components are zero.</p>
@@ -388,7 +500,7 @@ object's orientation is never applied twice.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_Length" data-uid="CodeSmile.LunyScript.Vector3.Length">
   Length
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L134"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How long this value is.</p>
@@ -396,7 +508,7 @@ object's orientation is never applied twice.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double Length { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly double Length { get; }</code></pre>
   </div>
 
 
@@ -423,7 +535,7 @@ object's orientation is never applied twice.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_LengthSquared" data-uid="CodeSmile.LunyScript.Vector3.LengthSquared">
   LengthSquared
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L139"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How long this value is, squared, which needs no square root and is what a
@@ -432,7 +544,7 @@ comparison of two lengths should use.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double LengthSquared { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly double LengthSquared { get; }</code></pre>
   </div>
 
 
@@ -459,7 +571,7 @@ comparison of two lengths should use.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_Normalized" data-uid="CodeSmile.LunyScript.Vector3.Normalized">
   Normalized
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L135"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L145"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This value scaled to a length of one. A value of length zero normalizes to zero
@@ -469,7 +581,7 @@ can use.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Vector3 Normalized { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly Vector3 Normalized { get; }</code></pre>
   </div>
 
 
@@ -492,111 +604,6 @@ can use.</p>
 
 
 
-  <a id="CodeSmile_LunyScript_Vector3_X_" data-uid="CodeSmile.LunyScript.Vector3.X*"></a>
-
-  <h3 id="CodeSmile_LunyScript_Vector3_X" data-uid="CodeSmile.LunyScript.Vector3.X">
-  X
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L67"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>The first component.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public float X { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">float</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_LunyScript_Vector3_X_examples">Examples</h4>
-  <pre><code class="lang-csharp">var x = offset.X;</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_LunyScript_Vector3_Y_" data-uid="CodeSmile.LunyScript.Vector3.Y*"></a>
-
-  <h3 id="CodeSmile_LunyScript_Vector3_Y" data-uid="CodeSmile.LunyScript.Vector3.Y">
-  Y
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L71"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>The second component.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public float Y { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">float</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_LunyScript_Vector3_Y_examples">Examples</h4>
-  <pre><code class="lang-csharp">var y = offset.Y;</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_LunyScript_Vector3_Z_" data-uid="CodeSmile.LunyScript.Vector3.Z*"></a>
-
-  <h3 id="CodeSmile_LunyScript_Vector3_Z" data-uid="CodeSmile.LunyScript.Vector3.Z">
-  Z
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L75"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>The third component.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public float Z { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">float</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_LunyScript_Vector3_Z_examples">Examples</h4>
-  <pre><code class="lang-csharp">var z = offset.Z;</code></pre>
-
-
-
-
-
-
   <h2 class="section" id="methods">Methods
 </h2>
 
@@ -605,7 +612,7 @@ can use.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_Cross_CodeSmile_LunyScript_Vector3_CodeSmile_LunyScript_Vector3_" data-uid="CodeSmile.LunyScript.Vector3.Cross(CodeSmile.LunyScript.Vector3,CodeSmile.LunyScript.Vector3)">
   Cross(Vector3, Vector3)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L168"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L178"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The cross product of two values: a value at right angles to both, whose length is
@@ -664,7 +671,7 @@ the area of the parallelogram they span.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_DistanceTo_CodeSmile_LunyScript_Vector3_" data-uid="CodeSmile.LunyScript.Vector3.DistanceTo(CodeSmile.LunyScript.Vector3)">
   DistanceTo(Vector3)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L160"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L170"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How far this value is from another.</p>
@@ -672,7 +679,7 @@ the area of the parallelogram they span.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double DistanceTo(Vector3 other)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly double DistanceTo(Vector3 other)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -716,7 +723,7 @@ the area of the parallelogram they span.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_Dot_CodeSmile_LunyScript_Vector3_" data-uid="CodeSmile.LunyScript.Vector3.Dot(CodeSmile.LunyScript.Vector3)">
   Dot(Vector3)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L153"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L163"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The dot product of this value and another: the length of one times the length of
@@ -725,7 +732,7 @@ the other times the cosine of the angle between them.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double Dot(Vector3 other)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly double Dot(Vector3 other)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -769,7 +776,7 @@ the other times the cosine of the angle between them.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_Equals_CodeSmile_LunyScript_Vector3_" data-uid="CodeSmile.LunyScript.Vector3.Equals(CodeSmile.LunyScript.Vector3)">
   Equals(Vector3)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L237"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L247"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether two values have the same three components.</p>
@@ -777,7 +784,7 @@ the other times the cosine of the angle between them.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Equals(Vector3 other)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly bool Equals(Vector3 other)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -821,7 +828,7 @@ the other times the cosine of the angle between them.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_Equals_System_Object_" data-uid="CodeSmile.LunyScript.Vector3.Equals(System.Object)">
   Equals(object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L244"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L254"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether this is an equal value of the same type.</p>
@@ -829,7 +836,7 @@ the other times the cosine of the angle between them.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override bool Equals(object obj)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override readonly bool Equals(object obj)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -873,7 +880,7 @@ the other times the cosine of the angle between them.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_From_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_" data-uid="CodeSmile.LunyScript.Vector3.From(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock)">
   From(NumberValueBlock, NumberValueBlock, NumberValueBlock)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L108"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a spatial expression out of three number expressions, for a variable whose
@@ -944,7 +951,7 @@ three components come from three places.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_GetHashCode" data-uid="CodeSmile.LunyScript.Vector3.GetHashCode">
   GetHashCode()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L249"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L259"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A hash of the three components.</p>
@@ -952,7 +959,7 @@ three components come from three places.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override int GetHashCode()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override readonly int GetHashCode()</code></pre>
   </div>
 
 
@@ -980,7 +987,7 @@ three components come from three places.</p>
 
   <h3 id="CodeSmile_LunyScript_Vector3_Lerp_CodeSmile_LunyScript_Vector3_CodeSmile_LunyScript_Vector3_System_Double_" data-uid="CodeSmile.LunyScript.Vector3.Lerp(CodeSmile.LunyScript.Vector3,CodeSmile.LunyScript.Vector3,System.Double)">
   Lerp(Vector3, Vector3, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L181"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L191"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A value a stated fraction of the way from this one to another. The fraction is
@@ -1046,7 +1053,7 @@ not limited: 2.0 is twice the distance past the destination, matching scalar
 
   <h3 id="CodeSmile_LunyScript_Vector3_ToString" data-uid="CodeSmile.LunyScript.Vector3.ToString">
   ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L255"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L265"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The three components, so a log line naming one reads as it was written.</p>
@@ -1054,7 +1061,7 @@ not limited: 2.0 is twice the distance past the destination, matching scalar
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override string ToString()</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override readonly string ToString()</code></pre>
   </div>
 
 
@@ -1082,7 +1089,7 @@ not limited: 2.0 is twice the distance past the destination, matching scalar
 
   <h3 id="CodeSmile_LunyScript_Vector3_WithX_System_Double_" data-uid="CodeSmile.LunyScript.Vector3.WithX(System.Double)">
   WithX(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L118"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A copy of this value with its first component replaced.</p>
@@ -1090,7 +1097,7 @@ not limited: 2.0 is twice the distance past the destination, matching scalar
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Vector3 WithX(double x)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly Vector3 WithX(double x)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1134,7 +1141,7 @@ not limited: 2.0 is twice the distance past the destination, matching scalar
 
   <h3 id="CodeSmile_LunyScript_Vector3_WithY_System_Double_" data-uid="CodeSmile.LunyScript.Vector3.WithY(System.Double)">
   WithY(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L124"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A copy of this value with its second component replaced.</p>
@@ -1142,7 +1149,7 @@ not limited: 2.0 is twice the distance past the destination, matching scalar
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Vector3 WithY(double y)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly Vector3 WithY(double y)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1186,7 +1193,7 @@ not limited: 2.0 is twice the distance past the destination, matching scalar
 
   <h3 id="CodeSmile_LunyScript_Vector3_WithZ_System_Double_" data-uid="CodeSmile.LunyScript.Vector3.WithZ(System.Double)">
   WithZ(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L130"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A copy of this value with its third component replaced.</p>
@@ -1194,7 +1201,7 @@ not limited: 2.0 is twice the distance past the destination, matching scalar
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Vector3 WithZ(double z)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public readonly Vector3 WithZ(double z)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1242,7 +1249,7 @@ not limited: 2.0 is twice the distance past the destination, matching scalar
 
   <h3 id="CodeSmile_LunyScript_Vector3_op_Addition_CodeSmile_LunyScript_Vector3_CodeSmile_LunyScript_Vector3_" data-uid="CodeSmile.LunyScript.Vector3.op_Addition(CodeSmile.LunyScript.Vector3,CodeSmile.LunyScript.Vector3)">
   operator +(Vector3, Vector3)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L191"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L201"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Adds two values component by component.</p>
@@ -1300,7 +1307,7 @@ not limited: 2.0 is twice the distance past the destination, matching scalar
 
   <h3 id="CodeSmile_LunyScript_Vector3_op_Division_CodeSmile_LunyScript_Vector3_System_Double_" data-uid="CodeSmile.LunyScript.Vector3.op_Division(CodeSmile.LunyScript.Vector3,System.Double)">
   operator /(Vector3, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L230"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L240"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Divides every component of a value by a number.</p>
@@ -1359,7 +1366,7 @@ throwing, which is what <code>Double</code> division does everywhere else in thi
 
   <h3 id="CodeSmile_LunyScript_Vector3_op_Multiply_CodeSmile_LunyScript_Vector3_System_Double_" data-uid="CodeSmile.LunyScript.Vector3.op_Multiply(CodeSmile.LunyScript.Vector3,System.Double)">
   operator *(Vector3, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L214"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L224"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Scales every component of a value by a number.</p>
@@ -1417,7 +1424,7 @@ throwing, which is what <code>Double</code> division does everywhere else in thi
 
   <h3 id="CodeSmile_LunyScript_Vector3_op_Multiply_System_Double_CodeSmile_LunyScript_Vector3_" data-uid="CodeSmile.LunyScript.Vector3.op_Multiply(System.Double,CodeSmile.LunyScript.Vector3)">
   operator *(double, Vector3)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L232"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Scales every component of a value by a number.</p>
@@ -1475,7 +1482,7 @@ throwing, which is what <code>Double</code> division does everywhere else in thi
 
   <h3 id="CodeSmile_LunyScript_Vector3_op_Subtraction_CodeSmile_LunyScript_Vector3_CodeSmile_LunyScript_Vector3_" data-uid="CodeSmile.LunyScript.Vector3.op_Subtraction(CodeSmile.LunyScript.Vector3,CodeSmile.LunyScript.Vector3)">
   operator -(Vector3, Vector3)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L199"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L209"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Subtracts one value from another component by component.</p>
@@ -1533,7 +1540,7 @@ throwing, which is what <code>Double</code> division does everywhere else in thi
 
   <h3 id="CodeSmile_LunyScript_Vector3_op_UnaryNegation_CodeSmile_LunyScript_Vector3_" data-uid="CodeSmile.LunyScript.Vector3.op_UnaryNegation(CodeSmile.LunyScript.Vector3)">
   operator -(Vector3)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L206"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L216"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This value with every component's sign reversed.</p>
@@ -1585,7 +1592,7 @@ throwing, which is what <code>Double</code> division does everywhere else in thi
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L38" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Math/Vector3.cs/#L47" class="edit-link">Edit this page</a>
         </div>
 
 
