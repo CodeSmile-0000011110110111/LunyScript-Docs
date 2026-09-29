@@ -180,6 +180,22 @@ named in <code class="language-plaintext highlighter-rouge">From</code> or <code
 <code class="language-plaintext highlighter-rouge">From</code> and <code class="language-plaintext highlighter-rouge">At</code> also take <code class="language-plaintext highlighter-rouge">Transform.Child(0)</code>, <code class="language-plaintext highlighter-rouge">Transform.Parent</code> and <code class="language-plaintext highlighter-rouge">Transform.Root</code>.
 <code class="language-plaintext highlighter-rouge">Towards(Target)</code> aims at a bound object from wherever the query starts.</p>
 
+<h2 id="along-a-ray-from-the-screen">Along a ray from the screen</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Along(ray)</code> takes where a cast starts and where it travels from the world ray through a screen
+position, such as the pointer’s:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">point</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="nf">Vector2</span><span class="p">(</span><span class="s">"Point"</span><span class="p">);</span>
+<span class="n">Collision</span><span class="p">.</span><span class="nf">SphereCast</span><span class="p">().</span><span class="nf">Radius</span><span class="p">(</span><span class="m">0.2</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Along</span><span class="p">(</span><span class="n">Camera</span><span class="p">.</span><span class="nf">ScreenRay</span><span class="p">(</span><span class="n">point</span><span class="p">.</span><span class="n">Value</span><span class="p">)).</span><span class="nf">Length</span><span class="p">(</span><span class="m">200</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Hover</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>It is <code class="language-plaintext highlighter-rouge">From(ray.Origin).Towards(ray.Direction)</code> with one camera read, so it is written without
+<code class="language-plaintext highlighter-rouge">From</code>, <code class="language-plaintext highlighter-rouge">Offset</code> and <code class="language-plaintext highlighter-rouge">Towards</code>, and the query stays in world space. A ray whose position is outside
+the camera’s view, or that has no camera, runs no query and clears the result.
+<a href="/LunyScript-Docs/manual/cameras-and-viewports.html#rays-from-the-screen">Rays from the screen</a>
+says which camera a ray goes through.</p>
+
 <h2 id="reading-a-result">Reading a result</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Sight</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Hit</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Sight</span><span class="p">));</span>
@@ -266,6 +282,7 @@ Collision.SphereOverlap() | BoxOverlap() | CapsuleOverlap()
     .From(position | object | relation)       // casts
     .At(position | object | relation)         // overlaps
     .Offset(x, y, z) .Towards(direction | object) .Length(n)
+    .Along(Camera.ScreenRay(position))        // casts, world space
     .InLocalSpace() | .InWorldSpace()
     .Layers(mask) .IncludeTriggers() | .IgnoreTriggers()
     .ExcludeSelf() .Draw()
@@ -277,6 +294,7 @@ hit.HasHit  hit.Point  hit.Normal  hit.Distance
 hits.Count  hits.Overflowed  hits.At(i)  ForEach(hits)
 entry.Point  entry.Normal  entry.Distance  entry.WorldPosition
 Transform.WorldPosition  WorldRotation  Forward  Right  Up
+Camera.ScreenRay(position | x, y) .InView(view)  ray.Origin  ray.Direction
 Vector3.Forward  Vector3.Right  Vector3.Up
 </code></pre></div></div>
 

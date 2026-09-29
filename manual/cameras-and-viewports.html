@@ -221,10 +221,82 @@ create or Local Player field.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
+<h2 id="rays-from-the-screen">Rays from the screen</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Camera.ScreenRay(position)</code> is the world ray through a screen position. It starts on the camera’s
+near plane under the position and points into the screen. A cast travels along it with <code class="language-plaintext highlighter-rouge">Along</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">ClickToMove</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">HitResult</span> <span class="n">Ground</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Ground</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Hit</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Ground</span><span class="p">));</span>
+        <span class="n">Destination</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Vector3</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Destination</span><span class="p">));</span>
+        <span class="kt">var</span> <span class="n">point</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="nf">Vector2</span><span class="p">(</span><span class="s">"Point"</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">click</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="nf">Button</span><span class="p">(</span><span class="s">"Click"</span><span class="p">);</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Destination</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="n">WorldPosition</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Input</span><span class="p">(</span><span class="n">click</span><span class="p">).</span><span class="nf">Performed</span><span class="p">(</span>
+            <span class="n">Collision</span><span class="p">.</span><span class="nf">RayCast</span><span class="p">()</span>
+                <span class="p">.</span><span class="nf">Along</span><span class="p">(</span><span class="n">Camera</span><span class="p">.</span><span class="nf">ScreenRay</span><span class="p">(</span><span class="n">point</span><span class="p">.</span><span class="n">Value</span><span class="p">)).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Ground</span><span class="p">),</span>
+            <span class="nf">If</span><span class="p">(</span><span class="n">Ground</span><span class="p">.</span><span class="n">HasHit</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Destination</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span>
+                <span class="n">Ground</span><span class="p">.</span><span class="n">Point</span><span class="p">.</span><span class="nf">WithY</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="n">WorldPosition</span><span class="p">.</span><span class="n">Y</span><span class="p">))));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">Destination</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">5</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Point</code> and <code class="language-plaintext highlighter-rouge">Click</code> are actions in the action asset of the object’s local player: <code class="language-plaintext highlighter-rouge">Point</code> is a
+pass-through action on <code class="language-plaintext highlighter-rouge">&lt;Pointer&gt;/position</code>, which is the mouse, pen and touch position, and
+<code class="language-plaintext highlighter-rouge">Click</code> is a button. <a href="/LunyScript-Docs/manual/player-input.html">Player input</a> explains the
+action asset and the object’s Local Player field.</p>
+
+<p>The position is in screen pixels from the bottom left, which is what the pointer reports. A <code class="language-plaintext highlighter-rouge">Vector2</code>
+and two numbers work as well, and a <code class="language-plaintext highlighter-rouge">Vector3</code> position ignores its third number, which is how
+<code class="language-plaintext highlighter-rouge">Input.Vector2(...).Value</code> arrives:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">centre</span> <span class="p">=</span> <span class="n">Camera</span><span class="p">.</span><span class="nf">ScreenRay</span><span class="p">(</span><span class="m">640</span><span class="p">,</span> <span class="m">360</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">corner</span> <span class="p">=</span> <span class="n">Camera</span><span class="p">.</span><span class="nf">ScreenRay</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vector2</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>Without <code class="language-plaintext highlighter-rouge">InView</code> the ray goes through <code class="language-plaintext highlighter-rouge">Camera.main</code>, the enabled camera tagged MainCamera. <code class="language-plaintext highlighter-rouge">InView</code>
+names the object that carries another camera, such as the left half of a split screen:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">LeftView</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+<span class="kt">var</span> <span class="n">left</span> <span class="p">=</span> <span class="n">Camera</span><span class="p">.</span><span class="nf">ScreenRay</span><span class="p">(</span><span class="n">point</span><span class="p">.</span><span class="n">Value</span><span class="p">).</span><span class="nf">InView</span><span class="p">(</span><span class="n">LeftView</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>A ray is read each time a block that uses it runs, from the camera’s pose and the position at that
+moment, so a ray written once in <code class="language-plaintext highlighter-rouge">Build()</code> follows the pointer and the camera, a running Cinemachine
+blend included. <code class="language-plaintext highlighter-rouge">Origin</code> and <code class="language-plaintext highlighter-rouge">Direction</code> read it as two <code class="language-plaintext highlighter-rouge">Vector3</code> values:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Aim</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">left</span><span class="p">.</span><span class="n">Origin</span> <span class="p">+</span> <span class="n">left</span><span class="p">.</span><span class="n">Direction</span> <span class="p">*</span> <span class="m">10</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Along(ray)</code> is <code class="language-plaintext highlighter-rouge">From(ray.Origin).Towards(ray.Direction)</code> with one camera read, on each of the four
+casts. It is written without <code class="language-plaintext highlighter-rouge">From</code>, <code class="language-plaintext highlighter-rouge">Offset</code> and <code class="language-plaintext highlighter-rouge">Towards</code>, and a query that has it is in world
+space; the other combinations are refused when the script type is built.</p>
+
+<p>When the ray has no camera to read:</p>
+
+<ul>
+  <li>A position outside the camera’s rectangle of the screen reads a zero origin and a zero direction,
+with no message, and a cast along it runs no query and clears its result. A pointer that crosses
+a split screen leaves one of the views every frame.</li>
+  <li>No main camera, a view binding that holds no object, an object without a camera and a disabled
+camera read the same zeros, and the Console says which, once per script and line.</li>
+  <li>A camera that draws into a texture takes the position in that texture’s pixels.</li>
+</ul>
+
 <h2 id="what-an-open-camera-gate-changes">What an open camera gate changes</h2>
 
 <p>A camera gate makes every camera write be ignored, so a cutscene or a menu can hold the framing it
-set while the rest of the game keeps running:</p>
+set while the rest of the game keeps running. A screen ray is a read and keeps working; an input gate
+mutes the pointer and click actions instead:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">"Cutscene"</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Camera</span><span class="p">);</span>
 <span class="c1">// Camera.For(ChaseRig).Follow(Avatar) now writes nothing.</span>
@@ -238,9 +310,12 @@ set while the rest of the game keeps running:</p>
 local player’s actions.</li>
   <li><a href="/LunyScript-Docs/manual/binding-scene-objects.html">Binding scene objects</a> — declaring the
 view and rig bindings these calls take.</li>
+  <li><a href="/LunyScript-Docs/manual/collision-queries.html">Collision queries</a> — the casts <code class="language-plaintext highlighter-rouge">Along</code>
+finishes.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ViewFactory.html"><code class="language-plaintext highlighter-rouge">ViewFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CameraFactory.html"><code class="language-plaintext highlighter-rouge">CameraFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ScreenRay.html"><code class="language-plaintext highlighter-rouge">ScreenRay</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CameraTargetsBuilder.html"><code class="language-plaintext highlighter-rouge">CameraTargetsBuilder</code></a>.</li>
 </ul>
 
