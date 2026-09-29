@@ -92,6 +92,7 @@ object’s copy changes no other object’s.</p>
   <li><code class="language-plaintext highlighter-rouge">bool</code>, a <code class="language-plaintext highlighter-rouge">Flag</code>;</li>
   <li>a C# <code class="language-plaintext highlighter-rouge">enum</code>, a variable of that enum;</li>
   <li>LunyScript’s <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code> and <code class="language-plaintext highlighter-rouge">Rotation</code>;</li>
+  <li>LunyScript’s <code class="language-plaintext highlighter-rouge">Color</code>, a colour variable;</li>
   <li><code class="language-plaintext highlighter-rouge">string</code>, a <code class="language-plaintext highlighter-rouge">Text</code> of 64 bytes, or of the capacity
 <code class="language-plaintext highlighter-rouge">[LunyScriptDataField(Capacity = TextCapacity.Bytes128)]</code> names;</li>
   <li>another <code class="language-plaintext highlighter-rouge">[LunyScriptData]</code> struct, whose fields are named such as <code class="language-plaintext highlighter-rouge">Stats.Muzzle.Speed</code>.</li>
@@ -201,7 +202,9 @@ of the declared values. A field name in the file matches its C# name exactly, in
 number goes into a number field, <code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code> into a <code class="language-plaintext highlighter-rouge">bool</code>, text into a <code class="language-plaintext highlighter-rouge">string</code>, the number of
 a declared constant into an enum, an array of 3, 2 or 4 numbers into a <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code> or
 <code class="language-plaintext highlighter-rouge">Rotation</code>, and an object into a nested schema. A value of the wrong kind, a fraction in an integer
-field, or text longer than its field fails the whole load, and no field changes.</p>
+field, or text longer than its field fails the whole load, and no field changes. A colour field has
+no JSON layout yet: a file that names one fails the load, and a file that leaves it out keeps the
+declared colour.</p>
 
 <h3 id="pictures-and-sounds">Pictures and sounds</h3>
 
@@ -217,15 +220,49 @@ field, or text longer than its field fails the whole load, and no field changes.
 an input with nothing assigned holds its placeholder, a short low tone or a checkered texture. The
 decoded clip belongs to the object and is destroyed when the object ends.</p>
 
+<h3 id="a-colour-saved-in-an-asset">A colour saved in an asset</h3>
+
+<p>LunyScript’s <code class="language-plaintext highlighter-rouge">Color</code> keeps its four channels in public fields, so Unity saves a <code class="language-plaintext highlighter-rouge">Color</code> field of a
+schema with the asset, and the Inspector shows it as four numbers from 0 to 1:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="p">[</span><span class="n">Serializable</span><span class="p">,</span> <span class="n">LunyScriptData</span><span class="p">]</span>
+<span class="k">public</span> <span class="k">partial</span> <span class="k">struct</span> <span class="nc">TeamLook</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">Color</span> <span class="n">Tint</span><span class="p">;</span>
+    <span class="k">public</span> <span class="n">Color</span> <span class="n">Flash</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">TeamAsset</span> <span class="p">:</span> <span class="n">ScriptableObject</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">LunyScriptDataField</span><span class="p">]</span> <span class="k">public</span> <span class="n">TeamLook</span> <span class="n">Look</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The schema’s file imports no engine namespace, so <code class="language-plaintext highlighter-rouge">Color</code> there is LunyScript’s. A file that
+imports both <code class="language-plaintext highlighter-rouge">CodeSmile.LunyScript</code> and <code class="language-plaintext highlighter-rouge">UnityEngine</code> writes <code class="language-plaintext highlighter-rouge">UnityEngine.Color</code> for Unity’s type.
+<code class="language-plaintext highlighter-rouge">Team = Bind.Data(TeamLook.Schema)</code> copies the asset’s two colours into colour variables when the
+object spawns, and <code class="language-plaintext highlighter-rouge">Object.SetColor(Team.Tint)</code>, on the
+<a href="/LunyScript-Docs/manual/showing-hiding-and-tinting.html">Showing, hiding and tinting</a> page,
+writes one into the object’s renderer.</p>
+
 <h2 id="limits">Limits</h2>
 
 <ul>
   <li>A <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code> or <code class="language-plaintext highlighter-rouge">Rotation</code> field of a schema stored in an asset keeps its default
-value, because Unity does not save those types’ components. Store such values as number fields.</li>
+value, because Unity does not save those types’ components. Store such values as number fields.
+A <code class="language-plaintext highlighter-rouge">Color</code> field is saved.</li>
   <li>A text or JSON load reads a file; it cannot read a <code class="language-plaintext highlighter-rouge">TextAsset</code> assigned in the Inspector.</li>
 </ul>
 
-<p>The <code class="language-plaintext highlighter-rouge">DataInputs</code> scene in <code class="language-plaintext highlighter-rouge">ApiExamples</code> shows every call on this page.</p>
+<p>The <code class="language-plaintext highlighter-rouge">DataInputs</code> scene in <code class="language-plaintext highlighter-rouge">ApiExamples</code> shows every call on this page, and the <code class="language-plaintext highlighter-rouge">Colors</code> scene shows
+a colour saved in a team asset.</p>
 
 <p>Next: <a href="/LunyScript-Docs/manual/saving-progress-and-settings.html">Saving progress and settings</a>,
 or the <a href="/LunyScript-Docs/api/">API Reference</a>.</p>

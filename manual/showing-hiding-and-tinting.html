@@ -141,6 +141,40 @@ one ignores. A channel above 1 is allowed, because an HDR colour property uses i
 writes, <code class="language-plaintext highlighter-rouge">_BaseColor</code> on the Universal Render Pipeline’s Lit and Unlit shaders. <code class="language-plaintext highlighter-rouge">Object.ResetColor()</code>
 removes the tint, and the material’s own colour shows again.</p>
 
+<h2 id="a-colour-value">A colour value</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Object.SetColor</code> also takes one colour. <code class="language-plaintext highlighter-rouge">Color</code> is LunyScript’s colour type, with Unity’s name: four
+channels, <code class="language-plaintext highlighter-rouge">R</code>, <code class="language-plaintext highlighter-rouge">G</code>, <code class="language-plaintext highlighter-rouge">B</code> and <code class="language-plaintext highlighter-rouge">A</code>, each from 0 to 1. A script imports no engine namespace, so <code class="language-plaintext highlighter-rouge">Color</code>
+in a script is this type.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">gold</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Color</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0.8</span><span class="p">,</span> <span class="m">0.2</span><span class="p">);</span>         <span class="c1">// alpha 1</span>
+<span class="kt">var</span> <span class="n">glass</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Color</span><span class="p">(</span><span class="m">0.3</span><span class="p">,</span> <span class="m">0.6</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">);</span>
+<span class="n">glass</span><span class="p">.</span><span class="n">A</span> <span class="p">=</span> <span class="m">0.25</span><span class="p">;</span>                            <span class="c1">// a channel is a field</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Gold"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">gold</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Glass"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Shield</span><span class="p">).</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">glass</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Color.White</code>, <code class="language-plaintext highlighter-rouge">Black</code>, <code class="language-plaintext highlighter-rouge">Gray</code>, <code class="language-plaintext highlighter-rouge">Clear</code>, <code class="language-plaintext highlighter-rouge">Red</code>, <code class="language-plaintext highlighter-rouge">Green</code> and <code class="language-plaintext highlighter-rouge">Blue</code> hold the channels Unity’s own
+named colours hold. The channels are <code class="language-plaintext highlighter-rouge">Double</code>, so a script writes <code class="language-plaintext highlighter-rouge">0.5</code> and never <code class="language-plaintext highlighter-rouge">0.5f</code>, and a
+channel above 1 is kept for an HDR colour property.</p>
+
+<p>A colour can also come from a data asset. A <code class="language-plaintext highlighter-rouge">Color</code> field of a <code class="language-plaintext highlighter-rouge">[LunyScriptData]</code> schema is saved
+with the asset, and the script’s copy of it is a colour variable <code class="language-plaintext highlighter-rouge">SetColor</code> reads each time it runs:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Team</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Data</span><span class="p">(</span><span class="n">TeamLook</span><span class="p">.</span><span class="n">Schema</span><span class="p">);</span>    <span class="c1">// TeamLook: Color Tint and Color Flash</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">Team</span><span class="p">.</span><span class="n">Tint</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Hit"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">Team</span><span class="p">.</span><span class="n">Flash</span><span class="p">),</span>
+    <span class="nf">Wait</span><span class="p">(</span><span class="m">0.15</span><span class="p">),</span> <span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">Team</span><span class="p">.</span><span class="n">Tint</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Traitor"</span><span class="p">,</span> <span class="n">Team</span><span class="p">.</span><span class="n">Tint</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">Green</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Team.Tint.Set(...)</code> changes this object’s copy; the asset keeps its colour.
+<a href="/LunyScript-Docs/manual/custom-data-and-files.html">Custom data, JSON and text files</a> shows the
+schema and the asset.</p>
+
 <h2 id="material-numbers">Material numbers</h2>
 
 <p>A shader can expose a number such as a dissolve amount or an outline width.
@@ -176,8 +210,8 @@ under any other name is removed.</p>
 
 <p>The object still runs. The first call that finds no renderer, no main colour or no property of that
 name writes one error to the Console, naming the script, the object and the property, and after that
-the calls do nothing. A colour channel that is negative or not a finite number, and a material number
-that is not finite, are refused the same way.</p>
+the calls do nothing. A colour channel that is negative, not a number or larger than the largest
+<code class="language-plaintext highlighter-rouge">Single</code>, 3.4028235E+38, and a material number that is not finite, are refused the same way.</p>
 
 <h2 id="call-list">Call list</h2>
 
@@ -188,6 +222,7 @@ out.</p>
 <span class="n">Object</span><span class="p">.</span><span class="nf">Show</span><span class="p">()</span>
 <span class="n">Object</span><span class="p">.</span><span class="n">IsVisible</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span> <span class="p">[</span> <span class="p">,</span> <span class="n">alpha</span> <span class="p">])</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">colour</span><span class="p">)</span>                      <span class="c1">// a Color or a colour variable</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">ResetColor</span><span class="p">()</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">MaterialNumber</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="nf">Set</span><span class="p">(</span><span class="k">value</span><span class="p">)</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">MaterialNumber</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="nf">Reset</span><span class="p">()</span>
@@ -204,7 +239,8 @@ like the one that ends a flash.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectLifetimeFactory.html"><code class="language-plaintext highlighter-rouge">ObjectLifetimeFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectHandle.html"><code class="language-plaintext highlighter-rouge">ObjectHandle</code></a>,
-<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.MaterialNumber.html"><code class="language-plaintext highlighter-rouge">MaterialNumber</code></a>.</li>
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.MaterialNumber.html"><code class="language-plaintext highlighter-rouge">MaterialNumber</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Color.html"><code class="language-plaintext highlighter-rouge">Color</code></a>.</li>
 </ul>
 
   </div>
