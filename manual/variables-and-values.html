@@ -67,7 +67,7 @@
     <span class="p">{</span>
         <span class="n">Charge</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Charge</span><span class="p">),</span> <span class="m">40</span><span class="p">);</span>
 
-        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Charge</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span> <span class="p">*</span> <span class="m">2</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Charge</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span> <span class="p">*</span> <span class="m">2</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -253,7 +253,7 @@ IEEE arithmetic and produces an infinity. <code class="language-plaintext highli
 
 <p>Operators build an expression that is evaluated when the block runs:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Charge</span> <span class="p">&lt;</span> <span class="m">5</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Powered</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)),</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Charge</span> <span class="p">&gt;</span> <span class="m">10</span> <span class="p">&amp;</span> <span class="n">Armed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Hits</span><span class="p">.</span><span class="nf">Increment</span><span class="p">()),</span>
     <span class="n">Ratio</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Charge</span> <span class="p">/</span> <span class="n">MaxCharge</span><span class="p">));</span>
@@ -265,7 +265,7 @@ because a short-circuit would have to pick a side while <code class="language-pl
 <p>A <code class="language-plaintext highlighter-rouge">Flag</code> is itself a condition, so <code class="language-plaintext highlighter-rouge">If(Powered)</code> and <code class="language-plaintext highlighter-rouge">If(Powered.IsTrue())</code> are the same test.
 <code class="language-plaintext highlighter-rouge">If(!Powered)</code> and <code class="language-plaintext highlighter-rouge">If(Powered.IsFalse())</code> are the opposite test, and are the same as each other:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(!</span><span class="n">Powered</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">OffSeconds</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(!</span><span class="n">Powered</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">OffSeconds</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)));</span>
 </code></pre></div></div>
 
 <h2 id="math-as-expressions">Math as expressions</h2>
@@ -396,7 +396,7 @@ the wire.</p>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Var</span><span class="p">(</span><span class="n">Charge</span><span class="p">).</span><span class="nf">Changed</span><span class="p">(</span><span class="n">Alarm</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 </code></pre></div></div>
 
-<p>The watch is polled once per frame, after <code class="language-plaintext highlighter-rouge">On.FrameUpdate</code>. A value that is written and written back
+<p>The watch is polled once per frame, after <code class="language-plaintext highlighter-rouge">On.Update</code>. A value that is written and written back
 within the same frame raises nothing, because the poll sees the value it saw before.</p>
 
 <h2 id="call-list">Call list</h2>

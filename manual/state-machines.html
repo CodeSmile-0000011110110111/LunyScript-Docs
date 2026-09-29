@@ -182,8 +182,8 @@ Enter, and the state keeps what its Enter started. <code class="language-plainte
 
 <h2 id="reading-the-state">Reading the state</h2>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Phases</span><span class="p">.</span><span class="nf">IsIn</span><span class="p">(</span><span class="n">Angry</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Rage</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(!</span><span class="n">Phases</span><span class="p">.</span><span class="n">IsRunning</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Phases</span><span class="p">.</span><span class="nf">Start</span><span class="p">()));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Phases</span><span class="p">.</span><span class="nf">IsIn</span><span class="p">(</span><span class="n">Angry</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Rage</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(!</span><span class="n">Phases</span><span class="p">.</span><span class="n">IsRunning</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Phases</span><span class="p">.</span><span class="nf">Start</span><span class="p">()));</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">IsIn(state)</code> is true while the machine runs and that state is current. <code class="language-plaintext highlighter-rouge">IsRunning</code> is true after a
@@ -202,7 +202,7 @@ next <code class="language-plaintext highlighter-rouge">Start()</code>. Stopping
 <p>A machine does not start or stop itself: <code class="language-plaintext highlighter-rouge">Phases.Stop()</code> written in one of <code class="language-plaintext highlighter-rouge">Phases</code>’ own lists is
 refused when the script is built. Stop it from outside:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Phases</span><span class="p">.</span><span class="nf">IsIn</span><span class="p">(</span><span class="n">Beaten</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Phases</span><span class="p">.</span><span class="nf">Stop</span><span class="p">()));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Phases</span><span class="p">.</span><span class="nf">IsIn</span><span class="p">(</span><span class="n">Beaten</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Phases</span><span class="p">.</span><span class="nf">Stop</span><span class="p">()));</span>
 </code></pre></div></div>
 
 <p>A state with no transitions out of it keeps the machine there, which is usually all a final state
@@ -223,7 +223,7 @@ transition is read again in the next frame. <code class="language-plaintext high
 
 <h2 id="which-frame-update">Which frame update</h2>
 
-<p>A machine runs in the frame update, after <code class="language-plaintext highlighter-rouge">On.FrameUpdate</code>. Write <code class="language-plaintext highlighter-rouge">InFixedUpdate()</code> to run it in each
+<p>A machine runs in the frame update, after <code class="language-plaintext highlighter-rouge">On.Update</code>. Write <code class="language-plaintext highlighter-rouge">InFixedUpdate()</code> to run it in each
 fixed step instead, after <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>, where Motion’s physics writes are allowed; or
 <code class="language-plaintext highlighter-rouge">InLateUpdate()</code> to run it after <code class="language-plaintext highlighter-rouge">On.LateUpdate</code>, for a camera that follows something that already
 moved:</p>
@@ -233,7 +233,7 @@ moved:</p>
 </code></pre></div></div>
 
 <p>A machine that moves a body and one that follows it with the camera are two machines, each on its own
-update. A paused script’s machines stand still, like its <code class="language-plaintext highlighter-rouge">On.FrameUpdate</code>.</p>
+update. A paused script’s machines stand still, like its <code class="language-plaintext highlighter-rouge">On.Update</code>.</p>
 
 <h2 id="call-list">Call list</h2>
 

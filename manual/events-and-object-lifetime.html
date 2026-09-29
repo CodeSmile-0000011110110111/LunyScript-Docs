@@ -57,31 +57,37 @@
   </header>
 
   <div class="post-content">
-    <p>Register blocks against an event and they run whenever that event is raised on this object:</p>
+    <p>Register blocks against an object’s lifetime and they run when that object starts, ticks, or ends:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
 
-<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Hazard</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Door</span> <span class="p">:</span> <span class="n">Script</span>
 <span class="p">{</span>
-    <span class="p">[</span><span class="nf">Variable</span><span class="p">(</span><span class="m">100</span><span class="p">)]</span> <span class="k">public</span> <span class="n">Number</span> <span class="n">Health</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
-
-    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">TriggerEnter</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="nf">HasTag</span><span class="p">(</span><span class="s">"Spike"</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">10</span><span class="p">)));</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"Hinge Marker"</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Disabled</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Deactivate</span><span class="p">(</span><span class="s">"Hinge Marker"</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Enabled</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Activate</span><span class="p">(</span><span class="s">"Hinge Marker"</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Despawned</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">(</span><span class="s">"Hinge Marker"</span><span class="p">));</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Add the component, give the spike a <code class="language-plaintext highlighter-rouge">Spike</code> tag and a trigger collider, and put a <code class="language-plaintext highlighter-rouge">Rigidbody</code> on
-the spike or on this object. The object loses ten health each time it enters that trigger. The
-<code class="language-plaintext highlighter-rouge">Rigidbody</code> is Unity’s rule for a trigger contact; the script does not create it.</p>
+<p>Add the component and pick <code class="language-plaintext highlighter-rouge">Door</code>. When the object starts, it creates an empty marker named
+<code class="language-plaintext highlighter-rouge">Hinge Marker</code>. Disabling the door deactivates that marker; enabling the door activates it again.
+Ending the door destroys the marker.</p>
 
 <h2 id="what-on-does">What <code class="language-plaintext highlighter-rouge">On</code> does</h2>
 
 <p><code class="language-plaintext highlighter-rouge">On.*</code> is the registration surface. Each call takes one or more blocks and returns nothing, so an
-<code class="language-plaintext highlighter-rouge">On.*</code> call is a statement in <code class="language-plaintext highlighter-rouge">Build()</code> rather than a value you can pass on. Registering the same
-event twice appends blocks; the second call keeps the first call’s blocks.</p>
+<code class="language-plaintext highlighter-rouge">On.*</code> call is a statement in <code class="language-plaintext highlighter-rouge">Build()</code> rather than a value you can pass on. Two calls that name
+the same event both fire, in the order they were written.</p>
 
-<p>A script that registers none of the six contact events is never subscribed to Unity’s physics
-callbacks at all, so a script that only moves costs nothing on the physics side.</p>
+<p>This page is the object’s lifetime: created, spawned, ready, enabled, disabled, despawned, the
+three ticks, application pause and focus, and creating or removing objects. Contact events live
+on <a href="/LunyScript-Docs/manual/physics.html">Physics</a>. <code class="language-plaintext highlighter-rouge">On.Message</code> lives on
+<a href="/LunyScript-Docs/manual/messaging.html">Messaging</a>. Authority gain and loss live on
+<a href="/LunyScript-Docs/manual/networking-and-cloud-save.html">Networking and cloud save</a>.</p>
 
 <h2 id="lifecycle-events">Lifecycle events</h2>
 
@@ -142,123 +148,48 @@ callbacks at all, so a script that only moves costs nothing on the physics side.
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">On.FrameUpdate(block, ..)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">On.Update(block, ..)</code></td>
       <td>Once per frame while enabled, subject to the script’s process mode.</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">On.FixedUpdate(block, ..)</code></td>
-      <td>Zero or more times per frame, before <code class="language-plaintext highlighter-rouge">FrameUpdate</code>.</td>
+      <td>Zero or more times per frame, before <code class="language-plaintext highlighter-rouge">On.Update</code>.</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">On.LateUpdate(block, ..)</code></td>
-      <td>After every object’s <code class="language-plaintext highlighter-rouge">FrameUpdate</code> and after variable watches.</td>
+      <td>After every object’s <code class="language-plaintext highlighter-rouge">On.Update</code> and after variable watches.</td>
     </tr>
   </tbody>
 </table>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Age</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">),</span> <span class="n">Transform</span><span class="p">.</span><span class="nf">RotateBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">35</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Age</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">),</span> <span class="n">Transform</span><span class="p">.</span><span class="nf">RotateBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">35</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">AddForce</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">12</span><span class="p">).</span><span class="nf">InLocalSpace</span><span class="p">());</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">LateUpdate</span><span class="p">(</span><span class="n">Readout</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Text</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">"age {0:1} s"</span><span class="p">,</span> <span class="n">Age</span><span class="p">)));</span>
 </code></pre></div></div>
 
 <p>Physics work belongs in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>; see
 <a href="/LunyScript-Docs/manual/motion.html">Motion</a> for which calls require it. Variable watches are
-polled between <code class="language-plaintext highlighter-rouge">FrameUpdate</code> and <code class="language-plaintext highlighter-rouge">LateUpdate</code>, so a watch never fires from inside <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>.</p>
+polled between <code class="language-plaintext highlighter-rouge">On.Update</code> and <code class="language-plaintext highlighter-rouge">On.LateUpdate</code>, so a watch never fires from inside
+<code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>.</p>
 
-<h2 id="contact-events-and-the-collider-you-touched">Contact events, and the collider you touched</h2>
-
-<p>Six events cover collision and trigger contact. Inside any of them, <code class="language-plaintext highlighter-rouge">Other</code> reads the collider on the
-far side.</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="n">Impacts</span><span class="p">.</span><span class="nf">Inc</span><span class="p">());</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">CollisionStay</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="nf">HasTag</span><span class="p">(</span><span class="s">"Player"</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Pushing</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">CollisionExit</span><span class="p">(</span><span class="n">Pushing</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">TriggerEnter</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="n">IsTrigger</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">InVolume</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">TriggerStay</span><span class="p">(</span><span class="n">Dose</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">TriggerExit</span><span class="p">(</span><span class="n">InVolume</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
-</code></pre></div></div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Read</th>
-      <th>What it gives</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Other.WorldPosition</code></td>
-      <td>The other collider’s position, as a <code class="language-plaintext highlighter-rouge">Vector3</code>.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Other.WorldPositionX</code> / <code class="language-plaintext highlighter-rouge">Y</code> / <code class="language-plaintext highlighter-rouge">Z</code></td>
-      <td>One component of that position, as a number.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Other.Layer</code></td>
-      <td>The other collider’s layer, as a number.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Other.IsTrigger</code></td>
-      <td>Whether the other collider is a trigger.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">Other.HasTag(tag)</code></td>
-      <td>Whether the other collider carries that tag.</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">TriggerStay</span><span class="p">(</span>
-    <span class="n">HitPoint</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="n">WorldPosition</span><span class="p">),</span>
-    <span class="n">HitX</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="n">WorldPositionX</span><span class="p">),</span>
-    <span class="n">HitLayer</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="n">Layer</span><span class="p">),</span>
-    <span class="nf">If</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="n">IsTrigger</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Volumes</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()),</span>
-    <span class="nf">If</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="nf">HasTag</span><span class="p">(</span><span class="s">"Player"</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">PlayerInside</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">Other</code> is readable while a contact event is running. Reading it from a tick event throws
-<code class="language-plaintext highlighter-rouge">LunyScriptUsageException</code> when the block runs. <code class="language-plaintext highlighter-rouge">Other.HasTag</code> compiles to Unity’s <code class="language-plaintext highlighter-rouge">CompareTag</code> and
-allocates nothing; a blank tag is refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs.</p>
-
-<p><code class="language-plaintext highlighter-rouge">On.CollisionStay</code> and <code class="language-plaintext highlighter-rouge">On.TriggerStay</code> run on every fixed step while contact lasts.
-<code class="language-plaintext highlighter-rouge">On.TriggerStay</code> needs Unity’s contact-pair setting that generates stay callbacks for triggers.</p>
-
-<p>A paused <code class="language-plaintext highlighter-rouge">Pausable</code> script still runs its contact events, so <code class="language-plaintext highlighter-rouge">On.CollisionEnter(Time.Resume())</code>
-resumes the game when something hits it. A script whose component is disabled runs none of them.
-<a href="/LunyScript-Docs/manual/time-and-pausing.html#collisions-while-the-game-is-paused">Time, pausing and gates</a>
-says when a paused game meets a contact at all, and which project setting pauses contact events too.</p>
-
-<h2 id="application-authority-and-messages">Application, authority and messages</h2>
+<h2 id="application-events">Application events</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="n">Application</span><span class="p">.</span><span class="nf">Paused</span><span class="p">(</span><span class="n">Autosave</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="n">Application</span><span class="p">.</span><span class="nf">Resumed</span><span class="p">(</span><span class="n">Autosave</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="n">Application</span><span class="p">.</span><span class="nf">FocusGained</span><span class="p">(</span><span class="n">Focused</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="n">Application</span><span class="p">.</span><span class="nf">FocusLost</span><span class="p">(</span><span class="n">Focused</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="n">Application</span><span class="p">.</span><span class="nf">Quitting</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Resume</span><span class="p">());</span>
-
-<span class="n">On</span><span class="p">.</span><span class="n">Authority</span><span class="p">.</span><span class="nf">Gained</span><span class="p">(</span><span class="n">Driving</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
-<span class="n">On</span><span class="p">.</span><span class="n">Authority</span><span class="p">.</span><span class="nf">Lost</span><span class="p">(</span><span class="n">Driving</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
-
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RequestReady"</span><span class="p">,</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">On.Application.*</code> events are delivered to every enabled object. The editor raises focus changes that
 a built player may leave out, and an operating system that terminates an application may skip
 <code class="language-plaintext highlighter-rouge">Quitting</code>.</p>
 
-<p><code class="language-plaintext highlighter-rouge">On.Message</code> receives what another peer sent with <code class="language-plaintext highlighter-rouge">Net.Send.ToAuthority</code>. Spell the message name with
-<code class="language-plaintext highlighter-rouge">nameof</code> so the two move together, and see
-<a href="/LunyScript-Docs/manual/networking-and-cloud-save.html">Networking and cloud save</a> for the
-sending side. Two <code class="language-plaintext highlighter-rouge">On.Message</code> calls naming the same message append; a send with no matching
-<code class="language-plaintext highlighter-rouge">On.Message</code> in the same script is refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs.</p>
-
 <h2 id="creating-and-removing-objects">Creating and removing objects</h2>
 
 <p><code class="language-plaintext highlighter-rouge">Object</code> produces and ends game objects that this script owns. <code class="language-plaintext highlighter-rouge">Create</code> makes a fresh object and
-<code class="language-plaintext highlighter-rouge">Destroy</code> ends one for good. <code class="language-plaintext highlighter-rouge">Spawn</code> and <code class="language-plaintext highlighter-rouge">Despawn</code> do the same with reusable objects from a pool, on
-<a href="/LunyScript-Docs/manual/object-pools.html">Object pools</a>. The signatures are in the
-<a href="#call-list">call list</a> at the end of this page.</p>
+<code class="language-plaintext highlighter-rouge">Destroy</code> ends one for good. <code class="language-plaintext highlighter-rouge">Spawn</code> and <code class="language-plaintext highlighter-rouge">Despawn</code> reuse copies from a pool, on
+<a href="/LunyScript-Docs/manual/object-pools.html">Object pools</a>.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Prefab</span> <span class="n">Sentry</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
@@ -268,25 +199,27 @@ sending side. Two <code class="language-plaintext highlighter-rouge">On.Message<
     <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"PostGuard"</span><span class="p">,</span>
         <span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Sentry</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.8</span><span class="p">,</span> <span class="m">0</span><span class="p">)).</span><span class="nf">ChildOf</span><span class="p">()</span>
             <span class="p">.</span><span class="nf">Into</span><span class="p">(</span><span class="s">"Guard"</span><span class="p">));</span>
-    <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">()));</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RecallGuard"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">(</span><span class="s">"Guard"</span><span class="p">));</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">()));</span>
 <span class="p">}</span>
 </code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">PostGuard</code> creates a copy of <code class="language-plaintext highlighter-rouge">Sentry</code>, parents it to this object, and names it <code class="language-plaintext highlighter-rouge">Guard</code> in this
+script. <code class="language-plaintext highlighter-rouge">RecallGuard</code> destroys that copy by the same name.</p>
 
 <p><code class="language-plaintext highlighter-rouge">Object.Create(name)</code> makes an empty object immediately. It carries no script, and it is destroyed
 when this object’s script ends.</p>
 
 <p><code class="language-plaintext highlighter-rouge">Object.Create(prefab)</code> makes a fresh copy of a declared <code class="language-plaintext highlighter-rouge">Prefab</code> input or of a succeeded
 <code class="language-plaintext highlighter-rouge">Operation&lt;Prefab&gt;</code> handle; see
-<a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> for both. <code class="language-plaintext highlighter-rouge">At</code>
-places it, <code class="language-plaintext highlighter-rouge">ChildOf</code> with no name parents it to this object, and <code class="language-plaintext highlighter-rouge">Into(name)</code> keeps it in a named slot
-so <code class="language-plaintext highlighter-rouge">Activate</code>, <code class="language-plaintext highlighter-rouge">Deactivate</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> can name it later. Leave <code class="language-plaintext highlighter-rouge">At</code> out and the prefab keeps its own
-pose; leave <code class="language-plaintext highlighter-rouge">ChildOf</code> out and the object goes to the scene root. The copy is made after the current
-event’s blocks finish, so it is in its slot from the next event on.</p>
+<a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> for both. Leave
+<code class="language-plaintext highlighter-rouge">At</code> out and the prefab keeps its own pose; leave <code class="language-plaintext highlighter-rouge">ChildOf</code> out and the object goes to the scene
+root. The copy is made after the current event’s blocks finish, so later events can name it.</p>
 
-<p><strong>Everything this script makes is destroyed when this script’s object ends</strong>, with or without <code class="language-plaintext highlighter-rouge">Into</code>.
-Write <code class="language-plaintext highlighter-rouge">SurvivesCaller()</code> on a copy that should stay, such as a pickup a dying enemy drops:</p>
+<p><strong>Everything this script makes is destroyed when this script’s object ends</strong>, with or without
+<code class="language-plaintext highlighter-rouge">Into</code>. Write <code class="language-plaintext highlighter-rouge">SurvivesCaller()</code> on a copy that should stay, such as a pickup a dying enemy drops:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
     <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Pickup</span><span class="p">).</span><span class="nf">SurvivesCaller</span><span class="p">(),</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">()));</span>
 </code></pre></div></div>
 
@@ -310,36 +243,113 @@ above zero is reported as an error and nothing is created. <code class="language
 and a frame do not follow it.</p>
 
 <p>With a name, <code class="language-plaintext highlighter-rouge">Activate</code>, <code class="language-plaintext highlighter-rouge">Deactivate</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> act on that object after the current event’s
-blocks finish, and <code class="language-plaintext highlighter-rouge">Destroy</code> empties the slot where the block runs, so a later block sees it empty.
-With no name they act on this object after the current dispatch finishes, so the rest of the block
-list still runs. <code class="language-plaintext highlighter-rouge">Object.Destroy()</code> on this
-object produces <code class="language-plaintext highlighter-rouge">On.Disabled</code>, then <code class="language-plaintext highlighter-rouge">On.Despawned</code>, and then destroys the host.</p>
+blocks finish, and <code class="language-plaintext highlighter-rouge">Destroy</code> drops the name where the block runs, so a later block no longer finds
+it. With no name they act on this object after the current dispatch finishes, so the rest of the
+block list still runs. <code class="language-plaintext highlighter-rouge">Object.Destroy()</code> on this object produces <code class="language-plaintext highlighter-rouge">On.Disabled</code>, then
+<code class="language-plaintext highlighter-rouge">On.Despawned</code>, and then destroys the host.</p>
 
 <p><code class="language-plaintext highlighter-rouge">Object</code> also changes how an object is drawn while it keeps running: <code class="language-plaintext highlighter-rouge">Hide</code>, <code class="language-plaintext highlighter-rouge">Show</code>, <code class="language-plaintext highlighter-rouge">SetColor</code> and
 material numbers are on <a href="/LunyScript-Docs/manual/showing-hiding-and-tinting.html">Showing, hiding and tinting objects</a>.</p>
 
-<h2 id="call-list">Call list</h2>
+<h2 id="methods">Methods</h2>
 
-<p>These lines are call signatures, not a script you can paste. Brackets mark a clause you may leave
-out. The working create is under Creating and removing objects, above.</p>
+<p>Each row is one call. Optional chain methods are in italics. Brackets mark an argument you may
+leave out.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-<span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span> <span class="p">{</span> <span class="n">prefab</span> <span class="p">|</span> <span class="n">handle</span> <span class="p">}</span> <span class="p">)</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">At</span><span class="p">(</span> <span class="p">{</span> <span class="n">position</span> <span class="p">|</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="p">}</span> <span class="p">[</span> <span class="p">,</span> <span class="n">rotation</span> <span class="p">])</span>
-      <span class="p">[</span> <span class="p">.</span><span class="nf">InWorldSpace</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InLocalSpace</span><span class="p">()</span> <span class="p">]</span>
-    <span class="p">|</span> <span class="p">.</span><span class="nf">NearPlayer</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">radius</span><span class="p">)</span> <span class="p">]</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="n">player</span><span class="p">)</span> <span class="p">]</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">ChildOf</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span> <span class="p">]</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">Into</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">]</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">SurvivesCaller</span><span class="p">()</span> <span class="p">]</span>
-<span class="n">Object</span><span class="p">.</span><span class="nf">Activate</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
-<span class="n">Object</span><span class="p">.</span><span class="nf">Deactivate</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
-<span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
-</code></pre></div></div>
+<table>
+  <thead>
+    <tr>
+      <th>Call</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.Create(name)</code></td>
+      <td>Makes an empty object named <code class="language-plaintext highlighter-rouge">name</code> in the scene and in this script.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.Create(prefab)</code></td>
+      <td>Makes a fresh copy of a declared <code class="language-plaintext highlighter-rouge">Prefab</code> input.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.Create(handle)</code></td>
+      <td>Makes a fresh copy of a succeeded <code class="language-plaintext highlighter-rouge">Operation&lt;Prefab&gt;</code> payload.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.At(position)</code></em></td>
+      <td>Places the copy at <code class="language-plaintext highlighter-rouge">position</code>.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.At(position, rotation)</code></em></td>
+      <td>Places the copy at <code class="language-plaintext highlighter-rouge">position</code> with <code class="language-plaintext highlighter-rouge">rotation</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">position</code></td>
+      <td>Where the copy goes. One <code class="language-plaintext highlighter-rouge">Vector3</code> or <code class="language-plaintext highlighter-rouge">x, y, z</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">rotation</code></td>
+      <td>How the copy is turned. Leave it out and the prefab keeps its rotation.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.InWorldSpace()</code></em></td>
+      <td>Reads <code class="language-plaintext highlighter-rouge">At</code> on the scene’s axes.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.InLocalSpace()</code></em></td>
+      <td>Reads <code class="language-plaintext highlighter-rouge">At</code> on the parent’s axes. This is the default after <code class="language-plaintext highlighter-rouge">At</code>.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.NearPlayer(player, radius)</code></em></td>
+      <td>Places the copy near that player’s object. <code class="language-plaintext highlighter-rouge">At</code> does not follow it.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.ForPlayer(player)</code></em></td>
+      <td>Binds scripts on the copy to local player <code class="language-plaintext highlighter-rouge">player</code>.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.ChildOf()</code></em></td>
+      <td>Parents the copy to this object.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.ChildOf(name)</code></em></td>
+      <td>Parents the copy to the object this script already named. ChildOf cannot parent to itself.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.Into(name)</code></em></td>
+      <td>Names the copy in this script so later calls can address it.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">name</code></td>
+      <td>The name later <code class="language-plaintext highlighter-rouge">Activate</code>, <code class="language-plaintext highlighter-rouge">Deactivate</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> use.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.SurvivesCaller()</code></em></td>
+      <td>Leaves the copy in the scene when this script’s object ends.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.Activate([name])</code></td>
+      <td>Activates this object, or the named copy.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.Deactivate([name])</code></td>
+      <td>Deactivates this object, or the named copy.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.Destroy([name])</code></td>
+      <td>Destroys this object, or the named copy.</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="what-to-read-next">What to read next</h2>
 
 <ul>
+  <li><a href="/LunyScript-Docs/manual/physics.html">Physics</a> — contact events and <code class="language-plaintext highlighter-rouge">Other</code>.</li>
+  <li><a href="/LunyScript-Docs/manual/messaging.html">Messaging</a> — <code class="language-plaintext highlighter-rouge">On.Message</code> and sending from C#.</li>
+  <li><a href="/LunyScript-Docs/manual/networking-and-cloud-save.html">Networking and cloud save</a> —
+<code class="language-plaintext highlighter-rouge">On.Authority.Gained</code> and <code class="language-plaintext highlighter-rouge">On.Authority.Lost</code>.</li>
   <li><a href="/LunyScript-Docs/manual/object-pools.html">Object pools</a> — reuse spawned objects with
 <code class="language-plaintext highlighter-rouge">Define.Pool</code>, <code class="language-plaintext highlighter-rouge">Object.Spawn</code> and <code class="language-plaintext highlighter-rouge">Object.Despawn</code>.</li>
   <li><a href="/LunyScript-Docs/manual/time-and-pausing.html">Time, pausing and gates</a> — which tick events
@@ -349,8 +359,6 @@ spans more than one event.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OnFactory.html"><code class="language-plaintext highlighter-rouge">OnFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OnApplicationFactory.html"><code class="language-plaintext highlighter-rouge">OnApplicationFactory</code></a>,
-<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OnAuthorityFactory.html"><code class="language-plaintext highlighter-rouge">OnAuthorityFactory</code></a>,
-<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OtherFactory.html"><code class="language-plaintext highlighter-rouge">OtherFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectLifetimeFactory.html"><code class="language-plaintext highlighter-rouge">ObjectLifetimeFactory</code></a>.</li>
 </ul>
 

@@ -69,7 +69,7 @@
     <span class="p">{</span>
         <span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="n">Always</span><span class="p">);</span>
 
-        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
             <span class="nf">If</span><span class="p">(</span><span class="n">MenuOpen</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Pause</span><span class="p">()).</span><span class="nf">Else</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Resume</span><span class="p">()));</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -156,7 +156,7 @@ it once, directly in <code class="language-plaintext highlighter-rouge">Build()<
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="n">WhenPaused</span><span class="p">);</span>
-    <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Rewind</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">.</span><span class="nf">Unscaled</span><span class="p">()));</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Rewind</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">.</span><span class="nf">Unscaled</span><span class="p">()));</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -191,7 +191,7 @@ Unity sends every callback of one step after that step, and each of them still a
 
 <p>To pause contact events with the game, open <strong>Edit &gt; Project Settings &gt; LunyScript</strong> and turn on
 <strong>Time.Pause pauses contact events</strong>. A <code class="language-plaintext highlighter-rouge">Pausable</code> script then skips its contact events while
-<code class="language-plaintext highlighter-rouge">Time.Pause()</code> holds the game, as it skips <code class="language-plaintext highlighter-rouge">On.FrameUpdate</code>. <code class="language-plaintext highlighter-rouge">WhenPaused</code> and <code class="language-plaintext highlighter-rouge">Always</code> scripts
+<code class="language-plaintext highlighter-rouge">Time.Pause()</code> holds the game, as it skips <code class="language-plaintext highlighter-rouge">On.Update</code>. <code class="language-plaintext highlighter-rouge">WhenPaused</code> and <code class="language-plaintext highlighter-rouge">Always</code> scripts
 receive them either way. The setting applies to the whole project; no script line changes it.
 <code class="language-plaintext highlighter-rouge">Time.SetScale(0)</code> pauses no script, so it leaves contact events alone under either setting.</p>
 
@@ -235,11 +235,11 @@ clock alone, so every script keeps ticking while a gate is open.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// With the Input gate open, this reads false while the button is held.</span>
 <span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">"Menu"</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Input</span><span class="p">);</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">fire</span><span class="p">.</span><span class="n">IsPressed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Shots</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">fire</span><span class="p">.</span><span class="n">IsPressed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Shots</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()));</span>
 
 <span class="c1">// With the Camera gate open, this writes nothing.</span>
 <span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">"Menu"</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Camera</span><span class="p">);</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">).</span><span class="nf">Follow</span><span class="p">(</span><span class="n">Avatar</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Camera</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">ChaseRig</span><span class="p">).</span><span class="nf">Follow</span><span class="p">(</span><span class="n">Avatar</span><span class="p">));</span>
 
 <span class="c1">// A gate opened on None leaves both of those lines working.</span>
 <span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="s">"Menu"</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">None</span><span class="p">);</span>
@@ -255,7 +255,7 @@ opening a gate pauses nothing; combine the two when you want both.</p>
 <span class="p">{</span>
     <span class="nf">SetProcessMode</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="n">Always</span><span class="p">);</span>
 
-    <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
         <span class="n">Countdown</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">.</span><span class="nf">Unscaled</span><span class="p">()),</span>
         <span class="nf">If</span><span class="p">(</span><span class="n">MenuOpen</span><span class="p">)</span>
             <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">Pause</span><span class="p">(),</span>
@@ -271,7 +271,8 @@ opens both gates so the player’s movement input and the chase camera stop reac
 
 <ul>
   <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> — the
-tick events a process mode governs, and the contact events.</li>
+tick events a process mode governs.</li>
+  <li><a href="/LunyScript-Docs/manual/physics.html">Physics</a> — contact events while the game is paused.</li>
   <li><a href="/LunyScript-Docs/manual/player-input.html">Player input</a> — what an open input gate changes.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.TimeFactory.html"><code class="language-plaintext highlighter-rouge">TimeFactory</code></a>,

@@ -66,7 +66,7 @@
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">SetWorldPosition</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1.25</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
             <span class="n">Transform</span><span class="p">.</span><span class="nf">RotateBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">90</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">InWorldSpace</span><span class="p">());</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -175,7 +175,7 @@ pass mean a different thing in each.</p>
 <p><code class="language-plaintext highlighter-rouge">Transform.Parent</code>, <code class="language-plaintext highlighter-rouge">Transform.Root</code> and <code class="language-plaintext highlighter-rouge">Transform.Child(index)</code> return a surface carrying the same
 verbs and reads, aimed at that object:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
     <span class="n">Transform</span><span class="p">.</span><span class="nf">Child</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">SetScale</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">Math</span><span class="p">.</span><span class="nf">Max</span><span class="p">(</span><span class="m">0.03</span><span class="p">,</span> <span class="n">Charge</span> <span class="p">/</span> <span class="m">25</span><span class="p">),</span> <span class="m">1</span><span class="p">),</span>
     <span class="n">Transform</span><span class="p">.</span><span class="nf">Child</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="nf">SetLocalPosition</span><span class="p">(</span><span class="n">Probe</span><span class="p">),</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="n">HasParent</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Height</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="n">Parent</span><span class="p">.</span><span class="n">WorldPositionY</span><span class="p">)));</span>

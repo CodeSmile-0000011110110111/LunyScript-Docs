@@ -190,7 +190,7 @@ outcomes. A classified failure that no watch observes is logged once per attempt
 
 <p>The same four states read as conditions, which is what you use inside a tick event:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">IsPending</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">State</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1</span><span class="p">)),</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">Succeeded</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">State</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">2</span><span class="p">)),</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="n">Failed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">State</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">3</span><span class="p">)),</span>
@@ -208,7 +208,7 @@ pending, and after a success and after a cancellation.</p>
 classification. It is false while the attempt is pending, after a success, after a cancellation, and
 after a failure of any other classification:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="nf">FailedAs</span><span class="p">(</span><span class="n">OperationFailure</span><span class="p">.</span><span class="n">NotFound</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Missing</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)),</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="nf">FailedAs</span><span class="p">(</span><span class="n">OperationFailure</span><span class="p">.</span><span class="n">Timeout</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Loading</span><span class="p">.</span><span class="nf">Retry</span><span class="p">()));</span>
 </code></pre></div></div>

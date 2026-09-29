@@ -64,7 +64,7 @@
 <span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">Spinner</span> <span class="p">:</span> <span class="n">Script</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">RotateBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">35</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">RotateBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">35</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -131,7 +131,7 @@ place to put declarations.</p>
         <span class="c1">// The generator writes the Charge property this line assigns.</span>
         <span class="n">Charge</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Charge</span><span class="p">),</span> <span class="m">40</span><span class="p">);</span>
 
-        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Charge</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Charge</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Discharge"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Spark</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -180,8 +180,9 @@ editor, and it offers the surfaces that do not need a running game object.</p>
 <ul>
   <li><a href="/LunyScript-Docs/manual/variables-and-values.html">Variables and values</a> — declare state
 and write to it.</li>
-  <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> — the
-full list of events a block can be registered against.</li>
+  <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> —
+lifetime and tick events. <a href="/LunyScript-Docs/manual/messaging.html">Messaging</a> and
+<a href="/LunyScript-Docs/manual/physics.html">Physics</a> cover <code class="language-plaintext highlighter-rouge">On.Message</code> and contact.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Script.html"><code class="language-plaintext highlighter-rouge">Script</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ScriptBase.html"><code class="language-plaintext highlighter-rouge">ScriptBase</code></a>,

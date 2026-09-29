@@ -70,7 +70,7 @@
         <span class="n">Score</span> <span class="p">=</span> <span class="n">Var</span><span class="p">.</span><span class="n">DefineSynced</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;(</span>
             <span class="k">nameof</span><span class="p">(</span><span class="n">Score</span><span class="p">),</span> <span class="n">SyncCadence</span><span class="p">.</span><span class="n">OnChange</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
 
-        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Score</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Score</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -155,7 +155,7 @@ session at all, and <code class="language-plaintext highlighter-rouge">Net.IsHos
 <p><code class="language-plaintext highlighter-rouge">Net.SecondsSinceUpdate</code> is how long since this peer last received a value, which is how a script
 notices that its copy has stopped arriving:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="nf">SecondsSinceUpdate</span><span class="p">(</span><span class="n">Score</span><span class="p">)</span> <span class="p">&gt;</span> <span class="m">2</span><span class="p">)</span>
         <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Stale</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">))</span>
         <span class="p">.</span><span class="nf">Else</span><span class="p">(</span><span class="n">Stale</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
@@ -165,20 +165,18 @@ notices that its copy has stopped arriving:</p>
 
 <h2 id="messages">Messages</h2>
 
-<p>A peer without authority asks the authority to act by sending a named message. The authority receives
-it with <code class="language-plaintext highlighter-rouge">On.Message</code>:</p>
+<p>A peer without authority asks the authority to act by sending a named message. The authority
+receives it with <code class="language-plaintext highlighter-rouge">On.Message</code> in the same script:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// On any peer.</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
     <span class="nf">If</span><span class="p">(!</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span> <span class="p">&amp;</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">IsFalse</span><span class="p">())</span>
         <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">Send</span><span class="p">.</span><span class="nf">ToAuthority</span><span class="p">(</span><span class="s">"RequestReady"</span><span class="p">)));</span>
 
-<span class="c1">// On the authority, in the same script.</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RequestReady"</span><span class="p">,</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 </code></pre></div></div>
 
-<p>Spell the name with <code class="language-plaintext highlighter-rouge">nameof</code> where you have a constant to name, so the send and the handler move
-together. A send with no matching <code class="language-plaintext highlighter-rouge">On.Message</code> in the same script is refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs.</p>
+<p><a href="/LunyScript-Docs/manual/messaging.html">Messaging</a> is the <code class="language-plaintext highlighter-rouge">On.Message</code> surface, including
+two handlers for one name and sending from C#.</p>
 
 <h2 id="authority-changing-hands">Authority changing hands</h2>
 
@@ -261,7 +259,7 @@ writes nothing into its variable.</p>
 
         <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Cloud</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">));</span>
 
-        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
             <span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Score</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)),</span>
             <span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="nf">SecondsSinceUpdate</span><span class="p">(</span><span class="n">Score</span><span class="p">)</span> <span class="p">&gt;</span> <span class="m">2</span><span class="p">)</span>
                 <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Stale</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">))</span>
@@ -275,11 +273,13 @@ writes nothing into its variable.</p>
 <h2 id="what-to-read-next">What to read next</h2>
 
 <ul>
+  <li><a href="/LunyScript-Docs/manual/messaging.html">Messaging</a> — <code class="language-plaintext highlighter-rouge">On.Message</code> and sending from C#.</li>
   <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> —
-<code class="language-plaintext highlighter-rouge">On.Message</code> and <code class="language-plaintext highlighter-rouge">On.Authority</code> in their place among the other events.</li>
+lifecycle and tick events.</li>
   <li><a href="/LunyScript-Docs/manual/variables-and-values.html">Variables and values</a> — how a
 synchronised variable is read and written.</li>
   <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OnAuthorityFactory.html"><code class="language-plaintext highlighter-rouge">OnAuthorityFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.NetFactory.html"><code class="language-plaintext highlighter-rouge">NetFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.NetSendFactory.html"><code class="language-plaintext highlighter-rouge">NetSendFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SyncFactory.html"><code class="language-plaintext highlighter-rouge">SyncFactory</code></a>,

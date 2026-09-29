@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+<title>Physics | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Physics" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/physics.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/physics.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Physics" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Physics","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/physics.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Physics</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Register contact events on the object the script is on, and read the other collider through
+<code class="language-plaintext highlighter-rouge">Other</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Hazard</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">Variable</span><span class="p">(</span><span class="m">100</span><span class="p">)]</span> <span class="k">public</span> <span class="n">Number</span> <span class="n">Health</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">TriggerEnter</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="nf">HasTag</span><span class="p">(</span><span class="s">"Spike"</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">10</span><span class="p">)));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Add the component, give the spike a <code class="language-plaintext highlighter-rouge">Spike</code> tag and a trigger collider, and put a <code class="language-plaintext highlighter-rouge">Rigidbody</code> on
+the spike or on this object. The object loses ten health each time it enters that trigger. The
+<code class="language-plaintext highlighter-rouge">Rigidbody</code> is Unity’s rule for a trigger contact; the script does not create it.</p>
+
+<h2 id="contact-events">Contact events</h2>
+
+<p>Six events cover collision and trigger contact. They are <code class="language-plaintext highlighter-rouge">On.*</code> because the contact happens to the
+object the script is on. A script that registers none of the six is never subscribed to Unity’s
+physics callbacks, so a script that only moves costs nothing on the physics side.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="n">Impacts</span><span class="p">.</span><span class="nf">Inc</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">CollisionStay</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="nf">HasTag</span><span class="p">(</span><span class="s">"Player"</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Pushing</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">CollisionExit</span><span class="p">(</span><span class="n">Pushing</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">TriggerEnter</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="n">IsTrigger</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">InVolume</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">TriggerStay</span><span class="p">(</span><span class="n">Dose</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">TriggerExit</span><span class="p">(</span><span class="n">InVolume</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">On.CollisionStay</code> and <code class="language-plaintext highlighter-rouge">On.TriggerStay</code> run on every fixed step while contact lasts.</p>
+
+<p><code class="language-plaintext highlighter-rouge">On.TriggerStay</code> fires only when <strong>Generate On Trigger Stay Events</strong> is enabled in
+Project Settings / Physics / Settings / GameObject. Unity leaves that setting off by default, so
+the event does not fire until it is turned on.</p>
+
+<p>A paused <code class="language-plaintext highlighter-rouge">Pausable</code> script still runs its contact events, so
+<code class="language-plaintext highlighter-rouge">On.CollisionEnter(Time.Resume())</code> resumes the game when something hits it. A script whose
+component is disabled runs none of them.
+<a href="/LunyScript-Docs/manual/time-and-pausing.html#collisions-while-the-game-is-paused">Time, pausing and gates</a>
+says when a paused game meets a contact at all, and which project setting pauses contact events
+too.</p>
+
+<p>Casts and overlaps — <code class="language-plaintext highlighter-rouge">Collision.RayCast</code> and the six other queries — are on
+<a href="/LunyScript-Docs/manual/collision-queries.html">Collision queries</a>.</p>
+
+<h2 id="the-collider-you-touched">The collider you touched</h2>
+
+<p>Inside any of the six contact events, <code class="language-plaintext highlighter-rouge">Other</code> reads the collider on the far side.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Read</th>
+      <th>What it gives</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Other.WorldPosition</code></td>
+      <td>The other collider’s position, as a <code class="language-plaintext highlighter-rouge">Vector3</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Other.WorldPositionX</code> / <code class="language-plaintext highlighter-rouge">Y</code> / <code class="language-plaintext highlighter-rouge">Z</code></td>
+      <td>One component of that position, as a number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Other.Layer</code></td>
+      <td>The other collider’s layer, as a number.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Other.IsTrigger</code></td>
+      <td>Whether the other collider is a trigger.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Other.HasTag(tag)</code></td>
+      <td>Whether the other collider carries that tag.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">TriggerStay</span><span class="p">(</span>
+    <span class="n">HitPoint</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="n">WorldPosition</span><span class="p">),</span>
+    <span class="n">HitX</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="n">WorldPositionX</span><span class="p">),</span>
+    <span class="n">HitLayer</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="n">Layer</span><span class="p">),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="n">IsTrigger</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Volumes</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">Other</span><span class="p">.</span><span class="nf">HasTag</span><span class="p">(</span><span class="s">"Player"</span><span class="p">)).</span><span class="nf">Then</span><span class="p">(</span><span class="n">PlayerInside</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Other</code> is readable while a contact event is running. Reading it from <code class="language-plaintext highlighter-rouge">On.Update</code> or another tick
+event throws <code class="language-plaintext highlighter-rouge">LunyScriptUsageException</code> when the block runs. <code class="language-plaintext highlighter-rouge">Other.HasTag</code> compiles to Unity’s
+<code class="language-plaintext highlighter-rouge">CompareTag</code> and allocates nothing; a blank tag is refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs.</p>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/collision-queries.html">Collision queries</a> — rays, shapes and
+overlaps.</li>
+  <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> —
+lifecycle and tick events.</li>
+  <li><a href="/LunyScript-Docs/manual/motion.html">Motion</a> — moving through a CharacterController or a
+Rigidbody.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OnFactory.html"><code class="language-plaintext highlighter-rouge">OnFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OtherFactory.html"><code class="language-plaintext highlighter-rouge">OtherFactory</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

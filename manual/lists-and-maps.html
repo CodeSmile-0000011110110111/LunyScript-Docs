@@ -144,7 +144,7 @@ enum expression and text.</p>
 yields the element kind’s default, the mutation leaves the content as it was, and the collection sets
 a flag you can test:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
     <span class="n">Slots</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">newItem</span><span class="p">),</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Slots</span><span class="p">.</span><span class="nf">Failed</span><span class="p">()).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Overflowed</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
 </code></pre></div></div>
@@ -175,7 +175,7 @@ change it.</p>
 <span class="n">Added</span> <span class="p">=</span> <span class="n">CollectionResult</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Added</span><span class="p">));</span>
 
 <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Pickup"</span><span class="p">,</span> <span class="n">Slots</span><span class="p">.</span><span class="nf">TryAdd</span><span class="p">(</span><span class="n">item</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Added</span><span class="p">));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Added</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Glow</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)),</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Added</span><span class="p">.</span><span class="n">Failed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">ShowFull</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
 </code></pre></div></div>
@@ -232,7 +232,7 @@ handle that <code class="language-plaintext highlighter-rouge">Build()</code> ne
             <span class="n">Wave</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(),</span>
             <span class="n">Scores</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"wave"</span><span class="p">,</span> <span class="n">Wave</span><span class="p">));</span>
 
-        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
             <span class="n">Total</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">),</span>
             <span class="n">Best</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">),</span>
             <span class="nf">ForEach</span><span class="p">(</span><span class="n">Scores</span><span class="p">).</span><span class="nf">Do</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="k">value</span><span class="p">)</span> <span class="p">=&gt;</span>

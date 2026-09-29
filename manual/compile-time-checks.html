@@ -68,11 +68,11 @@ and in your IDE, with an ID you can look up here:</p>
         <span class="n">Health</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Health</span><span class="p">),</span> <span class="m">100</span><span class="p">);</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">Health</span> <span class="p">&gt;</span> <span class="m">10</span><span class="p">)</span>                       <span class="c1">// LUNY002: an error</span>
-            <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+            <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
 
         <span class="n">Transform</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>             <span class="c1">// LUNY005: a warning</span>
 
-        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&gt;</span> <span class="m">10</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">1</span><span class="p">)));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&gt;</span> <span class="m">10</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">1</span><span class="p">)));</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -183,7 +183,7 @@ condition reads:</p>
 <p>Pass the condition to <code class="language-plaintext highlighter-rouge">If(...)</code> instead. <code class="language-plaintext highlighter-rouge">&amp;&amp;</code>, <code class="language-plaintext highlighter-rouge">||</code>, <code class="language-plaintext highlighter-rouge">&amp;</code>, <code class="language-plaintext highlighter-rouge">|</code> and <code class="language-plaintext highlighter-rouge">!</code> between conditions build one
 combined condition, so they are not reported:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&gt;</span> <span class="m">10</span> <span class="p">&amp;&amp;</span> <span class="n">Alive</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">1</span><span class="p">)));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&gt;</span> <span class="m">10</span> <span class="p">&amp;&amp;</span> <span class="n">Alive</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">1</span><span class="p">)));</span>
 </code></pre></div></div>
 
 <p>The same line also throws when the script type is built, in every build configuration.</p>
@@ -243,7 +243,7 @@ statement, it is composed and then dropped:</p>
 <p>Pass it to an event, or keep it in a variable and pass that:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">step</span> <span class="p">=</span> <span class="n">Transform</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="n">step</span><span class="p">);</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">step</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>A builder written this way, such as <code class="language-plaintext highlighter-rouge">Transform.MoveBy(..)</code>, is also refused when the script type is
@@ -280,7 +280,7 @@ all of their blocks in the frame they are reached, so a wait or a group written 
                                        <span class="c1">// wait, Then runs its blocks in the frame it</span>
                                        <span class="c1">// is reached: move the Wait out of Then so</span>
                                        <span class="c1">// that it is a step of a routine</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">Wait</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>               <span class="c1">// Wait (here: Wait(..)) in an event list</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">Wait</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>               <span class="c1">// Wait (here: Wait(..)) in an event list</span>
                                        <span class="c1">// cannot wait, ...: make it a step of a</span>
                                        <span class="c1">// routine, as in Routine("name").Run(Wait(..))</span>
 </code></pre></div></div>

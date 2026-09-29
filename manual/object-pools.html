@@ -73,7 +73,7 @@
             <span class="p">.</span><span class="nf">HardCap</span><span class="p">(</span><span class="m">8</span><span class="p">).</span><span class="nf">Prewarm</span><span class="p">(</span><span class="m">4</span><span class="p">).</span><span class="nf">SpawnAt</span><span class="p">(</span><span class="n">Portal</span><span class="p">).</span><span class="nf">InRadius</span><span class="p">(</span><span class="m">3.0</span><span class="p">);</span>
         <span class="n">Wave</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Flag</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Wave</span><span class="p">),</span> <span class="k">false</span><span class="p">);</span>
 
-        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Wave</span><span class="p">.</span><span class="nf">IsTrue</span><span class="p">())</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Wave</span><span class="p">.</span><span class="nf">IsTrue</span><span class="p">())</span>
             <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">),</span> <span class="n">Wave</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -84,7 +84,7 @@
     <span class="p">{</span>
         <span class="n">Health</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Health</span><span class="p">),</span> <span class="m">100</span><span class="p">);</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Spawned</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">StopMotion</span><span class="p">());</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">()));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">()));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -146,7 +146,7 @@ the pool. When that scene unloads, the pool and every copy go with it.</p>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="s">"Boss"</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Retreat"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">(</span><span class="s">"Boss"</span><span class="p">));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">()));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">()));</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">Object.Spawn(pool)</code> takes one copy out of the pool. The pool reuses an idle copy when it has one and
@@ -230,7 +230,7 @@ its scale and anything else its last use changed. Reset what matters in <code cl
 its copies go back to their pool. <code class="language-plaintext highlighter-rouge">SurvivesCaller()</code> leaves a copy out in the scene after its spawner
 ends:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">)</span>
     <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Coins</span><span class="p">).</span><span class="nf">SurvivesCaller</span><span class="p">(),</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">()));</span>
 </code></pre></div></div>
 
@@ -246,7 +246,7 @@ parent, so <code class="language-plaintext highlighter-rouge">ChildOf()</code> t
 spawn to an operation to react to it:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">TakeEnemy</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">TakeEnemy</span><span class="p">));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">FrameUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Wave</span><span class="p">.</span><span class="nf">IsTrue</span><span class="p">())</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Wave</span><span class="p">.</span><span class="nf">IsTrue</span><span class="p">())</span>
     <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">TakeEnemy</span><span class="p">),</span> <span class="n">Wave</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
 <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">TakeEnemy</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Full</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 </code></pre></div></div>
@@ -287,24 +287,109 @@ names the two replacements:</p>
 <p>A copy made with <code class="language-plaintext highlighter-rouge">Object.Create(prefab)</code> is destroyed with the script that made it; add
 <code class="language-plaintext highlighter-rouge">SurvivesCaller()</code> to keep it.</p>
 
-<h2 id="call-list">Call list</h2>
+<h2 id="methods">Methods</h2>
 
-<p>These lines are call signatures, not a script you can paste. Brackets mark a clause you may leave out.</p>
+<p>Each row is one call. Optional chain methods are in italics. Brackets mark an argument you may
+leave out.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Define</span><span class="p">.</span><span class="nf">Pool</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="nf">From</span><span class="p">(</span><span class="n">prefab</span><span class="p">)</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">HardCap</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">Prewarm</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">]</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">SpawnAt</span><span class="p">(</span> <span class="p">{</span> <span class="n">position</span> <span class="p">[</span> <span class="p">,</span> <span class="n">rotation</span> <span class="p">]</span> <span class="p">|</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="p">[</span> <span class="p">,</span> <span class="n">rotation</span> <span class="p">]</span> <span class="p">|</span> <span class="kt">object</span> <span class="p">}</span> <span class="p">)</span>
-        <span class="p">[</span> <span class="p">.</span><span class="nf">InRadius</span><span class="p">(</span><span class="n">r</span> <span class="p">[</span> <span class="p">,</span> <span class="n">plane</span> <span class="p">])</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InSphere</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="p">]</span>
-        <span class="p">[</span> <span class="p">.</span><span class="nf">InWorldSpace</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InLocalSpace</span><span class="p">()</span> <span class="p">]</span> <span class="p">]</span>
-<span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">At</span><span class="p">(</span> <span class="p">{</span> <span class="n">position</span> <span class="p">[</span> <span class="p">,</span> <span class="n">rotation</span> <span class="p">]</span> <span class="p">|</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="p">[</span> <span class="p">,</span> <span class="n">rotation</span> <span class="p">]</span> <span class="p">|</span> <span class="kt">object</span> <span class="p">}</span> <span class="p">)</span>
-        <span class="p">[</span> <span class="p">.</span><span class="nf">InRadius</span><span class="p">(</span><span class="n">r</span> <span class="p">[</span> <span class="p">,</span> <span class="n">plane</span> <span class="p">])</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InSphere</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="p">]</span>
-        <span class="p">[</span> <span class="p">.</span><span class="nf">InWorldSpace</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">InLocalSpace</span><span class="p">()</span> <span class="p">]</span> <span class="p">]</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">ChildOf</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">Into</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">]</span>
-    <span class="p">[</span> <span class="p">.</span><span class="nf">SurvivesCaller</span><span class="p">()</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
-<span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">(</span> <span class="p">[</span> <span class="n">name</span> <span class="p">]</span> <span class="p">)</span>
-</code></pre></div></div>
+<table>
+  <thead>
+    <tr>
+      <th>Call</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Define.Pool(name).From(prefab)</code></td>
+      <td>Declares a pool of copies of that prefab.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.HardCap(n)</code></em></td>
+      <td>The most copies the pool holds, idle and in use together.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.Prewarm(n)</code></em></td>
+      <td>How many inactive copies to prepare before the first spawn.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.SpawnAt(position)</code></em></td>
+      <td>Where a spawn goes when the spawn itself names no place.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.InRadius(r)</code></em></td>
+      <td>Spreads <code class="language-plaintext highlighter-rouge">SpawnAt</code> over a disk of radius <code class="language-plaintext highlighter-rouge">r</code>.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.InSphere(r)</code></em></td>
+      <td>Spreads <code class="language-plaintext highlighter-rouge">SpawnAt</code> through a ball of radius <code class="language-plaintext highlighter-rouge">r</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.Spawn(pool)</code></td>
+      <td>Takes one copy out of the pool.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.At(position)</code></em></td>
+      <td>Places this spawn at <code class="language-plaintext highlighter-rouge">position</code>. Replaces the pool’s <code class="language-plaintext highlighter-rouge">SpawnAt</code>.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.At(position, rotation)</code></em></td>
+      <td>Places this spawn at <code class="language-plaintext highlighter-rouge">position</code> with <code class="language-plaintext highlighter-rouge">rotation</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">position</code></td>
+      <td>Where the copy goes. One <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">x, y, z</code>, or a scene object.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">rotation</code></td>
+      <td>How the copy is turned.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.InWorldSpace()</code></em></td>
+      <td>Reads <code class="language-plaintext highlighter-rouge">At</code> or <code class="language-plaintext highlighter-rouge">SpawnAt</code> on the scene’s axes.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.InLocalSpace()</code></em></td>
+      <td>Reads <code class="language-plaintext highlighter-rouge">At</code> or <code class="language-plaintext highlighter-rouge">SpawnAt</code> on the parent’s axes.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.ChildOf()</code></em></td>
+      <td>Parents the copy to this object.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.ChildOf(name)</code></em></td>
+      <td>Parents the copy to the object this script already named. ChildOf cannot parent to itself.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.Into(name)</code></em></td>
+      <td>Names the copy in this script so later calls can address it.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">name</code></td>
+      <td>The name later <code class="language-plaintext highlighter-rouge">Despawn</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> use.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.ForPlayer(n)</code></em></td>
+      <td>Binds scripts on the copy to local player <code class="language-plaintext highlighter-rouge">n</code>.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.SurvivesCaller()</code></em></td>
+      <td>Leaves the copy in the scene when this script’s object ends.</td>
+    </tr>
+    <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.As(operation)</code></em></td>
+      <td>Binds the spawn to an attempt.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.Despawn([name])</code></td>
+      <td>Returns this copy, or the named copy, to its pool.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.Destroy([name])</code></td>
+      <td>Ends this copy, or the named copy, for good.</td>
+    </tr>
+  </tbody>
+</table>
 
 <h2 id="what-to-read-next">What to read next</h2>
 
