@@ -124,8 +124,9 @@ type, so both compile in an assembly definition with No Engine References checke
 </code></pre></div></div>
 
 <p>The class is <code class="language-plaintext highlighter-rouge">partial</code> because LunyScript writes the code that reads those fields; no field is read
-by reflection. <code class="language-plaintext highlighter-rouge">[Serializable]</code> is what lets Unity save the struct in the asset. A script declares
-two inputs that read the asset:</p>
+by reflection. <code class="language-plaintext highlighter-rouge">[Serializable]</code> is what lets Unity save the struct in the asset. A <code class="language-plaintext highlighter-rouge">Vector3</code> or
+<code class="language-plaintext highlighter-rouge">Vector2</code> field of the struct is saved with it: the Inspector shows its <code class="language-plaintext highlighter-rouge">X</code>, <code class="language-plaintext highlighter-rouge">Y</code> and <code class="language-plaintext highlighter-rouge">Z</code>, and the
+script copies the saved values. A script declares two inputs that read the asset:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Balance</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Data</span><span class="p">(</span><span class="n">WeaponBalance</span><span class="p">.</span><span class="n">Schema</span><span class="p">);</span>
 <span class="n">Power</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Number</span><span class="p">().</span><span class="nf">FromDataField</span><span class="p">(</span><span class="s">"SomeValue"</span><span class="p">);</span>
@@ -255,9 +256,9 @@ writes one into the object’s renderer.</p>
 <h2 id="limits">Limits</h2>
 
 <ul>
-  <li>A <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code> or <code class="language-plaintext highlighter-rouge">Rotation</code> field of a schema stored in an asset keeps its default
-value, because Unity does not save those types’ components. Store such values as number fields.
-A <code class="language-plaintext highlighter-rouge">Color</code> field is saved.</li>
+  <li>A <code class="language-plaintext highlighter-rouge">Rotation</code> field of a schema stored in an asset keeps its default value, because Unity does
+not save that type’s components. Store such values as number fields. A <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code> or
+<code class="language-plaintext highlighter-rouge">Color</code> field is saved.</li>
   <li>A text or JSON load reads a file; it cannot read a <code class="language-plaintext highlighter-rouge">TextAsset</code> assigned in the Inspector.</li>
 </ul>
 

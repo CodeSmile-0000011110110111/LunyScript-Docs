@@ -90,8 +90,8 @@ the script; the number itself lives in the running object’s slot storage. That
 lets <code class="language-plaintext highlighter-rouge">Build()</code> run once for the whole script type while each object keeps its own value.</p>
 
 <p>Every number in LunyScript is a <code class="language-plaintext highlighter-rouge">Double</code>, so a script writes <code class="language-plaintext highlighter-rouge">0.5</code> and never <code class="language-plaintext highlighter-rouge">0.5f</code>. <code class="language-plaintext highlighter-rouge">Vector2</code> and
-<code class="language-plaintext highlighter-rouge">Vector3</code> store <code class="language-plaintext highlighter-rouge">Single</code> internally and accept <code class="language-plaintext highlighter-rouge">Double</code> at their edges, which is why you write plain
-numbers everywhere.</p>
+<code class="language-plaintext highlighter-rouge">Vector3</code> store <code class="language-plaintext highlighter-rouge">Single</code> components and accept <code class="language-plaintext highlighter-rouge">Double</code> in their constructors, methods and
+operators, so a script writes plain numbers there too.</p>
 
 <h2 id="the-kinds-a-variable-can-hold">The kinds a variable can hold</h2>
 
@@ -132,7 +132,7 @@ numbers everywhere.</p>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Color</code></td>
       <td>Four channels from 0 to 1.</td>
-      <td>A <code class="language-plaintext highlighter-rouge">Color</code> field of a data schema: <code class="language-plaintext highlighter-rouge">Team = Bind.Data(TeamLook.Schema);</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Tint = Define.Color(nameof(Tint), Color.Red);</code></td>
     </tr>
     <tr>
       <td>A C# <code class="language-plaintext highlighter-rouge">enum</code></td>
@@ -144,8 +144,9 @@ numbers everywhere.</p>
 
 <h2 id="three-ways-to-declare">Three ways to declare</h2>
 
-<p>The <code class="language-plaintext highlighter-rouge">Define</code> line is the short one for a Number, a Flag and Text. Write it inside <code class="language-plaintext highlighter-rouge">Build()</code> of a
-<code class="language-plaintext highlighter-rouge">partial</code> script, and the generator writes the property the line assigns. The line runs where it
+<p>The <code class="language-plaintext highlighter-rouge">Define</code> line is the short one, for every kind in the table. Write it inside <code class="language-plaintext highlighter-rouge">Build()</code> of a
+<code class="language-plaintext highlighter-rouge">partial</code> script, and the generator writes the property the line assigns: a <code class="language-plaintext highlighter-rouge">Number</code>, <code class="language-plaintext highlighter-rouge">Flag</code> or
+<code class="language-plaintext highlighter-rouge">Text</code>, or the <code class="language-plaintext highlighter-rouge">Var&lt;T&gt;</code> of the other kinds, such as <code class="language-plaintext highlighter-rouge">Var&lt;Vector3&gt;</code> or <code class="language-plaintext highlighter-rouge">Var&lt;Color&gt;</code>. The line runs where it
 stands, so the variable exists from that line on; use it on a later line. Pass <code class="language-plaintext highlighter-rouge">nameof</code> of the
 variable, because the name is the property’s name and names are unique within a script.</p>
 
@@ -153,6 +154,9 @@ variable, because the name is the property’s name and names are unique within 
 <span class="n">Health</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Health</span><span class="p">),</span> <span class="m">100</span><span class="p">);</span>
 <span class="n">Armed</span> <span class="p">=</span> <span class="n">Flag</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Armed</span><span class="p">),</span> <span class="k">true</span><span class="p">);</span>
 <span class="n">Log</span> <span class="p">=</span> <span class="n">Text</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Log</span><span class="p">),</span> <span class="n">TextCapacity</span><span class="p">.</span><span class="n">Bytes512</span><span class="p">);</span>
+<span class="n">Home</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Vector3</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Home</span><span class="p">),</span> <span class="k">new</span> <span class="nf">Vector3</span><span class="p">(-</span><span class="m">4.2</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.0</span><span class="p">));</span>
+<span class="n">Tint</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Color</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Tint</span><span class="p">),</span> <span class="k">new</span> <span class="nf">Color</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0.8</span><span class="p">,</span> <span class="m">0.2</span><span class="p">));</span>
+<span class="n">Equipped</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Enum</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Equipped</span><span class="p">),</span> <span class="n">Weapon</span><span class="p">.</span><span class="n">Sword</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>The compiler reports a mistake on the line itself: a use of <code class="language-plaintext highlighter-rouge">Health</code> above its <code class="language-plaintext highlighter-rouge">Define</code> line, a
@@ -167,8 +171,8 @@ second <code class="language-plaintext highlighter-rouge">Define</code> line for
 <span class="k">public</span> <span class="n">Text</span> <span class="n">Log</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 </code></pre></div></div>
 
-<p>A <code class="language-plaintext highlighter-rouge">Vector2</code>, <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Rotation</code> or enum variable, or any variable in a class that is not <code class="language-plaintext highlighter-rouge">partial</code>, is a
-property you write and assign with <code class="language-plaintext highlighter-rouge">Define</code> inside <code class="language-plaintext highlighter-rouge">Build()</code>:</p>
+<p>A variable in a class that is not <code class="language-plaintext highlighter-rouge">partial</code> is a property you write and assign with <code class="language-plaintext highlighter-rouge">Define</code>
+inside <code class="language-plaintext highlighter-rouge">Build()</code>:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="n">Var</span><span class="p">&lt;</span><span class="n">Vector3</span><span class="p">&gt;</span> <span class="n">Home</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
@@ -305,6 +309,17 @@ pairs. A variable’s <code class="language-plaintext highlighter-rouge">Set</co
 <code class="language-plaintext highlighter-rouge">Length</code>, <code class="language-plaintext highlighter-rouge">LengthSquared</code>, <code class="language-plaintext highlighter-rouge">Normalized</code>, <code class="language-plaintext highlighter-rouge">Dot(other)</code>, <code class="language-plaintext highlighter-rouge">DistanceTo(other)</code>, <code class="language-plaintext highlighter-rouge">WithX</code>, <code class="language-plaintext highlighter-rouge">WithY</code>, <code class="language-plaintext highlighter-rouge">WithZ</code>,
 and <code class="language-plaintext highlighter-rouge">Vector3ValueBlock.Cross(left, right)</code>. A rotation offers <code class="language-plaintext highlighter-rouge">Inverse</code>, <code class="language-plaintext highlighter-rouge">ApplyTo(vec)</code>,
 <code class="language-plaintext highlighter-rouge">AngleTo(other)</code> and <code class="language-plaintext highlighter-rouge">Compose(other)</code>.</p>
+
+<p>A <code class="language-plaintext highlighter-rouge">Vector3</code> value’s <code class="language-plaintext highlighter-rouge">X</code>, <code class="language-plaintext highlighter-rouge">Y</code> and <code class="language-plaintext highlighter-rouge">Z</code>, and a <code class="language-plaintext highlighter-rouge">Vector2</code> value’s <code class="language-plaintext highlighter-rouge">X</code> and <code class="language-plaintext highlighter-rouge">Y</code>, are public fields, which
+is what lets Unity save the value in an asset. C# can write one on a copy it holds, with the <code class="language-plaintext highlighter-rouge">f</code> a
+<code class="language-plaintext highlighter-rouge">Single</code> takes:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">offset</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+<span class="n">offset</span><span class="p">.</span><span class="n">Y</span> <span class="p">=</span> <span class="m">2.5f</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>A variable has no writable component: <code class="language-plaintext highlighter-rouge">Probe.X = 1</code> does not compile, and
+<code class="language-plaintext highlighter-rouge">Probe.Set(Probe.WithX(1))</code> replaces one component.</p>
 
 <p><code class="language-plaintext highlighter-rouge">Vector2</code> and <code class="language-plaintext highlighter-rouge">Vector3</code> are LunyScript’s own types, <code class="language-plaintext highlighter-rouge">CodeSmile.LunyScript.Vector2</code> and
 <code class="language-plaintext highlighter-rouge">CodeSmile.LunyScript.Vector3</code>, with the names Unity uses for its own. A script file imports no
