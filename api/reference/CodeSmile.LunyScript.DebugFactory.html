@@ -111,7 +111,7 @@ Struct DebugFactory  <a class="header-action link-secondary" title="View source"
 
   <h2 id="CodeSmile_LunyScript_DebugFactory_examples">Examples</h2>
   <pre><code class="lang-csharp">On.Ready(Debug.Log("ready"), Debug.Log(Health));
-On.FrameUpdate(If(Health &lt; 20).Then(Debug.Warn("low health", Health)));</code></pre>
+On.Update(If(Health &lt; 20).Then(Debug.Warn("low health", Health)));</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_DebugFactory_remarks">Remarks</h2>
@@ -121,7 +121,7 @@ this one.</p>
 <p>
     <b>Each call builds a block, and the block writes each time it runs.</b> A variable's
     value is read then, for the object the block runs on, so <code>Debug.Log(Health)</code> placed
-    in <code>On.FrameUpdate</code> writes that object's health on every frame. The line is the
+    in <code>On.Update</code> writes that object's health on every frame. The line is the
     message and value, then <code>(Script: &lt;script&gt;, Object: &lt;object&gt;)</code>, then the
     line the block was written on as a link: <code>Health = 15 (Script: PlayerScript, Object:
     Player)</code>. A variable shows its declared name; an expression such as
@@ -346,7 +346,7 @@ error. The script keeps running.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_CodeSmile_LunyScript_Number_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(If(Health &lt; 0).Then(Debug.Error(Health)));</code></pre>
+  <pre><code class="lang-csharp">On.Update(If(Health &lt; 0).Then(Debug.Error(Health)));</code></pre>
 
 
 
@@ -418,7 +418,7 @@ script keeps running.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Debug.Error(Health - Damage));</code></pre>
+  <pre><code class="lang-csharp">On.Update(Debug.Error(Health - Damage));</code></pre>
 
 
 
@@ -726,7 +726,7 @@ value, as an error. The script keeps running.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_System_String_CodeSmile_LunyScript_Number_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(If(Health &lt; 0).Then(Debug.Error("below zero", Health)));</code></pre>
+  <pre><code class="lang-csharp">On.Update(If(Health &lt; 0).Then(Debug.Error("below zero", Health)));</code></pre>
 
 
 
@@ -805,7 +805,7 @@ error. The script keeps running.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Error_System_String_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Debug.Error("overkill", Damage - Health));</code></pre>
+  <pre><code class="lang-csharp">On.Update(Debug.Error("overkill", Damage - Health));</code></pre>
 
 
 
@@ -1923,7 +1923,7 @@ warning.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_CodeSmile_LunyScript_Flag_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(If(!Alive).Then(Debug.Warn(Alive)));</code></pre>
+  <pre><code class="lang-csharp">On.Update(If(!Alive).Then(Debug.Warn(Alive)));</code></pre>
 
 
 
@@ -1995,7 +1995,7 @@ warning.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_CodeSmile_LunyScript_Number_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(If(Health &lt; 20).Then(Debug.Warn(Health)));</code></pre>
+  <pre><code class="lang-csharp">On.Update(If(Health &lt; 20).Then(Debug.Warn(Health)));</code></pre>
 
 
 
@@ -2067,7 +2067,7 @@ warning.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Debug.Warn(Health - Damage));</code></pre>
+  <pre><code class="lang-csharp">On.Update(Debug.Warn(Health - Damage));</code></pre>
 
 
 
@@ -2296,7 +2296,7 @@ as a warning.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_CodeSmile_LunyScript_Flag_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(If(!Alive).Then(Debug.Warn("down", Alive)));</code></pre>
+  <pre><code class="lang-csharp">On.Update(If(!Alive).Then(Debug.Warn("down", Alive)));</code></pre>
 
 
 
@@ -2375,7 +2375,7 @@ value, as a warning.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_CodeSmile_LunyScript_Number_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(If(Health &lt; 20).Then(Debug.Warn("low health", Health)));</code></pre>
+  <pre><code class="lang-csharp">On.Update(If(Health &lt; 20).Then(Debug.Warn("low health", Health)));</code></pre>
 
 
 
@@ -2454,7 +2454,7 @@ warning.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_DebugFactory_Warn_System_String_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Debug.Warn("after the hit", Health - Damage));</code></pre>
+  <pre><code class="lang-csharp">On.Update(Debug.Warn("after the hit", Health - Damage));</code></pre>
 
 
 

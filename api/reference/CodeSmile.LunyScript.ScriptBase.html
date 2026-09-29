@@ -131,7 +131,7 @@ public abstract class ScriptBase</code></pre>
     [Variable(true)] public Flag Alive { get; private set; }
     protected override void Build()
     {
-        On.FrameUpdate(If(Health &gt; 0.0).Then(Health.Add(-1.0)).Else(Alive.Set(false)));
+        On.Update(If(Health &gt; 0.0).Then(Health.Add(-1.0)).Else(Alive.Set(false)));
         When.Var(Alive).Changed(Health.Set(0.0));
     }
 }</code></pre>
@@ -461,7 +461,7 @@ Available during generated variable initialization or <code>Build()</code>.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_ScriptBase_Math_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Health.Set(Math.Clamp(Health + Healing, 0.0, 100.0)));</code></pre>
+  <pre><code class="lang-csharp">On.Update(Health.Set(Math.Clamp(Health + Healing, 0.0, 100.0)));</code></pre>
 
 
 
@@ -987,7 +987,7 @@ partial Script subclass, or keep explicit Var.Define calls inside Build.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_ScriptBase_ForEach_CodeSmile_LunyScript_HitsResult_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(ForEach(Pierced).Do(entry =&gt; If(entry.Distance &lt; 2).Then(Close.Add(1))));</code></pre>
+  <pre><code class="lang-csharp">On.Update(ForEach(Pierced).Do(entry =&gt; If(entry.Distance &lt; 2).Then(Close.Add(1))));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_ScriptBase_ForEach_CodeSmile_LunyScript_HitsResult_System_String_System_Int32__remarks">Remarks</h4>
@@ -1063,7 +1063,7 @@ refused.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_ScriptBase_ForEach_CodeSmile_LunyScript_OverlapsResult_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(ForEach(Nearby).Do(entry =&gt; Last.Set(entry.WorldPosition)));</code></pre>
+  <pre><code class="lang-csharp">On.Update(ForEach(Nearby).Do(entry =&gt; Last.Set(entry.WorldPosition)));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_ScriptBase_ForEach_CodeSmile_LunyScript_OverlapsResult_System_String_System_Int32__remarks">Remarks</h4>
@@ -1144,7 +1144,7 @@ it, a ForEach is already open, or this was called outside <code>Build()</code>.<
 
 
   <h4 class="section" id="CodeSmile_LunyScript_ScriptBase_ForEach__1_CodeSmile_LunyScript_ListHandle___0__System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(ForEach(Slots).Do(id =&gt; Hits.Add(id)));</code></pre>
+  <pre><code class="lang-csharp">On.Update(ForEach(Slots).Do(id =&gt; Hits.Add(id)));</code></pre>
 
 
 
@@ -1216,7 +1216,7 @@ refused.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_ScriptBase_ForEach__2_CodeSmile_LunyScript_MapHandle___0___1__System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(ForEach(Scores).Do((key, value) =&gt; Hits.Add(value)));</code></pre>
+  <pre><code class="lang-csharp">On.Update(ForEach(Scores).Do((key, value) =&gt; Hits.Add(value)));</code></pre>
 
 
 
@@ -1406,7 +1406,7 @@ whole <code>If</code> chain records the line it was written on, because <code>Th
 
 
   <h4 class="section" id="CodeSmile_LunyScript_ScriptBase_If_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(If(health &gt; 0.0).Then(health.Add(-1.0)));</code></pre>
+  <pre><code class="lang-csharp">On.Update(If(health &gt; 0.0).Then(health.Add(-1.0)));</code></pre>
 
 
 

@@ -238,7 +238,7 @@ public abstract class Script : ScriptBase</code></pre>
     [Variable(true)] public Flag Alive { get; private set; }
     protected override void Build()
     {
-        On.FrameUpdate(If(Alive).Then(Health.Add(-1.0)).Else(Alive.Set(false)));
+        On.Update(If(Alive).Then(Health.Add(-1.0)).Else(Alive.Set(false)));
     }
 }</code></pre>
 
@@ -280,7 +280,7 @@ script runs on. It hides <code>UnityEngine.Animator</code> inside a <code>Script
 
 
   <h4 class="section" id="CodeSmile_LunyScript_Script_Animator_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Animator.Number("Speed").Set(Speed));
+  <pre><code class="lang-csharp">On.Update(Animator.Number("Speed").Set(Speed));
 When.Input(jump).Performed(Animator.Trigger("Jump").Set());</code></pre>
 
 
@@ -752,7 +752,7 @@ family.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_Script_Net_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(If(Net.HasAuthority).Then(Score.Add(1.0)));</code></pre>
+  <pre><code class="lang-csharp">On.Update(If(Net.HasAuthority).Then(Score.Add(1.0)));</code></pre>
 
 
 
@@ -1205,7 +1205,7 @@ It hides <code>UnityEngine.Time</code> inside a script the same way <code>Transf
 
 
   <h4 class="section" id="CodeSmile_LunyScript_Script_Time_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.FrameUpdate(Age.Add(Time.Delta));</code></pre>
+  <pre><code class="lang-csharp">On.Update(Age.Add(Time.Delta));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_Script_Time_remarks">Remarks</h4>
