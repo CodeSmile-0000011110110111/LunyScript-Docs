@@ -123,11 +123,91 @@ returns <a class="xref" href="CodeSmile.LunyScript.SpacedCapsuleCastBuilder.html
 </h2>
 
 
+  <a id="CodeSmile_LunyScript_CapsuleCastBuilder_Along_" data-uid="CodeSmile.LunyScript.CapsuleCastBuilder.Along*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CapsuleCastBuilder_Along_CodeSmile_LunyScript_ScreenRay_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CapsuleCastBuilder.Along(CodeSmile.LunyScript.ScreenRay,System.String,System.Int32)">
+  Along(ScreenRay, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L315"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets where the capsule starts and which way it travels from a screen ray: the ray's origin on the camera's
+near plane and its direction into the screen, read from the camera once each time the query runs.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CapsuleCastBuilder Along(ScreenRay ray, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ScreenRay.html">ScreenRay</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>ray</code></dt></td>
+    <td style="width: 99%"><dd><p>A ray from <code>Camera.ScreenRay(position)</code> in this script's <code>Build()</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one: it records the authored line
+a diagnostic names.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.CapsuleCastBuilder.html">CapsuleCastBuilder</a></dt>
+    <dd><p>This query, which takes further clauses.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CapsuleCastBuilder_Along_CodeSmile_LunyScript_ScreenRay_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FrameUpdate(Collision.CapsuleCast().Height(2).Radius(0.5).Along(Camera.ScreenRay(point.Value)).Into(Hover));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CapsuleCastBuilder_Along_CodeSmile_LunyScript_ScreenRay_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><code>Along(ray)</code> is <code>From(ray.Origin).Towards(ray.Direction)</code> with one camera read, so it is
+written without <code>From</code>, <code>Offset</code> and <code>Towards</code>, and a screen ray is a world ray, so the query
+is not in local space. A ray the camera could not compute, for a position outside the view or without a
+camera, runs no query and clears the result. <code>Length</code> bounds the travel from the near plane.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This builder is a <code>default</code> that no verb produced, the query
+already has a ray, an origin, an offset or a direction, or <code class="paramref">ray</code> is a <code>default</code> or
+another script's.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_CapsuleCastBuilder_Draw_" data-uid="CodeSmile.LunyScript.CapsuleCastBuilder.Draw*"></a>
 
   <h3 id="CodeSmile_LunyScript_CapsuleCastBuilder_Draw_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CapsuleCastBuilder.Draw(System.String,System.Int32)">
   Draw(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L426"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L450"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Draws what each execution tested in the Editor's Scene view: the start volume, the travel
@@ -199,7 +279,7 @@ already draws.</p>
 
   <h3 id="CodeSmile_LunyScript_CapsuleCastBuilder_ExcludeSelf_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CapsuleCastBuilder.ExcludeSelf(System.String,System.Int32)">
   ExcludeSelf(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L405"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L429"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Leaves out this object's own colliders: those attached to its nearest enclosing Rigidbody, or, with
@@ -668,7 +748,7 @@ already has a height, or <code class="paramref">height</code> is null.</p>
 
   <h3 id="CodeSmile_LunyScript_CapsuleCastBuilder_IgnoreTriggers_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CapsuleCastBuilder.IgnoreTriggers(System.String,System.Int32)">
   IgnoreTriggers(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L385"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L409"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Leaves trigger colliders out, whatever the project's Queries Hit Triggers physics setting
@@ -735,7 +815,7 @@ already names its triggers.</p>
 
   <h3 id="CodeSmile_LunyScript_CapsuleCastBuilder_InLocalSpace" data-uid="CodeSmile.LunyScript.CapsuleCastBuilder.InLocalSpace">
   InLocalSpace()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L336"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L360"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Expresses the query in local axes: the origin object's, or this object's for a literal or omitted
@@ -783,7 +863,7 @@ axis.</p>
 
   <h3 id="CodeSmile_LunyScript_CapsuleCastBuilder_InWorldSpace" data-uid="CodeSmile.LunyScript.CapsuleCastBuilder.InWorldSpace">
   InWorldSpace()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L326"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L350"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Expresses the query in the scene's axes, which it does without this clause.</p>
@@ -829,7 +909,7 @@ world-space query needs its origin, and a cast its direction.</p>
 
   <h3 id="CodeSmile_LunyScript_CapsuleCastBuilder_IncludeTriggers_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CapsuleCastBuilder.IncludeTriggers(System.String,System.Int32)">
   IncludeTriggers(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L367"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L391"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reports trigger colliders too, whatever the project's Queries Hit Triggers physics setting
@@ -896,7 +976,7 @@ already names its triggers.</p>
 
   <h3 id="CodeSmile_LunyScript_CapsuleCastBuilder_Into_CodeSmile_LunyScript_HitResult_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CapsuleCastBuilder.Into(CodeSmile.LunyScript.HitResult,System.String,System.Int32)">
   Into(HitResult, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L448"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L472"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finishes the cast into a <code>Hit</code>: the nearest collider it touches, leaving out every collider the
@@ -974,7 +1054,7 @@ required clause is missing, or <code class="paramref">hit</code> was not declare
 
   <h3 id="CodeSmile_LunyScript_CapsuleCastBuilder_Into_CodeSmile_LunyScript_HitsResult_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CapsuleCastBuilder.Into(CodeSmile.LunyScript.HitsResult,System.String,System.Int32)">
   Into(HitsResult, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L471"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L495"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finishes the cast into a <code>Hits</code>: every collider it touches up to the capacity, nearest first, a
@@ -1052,7 +1132,7 @@ required clause is missing, or <code class="paramref">hits</code> was not declar
 
   <h3 id="CodeSmile_LunyScript_CapsuleCastBuilder_Layers_CodeSmile_LunyScript_LayerMask_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CapsuleCastBuilder.Layers(CodeSmile.LunyScript.LayerMask,System.String,System.Int32)">
   Layers(LayerMask, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L349"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L373"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Limits the query to the layers of a mask <code>Define.LayerMask</code> made.</p>
@@ -1128,7 +1208,7 @@ made.</p>
 
   <h3 id="CodeSmile_LunyScript_CapsuleCastBuilder_Length_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CapsuleCastBuilder.Length(CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   Length(NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L311"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/Collision/CapsuleCastBuilders.cs/#L335"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Sets how far the capsule travels, in world units, evaluated each time the query runs.</p>
