@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Class FileCloudSaveProvider | LunyScript API Reference ">
       
-      <meta name="description" content="The file-based Cloud Save provider: one file per key, under a directory the caller names. A first-class part of the product, not a test fixture; AGENTS.md rule 52. It is how every failure branch is tested without a network, and what makes the automated suite runnable with no credentials.">
+      <meta name="description" content="The file-based Cloud Save provider: one file per document, under a directory the caller names. A first-class part of the product, not a test fixture; AGENTS.md rule 52. It is how every failure branch is tested without a network, and what makes the automated suite runnable with no credentials.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -85,7 +85,7 @@ Class FileCloudSaveProvider  <a class="header-action link-secondary" title="View
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>The file-based Cloud Save provider: one file per key, under a directory the caller names.
+  <div class="markdown summary"><p>The file-based Cloud Save provider: one file per document, under a directory the caller names.
 <b>A first-class part of the product, not a test fixture</b>; AGENTS.md rule 52. It is how
 every failure branch is tested without a network, and what makes the automated suite runnable
 with no credentials.</p>
@@ -128,15 +128,16 @@ with no credentials.</p>
 
 
   <h2 id="CodeSmile_LunyScript_FileCloudSaveProvider_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>Every operation completes synchronously, inside the provider call; the gateway observes the
-outcome on its next per-frame poll, so a script sees the same event sequence it sees against a
-real service, one or more frames later rather than hundreds. Values are written in the
-invariant culture with the round-trip format, so a load returns exactly the <code>Double</code> that
-was saved.</p>
+  <div class="markdown level0 remarks"><p>Every operation does its work inside the provider call. By default the gateway observes the outcome on
+its next per-frame poll, so a script sees the same event sequence it sees against a real service, one
+or more frames later rather than hundreds; <a class="xref" href="CodeSmile.LunyScript.FileCloudSaveProvider.html#CodeSmile_LunyScript_FileCloudSaveProvider_DelayCompletion_System_Int32_">DelayCompletion(int)</a> holds each outcome back for a
+number of polls, which is how a test or a demonstration sees a request stay pending across frames.
+A document is stored as the JSON text the gateway hands over, UTF-8 without a byte order mark, in a
+file named after its key with the <code>.json</code> extension.</p>
 <p>
-    <b>Keys are case sensitive, on every file system.</b> <code>Save("Level1", 1.0)</code> and
-    <code>Save("level1", 2.0)</code> hold two separate values and <code>Load("Level1")</code> returns
-    1.0, on Windows and macOS as well as on Linux, which is how Unity Cloud Save behaves;
+    <b>Keys are case sensitive, on every file system.</b> <code>Save("Level1", ...)</code> and
+    <code>Save("level1", ...)</code> hold two separate documents and <code>Load("Level1")</code> returns the first,
+    on Windows and macOS as well as on Linux, which is how Unity Cloud Save behaves;
     <code>docs/slice-decisions.md</code> D5.14 records the decision and the file name it produces.
 </p>
 </div>
@@ -150,7 +151,7 @@ was saved.</p>
 
   <h3 id="CodeSmile_LunyScript_FileCloudSaveProvider__ctor_System_String_" data-uid="CodeSmile.LunyScript.FileCloudSaveProvider.#ctor(System.String)">
   FileCloudSaveProvider(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L45"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Creates a provider storing its files under one directory.</p>
@@ -201,11 +202,119 @@ whitespace.</p>
 </h2>
 
 
+  <a id="CodeSmile_LunyScript_FileCloudSaveProvider_DelayCompletion_" data-uid="CodeSmile.LunyScript.FileCloudSaveProvider.DelayCompletion*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FileCloudSaveProvider_DelayCompletion_System_Int32_" data-uid="CodeSmile.LunyScript.FileCloudSaveProvider.DelayCompletion(System.Int32)">
+  DelayCompletion(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L170"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Makes every later operation report that it is complete only after the gateway has polled it
+<code class="paramref">polls</code> times, which the gateway does once per frame. The work itself still
+happens inside the provider call, the way a service can store a document before its answer arrives.
+0, the default, reports each outcome on the first poll.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void DelayCompletion(int polls)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>polls</code></dt></td>
+    <td style="width: 99%"><dd><p>How many polls report the operation as still pending.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FileCloudSaveProvider_DelayCompletion_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">provider.DelayCompletion(30);   // each request stays pending for 30 frames</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">polls</code> is negative.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_FileCloudSaveProvider_Delete_" data-uid="CodeSmile.LunyScript.FileCloudSaveProvider.Delete*"></a>
+
+  <h3 id="CodeSmile_LunyScript_FileCloudSaveProvider_Delete_System_String_" data-uid="CodeSmile.LunyScript.FileCloudSaveProvider.Delete(System.String)">
+  Delete(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L119"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts removing the document stored under a key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public IAsyncOperation Delete(string key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>key</code></dt></td>
+    <td style="width: 99%"><dd><p>The document's name.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Platform.IAsyncOperation.html">IAsyncOperation</a></dt>
+    <dd><p>The operation the gateway polls. It succeeds when no document is stored under the key
+afterwards, whether or not one was stored before.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_FileCloudSaveProvider_Delete_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Succeeds when no file is left for the key, whether or not one existed.</p>
+</div>
+
+
+
+
   <a id="CodeSmile_LunyScript_FileCloudSaveProvider_Describe_" data-uid="CodeSmile.LunyScript.FileCloudSaveProvider.Describe*"></a>
 
   <h3 id="CodeSmile_LunyScript_FileCloudSaveProvider_Describe" data-uid="CodeSmile.LunyScript.FileCloudSaveProvider.Describe">
   Describe()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L142"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Names this provider for the gateway's log lines, so that a reader of the Console can
@@ -241,7 +350,7 @@ at C:/saves&quot;.</p>
 
   <h3 id="CodeSmile_LunyScript_FileCloudSaveProvider_FailNext_CodeSmile_LunyScript_OperationFailure_" data-uid="CodeSmile.LunyScript.FileCloudSaveProvider.FailNext(CodeSmile.LunyScript.OperationFailure)">
   FailNext(OperationFailure)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L155"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Makes the next operation, whichever it is, complete with <code class="paramref">failure</code>
@@ -289,10 +398,10 @@ network, which is the reason this provider exists; AGENTS.md rule 52.</p>
 
   <h3 id="CodeSmile_LunyScript_FileCloudSaveProvider_Load_System_String_" data-uid="CodeSmile.LunyScript.FileCloudSaveProvider.Load(System.String)">
   Load(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L94"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Starts loading one key's value.</p>
+  <div class="markdown level1 summary"><p>Starts reading the document stored under a key.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -311,7 +420,7 @@ network, which is the reason this provider exists; AGENTS.md rule 52.</p>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>key</code></dt></td>
-    <td style="width: 99%"><dd><p>The key.</p>
+    <td style="width: 99%"><dd><p>The document's name.</p>
 </dd></td>
   </tr>
   </dl>
@@ -320,7 +429,7 @@ network, which is the reason this provider exists; AGENTS.md rule 52.</p>
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.ICloudLoadOperation.html">ICloudLoadOperation</a></dt>
-    <dd><p>The operation the gateway polls. A key that does not exist completes with
+    <dd><p>The operation the gateway polls. A key with no stored document completes with
 <code>OperationFailure.NotFound</code>.</p>
 </dd>
   </dl>
@@ -337,17 +446,17 @@ network, which is the reason this provider exists; AGENTS.md rule 52.</p>
 
   <a id="CodeSmile_LunyScript_FileCloudSaveProvider_Save_" data-uid="CodeSmile.LunyScript.FileCloudSaveProvider.Save*"></a>
 
-  <h3 id="CodeSmile_LunyScript_FileCloudSaveProvider_Save_System_String_System_Double_" data-uid="CodeSmile.LunyScript.FileCloudSaveProvider.Save(System.String,System.Double)">
-  Save(string, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_FileCloudSaveProvider_Save_System_String_System_String_" data-uid="CodeSmile.LunyScript.FileCloudSaveProvider.Save(System.String,System.String)">
+  Save(string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L74"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Starts saving one value under one key.</p>
+  <div class="markdown level1 summary"><p>Starts storing one document under its key, replacing any copy stored before.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public IAsyncOperation Save(string key, double value)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public IAsyncOperation Save(string key, string document)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -361,14 +470,14 @@ network, which is the reason this provider exists; AGENTS.md rule 52.</p>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>key</code></dt></td>
-    <td style="width: 99%"><dd><p>The key. The gateway validates it at build time; a provider may refuse a key
-it cannot store with <code>OperationFailure.Denied</code>.</p>
+    <td style="width: 99%"><dd><p>The document's name. The script's build validated it; a provider may refuse a key it
+cannot store with <code>OperationFailure.Denied</code>.</p>
 </dd></td>
   </tr>
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
-    <td style="width: 99%"><dd><p>The value to store.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>document</code></dt></td>
+    <td style="width: 99%"><dd><p>The whole document as JSON text.</p>
 </dd></td>
   </tr>
   </dl>
@@ -395,7 +504,7 @@ it cannot store with <code>OperationFailure.Denied</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_FileCloudSaveProvider_SignIn" data-uid="CodeSmile.LunyScript.FileCloudSaveProvider.SignIn">
   SignIn()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/FileCloudSaveProvider.cs/#L56"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts signing in. Called by the gateway once, when the first request arrives.

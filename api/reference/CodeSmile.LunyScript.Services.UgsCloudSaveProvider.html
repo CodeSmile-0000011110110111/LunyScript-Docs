@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Class UgsCloudSaveProvider | LunyScript API Reference ">
       
-      <meta name="description" content="The Unity Gaming Services Cloud Save backend: initialises the services, signs in anonymously, and saves and loads player data, all behind  so the gateway polls and nothing awaits; AGENTS.md rule 51.">
+      <meta name="description" content="The Unity Gaming Services Cloud Save backend: initialises the services, signs in anonymously, and uploads, downloads and deletes one document per key in the signed-in player&#39;s data, all behind  so the gateway polls and nothing awaits; AGENTS.md rule 51.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_Services_UgsCloudSaveProvider" data-uid="CodeSmile.LunyScript.Services.UgsCloudSaveProvider" class="text-break">
-Class UgsCloudSaveProvider  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Services/Runtime/UgsCloudSaveProvider.cs/#L29"><i class="bi bi-code-slash"></i></a>
+Class UgsCloudSaveProvider  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Services/Runtime/UgsCloudSaveProvider.cs/#L35"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -86,8 +86,8 @@ Class UgsCloudSaveProvider  <a class="header-action link-secondary" title="View 
   </div>
 
   <div class="markdown summary"><p>The Unity Gaming Services Cloud Save backend: initialises the services, signs in anonymously,
-and saves and loads player data, all behind <a class="xref" href="CodeSmile.LunyScript.Platform.IAsyncOperation.html">IAsyncOperation</a> so the gateway
-polls and nothing awaits; AGENTS.md rule 51.</p>
+and uploads, downloads and deletes one document per key in the signed-in player's data, all
+behind <a class="xref" href="CodeSmile.LunyScript.Platform.IAsyncOperation.html">IAsyncOperation</a> so the gateway polls and nothing awaits; AGENTS.md rule 51.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -129,9 +129,13 @@ polls and nothing awaits; AGENTS.md rule 51.</p>
   <h2 id="CodeSmile_LunyScript_Services_UgsCloudSaveProvider_remarks">Remarks</h2>
   <div class="markdown level0 remarks"><p>Needs the project to be linked to a Unity Cloud project; the link lives in
 <code>ProjectSettings/ProjectSettings.asset</code> as <code>cloudProjectId</code> and
-<code>organizationId</code>. Every failure is classified once, from
+<code>organizationId</code>. A document is stored as one JSON object under its key, the settled answer
+&quot;One stored value for the whole document&quot;, in the player data a client may write, which Cloud Save
+calls the Default access class. Every failure is classified once, from
 <code>RequestFailedException.ErrorCode</code>, into an <a class="xref" href="CodeSmile.LunyScript.OperationFailure.html">OperationFailure</a>; a failure
-that maps to no narrower reason is Unknown and is logged with the original message.</p>
+that maps to no narrower reason is Unknown and is logged with the original message. The package
+decides when a request has timed out and reports it as <code>CommonErrorCodes.Timeout</code>; this
+provider adds no deadline.</p>
 </div>
 
 
@@ -139,11 +143,65 @@ that maps to no narrower reason is Unknown and is logged with the original messa
 </h2>
 
 
+  <a id="CodeSmile_LunyScript_Services_UgsCloudSaveProvider_Delete_" data-uid="CodeSmile.LunyScript.Services.UgsCloudSaveProvider.Delete*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Services_UgsCloudSaveProvider_Delete_System_String_" data-uid="CodeSmile.LunyScript.Services.UgsCloudSaveProvider.Delete(System.String)">
+  Delete(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Services/Runtime/UgsCloudSaveProvider.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts removing the document stored under a key.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public IAsyncOperation Delete(string key)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>key</code></dt></td>
+    <td style="width: 99%"><dd><p>The document's name.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Platform.IAsyncOperation.html">IAsyncOperation</a></dt>
+    <dd><p>The operation the gateway polls. It succeeds when no document is stored under the key
+afterwards, whether or not one was stored before.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Services_UgsCloudSaveProvider_Delete_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Cloud Save reports nothing about a key that holds no data, so a delete of an absent
+document succeeds.</p>
+</div>
+
+
+
+
   <a id="CodeSmile_LunyScript_Services_UgsCloudSaveProvider_Describe_" data-uid="CodeSmile.LunyScript.Services.UgsCloudSaveProvider.Describe*"></a>
 
   <h3 id="CodeSmile_LunyScript_Services_UgsCloudSaveProvider_Describe" data-uid="CodeSmile.LunyScript.Services.UgsCloudSaveProvider.Describe">
   Describe()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Services/Runtime/UgsCloudSaveProvider.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Services/Runtime/UgsCloudSaveProvider.cs/#L60"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Names this provider for the gateway's log lines, so that a reader of the Console can
@@ -179,10 +237,10 @@ at C:/saves&quot;.</p>
 
   <h3 id="CodeSmile_LunyScript_Services_UgsCloudSaveProvider_Load_System_String_" data-uid="CodeSmile.LunyScript.Services.UgsCloudSaveProvider.Load(System.String)">
   Load(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Services/Runtime/UgsCloudSaveProvider.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Services/Runtime/UgsCloudSaveProvider.cs/#L48"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Starts loading one key's value.</p>
+  <div class="markdown level1 summary"><p>Starts reading the document stored under a key.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -201,7 +259,7 @@ at C:/saves&quot;.</p>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>key</code></dt></td>
-    <td style="width: 99%"><dd><p>The key.</p>
+    <td style="width: 99%"><dd><p>The document's name.</p>
 </dd></td>
   </tr>
   </dl>
@@ -210,7 +268,7 @@ at C:/saves&quot;.</p>
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.ICloudLoadOperation.html">ICloudLoadOperation</a></dt>
-    <dd><p>The operation the gateway polls. A key that does not exist completes with
+    <dd><p>The operation the gateway polls. A key with no stored document completes with
 <code>OperationFailure.NotFound</code>.</p>
 </dd>
   </dl>
@@ -227,17 +285,17 @@ at C:/saves&quot;.</p>
 
   <a id="CodeSmile_LunyScript_Services_UgsCloudSaveProvider_Save_" data-uid="CodeSmile.LunyScript.Services.UgsCloudSaveProvider.Save*"></a>
 
-  <h3 id="CodeSmile_LunyScript_Services_UgsCloudSaveProvider_Save_System_String_System_Double_" data-uid="CodeSmile.LunyScript.Services.UgsCloudSaveProvider.Save(System.String,System.Double)">
-  Save(string, double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Services/Runtime/UgsCloudSaveProvider.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_Services_UgsCloudSaveProvider_Save_System_String_System_String_" data-uid="CodeSmile.LunyScript.Services.UgsCloudSaveProvider.Save(System.String,System.String)">
+  Save(string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Services/Runtime/UgsCloudSaveProvider.cs/#L43"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Starts saving one value under one key.</p>
+  <div class="markdown level1 summary"><p>Starts storing one document under its key, replacing any copy stored before.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public IAsyncOperation Save(string key, double value)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public IAsyncOperation Save(string key, string document)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -251,14 +309,14 @@ at C:/saves&quot;.</p>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>key</code></dt></td>
-    <td style="width: 99%"><dd><p>The key. The gateway validates it at build time; a provider may refuse a key
-it cannot store with <code>OperationFailure.Denied</code>.</p>
+    <td style="width: 99%"><dd><p>The document's name. The script's build validated it; a provider may refuse a key it
+cannot store with <code>OperationFailure.Denied</code>.</p>
 </dd></td>
   </tr>
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
-    <td style="width: 99%"><dd><p>The value to store.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>document</code></dt></td>
+    <td style="width: 99%"><dd><p>The whole document as JSON text.</p>
 </dd></td>
   </tr>
   </dl>
@@ -277,6 +335,10 @@ it cannot store with <code>OperationFailure.Denied</code>.</p>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_Services_UgsCloudSaveProvider_Save_System_String_System_String__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The JSON text is parsed into an object, so Cloud Save stores the document's fields as
+fields rather than as one escaped string.</p>
+</div>
 
 
 
@@ -285,7 +347,7 @@ it cannot store with <code>OperationFailure.Denied</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_Services_UgsCloudSaveProvider_SignIn" data-uid="CodeSmile.LunyScript.Services.UgsCloudSaveProvider.SignIn">
   SignIn()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Services/Runtime/UgsCloudSaveProvider.cs/#L32"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Services/Runtime/UgsCloudSaveProvider.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts signing in. Called by the gateway once, when the first request arrives.
@@ -319,7 +381,7 @@ A provider that needs no sign-in returns an already-completed operation.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Services/Runtime/UgsCloudSaveProvider.cs/#L29" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Services/Runtime/UgsCloudSaveProvider.cs/#L35" class="edit-link">Edit this page</a>
         </div>
 
 

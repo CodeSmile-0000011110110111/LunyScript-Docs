@@ -1031,6 +1031,20 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "reference/CodeSmile.LunyScript.CloudDeleteBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "reference/CodeSmile.LunyScript.CloudDeleteBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "CodeSmile.LunyScript.CloudDeleteBuilder",
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.CloudDeleteBuilder.yml\" sourcestartlinenumber=\"1\">What <code>Cloud.Delete(document)</code> returns: a delete of the cloud copy that becomes a block when\n<xref href=\"CodeSmile.LunyScript.CloudDeleteBuilder.As(CodeSmile.LunyScript.Operation%2cSystem.String%2cSystem.Int32)\" data-throw-if-not-resolved=\"false\"></xref> binds the operation handle. An unbound delete is refused when <code>Build()</code>\nfinishes.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "reference/CodeSmile.LunyScript.CloudFactory.yml",
       "output": {
         ".html": {
@@ -1041,7 +1055,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "CodeSmile.LunyScript.CloudFactory",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.CloudFactory.yml\" sourcestartlinenumber=\"1\">The <code>Cloud</code> surface inside <code>Build()</code>: builds the start blocks for Cloud Save. A\nstart block enqueues and returns in the same call; the outcome arrives through\n<code>When.Cloud(key)</code>, and, for a start bound with <code>.As(handle)</code>, through\n<code>When.Cloud(handle)</code> and <code>When.Operation(handle)</code>. AGENTS.md rule 50.</p>\n"
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.CloudFactory.yml\" sourcestartlinenumber=\"1\">The <code>Cloud</code> surface inside <code>Build()</code>: uploads a declared document to the signed-in\nplayer's Cloud Save data, downloads it back, and deletes the cloud copy. Each start is one attempt\non an operation handle, bound with <code>.As(handle)</code>, which is required; the outcome arrives through\n<code>When.Cloud(handle)</code> and <code>When.Operation(handle)</code>. AGENTS.md rule 50.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -1055,21 +1069,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "CodeSmile.LunyScript.CloudLoadBuilder",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.CloudLoadBuilder.yml\" sourcestartlinenumber=\"1\">What <code>Cloud.Load(key)</code> returns: an unbound load when it is used as a block, or a load that\nnames the variable its value is written into after <xref href=\"CodeSmile.LunyScript.CloudLoadBuilder.Into(CodeSmile.LunyScript.Number)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "reference/CodeSmile.LunyScript.CloudLoadIntoBuilder.yml",
-      "output": {
-        ".html": {
-          "relative_path": "reference/CodeSmile.LunyScript.CloudLoadIntoBuilder.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "CodeSmile.LunyScript.CloudLoadIntoBuilder",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.CloudLoadIntoBuilder.yml\" sourcestartlinenumber=\"1\">What <code>Cloud.Load(key).Into(target)</code> returns: a load that becomes a block when\n<xref href=\"CodeSmile.LunyScript.CloudLoadIntoBuilder.As(CodeSmile.LunyScript.Operation%2cSystem.String%2cSystem.Int32)\" data-throw-if-not-resolved=\"false\"></xref> binds the operation handle.</p>\n"
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.CloudLoadBuilder.yml\" sourcestartlinenumber=\"1\">What <code>Cloud.Load(document)</code> returns: a download that becomes a block when <xref href=\"CodeSmile.LunyScript.CloudLoadBuilder.As(CodeSmile.LunyScript.Operation%2cSystem.String%2cSystem.Int32)\" data-throw-if-not-resolved=\"false\"></xref> binds\nthe operation handle. An unbound download is refused when <code>Build()</code> finishes.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -1083,7 +1083,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "CodeSmile.LunyScript.CloudSaveBuilder",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.CloudSaveBuilder.yml\" sourcestartlinenumber=\"1\">What <code>Cloud.Save(key, value)</code> returns: an unbound save when it is used as a block, or a\nsave bound to an operation handle after <xref href=\"CodeSmile.LunyScript.CloudSaveBuilder.As(CodeSmile.LunyScript.Operation%2cSystem.String%2cSystem.Int32)\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.CloudSaveBuilder.yml\" sourcestartlinenumber=\"1\">What <code>Cloud.Save(document)</code> returns: an upload that becomes a block when <xref href=\"CodeSmile.LunyScript.CloudSaveBuilder.As(CodeSmile.LunyScript.Operation%2cSystem.String%2cSystem.Int32)\" data-throw-if-not-resolved=\"false\"></xref> binds\nthe operation handle. An unbound upload is refused when <code>Build()</code> finishes.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -1097,21 +1097,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "CodeSmile.LunyScript.CloudSaveGateway",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.CloudSaveGateway.yml\" sourcestartlinenumber=\"1\">Owns every in-flight Cloud Save request for one <xref href=\"CodeSmile.LunyScript.ScriptRunner\" data-throw-if-not-resolved=\"false\"></xref>, keyed by the save\nkey. Signs in when the first request arrives, queues requests made before the service is\nready, coalesces duplicates, polls each operation once per frame, and classifies every failure\nonce into an <xref href=\"CodeSmile.LunyScript.OperationFailure\" data-throw-if-not-resolved=\"false\"></xref>. No script and no block ever sees a <code>Task</code>\nor an exception type; AGENTS.md section 12.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "reference/CodeSmile.LunyScript.CloudWatchBuilder.yml",
-      "output": {
-        ".html": {
-          "relative_path": "reference/CodeSmile.LunyScript.CloudWatchBuilder.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "CodeSmile.LunyScript.CloudWatchBuilder",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.CloudWatchBuilder.yml\" sourcestartlinenumber=\"1\">What <code>When.Cloud(key)</code> returns: registers blocks against one key's Cloud Save outcomes.\nEach registration declares a hidden counter-shadow variable at build time and is polled once\nper frame after <code>On.Update</code>, the same shape <code>When.Var(x).Changed</code> has.</p>\n"
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.CloudSaveGateway.yml\" sourcestartlinenumber=\"1\">Owns every cloud upload, download and delete of a document one <xref href=\"CodeSmile.LunyScript.ScriptRunner\" data-throw-if-not-resolved=\"false\"></xref>'s scripts\nstart: signs in when the first request arrives, queues requests in the order their blocks ran, sends\none request per document at a time, polls each operation once per frame, and completes each request's\nattempts with its classified outcome. No script and no block ever sees a <code>Task</code> or an exception\ntype; AGENTS.md section 12.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -1881,7 +1867,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "CodeSmile.LunyScript.Document",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.Document.yml\" sourcestartlinenumber=\"1\">A handle to one declared document: a named, versioned set of variables that\n<code>Progress.Save</code> and <code>Progress.Load</code>, or <code>Settings.Save</code> and\n<code>Settings.Load</code>, keep in the user's local storage. Declared with\n<code>Define.Document(nameof(X))</code> inside <code>Build()</code>.</p>\n"
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.Document.yml\" sourcestartlinenumber=\"1\">A handle to one declared document: a named, versioned set of variables that\n<code>Progress.Save</code> and <code>Progress.Load</code>, or <code>Settings.Save</code> and\n<code>Settings.Load</code>, keep in the user's local storage, and <code>Cloud.Save</code>, <code>Cloud.Load</code>\nand <code>Cloud.Delete</code> keep in the signed-in player's Cloud Save data. Declared with\n<code>Define.Document(nameof(X))</code> inside <code>Build()</code>.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -2133,7 +2119,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "CodeSmile.LunyScript.FileCloudSaveProvider",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.FileCloudSaveProvider.yml\" sourcestartlinenumber=\"1\">The file-based Cloud Save provider: one file per key, under a directory the caller names.\n<b>A first-class part of the product, not a test fixture</b>; AGENTS.md rule 52. It is how\nevery failure branch is tested without a network, and what makes the automated suite runnable\nwith no credentials.</p>\n"
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.FileCloudSaveProvider.yml\" sourcestartlinenumber=\"1\">The file-based Cloud Save provider: one file per document, under a directory the caller names.\n<b>A first-class part of the product, not a test fixture</b>; AGENTS.md rule 52. It is how\nevery failure branch is tested without a network, and what makes the automated suite runnable\nwith no credentials.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -2455,7 +2441,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "CodeSmile.LunyScript.ICloudLoadOperation",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.ICloudLoadOperation.yml\" sourcestartlinenumber=\"1\">A load in flight. Adds the loaded value to <xref href=\"CodeSmile.LunyScript.Platform.IAsyncOperation\" data-throw-if-not-resolved=\"false\"></xref>; the value is\nmeaningful only once the operation completed successfully.</p>\n"
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.ICloudLoadOperation.yml\" sourcestartlinenumber=\"1\">A load in flight. Adds the loaded document to <xref href=\"CodeSmile.LunyScript.Platform.IAsyncOperation\" data-throw-if-not-resolved=\"false\"></xref>; the document is\nmeaningful only once the operation completed successfully.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -2469,7 +2455,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "CodeSmile.LunyScript.ICloudSaveProvider",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.ICloudSaveProvider.yml\" sourcestartlinenumber=\"1\">What a Cloud Save backend provides to the <xref href=\"CodeSmile.LunyScript.CloudSaveGateway\" data-throw-if-not-resolved=\"false\"></xref>: sign-in, a save and\na load, each returned as an operation the gateway polls once per frame. Script code never sees\nthis type; it sees start blocks and outcome events. AGENTS.md section 12.</p>\n"
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.ICloudSaveProvider.yml\" sourcestartlinenumber=\"1\">What a Cloud Save backend provides to the <xref href=\"CodeSmile.LunyScript.CloudSaveGateway\" data-throw-if-not-resolved=\"false\"></xref>: sign-in, and the upload,\ndownload and delete of one whole document, each returned as an operation the gateway polls once per\nframe. Script code never sees this type; it sees start blocks and outcome events. AGENTS.md section 12.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -4345,7 +4331,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "CodeSmile.LunyScript.OperationWatchBuilder",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.OperationWatchBuilder.yml\" sourcestartlinenumber=\"1\">What <code>When.Operation(handle)</code> returns: registers blocks against one attempt's classified\noutcomes. Each registration declares a hidden counter-shadow variable at build time and is\npolled once per frame after <code>On.Update</code>, the same shape\n<code>When.Cloud(key).Saved</code> has.</p>\n"
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.OperationWatchBuilder.yml\" sourcestartlinenumber=\"1\">What <code>When.Operation(handle)</code> returns: registers blocks against one attempt's classified\noutcomes. Each registration declares a hidden counter-shadow variable at build time and is\npolled once per frame after <code>On.Update</code>, the same shape\n<code>When.Var(x).Changed</code> has.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -5647,7 +5633,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "CodeSmile.LunyScript.Services.UgsCloudSaveProvider",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.Services.UgsCloudSaveProvider.yml\" sourcestartlinenumber=\"1\">The Unity Gaming Services Cloud Save backend: initialises the services, signs in anonymously,\nand saves and loads player data, all behind <xref href=\"CodeSmile.LunyScript.Platform.IAsyncOperation\" data-throw-if-not-resolved=\"false\"></xref> so the gateway\npolls and nothing awaits; AGENTS.md rule 51.</p>\n"
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.Services.UgsCloudSaveProvider.yml\" sourcestartlinenumber=\"1\">The Unity Gaming Services Cloud Save backend: initialises the services, signs in anonymously,\nand uploads, downloads and deletes one document per key in the signed-in player's data, all\nbehind <xref href=\"CodeSmile.LunyScript.Platform.IAsyncOperation\" data-throw-if-not-resolved=\"false\"></xref> so the gateway polls and nothing awaits; AGENTS.md rule 51.</p>\n"
     },
     {
       "type": "ManagedReference",

@@ -167,11 +167,11 @@ each authored operation to it, and reports a refused one once.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.CloudSaveGateway.html">CloudSaveGateway</a></dt>
-      <dd><p>Owns every in-flight Cloud Save request for one <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html">ScriptRunner</a>, keyed by the save
-key. Signs in when the first request arrives, queues requests made before the service is
-ready, coalesces duplicates, polls each operation once per frame, and classifies every failure
-once into an <a class="xref" href="CodeSmile.LunyScript.OperationFailure.html">OperationFailure</a>. No script and no block ever sees a <code>Task</code>
-or an exception type; AGENTS.md section 12.</p>
+      <dd><p>Owns every cloud upload, download and delete of a document one <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html">ScriptRunner</a>'s scripts
+start: signs in when the first request arrives, queues requests in the order their blocks ran, sends
+one request per document at a time, polls each operation once per frame, and completes each request's
+attempts with its classified outcome. No script and no block ever sees a <code>Task</code> or an exception
+type; AGENTS.md section 12.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -366,7 +366,7 @@ test says so. It reports the native Loaded and Unloaded phases the way Unity's c
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.FileCloudSaveProvider.html">FileCloudSaveProvider</a></dt>
-      <dd><p>The file-based Cloud Save provider: one file per key, under a directory the caller names.
+      <dd><p>The file-based Cloud Save provider: one file per document, under a directory the caller names.
 <b>A first-class part of the product, not a test fixture</b>; AGENTS.md rule 52. It is how
 every failure branch is tested without a network, and what makes the automated suite runnable
 with no credentials.</p>
@@ -950,36 +950,30 @@ the selector.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CloudDeleteBuilder.html">CloudDeleteBuilder</a></dt>
+      <dd><p>What <code>Cloud.Delete(document)</code> returns: a delete of the cloud copy that becomes a block when
+<a class="xref" href="CodeSmile.LunyScript.CloudDeleteBuilder.html#CodeSmile_LunyScript_CloudDeleteBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle. An unbound delete is refused when <code>Build()</code>
+finishes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.CloudFactory.html">CloudFactory</a></dt>
-      <dd><p>The <code>Cloud</code> surface inside <code>Build()</code>: builds the start blocks for Cloud Save. A
-start block enqueues and returns in the same call; the outcome arrives through
-<code>When.Cloud(key)</code>, and, for a start bound with <code>.As(handle)</code>, through
+      <dd><p>The <code>Cloud</code> surface inside <code>Build()</code>: uploads a declared document to the signed-in
+player's Cloud Save data, downloads it back, and deletes the cloud copy. Each start is one attempt
+on an operation handle, bound with <code>.As(handle)</code>, which is required; the outcome arrives through
 <code>When.Cloud(handle)</code> and <code>When.Operation(handle)</code>. AGENTS.md rule 50.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.CloudLoadBuilder.html">CloudLoadBuilder</a></dt>
-      <dd><p>What <code>Cloud.Load(key)</code> returns: an unbound load when it is used as a block, or a load that
-names the variable its value is written into after <a class="xref" href="CodeSmile.LunyScript.CloudLoadBuilder.html#CodeSmile_LunyScript_CloudLoadBuilder_Into_CodeSmile_LunyScript_Number_">Into(Number)</a>.</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="CodeSmile.LunyScript.CloudLoadIntoBuilder.html">CloudLoadIntoBuilder</a></dt>
-      <dd><p>What <code>Cloud.Load(key).Into(target)</code> returns: a load that becomes a block when
-<a class="xref" href="CodeSmile.LunyScript.CloudLoadIntoBuilder.html#CodeSmile_LunyScript_CloudLoadIntoBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle.</p>
+      <dd><p>What <code>Cloud.Load(document)</code> returns: a download that becomes a block when <a class="xref" href="CodeSmile.LunyScript.CloudLoadBuilder.html#CodeSmile_LunyScript_CloudLoadBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds
+the operation handle. An unbound download is refused when <code>Build()</code> finishes.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.CloudSaveBuilder.html">CloudSaveBuilder</a></dt>
-      <dd><p>What <code>Cloud.Save(key, value)</code> returns: an unbound save when it is used as a block, or a
-save bound to an operation handle after <a class="xref" href="CodeSmile.LunyScript.CloudSaveBuilder.html#CodeSmile_LunyScript_CloudSaveBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a>.</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="CodeSmile.LunyScript.CloudWatchBuilder.html">CloudWatchBuilder</a></dt>
-      <dd><p>What <code>When.Cloud(key)</code> returns: registers blocks against one key's Cloud Save outcomes.
-Each registration declares a hidden counter-shadow variable at build time and is polled once
-per frame after <code>On.Update</code>, the same shape <code>When.Var(x).Changed</code> has.</p>
+      <dd><p>What <code>Cloud.Save(document)</code> returns: an upload that becomes a block when <a class="xref" href="CodeSmile.LunyScript.CloudSaveBuilder.html#CodeSmile_LunyScript_CloudSaveBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds
+the operation handle. An unbound upload is refused when <code>Build()</code> finishes.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1135,7 +1129,8 @@ running any block or script code.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.Document.html">Document</a></dt>
       <dd><p>A handle to one declared document: a named, versioned set of variables that
 <code>Progress.Save</code> and <code>Progress.Load</code>, or <code>Settings.Save</code> and
-<code>Settings.Load</code>, keep in the user's local storage. Declared with
+<code>Settings.Load</code>, keep in the user's local storage, and <code>Cloud.Save</code>, <code>Cloud.Load</code>
+and <code>Cloud.Delete</code> keep in the signed-in player's Cloud Save data. Declared with
 <code>Define.Document(nameof(X))</code> inside <code>Build()</code>.</p>
 </dd>
     </dl>
@@ -1695,7 +1690,7 @@ attempt at a time.</p>
       <dd><p>What <code>When.Operation(handle)</code> returns: registers blocks against one attempt's classified
 outcomes. Each registration declares a hidden counter-shadow variable at build time and is
 polled once per frame after <code>On.Update</code>, the same shape
-<code>When.Cloud(key).Saved</code> has.</p>
+<code>When.Var(x).Changed</code> has.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2595,15 +2590,15 @@ sees this type; it sees the <code>View</code> and <code>Camera</code> surfaces.<
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.ICloudLoadOperation.html">ICloudLoadOperation</a></dt>
-      <dd><p>A load in flight. Adds the loaded value to <a class="xref" href="CodeSmile.LunyScript.Platform.IAsyncOperation.html">IAsyncOperation</a>; the value is
+      <dd><p>A load in flight. Adds the loaded document to <a class="xref" href="CodeSmile.LunyScript.Platform.IAsyncOperation.html">IAsyncOperation</a>; the document is
 meaningful only once the operation completed successfully.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.ICloudSaveProvider.html">ICloudSaveProvider</a></dt>
-      <dd><p>What a Cloud Save backend provides to the <a class="xref" href="CodeSmile.LunyScript.CloudSaveGateway.html">CloudSaveGateway</a>: sign-in, a save and
-a load, each returned as an operation the gateway polls once per frame. Script code never sees
-this type; it sees start blocks and outcome events. AGENTS.md section 12.</p>
+      <dd><p>What a Cloud Save backend provides to the <a class="xref" href="CodeSmile.LunyScript.CloudSaveGateway.html">CloudSaveGateway</a>: sign-in, and the upload,
+download and delete of one whole document, each returned as an operation the gateway polls once per
+frame. Script code never sees this type; it sees start blocks and outcome events. AGENTS.md section 12.</p>
 </dd>
     </dl>
     <dl class="jumplist">
