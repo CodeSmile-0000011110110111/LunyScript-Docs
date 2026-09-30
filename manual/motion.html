@@ -191,6 +191,86 @@ at the step before that, as a <code class="language-plaintext highlighter-rouge"
 <code class="language-plaintext highlighter-rouge">Build()</code> opts this script type into the per-step copy that produces it, so a script type that never
 reads it stores no previous position.</p>
 
+<h2 id="flocking-an-objects-children">Flocking an object’s children</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Motion.FlockChildren()</code> moves the children of the object the script runs on,
+not the object itself. Its active direct children fly as one flock toward a
+goal and keep their distance from each other:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Swarm</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Goal</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">LateUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">FlockChildren</span><span class="p">().</span><span class="nf">Towards</span><span class="p">(</span><span class="n">Goal</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">Within</span><span class="p">(</span><span class="m">6</span><span class="p">).</span><span class="nf">Separation</span><span class="p">(</span><span class="m">0.8</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">5</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Towards(Goal)</code> is required: an object in the scene, declared with
+<code class="language-plaintext highlighter-rouge">Bind.Object()</code>. Its position is read every frame. The other three are
+optional, each at most once and in any order:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Clause</th>
+      <th>Meaning</th>
+      <th>Without it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">AtSpeed(n)</code></td>
+      <td>The fastest a child moves, in world units per second.</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Within(n)</code></td>
+      <td>A child this close to the goal or closer is attracted.</td>
+      <td>No limit</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Separation(n)</code></td>
+      <td>The distance children keep from each other.</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The first call captures the active direct children and where they are. From
+then on the flock keeps each child’s position itself and writes it every
+frame, so a child something else moves is put back. Moving, turning or scaling
+the object carries the whole flock with it, and speed, distance and range stay
+in world units however the object is scaled. Only the position is written:
+rotation and scale are left alone, and nothing collides.</p>
+
+<p>A child farther from the goal than <code class="language-plaintext highlighter-rouge">Within</code> is not attracted: it keeps its
+distance from the others and slows to a stop, and it flies to the goal again
+once the goal comes back within range. The same happens while the goal’s
+object is inactive or destroyed.</p>
+
+<p>Write the call in <code class="language-plaintext highlighter-rouge">On.Update</code> or <code class="language-plaintext highlighter-rouge">On.LateUpdate</code>, where it runs every frame.
+A frame without the call ends the flock: the next call captures the children
+again, as they are then. That is how you stop and restart it, with an <code class="language-plaintext highlighter-rouge">If</code>
+around it or a state that places it. A child that is destroyed, deactivated or
+moved to another parent leaves the flock; a child added or activated joins at
+the next capture.</p>
+
+<p>An object is moved by one flock call per frame. A second call on the same
+object in the same frame, from any script on it, is ignored and reported once,
+and so is a call in any other event.</p>
+
+<p>For a swarm that circles the player, make the goal an invisible child of the
+player that orbits it:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">RotateAround</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="n">Parent</span><span class="p">.</span><span class="n">WorldPosition</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">By</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">144</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">KeepRotation</span><span class="p">());</span>
+</code></pre></div></div>
+
 <h2 id="a-worked-example">A worked example</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
@@ -222,7 +302,8 @@ several moves instead of switching on a number.</li>
   <li><a href="/LunyScript-Docs/manual/transform.html">Transform</a> — writing the pose directly.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.MotionFactory.html"><code class="language-plaintext highlighter-rouge">MotionFactory</code></a>,
-<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.BodyFactory.html"><code class="language-plaintext highlighter-rouge">BodyFactory</code></a>.</li>
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.BodyFactory.html"><code class="language-plaintext highlighter-rouge">BodyFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.MotionFlockBuilder.html"><code class="language-plaintext highlighter-rouge">MotionFlockBuilder</code></a>.</li>
 </ul>
 
   </div>
