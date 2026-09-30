@@ -409,6 +409,12 @@ from. Built once per script type and never changed afterwards.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptAssemblyAttribute.html">LunyScriptAssemblyAttribute</a></dt>
+      <dd><p>Declares what the scripts of an assembly are for, so that a game start runs the singleton scripts of its
+production assemblies and none of a sample's or a test's.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html">LunyScriptBehaviour</a></dt>
       <dd><p>Assigns one GameObject to one script type. This is the component a user adds; the script is
 named by an explicit field rather than by a type name written as a string.</p>
@@ -478,6 +484,11 @@ share, and the hidden object that ticks it once per frame.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptSingletonCatalog.html">LunyScriptSingletonCatalog</a></dt>
+      <dd><p>The singleton scripts a player starts, which the build writes into its first scene on a hidden object.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
       <dd><p>Thrown when script code asks LunyScript for something the API does not offer: a C# <code>if</code>
 around a condition block, an arithmetic operator on a text variable, a builder finished twice.</p>
@@ -506,6 +517,41 @@ AGENTS.md rules 44 to 49.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt>
       <dd><p>A block that produces a <code>Number</code> for one object: a variable read, a literal, or an
 arithmetic expression over other value blocks.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ReferencedColorBlock.html">ReferencedColorBlock</a></dt>
+      <dd><p>A read of another script's <code>Color</code> variable.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ReferencedEnumBlock.html">ReferencedEnumBlock</a></dt>
+      <dd><p>A read of another script's enum variable.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ReferencedFlagBlock.html">ReferencedFlagBlock</a></dt>
+      <dd><p>A read of another script's <code>Flag</code> variable, which is also a condition.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ReferencedNumberBlock.html">ReferencedNumberBlock</a></dt>
+      <dd><p>A read of another script's <code>Number</code> variable.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ReferencedRotationBlock.html">ReferencedRotationBlock</a></dt>
+      <dd><p>A read of another script's <code>Rotation</code> variable.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ReferencedVector2Block.html">ReferencedVector2Block</a></dt>
+      <dd><p>A read of another script's <code>Vector2</code> variable.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ReferencedVector3Block.html">ReferencedVector3Block</a></dt>
+      <dd><p>A read of another script's <code>Vector3</code> variable.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -597,8 +643,8 @@ instance layout, and is shared by every object running that script.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html">ScriptRunner</a></dt>
-      <dd><p>Owns the built programs, the live instances and the instance pool, and runs each event kind
-across every instance.</p>
+      <dd><p>How one script reaches another on this runner: resolving a target to the instance running on its object,
+delivering a request to one receiver and an event to its listeners, and the nesting limit both share.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1168,6 +1214,23 @@ build time and never at run time.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.Event.html">Event</a></dt>
+      <dd><p>An event a script sends: a notification that something happened on its object, which every local script
+listening to it hears at once.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.EventHandlerBuilder.html">EventHandlerBuilder</a></dt>
+      <dd><p>A listener <code>On.Event(event)</code> started: <a class="xref" href="CodeSmile.LunyScript.EventHandlerBuilder.html#CodeSmile_LunyScript_EventHandlerBuilder_Do_CodeSmile_LunyScript_Block___">Do(params Block[])</a> names its blocks, and <a class="xref" href="CodeSmile.LunyScript.EventHandlerBuilder.html#CodeSmile_LunyScript_EventHandlerBuilder_From_CodeSmile_LunyScript_LunyScriptTarget_System_String_System_Int32_">From(LunyScriptTarget, string, int)</a>
+restricts it to one sender first.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.EventSourceHandlerBuilder.html">EventSourceHandlerBuilder</a></dt>
+      <dd><p>A listener restricted to one sender by <code>From</code>: <a class="xref" href="CodeSmile.LunyScript.EventSourceHandlerBuilder.html#CodeSmile_LunyScript_EventSourceHandlerBuilder_Do_CodeSmile_LunyScript_Block___">Do(params Block[])</a> names its blocks.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.FakeCameraProvider.TargetGroupEntry.html">FakeCameraProvider.TargetGroupEntry</a></dt>
       <dd><p>One object in a rig's target group, with the weight and radius it was given.</p>
 </dd>
@@ -1228,6 +1291,12 @@ per stored entry, nearest first.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.ForEachOverlapsBuilder.html">ForEachOverlapsBuilder</a></dt>
       <dd><p>What <code>ForEach(overlaps)</code> returns: <a class="xref" href="CodeSmile.LunyScript.ForEachOverlapsBuilder.html#CodeSmile_LunyScript_ForEachOverlapsBuilder_Do_System_Func_CodeSmile_LunyScript_OverlapEntry_CodeSmile_LunyScript_Block__">Do(Func&lt;OverlapEntry, Block&gt;)</a> takes the body
 run once per stored entry, in Unity's order.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.Gate.html">Gate</a></dt>
+      <dd><p>A declared gate: a named hold on input or camera for every script on the runner, which
+<code>Gate.Open(gate, categories)</code> opens and <code>Gate.Close(gate)</code> closes.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1369,10 +1438,28 @@ names another direction.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptOptions.html">LunyScriptOptions</a></dt>
+      <dd><p>How a script type runs, which its <code>Options</code> property declares: <code>RunAs(Scope.Singleton)</code> for one
+instance per game, or nothing for one per object.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptReadSource.html">LunyScriptReadSource</a></dt>
+      <dd><p>What a generated reader such as <code>EnemyScript.Reader</code> reads from: the script type it expects and the
+target, checked when <code>EnemyScript.At(target)</code> ran inside <code>Build()</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptReference-1.html">LunyScriptReference&lt;TScript&gt;</a></dt>
       <dd><p>One incarnation of a script, referenced from ordinary C# code: its compiled definition, reads of
 the variables it declared, and observations of their changes. <a class="xref" href="CodeSmile.LunyScript.LunyScript.html#CodeSmile_LunyScript_LunyScript_Find__1_CodeSmile_LunyScript_LunyScriptBehaviour_">Find&lt;TScript&gt;(LunyScriptBehaviour)</a>
 returns it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptTarget.html">LunyScriptTarget</a></dt>
+      <dd><p>Which object a read of another script, a request or an event filter is about: a declared object binding,
+an object this script holds under a name, or the script that sent the request running now.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1948,9 +2035,27 @@ and is finished by <code>Into</code>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.ReferencedWatchBuilder.html">ReferencedWatchBuilder</a></dt>
+      <dd><p>A watch on another script's variable that <code>When.Var(reader.Member)</code> started: <a class="xref" href="CodeSmile.LunyScript.ReferencedWatchBuilder.html#CodeSmile_LunyScript_ReferencedWatchBuilder_Changed_CodeSmile_LunyScript_Block___">Changed(params Block[])</a>
+names the blocks that run when the value changes on the same target.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.ReparentBuilder.html">ReparentBuilder</a></dt>
       <dd><p>What <code>SetParent(...)</code> and <code>Unparent()</code> return: the reparent, which keeps the
 object's world placement unless <a class="xref" href="CodeSmile.LunyScript.ReparentBuilder.html#CodeSmile_LunyScript_ReparentBuilder_KeepLocal">KeepLocal()</a> says otherwise.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.Request.html">Request</a></dt>
+      <dd><p>A request a script accepts: work another script asks this script's object to do, which this script's
+<code>On.Request</code> handlers perform, check or refuse.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.RequestBuilder.html">RequestBuilder</a></dt>
+      <dd><p>A request <code>Request(target, request)</code> started: used as a block it sends the request, and
+<a class="xref" href="CodeSmile.LunyScript.RequestBuilder.html#CodeSmile_LunyScript_RequestBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds an operation that observes the outcome.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2786,6 +2891,11 @@ the application as a whole, rather than about one object.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.AssemblyUsage.html">AssemblyUsage</a></dt>
+      <dd><p>What an assembly's scripts are for, which <a class="xref" href="CodeSmile.LunyScript.LunyScriptAssemblyAttribute.html">LunyScriptAssemblyAttribute</a> declares.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.AssetPlaceholderSource.html">AssetPlaceholderSource</a></dt>
       <dd><p>Which configuration named the asset placeholder a type resolves to.</p>
 </dd>
@@ -2968,6 +3078,12 @@ no block ever sees an exception type. See AGENTS.md section 12, rule 51.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.RoundingMode.html">RoundingMode</a></dt>
       <dd><p>How <code>Math.Round</code> and <code>Number.Round</code> resolve a value exactly
 halfway between two whole numbers.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.Scope.html">Scope</a></dt>
+      <dd><p>How many instances of a script type run, which a script declares in its <code>Options</code> property with
+<code>RunAs(scope)</code>.</p>
 </dd>
     </dl>
     <dl class="jumplist">

@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Class ScriptRunner | LunyScript API Reference ">
       
-      <meta name="description" content="Owns the built programs, the live instances and the instance pool, and runs each event kind across every instance.">
+      <meta name="description" content="How one script reaches another on this runner: resolving a target to the instance running on its object, delivering a request to one receiver and an event to its listeners, and the nesting limit both share.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -85,8 +85,8 @@ Class ScriptRunner  <a class="header-action link-secondary" title="View source" 
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>Owns the built programs, the live instances and the instance pool, and runs each event kind
-across every instance.</p>
+  <div class="markdown summary"><p>How one script reaches another on this runner: resolving a target to the instance running on its object,
+delivering a request to one receiver and an event to its listeners, and the nesting limit both share.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -124,21 +124,17 @@ runner.TickFrameUpdate();</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_ScriptRunner_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>A runner names no Unity type at all. The one place it reports a block failure goes through
-<a class="xref" href="CodeSmile.LunyScript.LunyScriptLog.html">LunyScriptLog</a>, which is the only class in the product that calls
-<code>UnityEngine.Debug</code>. That is what lets every block be tested in Edit Mode against
-<code>FakeHost</code>, with no scene and no frame; AGENTS.md rule 53.</p>
+  <div class="markdown level0 remarks"><p><b>Delivery is immediate.</b> A request's sections and an event's handlers run inside the sender's block,
+before the sender's next block, which is what the settled <code>api-local-delivery</code> answer asks for. They run
+inside the dispatch that is already running, so no public entry point is re-entered.</p>
 <p>
-    <b><code>Build()</code> runs once per script type, and this cache is what makes that true.</b>
-    <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html#CodeSmile_LunyScript_ScriptRunner_GetOrBuildProgram_CodeSmile_LunyScript_ScriptBase_">GetOrBuildProgram(ScriptBase)</a> compiles a script type the first time it is asked for and
-    returns the same program afterwards, so spawning a hundred objects of one script type
-    compiles it once.
+    <b>Nothing here allocates on the per-frame path.</b> Resolving a target is a slot read, one dictionary
+    lookup keyed by the object with reference equality, and the incarnation comparison
+    <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html">IsLive(ScriptRunner, ScriptInstance, long)</a> makes. An event's listeners are copied into a list kept for each nesting
+    level, which grows once. Filing an instance and adding a listener happen when an instance spawns, which
+    is AGENTS.md rule 31's spawn boundary.
 </p>
-<p>
-    Structural changes and reentrant dispatch are refused while a runner executes authored
-    actions. The one removal the runtime loop does make is its own: it
-    drops an instance whose host no longer exists and steps its index back for it.
-</p>
+<p><code>docs/proposals/script-communication.md</code> is the contract.</p>
 </div>
 
 
@@ -881,7 +877,7 @@ Element lookup is spawn-time cache, not per-use Q.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptRunner_BindNetworkObject_CodeSmile_LunyScript_ScriptInstance_System_Int32_" data-uid="CodeSmile.LunyScript.ScriptRunner.BindNetworkObject(CodeSmile.LunyScript.ScriptInstance,System.Int32)">
   BindNetworkObject(ScriptInstance, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L1818"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L1819"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds one instance to a networked object, so that it takes part in the network
@@ -948,7 +944,7 @@ the id is produced; AGENTS.md rule 49.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptRunner_Despawn_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.ScriptRunner.Despawn(CodeSmile.LunyScript.ScriptInstance)">
   Despawn(ScriptInstance)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L823"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L824"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Stops running an instance and keeps it for the next spawn of the same program.</p>
@@ -1000,7 +996,7 @@ the id is produced; AGENTS.md rule 49.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptRunner_FindNetworkedInstance_System_Int32_" data-uid="CodeSmile.LunyScript.ScriptRunner.FindNetworkedInstance(System.Int32)">
   FindNetworkedInstance(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L1876"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L1877"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The instance bound to one network object id, or null when no instance is.</p>
@@ -1167,7 +1163,7 @@ one.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptRunner_PooledCount_CodeSmile_LunyScript_ScriptProgram_" data-uid="CodeSmile.LunyScript.ScriptRunner.PooledCount(CodeSmile.LunyScript.ScriptProgram)">
   PooledCount(ScriptProgram)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L997"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L998"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many pooled instances are waiting for a respawn of one program.</p>
@@ -1595,7 +1591,7 @@ editor runner.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptRunner_SetEnabled_CodeSmile_LunyScript_ScriptInstance_System_Boolean_" data-uid="CodeSmile.LunyScript.ScriptRunner.SetEnabled(CodeSmile.LunyScript.ScriptInstance,System.Boolean)">
   SetEnabled(ScriptInstance, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L1035"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L1036"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Turns an instance's per-frame blocks on or off, following the host's own enabled
@@ -1858,7 +1854,7 @@ editor runner.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptRunner_UnbindNetworkObject_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.ScriptRunner.UnbindNetworkObject(CodeSmile.LunyScript.ScriptInstance)">
   UnbindNetworkObject(ScriptInstance)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L1855"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L1856"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Removes an instance's network binding. Called when the object despawns, and by

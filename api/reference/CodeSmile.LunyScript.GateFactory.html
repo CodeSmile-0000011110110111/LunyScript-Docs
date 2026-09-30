@@ -129,6 +129,78 @@ releases its hold when it despawns.</p>
 
   <a id="CodeSmile_LunyScript_GateFactory_Close_" data-uid="CodeSmile.LunyScript.GateFactory.Close*"></a>
 
+  <h3 id="CodeSmile_LunyScript_GateFactory_Close_CodeSmile_LunyScript_Gate_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.GateFactory.Close(CodeSmile.LunyScript.Gate,System.String,System.Int32)">
+  Close(Gate, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Gates/GateFactory.cs/#L123"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that closes one hold of a declared gate, whoever opened it. Closing a gate that is
+not open changes nothing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Close(Gate gate, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Gate.html">Gate</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>gate</code></dt></td>
+    <td style="width: 99%"><dd><p>The gate: this script's own or another script's generated descriptor.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_GateFactory_Close_CodeSmile_LunyScript_Gate_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Update(If(Time.Elapsed &gt; 2).Then(Gate.Close(LoaderScript.Gates.Loading)));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The gate was never declared or has no name yet, or this factory
+was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_GateFactory_Close_" data-uid="CodeSmile.LunyScript.GateFactory.Close*"></a>
+
   <h3 id="CodeSmile_LunyScript_GateFactory_Close_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.GateFactory.Close(System.String,System.String,System.Int32)">
   Close(string, string, int)
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Gates/GateFactory.cs/#L69"><i class="bi bi-code-slash"></i></a>
@@ -194,6 +266,92 @@ open changes nothing.</p>
     <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
     <dd><p><code class="paramref">name</code> is null or whitespace, or
 this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_GateFactory_Open_" data-uid="CodeSmile.LunyScript.GateFactory.Open*"></a>
+
+  <h3 id="CodeSmile_LunyScript_GateFactory_Open_CodeSmile_LunyScript_Gate_CodeSmile_LunyScript_GateCategory_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.GateFactory.Open(CodeSmile.LunyScript.Gate,CodeSmile.LunyScript.GateCategory,System.String,System.Int32)">
+  Open(Gate, GateCategory, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Gates/GateFactory.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a block that opens a declared gate, suppressing the given categories for every script on
+this runner.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Open(Gate gate, GateCategory categories, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Gate.html">Gate</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>gate</code></dt></td>
+    <td style="width: 99%"><dd><p>The gate.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.GateCategory.html">GateCategory</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>categories</code></dt></td>
+    <td style="width: 99%"><dd><p>Which systems to suppress. Only <a class="xref" href="CodeSmile.LunyScript.GateCategory.html#CodeSmile_LunyScript_GateCategory_Input">Input</a> and
+<a class="xref" href="CodeSmile.LunyScript.GateCategory.html#CodeSmile_LunyScript_GateCategory_Camera">Camera</a> exist in this version.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_GateFactory_Open_CodeSmile_LunyScript_Gate_CodeSmile_LunyScript_GateCategory_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Loading = Define.Gate();
+On.Ready(Gate.Open(Loading, GateCategory.Input));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_GateFactory_Open_CodeSmile_LunyScript_Gate_CodeSmile_LunyScript_GateCategory_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The gate is this script's own, declared with <code>Define.Gate()</code>, or another script's, named through
+its generated descriptor such as <code>LoaderScript.Gates.Loading</code>. A declared gate is a different gate from
+every gate named by a string. <code>docs/proposals/script-communication.md</code> is the contract.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The gate was never declared or has no name yet,
+<code class="paramref">categories</code> names a bit this version does not suppress, or this factory was not obtained
+inside <code>Build()</code>.</p>
 </dd>
   </dl>
 

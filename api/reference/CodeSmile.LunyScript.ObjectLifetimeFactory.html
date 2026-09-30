@@ -1078,6 +1078,85 @@ this factory was not obtained inside <code>Build()</code>.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_Owned_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Owned*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_Owned_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.Owned(System.String,System.String,System.Int32)">
+  Owned(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/ObjectLifetimeFactory.cs/#L426"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The object this script holds under a name, as a target for a read of its script, a request or an
+event filter.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public LunyScriptTarget Owned(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The name the object is held under.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptTarget.html">LunyScriptTarget</a></dt>
+    <dd><p>The target.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Owned_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Object.Spawn(Drones).Into("Scout"));
+var scout = DroneScript.At(Object.Owned("Scout"));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ObjectLifetimeFactory_Owned_System_String_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The name is the one <code>Object.Create(name)</code>, <code>Object.Create(prefab).Into(name)</code> or
+<code>Object.Spawn(pool).Into(name)</code> fills. The target names the script running on the object that name
+holds when the block runs: nothing while the slot is empty, and the new incarnation once a new object
+fills it. <code>docs/proposals/script-communication.md</code> is the contract.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">name</code> is null or whitespace. A name nothing in
+this script produces is refused when <code>Build()</code> finishes.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_ObjectLifetimeFactory_ResetColor_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.ResetColor*"></a>
 
   <h3 id="CodeSmile_LunyScript_ObjectLifetimeFactory_ResetColor_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ObjectLifetimeFactory.ResetColor(System.String,System.Int32)">

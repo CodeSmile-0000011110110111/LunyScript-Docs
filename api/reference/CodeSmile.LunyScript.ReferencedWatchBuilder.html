@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Struct VarWatchBuilder&lt;T&gt; | LunyScript API Reference </title>
+      <title>Struct ReferencedWatchBuilder | LunyScript API Reference </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Struct VarWatchBuilder&lt;T&gt; | LunyScript API Reference ">
+      <meta name="title" content="Struct ReferencedWatchBuilder | LunyScript API Reference ">
       
-      <meta name="description" content="What When.Var(x) returns. Its only method is , which registers the watch with the build.">
+      <meta name="description" content="A watch on another script&#39;s variable that When.Var(reader.Member) started:  names the blocks that run when the value changes on the same target.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_VarWatchBuilder_1.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.VarWatchBuilder%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_ReferencedWatchBuilder.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.ReferencedWatchBuilder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -72,12 +72,12 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="CodeSmile.LunyScript.VarWatchBuilder`1">
+        <article data-uid="CodeSmile.LunyScript.ReferencedWatchBuilder">
 
 
 
-  <h1 id="CodeSmile_LunyScript_VarWatchBuilder_1" data-uid="CodeSmile.LunyScript.VarWatchBuilder`1" class="text-break">
-Struct VarWatchBuilder&lt;T&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/WhenFactory.cs/#L493"><i class="bi bi-code-slash"></i></a>
+  <h1 id="CodeSmile_LunyScript_ReferencedWatchBuilder" data-uid="CodeSmile.LunyScript.ReferencedWatchBuilder" class="text-break">
+Struct ReferencedWatchBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Communication/ReferencedWatchBuilder.cs/#L22"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,22 +85,17 @@ Struct VarWatchBuilder&lt;T&gt;  <a class="header-action link-secondary" title="
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>What <code>When.Var(x)</code> returns. Its only method is <a class="xref" href="CodeSmile.LunyScript.VarWatchBuilder-1.html#CodeSmile_LunyScript_VarWatchBuilder_1_Changed_CodeSmile_LunyScript_Block___">Changed(params Block[])</a>, which registers
-the watch with the build.</p>
+  <div class="markdown summary"><p>A watch on another script's variable that <code>When.Var(reader.Member)</code> started: <a class="xref" href="CodeSmile.LunyScript.ReferencedWatchBuilder.html#CodeSmile_LunyScript_ReferencedWatchBuilder_Changed_CodeSmile_LunyScript_Block___">Changed(params Block[])</a>
+names the blocks that run when the value changes on the same target.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly struct VarWatchBuilder&lt;T&gt; where T : struct</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly struct ReferencedWatchBuilder</code></pre>
   </div>
 
 
 
-  <h4 class="section">Type Parameters</h4>
-  <dl class="parameters">
-    <dt><code>T</code></dt>
-    <dd></dd>
-  </dl>
 
   <details>
   <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
@@ -113,17 +108,17 @@ the watch with the build.</p>
 
 
 
-  <h2 id="CodeSmile_LunyScript_VarWatchBuilder_1_examples">Examples</h2>
-  <pre><code class="lang-csharp">When.Var(playerName).Changed(score.Set(0.0));</code></pre>
+  <h2 id="CodeSmile_LunyScript_ReferencedWatchBuilder_examples">Examples</h2>
+  <pre><code class="lang-csharp">var enemy = EnemyScript.At(Target);
+When.Var(enemy.Health).Changed(Flash.Set(true));</code></pre>
 
 
-  <h2 id="CodeSmile_LunyScript_VarWatchBuilder_1_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p><b>A watch is polled once per frame, after the frame-update blocks.</b> It compares the
-variable against a second slot of the same kind, allocated at build time, that holds what the
-variable was the last time the watch ran. A value that changes and changes back within one
-frame therefore does not fire. That is the semantic, stated rather than hidden;
-<code>docs/execution-model.md</code> and <code>docs/slice-decisions.md</code> record why polling was
-chosen over notifying on write.</p>
+  <h2 id="CodeSmile_LunyScript_ReferencedWatchBuilder_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>The watch follows the target. When the target resolves to a different incarnation than at the previous
+check, that incarnation's value becomes the baseline and no block runs, so switching targets never looks
+like a change of value. A target that resolves to nothing clears the baseline. The check runs once per frame
+after <code>On.Update</code>, like every <code>When.Var</code> watch. <code>docs/proposals/script-communication.md</code> is the
+contract.</p>
 </div>
 
 
@@ -131,15 +126,14 @@ chosen over notifying on write.</p>
 </h2>
 
 
-  <a id="CodeSmile_LunyScript_VarWatchBuilder_1_Changed_" data-uid="CodeSmile.LunyScript.VarWatchBuilder`1.Changed*"></a>
+  <a id="CodeSmile_LunyScript_ReferencedWatchBuilder_Changed_" data-uid="CodeSmile.LunyScript.ReferencedWatchBuilder.Changed*"></a>
 
-  <h3 id="CodeSmile_LunyScript_VarWatchBuilder_1_Changed_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.VarWatchBuilder`1.Changed(CodeSmile.LunyScript.Block[])">
+  <h3 id="CodeSmile_LunyScript_ReferencedWatchBuilder_Changed_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.ReferencedWatchBuilder.Changed(CodeSmile.LunyScript.Block[])">
   Changed(params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/WhenFactory.cs/#L522"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Communication/ReferencedWatchBuilder.cs/#L39"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Registers the blocks that run when the variable's value differs from what it was the
-last time the watch ran.</p>
+  <div class="markdown level1 summary"><p>Registers the blocks that run when the watched value changes on the target it followed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -170,16 +164,15 @@ last time the watch ran.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_VarWatchBuilder_1_Changed_CodeSmile_LunyScript_Block____examples">Examples</h4>
-  <pre><code class="lang-csharp">When.Var(health).Changed(alive.Set(health &gt; 0.0));</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_ReferencedWatchBuilder_Changed_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">When.Var(enemy.Health).Changed(Flash.Set(true));</code></pre>
 
 
 
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p><code class="paramref">blocks</code> is null or contains
-null, or the variable's kind is not one LunyScript can watch.</p>
+    <dd><p><code class="paramref">blocks</code> is null or contains null.</p>
 </dd>
   </dl>
 
@@ -189,7 +182,7 @@ null, or the variable's kind is not one LunyScript can watch.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/WhenFactory.cs/#L493" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Communication/ReferencedWatchBuilder.cs/#L22" class="edit-link">Edit this page</a>
         </div>
 
 
