@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_MotionFactory" data-uid="CodeSmile.LunyScript.MotionFactory" class="text-break">
-Struct MotionFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L30"><i class="bi bi-code-slash"></i></a>
+Struct MotionFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L36"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -111,7 +111,8 @@ relocation for the object a script runs on.</p>
   <h2 id="CodeSmile_LunyScript_MotionFactory_examples">Examples</h2>
   <pre><code class="lang-csharp">On.FixedUpdate(Motion.MoveTo(Pad).AtSpeed(4.0));
 On.FixedUpdate(Motion.AddForce(Thrust).InWorldSpace());
-On.Ready(Motion.TeleportTo(Spawn));</code></pre>
+On.Ready(Motion.TeleportTo(Spawn));
+On.LateUpdate(Motion.FlockChildren().Towards(Goal));</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_MotionFactory_remarks">Remarks</h2>
@@ -126,6 +127,11 @@ direct transform, and refuses a dynamic Rigidbody. Dynamic bodies use
     <code>On.FixedUpdate</code>. Written in any other event they are reported once and ignored;
     they are not transferred to a later step. API-semantics M12.
 </p>
+<p>
+    <a class="xref" href="CodeSmile.LunyScript.MotionFactory.html#CodeSmile_LunyScript_MotionFactory_FlockChildren_System_String_System_Int32_">FlockChildren(string, int)</a> is the one call that moves the object's children rather than the
+    object: it writes their positions once per frame from <code>On.Update</code> or <code>On.LateUpdate</code>, with no
+    physics and no collision.
+</p>
 </div>
 
 
@@ -137,7 +143,7 @@ direct transform, and refuses a dynamic Rigidbody. Dynamic bodies use
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_AddForce_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.AddForce(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   AddForce(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L212"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L218"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Applies a continuous force given as three numbers.</p>
@@ -220,7 +226,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_AddForce_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.AddForce(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
   AddForce(Vector3ValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L203"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Applies a continuous force on an active dynamic Rigidbody, along the object's own
@@ -292,7 +298,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_AddImpulse_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.AddImpulse(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   AddImpulse(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L250"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L256"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Applies an instant change given as three numbers.</p>
@@ -375,7 +381,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_AddImpulse_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.AddImpulse(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
   AddImpulse(Vector3ValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L235"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L241"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Applies an instant change on an active dynamic Rigidbody, along the object's own
@@ -447,7 +453,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_FaceTowards_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.FaceTowards(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   FaceTowards(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L155"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L161"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Turns toward a world point given as three numbers. Incomplete until
@@ -531,7 +537,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_FaceTowards_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.FaceTowards(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
   FaceTowards(Vector3ValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L134"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L140"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Turns toward a world point each execution. Incomplete until
@@ -599,11 +605,92 @@ surface was read outside <code>Build()</code>.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_MotionFactory_FlockChildren_" data-uid="CodeSmile.LunyScript.MotionFactory.FlockChildren*"></a>
+
+  <h3 id="CodeSmile_LunyScript_MotionFactory_FlockChildren_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.FlockChildren(System.String,System.Int32)">
+  FlockChildren(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L425"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Moves the active direct children of the object this script runs on as one flock toward a
+goal, keeping them apart from each other. Incomplete until <code>Towards</code> names the goal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public MotionFlockChildrenBuilder FlockChildren(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.MotionFlockChildrenBuilder.html">MotionFlockChildrenBuilder</a></dt>
+    <dd><p>A builder that takes <code>Towards</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_FlockChildren_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Goal = Bind.Object();
+On.LateUpdate(Motion.FlockChildren().Towards(Goal));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_MotionFactory_FlockChildren_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Written in <code>On.Update</code> or <code>On.LateUpdate</code> and run every frame. The first call captures the
+object's active direct children and their local positions; from then on the flock keeps each
+child's position itself, writes it to the child every frame, and reads no child position again, so
+a child something else moved is put back. Moving, turning or scaling this object carries the flock.
+Speed, spacing and range are world units. A frame without the call ends the flock, and the next call
+captures the children again. A child that is destroyed, deactivated or moved to another parent leaves
+the flock until then; one added or activated joins at the next capture. Only the position is written,
+and nothing collides.</p>
+<p>
+    One call per object per frame: a second call on the same object in the same frame, from any
+    script and from either event, is reported once and ignored, and so is a call written in any other
+    event.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_MotionFactory_MoveBy_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveBy*"></a>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_MoveBy_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveBy(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   MoveBy(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L56"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>One displacement this execution, along the object's own oriented axes unless
@@ -688,7 +775,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_MoveBy_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveBy(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
   MoveBy(Vector3ValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L78"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>One displacement this execution, from a spatial value.</p>
@@ -759,7 +846,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_MoveTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveTo(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   MoveTo(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L111"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L117"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Steps toward a world destination given as three numbers. Incomplete until
@@ -843,7 +930,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_MoveTo_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.MoveTo(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
   MoveTo(Vector3ValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L90"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L96"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Steps toward a world destination. Incomplete until <code>AtSpeed</code>.</p>
@@ -914,7 +1001,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_RotateTo_CodeSmile_LunyScript_RotationValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.RotateTo(CodeSmile.LunyScript.RotationValueBlock,System.String,System.Int32)">
   RotateTo(RotationValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L178"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L184"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Steps toward an orientation. Incomplete until <code>DegreesPerSecond</code>.</p>
@@ -985,7 +1072,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_SetVelocity_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.SetVelocity(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   SetVelocity(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L293"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L299"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Writes absolute linear velocity given as three numbers.</p>
@@ -1068,7 +1155,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_SetVelocity_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.SetVelocity(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
   SetVelocity(Vector3ValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L273"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L279"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Writes absolute linear velocity, converted from the selected frame before the
@@ -1140,7 +1227,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_StopMotion_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.StopMotion(System.String,System.Int32)">
   StopMotion(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L314"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L320"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Clears linear and angular velocity once. Not a freeze: later gravity and contacts
@@ -1205,7 +1292,7 @@ still move the body.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
   TeleportTo(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L353"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L359"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Places the object at a world position given as three numbers.</p>
@@ -1288,7 +1375,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo(CodeSmile.LunyScript.ObjectBinding,System.String,System.Int32)">
   TeleportTo(ObjectBinding, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L382"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L388"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Places the object at a landmark's world position: an object in the scene the script
@@ -1368,7 +1455,7 @@ was declared by another script's <code>Build()</code>, or is declared as a type 
 
   <h3 id="CodeSmile_LunyScript_MotionFactory_TeleportTo_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.MotionFactory.TeleportTo(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
   TeleportTo(Vector3ValueBlock, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L333"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L339"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Places the object at a world position. Dynamic bodies also clear both velocities.
@@ -1441,7 +1528,7 @@ surface was read outside <code>Build()</code>.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L30" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Motion/MotionFactory.cs/#L36" class="edit-link">Edit this page</a>
         </div>
 
 
