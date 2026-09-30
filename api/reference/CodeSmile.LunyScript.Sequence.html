@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct Sequence | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct Sequence | LunyScript API Reference ">
+      
+      <meta name="description" content="A named sequence: several blocks a script declared as one with Define.Sequence, under the name of the property it is assigned to. It converts to a block wherever a block is accepted.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_Sequence.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.Sequence%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.Sequence">
+
+
+
+  <h1 id="CodeSmile_LunyScript_Sequence" data-uid="CodeSmile.LunyScript.Sequence" class="text-break">
+Struct Sequence  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/Sequence.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>A named sequence: several blocks a script declared as one with <code>Define.Sequence</code>, under the name of the
+property it is assigned to. It converts to a block wherever a block is accepted.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct Sequence</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyScript_Sequence_examples">Examples</h2>
+  <pre><code class="lang-csharp">DodgeRoll = Define.Sequence(Crouch.Set(true), Wait(0.2), Lane.Add(1), Wait(0.4), Crouch.Set(false));
+On.Message("Dodge", Routine("Dodge").Run(DodgeRoll));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_Sequence_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><b>The name comes from the property.</b> <code>DodgeRoll = Define.Sequence(...)</code> in a partial script's
+<code>Build()</code> makes the generator write the <code>DodgeRoll</code> property, and that property's setter gives the
+sequence the name DodgeRoll and the line of the Define call. The debugger shows the sequence as one row with
+that name, folded, and a diagnostic names it the same way.</p>
+<p>
+    <b>A sequence does what its blocks would do written out in its place.</b> In an event list, a <code>Then</code> or
+    another list that runs every block at once, it runs its blocks in that frame. As a step of a routine, a
+    group, a <code>Run</code> body or a <code>Choose</code> option's action, each of its blocks finishes before the next
+    begins, and a <code>Wait</code> inside it holds that owner. In a concurrent group it is one child.
+    <code>docs/proposals/sequences.md</code> is the contract.
+</p>
+<p>
+    <b>Placed a second time it is a copy</b>, with progress of its own, the rule for every composed block. A
+    <code>Define.Sequence</code> assigned to a local or to a hand-written property has no name, and using it as a
+    block is refused; <code>Sequence(...)</code> is the spelling for a sequence without a name.
+</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Sequence_ToString_" data-uid="CodeSmile.LunyScript.Sequence.ToString*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Sequence_ToString" data-uid="CodeSmile.LunyScript.Sequence.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/Sequence.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The sequence's name, for a log line or a failure message.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>For example: &quot;DodgeRoll : sequence of 4 blocks&quot;.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_Sequence_op_Implicit_" data-uid="CodeSmile.LunyScript.Sequence.op_Implicit*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Sequence_op_Implicit_CodeSmile_LunyScript_Sequence__CodeSmile_LunyScript_Block" data-uid="CodeSmile.LunyScript.Sequence.op_Implicit(CodeSmile.LunyScript.Sequence)~CodeSmile.LunyScript.Block">
+  implicit operator Block(Sequence)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/Sequence.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The sequence as a block, for any list that takes blocks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static implicit operator Block(Sequence sequence)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Sequence.html">Sequence</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>sequence</code></dt></td>
+    <td style="width: 99%"><dd><p>The named sequence.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Sequence_op_Implicit_CodeSmile_LunyScript_Sequence__CodeSmile_LunyScript_Block_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Message("Dodge", Routine("Dodge").Run(DodgeRoll, Rolls.Inc()));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The handle was never assigned, or its <code>Define.Sequence</code> line
+has no name because no generated property received it.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/Sequence.cs/#L33" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
