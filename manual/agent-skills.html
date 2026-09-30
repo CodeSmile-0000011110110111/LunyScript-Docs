@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>AI agent skills | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="AI agent skills" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/agent-skills.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/agent-skills.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="AI agent skills" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"AI agent skills","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/agent-skills.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">AI agent skills</h1>
+  </header>
+
+  <div class="post-content">
+    <p>LunyScript ships skills that teach AI coding agents, such as Claude Code, Codex and Grok, to write
+LunyScript scripts. A skill is a folder with one <code class="language-plaintext highlighter-rouge">SKILL.md</code> file: a name, a one-line description of
+when to use it, and the instructions. The skills are in your project at
+<code class="language-plaintext highlighter-rouge">Assets/CodeSmile/LunyScript/AgentSkills/</code>, and they match the LunyScript version you installed:
+every C# example in them compiles against that version.</p>
+
+<p>An agent finds a skill only in its own skill folders. When you allow it, LunyScript writes a short
+<strong>skill link</strong> for each skill into those folders, and keeps the links up to date.</p>
+
+<h2 id="the-skills">The skills</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>An agent loads it when a script</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lunyscript</code></td>
+      <td>is written or changed at all: <code class="language-plaintext highlighter-rouge">Build()</code>, variables, events, conditions, errors</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lunyscript-transform</code></td>
+      <td>places, turns, orbits, aims or reparents an object directly</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lunyscript-motion</code></td>
+      <td>moves an object with a body, at a speed or over time, or flocks children</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lunyscript-objects</code></td>
+      <td>creates, pools, spawns, destroys, binds, hides or tints objects</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lunyscript-audio</code></td>
+      <td>plays clips or controls an <code class="language-plaintext highlighter-rouge">AudioSource</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lunyscript-particles</code></td>
+      <td>plays, stops or bursts a <code class="language-plaintext highlighter-rouge">ParticleSystem</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lunyscript-input</code></td>
+      <td>reads Input System actions</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lunyscript-ui</code></td>
+      <td>writes to or reacts to a UI Toolkit panel</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lunyscript-save</code></td>
+      <td>saves or loads values on the device or in Cloud Save</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">lunyscript-data</code></td>
+      <td>reads tuning values from a data asset or a JSON file</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="allowing-the-skill-links">Allowing the skill links</h2>
+
+<p><strong>Tools &gt; LunyScript &gt; Welcome</strong> opens the welcome window. It also opens by itself once each time
+you open the project, until you tick <strong>Don’t show again</strong>; that choice is yours alone, kept in
+the project’s <code class="language-plaintext highlighter-rouge">UserSettings</code> folder.</p>
+
+<p>Each time the window opens, and until a skill link exists, it asks:</p>
+
+<blockquote>
+  <p>Allow LunyScript to install AI agent skill links under .claude/skills and .agents/skills?</p>
+</blockquote>
+
+<p>Nothing is written before you press <strong>Allow skill links</strong>. Allow writes one link per skill, in a
+folder named after the skill, in each of these folders of your Unity project:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Folder</th>
+      <th>Read by</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.claude/skills/</code></td>
+      <td>Claude Code, and Grok</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.agents/skills/</code></td>
+      <td>Codex, and Grok</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Start your agent in the Unity project folder, the one that holds <code class="language-plaintext highlighter-rouge">Assets</code>, or in a folder inside
+it:</p>
+
+<ul>
+  <li><strong>Claude Code</strong> lists the skills in <code class="language-plaintext highlighter-rouge">.claude/skills/</code> of the folder it starts in and of every
+folder above it.</li>
+  <li><strong>Codex</strong> lists the skills in <code class="language-plaintext highlighter-rouge">.agents/skills/</code> of the folder it starts in and of every folder
+above it up to the root of the Git repository. Outside a Git repository it reads only the folder
+it starts in.</li>
+  <li><strong>Grok</strong> lists both folders, walking up the way Codex does, once you trust the project folder. It
+asks the first time it starts there; <code class="language-plaintext highlighter-rouge">grok --trust</code> grants it without the question. Until then it
+lists no project skill.</li>
+</ul>
+
+<p>Each agent then loads a skill by itself when your request matches the skill’s description. Asked to
+“add a LunyScript script” that moves an object toward a point, with no mention of skills, Claude Code
+2.1.285, Codex CLI 0.155.1 and Grok 1.0.44 each loaded <code class="language-plaintext highlighter-rouge">lunyscript</code> and <code class="language-plaintext highlighter-rouge">lunyscript-motion</code> and read
+both files under <code class="language-plaintext highlighter-rouge">Assets</code> before writing the script.</p>
+
+<h2 id="what-a-skill-link-is">What a skill link is</h2>
+
+<p>A link is a <code class="language-plaintext highlighter-rouge">SKILL.md</code> that carries the skill’s own name and description, so the agent lists it,
+and one instruction: read the skill’s file under <code class="language-plaintext highlighter-rouge">Assets</code>. The link for the core skill in
+<code class="language-plaintext highlighter-rouge">.claude/skills</code>, with its long lines shortened here:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
+name: lunyscript
+description: Write, change, review or explain a LunyScript script ...
+---
+
+&lt;!-- Written by LunyScript to make its lunyscript skill discoverable
+here. LunyScript updates this file and deletes it on request; an edit
+stops both. --&gt;
+
+The lunyscript skill ships with LunyScript in this Unity project. Read
+`Assets/CodeSmile/LunyScript/AgentSkills/lunyscript/SKILL.md`, a path
+relative to the Unity project folder that holds this `.claude` folder,
+and follow it. Paths inside that file are relative to its own folder.
+&lt;!-- lunyscript-skill-link sha256:35ad9e19...9a7ac4 --&gt;
+</code></pre></div></div>
+
+<p>The link is plain text, identical on every machine, so you can commit it or ignore it. It is not a
+symbolic link, so it needs no permission on Windows.</p>
+
+<h2 id="your-own-files-stay-as-they-are">Your own files stay as they are</h2>
+
+<p>The last line of a link carries a SHA-256 hash of the text above it. That line is the only way
+LunyScript recognises a file as its own. Before it writes, rewrites or deletes anything, LunyScript
+checks the path, and leaves exactly as it is:</p>
+
+<ul>
+  <li>a file or folder with a skill’s name that it did not write, such as your own skill called
+<code class="language-plaintext highlighter-rouge">lunyscript</code>;</li>
+  <li>a link you edited, from the moment you edit it;</li>
+  <li>a link folder that holds any file besides its <code class="language-plaintext highlighter-rouge">SKILL.md</code>;</li>
+  <li>a file where a folder would go, such as a file named <code class="language-plaintext highlighter-rouge">.agents</code>;</li>
+  <li>a symbolic link or junction anywhere on the path, which it does not follow.</li>
+</ul>
+
+<p>Each of those is listed in the welcome window and as a warning in the Console, and every other link
+is still written. A file that only has a skill’s name is never taken as permission to write.</p>
+
+<h2 id="updates-and-repairs">Updates and repairs</h2>
+
+<p>While at least one link LunyScript recognises as its own exists, it repairs and updates the links,
+without asking, each time the Editor loads scripts: after you import a newer LunyScript, it
+rewrites a link whose skill changed, writes a link for a new skill, rewrites a link you deleted, and
+deletes the link of a skill that no longer ships. A folder where no link exists is written only after
+you allow it in the welcome window.</p>
+
+<h2 id="removing-the-links">Removing the links</h2>
+
+<p>With the links installed, the welcome window shows <strong>Remove skill links</strong>. It deletes every link
+LunyScript recognises as its own, and each of the folders <code class="language-plaintext highlighter-rouge">.claude</code>, <code class="language-plaintext highlighter-rouge">.claude/skills</code>, <code class="language-plaintext highlighter-rouge">.agents</code> and
+<code class="language-plaintext highlighter-rouge">.agents/skills</code> that LunyScript created and that is now empty. It records those folders in
+<code class="language-plaintext highlighter-rouge">UserSettings/LunyScriptAgentSkillFolders.txt</code> when it creates them; a folder that existed before is
+never deleted. The next time the window opens, it asks again.</p>
+
+<p>Remove the links before you remove LunyScript from a project. A link left behind names a file that
+no longer exists, and the agent then has nothing to read.</p>
+
+<h2 id="without-the-links">Without the links</h2>
+
+<ul>
+  <li>Tell the agent where the skill is: “read
+<code class="language-plaintext highlighter-rouge">Assets/CodeSmile/LunyScript/AgentSkills/lunyscript/SKILL.md</code> first”.</li>
+  <li>Or copy a skill’s folder into a skill folder your agent reads, such as <code class="language-plaintext highlighter-rouge">~/.claude/skills/</code> for
+every project of one user. A copy does not update with LunyScript.</li>
+</ul>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/writing-a-script.html">Writing a script</a> — the class the <code class="language-plaintext highlighter-rouge">lunyscript</code>
+skill teaches.</li>
+  <li><a href="/LunyScript-Docs/manual/compile-time-checks.html">Compile-time checks</a> — the errors an agent
+sees when it writes a script wrong.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
