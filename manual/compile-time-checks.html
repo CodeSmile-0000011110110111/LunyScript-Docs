@@ -288,9 +288,18 @@ all of their blocks in the frame they are reached, so a wait or a group written 
 <p>Move the wait out of <code class="language-plaintext highlighter-rouge">Then</code> so that it is a step of the routine. To wait only when the condition holds, set a <code class="language-plaintext highlighter-rouge">Number</code> inside <code class="language-plaintext highlighter-rouge">Then</code>
 and give it to a wait after the <code class="language-plaintext highlighter-rouge">If</code>, as <a href="/LunyScript-Docs/manual/flow.html">Flow</a> shows under “Where a wait goes”.</p>
 
+<p>A sequence written directly in one of those lists, <code class="language-plaintext highlighter-rouge">Sequence(...)</code> or a tuple of blocks, runs its blocks there, so a wait or a group
+written inside it is reported the same way, and the fix moves the sequence:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">((</span><span class="n">Lamp</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">1</span><span class="p">)));</span>
+<span class="c1">// Wait (here: Wait(..)) in a sequence in an event list cannot wait, ...:</span>
+<span class="c1">// make the sequence a step of a routine, as in</span>
+<span class="c1">// Routine("name").Run(Sequence(..))</span>
+</code></pre></div></div>
+
 <p>The script type is also refused when it is built, naming the line of the wait, or for a group the line of the <code class="language-plaintext highlighter-rouge">If</code> that holds it. That
 refusal covers a wait stored in a variable or returned from a method and then placed in <code class="language-plaintext highlighter-rouge">Then</code>, which the compile-time check does not
-follow, and a wait in a <code class="language-plaintext highlighter-rouge">When.*</code> body or a <code class="language-plaintext highlighter-rouge">ForEach</code> body.</p>
+follow, a wait in a sequence held in a variable or declared with <code class="language-plaintext highlighter-rouge">Define.Sequence</code>, and a wait in a <code class="language-plaintext highlighter-rouge">When.*</code> body or a <code class="language-plaintext highlighter-rouge">ForEach</code> body.</p>
 
 <h2 id="luny008">LUNY008: a script in an assembly definition that references the engine</h2>
 

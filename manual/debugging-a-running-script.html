@@ -107,7 +107,9 @@ on, the error, and what LunyScript did about it.</p>
 <p><strong>Script flow</strong> has one row per event and one row per block, in the order the script wrote them.
 A block’s row shows the text of the line it was written on; when several blocks were written on one
 line, the later ones show their block type instead. A block whose parts record nothing, such as the
-number a <code class="language-plaintext highlighter-rouge">Set</code> writes, starts folded; its arrow shows those parts.</p>
+number a <code class="language-plaintext highlighter-rouge">Set</code> writes, starts folded; its arrow shows those parts. A sequence you declared with
+<code class="language-plaintext highlighter-rouge">DodgeRoll = Define.Sequence(...)</code> is one row that reads <code class="language-plaintext highlighter-rouge">DodgeRoll</code> and starts folded, so it reads
+as one line; its arrow shows its blocks, and its line is the line of the <code class="language-plaintext highlighter-rouge">Define.Sequence</code> call.</p>
 
 <table>
   <thead>
@@ -184,7 +186,8 @@ the running script at once, between two frames, and neither changes the script.<
 
 <p><strong>Fire</strong> runs that one block once, as its event would. Nothing sends the guard’s <code class="language-plaintext highlighter-rouge">Hit</code> message yet,
 so its <code class="language-plaintext highlighter-rouge">Hits.Add(1)</code> block never runs on its own: press Fire on its row, and <code class="language-plaintext highlighter-rouge">Hits</code> under <strong>Values</strong>
-goes up by one each time. Fire on an <code class="language-plaintext highlighter-rouge">If</code> runs its condition and the branch the condition picks.
+goes up by one each time. Fire on an <code class="language-plaintext highlighter-rouge">If</code> runs its condition and the branch the condition picks,
+and Fire on a sequence in an event list runs each of its blocks once, in order.
 A block that runs over several frames cannot be fired: a routine and its steps, a timed <code class="language-plaintext highlighter-rouge">Run</code>, a
 state machine, <code class="language-plaintext highlighter-rouge">Choose</code>, a <code class="language-plaintext highlighter-rouge">Wait</code>, and every block inside them. Neither can a block of a contact
 event such as <code class="language-plaintext highlighter-rouge">On.CollisionEnter</code>, which can read the other collider only a collision supplies.

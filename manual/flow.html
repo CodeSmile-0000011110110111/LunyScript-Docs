@@ -324,11 +324,84 @@ seconds whether or not the exit was reached: a finished wait says only that the 
 an action result and a routine group all spell it the same way. <code class="language-plaintext highlighter-rouge">Canceled</code> carries one L, which is
 the spelling .NET and Unity use.</p>
 
+<h2 id="sequences-several-blocks-as-one">Sequences: several blocks as one</h2>
+
+<p>A sequence holds several blocks as one block. It runs them in the order you wrote them and does
+what they would do written out in its place. There are three ways to write one:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// A named sequence. The name is what the debugger shows for it.</span>
+    <span class="n">DodgeRoll</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Sequence</span><span class="p">(</span><span class="n">Crouch</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">0.2</span><span class="p">),</span>
+        <span class="n">Lane</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">0.4</span><span class="p">),</span> <span class="n">Crouch</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+
+    <span class="c1">// A sequence without a name, held in a local.</span>
+    <span class="kt">var</span> <span class="n">hop</span> <span class="p">=</span> <span class="nf">Sequence</span><span class="p">(</span><span class="n">Lift</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">0.25</span><span class="p">),</span> <span class="n">Lift</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>
+
+    <span class="c1">// The same as Sequence(...): a tuple of 2 to 9 blocks.</span>
+    <span class="kt">var</span> <span class="n">blink</span> <span class="p">=</span> <span class="p">(</span><span class="n">Lamp</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">0.1</span><span class="p">),</span> <span class="n">Lamp</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+
+    <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Dodge"</span><span class="p">,</span> <span class="nf">Routine</span><span class="p">(</span><span class="s">"Dodge"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">DodgeRoll</span><span class="p">));</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Warm up"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">hop</span><span class="p">,</span> <span class="n">hop</span><span class="p">,</span> <span class="n">blink</span><span class="p">,</span> <span class="n">DodgeRoll</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">DodgeRoll = Define.Sequence(...)</code> in a <code class="language-plaintext highlighter-rouge">partial</code> script declares the <code class="language-plaintext highlighter-rouge">DodgeRoll</code> property for you,
+the way a <code class="language-plaintext highlighter-rouge">Define.Number</code> line does. Assigned to a local instead, a <code class="language-plaintext highlighter-rouge">Define.Sequence</code> has no name,
+and the script type is refused when it is built; write <code class="language-plaintext highlighter-rouge">Sequence(...)</code> for a sequence you do not
+name.</p>
+
+<p>Where a sequence is placed decides how its blocks run:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Placed in</th>
+      <th>Its blocks run</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>An event list, a <code class="language-plaintext highlighter-rouge">When.*</code> body, <code class="language-plaintext highlighter-rouge">Then</code>, <code class="language-plaintext highlighter-rouge">Else</code></td>
+      <td>All of them, in the frame the list runs.</td>
+    </tr>
+    <tr>
+      <td>A routine, a <code class="language-plaintext highlighter-rouge">Run</code> body, a <code class="language-plaintext highlighter-rouge">Choose</code> option</td>
+      <td>One after another, each finishing first.</td>
+    </tr>
+    <tr>
+      <td>An <code class="language-plaintext highlighter-rouge">InParallel</code> group</td>
+      <td>As one child, one after another.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>As a step of a routine, a <code class="language-plaintext highlighter-rouge">Wait</code> inside a sequence holds the routine, exactly as it would written
+out in the routine. In an event list or a <code class="language-plaintext highlighter-rouge">Then</code> nothing waits, so a <code class="language-plaintext highlighter-rouge">Wait</code> or a group inside a
+sequence placed there is refused when the script type is built, and the message names the sequence
+to move. Written directly in the list, as in <code class="language-plaintext highlighter-rouge">On.Update((Lamp.Set(true), Wait(1)))</code>, it is also
+reported on its line as <a href="/LunyScript-Docs/manual/compile-time-checks.html#luny007">LUNY007</a>.</p>
+
+<p>In a group a sequence is one child, which is the one place it differs from its blocks written out:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">sweep</span> <span class="p">=</span> <span class="nf">InParallel</span><span class="p">((</span><span class="n">MoveOut</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="n">MoveOut</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">)),</span>
+    <span class="n">Spin</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>The three blocks run one after another while <code class="language-plaintext highlighter-rouge">Spin.Set(1)</code> runs beside them, and the group ends
+when the sequence’s last block has finished. A sequence reports Failed when one of its blocks
+reported Failed, after running the rest of them, so a group reads its outcome the way it reads
+any child’s.</p>
+
+<p>A named sequence is one row in the
+<a href="/LunyScript-Docs/manual/debugging-a-running-script.html">debugger</a>: the row reads
+<code class="language-plaintext highlighter-rouge">DodgeRoll</code> and starts folded, so a long, tested sequence reads as one line until you unfold it.</p>
+
 <h2 id="using-one-block-in-several-places">Using one block in several places</h2>
 
 <p>A block you hold in a local and place in two places behaves as if you had written it out at each
-place. A routine started from two events is two routines, each with its own progress, and a timed
-move placed in two events is two moves:</p>
+place. A routine started from two events is two routines, each with its own progress, a timed
+move placed in two events is two moves, and a sequence placed in two routines is two sequences:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">tour</span> <span class="p">=</span> <span class="nf">Routine</span><span class="p">(</span><span class="s">"Tour"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">Starts</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(),</span> <span class="n">walk</span><span class="p">,</span> <span class="n">Ends</span><span class="p">.</span><span class="nf">Increment</span><span class="p">());</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">tour</span><span class="p">);</span>
@@ -359,6 +432,7 @@ outcome words on work that leaves the process.</li>
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.IfBuilder.html"><code class="language-plaintext highlighter-rouge">IfBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RunWorkBuilder.html"><code class="language-plaintext highlighter-rouge">RunBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RoutineBuilder.html"><code class="language-plaintext highlighter-rouge">RoutineBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Sequence.html"><code class="language-plaintext highlighter-rouge">Sequence</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.WaitBuilder.html"><code class="language-plaintext highlighter-rouge">WaitBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ActionResult.html"><code class="language-plaintext highlighter-rouge">ActionResult</code></a>.</li>
 </ul>
