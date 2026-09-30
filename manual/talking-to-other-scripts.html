@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Talking to other scripts | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Talking to other scripts" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/talking-to-other-scripts.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/talking-to-other-scripts.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Talking to other scripts" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Talking to other scripts","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/talking-to-other-scripts.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Talking to other scripts</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Read another object’s script with its generated reader, and ask it to change itself with a
+request it declares:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">EnemyScript</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Health</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Health</span><span class="p">),</span> <span class="m">40</span><span class="p">);</span>
+        <span class="n">Heal</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Request</span><span class="p">();</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Request</span><span class="p">(</span><span class="n">Heal</span><span class="p">,</span> <span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&gt;=</span> <span class="m">100</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="nf">Reject</span><span class="p">()));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Request</span><span class="p">(</span><span class="n">Heal</span><span class="p">,</span> <span class="n">Health</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">25</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">HealerScript</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Patient</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+        <span class="n">Seen</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Seen</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>
+        <span class="kt">var</span> <span class="n">patient</span> <span class="p">=</span> <span class="n">EnemyScript</span><span class="p">.</span><span class="nf">At</span><span class="p">(</span><span class="n">Patient</span><span class="p">);</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Seen</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">patient</span><span class="p">.</span><span class="n">Health</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Request</span><span class="p">(</span><span class="n">Patient</span><span class="p">,</span> <span class="n">EnemyScript</span><span class="p">.</span><span class="n">Requests</span><span class="p">.</span><span class="n">Heal</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">EnemyScript.At(Patient)</code> reads the <code class="language-plaintext highlighter-rouge">EnemyScript</code> running on the object the <code class="language-plaintext highlighter-rouge">Patient</code> binding
+names. <code class="language-plaintext highlighter-rouge">patient.Health</code> has no <code class="language-plaintext highlighter-rouge">Set</code> and no <code class="language-plaintext highlighter-rouge">Add</code>: only the enemy’s own script changes its
+<code class="language-plaintext highlighter-rouge">Health</code>, and the healer asks for that with the enemy’s <code class="language-plaintext highlighter-rouge">Heal</code> request. The enemy decides, and at
+full health it refuses.</p>
+
+<h2 id="reading-another-script">Reading another script</h2>
+
+<p>The variable generator writes a static <code class="language-plaintext highlighter-rouge">At(target)</code> into every partial script class that has a
+public variable. It returns a reader whose properties are that script’s public variables, each a
+read of the variable’s kind, plus <code class="language-plaintext highlighter-rouge">IsRunning</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">enemy</span> <span class="p">=</span> <span class="n">EnemyScript</span><span class="p">.</span><span class="nf">At</span><span class="p">(</span><span class="n">Patient</span><span class="p">);</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
+    <span class="n">Seen</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">Health</span><span class="p">),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">IsRunning</span> <span class="p">&amp;</span> <span class="n">enemy</span><span class="p">.</span><span class="n">Alive</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">Tint</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>A target</strong> is a binding <code class="language-plaintext highlighter-rouge">Bind.Object()</code> declared, an object this script holds under a name,
+<code class="language-plaintext highlighter-rouge">Object.Owned("Companion")</code>, or inside a request handler, <code class="language-plaintext highlighter-rouge">Sender</code>.</li>
+  <li><strong>Every readable kind reads</strong>: Number, Flag, <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code>, <code class="language-plaintext highlighter-rouge">Rotation</code>, <code class="language-plaintext highlighter-rouge">Color</code> and a
+declared enum. A private variable, and a Text variable, is not on the reader.</li>
+  <li><strong>A read runs when its block runs</strong>, so it returns the value the target holds at that moment.
+A reader of a script also reads a script derived from it.</li>
+  <li><strong>While the target names no running script of the type</strong>, a read returns its kind’s default:
+0, False, a zero vector, the identity rotation, a clear colour, the enum’s first value.
+<code class="language-plaintext highlighter-rouge">IsRunning</code> is False then. An empty binding and an ended target write nothing to the Console. A
+target that runs a script of another type writes one warning per <code class="language-plaintext highlighter-rouge">At(target)</code>, because that is
+a mistake in the scene.</li>
+  <li><strong>A read never reaches another incarnation.</strong> When the target’s object is despawned and reused
+from a pool, an owned name that held it is empty again; the new use is read only through a name
+that holds it now.</li>
+</ul>
+
+<p>A read is for blocks. C# reads another object’s script with <code class="language-plaintext highlighter-rouge">LunyScript.Find</code>, which throws after
+the script ended instead of returning a default; see
+<a href="/LunyScript-Docs/manual/reading-scripts-from-csharp.html">Reading scripts from C#</a>.</p>
+
+<h2 id="watching-another-scripts-variable">Watching another script’s variable</h2>
+
+<p><code class="language-plaintext highlighter-rouge">When.Var</code> takes a Number, Flag or enum read and runs its blocks when the value changes:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">enemy</span> <span class="p">=</span> <span class="n">EnemyScript</span><span class="p">.</span><span class="nf">At</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Owned</span><span class="p">(</span><span class="s">"Target"</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Var</span><span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">Health</span><span class="p">).</span><span class="nf">Changed</span><span class="p">(</span><span class="n">Flash</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>The watch follows the target. When the target resolves to another incarnation than before, the
+watch takes that incarnation’s value as its new start and runs nothing, whether the two values
+are equal or not. While the target names nothing, it runs nothing. The watch ends with the
+script that declared it.</p>
+
+<h2 id="asking-another-script-requests">Asking another script: requests</h2>
+
+<p>A script declares the requests it accepts and handles each one:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Heal</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Request</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Request</span><span class="p">(</span><span class="n">Heal</span><span class="p">,</span> <span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&gt;=</span> <span class="m">100</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="nf">Reject</span><span class="p">()));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Request</span><span class="p">(</span><span class="n">Heal</span><span class="p">,</span> <span class="n">Health</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">HealerScript</span><span class="p">.</span><span class="nf">At</span><span class="p">(</span><span class="n">Sender</span><span class="p">).</span><span class="n">Strength</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>Another script sends one through the declaring script’s generated <code class="language-plaintext highlighter-rouge">Requests</code> class:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Healing</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Healing</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Request</span><span class="p">(</span><span class="n">Patient</span><span class="p">,</span> <span class="n">EnemyScript</span><span class="p">.</span><span class="n">Requests</span><span class="p">.</span><span class="n">Heal</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Healing</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Healing</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Seen</span><span class="p">.</span><span class="nf">Set</span><span class="p">(-</span><span class="m">1</span><span class="p">));</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>The receiver decides.</strong> Its <code class="language-plaintext highlighter-rouge">On.Request</code> sections run in the order written, and
+<code class="language-plaintext highlighter-rouge">Reject()</code> refuses the request: the sections after the current one do not run, and what
+already ran stays done.</li>
+  <li><strong>Delivery is immediate.</strong> The sections run inside the sender’s block, before its next block,
+also while the receiver’s game is paused. <code class="language-plaintext highlighter-rouge">Sender</code> inside them is the sending script.</li>
+  <li><strong>A handler may send more requests and events.</strong> Requests and events nest at most 8 deep; one
+past that is refused, and the sender’s later blocks still run.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">.As(operation)</code> observes the outcome:</strong></li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Outcome</th>
+      <th>When</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Succeeded</td>
+      <td>every section ran</td>
+    </tr>
+    <tr>
+      <td>Failed as <code class="language-plaintext highlighter-rouge">Denied</code></td>
+      <td>a section ran <code class="language-plaintext highlighter-rouge">Reject()</code>, the receiver is deactivated or stopped, or the nesting limit refused it</td>
+    </tr>
+    <tr>
+      <td>Failed as <code class="language-plaintext highlighter-rouge">NotFound</code></td>
+      <td>the target names no running script that handles this request</td>
+    </tr>
+    <tr>
+      <td>Failed as <code class="language-plaintext highlighter-rouge">Unknown</code></td>
+      <td>a block of a section threw; the receiver stops, the sender does not</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Without <code class="language-plaintext highlighter-rouge">.As</code>, a request nothing handled is reported once as a warning, and a refusal is silent.</p>
+
+<p>A script handles only the requests it declares, so <code class="language-plaintext highlighter-rouge">On.Request(EnemyScript.Requests.Heal, ...)</code>
+in another script is refused when the script is built. <code class="language-plaintext highlighter-rouge">Requests</code> lists the requests a
+<code class="language-plaintext highlighter-rouge">Define.Request()</code> line declares; one a hand-written property holds, named with
+<code class="language-plaintext highlighter-rouge">.As(nameof(...))</code>, is used by its own script only.</p>
+
+<h2 id="telling-every-script-events">Telling every script: events</h2>
+
+<p>A script declares the events it sends and sends only its own:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Opened</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Event</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Request</span><span class="p">(</span><span class="n">Open</span><span class="p">,</span> <span class="n">IsOpen</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="nf">SendEvent</span><span class="p">(</span><span class="n">Opened</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>Any script listens through the declaring script’s generated <code class="language-plaintext highlighter-rouge">Events</code> class:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Event</span><span class="p">(</span><span class="n">DoorScript</span><span class="p">.</span><span class="n">Events</span><span class="p">.</span><span class="n">Opened</span><span class="p">).</span><span class="nf">Do</span><span class="p">(</span><span class="n">DoorsOpened</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Event</span><span class="p">(</span><span class="n">DoorScript</span><span class="p">.</span><span class="n">Events</span><span class="p">.</span><span class="n">Opened</span><span class="p">).</span><span class="nf">From</span><span class="p">(</span><span class="n">FrontDoor</span><span class="p">).</span><span class="nf">Do</span><span class="p">(</span><span class="n">FrontOpen</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>Without <code class="language-plaintext highlighter-rouge">From</code>, a listener hears every running <code class="language-plaintext highlighter-rouge">DoorScript</code> that sends <code class="language-plaintext highlighter-rouge">Opened</code>, its own object
+included. <code class="language-plaintext highlighter-rouge">.From(target)</code> hears only the script its target names when the event arrives. An
+unrelated script’s own <code class="language-plaintext highlighter-rouge">Opened</code> is another event. Listeners run immediately, in the order they
+were spawned; a deactivated or ended listener hears nothing. An event carries no values: a
+listener reads the sender through a target it holds.</p>
+
+<h2 id="sharing-a-gate">Sharing a gate</h2>
+
+<p>A gate a script declares is one another script opens or closes through the declaring script’s
+<code class="language-plaintext highlighter-rouge">Gates</code> class:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// In LoaderScript:</span>
+<span class="n">Loading</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Gate</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="n">Loading</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Input</span><span class="p">));</span>
+
+<span class="c1">// In any other script:</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Done</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Gate</span><span class="p">.</span><span class="nf">Close</span><span class="p">(</span><span class="n">LoaderScript</span><span class="p">.</span><span class="n">Gates</span><span class="p">.</span><span class="n">Loading</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p>Two scripts that each declare their own <code class="language-plaintext highlighter-rouge">Loading</code> hold two gates, and <code class="language-plaintext highlighter-rouge">Gate.Open("Loading", ...)</code>
+with a string is a third. Every other rule of gates applies; see
+<a href="/LunyScript-Docs/manual/time-and-pausing.html">Time, pausing and gates</a>.</p>
+
+<h2 id="scripts-that-run-once-per-game">Scripts that run once per game</h2>
+
+<p>A script declares that it runs once per game in its <code class="language-plaintext highlighter-rouge">Options</code> property:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">QuestDirector</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="n">LunyScriptOptions</span> <span class="n">Options</span> <span class="p">=&gt;</span> <span class="nf">RunAs</span><span class="p">(</span><span class="n">Scope</span><span class="p">.</span><span class="n">Singleton</span><span class="p">);</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Completed</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Completed</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Event</span><span class="p">(</span><span class="n">QuestGiver</span><span class="p">.</span><span class="n">Events</span><span class="p">.</span><span class="n">Finished</span><span class="p">).</span><span class="nf">Do</span><span class="p">(</span><span class="n">Completed</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li><strong>No scene holds it.</strong> When the game starts, LunyScript creates one GameObject named after the
+script, with a Transform and a <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code>, moves it to DontDestroyOnLoad, and runs
+the script there until the game ends. Scene loads do not end it.</li>
+  <li><strong>Every singleton exists before any of them runs <code class="language-plaintext highlighter-rouge">On.Ready</code></strong>, so each hears the events the
+others send from <code class="language-plaintext highlighter-rouge">On.Ready</code>. Which <code class="language-plaintext highlighter-rouge">On.Ready</code> runs first is not promised.</li>
+  <li><strong>Its inputs are its declarations’ defaults.</strong> The object has no Inspector rows, and an object
+binding searches only DontDestroyOnLoad.</li>
+  <li><strong>A copy on another object does not run.</strong> A <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> running a singleton script
+in a scene or a prefab writes one warning and does nothing.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">RunAs</code> belongs in <code class="language-plaintext highlighter-rouge">Options</code>.</strong> Called inside <code class="language-plaintext highlighter-rouge">Build()</code> it is refused, because the scope is read
+before <code class="language-plaintext highlighter-rouge">Build()</code> runs. A variable or document named <code class="language-plaintext highlighter-rouge">Options</code> hides this property; name it after
+what it holds, such as <code class="language-plaintext highlighter-rouge">Preferences</code>.</li>
+  <li><strong>Samples and tests do not start.</strong> An assembly marked
+<code class="language-plaintext highlighter-rouge">[assembly: LunyScriptAssembly(AssemblyUsage.Sample)]</code> or <code class="language-plaintext highlighter-rouge">AssemblyUsage.Test</code>, and an assembly
+that references NUnit, is left out of the game start.</li>
+</ul>
+
+<p>Scripts reach a singleton through its events and gates. A reader and a request need a target, and
+a singleton has no binding another script can name.</p>
+
+<h2 id="what-is-not-included">What is not included</h2>
+
+<ul>
+  <li>Reading or asking the collider on the far side of a contact: <code class="language-plaintext highlighter-rouge">Other</code> names a collider, not a
+script.</li>
+  <li>Values carried by a request or an event.</li>
+  <li>Finding a script by its type or a singleton by its name.</li>
+  <li>Requests and events between peers; those use
+<a href="/LunyScript-Docs/manual/messaging.html">Messaging</a> and <code class="language-plaintext highlighter-rouge">Net.Send</code>.</li>
+</ul>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/binding-scene-objects.html">Binding scene objects</a> — the targets
+a reader and a request take.</li>
+  <li><a href="/LunyScript-Docs/manual/object-pools.html">Object pools</a> — the owned names
+<code class="language-plaintext highlighter-rouge">Object.Owned(name)</code> reads.</li>
+  <li><a href="/LunyScript-Docs/manual/reading-scripts-from-csharp.html">Reading scripts from C#</a> — the
+C# view of another object’s script.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.LunyScriptTarget.html"><code class="language-plaintext highlighter-rouge">LunyScriptTarget</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Request.html"><code class="language-plaintext highlighter-rouge">Request</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Event.html"><code class="language-plaintext highlighter-rouge">Event</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.LunyScriptOptions.html"><code class="language-plaintext highlighter-rouge">LunyScriptOptions</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

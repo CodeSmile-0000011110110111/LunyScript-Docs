@@ -220,22 +220,22 @@ same composite uses, so W cannot become both up and down. Rebinding the whole
 <p>A rebind lasts until the game quits. List the player’s bindings in a Settings
 document and they are saved and loaded with the document’s other fields:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Options</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Document</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Options</span><span class="p">))</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Preferences</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Document</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Preferences</span><span class="p">))</span>
     <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">MusicVolume</span><span class="p">),</span> <span class="n">MusicVolume</span><span class="p">)</span>
     <span class="p">.</span><span class="nf">Bindings</span><span class="p">(</span><span class="n">Input</span><span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>
 
-<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Settings</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Options</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">LoadingOptions</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Settings</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Preferences</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">LoadingPreferences</span><span class="p">));</span>
 <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">RebindFire</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span>
-    <span class="n">Settings</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">Options</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">SavingOptions</span><span class="p">));</span>
+    <span class="n">Settings</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">Preferences</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">SavingPreferences</span><span class="p">));</span>
 </code></pre></div></div>
 
 <ul>
-  <li>Nothing is written until the script saves the document. <code class="language-plaintext highlighter-rouge">Options.IsDirty</code>
+  <li>Nothing is written until the script saves the document. <code class="language-plaintext highlighter-rouge">Preferences.IsDirty</code>
 is true after a rebind or a reset, until the next save.</li>
   <li>A load replaces the player’s controls with the saved ones. A control the
 saved copy does not mention returns to the action asset’s.</li>
   <li>A saved control whose binding a newer version of the game removed is
-skipped, and <code class="language-plaintext highlighter-rouge">Options.Omitted(Input.ForPlayer(0))</code> is true after that load.</li>
+skipped, and <code class="language-plaintext highlighter-rouge">Preferences.Omitted(Input.ForPlayer(0))</code> is true after that load.</li>
   <li>Only a Settings document lists bindings, and each player once. List several
 players with <code class="language-plaintext highlighter-rouge">.Bindings(Input.ForPlayer(2))</code> and so on. With local players,
 numbers 0 and 1 both name the host, so list the host under one of them.</li>

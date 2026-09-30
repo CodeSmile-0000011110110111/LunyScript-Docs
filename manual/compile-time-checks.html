@@ -130,6 +130,11 @@ generator that writes your variable properties, so there is nothing to install o
       <td>Warning</td>
       <td>A script in an assembly definition that references the Unity engine.</td>
     </tr>
+    <tr>
+      <td><a href="#luny009">LUNY009</a></td>
+      <td>Warning</td>
+      <td>A member whose name the generated reader or descriptors of another script need.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -325,9 +330,33 @@ turns the warning off for the whole assembly:</p>
     <span class="s">"LunyScript"</span><span class="p">,</span> <span class="s">"LUNY008"</span><span class="p">,</span> <span class="n">Justification</span> <span class="p">=</span> <span class="s">"Test scripts"</span><span class="p">)]</span>
 </code></pre></div></div>
 
+<h2 id="luny009">LUNY009: a name the generated access to a script needs</h2>
+
+<p>The generator writes <code class="language-plaintext highlighter-rouge">At(target)</code> and its <code class="language-plaintext highlighter-rouge">Reader</code> into a script with a public variable, and the
+<code class="language-plaintext highlighter-rouge">Requests</code>, <code class="language-plaintext highlighter-rouge">Events</code> and <code class="language-plaintext highlighter-rouge">Gates</code> classes into a script that declares one, so other scripts can
+<a href="/LunyScript-Docs/manual/talking-to-other-scripts.html">read and ask it</a>. A member of the
+script that already has one of those names keeps it, and the generator writes nothing in its
+place:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Radio</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">const</span> <span class="kt">string</span> <span class="n">At</span> <span class="p">=</span> <span class="s">"At"</span><span class="p">;</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// LUNY009: Radio declares a member named At, so no Radio.At</span>
+        <span class="n">Volume</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Volume</span><span class="p">),</span> <span class="m">1</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The warning is reported on the script’s first declaration line.</p>
+
+<p>A public variable named <code class="language-plaintext highlighter-rouge">IsRunning</code> is left off the reader, because the reader’s own <code class="language-plaintext highlighter-rouge">IsRunning</code>
+check has that name. Rename the member to make the script readable from other scripts.</p>
+
 <h2 id="turning-a-check-off-for-a-few-lines">Turning a check off for a few lines</h2>
 
-<p>LUNY002 to LUNY008 are ordinary compiler diagnostics, so <code class="language-plaintext highlighter-rouge">#pragma warning</code> turns one off around the
+<p>LUNY002 to LUNY009 are ordinary compiler diagnostics, so <code class="language-plaintext highlighter-rouge">#pragma warning</code> turns one off around the
 lines that need it and on again after them:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma warning disable LUNY005

@@ -249,6 +249,17 @@ clock alone, so every script keeps ticking while a gate is open.</p>
 screen can hold the gate open while it captures a new binding. Pausing the game opens no gate, and
 opening a gate pauses nothing; combine the two when you want both.</p>
 
+<p>A gate can also be declared, and another script then names it through the declaring script:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Loading</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Gate</span><span class="p">();</span>                        <span class="c1">// in LoaderScript</span>
+<span class="n">Gate</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="n">Loading</span><span class="p">,</span> <span class="n">GateCategory</span><span class="p">.</span><span class="n">Input</span><span class="p">);</span>
+<span class="n">Gate</span><span class="p">.</span><span class="nf">Close</span><span class="p">(</span><span class="n">LoaderScript</span><span class="p">.</span><span class="n">Gates</span><span class="p">.</span><span class="n">Loading</span><span class="p">);</span>         <span class="c1">// in any other script</span>
+</code></pre></div></div>
+
+<p>A declared gate is its own gate: another script’s own <code class="language-plaintext highlighter-rouge">Loading</code>, and the string gate <code class="language-plaintext highlighter-rouge">"Loading"</code>,
+are two more. See
+<a href="/LunyScript-Docs/manual/talking-to-other-scripts.html">Talking to other scripts</a>.</p>
+
 <h2 id="the-two-together">The two together</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
