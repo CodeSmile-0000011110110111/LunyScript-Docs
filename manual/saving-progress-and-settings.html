@@ -2,7 +2,7 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>Saving progress and settings | LunyScript Docs</title>
 <meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="Saving progress and settings" />
@@ -239,7 +239,7 @@ load that omits fields writes one warning naming each of them.</p>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">doc.Unsynced</code></td>
-      <td>The document is stored on this device and not uploaded. This version uploads no document, so once saved or loaded it stays true.</td>
+      <td>The document is stored on this device and not uploaded. <code class="language-plaintext highlighter-rouge">Cloud.Save</code> clears it; <a href="/LunyScript-Docs/manual/networking-and-cloud-save.html">Networking and cloud save</a> says exactly when.</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">doc.HasOmissions</code></td>
@@ -345,13 +345,12 @@ finite is stored as the text <code class="language-plaintext highlighter-rouge">
 <h2 id="what-is-not-included">What is not included</h2>
 
 <ul>
-  <li>Uploading a document to a cloud service. <code class="language-plaintext highlighter-rouge">Cloud.Save</code> and <code class="language-plaintext highlighter-rouge">Cloud.Load</code> store
-single numbers; see
-<a href="/LunyScript-Docs/manual/networking-and-cloud-save.html">Networking and cloud save</a>.</li>
   <li>Choosing between several local users: every document belongs to the one
 default user.</li>
   <li>Fields of an enum, list or map type.</li>
-  <li>Deleting a document, and reading one from C#.</li>
+  <li>Deleting a document from the device, and reading one from C#. <code class="language-plaintext highlighter-rouge">Cloud.Save</code>,
+<code class="language-plaintext highlighter-rouge">Cloud.Load</code> and <code class="language-plaintext highlighter-rouge">Cloud.Delete</code> keep a copy of the same document in the cloud;
+see <a href="/LunyScript-Docs/manual/networking-and-cloud-save.html">Networking and cloud save</a>.</li>
 </ul>
 
 <h2 id="a-worked-example">A worked example</h2>

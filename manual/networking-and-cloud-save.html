@@ -2,7 +2,7 @@
 <html lang="en"><head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.0 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>Networking and cloud save | LunyScript Docs</title>
 <meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="Networking and cloud save" />
@@ -189,57 +189,93 @@ the session ends.</p>
 
 <h2 id="cloud-save">Cloud save</h2>
 
-<p><code class="language-plaintext highlighter-rouge">Cloud</code> stores a number under a key and reads it back:</p>
+<p><code class="language-plaintext highlighter-rouge">Cloud</code> uploads a document to the signed-in player’s Cloud Save data, downloads
+it back, and deletes the cloud copy. The document is the one
+<a href="/LunyScript-Docs/manual/saving-progress-and-settings.html">Saving progress and settings</a>
+declares with <code class="language-plaintext highlighter-rouge">Define.Document</code>, so one declaration serves the copy on the
+device and the copy in the cloud:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Cloud</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RunEnded"</span><span class="p">,</span> <span class="n">Cloud</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">,</span> <span class="n">Score</span><span class="p">));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Career</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Document</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Career</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Best</span><span class="p">),</span> <span class="n">Best</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Pilot</span><span class="p">),</span> <span class="n">Pilot</span><span class="p">);</span>
 
-<span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">).</span><span class="nf">Saved</span><span class="p">(</span><span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Saved."</span><span class="p">));</span>
-<span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">).</span><span class="nf">Loaded</span><span class="p">(</span><span class="n">Score</span><span class="p">,</span> <span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Loaded."</span><span class="p">));</span>
-<span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"The store did not answer."</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Cloud</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Career</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Downloading</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RunEnded"</span><span class="p">,</span> <span class="n">Progress</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">Career</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Saving</span><span class="p">),</span>
+    <span class="n">Cloud</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">Career</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Uploading</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="n">Uploading</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Kept on this device"</span><span class="p">));</span>
 </code></pre></div></div>
 
 <table>
   <thead>
     <tr>
-      <th>Watch</th>
-      <th>When it runs</th>
+      <th>Start</th>
+      <th>What it does</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">When.Cloud(key).Saved(block, ..)</code></td>
-      <td>The value reached the store.</td>
+      <td><code class="language-plaintext highlighter-rouge">Cloud.Save(doc).As(op)</code></td>
+      <td>Uploads every field’s value when the block runs, as one stored value.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">When.Cloud(key).Loaded(into, block, ..)</code></td>
-      <td>The value arrived and was written into <code class="language-plaintext highlighter-rouge">into</code>.</td>
+      <td><code class="language-plaintext highlighter-rouge">Cloud.Load(doc).As(op)</code></td>
+      <td>Downloads the copy and writes its fields together.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">When.Cloud(key).Failed(block, ..)</code></td>
-      <td>The attempt ended without doing either.</td>
+      <td><code class="language-plaintext highlighter-rouge">Cloud.Delete(doc).As(op)</code></td>
+      <td>Removes the cloud copy; the fields are not touched.</td>
     </tr>
   </tbody>
 </table>
 
-<p>The first parameter of <code class="language-plaintext highlighter-rouge">Loaded</code> is the <code class="language-plaintext highlighter-rouge">Number</code> the loaded value is written into, and the blocks
-after it run once that write has happened. The key is required and must not be blank.</p>
+<p>Every start needs <code class="language-plaintext highlighter-rouge">.As(handle)</code>, a handle <code class="language-plaintext highlighter-rouge">Operation.Define</code> declared.
+<code class="language-plaintext highlighter-rouge">When.Cloud(handle)</code> is the same watch as <code class="language-plaintext highlighter-rouge">When.Operation(handle)</code>, so
+<code class="language-plaintext highlighter-rouge">Succeeded</code>, <code class="language-plaintext highlighter-rouge">Failed</code>, <code class="language-plaintext highlighter-rouge">Canceled</code>, <code class="language-plaintext highlighter-rouge">Finished</code> and the handle’s conditions work
+the way <a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a>
+describes.</p>
 
-<p>A save or a load can also be one attempt on an operation handle. <code class="language-plaintext highlighter-rouge">.As(handle)</code> binds it, and a load
-names the variable its value is written into first:</p>
+<ul>
+  <li>The cloud copy is stored under the document’s name, in the layout the copy on
+the device has. A download migrates an older version and reports omitted
+fields the way <code class="language-plaintext highlighter-rouge">Progress.Load</code> does.</li>
+  <li>A document never uploaded fails a download as <code class="language-plaintext highlighter-rouge">NotFound</code>, and every field
+keeps its value. A delete succeeds whether or not a copy existed.</li>
+  <li>Requests for one document run one at a time, in the order their blocks ran.
+A download after an upload reads what the upload stored. When a request
+fails, the next one still runs with the values it captured; the failed one is
+not sent again.</li>
+  <li>Cancelling a request that has not been sent yet removes it.</li>
+  <li>LunyScript sets no time limit on a cloud request. The service decides when a
+request has timed out and reports <code class="language-plaintext highlighter-rouge">Timeout</code>.</li>
+</ul>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RunEnded"</span><span class="p">,</span> <span class="n">Cloud</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">,</span> <span class="n">Score</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">SavingScore</span><span class="p">));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Cloud</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Score</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">LoadingScore</span><span class="p">));</span>
+<h3 id="unsynced">Unsynced</h3>
 
-<span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="n">SavingScore</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span><span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Saved."</span><span class="p">));</span>
-<span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="n">LoadingScore</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Prompt</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"No score yet."</span><span class="p">));</span>
+<p><code class="language-plaintext highlighter-rouge">doc.Unsynced</code> is true when the document was edited since the cloud last
+confirmed an upload, or when the copy on the device is newer than that upload.
+A download never makes it false. An upload that the cloud confirms makes it
+false only when no field changed after the upload captured its values, even if
+a value changed and then returned to what was uploaded:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Career</span><span class="p">.</span><span class="n">Unsynced</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Not uploaded yet"</span><span class="p">)));</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">When.Cloud(handle)</code> is the same watch as <code class="language-plaintext highlighter-rouge">When.Operation(handle)</code>, so <code class="language-plaintext highlighter-rouge">Succeeded</code>, <code class="language-plaintext highlighter-rouge">Failed</code>,
-<code class="language-plaintext highlighter-rouge">Canceled</code>, <code class="language-plaintext highlighter-rouge">Finished</code>, <code class="language-plaintext highlighter-rouge">Cancel()</code> and <code class="language-plaintext highlighter-rouge">Retry()</code> work the way
-<a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> describes. The
-key’s own <code class="language-plaintext highlighter-rouge">When.Cloud(key)</code> watches still run for the same request. A load whose attempt was cancelled
-writes nothing into its variable.</p>
+<p><code class="language-plaintext highlighter-rouge">doc.IsDirty</code> keeps describing the copy on the device: an upload does not change
+it, and a download changes it only through the values it writes.</p>
+
+<h3 id="the-provider">The provider</h3>
+
+<p>The game names where cloud copies go once, before or after the first request:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">cloud</span> <span class="p">=</span> <span class="n">LunyScriptRuntime</span><span class="p">.</span><span class="n">DefaultRunner</span><span class="p">.</span><span class="n">CloudGateway</span><span class="p">;</span>
+<span class="n">cloud</span><span class="p">.</span><span class="nf">UseProvider</span><span class="p">(</span><span class="k">new</span> <span class="n">CodeSmile</span><span class="p">.</span><span class="n">LunyScript</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">UgsCloudSaveProvider</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">UgsCloudSaveProvider</code> signs in anonymously to Unity Gaming Services and needs
+the project’s Unity Cloud link. <code class="language-plaintext highlighter-rouge">FileCloudSaveProvider</code> keeps each document as a
+file in a directory you name, which is how the API example and the tests run
+without an account; <code class="language-plaintext highlighter-rouge">DelayCompletion(frames)</code> makes it answer later, the way a
+network does.</p>
 
 <h2 id="a-worked-example">A worked example</h2>
 
@@ -248,16 +284,22 @@ writes nothing into its variable.</p>
 <span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">NetworkedRunner</span> <span class="p">:</span> <span class="n">Script</span>
 <span class="p">{</span>
     <span class="k">public</span> <span class="n">Number</span> <span class="n">Score</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">Document</span> <span class="n">Record</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">public</span> <span class="n">Operation</span> <span class="n">Downloading</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
     <span class="p">[</span><span class="n">Variable</span><span class="p">]</span> <span class="k">public</span> <span class="n">Flag</span> <span class="n">Stale</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="n">Score</span> <span class="p">=</span> <span class="n">Var</span><span class="p">.</span><span class="n">DefineSynced</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;(</span>
             <span class="k">nameof</span><span class="p">(</span><span class="n">Score</span><span class="p">),</span> <span class="n">SyncCadence</span><span class="p">.</span><span class="n">OnChange</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+        <span class="n">Best</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Best</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>
+        <span class="n">Record</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Document</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Record</span><span class="p">))</span>
+            <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Best</span><span class="p">),</span> <span class="n">Best</span><span class="p">);</span>
+        <span class="n">Downloading</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Downloading</span><span class="p">));</span>
         <span class="n">Sync</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="n">SyncCadence</span><span class="p">.</span><span class="n">EveryTick</span><span class="p">);</span>
         <span class="n">Sync</span><span class="p">.</span><span class="nf">Rotation</span><span class="p">(</span><span class="n">SyncCadence</span><span class="p">.</span><span class="n">OnChange</span><span class="p">);</span>
 
-        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Cloud</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Cloud</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Record</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Downloading</span><span class="p">));</span>
 
         <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
             <span class="nf">If</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Score</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)),</span>
@@ -265,10 +307,13 @@ writes nothing into its variable.</p>
                 <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Stale</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">))</span>
                 <span class="p">.</span><span class="nf">Else</span><span class="p">(</span><span class="n">Stale</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
 
-        <span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="s">"highscore"</span><span class="p">).</span><span class="nf">Loaded</span><span class="p">(</span><span class="n">Score</span><span class="p">,</span> <span class="n">Stale</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="n">Downloading</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span><span class="n">Stale</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
+
+<p>A document field cannot be a synchronised variable, because a download writes
+the field on every peer; the example keeps the best score in its own <code class="language-plaintext highlighter-rouge">Best</code>.</p>
 
 <h2 id="what-to-read-next">What to read next</h2>
 
@@ -285,9 +330,10 @@ synchronised variable is read and written.</li>
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SyncFactory.html"><code class="language-plaintext highlighter-rouge">SyncFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SyncCadence.html"><code class="language-plaintext highlighter-rouge">SyncCadence</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudFactory.html"><code class="language-plaintext highlighter-rouge">CloudFactory</code></a>,
-<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudWatchBuilder.html"><code class="language-plaintext highlighter-rouge">CloudWatchBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudSaveBuilder.html"><code class="language-plaintext highlighter-rouge">CloudSaveBuilder</code></a>,
-<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudLoadBuilder.html"><code class="language-plaintext highlighter-rouge">CloudLoadBuilder</code></a>.</li>
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudLoadBuilder.html"><code class="language-plaintext highlighter-rouge">CloudLoadBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudDeleteBuilder.html"><code class="language-plaintext highlighter-rouge">CloudDeleteBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.FileCloudSaveProvider.html"><code class="language-plaintext highlighter-rouge">FileCloudSaveProvider</code></a>.</li>
 </ul>
 
   </div>
