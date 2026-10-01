@@ -130,9 +130,9 @@ that does not match its handle. A machine has one to sixteen states. Every machi
 enters the state. Update runs once in every later frame the state is current and no transition is
 taken. Exit runs when the machine leaves the state.</p>
 
-<p><strong>A routine, <code class="language-plaintext highlighter-rouge">Choose</code> or <code class="language-plaintext highlighter-rouge">Run</code> started in Enter belongs to the state.</strong> The machine runs it in each
-frame before Update, and stops it when the machine leaves the state, so the roar above never outlives
-<code class="language-plaintext highlighter-rouge">Angry</code>. Entering the state again starts it again.</p>
+<p><strong>A routine, <code class="language-plaintext highlighter-rouge">Choose</code>, <code class="language-plaintext highlighter-rouge">Run</code> or behaviour tree started in Enter belongs to the state.</strong> The machine
+runs it in each frame before Update, and stops it when the machine leaves the state, so the roar
+above never outlives <code class="language-plaintext highlighter-rouge">Angry</code>. Entering the state again starts it again.</p>
 
 <p>The three lists run their blocks one after another in one frame, like an <code class="language-plaintext highlighter-rouge">If</code>’s <code class="language-plaintext highlighter-rouge">Then</code>. A <code class="language-plaintext highlighter-rouge">Wait</code> or an
 <code class="language-plaintext highlighter-rouge">InParallel</code> group written in them is refused; put the waiting in a routine that Enter starts, as the
@@ -259,6 +259,8 @@ names.</p>
 routines a state starts, and the <code class="language-plaintext highlighter-rouge">Wait</code> they hold for.</li>
   <li><a href="/LunyScript-Docs/manual/choosing-between-options.html">Choosing between options</a> — score
 several actions each frame instead of naming states.</li>
+  <li><a href="/LunyScript-Docs/manual/behaviour-trees.html">Behaviour trees</a> — try options in order and
+fall back when one fails; a tree a state’s Enter starts belongs to that state.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.StateMachine.html"><code class="language-plaintext highlighter-rouge">StateMachine</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.State.html"><code class="language-plaintext highlighter-rouge">State</code></a>,

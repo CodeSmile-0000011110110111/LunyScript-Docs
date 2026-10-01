@@ -113,7 +113,7 @@ generator that writes your variable properties, so there is nothing to install o
     <tr>
       <td><a href="#luny005">LUNY005</a></td>
       <td>Warning</td>
-      <td>A block written as a statement, where nothing runs it.</td>
+      <td>A block or a behaviour-tree node written as a statement, where nothing runs it.</td>
     </tr>
     <tr>
       <td><a href="#luny006">LUNY006</a></td>
@@ -253,6 +253,15 @@ statement, it is composed and then dropped:</p>
 
 <p>A builder written this way, such as <code class="language-plaintext highlighter-rouge">Transform.MoveBy(..)</code>, is also refused when the script type is
 built. A finished block such as <code class="language-plaintext highlighter-rouge">Health.Set(0)</code> is not, so this warning is the only report of it.</p>
+
+<p>A behaviour-tree node runs only where a tree holds it, so a node written as a statement is reported
+the same way:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Task</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>        <span class="c1">// Node (here: Task(..)) is unused,</span>
+                            <span class="c1">// it will not run</span>
+<span class="nf">InOrder</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>              <span class="c1">// Builder (here: InOrder(..)) node is</span>
+                            <span class="c1">// unused, it will not run</span>
+</code></pre></div></div>
 
 <h2 id="luny006">LUNY006: Unity engine API inside a script</h2>
 
