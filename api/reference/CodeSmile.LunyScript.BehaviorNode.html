@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Class ScriptBuildContext | LunyScript API Reference </title>
+      <title>Struct BehaviorNode | LunyScript API Reference </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Class ScriptBuildContext | LunyScript API Reference ">
+      <meta name="title" content="Struct BehaviorNode | LunyScript API Reference ">
       
-      <meta name="description" content="The build-time half of the behaviour tree: each tree a Behavior(name).Root(node) declares, placed once, and where its starts are placed.">
+      <meta name="description" content="One node of a behaviour tree: a leaf made by Task or Check, a composite made by InOrder, InParallel or InAnyOrder, or a wrapper made by Inverted, AlwaysSucceeds, AlwaysFails or Repeat.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_ScriptBuildContext.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.ScriptBuildContext%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_BehaviorNode.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.BehaviorNode%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -72,12 +72,12 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="CodeSmile.LunyScript.ScriptBuildContext">
+        <article data-uid="CodeSmile.LunyScript.BehaviorNode">
 
 
 
-  <h1 id="CodeSmile_LunyScript_ScriptBuildContext" data-uid="CodeSmile.LunyScript.ScriptBuildContext" class="text-break">
-Class ScriptBuildContext  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Build/ScriptBuildContext.StateMachines.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  <h1 id="CodeSmile_LunyScript_BehaviorNode" data-uid="CodeSmile.LunyScript.BehaviorNode" class="text-break">
+Struct BehaviorNode  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/BehaviorTrees/BehaviorNode.cs/#L26"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,13 +85,14 @@ Class ScriptBuildContext  <a class="header-action link-secondary" title="View so
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>The build-time half of the behaviour tree: each tree a <code>Behavior(name).Root(node)</code> declares, placed once,
-and where its starts are placed.</p>
+  <div class="markdown summary"><p>One node of a behaviour tree: a leaf made by <code>Task</code> or <code>Check</code>, a composite made by <code>InOrder</code>,
+<code>InParallel</code> or <code>InAnyOrder</code>, or a wrapper made by <code>Inverted</code>, <code>AlwaysSucceeds</code>,
+<code>AlwaysFails</code> or <code>Repeat</code>.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class ScriptBuildContext</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly struct BehaviorNode</code></pre>
   </div>
 
 
@@ -100,13 +101,6 @@ and where its starts are placed.</p>
   <details>
   <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
 
-  <dl class="typelist inheritance">
-    <dt>Inheritance</dt>
-    <dd>
-      <div><span class="xref">object</span></div>
-      <div><span class="xref">ScriptBuildContext</span></div>
-    </dd>
-  </dl>
 
 
 
@@ -115,57 +109,28 @@ and where its starts are placed.</p>
 
 
 
+  <h2 id="CodeSmile_LunyScript_BehaviorNode_examples">Examples</h2>
+  <pre><code class="lang-csharp">BehaviorNode openDoor = InOrder(Check(HasKey), Task(Opening.Set(true))).UntilOneFails();
+var door = Behavior("Door").Root(openDoor);</code></pre>
 
-  <h2 id="CodeSmile_LunyScript_ScriptBuildContext_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>A tree's nodes are placed where <code>Root</code> is written, with one <span class="xref">CodeSmile.LunyScript.BlockCloner</span>, the way a Run's body
-is placed where the Run is declared. A tree whose Start is placed in a state's Enter list belongs to that state:
-<span class="xref">CodeSmile.LunyScript.ScriptBuildContext.FinishStateMachines()</span> claims it, and the machine advances it instead of the runner. All of this
-runs once per script type; nothing here runs per frame. <code>docs/proposals/behaviour-trees.md</code> is the
-contract.</p>
+
+  <h2 id="CodeSmile_LunyScript_BehaviorNode_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>A node is placed in a tree only: as a child of a composite, as the child of a wrapper, or as the root given to
+<code>Behavior(name).Root(...)</code>. It is not a <a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>, so a block or a condition becomes a node only
+through <code>Task</code> or <code>Check</code>, and a node cannot be placed in an event list.</p>
+<p>
+    A node held in a local or returned by a method can be placed more than once. Each placement after the first
+    is a copy with progress of its own, as <code>docs/execution-model.md</code>, "Reusing a composed block", states
+    for every composed block.
+</p>
 </div>
-
-
-  <h2 class="section" id="properties">Properties
-</h2>
-
-
-  <a id="CodeSmile_LunyScript_ScriptBuildContext_ScriptType_" data-uid="CodeSmile.LunyScript.ScriptBuildContext.ScriptType*"></a>
-
-  <h3 id="CodeSmile_LunyScript_ScriptBuildContext_ScriptType" data-uid="CodeSmile.LunyScript.ScriptBuildContext.ScriptType">
-  ScriptType
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Build/ScriptBuildContext.cs/#L114"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>The script type being built. Named in every diagnostic this build can raise.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Type ScriptType { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">Type</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
 
 
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Core/Build/ScriptBuildContext.StateMachines.cs/#L17" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/BehaviorTrees/BehaviorNode.cs/#L26" class="edit-link">Edit this page</a>
         </div>
 
 

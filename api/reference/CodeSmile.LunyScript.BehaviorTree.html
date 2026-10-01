@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct BehaviorTree | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct BehaviorTree | LunyScript API Reference ">
+      
+      <meta name="description" content="A declared behaviour tree.  starts or restarts one activation,  interrupts it, and four conditions read what it reached.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_BehaviorTree.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.BehaviorTree%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.BehaviorTree">
+
+
+
+  <h1 id="CodeSmile_LunyScript_BehaviorTree" data-uid="CodeSmile.LunyScript.BehaviorTree" class="text-break">
+Struct BehaviorTree  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/BehaviorTrees/BehaviorTree.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>A declared behaviour tree. <a class="xref" href="CodeSmile.LunyScript.BehaviorTree.html#CodeSmile_LunyScript_BehaviorTree_Start_System_String_System_Int32_">Start(string, int)</a> starts or restarts one activation, <a class="xref" href="CodeSmile.LunyScript.BehaviorTree.html#CodeSmile_LunyScript_BehaviorTree_Stop_System_String_System_Int32_">Stop(string, int)</a>
+interrupts it, and four conditions read what it reached.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct BehaviorTree</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyScript_BehaviorTree_examples">Examples</h2>
+  <pre><code class="lang-csharp">var open = Behavior("Open").Root(InOrder(Check(HasKey), Task(Opening.Set(true))).UntilOneFails());
+On.Message("Use", open.Start());
+On.Update(If(open.Failed).Then(Locked.Set(true)));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_BehaviorTree_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>The runner advances an active tree once per frame, after the object's <code>On.Update</code> blocks, state machines,
+routines, Run work and <code>Choose</code> selectors. The root descends through immediate work in one advance, so a
+tree of Checks and immediate Tasks finishes in the advance that starts it. When the root finishes, the
+activation ends and its result is kept until the next Start: a finished tree does not start again by itself.</p>
+<p>
+    The handle keeps its build directly and holds no <span class="xref">CodeSmile.LunyScript.BuilderLease</span>; only an unfinished builder
+    step holds one. A tree is a declared handle: <code>Start()</code> placed in two event lists starts the one
+    tree.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_BehaviorTree_Failed_" data-uid="CodeSmile.LunyScript.BehaviorTree.Failed*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BehaviorTree_Failed" data-uid="CodeSmile.LunyScript.BehaviorTree.Failed">
+  Failed
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/BehaviorTrees/BehaviorTree.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A condition that is true once the last activation's root finished Failed, until the next Start. It is
+false before the first Start, while an activation runs, and after a Stop that interrupted one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Failed { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BehaviorTree_Failed_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Update(If(open.Failed).Then(Locked.Set(true)));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_BehaviorTree_IsActive_" data-uid="CodeSmile.LunyScript.BehaviorTree.IsActive*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BehaviorTree_IsActive" data-uid="CodeSmile.LunyScript.BehaviorTree.IsActive">
+  IsActive
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/BehaviorTrees/BehaviorTree.cs/#L109"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A condition that is true while an activation of this tree is running: from Start until the root
+finishes or a Stop interrupts it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock IsActive { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BehaviorTree_IsActive_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Update(If(PlayerNear &amp; !greet.IsActive).Then(greet.Start()));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BehaviorTree_IsActive_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>It reads the same state as <a class="xref" href="CodeSmile.LunyScript.BehaviorTree.html#CodeSmile_LunyScript_BehaviorTree_Running">Running</a>. With one explicit Start per activation, a tree is
+active exactly while its root's work is pending.</p>
+</div>
+
+
+
+
+  <a id="CodeSmile_LunyScript_BehaviorTree_Running_" data-uid="CodeSmile.LunyScript.BehaviorTree.Running*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BehaviorTree_Running" data-uid="CodeSmile.LunyScript.BehaviorTree.Running">
+  Running
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/BehaviorTrees/BehaviorTree.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A condition that is true while the root's work is pending: from Start until the root finishes or a
+Stop interrupts it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Running { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BehaviorTree_Running_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Update(If(guard.Running).Then(Busy.Set(true)));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_BehaviorTree_Succeeded_" data-uid="CodeSmile.LunyScript.BehaviorTree.Succeeded*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BehaviorTree_Succeeded" data-uid="CodeSmile.LunyScript.BehaviorTree.Succeeded">
+  Succeeded
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/BehaviorTrees/BehaviorTree.cs/#L119"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A condition that is true once the last activation's root finished Succeeded, until the next Start. It
+is false before the first Start, while an activation runs, and after a Stop that interrupted one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ConditionBlock Succeeded { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BehaviorTree_Succeeded_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Update(If(open.Succeeded).Then(Opened.Set(true)));</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_BehaviorTree_Start_" data-uid="CodeSmile.LunyScript.BehaviorTree.Start*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BehaviorTree_Start_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BehaviorTree.Start(System.String,System.Int32)">
+  Start(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/BehaviorTrees/BehaviorTree.cs/#L133"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The block that starts one activation of this tree. An activation that is running is interrupted
+first, its running nodes each doing their own cleanup, and a kept result is cleared. The tree is first advanced
+in the frame's tree pass, which follows <code>On.Update</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Start(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>The start block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BehaviorTree_Start_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(guard.Start());</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_BehaviorTree_Stop_" data-uid="CodeSmile.LunyScript.BehaviorTree.Stop*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BehaviorTree_Stop_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BehaviorTree.Stop(System.String,System.Int32)">
+  Stop(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/BehaviorTrees/BehaviorTree.cs/#L148"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The block that interrupts an activation of this tree. Its running nodes each do their own cleanup and
+the tree is left without a result. A tree that finished keeps its result, and one that is not active is left as
+it is.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Stop(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>The stop block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BehaviorTree_Stop_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Update(If(Health &lt;= 0).Then(guard.Stop()));</code></pre>
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/BehaviorTrees/BehaviorTree.cs/#L89" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
