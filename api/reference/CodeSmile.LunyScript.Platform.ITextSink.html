@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_Platform_ITextSink" data-uid="CodeSmile.LunyScript.Platform.ITextSink" class="text-break">
-Interface ITextSink  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITextSink.cs/#L23"><i class="bi bi-code-slash"></i></a>
+Interface ITextSink  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITextSink.cs/#L24"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -118,9 +118,10 @@ digits into a stack buffer and allocates nothing. The .NET 10 counterparts are
 Replacing: <code>String.Format</code>, <code>System.Text.StringBuilder</code>, string interpolation,
 <code>Int32.ToString()</code> on the run-time path.</p>
 <p>
-    Fixed-capacity text still writes <code>FixedString</code> slots directly.
-    <a class="xref" href="CodeSmile.LunyScript.Platform.AllocatingTextSink.html">AllocatingTextSink</a> is the consumer of this interface: a text variable
-    declared with allocating storage writes through it.
+    Fixed-capacity text writes <code>FixedString</code> slots directly, and a text declared without a
+    byte count is one <code>System.String</code> per slot, composed from the same UTF-8 formatting. No
+    runtime type implements this interface since <code>AllocatingTextSink</code> was removed on
+    2026-10-02; it stays as the .NET 10 seam that names what the formatting replaces.
 </p>
 </div>
 
@@ -133,7 +134,7 @@ Replacing: <code>String.Format</code>, <code>System.Text.StringBuilder</code>, s
 
   <h3 id="CodeSmile_LunyScript_Platform_ITextSink_CapacityBytes" data-uid="CodeSmile.LunyScript.Platform.ITextSink.CapacityBytes">
   CapacityBytes
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITextSink.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITextSink.cs/#L28"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Number of UTF-8 bytes the sink can hold. See AGENTS.md section 6 for the
@@ -170,7 +171,7 @@ capacity-growth rule and what happens past 4096 bytes.</p>
 
   <h3 id="CodeSmile_LunyScript_Platform_ITextSink_Append_System_Double_" data-uid="CodeSmile.LunyScript.Platform.ITextSink.Append(System.Double)">
   Append(double)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITextSink.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITextSink.cs/#L34"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Appends the decimal form of <code class="paramref">value</code> without allocating.</p>
@@ -212,7 +213,7 @@ capacity-growth rule and what happens past 4096 bytes.</p>
 
   <h3 id="CodeSmile_LunyScript_Platform_ITextSink_Set_System_ReadOnlySpan_System_Char__" data-uid="CodeSmile.LunyScript.Platform.ITextSink.Set(System.ReadOnlySpan{System.Char})">
   Set(ReadOnlySpan&lt;char&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITextSink.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITextSink.cs/#L31"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Replaces the sink's content with <code class="paramref">value</code>.</p>
@@ -254,7 +255,7 @@ capacity-growth rule and what happens past 4096 bytes.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITextSink.cs/#L23" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Platform/ITextSink.cs/#L24" class="edit-link">Edit this page</a>
         </div>
 
 

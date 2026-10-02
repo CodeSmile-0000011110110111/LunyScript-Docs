@@ -2455,8 +2455,8 @@ how often each one is sent.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a></dt>
-      <dd><p>A text variable of a script: a handle to one fixed-capacity text slot. <code>Build()</code> declares
-it, and its methods build blocks.</p>
+      <dd><p>A text variable of a script: a handle to one text slot. <code>Build()</code> declares it, and its
+methods build blocks.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2474,14 +2474,16 @@ required.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.TextCapacityDefineBuilder.html">TextCapacityDefineBuilder</a></dt>
-      <dd><p>What <code>Define.Text(name, capacity)</code> returns: an object-local text slot of that
-capacity unless <code>Shared</code> is called.</p>
+      <dd><p>What <code>Define.Text(name, capacity)</code> returns: an object-local fixed text slot of that
+capacity, which never allocates and refuses text that does not fit, unless <code>Shared</code> is
+called.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.TextDefineBuilder.html">TextDefineBuilder</a></dt>
-      <dd><p>What <code>Define.Text(name)</code> returns: an object-local 64-byte fixed slot unless
-<code>Allocating</code> or <code>Shared</code> is called.</p>
+      <dd><p>What <code>Define.Text(name)</code> returns: an object-local text that grows with what is written
+into it, one <code>System.String</code> per object, unless <code>Allocating</code> or <code>Shared</code> is
+called.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2516,8 +2518,9 @@ named.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.TextSlot.html">TextSlot</a></dt>
-      <dd><p>Where one text variable lives on every instance of a program, and how many bytes it holds.
-The capacity is part of the handle because each capacity is a separate array on the instance.</p>
+      <dd><p>Where one text variable lives on every instance of a program, and how it is stored: in a
+fixed-capacity array selected by <a class="xref" href="CodeSmile.LunyScript.TextSlot.html#CodeSmile_LunyScript_TextSlot_Capacity">Capacity</a>, or as one <code>System.String</code> per
+object when <a class="xref" href="CodeSmile.LunyScript.TextSlot.html#CodeSmile_LunyScript_TextSlot_IsAllocating">IsAllocating</a> is true.</p>
 </dd>
     </dl>
     <dl class="jumplist">
