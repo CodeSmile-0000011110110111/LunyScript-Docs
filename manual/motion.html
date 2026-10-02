@@ -164,10 +164,78 @@ back short of it three times. A move at <code class="language-plaintext highligh
 <p>A kinematic Rigidbody must run these in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>. A CharacterController and an object with
 neither component accept them from any event.</p>
 
+<p>A CharacterController is moved once per frame. The first <code class="language-plaintext highlighter-rouge">MoveBy</code>, <code class="language-plaintext highlighter-rouge">MoveTo</code>, follow or lead step, or
+<code class="language-plaintext highlighter-rouge">ApplyGravity</code> that moves it in a frame runs, whichever script and event it comes from; every later one in
+that frame is ignored, and the Console shows one error for that line, naming the call that moved the
+controller first. The fixed steps of a frame count in that frame. Add the steps together and move once:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Walk is a Vector3 of the walking speed; FallSpeed is a Number the script keeps.</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
+    <span class="n">FallSpeed</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">FallSpeed</span> <span class="p">-</span> <span class="m">9.81</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">),</span>
+    <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="n">Walk</span><span class="p">.</span><span class="n">X</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">,</span> <span class="n">FallSpeed</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">,</span> <span class="n">Walk</span><span class="p">.</span><span class="n">Z</span> <span class="p">*</span> <span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">).</span><span class="nf">InWorldSpace</span><span class="p">());</span>
+</code></pre></div></div>
+
 <p>On a player’s object that a <code class="language-plaintext highlighter-rouge">Camera.FollowGroup().Bounds(width, height)</code> keeps together with the
 other players, <code class="language-plaintext highlighter-rouge">MoveBy</code> and <code class="language-plaintext highlighter-rouge">MoveTo</code> are applied at the end of the tick with the other players’
 moves, and a step that would spread the group past its Bounds is shortened;
 <a href="/LunyScript-Docs/manual/cameras-and-viewports.html">Cameras and viewports</a> has the rule.</p>
+
+<h2 id="falling-with-gravity">Falling with gravity</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">ApplyGravity</span><span class="p">(-</span><span class="m">9.81</span><span class="p">));</span>            <span class="c1">// world Y, units per second squared</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">ApplyGravity</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="p">-</span><span class="m">9.81</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>      <span class="c1">// or three numbers, or one Vector3</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Landed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">ResetGravity</span><span class="p">()));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">ApplyGravity</code> accelerates the object. Each time it runs it adds the acceleration to a velocity the
+script keeps for the object, then moves the object by that velocity for the time the frame took, so a
+fall gets faster frame by frame. The one number is the world Y part, and a negative number pulls down;
+<code class="language-plaintext highlighter-rouge">ApplyGravity(x, y, z)</code> and <code class="language-plaintext highlighter-rouge">ApplyGravity(vector)</code> take all three parts, in world space. A Number or
+<code class="language-plaintext highlighter-rouge">Vector3</code> variable is read each time.</p>
+
+<p>The velocity stays until something clears it. <code class="language-plaintext highlighter-rouge">ApplyGravity(0)</code> adds nothing and keeps the object
+moving at the speed it had, the way a coasting object does. <code class="language-plaintext highlighter-rouge">Motion.ResetGravity()</code> sets the velocity
+back to zero and moves nothing, so the next <code class="language-plaintext highlighter-rouge">ApplyGravity</code> starts from rest; it runs in any event.
+Nothing detects the ground: decide when the object has landed, for example with a contact event or a
+collision query, and reset it then. A successful <code class="language-plaintext highlighter-rouge">Motion.TeleportTo</code> from the same script also starts
+the velocity from zero.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>The object has</th>
+      <th><code class="language-plaintext highlighter-rouge">ApplyGravity</code></th>
+      <th>How often</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A <code class="language-plaintext highlighter-rouge">CharacterController</code></td>
+      <td><code class="language-plaintext highlighter-rouge">CharacterController.Move</code>, from any event</td>
+      <td>once per frame, so write it in <code class="language-plaintext highlighter-rouge">On.Update</code></td>
+    </tr>
+    <tr>
+      <td>A kinematic <code class="language-plaintext highlighter-rouge">Rigidbody</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Rigidbody.MovePosition</code>, in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code></td>
+      <td>once per fixed step</td>
+    </tr>
+    <tr>
+      <td>No body and no controller</td>
+      <td>a transform write, from any event</td>
+      <td>once per frame, so write it in <code class="language-plaintext highlighter-rouge">On.Update</code></td>
+    </tr>
+    <tr>
+      <td>A dynamic <code class="language-plaintext highlighter-rouge">Rigidbody</code></td>
+      <td>a refusal: Unity’s own gravity moves it</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A second <code class="language-plaintext highlighter-rouge">ApplyGravity</code> in the same frame, or the same fixed step, is ignored and the Console shows
+one error for that line. While the game is paused no time passes, so nothing falls. On a
+CharacterController, <code class="language-plaintext highlighter-rouge">ApplyGravity</code> is the controller’s one move of the frame, so a character that
+walks and falls keeps its own fall speed and moves once, as the previous section shows.</p>
 
 <h2 id="driving-a-dynamic-body">Driving a dynamic body</h2>
 
