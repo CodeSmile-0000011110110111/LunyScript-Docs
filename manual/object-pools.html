@@ -83,7 +83,7 @@
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="n">Health</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Health</span><span class="p">),</span> <span class="m">100</span><span class="p">);</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">Spawned</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">StopMotion</span><span class="p">());</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Spawned</span><span class="p">(</span><span class="n">Body</span><span class="p">.</span><span class="nf">MakeDynamic</span><span class="p">());</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">()));</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -217,10 +217,10 @@ rotation the <code class="language-plaintext highlighter-rouge">At</code> names.
 </table>
 
 <p>Every variable of the copy’s script is back at its declared value on each spawn. Native state is not:
-a Rigidbody keeps its velocity, an Animator its state, a particle system its particles, and the object
+a Rigidbody keeps its velocity and whether it is kinematic, an Animator its state, a particle system its particles, and the object
 its scale and anything else its last use changed. Reset what matters in <code class="language-plaintext highlighter-rouge">On.Spawned</code>:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Spawned</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">StopMotion</span><span class="p">(),</span> <span class="n">Transform</span><span class="p">.</span><span class="nf">SetScale</span><span class="p">(</span><span class="m">1</span><span class="p">),</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Spawned</span><span class="p">(</span><span class="n">Body</span><span class="p">.</span><span class="nf">MakeDynamic</span><span class="p">(),</span> <span class="n">Transform</span><span class="p">.</span><span class="nf">SetScale</span><span class="p">(</span><span class="m">1</span><span class="p">),</span>
     <span class="n">Particles</span><span class="p">.</span><span class="nf">Play</span><span class="p">());</span>
 </code></pre></div></div>
 

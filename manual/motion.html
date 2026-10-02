@@ -160,10 +160,51 @@ moves, and a step that would spread the group past its Bounds is shortened;
     <span class="n">Motion</span><span class="p">.</span><span class="nf">StopMotion</span><span class="p">());</span>
 </code></pre></div></div>
 
-<p>All four require an active dynamic Rigidbody and <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>. <code class="language-plaintext highlighter-rouge">AddImpulse</code> is a separate call
+<p>All four require an active dynamic Rigidbody and <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>; written anywhere else they are reported once and
+ignored. <code class="language-plaintext highlighter-rouge">AddImpulse</code> is a separate call
 rather than a force-mode parameter on <code class="language-plaintext highlighter-rouge">AddForce</code>, so the two read differently at a glance.
 <code class="language-plaintext highlighter-rouge">SetVelocity</code> converts the vector out of the frame you chose before it writes the world velocity.
 <code class="language-plaintext highlighter-rouge">StopMotion</code> clears linear and angular velocity once, at the moment it runs.</p>
+
+<h2 id="pushing-with-an-explosion">Pushing with an explosion</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Blasted</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span>
+    <span class="n">Motion</span><span class="p">.</span><span class="nf">AddImpulse</span><span class="p">(</span><span class="m">12</span><span class="p">).</span><span class="nf">AsExplosion</span><span class="p">(</span><span class="n">Hub</span><span class="p">,</span> <span class="m">6</span><span class="p">).</span><span class="nf">Upwards</span><span class="p">(</span><span class="m">1.5</span><span class="p">),</span>
+    <span class="n">Blasted</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">AddForce</span><span class="p">(</span><span class="m">40</span><span class="p">).</span><span class="nf">AsExplosion</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">6</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">AddImpulse(strength)</code> and <code class="language-plaintext highlighter-rouge">AddForce(strength)</code> take one number and are finished by <code class="language-plaintext highlighter-rouge">AsExplosion(center, radius)</code>,
+which gives the direction: Unity’s own <code class="language-plaintext highlighter-rouge">Rigidbody.AddExplosionForce</code>, pushing this object’s body away from a world
+point. <code class="language-plaintext highlighter-rouge">AddImpulse</code> is a one-time blast, so run it once per blast; <code class="language-plaintext highlighter-rouge">AddForce</code> pushes in every fixed step the block runs
+in. The centre is a <code class="language-plaintext highlighter-rouge">Vector3</code> or three numbers. <code class="language-plaintext highlighter-rouge">Upwards(n)</code> measures the push direction from <code class="language-plaintext highlighter-rouge">n</code> units below the
+centre, which throws bodies up as well as out; without it the push is straight away from the centre.</p>
+
+<p>Unity scales the strength down with distance and measures that distance to the box around the body’s colliders, so a
+body whose centre is a little past the radius can still be pushed, weakly. A body whose box is wholly past the radius
+is not pushed. The explosion acts on the body the script runs on and finds no other body: put a script on each body a
+blast should move. It needs an active dynamic Rigidbody and <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>, like <code class="language-plaintext highlighter-rouge">AddImpulse</code>, and a radius greater
+than 0; a radius of 0 is reported once and pushes nothing. Unity tells the script nothing back, so a script that needs to
+know whether a blast reached it decides that by its own rule, such as its distance from the centre.</p>
+
+<h2 id="switching-a-body-between-kinematic-and-dynamic">Switching a body between kinematic and dynamic</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Spawned</span><span class="p">(</span><span class="n">Body</span><span class="p">.</span><span class="nf">MakeDynamic</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Expired</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Body</span><span class="p">.</span><span class="nf">MakeKinematic</span><span class="p">()));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">Body.MakeKinematic()</code> stops forces, gravity and contacts from moving the body; a kinematic move such as
+<code class="language-plaintext highlighter-rouge">Motion.MoveBy</code> still does. A dynamic body loses its velocity first, so it stops where it is, and its collider stays as it
+was, so other bodies still land on it. <code class="language-plaintext highlighter-rouge">Body.MakeDynamic()</code> hands the body back to physics, starting from rest.</p>
+
+<p>Both run in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>, and also in <code class="language-plaintext highlighter-rouge">On.Spawned</code>, <code class="language-plaintext highlighter-rouge">On.Ready</code>, <code class="language-plaintext highlighter-rouge">On.Enabled</code>, <code class="language-plaintext highlighter-rouge">On.Disabled</code> and <code class="language-plaintext highlighter-rouge">On.Despawned</code>,
+which run once when an object starts, stops or changes state rather than every frame. Written in <code class="language-plaintext highlighter-rouge">On.Update</code>,
+<code class="language-plaintext highlighter-rouge">On.LateUpdate</code> or any other event, they are reported once and ignored. An object with no Rigidbody writes a warning once
+and nothing is switched.</p>
+
+<p>A pool gives back the object, not a fresh body: a copy that was kinematic or moving when it was returned is still that
+way when it is handed out again. <code class="language-plaintext highlighter-rouge">On.Spawned(Body.MakeDynamic())</code> puts it back to a dynamic body at rest before Unity
+shows it. <a href="/LunyScript-Docs/manual/object-pools.html">Object pools</a> has the whole reset.</p>
 
 <h2 id="relocating-and-observing-the-result">Relocating, and observing the result</h2>
 
