@@ -125,14 +125,20 @@ every C# example in them compiles against that version.</p>
 you open the project, until you tick <strong>Don’t show again</strong>; that choice is yours alone, kept in
 the project’s <code class="language-plaintext highlighter-rouge">UserSettings</code> folder.</p>
 
-<p>Each time the window opens, and until a skill link exists, it asks:</p>
+<p>After the welcome window opens, and while no skill link exists, a message box titled <strong>Install
+LunyScript AI Skills</strong> asks:</p>
 
 <blockquote>
-  <p>Allow LunyScript to install AI agent skill links under .claude/skills and .agents/skills?</p>
+  <p>LunyScript includes AI agent skills. To ensure agents find and use the LunyScript skills, we need
+to create .agents/skills/lunyscript* and .claude/skills/lunyscript* in the project’s root. These
+redirecting skills guide AI agents to use the actual LunyScript skills located in
+Assets/CodeSmile/LunyScript/AgentSkills/lunyscript*</p>
+
+  <p>Allow LunyScript to install the links to its AI agent skills?</p>
 </blockquote>
 
-<p>Nothing is written before you press <strong>Allow skill links</strong>. Allow writes one link per skill, in a
-folder named after the skill, in each of these folders of your Unity project:</p>
+<p><strong>Yes</strong> writes one link per skill, in a folder named after the skill, in each of these folders of
+your Unity project. <strong>No</strong> writes nothing.</p>
 
 <table>
   <thead>
@@ -152,6 +158,12 @@ folder named after the skill, in each of these folders of your Unity project:</p
     </tr>
   </tbody>
 </table>
+
+<p>LunyScript keeps your answer in <code class="language-plaintext highlighter-rouge">UserSettings/LunyScriptAgentSkills.asset</code>, yours alone like the
+<strong>Don’t show again</strong> choice. When the welcome window opens by itself, the box asks only until you
+answer it once. When you open the welcome window from <strong>Tools &gt; LunyScript &gt; Welcome</strong>, the box asks
+again while no skill link exists, so you can still answer <strong>Yes</strong> after an earlier <strong>No</strong>. The box
+never appears when the Editor runs in batch mode.</p>
 
 <p>Start your agent in the Unity project folder, the one that holds <code class="language-plaintext highlighter-rouge">Assets</code>, or in a folder inside
 it:</p>
@@ -212,8 +224,8 @@ checks the path, and leaves exactly as it is:</p>
   <li>a symbolic link or junction anywhere on the path, which it does not follow.</li>
 </ul>
 
-<p>Each of those is listed in the welcome window and as a warning in the Console, and every other link
-is still written. A file that only has a skill’s name is never taken as permission to write.</p>
+<p>Each of those is listed as a warning in the Console, and every other link is still written. A file
+that only has a skill’s name is never taken as permission to write.</p>
 
 <h2 id="updates-and-repairs">Updates and repairs</h2>
 
@@ -221,15 +233,15 @@ is still written. A file that only has a skill’s name is never taken as permis
 without asking, each time the Editor loads scripts: after you import a newer LunyScript, it
 rewrites a link whose skill changed, writes a link for a new skill, rewrites a link you deleted, and
 deletes the link of a skill that no longer ships. A folder where no link exists is written only after
-you allow it in the welcome window.</p>
+you answer <strong>Yes</strong> in the Install LunyScript AI Skills box.</p>
 
 <h2 id="removing-the-links">Removing the links</h2>
 
-<p>With the links installed, the welcome window shows <strong>Remove skill links</strong>. It deletes every link
-LunyScript recognises as its own, and each of the folders <code class="language-plaintext highlighter-rouge">.claude</code>, <code class="language-plaintext highlighter-rouge">.claude/skills</code>, <code class="language-plaintext highlighter-rouge">.agents</code> and
-<code class="language-plaintext highlighter-rouge">.agents/skills</code> that LunyScript created and that is now empty. It records those folders in
-<code class="language-plaintext highlighter-rouge">UserSettings/LunyScriptAgentSkillFolders.txt</code> when it creates them; a folder that existed before is
-never deleted. The next time the window opens, it asks again.</p>
+<p>Delete the folder <code class="language-plaintext highlighter-rouge">lunyscript</code> and every folder whose name starts with <code class="language-plaintext highlighter-rouge">lunyscript-</code> from
+<code class="language-plaintext highlighter-rouge">.claude/skills/</code> and <code class="language-plaintext highlighter-rouge">.agents/skills/</code>. With no link left that LunyScript recognises as its own, it writes nothing
+until you answer <strong>Yes</strong> in the box again. Delete <code class="language-plaintext highlighter-rouge">.claude</code>, <code class="language-plaintext highlighter-rouge">.claude/skills</code>, <code class="language-plaintext highlighter-rouge">.agents</code> and
+<code class="language-plaintext highlighter-rouge">.agents/skills</code> as well if you have no other use for them; LunyScript records in
+<code class="language-plaintext highlighter-rouge">UserSettings/LunyScriptAgentSkillFolders.txt</code> which of them it created.</p>
 
 <p>Remove the links before you remove LunyScript from a project. A link left behind names a file that
 no longer exists, and the agent then has nothing to read.</p>
