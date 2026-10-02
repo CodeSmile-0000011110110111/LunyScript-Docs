@@ -460,7 +460,7 @@ False for nobody.</p>
 
   <h3 id="CodeSmile_LunyScript_InputGateway_IsPressed_System_Int32_" data-uid="CodeSmile.LunyScript.InputGateway.IsPressed(System.Int32)">
   IsPressed(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L297"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L374"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether one resolved action is held down now.</p>
@@ -512,7 +512,7 @@ False for nobody.</p>
 
   <h3 id="CodeSmile_LunyScript_InputGateway_Occurred_System_Int32_CodeSmile_LunyScript_InputPhase_" data-uid="CodeSmile.LunyScript.InputGateway.Occurred(System.Int32,CodeSmile.LunyScript.InputPhase)">
   Occurred(int, InputPhase)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L328"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L405"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether one occurrence happened to a resolved action during this frame.</p>
@@ -623,7 +623,7 @@ never gives to a second person, or 0 for nobody.</p>
 
   <h3 id="CodeSmile_LunyScript_InputGateway_ReadNumber_System_Int32_" data-uid="CodeSmile.LunyScript.InputGateway.ReadNumber(System.Int32)">
   ReadNumber(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L305"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L382"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>One resolved action's one-component value now.</p>
@@ -675,7 +675,7 @@ never gives to a second person, or 0 for nobody.</p>
 
   <h3 id="CodeSmile_LunyScript_InputGateway_ReadVector_System_Int32_" data-uid="CodeSmile.LunyScript.InputGateway.ReadVector(System.Int32)">
   ReadVector(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L314"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L391"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>One resolved action's spatial value now.</p>
@@ -723,11 +723,86 @@ never gives to a second person, or 0 for nobody.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_InputGateway_ReleaseProvider_" data-uid="CodeSmile.LunyScript.InputGateway.ReleaseProvider*"></a>
+
+  <h3 id="CodeSmile_LunyScript_InputGateway_ReleaseProvider_CodeSmile_LunyScript_IInputProvider_" data-uid="CodeSmile.LunyScript.InputGateway.ReleaseProvider(CodeSmile.LunyScript.IInputProvider)">
+  ReleaseProvider(IInputProvider)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L246"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Takes the installed backend back out, so that nothing reads it after the objects it reads
+are gone. Every declared action goes back to <a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_Unresolved">Unresolved</a> and reads the
+resting value of its kind.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool ReleaseProvider(IInputProvider provider)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.IInputProvider.html">IInputProvider</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>provider</code></dt></td>
+    <td style="width: 99%"><dd><p>The provider to take out. A provider that is not the installed one
+changes nothing, so one scene's teardown cannot take another scene's backend away.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when that provider was the installed one, false otherwise.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputGateway_ReleaseProvider_CodeSmile_LunyScript_IInputProvider__examples">Examples</h4>
+  <pre><code class="lang-csharp">runner.InputGateway.ReleaseProvider(m_Provider);</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_InputGateway_ReleaseProvider_CodeSmile_LunyScript_IInputProvider__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>This is the counterpart of <a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_UseProvider_CodeSmile_LunyScript_IInputProvider_">UseProvider(IInputProvider)</a>, and what a game whose backend
+reads objects of one scene calls when that scene ends.</b> The runner outlives a scene, so
+a backend left installed keeps reading what that scene owned: an action asset the scene
+destroyed resolves as no local player, and the gateway then reports every action the
+scripts of that scene declared. <code>PlayerCameraDemo</code> is the demonstration that does
+this, and its <code>OnDestroy</code> releases before it destroys the asset it built.</p>
+<p>
+    <b>Releasing reports nothing.</b> A declaration that stops resolving because the game
+    ended its own backend is not a mistake in a script, which is what separates this from
+    <a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_UseProvider_CodeSmile_LunyScript_IInputProvider_">UseProvider(IInputProvider)</a>: there, an action the new backend does not have is reported.
+    The already-reported flags are cleared as well, so a backend installed later reports
+    what it finds missing.
+</p>
+<p>
+    A provider that is <span class="xref">System.IDisposable</span> is disposed here, as a replaced one is in
+    <a class="xref" href="CodeSmile.LunyScript.InputGateway.html#CodeSmile_LunyScript_InputGateway_UseProvider_CodeSmile_LunyScript_IInputProvider_">UseProvider(IInputProvider)</a>: <code>InputSystemProvider</code> holds Input System users, action
+    copies and a device listener, and those are what releasing gives back.
+</p>
+</div>
+
+
+
+
   <a id="CodeSmile_LunyScript_InputGateway_ResolutionsFor_" data-uid="CodeSmile.LunyScript.InputGateway.ResolutionsFor*"></a>
 
   <h3 id="CodeSmile_LunyScript_InputGateway_ResolutionsFor_CodeSmile_LunyScript_ScriptProgram_" data-uid="CodeSmile.LunyScript.InputGateway.ResolutionsFor(CodeSmile.LunyScript.ScriptProgram)">
   ResolutionsFor(ScriptProgram)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L229"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputGateway.cs/#L306"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The backend identifiers this program's declared actions resolved to, in declaration

@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_LunyScriptDriverBehaviour" data-uid="CodeSmile.LunyScript.LunyScriptDriverBehaviour" class="text-break">
-Class LunyScriptDriverBehaviour  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptDriverBehaviour.cs/#L25"><i class="bi bi-code-slash"></i></a>
+Class LunyScriptDriverBehaviour  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptDriverBehaviour.cs/#L34"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -134,6 +134,15 @@ object, and it is the shape the future runtime inspector reads.</p>
     <code>docs/host-transform-cache.md</code> states what the sweep covers and what it was
     measured to find.
 </p>
+<p>
+    <b>A driver whose Play Mode session already ended destroys its object instead of ticking
+    again.</b> The driver object carries <code>HideFlags.HideAndDontSave</code>, which Unity does not
+    destroy when Play Mode ends in the Editor, so the object is still there when the next
+    session starts, with its runner and every backend that session installed on it. The
+    statics of <a class="xref" href="CodeSmile.LunyScript.LunyScriptRuntime.html">LunyScriptRuntime</a> are reset between sessions, so that type no
+    longer names this driver, and that is what tells an ended session's driver from the
+    current one. <span class="xref">CodeSmile.LunyScript.LunyScriptDriverBehaviour.EndedWithAPreviousSession()</span> states what ticking one did.
+</p>
 </div>
 
 
@@ -145,7 +154,7 @@ object, and it is the shape the future runtime inspector reads.</p>
 
   <h3 id="CodeSmile_LunyScript_LunyScriptDriverBehaviour_SceneUnloadDropCount" data-uid="CodeSmile.LunyScript.LunyScriptDriverBehaviour.SceneUnloadDropCount">
   SceneUnloadDropCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptDriverBehaviour.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptDriverBehaviour.cs/#L49"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many instances this driver's scene-unload sweep has dropped since it was
@@ -187,7 +196,7 @@ instance before the scene finishes unloading.</p>
 
   <h3 id="CodeSmile_LunyScript_LunyScriptDriverBehaviour_Bind_CodeSmile_LunyScript_ScriptRunner_" data-uid="CodeSmile.LunyScript.LunyScriptDriverBehaviour.Bind(CodeSmile.LunyScript.ScriptRunner)">
   Bind(ScriptRunner)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptDriverBehaviour.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptDriverBehaviour.cs/#L59"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Names the runner this driver ticks. Called by
@@ -234,7 +243,7 @@ instance before the scene finishes unloading.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptDriverBehaviour.cs/#L25" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptDriverBehaviour.cs/#L34" class="edit-link">Edit this page</a>
         </div>
 
 
