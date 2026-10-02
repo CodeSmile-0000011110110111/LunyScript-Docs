@@ -66,7 +66,7 @@ request it declares:</p>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="n">Health</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Health</span><span class="p">),</span> <span class="m">40</span><span class="p">);</span>
+        <span class="n">Health</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Health</span><span class="p">),</span> <span class="m">40</span><span class="p">);</span>
         <span class="n">Heal</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Request</span><span class="p">();</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Request</span><span class="p">(</span><span class="n">Heal</span><span class="p">,</span> <span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&gt;=</span> <span class="m">100</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="nf">Reject</span><span class="p">()));</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Request</span><span class="p">(</span><span class="n">Heal</span><span class="p">,</span> <span class="n">Health</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">25</span><span class="p">));</span>
@@ -78,7 +78,7 @@ request it declares:</p>
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="n">Patient</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
-        <span class="n">Seen</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Seen</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>
+        <span class="n">Seen</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Seen</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>
         <span class="kt">var</span> <span class="n">patient</span> <span class="p">=</span> <span class="n">EnemyScript</span><span class="p">.</span><span class="nf">At</span><span class="p">(</span><span class="n">Patient</span><span class="p">);</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Seen</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">patient</span><span class="p">.</span><span class="n">Health</span><span class="p">));</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Request</span><span class="p">(</span><span class="n">Patient</span><span class="p">,</span> <span class="n">EnemyScript</span><span class="p">.</span><span class="n">Requests</span><span class="p">.</span><span class="n">Heal</span><span class="p">));</span>
@@ -148,7 +148,7 @@ script that declared it.</p>
 
 <p>Another script sends one through the declaring script’s generated <code class="language-plaintext highlighter-rouge">Requests</code> class:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Healing</span> <span class="p">=</span> <span class="n">Operation</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Healing</span><span class="p">));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Healing</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Healing</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Request</span><span class="p">(</span><span class="n">Patient</span><span class="p">,</span> <span class="n">EnemyScript</span><span class="p">.</span><span class="n">Requests</span><span class="p">.</span><span class="n">Heal</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Healing</span><span class="p">));</span>
 <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Healing</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Seen</span><span class="p">.</span><span class="nf">Set</span><span class="p">(-</span><span class="m">1</span><span class="p">));</span>
 </code></pre></div></div>
@@ -245,7 +245,7 @@ with a string is a third. Every other rule of gates applies; see
 
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="n">Completed</span> <span class="p">=</span> <span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Completed</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>
+        <span class="n">Completed</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Completed</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Event</span><span class="p">(</span><span class="n">QuestGiver</span><span class="p">.</span><span class="n">Events</span><span class="p">.</span><span class="n">Finished</span><span class="p">).</span><span class="nf">Do</span><span class="p">(</span><span class="n">Completed</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
