@@ -119,9 +119,9 @@ On.FixedUpdate(If(Expired).Then(Body.MakeKinematic()));</code></pre>
 and is not walked after a physics step. Round 05 gated this observation at build time.</p>
 <p>
     <a class="xref" href="CodeSmile.LunyScript.BodyFactory.html#CodeSmile_LunyScript_BodyFactory_MakeKinematic_System_String_System_Int32_">MakeKinematic(string, int)</a> and <a class="xref" href="CodeSmile.LunyScript.BodyFactory.html#CodeSmile_LunyScript_BodyFactory_MakeDynamic_System_String_System_Int32_">MakeDynamic(string, int)</a> run in <code>On.FixedUpdate</code>, and also in
-    <code>On.Spawned</code>, <code>On.Ready</code>, <code>On.Enabled</code>, <code>On.Disabled</code> and <code>On.Despawned</code>, which
-    run once per lifecycle change. Both leave the body with no velocity. An object with no Rigidbody
-    warns once per incarnation and nothing is switched.
+    <code>On.Created</code>, <code>On.Spawned</code>, <code>On.Ready</code>, <code>On.Enabled</code>, <code>On.Disabled</code> and
+    <code>On.Despawned</code>, which run once per lifecycle change. Both leave the body with no velocity. An object
+    with no Rigidbody warns once per incarnation and nothing is switched.
 </p>
 </div>
 
@@ -238,9 +238,9 @@ starts from rest under forces, gravity and contacts.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_BodyFactory_MakeDynamic_System_String_System_Int32__remarks">Remarks</h4>
-  <div class="markdown level1 remarks"><p>Runs in <code>On.FixedUpdate</code>, <code>On.Spawned</code>, <code>On.Ready</code>, <code>On.Enabled</code>, <code>On.Disabled</code>
-and <code>On.Despawned</code>; written in any other event it is reported once and ignored. A body that is
-already dynamic also loses its velocity. An object with no Rigidbody warns once per incarnation.
+  <div class="markdown level1 remarks"><p>Runs in <code>On.FixedUpdate</code>, <code>On.Created</code>, <code>On.Spawned</code>, <code>On.Ready</code>, <code>On.Enabled</code>,
+<code>On.Disabled</code> and <code>On.Despawned</code>; written in any other event it is reported once and ignored. A
+body that is already dynamic also loses its velocity. An object with no Rigidbody warns once per incarnation.
 <code>On.Spawned</code> is where a pooled object that a previous use made kinematic gets its dynamic body
 back, before anything else reads it.</p>
 </div>
@@ -312,10 +312,10 @@ blocks and touches other bodies.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_BodyFactory_MakeKinematic_System_String_System_Int32__remarks">Remarks</h4>
-  <div class="markdown level1 remarks"><p>Runs in <code>On.FixedUpdate</code>, <code>On.Spawned</code>, <code>On.Ready</code>, <code>On.Enabled</code>, <code>On.Disabled</code>
-and <code>On.Despawned</code>; written in any other event it is reported once and ignored. A body that is
-already kinematic stays kinematic and gets no velocity write. An object with no Rigidbody warns once per
-incarnation. A pool resets no native state, so a script whose pooled object becomes kinematic writes
+  <div class="markdown level1 remarks"><p>Runs in <code>On.FixedUpdate</code>, <code>On.Created</code>, <code>On.Spawned</code>, <code>On.Ready</code>, <code>On.Enabled</code>,
+<code>On.Disabled</code> and <code>On.Despawned</code>; written in any other event it is reported once and ignored. A
+body that is already kinematic stays kinematic and gets no velocity write. An object with no Rigidbody warns
+once per incarnation. A pool resets no native state, so a script whose pooled object becomes kinematic writes
 <a class="xref" href="CodeSmile.LunyScript.BodyFactory.html#CodeSmile_LunyScript_BodyFactory_MakeDynamic_System_String_System_Int32_">MakeDynamic(string, int)</a> in its <code>On.Spawned</code>.</p>
 </div>
 
