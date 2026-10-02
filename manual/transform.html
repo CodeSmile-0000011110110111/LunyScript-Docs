@@ -82,7 +82,92 @@ a piece of scenery that animates on a fixed path.</p>
 
 <p>An object with a Rigidbody or a CharacterController needs
 <a href="/LunyScript-Docs/manual/motion.html">Motion</a> instead, which routes the same intent through
-whichever component the object actually has.</p>
+whichever component the object actually has. On an object with a Rigidbody, Transform’s position
+and rotation writes are refused; <a href="#an-object-with-a-rigidbody">the next section</a> lists the Motion
+call to use for each.</p>
+
+<h2 id="an-object-with-a-rigidbody">An object with a Rigidbody</h2>
+
+<p>Transform does not write the position or the rotation of an object that has a Rigidbody,
+kinematic or dynamic. The write changes nothing, the Console shows one error for that line, which
+names the Motion call to use, and the rest of the event still runs:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Crate has a kinematic Rigidbody.</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="n">Transform</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0.1</span><span class="p">));</span> <span class="c1">// refused: Crate stays put</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0.1</span><span class="p">));</span>    <span class="c1">// moves Crate</span>
+</code></pre></div></div>
+
+<p>Writing the Transform call in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code> does not change the answer. Use the Motion call
+from this table instead, in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Refused Transform call</th>
+      <th>Kinematic Rigidbody</th>
+      <th>Dynamic Rigidbody</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MoveBy</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Motion.MoveBy</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Motion.AddForce</code>, <code class="language-plaintext highlighter-rouge">Motion.AddImpulse</code> or <code class="language-plaintext highlighter-rouge">Motion.SetVelocity</code> to push it, <code class="language-plaintext highlighter-rouge">Motion.TeleportTo</code> to place it</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MoveTo(..).Over(..)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Motion.MoveTo(point).Over(seconds)</code></td>
+      <td>as for <code class="language-plaintext highlighter-rouge">MoveBy</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SetWorldPosition</code>, <code class="language-plaintext highlighter-rouge">SetLocalPosition</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Motion.TeleportTo</code> to place it, <code class="language-plaintext highlighter-rouge">Motion.MoveTo(point).AtSpeed(speed)</code> to move it there</td>
+      <td>as for <code class="language-plaintext highlighter-rouge">MoveBy</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">RotateAround</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Motion.MoveTo(point).AtSpeed(speed)</code> toward each next point of the orbit</td>
+      <td>as for <code class="language-plaintext highlighter-rouge">MoveBy</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">RotateTo(..).Over(..)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Motion.RotateTo(rotation).Over(seconds)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Motion.TeleportTo(Transform.WorldPosition).WithRotation(rotation)</code> to set it, or <code class="language-plaintext highlighter-rouge">Body.MakeKinematic()</code> and then <code class="language-plaintext highlighter-rouge">Motion.RotateTo</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SetWorldRotation</code>, <code class="language-plaintext highlighter-rouge">SetLocalRotation</code>, <code class="language-plaintext highlighter-rouge">RotateBy</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Motion.RotateTo(rotation).DegreesPerSecond(speed)</code> to turn it, <code class="language-plaintext highlighter-rouge">Motion.TeleportTo(Transform.WorldPosition).WithRotation(rotation)</code> to set it</td>
+      <td>as for <code class="language-plaintext highlighter-rouge">RotateTo</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">LookAt</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Motion.FaceTowards(point).DegreesPerSecond(speed)</code></td>
+      <td>as for <code class="language-plaintext highlighter-rouge">RotateTo</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">Motion.TeleportTo</code> and <code class="language-plaintext highlighter-rouge">Motion.MoveTo</code> take a world position, so a local position becomes a world
+one first. A <code class="language-plaintext highlighter-rouge">RotateBy</code> becomes the <code class="language-plaintext highlighter-rouge">Rotation</code> it would end at, which
+<a href="/LunyScript-Docs/manual/variables-and-values.html">Variables and values</a> explains how to
+build.</p>
+
+<ul>
+  <li><strong>The object written is the one checked.</strong> A child with a Rigidbody refuses
+<code class="language-plaintext highlighter-rouge">Transform.Child(0).SetLocalPosition(...)</code>, and so do a parent and a root that have one. Motion
+moves only the object its own script runs on, so give that object a script with the Motion call.
+A Rigidbody on the script’s own object does not refuse a write to a child that has none.</li>
+  <li><strong>A Rigidbody beside a CharacterController refuses too.</strong> Motion moves that object through its
+CharacterController, from any event, with the kinematic column’s calls.</li>
+  <li><strong>Scale and the hierarchy are not refused.</strong> <code class="language-plaintext highlighter-rouge">SetScale</code>, <code class="language-plaintext highlighter-rouge">ScaleBy</code>, <code class="language-plaintext highlighter-rouge">ScaleTo</code>, <code class="language-plaintext highlighter-rouge">SetParent</code>,
+<code class="language-plaintext highlighter-rouge">Unparent</code> and every read work on an object with a Rigidbody.</li>
+  <li><strong>A timed move that is refused stops where it is.</strong> A <code class="language-plaintext highlighter-rouge">MoveTo</code> or <code class="language-plaintext highlighter-rouge">RotateTo</code> that meets a
+Rigidbody part way ends there, and its next run on an object without one starts again from that
+pose.</li>
+  <li><strong>The body is checked at every write.</strong> The error appears once per script type and line, and
+again when <code class="language-plaintext highlighter-rouge">Body.MakeKinematic()</code> or <code class="language-plaintext highlighter-rouge">Body.MakeDynamic()</code> changed the body, naming that body’s
+calls.</li>
+</ul>
 
 <h2 id="one-vector3-or-three-numbers">One Vector3 or three numbers</h2>
 

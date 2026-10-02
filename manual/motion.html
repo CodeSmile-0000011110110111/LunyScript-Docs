@@ -111,6 +111,24 @@ call for that component:</p>
 outside <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code> when the component requires it — is reported once and then ignored. Nothing
 is queued for a later step.</p>
 
+<h2 id="instead-of-a-transform-write">Instead of a Transform write</h2>
+
+<p>On an object with a Rigidbody, kinematic or dynamic, Transform does not write the position or the
+rotation: the write is refused, and the Console shows one error for that line, naming the Motion
+call to use. Move the object with that call in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Crate has a kinematic Rigidbody.</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0.1</span><span class="p">));</span>      <span class="c1">// not Transform.MoveBy</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">TeleportTo</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>    <span class="c1">// not SetWorldPosition</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span>
+    <span class="n">Motion</span><span class="p">.</span><span class="nf">FaceTowards</span><span class="p">(</span><span class="n">Pad</span><span class="p">).</span><span class="nf">DegreesPerSecond</span><span class="p">(</span><span class="m">90</span><span class="p">));</span> <span class="c1">// not LookAt</span>
+</code></pre></div></div>
+
+<p>A dynamic Rigidbody is pushed instead, with <code class="language-plaintext highlighter-rouge">Motion.AddForce</code>, <code class="language-plaintext highlighter-rouge">Motion.AddImpulse</code> or
+<code class="language-plaintext highlighter-rouge">Motion.SetVelocity</code>, and placed with <code class="language-plaintext highlighter-rouge">Motion.TeleportTo</code>.
+<a href="/LunyScript-Docs/manual/transform.html#an-object-with-a-rigidbody">Transform</a> lists the
+Motion call for each refused write, for both kinds of body.</p>
+
 <h2 id="moving-a-character-or-a-kinematic-body">Moving a character or a kinematic body</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Motion</span><span class="p">.</span><span class="nf">MoveBy</span><span class="p">(</span><span class="m">0.02</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>            <span class="c1">// own axes; (delta) takes a Vector3</span>
