@@ -137,7 +137,7 @@ the actor's agent follows it. Speed, acceleration and stopping distance stay on 
 
   <h3 id="CodeSmile_LunyScript_NavigationFactory_Arrived_CodeSmile_LunyScript_Operation_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.Arrived(CodeSmile.LunyScript.Operation,System.String,System.Int32)">
   Arrived(Operation, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L190"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L259"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether the latest attempt bound to <code class="paramref">operation</code> ended with its actor
@@ -207,11 +207,94 @@ this surface was read outside <code>Build()</code>. When <code>Build()</code> fi
 
 
 
+  <a id="CodeSmile_LunyScript_NavigationFactory_Follow_" data-uid="CodeSmile.LunyScript.NavigationFactory.Follow*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NavigationFactory_Follow_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.Follow(CodeSmile.LunyScript.ObjectBinding,System.String,System.Int32)">
+  Follow(ObjectBinding, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Follows another object along routes: while that object is farther away than a range, the actor's
+agent follows a route to it; inside the range the agent stops. Incomplete until <code>WithinDistance</code> and
+<code>As</code> are written.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NavigationFollowBuilder Follow(ObjectBinding target, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>target</code></dt></td>
+    <td style="width: 99%"><dd><p>An object binding, such as <code>Leader = Bind.Object();</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NavigationFollowBuilder.html">NavigationFollowBuilder</a></dt>
+    <dd><p>A builder that takes <code>WithinDistance</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_Follow_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Navigation.Follow(Leader).WithinDistance(2).As(Pursuit));
+When.Navigation(Pursuit).EnteredRange(Status.Set("Close"));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_Follow_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The actor is the object the script runs on. The attempt <code>As</code> binds stays pending while the run lasts,
+including inside the range and at the reachable end of a partial route, where
+<code>Navigation.ReachedPartialEnd(op)</code> reads true. The run asks for a new route within the same attempt
+when the target has moved more than the range's margin, one world unit plus a tenth of the range, from
+where the last route was asked to. A lost target, the actor disabled and <code>op.Cancel()</code> end it as
+cancelled; an invalid route ends it as <code>Unreachable</code>. <code>When.Navigation(op).EnteredRange</code> and
+<code>.ExitedRange</code> observe the range. <code>docs/proposals/follow-and-lead.md</code> is the family.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">target</code> was never declared, or was declared
+by another script's <code>Build()</code>, or this surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_NavigationFactory_IsMoving_" data-uid="CodeSmile.LunyScript.NavigationFactory.IsMoving*"></a>
 
   <h3 id="CodeSmile_LunyScript_NavigationFactory_IsMoving_CodeSmile_LunyScript_Operation_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.IsMoving(CodeSmile.LunyScript.Operation,System.String,System.Int32)">
   IsMoving(Operation, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L174"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L243"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether the latest attempt bound to <code class="paramref">operation</code> is pending and its
@@ -277,6 +360,88 @@ binds.</p>
     <dd><p><code class="paramref">operation</code> was never declared, or
 this surface was read outside <code>Build()</code>. When <code>Build()</code> finishes, a handle no
 <code>Navigation.MoveTo</code> binds is refused.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_NavigationFactory_Lead_" data-uid="CodeSmile.LunyScript.NavigationFactory.Lead*"></a>
+
+  <h3 id="CodeSmile_LunyScript_NavigationFactory_Lead_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.Lead(CodeSmile.LunyScript.ObjectBinding,System.String,System.Int32)">
+  Lead(ObjectBinding, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L163"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Leads another object to a destination along a route: the actor's agent follows the route while
+the follower is within a range, and is held while the follower is farther away. Incomplete until
+<code>To</code>, <code>WithinDistance</code> and <code>As</code> are written.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NavigationLeadBuilder Lead(ObjectBinding follower, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>follower</code></dt></td>
+    <td style="width: 99%"><dd><p>An object binding, such as <code>Follower = Bind.Object();</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.NavigationLeadBuilder.html">NavigationLeadBuilder</a></dt>
+    <dd><p>A builder that takes <code>To</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_Lead_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Navigation.Lead(Follower).To(Exit).WithinDistance(6).As(Escort));
+When.Navigation(Escort).ExitedRange(Status.Set("Waiting"));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationFactory_Lead_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The attempt <code>As</code> binds succeeds once, when the actor's origin is within the range of the
+destination, with <code>Navigation.Arrived(op)</code> true, or at the reachable end of a partial route, with
+<code>Navigation.ReachedPartialEnd(op)</code> true. The agent's stopping distance is not an arrival: an agent
+that stops farther than the range from the destination keeps the attempt pending. The hold while the
+follower is away is added to <code>Navigation.Pause()</code>'s. <code>docs/proposals/follow-and-lead.md</code> is
+the family.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">follower</code> was never declared, or was
+declared by another script's <code>Build()</code>, or this surface was read outside <code>Build()</code>.</p>
 </dd>
   </dl>
 
@@ -519,7 +684,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_NavigationFactory_Pause_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.Pause(System.String,System.Int32)">
   Pause(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L194"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Holds the actor where it is. Its route and the attempt that drives it stay; a
@@ -585,7 +750,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_NavigationFactory_ReachedPartialEnd_CodeSmile_LunyScript_Operation_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.ReachedPartialEnd(CodeSmile.LunyScript.Operation,System.String,System.Int32)">
   ReachedPartialEnd(Operation, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L207"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L276"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether the latest attempt bound to <code class="paramref">operation</code> ended with its actor
@@ -660,7 +825,7 @@ this surface was read outside <code>Build()</code>. When <code>Build()</code> fi
 
   <h3 id="CodeSmile_LunyScript_NavigationFactory_Resume_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.Resume(System.String,System.Int32)">
   Resume(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L137"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L206"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Releases the hold <code>Pause()</code> put on the actor, which continues along its
@@ -725,7 +890,7 @@ route.</p>
 
   <h3 id="CodeSmile_LunyScript_NavigationFactory_Route_CodeSmile_LunyScript_Operation_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.Route(CodeSmile.LunyScript.Operation,System.String,System.Int32)">
   Route(Operation, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L153"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L222"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The route of the latest attempt a <code>Navigation.MoveTo</code> bound to
@@ -799,7 +964,7 @@ this surface was read outside <code>Build()</code>. When <code>Build()</code> fi
 
   <h3 id="CodeSmile_LunyScript_NavigationFactory_Stop_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NavigationFactory.Stop(System.String,System.Int32)">
   Stop(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFactory.cs/#L181"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Stops the actor: clears its route and ends the attempt that drives it as cancelled.

@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Struct VarWatchBuilder&lt;T&gt; | LunyScript API Reference </title>
+      <title>Struct NavigationCompleteRangeBuilder | LunyScript API Reference </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Struct VarWatchBuilder&lt;T&gt; | LunyScript API Reference ">
+      <meta name="title" content="Struct NavigationCompleteRangeBuilder | LunyScript API Reference ">
       
-      <meta name="description" content="What When.Var(x) returns. Its only method is , which registers the watch with the build.">
+      <meta name="description" content="A routed follow or lead that refuses a partial route. It is incomplete until .">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_VarWatchBuilder_1.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.VarWatchBuilder%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_NavigationCompleteRangeBuilder.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.NavigationCompleteRangeBuilder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -72,12 +72,12 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="CodeSmile.LunyScript.VarWatchBuilder`1">
+        <article data-uid="CodeSmile.LunyScript.NavigationCompleteRangeBuilder">
 
 
 
-  <h1 id="CodeSmile_LunyScript_VarWatchBuilder_1" data-uid="CodeSmile.LunyScript.VarWatchBuilder`1" class="text-break">
-Struct VarWatchBuilder&lt;T&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/WhenFactory.cs/#L539"><i class="bi bi-code-slash"></i></a>
+  <h1 id="CodeSmile_LunyScript_NavigationCompleteRangeBuilder" data-uid="CodeSmile.LunyScript.NavigationCompleteRangeBuilder" class="text-break">
+Struct NavigationCompleteRangeBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFollowBuilders.cs/#L240"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,22 +85,16 @@ Struct VarWatchBuilder&lt;T&gt;  <a class="header-action link-secondary" title="
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>What <code>When.Var(x)</code> returns. Its only method is <a class="xref" href="CodeSmile.LunyScript.VarWatchBuilder-1.html#CodeSmile_LunyScript_VarWatchBuilder_1_Changed_CodeSmile_LunyScript_Block___">Changed(params Block[])</a>, which registers
-the watch with the build.</p>
+  <div class="markdown summary"><p>A routed follow or lead that refuses a partial route. It is incomplete until <a class="xref" href="CodeSmile.LunyScript.NavigationCompleteRangeBuilder.html#CodeSmile_LunyScript_NavigationCompleteRangeBuilder_As_CodeSmile_LunyScript_Operation_">As(Operation)</a>.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly struct VarWatchBuilder&lt;T&gt; where T : struct</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly struct NavigationCompleteRangeBuilder</code></pre>
   </div>
 
 
 
-  <h4 class="section">Type Parameters</h4>
-  <dl class="parameters">
-    <dt><code>T</code></dt>
-    <dd></dd>
-  </dl>
 
   <details>
   <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
@@ -113,38 +107,29 @@ the watch with the build.</p>
 
 
 
-  <h2 id="CodeSmile_LunyScript_VarWatchBuilder_1_examples">Examples</h2>
-  <pre><code class="lang-csharp">When.Var(playerName).Changed(score.Set(0.0));</code></pre>
+  <h2 id="CodeSmile_LunyScript_NavigationCompleteRangeBuilder_examples">Examples</h2>
+  <pre><code class="lang-csharp">On.Ready(Navigation.Lead(Follower).To(Exit).WithinDistance(6).RequireComplete().As(Escort));</code></pre>
 
 
-  <h2 id="CodeSmile_LunyScript_VarWatchBuilder_1_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p><b>A watch is polled once per frame, after the frame-update blocks.</b> It compares the
-variable against a second slot of the same kind, allocated at build time, that holds what the
-variable was the last time the watch ran. A value that changes and changes back within one
-frame therefore does not fire. That is the semantic, stated rather than hidden;
-<code>docs/execution-model.md</code> and <code>docs/slice-decisions.md</code> record why polling was
-chosen over notifying on write.</p>
-</div>
 
 
   <h2 class="section" id="methods">Methods
 </h2>
 
 
-  <a id="CodeSmile_LunyScript_VarWatchBuilder_1_Changed_" data-uid="CodeSmile.LunyScript.VarWatchBuilder`1.Changed*"></a>
+  <a id="CodeSmile_LunyScript_NavigationCompleteRangeBuilder_As_" data-uid="CodeSmile.LunyScript.NavigationCompleteRangeBuilder.As*"></a>
 
-  <h3 id="CodeSmile_LunyScript_VarWatchBuilder_1_Changed_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.VarWatchBuilder`1.Changed(CodeSmile.LunyScript.Block[])">
-  Changed(params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/WhenFactory.cs/#L568"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_NavigationCompleteRangeBuilder_As_CodeSmile_LunyScript_Operation_" data-uid="CodeSmile.LunyScript.NavigationCompleteRangeBuilder.As(CodeSmile.LunyScript.Operation)">
+  As(Operation)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFollowBuilders.cs/#L269"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Registers the blocks that run when the variable's value differs from what it was the
-last time the watch ran.</p>
+  <div class="markdown level1 summary"><p>Binds the run to an operation handle.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Changed(params Block[] blocks)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block As(Operation operation)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -156,30 +141,36 @@ last time the watch ran.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a>[]</dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>blocks</code></dt></td>
-    <td style="width: 99%"><dd><p>The blocks, in order.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Operation.html">Operation</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>operation</code></dt></td>
+    <td style="width: 99%"><dd><p>The handle <code>Define.Operation</code> returned.</p>
 </dd></td>
   </tr>
   </dl>
   </table>
 
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block that starts the run when it runs, or does nothing while the same run is pending.</p>
+</dd>
+  </dl>
 
 
 
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_VarWatchBuilder_1_Changed_CodeSmile_LunyScript_Block____examples">Examples</h4>
-  <pre><code class="lang-csharp">When.Var(health).Changed(alive.Set(health &gt; 0.0));</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_NavigationCompleteRangeBuilder_As_CodeSmile_LunyScript_Operation__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Navigation.Lead(Follower).To(Exit).WithinDistance(6).RequireComplete().As(Escort));</code></pre>
 
 
 
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p><code class="paramref">blocks</code> is null or contains
-null, or the variable's kind is not one LunyScript can watch.</p>
+    <dd><p><code class="paramref">operation</code> was never declared, or this
+builder is a <code>default</code>.</p>
 </dd>
   </dl>
 
@@ -189,7 +180,7 @@ null, or the variable's kind is not one LunyScript can watch.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/WhenFactory.cs/#L539" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Navigation/NavigationFollowBuilders.cs/#L240" class="edit-link">Edit this page</a>
         </div>
 
 
