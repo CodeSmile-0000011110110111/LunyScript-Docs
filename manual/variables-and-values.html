@@ -116,8 +116,8 @@ operators, so a script writes plain numbers there too.</p>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Text</code></td>
-      <td>UTF-8 bytes in a fixed slot.</td>
-      <td><code class="language-plaintext highlighter-rouge">Readout = Text.Define(nameof(Readout), TextCapacity.Bytes128);</code></td>
+      <td>Characters: a string that grows, or UTF-8 bytes in a fixed slot when you name a byte count.</td>
+      <td><code class="language-plaintext highlighter-rouge">Readout = Text.Define(nameof(Readout));</code></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Vector2</code>, <code class="language-plaintext highlighter-rouge">Vector3</code></td>
@@ -219,9 +219,10 @@ guard reacts when the player comes within 4 units of its post:</p>
     <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Alert</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"The east guard sees you"</span><span class="p">)));</span>
 </code></pre></div></div>
 
-<p>A shared text has a fixed capacity. <code class="language-plaintext highlighter-rouge">Text.Define(name)</code> and <code class="language-plaintext highlighter-rouge">Bind.Text(name)</code> hold 64 bytes, and
-<code class="language-plaintext highlighter-rouge">Text.Define(name, capacity)</code> and <code class="language-plaintext highlighter-rouge">Bind.Text(name, capacity)</code> hold another size; every script that
-declares one shared text has to name the same capacity, or the script built second is refused. A
+<p>A shared text grows when it is declared without a byte count: <code class="language-plaintext highlighter-rouge">Text.Define(name)</code> and <code class="language-plaintext highlighter-rouge">Bind.Text(name)</code>
+hold one string on the store. <code class="language-plaintext highlighter-rouge">Text.Define(name, capacity)</code> and <code class="language-plaintext highlighter-rouge">Bind.Text(name, capacity)</code> hold a fixed
+size instead. Every script that declares one shared text declares it the same way, growing or with the
+same capacity, or the script built second is refused. A
 store holds one variable per name, so declaring <code class="language-plaintext highlighter-rouge">PlayerPosition</code> as a shared <code class="language-plaintext highlighter-rouge">Number</code> in a third
 script is refused too. <code class="language-plaintext highlighter-rouge">Shared.Clear</code> resets a shared <code class="language-plaintext highlighter-rouge">Vector3</code> to the default its <code class="language-plaintext highlighter-rouge">Define</code> gave it and
 empties a shared text. C# reads both through <code class="language-plaintext highlighter-rouge">behaviour.GetVector3</code> and <code class="language-plaintext highlighter-rouge">behaviour.ReadText</code>, as it
@@ -329,8 +330,21 @@ name: write <code class="language-plaintext highlighter-rouge">UnityEngine.Vecto
 
 <h2 id="text">Text</h2>
 
-<p>A text variable holds UTF-8 bytes in a fixed slot. The capacity you choose is the storage; three of
-those bytes hold the length and a terminating zero, so <code class="language-plaintext highlighter-rouge">Bytes64</code> stores 61 usable bytes.</p>
+<p>A text variable declared without a byte count grows with what you write into it. Each object keeps one
+<code class="language-plaintext highlighter-rouge">System.String</code> for it, so a line of any length fits:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Status</span> <span class="p">=</span> <span class="n">Text</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Status</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Text</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">"{0} drones gathering, {1} returning"</span><span class="p">,</span> <span class="n">Gathering</span><span class="p">,</span> <span class="n">Returning</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p>Writing the characters the text already holds allocates nothing, so a status that is set every frame and
+does not change costs nothing; writing different characters allocates the new string.</p>
+
+<p>Name a byte count when the text has a known size and must never allocate. The text is then a fixed slot:
+three of its bytes hold the length and a terminating zero, so <code class="language-plaintext highlighter-rouge">Bytes64</code> stores 61 usable bytes.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Callsign</span> <span class="p">=</span> <span class="n">Text</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Callsign</span><span class="p">),</span> <span class="n">TextCapacity</span><span class="p">.</span><span class="n">Bytes64</span><span class="p">);</span>
+</code></pre></div></div>
 
 <table>
   <thead>
@@ -347,7 +361,7 @@ those bytes hold the length and a terminating zero, so <code class="language-pla
       <td>29</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">TextCapacity.Bytes64</code> (the default)</td>
+      <td><code class="language-plaintext highlighter-rouge">TextCapacity.Bytes64</code></td>
       <td>64</td>
       <td>61</td>
     </tr>
@@ -369,6 +383,10 @@ those bytes hold the length and a terminating zero, so <code class="language-pla
   </tbody>
 </table>
 
+<p>Text longer than a fixed slot is refused when the block runs: the error names the slot, the bytes it was
+given and the bytes it holds, the slot keeps what it had, and nothing is shortened. Byte counts are UTF-8,
+so <code class="language-plaintext highlighter-rouge">€</code> takes three bytes and <code class="language-plaintext highlighter-rouge">😀</code> four.</p>
+
 <p><code class="language-plaintext highlighter-rouge">Text.Format</code> builds the content. <code class="language-plaintext highlighter-rouge">{0}</code> is the first argument, <code class="language-plaintext highlighter-rouge">{1}</code> the second, and <code class="language-plaintext highlighter-rouge">{0:2}</code> asks a
 number hole for exactly two decimal places. A literal brace is written twice: <code class="language-plaintext highlighter-rouge">{{</code> or <code class="language-plaintext highlighter-rouge">}}</code>.</p>
 
@@ -376,20 +394,23 @@ number hole for exactly two decimal places. A literal brace is written twice: <c
     <span class="s">"{0:1} / {1} charge, lamp {2}"</span><span class="p">,</span> <span class="n">Charge</span><span class="p">,</span> <span class="n">MaxCharge</span><span class="p">,</span> <span class="n">Powered</span><span class="p">));</span>
 </code></pre></div></div>
 
-<p>The format is parsed once, inside <code class="language-plaintext highlighter-rouge">Build()</code>. Writing the result every frame appends into a buffer the
-size of the destination and allocates nothing. Text longer than the slot is refused and the slot
-keeps what it had.</p>
+<p>The format is parsed once, inside <code class="language-plaintext highlighter-rouge">Build()</code>. Writing the result into a fixed text every frame appends into a
+buffer the size of the destination and allocates nothing; writing it into a growing text allocates only when
+the result differs from what the text holds.</p>
 
-<p>For content that outgrows 4093 bytes, declare an allocating variable instead. It uses the same
-<code class="language-plaintext highlighter-rouge">Set</code>, <code class="language-plaintext highlighter-rouge">Clear</code> and <code class="language-plaintext highlighter-rouge">Text.Format</code> calls:</p>
+<p>To give a growing text an upper bound, add <code class="language-plaintext highlighter-rouge">Allocating</code>. A longer write is refused the way a fixed slot
+refuses one:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Log</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Log</span><span class="p">)).</span><span class="nf">Allocating</span><span class="p">(</span><span class="m">65536</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>An allocating variable takes a UTF-8 bound from 1 to 1048576 bytes and is local to its peer, so it is
-the fixed-capacity form that
-<a href="/LunyScript-Docs/manual/networking-and-cloud-save.html">Networking and cloud save</a> sends over
-the wire.</p>
+<p>The bound is UTF-8 bytes, from 1 to 1048576. A growing text, bounded or not, is local to its peer. A
+synchronised text is always fixed, 64 bytes unless you name another capacity, because its size is what it
+costs on the wire; <a href="/LunyScript-Docs/manual/networking-and-cloud-save.html">Networking and cloud save</a>
+sends it.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Assets/CodeSmile/LunyScript/ApiExamples/GrowingText.unity</code> binds one label to a growing text and one to a
+64-byte text.</p>
 
 <h2 id="reacting-to-a-change">Reacting to a change</h2>
 
@@ -407,23 +428,25 @@ declarations are above.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Number</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>  <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
 <span class="n">Flag</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>    <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">Text</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>  <span class="p">[</span> <span class="p">.</span><span class="nf">Allocating</span><span class="p">(</span><span class="n">maxBytes</span><span class="p">)</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">Text</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>             <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Text</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>  <span class="p">[</span> <span class="p">.</span><span class="nf">Allocating</span><span class="p">(</span><span class="n">maxBytes</span><span class="p">)</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>     <span class="c1">// grows</span>
+<span class="n">Text</span><span class="p">.</span><span class="nf">Define</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>             <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>     <span class="c1">// fixed</span>
 <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">)</span>       <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
 <span class="n">Define</span><span class="p">.</span><span class="nf">Flag</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">)</span>         <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>  <span class="p">[</span> <span class="p">.</span><span class="nf">Allocating</span><span class="p">(</span><span class="n">maxBytes</span><span class="p">)</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>             <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>  <span class="p">[</span> <span class="p">.</span><span class="nf">Allocating</span><span class="p">(</span><span class="n">maxBytes</span><span class="p">)</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>     <span class="c1">// grows</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>             <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>     <span class="c1">// fixed</span>
 <span class="n">Define</span><span class="p">.</span><span class="nf">Vector3</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>    <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
 <span class="n">Define</span><span class="p">.</span><span class="nf">Vector2</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
 <span class="n">Define</span><span class="p">.</span><span class="nf">Rotation</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
 <span class="n">Define</span><span class="p">.</span><span class="n">Enum</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">)</span>
 <span class="n">Var</span><span class="p">.</span><span class="n">Define</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
-<span class="n">Var</span><span class="p">.</span><span class="nf">DefineText</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">capacity</span> <span class="p">])</span>
+<span class="n">Var</span><span class="p">.</span><span class="nf">DefineText</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>                    <span class="c1">// grows</span>
+<span class="n">Var</span><span class="p">.</span><span class="nf">DefineText</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>          <span class="c1">// fixed</span>
 <span class="n">Var</span><span class="p">.</span><span class="nf">DefineAllocatingText</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">maxBytes</span><span class="p">)</span>
 <span class="n">Bind</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>                       <span class="p">{</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">}</span>
 <span class="n">Bind</span><span class="p">.</span><span class="nf">Flag</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>                         <span class="p">{</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">}</span>
 <span class="n">Bind</span><span class="p">.</span><span class="nf">Vector3</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>                         <span class="p">{</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">}</span>
-<span class="n">Bind</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">capacity</span> <span class="p">])</span>          <span class="p">{</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">}</span>
+<span class="n">Bind</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>                         <span class="p">{</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">}</span>     <span class="c1">// grows</span>
+<span class="n">Bind</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>               <span class="p">{</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">}</span>     <span class="c1">// fixed</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">Number.Define</code> and <code class="language-plaintext highlighter-rouge">Define.Number</code> are the same call, and so are the Flag and Text pairs.

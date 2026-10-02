@@ -205,7 +205,7 @@ unassigned, because <code class="language-plaintext highlighter-rouge">Build()</
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Text</code></td>
-      <td>a copy into your fixed string</td>
+      <td><code class="language-plaintext highlighter-rouge">string</code>, or a copy into your fixed string</td>
     </tr>
   </tbody>
 </table>
@@ -214,15 +214,23 @@ unassigned, because <code class="language-plaintext highlighter-rouge">Build()</
 <code class="language-plaintext highlighter-rouge">CodeSmile.LunyScript</code> and <code class="language-plaintext highlighter-rouge">UnityEngine</code> writes <code class="language-plaintext highlighter-rouge">UnityEngine.Vector3</code> for Unity’s type, as <code class="language-plaintext highlighter-rouge">ShowHealth</code>
 does above, because the compiler refuses the bare name in a file that imports both.</p>
 
-<p>A text variable is copied into a fixed string you provide, so the read allocates nothing:</p>
+<p>A text variable is read as a <code class="language-plaintext highlighter-rouge">string</code>. A text declared without a byte count returns the string it holds,
+so the read allocates nothing; a text declared with a <code class="language-plaintext highlighter-rouge">TextCapacity</code> returns its characters as a new
+string on each read:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">status</span> <span class="p">=</span> <span class="n">reference</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">reference</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">Status</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>A fixed text can also be copied into a fixed string you provide, which allocates nothing:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">name</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FixedString64Bytes</span><span class="p">();</span>
 <span class="n">reference</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">reference</span><span class="p">.</span><span class="n">Definition</span><span class="p">.</span><span class="n">PlayerName</span><span class="p">,</span> <span class="k">ref</span> <span class="n">name</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>That read returns <code class="language-plaintext highlighter-rouge">CopyError.Truncation</code>, and leaves the fixed string unchanged, when the text does
-not fit. <code class="language-plaintext highlighter-rouge">FixedString64Bytes</code> is in <code class="language-plaintext highlighter-rouge">Unity.Collections</code>. No read and no check allocates, so a HUD can
-check and read every frame.</p>
+not fit, which a growing text longer than the fixed string you pass also does. <code class="language-plaintext highlighter-rouge">FixedString64Bytes</code> is in
+<code class="language-plaintext highlighter-rouge">Unity.Collections</code>. The checks and the reads of numbers, flags and the other values allocate nothing, so a
+HUD can check and read every frame.</p>
 
 <h2 id="when-the-script-ends">When the script ends</h2>
 
