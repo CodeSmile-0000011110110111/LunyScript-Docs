@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Follow and lead | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Follow and lead" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/follow-and-lead.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/follow-and-lead.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Follow and lead" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Follow and lead","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/follow-and-lead.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Follow and lead</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Keep one object near another, or have it lead another to a place and wait when that object falls
+behind:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Drone</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">Operation</span> <span class="n">Pursuit</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Leader</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+        <span class="n">Pursuit</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Pursuit</span><span class="p">));</span>
+        <span class="n">Status</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Status</span><span class="p">));</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">Follow</span><span class="p">(</span><span class="n">Leader</span><span class="p">).</span><span class="nf">WithinDistance</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">4</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="n">Pursuit</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Motion</span><span class="p">(</span><span class="n">Pursuit</span><span class="p">).</span><span class="nf">EnteredRange</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Close"</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Motion</span><span class="p">(</span><span class="n">Pursuit</span><span class="p">).</span><span class="nf">ExitedRange</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Catching up"</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Put the script on the object that follows, and assign the object to follow to <code class="language-plaintext highlighter-rouge">Leader</code> in the
+Inspector, or name it <code class="language-plaintext highlighter-rouge">Leader</code> in the scene. While the leader is farther than 2 units away the drone
+moves toward it at 4 units per second; inside 2 units it holds. <code class="language-plaintext highlighter-rouge">EnteredRange</code> and <code class="language-plaintext highlighter-rouge">ExitedRange</code> run
+when the leader comes within the range and when it leaves it.</p>
+
+<p>A follow or a lead is a run that lasts across frames, started once. It is an attempt on an
+operation, so <code class="language-plaintext highlighter-rouge">When.Operation</code>, <code class="language-plaintext highlighter-rouge">IsPending</code>, <code class="language-plaintext highlighter-rouge">Succeeded</code>, <code class="language-plaintext highlighter-rouge">Canceled</code> and <code class="language-plaintext highlighter-rouge">Failed</code> report it the way
+they report a load or a save.</p>
+
+<h2 id="direct-and-routed">Direct and routed</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Family</th>
+      <th>Moves the object</th>
+      <th>Speed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Motion.Follow</code>, <code class="language-plaintext highlighter-rouge">Motion.Lead</code></td>
+      <td>in a straight line, through its CharacterController, its kinematic Rigidbody, or its transform</td>
+      <td><code class="language-plaintext highlighter-rouge">AtSpeed(n)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Navigation.Follow</code>, <code class="language-plaintext highlighter-rouge">Navigation.Lead</code></td>
+      <td>along routes its navigation agent follows around walls</td>
+      <td>set on the agent</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The <a href="/LunyScript-Docs/manual/navigation.html">Navigation</a> page says how to install the
+navigation backend; the routed forms need it, as <code class="language-plaintext highlighter-rouge">Navigation.MoveTo</code> does.</p>
+
+<h2 id="the-range">The range</h2>
+
+<p><code class="language-plaintext highlighter-rouge">WithinDistance(r)</code> is the range, in world units between the two objects’ origins, measured in all
+three axes. A wall between them does not change it.</p>
+
+<p>The run enters the range at a distance of <code class="language-plaintext highlighter-rouge">r</code> or less, and leaves it only when the distance is more
+than <code class="language-plaintext highlighter-rouge">r</code> plus one unit plus a tenth of <code class="language-plaintext highlighter-rouge">r</code>. Between the two it keeps what it was, so an object that
+stands at the edge does not start and stop on alternate frames:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><code class="language-plaintext highlighter-rouge">WithinDistance</code></th>
+      <th>Enters at</th>
+      <th>Leaves above</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>2</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>6</td>
+      <td>7.6</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td>20</td>
+      <td>23</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The run reads the distance once per frame, after <code class="language-plaintext highlighter-rouge">On.Update</code>. <code class="language-plaintext highlighter-rouge">EnteredRange</code> and <code class="language-plaintext highlighter-rouge">ExitedRange</code> run
+once in the frame whose reading crossed the edge; a crossing and its return between two readings
+produce nothing. The first reading after a start produces no event: it decides whether the run
+starts inside or outside. A distance of <code class="language-plaintext highlighter-rouge">r</code> or less is inside, and anything farther, the margin
+included, is outside.</p>
+
+<p>The range, the speed, and a lead’s destination are read when the run starts. Changing the variables
+later changes the next run. The other object’s position is read every frame.</p>
+
+<h2 id="following">Following</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>While the leader is</th>
+      <th>The follower</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>inside the range</td>
+      <td>holds</td>
+    </tr>
+    <tr>
+      <td>outside the range</td>
+      <td>moves toward it, and stops just inside <code class="language-plaintext highlighter-rouge">r</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A direct step stops a thousandth of a unit inside the range, because Unity keeps positions in single precision and a
+step that stopped at exactly <code class="language-plaintext highlighter-rouge">r</code> could read back as just outside it.</p>
+
+<p>A follow does not finish by itself. It keeps the attempt pending while it holds, so it moves again
+when the leader walks off. It ends when you cancel it, when the leader is gone, or when the follower
+is disabled.</p>
+
+<h2 id="leading">Leading</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Escort</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="n">Operation</span> <span class="n">Guide</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Follower</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+        <span class="n">Exit</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+        <span class="n">Guide</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Guide</span><span class="p">));</span>
+        <span class="n">Status</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Status</span><span class="p">));</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">Lead</span><span class="p">(</span><span class="n">Follower</span><span class="p">).</span><span class="nf">To</span><span class="p">(</span><span class="n">Exit</span><span class="p">).</span><span class="nf">WithinDistance</span><span class="p">(</span><span class="m">6</span><span class="p">)</span>
+            <span class="p">.</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">3</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Guide</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Motion</span><span class="p">(</span><span class="n">Guide</span><span class="p">).</span><span class="nf">ExitedRange</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Waiting"</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Motion</span><span class="p">(</span><span class="n">Guide</span><span class="p">).</span><span class="nf">EnteredRange</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Leading"</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Guide</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Arrived"</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>While the follower is</th>
+      <th>The leader</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>inside the range</td>
+      <td>moves toward the destination</td>
+    </tr>
+    <tr>
+      <td>outside the range</td>
+      <td>waits</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The lead arrives when the leader’s origin is within the same range of the destination, here 6
+units, and its attempt succeeds once. The follower’s distance and the destination’s distance use
+the one number and measure different objects, so the follower coming within range does not finish
+the lead. <code class="language-plaintext highlighter-rouge">To</code> takes a <code class="language-plaintext highlighter-rouge">Bind.Object()</code> landmark, a <code class="language-plaintext highlighter-rouge">Vector3</code>, or three numbers; a landmark’s
+position is read when the lead starts, so the landmark moving later does not move the destination.</p>
+
+<h2 id="starting-on-a-kinematic-rigidbody">Starting on a kinematic Rigidbody</h2>
+
+<p>A kinematic Rigidbody moves in the physics step, so its run starts there. Write the start in
+<code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>; running it again while the run is pending changes nothing:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">Follow</span><span class="p">(</span><span class="n">Leader</span><span class="p">).</span><span class="nf">WithinDistance</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">4</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="n">Pursuit</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p>A CharacterController, or an object with neither component, starts in any event and moves once per
+frame. A dynamic Rigidbody refuses the start. The run reads the position the object has: a position
+a kinematic body asked for is not in range until the physics step has moved the body there.</p>
+
+<h2 id="routed-runs">Routed runs</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Navigation</span><span class="p">.</span><span class="nf">Follow</span><span class="p">(</span><span class="n">Leader</span><span class="p">).</span><span class="nf">WithinDistance</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Pursuit</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Navigation</span><span class="p">.</span><span class="nf">Lead</span><span class="p">(</span><span class="n">Follower</span><span class="p">).</span><span class="nf">To</span><span class="p">(</span><span class="n">Exit</span><span class="p">).</span><span class="nf">WithinDistance</span><span class="p">(</span><span class="m">6</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="n">Guide</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Navigation</span><span class="p">(</span><span class="n">Pursuit</span><span class="p">).</span><span class="nf">EnteredRange</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Close"</span><span class="p">));</span>
+</code></pre></div></div>
+
+<ul>
+  <li>A routed follow outside its range asks for a route to the leader. It asks again, inside the same
+attempt, when the leader has moved more than the range’s margin away from where the last route
+went, and inside the range it stops the agent.</li>
+  <li>A routed lead asks for one route to its destination and holds the agent while the follower is
+away. <code class="language-plaintext highlighter-rouge">Navigation.Pause()</code> holds the agent too; the follower coming back never releases a pause.</li>
+  <li>A route that does not reach the leader is followed to its reachable end, and the follow stays
+pending there with <code class="language-plaintext highlighter-rouge">Navigation.ReachedPartialEnd(op)</code> true. When the leader moves somewhere
+reachable, the follow continues. A lead at the end of such a route succeeds with
+<code class="language-plaintext highlighter-rouge">ReachedPartialEnd</code> true and <code class="language-plaintext highlighter-rouge">Arrived</code> false.</li>
+  <li><code class="language-plaintext highlighter-rouge">RequireComplete()</code> before <code class="language-plaintext highlighter-rouge">As</code> refuses a route that does not reach: the attempt fails as
+<code class="language-plaintext highlighter-rouge">Unreachable</code>. A route that reaches nothing fails as <code class="language-plaintext highlighter-rouge">Unreachable</code> with or without it.</li>
+  <li>The agent’s stopping distance is not an arrival. An agent that stops farther from the destination
+than the range keeps the lead waiting; choose a range that allows for the agent’s stopping distance
+and for the height between the object’s origin and the destination.</li>
+</ul>
+
+<h2 id="when-a-run-ends">When a run ends</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>What happens</th>
+      <th>The attempt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>a lead arrives</td>
+      <td>succeeds</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">op.Cancel()</code></td>
+      <td>cancelled</td>
+    </tr>
+    <tr>
+      <td>the other object is destroyed, deactivated, despawned, or replaced by a <code class="language-plaintext highlighter-rouge">LiveRebind()</code> binding</td>
+      <td>cancelled; no <code class="language-plaintext highlighter-rouge">ExitedRange</code> runs</td>
+    </tr>
+    <tr>
+      <td>the moving object is disabled</td>
+      <td>cancelled</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Motion.TeleportTo</code>, <code class="language-plaintext highlighter-rouge">Transform.SetWorldPosition</code> or <code class="language-plaintext highlighter-rouge">Transform.SetLocalPosition</code> on the moving object</td>
+      <td>cancelled, then the position is written</td>
+    </tr>
+    <tr>
+      <td>the object or the other object is unavailable when the run starts, or a body that cannot start there</td>
+      <td>fails as <code class="language-plaintext highlighter-rouge">Denied</code></td>
+    </tr>
+    <tr>
+      <td>a routed run’s route reaches nothing</td>
+      <td>fails as <code class="language-plaintext highlighter-rouge">Unreachable</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A new start captures the binding’s object as it is then. Nothing moves a run to a replacement by
+itself. A run belongs to the object’s current life: when the object is despawned, its runs end
+without an event, and a reused pooled object starts with none.</p>
+
+<p>While a pause stops a script, its runs read no distance and a direct run moves nothing. After the
+pause, the first reading compares the current distance with the state before the pause.</p>
+
+<h2 id="one-run-moves-an-object">One run moves an object</h2>
+
+<p>A run owns its object’s position. While one moves the object:</p>
+
+<ul>
+  <li>another <code class="language-plaintext highlighter-rouge">Motion.Follow</code> or <code class="language-plaintext highlighter-rouge">Motion.Lead</code> start on that object, from any script, fails as <code class="language-plaintext highlighter-rouge">Denied</code>;</li>
+  <li><code class="language-plaintext highlighter-rouge">Motion.MoveBy</code>, <code class="language-plaintext highlighter-rouge">Motion.MoveTo</code>, <code class="language-plaintext highlighter-rouge">Transform.MoveBy</code>, <code class="language-plaintext highlighter-rouge">Transform.MoveTo(...).Over</code> and
+<code class="language-plaintext highlighter-rouge">Transform.RotateAround</code> on the object are refused, reported once in the Console, and ignored;</li>
+  <li>a <code class="language-plaintext highlighter-rouge">Navigation</code> move, follow or lead of the object fails as <code class="language-plaintext highlighter-rouge">Denied</code>, and a direct start on an
+object a navigation attempt drives fails as <code class="language-plaintext highlighter-rouge">Denied</code> too.</li>
+</ul>
+
+<p>Rotation is not part of the run: <code class="language-plaintext highlighter-rouge">Motion.FaceTowards</code> turns a follower while it follows. Cancel a run
+with <code class="language-plaintext highlighter-rouge">op.Cancel()</code> before moving the object another way.</p>
+
+<h2 id="call-list">Call list</h2>
+
+<p>These lines are call signatures, not a script you can paste.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Motion</span><span class="p">.</span><span class="nf">Follow</span><span class="p">(</span><span class="n">target</span><span class="p">).</span><span class="nf">WithinDistance</span><span class="p">(</span><span class="n">r</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="n">s</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span>
+<span class="n">Motion</span><span class="p">.</span><span class="nf">Lead</span><span class="p">(</span><span class="n">follower</span><span class="p">).</span><span class="nf">To</span><span class="p">(</span><span class="n">destination</span><span class="p">).</span><span class="nf">WithinDistance</span><span class="p">(</span><span class="n">r</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span>                  <span class="c1">// To(x, y, z) and To(landmark) too</span>
+<span class="n">Navigation</span><span class="p">.</span><span class="nf">Follow</span><span class="p">(</span><span class="n">target</span><span class="p">).</span><span class="nf">WithinDistance</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">RequireComplete</span><span class="p">()</span> <span class="p">]</span> <span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span>
+<span class="n">Navigation</span><span class="p">.</span><span class="nf">Lead</span><span class="p">(</span><span class="n">follower</span><span class="p">).</span><span class="nf">To</span><span class="p">(</span><span class="n">destination</span><span class="p">).</span><span class="nf">WithinDistance</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    <span class="p">[</span> <span class="p">.</span><span class="nf">RequireComplete</span><span class="p">()</span> <span class="p">]</span> <span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="n">operation</span><span class="p">)</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Motion</span><span class="p">(</span><span class="n">operation</span><span class="p">).</span><span class="nf">EnteredRange</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Motion</span><span class="p">(</span><span class="n">operation</span><span class="p">).</span><span class="nf">ExitedRange</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Navigation</span><span class="p">(</span><span class="n">operation</span><span class="p">).</span><span class="nf">EnteredRange</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Navigation</span><span class="p">(</span><span class="n">operation</span><span class="p">).</span><span class="nf">ExitedRange</span><span class="p">(</span><span class="n">blocks</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/motion.html">Motion</a> — the movement mechanisms a direct run uses.</li>
+  <li><a href="/LunyScript-Docs/manual/navigation.html">Navigation</a> — the backend, routes and the reads.</li>
+  <li><a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a> — operation
+handles and their watches.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.MotionFollowBuilder.html"><code class="language-plaintext highlighter-rouge">MotionFollowBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.MotionLeadBuilder.html"><code class="language-plaintext highlighter-rouge">MotionLeadBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RangeWatchBuilder.html"><code class="language-plaintext highlighter-rouge">RangeWatchBuilder</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
