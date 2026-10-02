@@ -377,6 +377,27 @@ gamepads and presses their buttons, and says so on screen.</p>
 <p>The <strong>Rebinding</strong> scene in the API examples is a controls screen: one row per control with its bound
 control, Rebind and Reset, and Save and Load for a Settings document that keeps the controls.</p>
 
+<h2 id="taking-the-backend-back-out">Taking the backend back out</h2>
+
+<p>A project-asset action asset outlives every scene, so installing the backend once in the first scene
+needs no teardown. A component that creates the action asset itself, with
+<code class="language-plaintext highlighter-rouge">ScriptableObject.CreateInstance&lt;InputActionAsset&gt;()</code>, releases the backend before it destroys that
+asset:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">private</span> <span class="k">void</span> <span class="nf">OnDestroy</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">m_Runner</span><span class="p">.</span><span class="n">InputGateway</span><span class="p">.</span><span class="nf">ReleaseProvider</span><span class="p">(</span><span class="n">m_Provider</span><span class="p">);</span>
+    <span class="nf">Destroy</span><span class="p">(</span><span class="n">m_Actions</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The runner outlives the scene that installed a backend on it, so a backend left installed goes on
+reading an asset the scene destroyed, and every action the scripts of that scene declared is reported
+as its local player not being present. <code class="language-plaintext highlighter-rouge">ReleaseProvider</code> takes a backend out only when it is the
+installed one, and reports nothing: every action goes back to its resting value. Hold the runner in a
+field, taken in <code class="language-plaintext highlighter-rouge">Awake</code>, rather than reading <code class="language-plaintext highlighter-rouge">LunyScriptRuntime.DefaultRunner</code> again in <code class="language-plaintext highlighter-rouge">OnDestroy</code>:
+that type is reset as a Play Mode session ends.</p>
+
 <h2 id="what-an-open-input-gate-changes">What an open input gate changes</h2>
 
 <p>An input gate makes every action read return its resting value, so <code class="language-plaintext highlighter-rouge">IsPressed</code> reads false and
