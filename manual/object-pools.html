@@ -224,6 +224,11 @@ its scale and anything else its last use changed. Reset what matters in <code cl
     <span class="n">Particles</span><span class="p">.</span><span class="nf">Play</span><span class="p">());</span>
 </code></pre></div></div>
 
+<p>A pool runs a reused copy’s <code class="language-plaintext highlighter-rouge">On.Spawned</code> before it activates the copy, and Unity drops a force on an inactive object, so
+a push the copy should start with goes in <code class="language-plaintext highlighter-rouge">On.Enabled</code>, which runs after the activation:
+<code class="language-plaintext highlighter-rouge">On.Enabled(Motion.AddImpulse(0, 3, 0).InWorldSpace())</code>. <a href="/LunyScript-Docs/manual/motion.html">Motion</a> has the
+rule.</p>
+
 <h2 id="who-ends-the-copies">Who ends the copies</h2>
 
 <p>A copy belongs to the script that spawned it, with or without a name. When that script’s object ends,
