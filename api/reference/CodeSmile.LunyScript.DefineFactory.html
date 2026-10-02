@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct DefineFactory | LunyScript API Reference ">
       
-      <meta name="description" content="The Define surface inside Build(): declares a script&#39;s variables with the author spelling Round 06 settled, and hands back the typed handles the blocks are built from.">
+      <meta name="description" content="The Define surface inside Build(): declares a script&#39;s variables, operations and collection results, and hands back the typed handles the blocks are built from.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -85,8 +85,8 @@ Struct DefineFactory  <a class="header-action link-secondary" title="View source
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>The <code>Define</code> surface inside <code>Build()</code>: declares a script's variables with the
-author spelling Round 06 settled, and hands back the typed handles the blocks are built from.</p>
+  <div class="markdown summary"><p>The <code>Define</code> surface inside <code>Build()</code>: declares a script's variables, operations and
+collection results, and hands back the typed handles the blocks are built from.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -125,11 +125,90 @@ surface. Explicit <code>Var.Define</code> remains supported.</p>
 </h2>
 
 
+  <a id="CodeSmile_LunyScript_DefineFactory_CollectionResult_" data-uid="CodeSmile.LunyScript.DefineFactory.CollectionResult*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DefineFactory_CollectionResult_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.CollectionResult(System.String,System.String,System.Int32)">
+  CollectionResult(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L297"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a collection result: the outcome of one synchronous collection call, which a try call
+binds with <code>.As(result)</code> and <code>If(result)</code> reads. It starts not-run, with <code>Succeeded</code> and
+<code>Failed</code> both false.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CollectionResult CollectionResult(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.CollectionResult.html">CollectionResult</a></dt>
+    <dd><p>The handle <code>.As</code> binds and <code>If</code> reads.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DefineFactory_CollectionResult_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Added = Define.CollectionResult(nameof(Added));
+On.Ready(Slots.TryAdd(item).As(Added), If(Added).Then(Hits.Add(1.0)));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DefineFactory_CollectionResult_System_String_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>A collection result is not an <code>Operation</code>: the call it stores has finished when its block
+returns, so it has no pending state, deadline, generation or watch. This call performs no collection
+call.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The name is empty or already used, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_DefineFactory_Color_" data-uid="CodeSmile.LunyScript.DefineFactory.Color*"></a>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Color_System_String_CodeSmile_LunyScript_Color_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Color(System.String,CodeSmile.LunyScript.Color,System.String,System.Int32)">
   Color(string, Color, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L273"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L371"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a <code>Color</code> variable. There is no <code>Shared</code> form and no synchronised form in this
@@ -201,7 +280,7 @@ omitted.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Data__2_CodeSmile_LunyScript_ILunyScriptData___0___1__System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Data``2(CodeSmile.LunyScript.ILunyScriptData{``0,``1},System.String,System.Int32)">
   Data&lt;TValue, THandle&gt;(ILunyScriptData&lt;TValue, THandle&gt;, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L306"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L404"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares this script's own copy of a <a class="xref" href="CodeSmile.LunyScript.LunyScriptDataAttribute.html">LunyScriptDataAttribute</a> struct: one variable per field,
@@ -289,7 +368,7 @@ again. <code>Asset.Load(file).Into(data)</code> fills the variables from a JSON 
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Document_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Document(System.String,System.String,System.Int32)">
   Document(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L343"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L441"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a document: a named, versioned list of this script's variables that
@@ -364,7 +443,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Enum__1_System_String___0_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Enum``1(System.String,``0,System.String,System.Int32)">
   Enum&lt;T&gt;(string, T, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L395"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L493"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a variable whose type is a C# enum. The default must be a declared
@@ -448,7 +527,7 @@ the default is not a declared constant.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Event_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Event(System.String,System.Int32)">
   Event(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L181"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L201"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares an event this script sends. The generated property names it, and a listener hears it
@@ -517,7 +596,7 @@ with <code>On.Event(ThisScript.Events.Name)</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Flag_System_String_System_Boolean_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Flag(System.String,System.Boolean,System.String,System.Int32)">
   Flag(string, bool, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L69"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a <code>Flag</code> variable. Convert the result to a handle for an
@@ -526,7 +605,7 @@ object-local variable, or call <code>Shared</code> first.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public FlagDefineBuilder Flag(string name, bool defaultValue, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public FlagDefineBuilder Flag(string name, bool defaultValue = false, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -546,7 +625,8 @@ object-local variable, or call <code>Shared</code> first.</p>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">bool</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>defaultValue</code></dt></td>
-    <td style="width: 99%"><dd><p>What every instance, or the shared slot, starts from.</p>
+    <td style="width: 99%"><dd><p>What every instance, or the shared slot, starts from. False when
+omitted.</p>
 </dd></td>
   </tr>
   <tr>
@@ -577,7 +657,8 @@ object-local variable, or call <code>Shared</code> first.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_DefineFactory_Flag_System_String_System_Boolean_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">MatchActive = Define.Flag(nameof(MatchActive), false);</code></pre>
+  <pre><code class="lang-csharp">Alive = Define.Flag(nameof(Alive), true);
+MatchActive = Define.Flag(nameof(MatchActive)).Shared();</code></pre>
 
 
 
@@ -595,7 +676,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Gate_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Gate(System.String,System.Int32)">
   Gate(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L196"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L216"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a gate: a named hold on input or camera for every script on the runner. The generated
@@ -665,7 +746,7 @@ hand-written property names it with <code>.As(nameof(Property))</code>.
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Hit_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Hit(System.String,System.String,System.Int32)">
   Hit(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L460"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L558"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares where a Collision cast stores the nearest collider it touches.</p>
@@ -740,7 +821,7 @@ read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Hits_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Hits(System.String,System.String,System.Int32)">
   Hits(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L479"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L577"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares where a Collision cast stores every collider it touches, nearest first, up to a
@@ -815,7 +896,7 @@ LunyScript changes it.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_LayerMask_System_Int32_System_Int32_System_Int32_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.LayerMask(System.Int32,System.Int32,System.Int32,System.String,System.Int32)">
   LayerMask(int, int, int, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L597"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L695"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Makes a layer mask from three layer indices.</p>
@@ -898,7 +979,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_LayerMask_System_Int32_System_Int32_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.LayerMask(System.Int32,System.Int32,System.String,System.Int32)">
   LayerMask(int, int, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L582"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L680"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Makes a layer mask from two layer indices.</p>
@@ -975,7 +1056,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_LayerMask_System_Int32_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.LayerMask(System.Int32,System.String,System.Int32)">
   LayerMask(int, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L568"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L666"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Makes a layer mask from a layer index, the value <code>Other.Layer</code> reads.</p>
@@ -1046,7 +1127,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_LayerMask_System_Int32___" data-uid="CodeSmile.LunyScript.DefineFactory.LayerMask(System.Int32[])">
   LayerMask(params int[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L609"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L707"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Makes a layer mask from any number of layer indices. The forms with one to three indices
@@ -1106,7 +1187,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_LayerMask_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.LayerMask(System.String,System.String,System.Int32)">
   LayerMask(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L516"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L614"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Makes a layer mask from layer names, for a Collision query's <code>Layers</code> clause.</p>
@@ -1181,7 +1262,7 @@ was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_LayerMask_System_String_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.LayerMask(System.String,System.String,System.String,System.Int32)">
   LayerMask(string, string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L530"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L628"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Makes a layer mask from two layer names.</p>
@@ -1258,7 +1339,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_LayerMask_System_String_System_String_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.LayerMask(System.String,System.String,System.String,System.String,System.Int32)">
   LayerMask(string, string, string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L545"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L643"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Makes a layer mask from three layer names.</p>
@@ -1341,7 +1422,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_LayerMask_System_String___" data-uid="CodeSmile.LunyScript.DefineFactory.LayerMask(System.String[])">
   LayerMask(params string[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L558"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L656"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Makes a layer mask from any number of layer names. The forms with one to three names name
@@ -1402,7 +1483,7 @@ the names, or this surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_List__1_System_String_System_Int32_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.List``1(System.String,System.Int32,System.String,System.Int32)">
   List&lt;T&gt;(string, int, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L419"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L517"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a fixed-capacity list. Occupancy starts at zero. Capacity is required and
@@ -1479,7 +1560,7 @@ at least 1.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Map__2_System_String_System_Int32_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Map``2(System.String,System.Int32,System.String,System.Int32)">
   Map&lt;TKey, TValue&gt;(string, int, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L439"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L537"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a fixed-capacity map. Occupancy starts at zero. Capacity is required and
@@ -1560,7 +1641,7 @@ at least 1.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Number_System_String_System_Double_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Number(System.String,System.Double,System.String,System.Int32)">
   Number(string, double, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L44"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a <code>Number</code> variable. Convert the result to a handle for an
@@ -1569,7 +1650,7 @@ object-local variable, or call <code>Shared</code> first.</p>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NumberDefineBuilder Number(string name, double defaultValue, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public NumberDefineBuilder Number(string name, double defaultValue = 0, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1589,7 +1670,8 @@ object-local variable, or call <code>Shared</code> first.</p>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>defaultValue</code></dt></td>
-    <td style="width: 99%"><dd><p>What every instance, or the shared slot, starts from.</p>
+    <td style="width: 99%"><dd><p>What every instance, or the shared slot, starts from. Zero when
+omitted.</p>
 </dd></td>
   </tr>
   <tr>
@@ -1620,7 +1702,8 @@ object-local variable, or call <code>Shared</code> first.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_DefineFactory_Number_System_String_System_Double_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">Health = Define.Number(nameof(Health), 100);</code></pre>
+  <pre><code class="lang-csharp">Health = Define.Number(nameof(Health), 100);
+TeamScore = Define.Number(nameof(TeamScore)).Shared();</code></pre>
 
 
 
@@ -1634,11 +1717,168 @@ outside <code>Build()</code>.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_DefineFactory_Operation_" data-uid="CodeSmile.LunyScript.DefineFactory.Operation*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DefineFactory_Operation_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Operation(System.String,System.String,System.Int32)">
+  Operation(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L244"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares an untyped operation handle: one observable attempt at a time. A family's start block
+binds it with <code>.As(handle)</code>, and <code>When.Operation(handle)</code> watches it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Operation Operation(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Operation.html">Operation</a></dt>
+    <dd><p>The handle <code>When.Operation</code> and <code>.As</code> take.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DefineFactory_Operation_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">LoadingArena = Define.Operation(nameof(LoadingArena));
+When.Operation(LoadingArena).Failed(ShowError.Set(true));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DefineFactory_Operation_System_String_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>This call starts no work. Scene flow, local requests and web calls each bind their own start to
+the handle declared here. <code>docs/proposals/operation-attempts.md</code> is the contract.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The name is empty or already used, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DefineFactory_Operation_" data-uid="CodeSmile.LunyScript.DefineFactory.Operation*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DefineFactory_Operation__1_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Operation``1(System.String,System.String,System.Int32)">
+  Operation&lt;T&gt;(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L268"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a typed operation handle. The attempt surface is the same as
+<a class="xref" href="CodeSmile.LunyScript.DefineFactory.html#CodeSmile_LunyScript_DefineFactory_Operation_System_String_System_String_System_Int32_">Operation(string, string, int)</a>. <code>Asset.Load</code> stores the owned asset on
+success.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Operation&lt;T&gt; Operation&lt;T&gt;(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The name, which should come from <code>nameof</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Operation-1.html">Operation</a>&lt;T&gt;</dt>
+    <dd><p>The typed handle.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd><p>The result type a later family stores on success.</p>
+</dd>
+  </dl>
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DefineFactory_Operation__1_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">EnemyContent = Define.Operation&lt;Prefab&gt;(nameof(EnemyContent));
+On.Ready(Asset.Load(EnemyPrefab).As(EnemyContent));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The name is empty or already used, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_DefineFactory_Overlaps_" data-uid="CodeSmile.LunyScript.DefineFactory.Overlaps*"></a>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Overlaps_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Overlaps(System.String,System.String,System.Int32)">
   Overlaps(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L497"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L595"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares where a Collision overlap stores every collider it finds, up to a capacity.</p>
@@ -1712,7 +1952,7 @@ LunyScript changes it.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Pool_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Pool(System.String,System.String,System.Int32)">
   Pool(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L373"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L471"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares an object pool: reusable copies of one prefab that <code>Object.Spawn</code> checks out
@@ -1790,7 +2030,7 @@ taken name is refused when the declaration converts to its handle.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Request_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Request(System.String,System.Int32)">
   Request(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L167"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L187"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a request this script accepts. The generated property names it, and another script
@@ -1859,7 +2099,7 @@ sends it with <code>Request(target, ThisScript.Requests.Name)</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Rotation_System_String_CodeSmile_LunyScript_Rotation_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Rotation(System.String,CodeSmile.LunyScript.Rotation,System.String,System.Int32)">
   Rotation(string, Rotation, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L239"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L337"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a <code>Rotation</code> variable. There is no <code>Shared</code> form in this
@@ -1930,7 +2170,7 @@ version. A default-constructed value becomes the identity.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Sequence_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.DefineFactory.Sequence(CodeSmile.LunyScript.Block[])">
   Sequence(params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L151"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L171"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a named sequence: several blocks held as one, under the name of the property the line
@@ -1998,7 +2238,7 @@ outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_StateMachine_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.StateMachine(System.String,System.String,System.Int32)">
   StateMachine(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L123"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L143"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a state machine. <code>WithStates</code> follows on the same line and names its states, so a
@@ -2069,11 +2309,12 @@ state exists only in the machine that declared it.</p>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Text_System_String_CodeSmile_LunyScript_TextCapacity_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Text(System.String,CodeSmile.LunyScript.TextCapacity,System.String,System.Int32)">
   Text(string, TextCapacity, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L102"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L122"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Declares a fixed-capacity text variable. Convert the result to a handle for an
-object-local variable, or call <code>Shared</code> first.</p>
+  <div class="markdown level1 summary"><p>Declares a text variable of the given fixed capacity, object-local or on a shared
+store after <code>.Shared()</code>. It never allocates, and a write that does not fit is refused and
+leaves the text unchanged.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -2098,7 +2339,7 @@ object-local variable, or call <code>Shared</code> first.</p>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>capacity</code></dt></td>
-    <td style="width: 99%"><dd><p>How many bytes it holds.</p>
+    <td style="width: 99%"><dd><p>How many bytes each object's slot, or the shared slot, holds.</p>
 </dd></td>
   </tr>
   <tr>
@@ -2134,6 +2375,13 @@ Alert = Define.Text(nameof(Alert), TextCapacity.Bytes128).Shared();</code></pre>
 
 
 
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The name is taken, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
 
 
 
@@ -2141,12 +2389,15 @@ Alert = Define.Text(nameof(Alert), TextCapacity.Bytes128).Shared();</code></pre>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Text_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Text(System.String,System.String,System.Int32)">
   Text(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L97"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Declares a text variable of the default 64-byte fixed capacity. Call
-<code>Allocating</code> for bounded heap storage, or <code>Shared</code> to place it on a shared
-store.</p>
+  <div class="markdown level1 summary"><p>Declares a text variable that grows with what is written into it: one
+<code>System.String</code> per object, or one on a shared store after <code>.Shared()</code>, bounded after
+<code>.Allocating(maxBytes)</code>. Writing the characters it already holds allocates nothing; writing
+different characters allocates the new string. Pass a <a class="xref" href="CodeSmile.LunyScript.TextCapacity.html">TextCapacity</a> instead for a
+fixed text that never allocates. In a <code>partial</code> script the generator writes the property this
+line assigns.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -2186,7 +2437,7 @@ store.</p>
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.TextDefineBuilder.html">TextDefineBuilder</a></dt>
-    <dd><p>A builder that converts to a 64-byte handle, or takes <code>Allocating</code> or
+    <dd><p>A builder that converts to a growing handle, or takes <code>Allocating</code> or
 <code>Shared</code>.</p>
 </dd>
   </dl>
@@ -2202,6 +2453,13 @@ Alert = Define.Text(nameof(Alert)).Shared();</code></pre>
 
 
 
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The name is taken, or this surface was read
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
 
 
 
@@ -2209,7 +2467,7 @@ Alert = Define.Text(nameof(Alert)).Shared();</code></pre>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Vector2_System_String_CodeSmile_LunyScript_Vector2_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Vector2(System.String,CodeSmile.LunyScript.Vector2,System.String,System.Int32)">
   Vector2(string, Vector2, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L255"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L353"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a <code>Vector2</code> variable. There is no <code>Shared</code> form in this version.</p>
@@ -2279,7 +2537,7 @@ Alert = Define.Text(nameof(Alert)).Shared();</code></pre>
 
   <h3 id="CodeSmile_LunyScript_DefineFactory_Vector3_System_String_CodeSmile_LunyScript_Vector3_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DefineFactory.Vector3(System.String,CodeSmile.LunyScript.Vector3,System.String,System.Int32)">
   Vector3(string, Vector3, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L320"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares a <code>Vector3</code> variable. Convert the result to a handle for an

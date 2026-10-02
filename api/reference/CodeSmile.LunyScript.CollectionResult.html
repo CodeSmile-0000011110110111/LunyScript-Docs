@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct CollectionResult | LunyScript API Reference ">
       
-      <meta name="description" content="The read-only, named outcome of one synchronous collection call. Declared with CollectionResult.Define(nameof(X)) inside Build() and produced by exactly one Slots.TryAdd(item).As(X). Used as a condition, it stands for .">
+      <meta name="description" content="The read-only, named outcome of one synchronous collection call. Declared with Define.CollectionResult(nameof(X)) inside Build() and produced by exactly one Slots.TryAdd(item).As(X). Used as a condition, it stands for .">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -86,7 +86,7 @@ Struct CollectionResult  <a class="header-action link-secondary" title="View sou
   </div>
 
   <div class="markdown summary"><p>The read-only, named outcome of one synchronous collection call. Declared with
-<code>CollectionResult.Define(nameof(X))</code> inside <code>Build()</code> and produced by exactly one
+<code>Define.CollectionResult(nameof(X))</code> inside <code>Build()</code> and produced by exactly one
 <code>Slots.TryAdd(item).As(X)</code>. Used as a condition, it stands for <a class="xref" href="CodeSmile.LunyScript.CollectionResult.html#CodeSmile_LunyScript_CollectionResult_Succeeded">Succeeded</a>.</p>
 </div>
   <div class="markdown conceptual"></div>
@@ -113,7 +113,7 @@ Struct CollectionResult  <a class="header-action link-secondary" title="View sou
   <pre><code class="lang-csharp">public CollectionResult Added { get; private set; }
 
 // Inside Build():
-Added = CollectionResult.Define(nameof(Added));
+Added = Define.CollectionResult(nameof(Added));
 On.Ready(
     Slots.TryAdd(item).As(Added),
     If(Added).Then(Hits.Add(1.0)));</code></pre>
@@ -210,7 +210,7 @@ or it belongs to another script.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_CollectionResult_IsDeclared_examples">Examples</h4>
-  <pre><code class="lang-csharp">var declared = Added.IsDeclared;   // true after CollectionResult.Define</code></pre>
+  <pre><code class="lang-csharp">var declared = Added.IsDeclared;   // true after Define.CollectionResult</code></pre>
 
 
 

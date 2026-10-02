@@ -69,7 +69,7 @@ const lunyScriptTypes = [
     'NetworkValueKind', 'NetworkVariableUpdate', 'NgoNetworkProvider', 'NodeDescription', 'Number',
     'NumberBindBuilder', 'NumberDefineBuilder', 'NumberFunction', 'NumberSlot', 'NumberState',
     'NumberValueBlock', 'ObjectLifetimeFactory', 'OnApplicationFactory', 'OnAuthorityFactory',
-    'OnEditorFactory', 'OnFactory', 'Operation', 'OperationFactory', 'OperationFailure',
+    'OnEditorFactory', 'OnFactory', 'Operation', 'OperationFailure',
     'OperationWatchBuilder', 'OrbitPointBuilder', 'OrbitRotationBuilder', 'OtherFactory', 'PlayerInputFactory',
     'PlayerTestHeartbeat', 'PlayerTestHeartbeatRecord', 'Prefab', 'Process', 'ProcessOverride',
     'RandomChoiceBuilder', 'RandomChoiceFromBuilder', 'RandomFactory', 'RandomIndexBuilder',

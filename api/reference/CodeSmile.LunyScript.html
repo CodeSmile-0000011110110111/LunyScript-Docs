@@ -1062,14 +1062,8 @@ element is visible to the next read in the same body.</p>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.CollectionResult.html">CollectionResult</a></dt>
       <dd><p>The read-only, named outcome of one synchronous collection call. Declared with
-<code>CollectionResult.Define(nameof(X))</code> inside <code>Build()</code> and produced by exactly one
+<code>Define.CollectionResult(nameof(X))</code> inside <code>Build()</code> and produced by exactly one
 <code>Slots.TryAdd(item).As(X)</code>. Used as a condition, it stands for <a class="xref" href="CodeSmile.LunyScript.CollectionResult.html#CodeSmile_LunyScript_CollectionResult_Succeeded">Succeeded</a>.</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="CodeSmile.LunyScript.CollectionResultFactory.html">CollectionResultFactory</a></dt>
-      <dd><p>The <code>CollectionResult</code> surface inside <code>Build()</code>: declares a named result that one
-synchronous collection call produces.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1169,8 +1163,8 @@ that schema.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.DefineFactory.html">DefineFactory</a></dt>
-      <dd><p>The <code>Define</code> surface inside <code>Build()</code>: declares a script's variables with the
-author spelling Round 06 settled, and hands back the typed handles the blocks are built from.</p>
+      <dd><p>The <code>Define</code> surface inside <code>Build()</code>: declares a script's variables, operations and
+collection results, and hands back the typed handles the blocks are built from.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1287,12 +1281,6 @@ required.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.FlagDefineBuilder.html">FlagDefineBuilder</a></dt>
       <dd><p>What <code>Define.Flag</code> returns: an object-local flag unless <code>Shared</code> is
 called.</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="CodeSmile.LunyScript.FlagFactory.html">FlagFactory</a></dt>
-      <dd><p>Declares flag variables. Inside a script, <code>Flag</code> in an expression means this member; in a
-declaration it is still the <a class="xref" href="CodeSmile.LunyScript.Flag.html">Flag</a> type.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1744,13 +1732,6 @@ called.</p>
 </dd>
     </dl>
     <dl class="jumplist">
-      <dt><a class="xref" href="CodeSmile.LunyScript.NumberFactory.html">NumberFactory</a></dt>
-      <dd><p>Declares number variables. Inside a script, <code>Number</code> in an expression means this member,
-the way <code>Transform</code> means the script's transform surface; in a declaration it is still the
-<a class="xref" href="CodeSmile.LunyScript.Number.html">Number</a> type.</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.NumberFieldBuilder.html">NumberFieldBuilder</a></dt>
       <dd><p>What <code>Bind.Number().FromDataField(field)</code> returns: a number input, complete once it is assigned or
 named.</p>
@@ -1822,14 +1803,8 @@ raises.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.Operation.html">Operation</a></dt>
-      <dd><p>A handle to one observable attempt. Declared with <code>Operation.Define(nameof(X))</code> inside
+      <dd><p>A handle to one observable attempt. Declared with <code>Define.Operation(nameof(X))</code> inside
 <code>Build()</code>; family start blocks bind it with <code>.As(handle)</code>.</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="CodeSmile.LunyScript.OperationFactory.html">OperationFactory</a></dt>
-      <dd><p>The <code>Operation</code> surface inside <code>Build()</code>: declares a handle with one observable
-attempt at a time.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2488,9 +2463,9 @@ called.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.TextFactory.html">TextFactory</a></dt>
-      <dd><p>Declares text variables and builds text formats. Inside a script, <code>Text</code> in an expression
-means this member; in a declaration it is still the <a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a>
-type.</p>
+      <dd><p>Builds text formats. Inside a script, <code>Text</code> in an expression means this member; in a
+declaration it is still the <a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a> type. A text variable is
+declared with <code>Define.Text</code>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
