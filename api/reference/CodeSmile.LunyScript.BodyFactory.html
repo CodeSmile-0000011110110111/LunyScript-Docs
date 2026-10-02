@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct BodyFactory | LunyScript API Reference ">
       
-      <meta name="description" content="The Body surface inside Build(): observations of what physics actually did to the object this script runs on.">
+      <meta name="description" content="The Body surface inside Build(): observations of what physics actually did to the object this script runs on, and the switch of its Rigidbody between kinematic and dynamic.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_BodyFactory" data-uid="CodeSmile.LunyScript.BodyFactory" class="text-break">
-Struct BodyFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/BodyFactory.cs/#L18"><i class="bi bi-code-slash"></i></a>
+Struct BodyFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/BodyFactory.cs/#L27"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -86,7 +86,7 @@ Struct BodyFactory  <a class="header-action link-secondary" title="View source" 
   </div>
 
   <div class="markdown summary"><p>The <code>Body</code> surface inside <code>Build()</code>: observations of what physics actually did
-to the object this script runs on.</p>
+to the object this script runs on, and the switch of its Rigidbody between kinematic and dynamic.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -109,12 +109,20 @@ to the object this script runs on.</p>
 
 
   <h2 id="CodeSmile_LunyScript_BodyFactory_examples">Examples</h2>
-  <pre><code class="lang-csharp">On.FixedUpdate(Travelled.Set(Body.PositionDelta));</code></pre>
+  <pre><code class="lang-csharp">On.FixedUpdate(Travelled.Set(Body.PositionDelta));
+On.Spawned(Body.MakeDynamic());
+On.FixedUpdate(If(Expired).Then(Body.MakeKinematic()));</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_BodyFactory_remarks">Remarks</h2>
   <div class="markdown level0 remarks"><p>A script type that never reads <a class="xref" href="CodeSmile.LunyScript.BodyFactory.html#CodeSmile_LunyScript_BodyFactory_PositionDelta">PositionDelta</a> stores no previous position
 and is not walked after a physics step. Round 05 gated this observation at build time.</p>
+<p>
+    <a class="xref" href="CodeSmile.LunyScript.BodyFactory.html#CodeSmile_LunyScript_BodyFactory_MakeKinematic_System_String_System_Int32_">MakeKinematic(string, int)</a> and <a class="xref" href="CodeSmile.LunyScript.BodyFactory.html#CodeSmile_LunyScript_BodyFactory_MakeDynamic_System_String_System_Int32_">MakeDynamic(string, int)</a> run in <code>On.FixedUpdate</code>, and also in
+    <code>On.Spawned</code>, <code>On.Ready</code>, <code>On.Enabled</code>, <code>On.Disabled</code> and <code>On.Despawned</code>, which
+    run once per lifecycle change. Both leave the body with no velocity. An object with no Rigidbody
+    warns once per incarnation and nothing is switched.
+</p>
 </div>
 
 
@@ -126,7 +134,7 @@ and is not walked after a physics step. Round 05 gated this observation at build
 
   <h3 id="CodeSmile_LunyScript_BodyFactory_PositionDelta" data-uid="CodeSmile.LunyScript.BodyFactory.PositionDelta">
   PositionDelta
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/BodyFactory.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/BodyFactory.cs/#L47"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>This body's world position after the last physics step, minus its world position after
@@ -170,11 +178,161 @@ type that never reads this value is not an observer.</p>
 
 
 
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_BodyFactory_MakeDynamic_" data-uid="CodeSmile.LunyScript.BodyFactory.MakeDynamic*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BodyFactory_MakeDynamic_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BodyFactory.MakeDynamic(System.String,System.Int32)">
+  MakeDynamic(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/BodyFactory.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Makes the object's Rigidbody dynamic, and then clears its linear and angular velocity, so it
+starts from rest under forces, gravity and contacts.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block MakeDynamic(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>The finished block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BodyFactory_MakeDynamic_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Spawned(Body.MakeDynamic());</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BodyFactory_MakeDynamic_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Runs in <code>On.FixedUpdate</code>, <code>On.Spawned</code>, <code>On.Ready</code>, <code>On.Enabled</code>, <code>On.Disabled</code>
+and <code>On.Despawned</code>; written in any other event it is reported once and ignored. A body that is
+already dynamic also loses its velocity. An object with no Rigidbody warns once per incarnation.
+<code>On.Spawned</code> is where a pooled object that a previous use made kinematic gets its dynamic body
+back, before anything else reads it.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_BodyFactory_MakeKinematic_" data-uid="CodeSmile.LunyScript.BodyFactory.MakeKinematic*"></a>
+
+  <h3 id="CodeSmile_LunyScript_BodyFactory_MakeKinematic_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.BodyFactory.MakeKinematic(System.String,System.Int32)">
+  MakeKinematic(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/BodyFactory.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Makes the object's Rigidbody kinematic, so forces, gravity and contacts stop moving it and only a
+kinematic move such as <code>Motion.MoveBy</code> does. A dynamic body first loses its linear and then its angular
+velocity, while it is still dynamic, so it stops where it is. Its collider stays enabled, so it still
+blocks and touches other bodies.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block MakeKinematic(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>The finished block.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BodyFactory_MakeKinematic_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.FixedUpdate(If(Expired).Then(Body.MakeKinematic()));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_BodyFactory_MakeKinematic_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Runs in <code>On.FixedUpdate</code>, <code>On.Spawned</code>, <code>On.Ready</code>, <code>On.Enabled</code>, <code>On.Disabled</code>
+and <code>On.Despawned</code>; written in any other event it is reported once and ignored. A body that is
+already kinematic stays kinematic and gets no velocity write. An object with no Rigidbody warns once per
+incarnation. A pool resets no native state, so a script whose pooled object becomes kinematic writes
+<a class="xref" href="CodeSmile.LunyScript.BodyFactory.html#CodeSmile_LunyScript_BodyFactory_MakeDynamic_System_String_System_Int32_">MakeDynamic(string, int)</a> in its <code>On.Spawned</code>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This surface was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/BodyFactory.cs/#L18" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Physics/BodyFactory.cs/#L27" class="edit-link">Edit this page</a>
         </div>
 
 
