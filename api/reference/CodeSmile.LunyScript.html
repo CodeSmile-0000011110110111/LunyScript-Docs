@@ -1066,8 +1066,9 @@ element is visible to the next read in the same body.</p>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.CollectionTryBuilder.html">CollectionTryBuilder</a></dt>
       <dd><p>What <code>Slots.TryAdd(item)</code> returns: one synchronous collection call whose own outcome is
-read. It has two consumers and takes exactly one of them: <code>If(Slots.TryAdd(item))</code>
-branches on the outcome, and <a class="xref" href="CodeSmile.LunyScript.CollectionTryBuilder.html#CodeSmile_LunyScript_CollectionTryBuilder_As_CodeSmile_LunyScript_CollectionResult_System_String_System_Int32_">As(CollectionResult, string, int)</a> stores it in a <a class="xref" href="CodeSmile.LunyScript.CollectionResult.html">CollectionResult</a>.</p>
+read. It has two kinds of consumer and takes exactly one: <code>If(Slots.TryAdd(item))</code>, or
+<code>ElseIf(Slots.TryAdd(item))</code> in an <code>If</code> chain, branches on the outcome, and <a class="xref" href="CodeSmile.LunyScript.CollectionTryBuilder.html#CodeSmile_LunyScript_CollectionTryBuilder_As_CodeSmile_LunyScript_CollectionResult_System_String_System_Int32_">As(CollectionResult, string, int)</a> stores it
+in a <a class="xref" href="CodeSmile.LunyScript.CollectionResult.html">CollectionResult</a>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1345,14 +1346,15 @@ and a cast's <code>Into(hits)</code> writes.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.IfBuilder.html">IfBuilder</a></dt>
-      <dd><p>What <code>If(condition)</code> returns. Its only method is <a class="xref" href="CodeSmile.LunyScript.IfBuilder.html#CodeSmile_LunyScript_IfBuilder_Then_CodeSmile_LunyScript_Block___">Then(params Block[])</a>, so a condition
-without a consequence does not compile.</p>
+      <dd><p>What <code>If(condition)</code> and <code>ElseIf(condition)</code> return. Its only method is <a class="xref" href="CodeSmile.LunyScript.IfBuilder.html#CodeSmile_LunyScript_IfBuilder_Then_CodeSmile_LunyScript_Block___">Then(params Block[])</a>, so a
+condition without a consequence does not compile.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.IfThenBuilder.html">IfThenBuilder</a></dt>
-      <dd><p>What <code>If(condition).Then(...)</code> returns: either add an <a class="xref" href="CodeSmile.LunyScript.IfThenBuilder.html#CodeSmile_LunyScript_IfThenBuilder_Else_CodeSmile_LunyScript_Block___">Else(params Block[])</a> or use it as a
-block, which the implicit conversion does.</p>
+      <dd><p>What <code>If(condition).Then(...)</code> and <code>ElseIf(condition).Then(...)</code> return: add an
+<a class="xref" href="CodeSmile.LunyScript.IfThenBuilder.html#CodeSmile_LunyScript_IfThenBuilder_ElseIf_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_">ElseIf(ConditionBlock, string, int)</a>, add an <a class="xref" href="CodeSmile.LunyScript.IfThenBuilder.html#CodeSmile_LunyScript_IfThenBuilder_Else_CodeSmile_LunyScript_Block___">Else(params Block[])</a>, or use it as a block, which
+the implicit conversion does.</p>
 </dd>
     </dl>
     <dl class="jumplist">
