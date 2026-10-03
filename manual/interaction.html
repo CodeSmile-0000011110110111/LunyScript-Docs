@@ -169,13 +169,19 @@ writes <code class="language-plaintext highlighter-rouge">Interaction.Focus</cod
 <ol>
   <li>A focuser whose player is not present, because nobody paired that player yet, focuses nothing.</li>
   <li>The ray goes through the cursor, or through the centre of the view, of the focuser’s camera.</li>
-  <li>While the cursor is over a button, toggle, text field or another control that takes focus, in a
-panel a LunyScript script uses, it focuses nothing, and a press goes to the control. A <code class="language-plaintext highlighter-rouge">Label</code>
-does not take the cursor.</li>
+  <li>While the cursor is over a button, toggle, text field or another control that takes focus, or
+over a button authored with <code class="language-plaintext highlighter-rouge">focusable="false"</code>, in a panel a LunyScript script uses, it focuses
+nothing, and a press goes to the control. A <code class="language-plaintext highlighter-rouge">Label</code> does not take the cursor.</li>
   <li>The first collider along the ray decides. The avatar’s own colliders are skipped, and so are
 triggers that are no target’s volume. A target’s volume is focused when the point the ray hit is
 within range; any other collider hides what is behind it.</li>
 </ol>
+
+<p>A gamepad player presses a focused UI Toolkit button with the south button, the same button a game
+usually binds to Interact, and moves focus between buttons with the stick. A button in an on-screen
+panel that only the cursor should press, such as a Reset button, is authored with
+<code class="language-plaintext highlighter-rouge">focusable="false"</code>: a click still presses it, the cursor over it still focuses nothing, and a
+gamepad never gives it focus, so the gamepad player’s Interact never presses it.</p>
 
 <h2 id="what-the-target-shows">What the target shows</h2>
 
