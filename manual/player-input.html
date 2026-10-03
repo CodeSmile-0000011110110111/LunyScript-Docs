@@ -129,6 +129,37 @@ give you back a handle to read:</p>
 <p><code class="language-plaintext highlighter-rouge">Vector2</code> and <code class="language-plaintext highlighter-rouge">Vector3</code> are the Input System’s control type names, which is why they carry those
 spellings rather than the product’s own <code class="language-plaintext highlighter-rouge">Vector2</code> and <code class="language-plaintext highlighter-rouge">Vector3</code>.</p>
 
+<h2 id="reading-the-last-value-an-action-received">Reading the last value an action received</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Value</code> and <code class="language-plaintext highlighter-rouge">IsPressed</code> return the last value the action received. The Input System backend records
+each action’s value and press state while the Input System processes input, and a read returns that
+record in whichever event runs it, so the same line works in <code class="language-plaintext highlighter-rouge">On.Update</code> and in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>.
+Read the input that drives a Rigidbody in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>, where Motion’s forces and kinematic
+moves run:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">move</span>  <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">Vector2</span><span class="p">(</span><span class="s">"Move"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">boost</span> <span class="p">=</span> <span class="n">Input</span><span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">).</span><span class="nf">Button</span><span class="p">(</span><span class="s">"Boost"</span><span class="p">);</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">FixedUpdate</span><span class="p">(</span>
+    <span class="n">Motion</span><span class="p">.</span><span class="nf">AddForce</span><span class="p">(</span><span class="n">move</span><span class="p">.</span><span class="n">Value</span><span class="p">.</span><span class="n">X</span> <span class="p">*</span> <span class="m">6</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">move</span><span class="p">.</span><span class="n">Value</span><span class="p">.</span><span class="n">Y</span> <span class="p">*</span> <span class="m">6</span><span class="p">).</span><span class="nf">InWorldSpace</span><span class="p">(),</span>
+    <span class="nf">If</span><span class="p">(</span><span class="n">boost</span><span class="p">.</span><span class="n">IsPressed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Motion</span><span class="p">.</span><span class="nf">AddForce</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">14</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">InWorldSpace</span><span class="p">()));</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Unity runs a frame’s fixed steps before the Input System processes that frame’s input, so a fixed
+step reads the value the previous frame received. Every fixed step of one frame reads the same
+value.</li>
+  <li>A held stick or button keeps its value until the action receives another, so it reads the same in
+every fixed step and every frame while it is held.</li>
+  <li>An action that has received nothing reads its resting value: <code class="language-plaintext highlighter-rouge">IsPressed</code> false, <code class="language-plaintext highlighter-rouge">Value</code> 0 or
+<code class="language-plaintext highlighter-rouge">Vector3.Zero</code>. So does an action that did not resolve.</li>
+  <li>With the Input System’s update mode set to process events in fixed update, <code class="language-plaintext highlighter-rouge">On.Update</code> reads what
+the frame’s last fixed step received.</li>
+</ul>
+
+<p>The <strong>FixedStepInput</strong> scene in the API examples drives a kinematic rover with <code class="language-plaintext highlighter-rouge">Motion.MoveBy</code> and
+pushes and lifts a ball with <code class="language-plaintext highlighter-rouge">Motion.AddForce</code>, all from reads in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>.</p>
+
 <p>The player is a number, from 0 upwards, that a set of devices is paired with. A negative number is
 refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs. <a href="#local-players">Local players</a> covers pairing and one script for
 every player. Declaring the same player, name and kind twice is one declaration;
@@ -137,16 +168,27 @@ declaring one name as two kinds is refused while <code class="language-plaintext
 
 <h2 id="watching-an-action">Watching an action</h2>
 
-<p>A watch runs blocks at one of the Input System’s three phases, so a press is handled once rather than
-on every frame it is held:</p>
+<p>A watch runs blocks at one of the action’s three phases, so a press is handled once rather than on
+every frame it is held:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Input</span><span class="p">(</span><span class="n">fire</span><span class="p">).</span><span class="nf">Started</span><span class="p">(</span><span class="n">Charging</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 <span class="n">When</span><span class="p">.</span><span class="nf">Input</span><span class="p">(</span><span class="n">fire</span><span class="p">).</span><span class="nf">Performed</span><span class="p">(</span><span class="n">Shots</span><span class="p">.</span><span class="nf">Increment</span><span class="p">());</span>
 <span class="n">When</span><span class="p">.</span><span class="nf">Input</span><span class="p">(</span><span class="n">fire</span><span class="p">).</span><span class="nf">Canceled</span><span class="p">(</span><span class="n">Charging</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">Canceled</code> runs on the frame the control returned to rest without having performed. It carries one L,
-matching the Input System’s own spelling.</p>
+<p>The three are the Input System action’s own phases. A plain button starts and performs on the frame
+it goes down and cancels on the frame it comes up. A stick starts when it leaves rest, performs on
+every change and cancels when it returns to rest. A Hold interaction starts on the press, performs
+when the hold time is reached, and cancels on the release. A pass-through action performs on every
+change and never starts or cancels. <code class="language-plaintext highlighter-rouge">Canceled</code> carries one L, matching the Input System’s own
+spelling.</p>
+
+<p>A watch runs after the frame’s <code class="language-plaintext highlighter-rouge">On.Update</code> and sees each occurrence the action received since the
+previous frame’s update, once: several presses between two frames run it once, and an occurrence a
+frame did not deliver, because an input gate was open or the script was paused, is not delivered
+later. No watch runs
+inside the Input System’s own processing. A force or an impulse belongs in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code>, so read
+<code class="language-plaintext highlighter-rouge">IsPressed</code> there rather than applying it from a watch.</p>
 
 <h2 id="rebinding">Rebinding</h2>
 
