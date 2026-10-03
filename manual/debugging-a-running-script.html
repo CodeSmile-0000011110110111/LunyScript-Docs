@@ -81,7 +81,7 @@
 <p>Press Play, open <strong>Tools &gt; LunyScript &gt; Debugger</strong> and select the guard in the Hierarchy. The
 window shows the guard’s <code class="language-plaintext highlighter-rouge">On.Update</code> with the <code class="language-plaintext highlighter-rouge">If</code> under it, then the <code class="language-plaintext highlighter-rouge">If</code>’s condition, a Then
 row and an Else row, and under those the lines <code class="language-plaintext highlighter-rouge">.Then(Speed.Set(6))</code> and <code class="language-plaintext highlighter-rouge">.Else(Speed.Set(2)));</code>.
-The <code class="language-plaintext highlighter-rouge">If</code> row reads “False: ran Else” and “0.0 s ago”, and the Else row reads Taken. Tick the <code class="language-plaintext highlighter-rouge">Alert</code>
+The <code class="language-plaintext highlighter-rouge">If</code> row reads “False: ran Else” and “0.0 s”, and the Else row reads Taken. Tick the <code class="language-plaintext highlighter-rouge">Alert</code>
 checkbox under <strong>Values</strong> and press <strong>Apply</strong>: the window shows “Applied. Read back: true”, and from
 the next frame the <code class="language-plaintext highlighter-rouge">If</code> row reads “True: ran Then” with a green highlight. <code class="language-plaintext highlighter-rouge">Speed</code> shows 6.</p>
 
@@ -120,45 +120,58 @@ as one line; its arrow shows its blocks, and its line is the line of the <code c
   </thead>
   <tbody>
     <tr>
-      <td>Last executed</td>
+      <td>(empty circle)</td>
+      <td>The block’s breakpoint; see <a href="#pausing-when-a-block-runs-or-a-value-changes">Pausing when a block runs or a value changes</a></td>
+    </tr>
+    <tr>
+      <td>Block</td>
+      <td>The block; this column takes the width the others leave</td>
+    </tr>
+    <tr>
+      <td>Last exec.</td>
       <td>Completed, Running for a step that continues next frame, Failed, or which branch an <code class="language-plaintext highlighter-rouge">If</code> ran</td>
     </tr>
     <tr>
       <td>Age</td>
-      <td>How long ago the block last ran</td>
+      <td>How long ago the block last ran, such as “4.2 s” or “5.1 min”</td>
     </tr>
     <tr>
-      <td>Live now</td>
+      <td>Live</td>
       <td>What a condition says about the values stored now, and the value of each of its parts</td>
     </tr>
     <tr>
       <td>Line</td>
-      <td>The line the block was written on</td>
+      <td>The number of the line the block was written on</td>
+    </tr>
+    <tr>
+      <td>Fire/Force</td>
+      <td>Runs the block once, or forces an <code class="language-plaintext highlighter-rouge">If</code>’s branch</td>
     </tr>
   </tbody>
 </table>
 
-<p>A condition shows the <code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code> its <code class="language-plaintext highlighter-rouge">If</code> recorded. A value built with a C# operator, such
-as <code class="language-plaintext highlighter-rouge">Health &gt; 10</code>, has no line of its own and shows the line of the call it belongs to as “owner 18”.
+<p>Drag the edge of a column’s header to resize it. A condition shows the <code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code> its <code class="language-plaintext highlighter-rouge">If</code>
+recorded. A value built with a C# operator, such as <code class="language-plaintext highlighter-rouge">Health &gt; 10</code>, has no line of its own and shows
+the number of the line of the call it belongs to; the cell’s tooltip says so.
 <strong>Details</strong> adds each block’s type, how many times it ran, and its place in the script.</p>
 
 <p>A row that just ran is highlighted for half a second: green for an <code class="language-plaintext highlighter-rouge">If</code> that ran Then and for its
 condition, and a light background for any other block. A block that runs every frame stays
 highlighted.</p>
 
-<p>Every result under Last executed is the one recorded when the block ran, and the debugger runs a
+<p>Every result under Last exec. is the one recorded when the block ran, and the debugger runs a
 block only when you press Fire, so a condition that has not run since the player moved still shows
 its last result, with its age.</p>
 
-<p><strong>Live now</strong> shows whether that result still holds. It is computed from the debugger’s own copy of
+<p><strong>Live</strong> shows whether that result still holds. It is computed from the debugger’s own copy of
 the values, ten times a second, without running any block or any of your code. A condition that only
 an event checks, such as one inside <code class="language-plaintext highlighter-rouge">On.Ready</code>, keeps the result it recorded then; when the values
-say otherwise, its Live now reading is shown in blue. Fire its <code class="language-plaintext highlighter-rouge">If</code> to record the current answer.</p>
+say otherwise, its Live reading is shown in blue. Fire its <code class="language-plaintext highlighter-rouge">If</code> to record the current answer.</p>
 
 <p><img src="/LunyScript-Docs/assets/runtime-debugger-live-now.png" alt="The Debugger window on a script whose On.Ready If checked Charge &gt;= 3 while Charge was 0: under Last executed its condition reads false from 5.8 seconds ago, under Live now it reads true in blue, with Charge at 3.45 and the constant 3 on the rows below it, and a condition over Time.IsPaused reads unavailable" /></p>
 
 <p>A condition built from your script’s variables, numbers, text, enums and spatial values, with
-comparisons, <code class="language-plaintext highlighter-rouge">&amp;</code>, <code class="language-plaintext highlighter-rouge">|</code> and <code class="language-plaintext highlighter-rouge">!</code>, has a Live now reading, and so does each part of it when you unfold
+comparisons, <code class="language-plaintext highlighter-rouge">&amp;</code>, <code class="language-plaintext highlighter-rouge">|</code> and <code class="language-plaintext highlighter-rouge">!</code>, has a Live reading, and so does each part of it when you unfold
 its row. A condition that reads anything else, such as the object’s position, the game clock, input,
 the network, the other collider of a collision or a list, reads <strong>unavailable</strong>, and so does a
 condition you wrote as your own C# class, because the debugger never runs your code to find out.
@@ -168,8 +181,9 @@ The row’s tooltip says why.</p>
 
 <h2 id="changing-a-value">Changing a value</h2>
 
-<p><strong>Values</strong> lists the script’s variables with an editor for each kind: a number field, a checkbox, a
-text field, three fields for a <code class="language-plaintext highlighter-rouge">Vector3</code>, two for a <code class="language-plaintext highlighter-rouge">Vector2</code>, three angles in degrees for a
+<p><strong>Values</strong> lists the script’s variables in three columns: the breakpoint circle, <strong>Name</strong>, and
+<strong>Value</strong>, which takes the remaining width; drag the edge of the Name header to resize it. Each value
+has an editor for its kind: a number field, a checkbox, a text field, three fields for a <code class="language-plaintext highlighter-rouge">Vector3</code>, two for a <code class="language-plaintext highlighter-rouge">Vector2</code>, three angles in degrees for a
 <code class="language-plaintext highlighter-rouge">Rotation</code>, a colour field for a <code class="language-plaintext highlighter-rouge">Color</code>, and a list of names for an enum. Change a value and press <strong>Apply</strong>. The window writes
 the value once and shows the value it read back, or why the write was refused, such as text longer
 than the variable holds. <strong>Revert</strong> puts the stored value back into the editor. Applying a value
@@ -196,7 +210,7 @@ as any failure does.</p>
 
 <p><strong>Force</strong> makes an <code class="language-plaintext highlighter-rouge">If</code> run the branch you choose without evaluating its condition. Choose
 <strong>Forced true</strong> in the guard’s <code class="language-plaintext highlighter-rouge">If</code> row: from the next frame the row reads “True: ran Then” and
-<code class="language-plaintext highlighter-rouge">Speed</code> shows 6, while <code class="language-plaintext highlighter-rouge">Alert</code> stays false, and the condition’s row reads false under Live now. The list shows the forced branch in amber until you
+<code class="language-plaintext highlighter-rouge">Speed</code> shows 6, while <code class="language-plaintext highlighter-rouge">Alert</code> stays false, and the condition’s row reads false under Live. The list shows the forced branch in amber until you
 choose <strong>Condition</strong>, which gives the <code class="language-plaintext highlighter-rouge">If</code> its condition back. An <code class="language-plaintext highlighter-rouge">If</code> also stops being forced when
 its object despawns and when Play Mode ends.</p>
 
@@ -205,12 +219,14 @@ the <code class="language-plaintext highlighter-rouge">ElseIf</code> line, so ea
 
 <h2 id="pausing-when-a-block-runs-or-a-value-changes">Pausing when a block runs or a value changes</h2>
 
-<p>Every block row also has a <strong>Break</strong> toggle, and so does every value under <strong>Values</strong>. Turn on
-<strong>Break</strong> on the guard’s <code class="language-plaintext highlighter-rouge">.Then(Speed.Set(6))</code> row, then tick <code class="language-plaintext highlighter-rouge">Alert</code> and press <strong>Apply</strong>: Play Mode
-pauses at the end of the next frame, because that frame ran the block. The rest of the frame still
-runs, including the other scripts, before Play Mode pauses. The toggle is red while it is on.</p>
+<p>The first column of <strong>Script flow</strong> and of <strong>Values</strong> holds breakpoints, as the breakpoint margin of a
+code editor does. Move the pointer over a block’s or a value’s cell in that column and a dark red
+circle shows; click it to set a breakpoint, which stays as a bright red circle, and click it again to
+clear it. Set a breakpoint on the guard’s <code class="language-plaintext highlighter-rouge">.Then(Speed.Set(6))</code> row, then tick <code class="language-plaintext highlighter-rouge">Alert</code> and press
+<strong>Apply</strong>: Play Mode pauses at the end of the next frame, because that frame ran the block. The rest of
+the frame still runs, including the other scripts, before Play Mode pauses.</p>
 
-<p><strong>Break</strong> on a value pauses Play Mode at the end of the frame in which the value changes. A write that
+<p>A breakpoint on a value pauses Play Mode at the end of the frame in which the value changes. A write that
 stores the value the variable already holds is not a change, so the guard’s <code class="language-plaintext highlighter-rouge">Speed.Set(2)</code> running
 every frame does not pause while <code class="language-plaintext highlighter-rouge">Speed</code> is already 2. Your own <strong>Apply</strong> does not pause either. A
 value declared with <code class="language-plaintext highlighter-rouge">.Shared()</code> pauses when any script that shares it changes it.</p>
