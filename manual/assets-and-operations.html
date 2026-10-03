@@ -235,8 +235,7 @@ so a retry is normally followed by another <code class="language-plaintext highl
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Guard</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Loading</span><span class="p">);</span>        <span class="c1">// a declared Prefab</span>
 <span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Poster</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">PosterLoad</span><span class="p">);</span>    <span class="c1">// a declared Texture2D</span>
-<span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">AssetSource</span><span class="p">.</span><span class="n">Resources</span><span class="p">&lt;</span><span class="n">Texture2D</span><span class="p">&gt;(</span><span class="s">"Posters/Stripe"</span><span class="p">))</span>
-    <span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="n">PosterLoad</span><span class="p">);</span>
+<span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Resource</span><span class="p">&lt;</span><span class="n">Texture2D</span><span class="p">&gt;(</span><span class="s">"Posters/Stripe"</span><span class="p">)).</span><span class="nf">As</span><span class="p">(</span><span class="n">PosterLoad</span><span class="p">);</span>
 <span class="n">Asset</span><span class="p">.</span><span class="nf">Release</span><span class="p">(</span><span class="n">Loading</span><span class="p">);</span>
 </code></pre></div></div>
 
@@ -244,9 +243,10 @@ so a retry is normally followed by another <code class="language-plaintext highl
 outcome. <code class="language-plaintext highlighter-rouge">Asset.Release(handle)</code> drops this owner’s hold on what the attempt produced, and is refused
 until that attempt has succeeded.</p>
 
-<p><code class="language-plaintext highlighter-rouge">AssetSource.Resources&lt;T&gt;(key)</code> takes an input kind, such as <code class="language-plaintext highlighter-rouge">Prefab</code> or <code class="language-plaintext highlighter-rouge">Texture2D</code>, and a relative,
-extension-free Resources path with no leading slash. A bound Inspector reference and
-<code class="language-plaintext highlighter-rouge">AssetSource.Resources</code> are the two sources this version offers.</p>
+<p><code class="language-plaintext highlighter-rouge">Resource&lt;T&gt;(key)</code> names an asset in a Unity <code class="language-plaintext highlighter-rouge">Resources</code> folder. It takes an input kind, such as
+<code class="language-plaintext highlighter-rouge">Prefab</code> or <code class="language-plaintext highlighter-rouge">Texture2D</code>, and a relative, extension-free Resources path with no leading slash, which
+is checked where the line is written. A bound Inspector reference and <code class="language-plaintext highlighter-rouge">Resource&lt;T&gt;(key)</code> are the two
+sources this version offers.</p>
 
 <h2 id="a-worked-example">A worked example</h2>
 
@@ -292,7 +292,7 @@ cloud family and its own watches.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.AssetFactory.html"><code class="language-plaintext highlighter-rouge">AssetFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.AssetAttribute.html"><code class="language-plaintext highlighter-rouge">AssetAttribute</code></a>,
-<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.AssetSource.html"><code class="language-plaintext highlighter-rouge">AssetSource</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Resource-1.html"><code class="language-plaintext highlighter-rouge">Resource&lt;T&gt;</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Operation.html"><code class="language-plaintext highlighter-rouge">Operation</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.DefineFactory.html"><code class="language-plaintext highlighter-rouge">DefineFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OperationWatchBuilder.html"><code class="language-plaintext highlighter-rouge">OperationWatchBuilder</code></a>.</li>
