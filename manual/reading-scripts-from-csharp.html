@@ -299,6 +299,82 @@ observation yourself.</li>
 ends, and every other observation still runs.</li>
 </ul>
 
+<h2 id="reading-a-shared-variable">Reading a shared variable</h2>
+
+<p>C# reads a shared variable the way it reads one of the object’s own: through a reference to a script
+that declares or binds it. The read returns the value in the store, which every script that declares
+or binds the name reads and writes.</p>
+
+<p><code class="language-plaintext highlighter-rouge">ScoreKeeper</code> declares the team’s score, and each <code class="language-plaintext highlighter-rouge">Coin</code> binds it and adds 10 when the player touches
+the coin:</p>
+
+<pre><code>public sealed partial class ScoreKeeper : Script
+{
+    protected override void Build()
+    {
+        TeamScore = Define.Number(nameof(TeamScore)).Shared();
+    }
+}
+
+public sealed partial class Coin : Script
+{
+    protected override void Build()
+    {
+        TeamScore = Bind.Number(nameof(TeamScore)).Shared();
+
+        On.TriggerEnter(If(Other.HasTag("Player"))
+            .Then(TeamScore.Add(10), Object.Destroy()));
+    }
+}
+</code></pre>
+
+<p>A HUD label shows the score through the object that runs <code class="language-plaintext highlighter-rouge">ScoreKeeper</code>:</p>
+
+<pre><code>using CodeSmile.LunyScript;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public sealed class TeamScoreLabel : MonoBehaviour
+{
+    [SerializeField] private LunyScriptBehaviour m_ScoreKeeper;
+    [SerializeField] private UIDocument m_Hud;
+    private Label m_Label;
+    private ScriptObservation m_Watch;
+
+    private void Start()
+    {
+        m_Label = m_Hud.rootVisualElement.Q&lt;Label&gt;("team-score");
+        var keeper = <strong>LunyScript.Find&lt;ScoreKeeper&gt;(m_ScoreKeeper)</strong>;
+        if (<strong>keeper.IsRunning</strong> == false)
+            return;
+
+        var score = <strong>keeper.Definition.TeamScore</strong>;
+        ShowScore(<strong>keeper.Read(score)</strong>);
+        m_Watch = <strong>keeper.Observe(score, ShowScore)</strong>;
+    }
+
+    private void ShowScore(double score) =&gt; m_Label.text = $"Score {score}";
+
+    private void OnDestroy() =&gt; <strong>m_Watch?.Dispose()</strong>;
+}
+</code></pre>
+
+<p>In the Inspector, drag the object that runs <code class="language-plaintext highlighter-rouge">ScoreKeeper</code> onto <code class="language-plaintext highlighter-rouge">m_ScoreKeeper</code>, which assigns its
+<code class="language-plaintext highlighter-rouge">LunyScriptBehaviour</code>, and the object that holds the HUD’s <code class="language-plaintext highlighter-rouge">UIDocument</code> onto <code class="language-plaintext highlighter-rouge">m_Hud</code>. The HUD’s UXML
+holds a <code class="language-plaintext highlighter-rouge">Label</code> named <code class="language-plaintext highlighter-rouge">team-score</code>. <code class="language-plaintext highlighter-rouge">Read</code> returns the score when the label starts. <code class="language-plaintext highlighter-rouge">Observe</code> calls
+<code class="language-plaintext highlighter-rouge">ShowScore</code> once per frame in which a coin changed the score, after every script’s <code class="language-plaintext highlighter-rouge">On.LateUpdate</code>.</p>
+
+<p>A reference to any object whose script declares or binds the name reads the same value. With
+<code class="language-plaintext highlighter-rouge">var coin = LunyScript.Find&lt;Coin&gt;(coinBehaviour);</code>, where <code class="language-plaintext highlighter-rouge">coinBehaviour</code> is a coin’s
+<code class="language-plaintext highlighter-rouge">LunyScriptBehaviour</code>, <code class="language-plaintext highlighter-rouge">coin.Read(coin.Definition.TeamScore)</code> returns the team score as well. A
+reference and its observation belong to the one object you found, and end when that object’s script
+ends, while the value stays in the store. A coin destroys itself when the player collects it, so the
+label reads through the scorekeeper, whose object stays in the scene for as long as the label shows
+the score.</p>
+
+<p>To change the score from C#, send a message to a script that declares or binds it, as the next
+section shows.</p>
+
 <h2 id="changing-a-scripts-state">Changing a script’s state</h2>
 
 <p>There is no write through a reference. To change another script’s state, send it a message and let
