@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Enum InputPhase | LunyScript API Reference ">
       
-      <meta name="description" content="The three occurrences one input action reports, which are the three the accepted design names.">
+      <meta name="description" content="The three occurrences one input action reports, which are the three the accepted design names and the three phases of the same names an Input System action reports.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -78,7 +78,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_InputPhase" data-uid="CodeSmile.LunyScript.InputPhase" class="text-break">
-Enum InputPhase  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputValueKind.cs/#L42"><i class="bi bi-code-slash"></i></a>
+Enum InputPhase  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputValueKind.cs/#L43"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -87,7 +87,7 @@ Enum InputPhase  <a class="header-action link-secondary" title="View source" hre
   </div>
 
   <div class="markdown summary"><p>The three occurrences one input action reports, which are the three the accepted design
-names.</p>
+names and the three phases of the same names an Input System action reports.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -113,17 +113,18 @@ names.</p>
   <dl class="parameters">
     <dt id="CodeSmile_LunyScript_InputPhase_Canceled"><code>Canceled = 2</code></dt>
   
-  <dd><p>The action ended without performing again: the control returned to its resting
-value this frame.</p>
+  <dd><p>The action ended: the control returned to its resting value, or the action was
+disabled while it was in progress.</p>
 </dd>
     <dt id="CodeSmile_LunyScript_InputPhase_Performed"><code>Performed = 1</code></dt>
   
-  <dd><p>The action did what it is configured to do this frame. A plain button press
-performs on the frame it goes down.</p>
+  <dd><p>The action did what it is configured to do. A plain button press performs on the
+frame it goes down, and a stick performs on every frame its value changes.</p>
 </dd>
     <dt id="CodeSmile_LunyScript_InputPhase_Started"><code>Started = 0</code></dt>
   
-  <dd><p>The action began: the control left its resting value this frame.</p>
+  <dd><p>The action began: the control left its resting value. A Hold interaction starts
+on the press, before its hold time is reached.</p>
 </dd>
   </dl>
 
@@ -132,8 +133,9 @@ performs on the frame it goes down.</p>
 
 
   <h2 id="CodeSmile_LunyScript_InputPhase_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p><b>These are polled once per frame rather than delivered as callbacks.</b> A script asks
-whether the occurrence happened during the frame that is running, so an occurrence is never
+  <div class="markdown level0 remarks"><p><b>A script reads these once per frame; they never run blocks from a callback.</b> The
+backend records each occurrence as the action receives it and hands every frame the ones
+received since the frame before, so an occurrence is delivered in one frame, is never
 replayed and never arrives outside a frame; <code>docs/execution-model.md</code>, &quot;Player input&quot;,
 states the whole contract.</p>
 </div>
@@ -141,7 +143,7 @@ states the whole contract.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputValueKind.cs/#L42" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Input/InputValueKind.cs/#L43" class="edit-link">Edit this page</a>
         </div>
 
 
