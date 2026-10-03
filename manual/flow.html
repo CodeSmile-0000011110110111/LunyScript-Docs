@@ -74,15 +74,61 @@
 
 <h2 id="branching">Branching</h2>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">If</span><span class="p">(</span><span class="n">Charge</span> <span class="p">&lt;</span> <span class="m">5</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Powered</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
-<span class="nf">If</span><span class="p">(</span><span class="n">Charge</span> <span class="p">&lt;</span> <span class="m">5</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Powered</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)).</span><span class="nf">Else</span><span class="p">(</span><span class="n">Powered</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
-<span class="nf">If</span><span class="p">(</span><span class="n">Armed</span> <span class="p">&amp;</span> <span class="n">Charge</span> <span class="p">&gt;</span> <span class="m">10</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Fire</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="n">Shots</span><span class="p">.</span><span class="nf">Increment</span><span class="p">());</span>
-</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">Charge</code> and <code class="language-plaintext highlighter-rouge">Shots</code> are <code class="language-plaintext highlighter-rouge">Number</code> variables, and <code class="language-plaintext highlighter-rouge">Powered</code>, <code class="language-plaintext highlighter-rouge">Armed</code> and <code class="language-plaintext highlighter-rouge">Fire</code> are <code class="language-plaintext highlighter-rouge">Flag</code>
+variables:</p>
+
+<pre><code>Charge = Define.Number(nameof(Charge), 100);
+Shots = Define.Number(nameof(Shots), 0);
+Powered = Define.Flag(nameof(Powered), true);
+Armed = Define.Flag(nameof(Armed), false);
+Fire = Define.Flag(nameof(Fire), false);
+
+On.Update(<strong>If(</strong>Charge &lt; 5<strong>).Then(</strong>Powered.Set(false)<strong>)</strong>);
+On.Update(<strong>If(</strong>Charge &lt; 5<strong>).Then(</strong>Powered.Set(false)<strong>)
+    .Else(</strong>Powered.Set(true)<strong>)</strong>);
+On.Update(<strong>If(</strong>Armed &amp; Charge &gt; 10<strong>)
+    .Then(</strong>Fire.Set(true), Shots.Increment()<strong>)</strong>);
+</code></pre>
 
 <p><code class="language-plaintext highlighter-rouge">If</code> takes a condition: a comparison, a <code class="language-plaintext highlighter-rouge">Flag</code>, or several combined with <code class="language-plaintext highlighter-rouge">&amp;</code>, <code class="language-plaintext highlighter-rouge">|</code> and <code class="language-plaintext highlighter-rouge">!</code>. It is
 incomplete without <code class="language-plaintext highlighter-rouge">Then</code>; an <code class="language-plaintext highlighter-rouge">If</code> used as a block with no branch is refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs,
 with a message naming the branch you left out. The condition is evaluated each time the <code class="language-plaintext highlighter-rouge">If</code> runs,
 immediately before its children.</p>
+
+<h3 id="choosing-one-of-several-branches">Choosing one of several branches</h3>
+
+<p><code class="language-plaintext highlighter-rouge">ElseIf</code> adds a branch after a <code class="language-plaintext highlighter-rouge">Then</code>, as many times as you need. <code class="language-plaintext highlighter-rouge">Level</code> is a <code class="language-plaintext highlighter-rouge">Number</code> variable:</p>
+
+<pre><code>Level = Define.Number(nameof(Level), 0);
+
+On.Update(<strong>If(</strong>Charge &lt; 10<strong>).Then(</strong>Level.Set(0)<strong>)
+    .ElseIf(</strong>Charge &lt; 50<strong>).Then(</strong>Level.Set(1)<strong>)
+    .ElseIf(</strong>Charge &lt; 90<strong>).Then(</strong>Level.Set(2)<strong>)
+    .Else(</strong>Level.Set(3)<strong>)</strong>);
+</code></pre>
+
+<p>The conditions are tested in the order you wrote them, each one only when every condition before it
+was false. The first true one runs its <code class="language-plaintext highlighter-rouge">Then</code> and ends the chain, so exactly one list runs: with
+<code class="language-plaintext highlighter-rouge">Charge</code> at 30, <code class="language-plaintext highlighter-rouge">Charge &lt; 50</code> is the first true condition and <code class="language-plaintext highlighter-rouge">Level</code> becomes 1, although
+<code class="language-plaintext highlighter-rouge">Charge &lt; 90</code> is true as well. <code class="language-plaintext highlighter-rouge">Else</code> runs when no condition was true. Without <code class="language-plaintext highlighter-rouge">Else</code>, a chain whose
+conditions are all false runs nothing:</p>
+
+<pre><code>On.Update(<strong>If(</strong>Charge &lt; 10<strong>).Then(</strong>Powered.Set(false)<strong>)
+    .ElseIf(</strong>Charge &gt; 90<strong>).Then(</strong>Powered.Set(true)<strong>)</strong>);
+</code></pre>
+
+<p><code class="language-plaintext highlighter-rouge">Else</code> ends the chain, so an <code class="language-plaintext highlighter-rouge">ElseIf</code> written after it does not compile. An <code class="language-plaintext highlighter-rouge">ElseIf</code> takes what
+<code class="language-plaintext highlighter-rouge">If</code> takes, including a collection try such as <code class="language-plaintext highlighter-rouge">ElseIf(Spare.TryAdd(item))</code>, whose call runs only
+when the chain reaches it.</p>
+
+<p>Each <code class="language-plaintext highlighter-rouge">ElseIf</code> is an <code class="language-plaintext highlighter-rouge">If</code> inside the <code class="language-plaintext highlighter-rouge">Else</code> of the branch before it. The chain above builds the same
+block as this nesting, and the
+<a href="/LunyScript-Docs/manual/debugging-a-running-script.html">debugger</a> shows it that way, one
+level deeper for each <code class="language-plaintext highlighter-rouge">ElseIf</code>:</p>
+
+<pre><code>On.Update(<strong>If(</strong>Charge &lt; 10<strong>).Then(</strong>Powered.Set(false)<strong>)
+    .Else(If(</strong>Charge &gt; 90<strong>).Then(</strong>Powered.Set(true)<strong>))</strong>);
+</code></pre>
 
 <h2 id="repeating-work">Repeating work</h2>
 
@@ -432,6 +478,7 @@ fall back when one fails; a Task runs a <code class="language-plaintext highligh
 outcome words on work that leaves the process.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.IfBuilder.html"><code class="language-plaintext highlighter-rouge">IfBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.IfThenBuilder.html"><code class="language-plaintext highlighter-rouge">IfThenBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RunWorkBuilder.html"><code class="language-plaintext highlighter-rouge">RunBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RoutineBuilder.html"><code class="language-plaintext highlighter-rouge">RoutineBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Sequence.html"><code class="language-plaintext highlighter-rouge">Sequence</code></a>,
