@@ -265,11 +265,10 @@ the same way:</p>
 
 <h2 id="luny006">LUNY006: Unity engine API inside a script</h2>
 
-<p>A script’s own code runs once, when the script type is built, and reaches game objects only
-through LunyScript blocks. An engine call there acts on the whole game at that moment: it can
-change the time scale, load a scene, or destroy an object LunyScript manages. The warning names
-the member with its namespace, so a script surface and an engine class with the same name are
-told apart:</p>
+<p>An engine call inside a script acts on the whole game, not on the object the script runs on: it
+can change the time scale, load a scene, or destroy an object LunyScript manages. The warning reads
+<code class="language-plaintext highlighter-rouge">LunyScript: UnityEngine.Time.timeScale is Unity engine API.</code> and names the member with its namespace, so a
+script surface and an engine class with the same name are told apart:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Time</span><span class="p">.</span><span class="n">timeScale</span> <span class="p">=</span> <span class="m">0f</span><span class="p">;</span>  <span class="c1">// LUNY006</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="nf">SetScale</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>       <span class="c1">// the LunyScript surface</span>
