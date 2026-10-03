@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Looking at and using objects | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Looking at and using objects" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<meta name="twitter:description" property="og:description" content="Documentation for LunyScript, a C# scripting layer for Unity." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/interaction.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/interaction.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Looking at and using objects" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for LunyScript, a C# scripting layer for Unity.","headline":"Looking at and using objects","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/interaction.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include below,
+    which minima has no hook for: a page that needs its own stylesheet or script has nowhere to
+    declare one. See _includes/custom-head.html for how a page opts in.
+  --></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Looking at and using objects</h1>
+  </header>
+
+  <div class="post-content">
+    <p>Let a player look at an object, see what pressing a button would do, and use it. Two scripts are
+enough: one on the object, one on the player’s avatar.</p>
+
+<pre><code>using CodeSmile.LunyScript;
+
+public sealed partial class LeverScript : Script
+{
+    protected override void Build()
+    {
+        Pulled = Define.Flag(nameof(Pulled));
+        <strong>Interaction.Target("Pull")</strong>;
+        <strong>On.Interacted(</strong>Pulled.Set(true)<strong>)</strong>;
+    }
+}
+
+public sealed partial class HeroScript : Script
+{
+    protected override void Build() =&gt;
+        <strong>Interaction.Focus(</strong>Input.Button("Interact")<strong>)</strong>;
+}
+</code></pre>
+
+<p>Put <code class="language-plaintext highlighter-rouge">LeverScript</code> on an object with a collider, and <code class="language-plaintext highlighter-rouge">HeroScript</code> on an avatar whose LunyScript
+Behaviour has its <strong>Local Player</strong> field set. Whatever lies at the centre of <code class="language-plaintext highlighter-rouge">Camera.main</code>, within
+three metres of the avatar and not hidden behind another collider, is focused, and a press of that
+player’s Interact action uses it: the lever runs <code class="language-plaintext highlighter-rouge">On.Interacted</code>.</p>
+
+<p>Interaction is new in this version, and its names can still change.</p>
+
+<h2 id="a-target-and-a-focuser">A target and a focuser</h2>
+
+<ul>
+  <li><strong>A target</strong> is an object whose script writes <code class="language-plaintext highlighter-rouge">Interaction.Target(prompt)</code>. Every local player can
+focus it at the same time. <code class="language-plaintext highlighter-rouge">On.Focused</code> runs when the first player starts focusing it,
+<code class="language-plaintext highlighter-rouge">On.Unfocused</code> when the last one stops, and <code class="language-plaintext highlighter-rouge">On.Interacted</code> each time a player uses it.</li>
+  <li><strong>A focuser</strong> is an object whose script writes <code class="language-plaintext highlighter-rouge">Interaction.Focus(button)</code>: a player’s avatar. It
+reads the local player its object is bound to and focuses at most one target.</li>
+</ul>
+
+<p>The runner decides what every focuser sees once per frame, before any script’s <code class="language-plaintext highlighter-rouge">On.Update</code>, so all
+scripts in a frame agree on what is focused.</p>
+
+<h2 id="a-pickup-two-players-can-see">A pickup two players can see</h2>
+
+<p>A pickup with a model that rises while it is focused and a glow that is on only then, and an avatar
+whose player may hold the keyboard and mouse or a gamepad:</p>
+
+<pre><code>public sealed partial class PickupScript : Script
+{
+    protected override void Build()
+    {
+        Volume = Bind.Object();
+        Model = Bind.Object();
+        Glow = Bind.Object();
+        Credits = Define.Number(nameof(Credits)).Shared();
+
+        <strong>Interaction.Target("Pick up")</strong>
+            <strong>.Volume(Volume).Visual(Model).Effect(Glow)</strong>;
+        <strong>On.Interacted(Interaction.Disable()</strong>, Credits.Add(1),
+            Object.Destroy()<strong>)</strong>;
+    }
+}
+
+public sealed partial class AvatarScript : Script
+{
+    protected override void Build()
+    {
+        PlayerView = Bind.Object();
+        Prompt = Bind.VisualTreeAsset();
+
+        <strong>Interaction.Focus(</strong>Input.Button("Interact")<strong>)</strong>
+            <strong>.Pointer(</strong>Input.Vector2("Point")<strong>)</strong>
+            <strong>.InView(PlayerView)</strong>
+            <strong>.Within(3.5)</strong>
+            <strong>.Prompt(Prompt)</strong>;
+    }
+}
+</code></pre>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Volume</code> names the object whose colliders a focus ray has to reach, usually a trigger box around
+the target. Without it, the target’s own colliders are its volume.</li>
+  <li><code class="language-plaintext highlighter-rouge">Visual</code> names the child that rises, grows and turns while the target is focused.</li>
+  <li><code class="language-plaintext highlighter-rouge">Effect</code> names a child that is active only while at least one player focuses the target: a light,
+a particle system or a sound that plays when it is enabled.</li>
+  <li><code class="language-plaintext highlighter-rouge">InView</code> names the object with the player’s <code class="language-plaintext highlighter-rouge">Camera</code>. Without it, <code class="language-plaintext highlighter-rouge">Camera.main</code> is used.</li>
+  <li><code class="language-plaintext highlighter-rouge">Within</code> is how far from the avatar the focused point may be, in metres; three by default.</li>
+  <li><code class="language-plaintext highlighter-rouge">Prompt</code> is a UXML document with a <code class="language-plaintext highlighter-rouge">Label</code> named <code class="language-plaintext highlighter-rouge">prompt</code>. Each player sees it in their own view,
+over the target, showing the target’s prompt text.</li>
+</ul>
+
+<h2 id="cursor-or-centre-of-the-view">Cursor or centre of the view</h2>
+
+<p>A focuser written with <code class="language-plaintext highlighter-rouge">.Pointer(position)</code> uses the cursor while its player holds the keyboard and
+mouse, and the centre of its view while that player holds a gamepad. The mode follows the device:
+the player who pairs the keyboard and mouse uses the cursor, and every other player aims with the
+centre of their view. There is only ever one cursor; when two players are both said to hold one,
+the lower player number keeps it and the Console says so once.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Interaction.UsesPointer</code> is true while a focuser uses the cursor, so the avatar’s script, which
+writes <code class="language-plaintext highlighter-rouge">Interaction.Focus</code> as above, can move its camera child:</p>
+
+<pre><code>On.Update(If(<strong>Interaction.UsesPointer</strong>)
+    .Then(Transform.Child(0).SetLocalPosition(0, 8.5, -4.5))
+    .Else(Transform.Child(0).SetLocalPosition(0, 0.8, -3.2)));
+</code></pre>
+
+<p>What a focuser focuses, each frame:</p>
+
+<ol>
+  <li>A focuser whose player is not present, because nobody paired that player yet, focuses nothing.</li>
+  <li>The ray goes through the cursor, or through the centre of the view, of the focuser’s camera.</li>
+  <li>While the cursor is over a button, toggle, text field or another control that takes focus, in a
+panel a LunyScript script uses, it focuses nothing, and a press goes to the control. A <code class="language-plaintext highlighter-rouge">Label</code>
+does not take the cursor.</li>
+  <li>The first collider along the ray decides. The avatar’s own colliders are skipped, and so are
+triggers that are no target’s volume. A target’s volume is focused when the point the ray hit is
+within range; any other collider hides what is behind it.</li>
+</ol>
+
+<h2 id="what-the-target-shows">What the target shows</h2>
+
+<ul>
+  <li><strong>The effect child</strong> is deactivated when the target appears, activated on the frame the first
+player focuses it, and deactivated on the frame the last one stops. A second player arriving while
+another stays changes nothing.</li>
+  <li><strong>The visual</strong> moves as the target’s <code class="language-plaintext highlighter-rouge">InteractionStyle</code> asset says: <code class="language-plaintext highlighter-rouge">Lift</code> metres up, <code class="language-plaintext highlighter-rouge">Scale</code>
+times its size, <code class="language-plaintext highlighter-rouge">Spin</code> degrees per second, each blended in and out over <code class="language-plaintext highlighter-rouge">Blend</code> seconds. It
+returns to the pose it had when the focus started, also when the target is disabled or removed.
+Create a style with <strong>Assets &gt; Create &gt; LunyScript &gt; Interaction Style</strong>, and assign it to the
+<code class="language-plaintext highlighter-rouge">InteractionStyle</code> row the script’s Inspector shows. Without one, the object uses the defaults and
+the Console says so once.</li>
+  <li><strong>The prompt</strong> is the target’s prompt text. Write it as a <code class="language-plaintext highlighter-rouge">Text</code> variable to change it while the
+game runs:</li>
+</ul>
+
+<pre><code>Label = Define.Text(nameof(Label));
+<strong>Interaction.Target(Label)</strong>;
+On.Ready(Label.Set("Open"));
+<strong>On.Interacted(</strong>Label.Set("Close")<strong>)</strong>;
+</code></pre>
+
+<h2 id="using-a-target">Using a target</h2>
+
+<p>A focuser uses its target when its player performs the button this frame. Uses are delivered in
+ascending local player number. <code class="language-plaintext highlighter-rouge">Interaction.Player</code> is the number of the player whose use is
+running, readable only inside <code class="language-plaintext highlighter-rouge">On.Interacted</code>:</p>
+
+<pre><code>HostCredits = Define.Number(nameof(HostCredits)).Shared();
+GuestCredits = Define.Number(nameof(GuestCredits)).Shared();
+<strong>Interaction.Target("Take")</strong>;
+
+<strong>On.Interacted(</strong>
+    <strong>Interaction.Disable()</strong>,
+    If(<strong>Interaction.Player &lt;= 1</strong>)
+        .Then(HostCredits.Add(1))
+        .Else(GuestCredits.Add(1)),
+    Object.Destroy()<strong>)</strong>;
+</code></pre>
+
+<p>A target that ran <code class="language-plaintext highlighter-rouge">Interaction.Disable()</code>, or asked to be destroyed, despawned or deactivated, in an
+earlier use of the same frame receives no later one. When two players press in the same frame, the
+lower player number takes the pickup and the other press does nothing. <code class="language-plaintext highlighter-rouge">Interaction.Enable()</code> makes
+the target usable again; a disabled target releases every player at once.</p>
+
+<h2 id="preparing-objects-in-the-editor">Preparing objects in the Editor</h2>
+
+<p><strong>Tools &gt; LunyScript &gt; Interaction Setup</strong> prepares the selected scene object or prefab instance:</p>
+
+<ol>
+  <li>An object without a LunyScript Behaviour gets one, running the script you choose from the scripts
+that write <code class="language-plaintext highlighter-rouge">Interaction.Target</code>.</li>
+  <li>Name the visual child. The visual is never created for you.</li>
+  <li>Leave <strong>Volume</strong> or <strong>Effect</strong> empty, and <strong>Apply</strong> creates the child <code class="language-plaintext highlighter-rouge">Focus Volume</code>, a trigger box
+around the visual and the object’s solid colliders, or <code class="language-plaintext highlighter-rouge">Focus Effect</code>, an inactive empty child.</li>
+  <li><strong>Apply</strong> is one Undo step. Applying again adds nothing and keeps every change you made since. A
+prefab instance receives the changes as overrides; prepare a prefab by preparing an instance in a
+scene and applying the overrides, or by saving a prepared scene object as a prefab.</li>
+</ol>
+
+<p>The same window tunes the style. <strong>Preview</strong> moves the visual in Edit Mode and puts it back when
+Preview is turned off, the selection changes, the window closes, Play Mode starts or the scene is
+saved. In Play Mode the values change the selected running object only. <strong>Apply to Style</strong> writes
+them into the style asset, as one Undo step.</p>
+
+<h2 id="mistakes-and-what-happens">Mistakes and what happens</h2>
+
+<pre><code><strong>Interaction.Target("Open")</strong>;
+<strong>Interaction.Target("Close")</strong>;
+</code></pre>
+
+<p>The script type is refused when it is built: one object is one target. Use a <code class="language-plaintext highlighter-rouge">Text</code> prompt instead.</p>
+
+<pre><code>Opened = Define.Flag(nameof(Opened));
+<strong>On.Interacted(</strong>Opened.Set(true)<strong>)</strong>;   // without Interaction.Target
+</code></pre>
+
+<p>Refused when the script type is built, naming the call the line needs. <code class="language-plaintext highlighter-rouge">Interaction.IsFocusing</code>
+without <code class="language-plaintext highlighter-rouge">Interaction.Focus</code> is refused the same way.</p>
+
+<pre><code>Who = Define.Number(nameof(Who));
+On.Update(Who.Set(<strong>Interaction.Player</strong>));
+</code></pre>
+
+<p>Builds. When it runs outside <code class="language-plaintext highlighter-rouge">On.Interacted</code>, the block fails like any failing block, and the
+message names <code class="language-plaintext highlighter-rouge">Interaction.Player</code> and <code class="language-plaintext highlighter-rouge">On.Interacted</code>.</p>
+
+<p>A volume whose object carries no collider is reported once, and nothing focuses that target. An
+avatar whose <strong>Local Player</strong> field is -1 reads no player, so it never focuses anything.</p>
+
+<h2 id="call-list">Call list</h2>
+
+<p>These lines are call signatures, not a script you can paste. Brackets mark a clause you may leave
+out. <code class="language-plaintext highlighter-rouge">prompt</code> is a string or a text variable, <code class="language-plaintext highlighter-rouge">Define.Text(name)</code>. <code class="language-plaintext highlighter-rouge">binding</code> is an object binding,
+<code class="language-plaintext highlighter-rouge">Bind.Object()</code>. <code class="language-plaintext highlighter-rouge">button</code> is a button action, <code class="language-plaintext highlighter-rouge">Input.Button(name)</code>, and <code class="language-plaintext highlighter-rouge">position</code> a two-component
+action, <code class="language-plaintext highlighter-rouge">Input.Vector2(name)</code>. <code class="language-plaintext highlighter-rouge">metres</code> is a number. <code class="language-plaintext highlighter-rouge">uxml</code> is a UXML input,
+<code class="language-plaintext highlighter-rouge">Bind.VisualTreeAsset()</code>. <code class="language-plaintext highlighter-rouge">blocks</code> are the blocks to run.</p>
+
+<pre><code>Interaction.Target(prompt) [ .Volume(binding) ] [ .Visual(binding) ]
+    [ .Effect(binding) ]
+On.Focused(blocks)
+On.Unfocused(blocks)
+On.Interacted(blocks)
+Interaction.Player                    // inside On.Interacted
+Interaction.Enable()
+Interaction.Disable()
+Interaction.IsFocused
+Interaction.FocusCount
+Interaction.Focus(button) [ .Pointer(position) ] [ .InView(binding) ]
+    [ .Within(metres) ] [ .Prompt(uxml) ]
+Interaction.IsFocusing
+Interaction.UsesPointer
+</code></pre>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li>The example scene <code class="language-plaintext highlighter-rouge">ApiDemos/Interaction.unity</code>: a door, a lamp and a pickup for two local players,
+one with the keyboard and mouse and one with a gamepad.</li>
+  <li><a href="/LunyScript-Docs/manual/player-input.html">Player input</a> — actions, and pairing local
+players.</li>
+  <li><a href="/LunyScript-Docs/manual/user-interface.html">User interface</a> — placing a label over a point
+in the scene.</li>
+  <li><a href="/LunyScript-Docs/manual/showing-hiding-and-tinting.html">Showing, hiding and tinting objects</a> —
+<code class="language-plaintext highlighter-rouge">Object.For(binding).Activate()</code> and <code class="language-plaintext highlighter-rouge">Deactivate()</code>, which turn a bound object on and off.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.InteractionFactory.html"><code class="language-plaintext highlighter-rouge">InteractionFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.InteractionTarget.html"><code class="language-plaintext highlighter-rouge">InteractionTarget</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.InteractionFocus.html"><code class="language-plaintext highlighter-rouge">InteractionFocus</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

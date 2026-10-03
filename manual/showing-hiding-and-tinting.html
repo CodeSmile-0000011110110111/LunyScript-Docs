@@ -123,6 +123,20 @@ first object named <code class="language-plaintext highlighter-rouge">Shield</co
 <a href="/LunyScript-Docs/manual/binding-scene-objects.html">Binding scene objects</a> has the rules. The handle <code class="language-plaintext highlighter-rouge">Object.For</code> returns has every call on this
 page, and it reaches the renderer on that object only.</p>
 
+<h2 id="turning-a-bound-object-on-and-off">Turning a bound object on and off</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Hide</code> turns a renderer off and leaves the object running. To turn the whole bound object off - its
+colliders, lights, particle systems and its own scripts - use <code class="language-plaintext highlighter-rouge">Activate</code> and <code class="language-plaintext highlighter-rouge">Deactivate</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Blocker</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Blocker</span><span class="p">).</span><span class="nf">Activate</span><span class="p">());</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Opened"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">Blocker</span><span class="p">).</span><span class="nf">Deactivate</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>Both apply after the blocks running now have finished, as <code class="language-plaintext highlighter-rouge">Object.Deactivate()</code> on the script’s own
+object does, so a script on the bound object receives <code class="language-plaintext highlighter-rouge">On.Disabled</code> and <code class="language-plaintext highlighter-rouge">On.Enabled</code> in the ordinary
+way. A binding that holds no object does nothing.</p>
+
 <h2 id="colour">Colour</h2>
 
 <p><code class="language-plaintext highlighter-rouge">Object.SetColor(red, green, blue)</code> tints the object. The channels run from 0 to 1, as Unity’s
@@ -227,6 +241,8 @@ out.</p>
 <span class="n">Object</span><span class="p">.</span><span class="nf">MaterialNumber</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="nf">Set</span><span class="p">(</span><span class="k">value</span><span class="p">)</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">MaterialNumber</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="nf">Reset</span><span class="p">()</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">target</span><span class="p">).</span><span class="nf">Hide</span><span class="p">()</span>                    <span class="c1">// and every call above</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">target</span><span class="p">).</span><span class="nf">Activate</span><span class="p">()</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">target</span><span class="p">).</span><span class="nf">Deactivate</span><span class="p">()</span>
 </code></pre></div></div>
 
 <h2 id="what-to-read-next">What to read next</h2>
