@@ -92,15 +92,17 @@ It takes either a variable declared with `DefineSynced`, or a transform channel.
 
 ## Messages
 
-A peer without authority asks the authority to act by sending a named message. The authority
+A peer without authority asks the authority to act by sending a declared message. The authority
 receives it with `On.Message` in the same script:
 
 ```csharp
+RequestReady = Define.Message();
+
 On.Update(
     If(!Net.HasAuthority & IsReady.IsFalse())
-        .Then(Net.Send.ToAuthority("RequestReady")));
+        .Then(Net.Send.ToAuthority(RequestReady)));
 
-On.Message("RequestReady", IsReady.Set(true));
+On.Message(RequestReady, IsReady.Set(true));
 ```
 
 [Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html) is the `On.Message` surface, including
@@ -130,7 +132,8 @@ Career = Define.Document(nameof(Career))
     .Field(nameof(Pilot), Pilot);
 
 On.Ready(Cloud.Load(Career).As(Downloading));
-On.Message("RunEnded", Progress.Save(Career).As(Saving),
+RunEnded = Define.Message();
+On.Message(RunEnded, Progress.Save(Career).As(Saving),
     Cloud.Save(Career).As(Uploading));
 When.Cloud(Uploading).Failed(Status.Set("Kept on this device"));
 ```

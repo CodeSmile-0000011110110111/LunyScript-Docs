@@ -303,14 +303,16 @@ its own `On.Message` blocks change it:
 
 ```csharp
 // in the script's Build():
-On.Message(nameof(Heal), Health.Add(25));
+Heal = Define.Message();
+On.Message(Heal, Health.Add(25));
 
 // in C#:
-playerBehaviour.Send(PlayerScript.Heal);
+playerBehaviour.Send(PlayerScript.Messages.Heal);
 ```
 
-`Heal` here is a `const string` the script declares, so the name is written once. The script
-decides what a heal does, including any limit it applies.
+`Heal` here is a message the script declares, and `PlayerScript.Messages.Heal` is the descriptor
+the generator writes for it, so a misspelt message does not compile. The script decides what a
+heal does, including any limit it applies.
 
 ## The object's own script
 

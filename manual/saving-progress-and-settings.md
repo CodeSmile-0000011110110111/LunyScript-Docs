@@ -271,7 +271,8 @@ public sealed partial class SoundMenu : Script
         On.Update(
             If(Sound.IsDirty).Then(Saved.Set(false))
                 .Else(Saved.Set(true)));
-        On.Message("CloseOptions",
+        CloseOptions = Define.Message();
+        On.Message(CloseOptions,
             Settings.Save(Sound).As(SavingSound));
     }
 }

@@ -17,7 +17,8 @@ public sealed partial class GuardScript : Script
             If(Alert.IsTrue())
                 .Then(Speed.Set(6))
                 .Else(Speed.Set(2)));
-        On.Message("Hit", Hits.Add(1));
+        Hit = Define.Message();
+        On.Message(Hit, Hits.Add(1));
     }
 }
 ```

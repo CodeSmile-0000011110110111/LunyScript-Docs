@@ -71,8 +71,9 @@
     <span class="p">{</span>
         <span class="n">Block</span> <span class="n">work</span> <span class="p">=</span> <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">4</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">2</span><span class="p">);</span>
         <span class="n">Block</span> <span class="n">rest</span> <span class="p">=</span> <span class="n">Motion</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">6</span><span class="p">).</span><span class="nf">AtSpeed</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+        <span class="n">Needs</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Choice</span><span class="p">();</span>
 
-        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Choose</span><span class="p">(</span><span class="s">"needs"</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Choose</span><span class="p">(</span><span class="n">Needs</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span>
             <span class="nf">Option</span><span class="p">(</span><span class="n">WorkScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">work</span><span class="p">),</span>
             <span class="nf">Option</span><span class="p">(</span><span class="n">RestScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">rest</span><span class="p">)));</span>
     <span class="p">}</span>
@@ -89,8 +90,11 @@ winner. Use it where the alternative would be a chain of <code class="language-p
 you would rather express as a number: which target to attack, whether to eat or sleep, which cover
 point to take.</p>
 
-<p>The subject you pass to <code class="language-plaintext highlighter-rouge">Choose</code> is what a diagnostic message and the runtime inspector call this
-selector. A blank subject is refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs.</p>
+<p><code class="language-plaintext highlighter-rouge">Choose</code> takes a choice <code class="language-plaintext highlighter-rouge">Define.Choice()</code> declared. Its declared name is what a diagnostic message
+and the runtime inspector call this selector, and a misspelt choice is a compile error. One
+declaration opens one selector: a second <code class="language-plaintext highlighter-rouge">Choose</code> with the same choice is refused while <code class="language-plaintext highlighter-rouge">Build()</code>
+runs, so two selectors need two declarations. Placing the block one <code class="language-plaintext highlighter-rouge">Choose</code> built in two places
+is allowed; each place runs its own copy.</p>
 
 <h2 id="options">Options</h2>
 
@@ -133,23 +137,26 @@ either order.</p>
   </tbody>
 </table>
 
+<p>Each statement below is one alternative for the choice <code class="language-plaintext highlighter-rouge">Needs = Define.Choice();</code> declares; a
+script writes one of them.</p>
+
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Without either clause, work and rest swap every frame the scores cross.</span>
-<span class="nf">Choose</span><span class="p">(</span><span class="s">"needs"</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span>
+<span class="nf">Choose</span><span class="p">(</span><span class="n">Needs</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span>
     <span class="nf">Option</span><span class="p">(</span><span class="n">WorkScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">work</span><span class="p">),</span>
     <span class="nf">Option</span><span class="p">(</span><span class="n">RestScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">rest</span><span class="p">));</span>
 
 <span class="c1">// A challenger must beat the winner by 0.1 before it takes over.</span>
-<span class="nf">Choose</span><span class="p">(</span><span class="s">"needs"</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span>
+<span class="nf">Choose</span><span class="p">(</span><span class="n">Needs</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span>
     <span class="nf">Option</span><span class="p">(</span><span class="n">WorkScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">work</span><span class="p">),</span>
     <span class="nf">Option</span><span class="p">(</span><span class="n">RestScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">rest</span><span class="p">)).</span><span class="nf">Bias</span><span class="p">(</span><span class="m">0.1</span><span class="p">);</span>
 
 <span class="c1">// The winner is kept for at least one second, whatever the scores do.</span>
-<span class="nf">Choose</span><span class="p">(</span><span class="s">"needs"</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span>
+<span class="nf">Choose</span><span class="p">(</span><span class="n">Needs</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span>
     <span class="nf">Option</span><span class="p">(</span><span class="n">WorkScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">work</span><span class="p">),</span>
     <span class="nf">Option</span><span class="p">(</span><span class="n">RestScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">rest</span><span class="p">)).</span><span class="nf">Hold</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
 
 <span class="c1">// Both: a one-second minimum, then a 0.1 margin to take over.</span>
-<span class="nf">Choose</span><span class="p">(</span><span class="s">"needs"</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span>
+<span class="nf">Choose</span><span class="p">(</span><span class="n">Needs</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span>
     <span class="nf">Option</span><span class="p">(</span><span class="n">WorkScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">work</span><span class="p">),</span>
     <span class="nf">Option</span><span class="p">(</span><span class="n">RestScore</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">rest</span><span class="p">)).</span><span class="nf">Bias</span><span class="p">(</span><span class="m">0.1</span><span class="p">).</span><span class="nf">Hold</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
 </code></pre></div></div>
@@ -169,7 +176,8 @@ governs the handover.</p>
 working options are under Options, above.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">Option</span><span class="p">(</span><span class="n">score</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span>
-<span class="nf">Choose</span><span class="p">(</span><span class="n">subject</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="p">..)</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Choice</span><span class="p">()</span>
+<span class="nf">Choose</span><span class="p">(</span><span class="n">choice</span><span class="p">).</span><span class="nf">Highest</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="p">..)</span>
     <span class="p">[</span> <span class="p">.</span><span class="nf">Bias</span><span class="p">(</span><span class="n">margin</span><span class="p">)</span> <span class="p">]</span> <span class="p">[</span> <span class="p">.</span><span class="nf">Hold</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span> <span class="p">[</span> <span class="p">.</span><span class="nf">Seconds</span><span class="p">()</span> <span class="p">]</span> <span class="p">]</span>
 </code></pre></div></div>
 

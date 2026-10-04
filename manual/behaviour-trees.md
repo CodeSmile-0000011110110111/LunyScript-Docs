@@ -21,7 +21,8 @@ public sealed partial class LockedDoor : Script
                 Task(Transform.Child(0).SetLocalPosition(0, 2, 0)))
             .UntilOneFails());
 
-        On.Message("Use", open.Start());
+        Use = Define.Message();
+        On.Message(Use, open.Start());
         On.Update(If(open.Failed).Then(Locked.Set(true)));
     }
 }

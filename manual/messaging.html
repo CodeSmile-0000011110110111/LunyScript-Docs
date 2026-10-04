@@ -58,37 +58,47 @@
   </header>
 
   <div class="post-content">
-    <p>Name a message in <code class="language-plaintext highlighter-rouge">Build()</code>, handle it with <code class="language-plaintext highlighter-rouge">On.Message</code>, and send it from C# or from a peer
+    <p>Declare a message in <code class="language-plaintext highlighter-rouge">Build()</code>, handle it with <code class="language-plaintext highlighter-rouge">On.Message</code>, and send it from C# or from a peer
 without authority:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
 
 <span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Battery</span> <span class="p">:</span> <span class="n">Script</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="k">const</span> <span class="kt">string</span> <span class="n">Heal</span> <span class="p">=</span> <span class="k">nameof</span><span class="p">(</span><span class="n">Heal</span><span class="p">);</span>
-
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="n">Health</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Health</span><span class="p">),</span> <span class="m">40</span><span class="p">);</span>
+        <span class="n">Heal</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Heal</span><span class="p">,</span> <span class="n">Health</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">25</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>From C# on the same object:</p>
+<p>From C# on the same object, through the descriptor the generator writes for every declared
+message:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">behaviour</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="n">Battery</span><span class="p">.</span><span class="n">Heal</span><span class="p">);</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">behaviour</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="n">Battery</span><span class="p">.</span><span class="n">Messages</span><span class="p">.</span><span class="n">Heal</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>The script decides what a heal does. C# does not write <code class="language-plaintext highlighter-rouge">Health</code> itself.</p>
 
+<h2 id="declaring-a-message">Declaring a message</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Define.Message()</code> takes no name: the property the line is assigned to names the message, so a
+misspelt message is a compile error. A local or a hand-written property names it with
+<code class="language-plaintext highlighter-rouge">.As(name)</code>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Heal</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+<span class="kt">var</span> <span class="n">ping</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">().</span><span class="nf">As</span><span class="p">(</span><span class="s">"Ping"</span><span class="p">);</span>
+</code></pre></div></div>
+
 <h2 id="receiving-a-message">Receiving a message</h2>
 
-<p><code class="language-plaintext highlighter-rouge">On.Message</code> takes the name and one or more blocks. Spell the name with <code class="language-plaintext highlighter-rouge">nameof</code> of a <code class="language-plaintext highlighter-rouge">const
-string</code> so a rename moves the send and the handler together.</p>
+<p><code class="language-plaintext highlighter-rouge">On.Message</code> takes the message and one or more blocks. A script handles only the messages it
+declares.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Heal</span><span class="p">),</span> <span class="n">Health</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">25</span><span class="p">));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RequestReady"</span><span class="p">,</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RequestReady</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">RequestReady</span><span class="p">,</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 </code></pre></div></div>
 
 <p>Two <code class="language-plaintext highlighter-rouge">On.Message</code> calls naming the same message both fire, in the order they were written:</p>
@@ -98,16 +108,17 @@ string</code> so a rename moves the send and the handler together.</p>
 </code></pre></div></div>
 
 <p>A send of <code class="language-plaintext highlighter-rouge">Heal</code> runs both handlers. A send with no matching <code class="language-plaintext highlighter-rouge">On.Message</code> in the same script is
-refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs when the send is authored in that script. A C# <code class="language-plaintext highlighter-rouge">Send</code> of a name this
-script has no handler for throws <code class="language-plaintext highlighter-rouge">LunyScriptUsageException</code> naming the message and the script.</p>
+refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs when the send is authored in that script. A C# <code class="language-plaintext highlighter-rouge">Send</code> of a message
+this script has no handler for, or one another script type declares, throws
+<code class="language-plaintext highlighter-rouge">LunyScriptUsageException</code> naming the message and the reason.</p>
 
 <h2 id="sending-from-c">Sending from C#</h2>
 
-<p><code class="language-plaintext highlighter-rouge">LunyScriptBehaviour.Send</code> runs this object’s <code class="language-plaintext highlighter-rouge">On.Message</code> handlers:</p>
+<p><code class="language-plaintext highlighter-rouge">LunyScriptBehaviour.Send</code> runs this object’s <code class="language-plaintext highlighter-rouge">On.Message</code> handlers for one declared message,
+named through the generated <code class="language-plaintext highlighter-rouge">Messages</code> class of the script that declares it:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">script</span> <span class="p">=</span> <span class="p">(</span><span class="n">PlayerScript</span><span class="p">)</span><span class="n">behaviour</span><span class="p">.</span><span class="n">Script</span><span class="p">;</span>
-<span class="k">if</span> <span class="p">(</span><span class="n">behaviour</span><span class="p">.</span><span class="n">IsRunning</span><span class="p">)</span>
-    <span class="n">behaviour</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="n">PlayerScript</span><span class="p">.</span><span class="n">Heal</span><span class="p">);</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">behaviour</span><span class="p">.</span><span class="n">IsRunning</span><span class="p">)</span>
+    <span class="n">behaviour</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="n">PlayerScript</span><span class="p">.</span><span class="n">Messages</span><span class="p">.</span><span class="n">Heal</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">IsRunning</code> is the check before <code class="language-plaintext highlighter-rouge">Awake</code>, after the object is despawned or destroyed, and after
@@ -120,11 +131,13 @@ finding another object’s script.</p>
 <p>A peer without authority asks the authority to act with <code class="language-plaintext highlighter-rouge">Net.Send.ToAuthority</code>. The authority
 receives that send with <code class="language-plaintext highlighter-rouge">On.Message</code> in the same script:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
-    <span class="nf">If</span><span class="p">(!</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span> <span class="p">&amp;</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">IsFalse</span><span class="p">())</span>
-        <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">Send</span><span class="p">.</span><span class="nf">ToAuthority</span><span class="p">(</span><span class="s">"RequestReady"</span><span class="p">)));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RequestReady</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
 
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RequestReady"</span><span class="p">,</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(!</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span> <span class="p">&amp;</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">IsFalse</span><span class="p">())</span>
+        <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">Send</span><span class="p">.</span><span class="nf">ToAuthority</span><span class="p">(</span><span class="n">RequestReady</span><span class="p">)));</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">RequestReady</span><span class="p">,</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 </code></pre></div></div>
 
 <p><a href="/LunyScript-Docs/manual/networking-and-cloud-save.html">Networking and cloud save</a> is the

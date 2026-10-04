@@ -59,21 +59,24 @@ the pool. When that scene unloads, the pool and every copy go with it.
 ## Spawning and despawning
 
 ```csharp
+Boss = Define.Object();
+Retreat = Define.Message();
 On.Ready(Object.Spawn(Enemies));
-On.Ready(Object.Spawn(Enemies).Into("Boss"));
-On.Message("Retreat", Object.Despawn("Boss"));
+On.Ready(Object.Spawn(Enemies).Into(Boss));
+On.Message(Retreat, Object.Despawn(Boss));
 On.Update(If(Health <= 0).Then(Object.Despawn()));
 ```
 
 `Object.Spawn(pool)` takes one copy out of the pool. The pool reuses an idle copy when it has one and
-makes a new one below its hard cap. `Into(name)` gives the copy a name in this script. `Despawn` puts a
-copy back: with a name from the script that spawned it, or with no name from the copy's own script.
+makes a new one below its hard cap. `Into(owned)` holds the copy in an owned object this script declared with
+`Define.Object()`. `Despawn` puts a copy back: with that owned object from the script that spawned
+it, or with no argument from the copy's own script.
 
 A spawn is applied after the current event's blocks finish, so a copy held with `Into` is in its slot
 from the next event on. A copy that goes back becomes available to spawns made after that; a spawn
 written right after the despawn, in the same event, uses another copy.
 
-`Object.Destroy()` or `Object.Destroy(name)` ends a pooled copy for good and takes it out of its pool,
+`Object.Destroy()` or `Object.Destroy(owned)` ends a pooled copy for good and takes it out of its pool,
 which can then make a new one in its place. `Despawn` works only on pooled copies; a fresh
 `Object.Create` copy ends with `Destroy`.
 
@@ -194,14 +197,14 @@ leave out.
 | *`.InWorldSpace()`* | Reads `At` or `SpawnAt` on the scene's axes. |
 | *`.InLocalSpace()`* | Reads `At` or `SpawnAt` on the parent's axes. |
 | *`.ChildOf()`* | Parents the copy to this object. |
-| *`.ChildOf(name)`* | Parents the copy to the object this script already named. ChildOf cannot parent to itself. |
-| *`.Into(name)`* | Names the copy in this script so later calls can address it. |
-| `name` | The name later `Despawn` and `Destroy` use. |
+| *`.ChildOf(owned)`* | Parents the copy to the object `owned` holds. ChildOf cannot parent to itself. |
+| *`.Into(owned)`* | Holds the copy in `owned` so later calls can address it. |
+| `owned` | An owned object `Define.Object()` declared, which `Despawn` and `Destroy` take. |
 | *`.ForPlayer(n)`* | Binds scripts on the copy to local player `n`. |
 | *`.SurvivesCaller()`* | Leaves the copy in the scene when this script's object ends. |
 | *`.As(operation)`* | Binds the spawn to an attempt. |
-| `Object.Despawn([name])` | Returns this copy, or the named copy, to its pool. |
-| `Object.Destroy([name])` | Ends this copy, or the named copy, for good. |
+| `Object.Despawn([owned])` | Returns this copy, or the copy `owned` holds, to its pool. |
+| `Object.Destroy([owned])` | Ends this copy, or the copy `owned` holds, for good. |
 
 ## What to read next
 

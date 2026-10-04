@@ -132,16 +132,19 @@ place to put declarations.</p>
         <span class="c1">// The generator writes the Charge property this line assigns.</span>
         <span class="n">Charge</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Charge</span><span class="p">),</span> <span class="m">40</span><span class="p">);</span>
 
+        <span class="n">Discharge</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+
         <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="n">Charge</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">));</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Discharge"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Spark</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Discharge</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Spark</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
 <p>The class is <code class="language-plaintext highlighter-rouge">partial</code> because the generators write the other half of it: the <code class="language-plaintext highlighter-rouge">Charge</code> property that
-the <code class="language-plaintext highlighter-rouge">Define.Number</code> line assigns, and the <code class="language-plaintext highlighter-rouge">DefineAssets</code> override for <code class="language-plaintext highlighter-rouge">Spark</code>. A script that declares
-its variables and assets on properties it writes itself, with no <code class="language-plaintext highlighter-rouge">[Variable]</code> or <code class="language-plaintext highlighter-rouge">[Asset]</code>, and
-names each <code class="language-plaintext highlighter-rouge">Bind</code> line with <code class="language-plaintext highlighter-rouge">As</code>, is written without <code class="language-plaintext highlighter-rouge">partial</code>. <code class="language-plaintext highlighter-rouge">Spark</code> gets its own field on
+the <code class="language-plaintext highlighter-rouge">Define.Number</code> line assigns, the <code class="language-plaintext highlighter-rouge">Discharge</code> message property the <code class="language-plaintext highlighter-rouge">Define.Message</code> line
+assigns, and the <code class="language-plaintext highlighter-rouge">DefineAssets</code> override for <code class="language-plaintext highlighter-rouge">Spark</code>. A script that declares its variables and
+assets on properties it writes itself, with no <code class="language-plaintext highlighter-rouge">[Variable]</code> or <code class="language-plaintext highlighter-rouge">[Asset]</code>, and names each <code class="language-plaintext highlighter-rouge">Bind</code>
+line and each <code class="language-plaintext highlighter-rouge">Define</code> line without a name with <code class="language-plaintext highlighter-rouge">As</code>, is written without <code class="language-plaintext highlighter-rouge">partial</code>. <code class="language-plaintext highlighter-rouge">Spark</code> gets its own field on
 the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code> component, below the script, and that is where the object assigns a
 prefab to it.</p>
 
@@ -165,8 +168,8 @@ editor, and it offers the surfaces that do not need a running game object.</p>
 <p>Available on both <code class="language-plaintext highlighter-rouge">Script</code> and <code class="language-plaintext highlighter-rouge">EditorScript</code>:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Var</span>  <span class="n">Define</span>  <span class="n">Shared</span>  <span class="n">Bind</span>  <span class="n">When</span>  <span class="n">Math</span>  <span class="n">Random</span>  <span class="n">Operation</span>  <span class="n">Asset</span>
-<span class="n">CollectionResult</span>  <span class="nf">If</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>  <span class="nf">ForEach</span><span class="p">(</span><span class="n">collection</span><span class="p">)</span>  <span class="nf">Routine</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-<span class="nf">InParallel</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span>  <span class="nf">Run</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span>  <span class="nf">Choose</span><span class="p">(</span><span class="n">subject</span><span class="p">)</span>  <span class="nf">Option</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+<span class="n">CollectionResult</span>  <span class="nf">If</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>  <span class="nf">ForEach</span><span class="p">(</span><span class="n">collection</span><span class="p">)</span>  <span class="nf">Routine</span><span class="p">(</span><span class="n">routine</span><span class="p">)</span>
+<span class="nf">InParallel</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span>  <span class="nf">Run</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="p">..)</span>  <span class="nf">Choose</span><span class="p">(</span><span class="n">choice</span><span class="p">)</span>  <span class="nf">Option</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
 <span class="nf">Seconds</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="nf">Milliseconds</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="nf">Minutes</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>  <span class="nf">Hours</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 </code></pre></div></div>
 

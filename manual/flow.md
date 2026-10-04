@@ -95,9 +95,11 @@ protected override void Build()
     var burst      = Run(Burst.Inc()).Every(500).Milliseconds().For(5);
     var continuous = Run(Continuous.Inc());
 
+    Quiet = Define.Message();
+
     On.Ready(pulse.Start(), cadence.Start(),
         burst.Start(), continuous.Start());
-    On.Message("Quiet", continuous.Stop(), cadence.Stop());
+    On.Message(Quiet, continuous.Stop(), cadence.Stop());
 }
 ```
 
@@ -120,12 +122,22 @@ A routine runs its steps in the order you wrote them, each one finishing before 
 as many frames as they need.
 
 ```csharp
-protected override void Build() =>
-    On.Ready(Routine("Door").Run(
+protected override void Build()
+{
+    Door = Define.Routine();
+    On.Ready(Routine(Door).Run(
         Opening.Set(true), Wait(3), Opening.Set(false)));
+}
 ```
 
-The name you pass to `Routine` is what a diagnostic message and the runtime inspector call it.
+`Routine` takes a routine `Define.Routine()` declared. Its declared name is what a diagnostic
+message and the runtime inspector call it, and a misspelt routine is a compile error. The
+declaration starts nothing; `Run` builds the block that starts the routine. One declaration opens
+one routine: a second `Routine(Door).Run(...)` is refused while `Build()` runs, so two routines need
+two declarations.
+
+The examples below each declare their routine on the line before they use it, the way `Door` is
+declared here: `Flash = Define.Routine();` before `Routine(Flash)`, and so on.
 
 ## Waiting inside a routine
 
@@ -140,7 +152,8 @@ The name you pass to `Routine` is what a diagnostic message and the runtime insp
 | `Wait(Seconds(0.15))` | A duration value, the one `Hold` takes. |
 
 ```csharp
-On.CollisionEnter(Routine("Flash").Run(
+Flash = Define.Routine();
+On.CollisionEnter(Routine(Flash).Run(
     Object.SetColor(1, 0.25, 0.25), Wait(0.15), Object.ResetColor()));
 ```
 
@@ -155,7 +168,8 @@ runs its next step. `Then`, `Else` and an event list run all of their blocks one
 there waits for a wait:
 
 ```csharp
-On.Ready(Routine("Blink").Run(
+Blink = Define.Routine();
+On.Ready(Routine(Blink).Run(
     If(ShouldBlink).Then(Light.Set(true), Wait(1), Light.Set(false))));   // refused
 ```
 
@@ -169,7 +183,8 @@ To wait only when the condition holds, set a `Number` inside `Then` and give it 
 at once, so the routine goes straight on when the condition is false:
 
 ```csharp
-On.Ready(Routine("Blink").Run(
+Blink = Define.Routine();
+On.Ready(Routine(Blink).Run(
     BlinkDelay.Set(0),
     If(ShouldBlink).Then(Light.Set(true), BlinkDelay.Set(1)),
     Wait(BlinkDelay),
@@ -195,7 +210,8 @@ var firstOpen  = InParallel(openLeft, openRight).UntilOneSucceeds();
 var arrival = InParallel(moveCamera, fadeMusic)
     .UntilOneFinishes().OthersKeepRunning();
 
-On.Ready(Routine("Arrival").Run(arrival, fadeInArrivalPanel));
+Arrival = Define.Routine();
+On.Ready(Routine(Arrival).Run(arrival, fadeInArrivalPanel));
 ```
 
 `OthersKeepRunning()` comes after a terminal clause. Here `fadeInArrivalPanel` is a multi-frame
@@ -210,8 +226,9 @@ A group publishes three conditions, and you read them by holding the group in a 
 protected override void Build()
 {
     var race = InParallel(reachExit, Wait(5)).UntilOneFinishes();
+    Escape = Define.Routine();
 
-    On.Ready(Routine("Escape").Run(
+    On.Ready(Routine(Escape).Run(
         race,
         If(race.Succeeded).Then(RaceOver.Set(true)),
         If(race.Failed).Then(Alarm.Set(true)),
@@ -257,8 +274,11 @@ protected override void Build()
     // The same as Sequence(...): a tuple of 2 to 9 blocks.
     var blink = (Lamp.Set(true), Wait(0.1), Lamp.Set(false));
 
-    On.Message("Dodge", Routine("Dodge").Run(DodgeRoll));
-    On.Ready(Routine("Warm up").Run(hop, hop, blink, DodgeRoll));
+    Roll = Define.Message();
+    Dodge = Define.Routine();
+    WarmUp = Define.Routine();
+    On.Message(Roll, Routine(Dodge).Run(DodgeRoll));
+    On.Ready(Routine(WarmUp).Run(hop, hop, blink, DodgeRoll));
 }
 ```
 
@@ -304,23 +324,27 @@ place. A routine started from two events is two routines, each with its own prog
 move placed in two events is two moves, and a sequence placed in two routines is two sequences:
 
 ```csharp
-var tour = Routine("Tour").Run(Starts.Increment(), walk, Ends.Increment());
+Tour = Define.Routine();
+Again = Define.Message();
+var tour = Routine(Tour).Run(Starts.Increment(), walk, Ends.Increment());
 On.Ready(tour);
-On.Message("Again", tour);    // a second routine, as if written out here
+On.Message(Again, tour);    // a second routine, as if written out here
 ```
 
 Inside one routine, a group's `Succeeded`, `Failed` and `Canceled` read the copy of the group that
 the same routine runs, so the second routine above can read its own outcome.
 
 Something you declare keeps one identity wherever you name it: a variable, a `Run(...)` work, an
-audio voice, a UI element and an operation. Every `Start()` and `Stop()` of one `Run` names the one
+audio voice, a UI element and an operation. A routine placed twice this way is still one declared
+`Tour`, so the debugger names both copies `Tour`. Every `Start()` and `Stop()` of one `Run` names the one
 work, which is also how one routine is restarted from two events:
 
 ```csharp
+Halt = Define.Message();
 var go = Run(tour).For(1);
 On.Ready(go.Start());
-On.Message("Again", go.Start());    // restarts the one routine
-On.Message("Halt", go.Stop());      // stops the work both starts named
+On.Message(Again, go.Start());    // restarts the one routine
+On.Message(Halt, go.Stop());      // stops the work both starts named
 ```
 
 ## What to read next

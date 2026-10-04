@@ -66,16 +66,17 @@
 <span class="p">{</span>
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"Hinge Marker"</span><span class="p">));</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">Disabled</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Deactivate</span><span class="p">(</span><span class="s">"Hinge Marker"</span><span class="p">));</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">Enabled</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Activate</span><span class="p">(</span><span class="s">"Hinge Marker"</span><span class="p">));</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">Despawned</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">(</span><span class="s">"Hinge Marker"</span><span class="p">));</span>
+        <span class="n">HingeMarker</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">HingeMarker</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Disabled</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Deactivate</span><span class="p">(</span><span class="n">HingeMarker</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Enabled</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Activate</span><span class="p">(</span><span class="n">HingeMarker</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Despawned</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">(</span><span class="n">HingeMarker</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
 <p>Add the component and pick <code class="language-plaintext highlighter-rouge">Door</code>. When the object starts, it creates an empty marker named
-<code class="language-plaintext highlighter-rouge">Hinge Marker</code>. Disabling the door deactivates that marker; enabling the door activates it again.
+<code class="language-plaintext highlighter-rouge">HingeMarker</code>, the name of the owned object <code class="language-plaintext highlighter-rouge">Define.Object()</code> declared. Disabling the door deactivates that marker; enabling the door activates it again.
 Ending the door destroys the marker.</p>
 
 <h2 id="what-on-does">What <code class="language-plaintext highlighter-rouge">On</code> does</h2>
@@ -197,19 +198,28 @@ a built player may leave out, and an operating system that terminates an applica
 
 <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
 <span class="p">{</span>
-    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="s">"Marker"</span><span class="p">));</span>
-    <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"PostGuard"</span><span class="p">,</span>
+    <span class="n">Marker</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+    <span class="n">Guard</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+    <span class="n">PostGuard</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+    <span class="n">RecallGuard</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Marker</span><span class="p">));</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">PostGuard</span><span class="p">,</span>
         <span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Sentry</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.8</span><span class="p">,</span> <span class="m">0</span><span class="p">)).</span><span class="nf">ChildOf</span><span class="p">()</span>
-            <span class="p">.</span><span class="nf">Into</span><span class="p">(</span><span class="s">"Guard"</span><span class="p">));</span>
-    <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RecallGuard"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">(</span><span class="s">"Guard"</span><span class="p">));</span>
+            <span class="p">.</span><span class="nf">Into</span><span class="p">(</span><span class="n">Guard</span><span class="p">));</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">RecallGuard</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">(</span><span class="n">Guard</span><span class="p">));</span>
     <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Destroy</span><span class="p">()));</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">PostGuard</code> creates a copy of <code class="language-plaintext highlighter-rouge">Sentry</code>, parents it to this object, and names it <code class="language-plaintext highlighter-rouge">Guard</code> in this
-script. <code class="language-plaintext highlighter-rouge">RecallGuard</code> destroys that copy by the same name.</p>
+<p><code class="language-plaintext highlighter-rouge">PostGuard</code> creates a copy of <code class="language-plaintext highlighter-rouge">Sentry</code>, parents it to this object, and holds it in the owned
+object <code class="language-plaintext highlighter-rouge">Guard</code>. <code class="language-plaintext highlighter-rouge">RecallGuard</code> destroys that copy through the same handle.</p>
 
-<p><code class="language-plaintext highlighter-rouge">Object.Create(name)</code> makes an empty object immediately. It carries no script, and it is destroyed
+<p><code class="language-plaintext highlighter-rouge">Define.Object()</code> declares an owned object: a slot on every instance of the script that one
+<code class="language-plaintext highlighter-rouge">Create</code> or <code class="language-plaintext highlighter-rouge">Spawn</code> call of the script fills, and that <code class="language-plaintext highlighter-rouge">Activate</code>, <code class="language-plaintext highlighter-rouge">Deactivate</code>, <code class="language-plaintext highlighter-rouge">Destroy</code>,
+<code class="language-plaintext highlighter-rouge">Despawn</code>, <code class="language-plaintext highlighter-rouge">ChildOf</code> and <code class="language-plaintext highlighter-rouge">Object.Owned</code> take. It starts empty. A scene object bound with
+<code class="language-plaintext highlighter-rouge">Bind.Object()</code> is borrowed, not owned, so <code class="language-plaintext highlighter-rouge">Object.Destroy</code> and <code class="language-plaintext highlighter-rouge">Object.Despawn</code> do not take one.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Object.Create(owned)</code> makes an empty object immediately, called the owned object’s declared name. It carries no script, and it is destroyed
 when this object’s script ends.</p>
 
 <p><code class="language-plaintext highlighter-rouge">Object.Create(prefab)</code> makes a fresh copy of a declared <code class="language-plaintext highlighter-rouge">Prefab</code> input or of a succeeded
@@ -231,8 +241,9 @@ is already ending, and is dropped.</p>
 <p><code class="language-plaintext highlighter-rouge">NearPlayer(player, radius)</code> places a joining player’s object near the object another player
 controls, on the same floor, facing the same way:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Avatar</span><span class="p">).</span><span class="nf">NearPlayer</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
-    <span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="s">"Guest2"</span><span class="p">));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Guest2</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Player</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Paired</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Avatar</span><span class="p">).</span><span class="nf">NearPlayer</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">2</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Guest2</span><span class="p">));</span>
 </code></pre></div></div>
 
 <p>Up to 16 points within <code class="language-plaintext highlighter-rouge">radius</code> metres are tried; the first with the target player’s floor under it,
@@ -244,10 +255,10 @@ whose Local Player field names the player. No such object, no floor under it, or
 above zero is reported as an error and nothing is created. <code class="language-plaintext highlighter-rouge">NearPlayer</code> is the placement, so <code class="language-plaintext highlighter-rouge">At</code>
 and a frame do not follow it.</p>
 
-<p>With a name, <code class="language-plaintext highlighter-rouge">Activate</code>, <code class="language-plaintext highlighter-rouge">Deactivate</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> act on that object after the current event’s
-blocks finish, and <code class="language-plaintext highlighter-rouge">Destroy</code> drops the name where the block runs, so a later block no longer finds
-it. With no name they act on this object after the current dispatch finishes, so the rest of the
-block list still runs. <code class="language-plaintext highlighter-rouge">Object.Destroy()</code> on this object produces <code class="language-plaintext highlighter-rouge">On.Disabled</code>, then
+<p>With an owned object, <code class="language-plaintext highlighter-rouge">Activate</code>, <code class="language-plaintext highlighter-rouge">Deactivate</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> act on that object after the current
+event’s blocks finish, and <code class="language-plaintext highlighter-rouge">Destroy</code> empties the owned object where the block runs, so a later
+block no longer finds it. With no argument they act on this object after the current dispatch
+finishes, so the rest of the block list still runs. <code class="language-plaintext highlighter-rouge">Object.Destroy()</code> on this object produces <code class="language-plaintext highlighter-rouge">On.Disabled</code>, then
 <code class="language-plaintext highlighter-rouge">On.Despawned</code>, and then destroys the host.</p>
 
 <p><code class="language-plaintext highlighter-rouge">Object</code> also changes how an object is drawn while it keeps running: <code class="language-plaintext highlighter-rouge">Hide</code>, <code class="language-plaintext highlighter-rouge">Show</code>, <code class="language-plaintext highlighter-rouge">SetColor</code> and
@@ -267,8 +278,12 @@ leave out.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Object.Create(name)</code></td>
-      <td>Makes an empty object named <code class="language-plaintext highlighter-rouge">name</code> in the scene and in this script.</td>
+      <td><code class="language-plaintext highlighter-rouge">Define.Object()</code></td>
+      <td>Declares an owned object <code class="language-plaintext highlighter-rouge">owned</code>, which the property it is assigned to names.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.Create(owned)</code></td>
+      <td>Makes an empty object in <code class="language-plaintext highlighter-rouge">owned</code>, called its declared name in the scene.</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Object.Create(prefab)</code></td>
@@ -315,32 +330,32 @@ leave out.</p>
       <td>Parents the copy to this object.</td>
     </tr>
     <tr>
-      <td><em><code class="language-plaintext highlighter-rouge">.ChildOf(name)</code></em></td>
-      <td>Parents the copy to the object this script already named. ChildOf cannot parent to itself.</td>
+      <td><em><code class="language-plaintext highlighter-rouge">.ChildOf(owned)</code></em></td>
+      <td>Parents the copy to the object <code class="language-plaintext highlighter-rouge">owned</code> holds. ChildOf cannot parent to itself.</td>
     </tr>
     <tr>
-      <td><em><code class="language-plaintext highlighter-rouge">.Into(name)</code></em></td>
-      <td>Names the copy in this script so later calls can address it.</td>
+      <td><em><code class="language-plaintext highlighter-rouge">.Into(owned)</code></em></td>
+      <td>Holds the copy in <code class="language-plaintext highlighter-rouge">owned</code> so later calls can address it.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">name</code></td>
-      <td>The name later <code class="language-plaintext highlighter-rouge">Activate</code>, <code class="language-plaintext highlighter-rouge">Deactivate</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> use.</td>
+      <td><code class="language-plaintext highlighter-rouge">owned</code></td>
+      <td>The owned object later <code class="language-plaintext highlighter-rouge">Activate</code>, <code class="language-plaintext highlighter-rouge">Deactivate</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> take.</td>
     </tr>
     <tr>
       <td><em><code class="language-plaintext highlighter-rouge">.SurvivesCaller()</code></em></td>
       <td>Leaves the copy in the scene when this script’s object ends.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Object.Activate([name])</code></td>
-      <td>Activates this object, or the named copy.</td>
+      <td><code class="language-plaintext highlighter-rouge">Object.Activate([owned])</code></td>
+      <td>Activates this object, or the object <code class="language-plaintext highlighter-rouge">owned</code> holds.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Object.Deactivate([name])</code></td>
-      <td>Deactivates this object, or the named copy.</td>
+      <td><code class="language-plaintext highlighter-rouge">Object.Deactivate([owned])</code></td>
+      <td>Deactivates this object, or the object <code class="language-plaintext highlighter-rouge">owned</code> holds.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Object.Destroy([name])</code></td>
-      <td>Destroys this object, or the named copy.</td>
+      <td><code class="language-plaintext highlighter-rouge">Object.Destroy([owned])</code></td>
+      <td>Destroys this object, or the object <code class="language-plaintext highlighter-rouge">owned</code> holds.</td>
     </tr>
   </tbody>
 </table>

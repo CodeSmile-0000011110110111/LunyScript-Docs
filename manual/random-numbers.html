@@ -68,35 +68,38 @@
 
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
-        <span class="kt">var</span> <span class="n">loot</span> <span class="p">=</span> <span class="n">Random</span><span class="p">.</span><span class="nf">Stream</span><span class="p">(</span><span class="s">"loot"</span><span class="p">,</span> <span class="m">42</span><span class="p">);</span>
+        <span class="n">Loot</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Randomizer</span><span class="p">().</span><span class="nf">Seed</span><span class="p">(</span><span class="m">42</span><span class="p">);</span>
 
-        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Random</span><span class="p">.</span><span class="nf">Number</span><span class="p">().</span><span class="nf">From</span><span class="p">(</span><span class="n">loot</span><span class="p">).</span><span class="nf">In</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Roll</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Random</span><span class="p">.</span><span class="nf">Number</span><span class="p">().</span><span class="nf">From</span><span class="p">(</span><span class="n">Loot</span><span class="p">).</span><span class="nf">In</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Roll</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">Roll</code> holds a number from 1 up to but excluding 100. Seed 42 produces the same number on every run
-of this stream, which is what makes the result reproducible while you are testing. <code class="language-plaintext highlighter-rouge">On.Ready</code> runs
+of this randomizer, which is what makes the result reproducible while you are testing. <code class="language-plaintext highlighter-rouge">On.Ready</code> runs
 once per spawn, so a pooled object that respawns draws again.</p>
 
-<h2 id="what-a-stream-is">What a stream is</h2>
+<h2 id="what-a-randomizer-is">What a randomizer is</h2>
 
-<p>A stream is a named source of random numbers that advances independently of every other stream, so a
-drop table and a camera shake each keep their own reproducible sequence whatever the other one
-draws.</p>
+<p>A randomizer is a declared source of random numbers that advances independently of every other
+randomizer, so a drop table and a camera shake each keep their own reproducible sequence whatever
+the other one draws. Each object running the script holds its own sequence, and a pooled object
+that respawns starts it again.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">loot</span> <span class="p">=</span> <span class="n">Random</span><span class="p">.</span><span class="nf">Stream</span><span class="p">(</span><span class="s">"loot"</span><span class="p">,</span> <span class="m">42</span><span class="p">);</span>   <span class="c1">// a seed: the same draws every run</span>
-<span class="kt">var</span> <span class="n">shake</span> <span class="p">=</span> <span class="n">Random</span><span class="p">.</span><span class="nf">Stream</span><span class="p">(</span><span class="s">"shake"</span><span class="p">);</span>     <span class="c1">// no seed given</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Loot</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Randomizer</span><span class="p">().</span><span class="nf">Seed</span><span class="p">(</span><span class="m">42</span><span class="p">);</span>   <span class="c1">// a seed: the same draws every run</span>
+<span class="n">Shake</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Randomizer</span><span class="p">();</span>           <span class="c1">// no seed given</span>
 </code></pre></div></div>
 
-<p>A stream name is unique within a script; two streams with the same name are refused while <code class="language-plaintext highlighter-rouge">Build()</code>
-runs. A seed is a <code class="language-plaintext highlighter-rouge">UInt32</code>, and 0 is stored as 1. Leaving the seed out derives it from the session
-seed, the object’s spawn index and the stream name, so two objects running the same script draw
-differently from each other and each of them repeats on a rerun of the same session seed.</p>
+<p><code class="language-plaintext highlighter-rouge">Define.Randomizer()</code> takes no name: the property the line is assigned to names it, and a local
+names it with <code class="language-plaintext highlighter-rouge">.As(name)</code>. <code class="language-plaintext highlighter-rouge">Seed</code> is written on the declaring line, before the name. A seed is a
+<code class="language-plaintext highlighter-rouge">UInt32</code>, and 0 is stored as 1. Leaving the seed out derives it from the session seed, the object’s
+spawn index and the declared name, so two objects running the same script draw differently from each
+other and each of them repeats on a rerun of the same session seed. Renaming an unseeded
+randomizer’s property changes its sequence.</p>
 
 <h2 id="the-four-kinds-of-draw">The four kinds of draw</h2>
 
-<p>Every draw names its stream with <code class="language-plaintext highlighter-rouge">From</code>, and the variable it writes with <code class="language-plaintext highlighter-rouge">Into</code>. The chain is
+<p>Every draw names its randomizer with <code class="language-plaintext highlighter-rouge">From</code>, and the variable it writes with <code class="language-plaintext highlighter-rouge">Into</code>. The chain is
 incomplete until both are present.</p>
 
 <table>
@@ -126,10 +129,10 @@ incomplete until both are present.</p>
   </tbody>
 </table>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Random</span><span class="p">.</span><span class="nf">Number</span><span class="p">().</span><span class="nf">From</span><span class="p">(</span><span class="n">loot</span><span class="p">).</span><span class="nf">In</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Roll</span><span class="p">);</span>
-<span class="n">Random</span><span class="p">.</span><span class="nf">Index</span><span class="p">().</span><span class="nf">From</span><span class="p">(</span><span class="n">loot</span><span class="p">).</span><span class="nf">In</span><span class="p">(</span><span class="m">3</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Pick</span><span class="p">);</span>
-<span class="n">Random</span><span class="p">.</span><span class="nf">Choice</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">5</span><span class="p">).</span><span class="nf">From</span><span class="p">(</span><span class="n">loot</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Drop</span><span class="p">);</span>
-<span class="n">Random</span><span class="p">.</span><span class="nf">Weighted</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="m">30</span><span class="p">).</span><span class="nf">WithWeights</span><span class="p">(</span><span class="m">70</span><span class="p">,</span> <span class="m">25</span><span class="p">,</span> <span class="m">5</span><span class="p">).</span><span class="nf">From</span><span class="p">(</span><span class="n">loot</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Rare</span><span class="p">);</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Random</span><span class="p">.</span><span class="nf">Number</span><span class="p">().</span><span class="nf">From</span><span class="p">(</span><span class="n">Loot</span><span class="p">).</span><span class="nf">In</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Roll</span><span class="p">);</span>
+<span class="n">Random</span><span class="p">.</span><span class="nf">Index</span><span class="p">().</span><span class="nf">From</span><span class="p">(</span><span class="n">Loot</span><span class="p">).</span><span class="nf">In</span><span class="p">(</span><span class="m">3</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Pick</span><span class="p">);</span>
+<span class="n">Random</span><span class="p">.</span><span class="nf">Choice</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">5</span><span class="p">).</span><span class="nf">From</span><span class="p">(</span><span class="n">Loot</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Drop</span><span class="p">);</span>
+<span class="n">Random</span><span class="p">.</span><span class="nf">Weighted</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="m">30</span><span class="p">).</span><span class="nf">WithWeights</span><span class="p">(</span><span class="m">70</span><span class="p">,</span> <span class="m">25</span><span class="p">,</span> <span class="m">5</span><span class="p">).</span><span class="nf">From</span><span class="p">(</span><span class="n">Loot</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Rare</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">In(minInclusive, maxExclusive)</code> refuses a minimum at or above the maximum, and refuses NaN and an
@@ -143,7 +146,7 @@ usable.</p>
 <p>A weighted draw over 0 and 1 is how you branch on a probability:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span>
-    <span class="n">Random</span><span class="p">.</span><span class="nf">Weighted</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">).</span><span class="nf">WithWeights</span><span class="p">(</span><span class="m">70</span><span class="p">,</span> <span class="m">30</span><span class="p">).</span><span class="nf">From</span><span class="p">(</span><span class="n">loot</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">WeaponPick</span><span class="p">),</span>
+    <span class="n">Random</span><span class="p">.</span><span class="nf">Weighted</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">).</span><span class="nf">WithWeights</span><span class="p">(</span><span class="m">70</span><span class="p">,</span> <span class="m">30</span><span class="p">).</span><span class="nf">From</span><span class="p">(</span><span class="n">Loot</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">WeaponPick</span><span class="p">),</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">WeaponPick</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
         <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Equipped</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Weapon</span><span class="p">.</span><span class="n">Sword</span><span class="p">))</span>
         <span class="p">.</span><span class="nf">Else</span><span class="p">(</span><span class="n">Equipped</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Weapon</span><span class="p">.</span><span class="n">Bow</span><span class="p">)));</span>
@@ -161,7 +164,7 @@ draw writes into.</li>
 <code class="language-plaintext highlighter-rouge">list.At(index)</code> to pick an element.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RandomFactory.html"><code class="language-plaintext highlighter-rouge">RandomFactory</code></a>,
-<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RandomStream.html"><code class="language-plaintext highlighter-rouge">RandomStream</code></a>.</li>
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Randomizer.html"><code class="language-plaintext highlighter-rouge">Randomizer</code></a>.</li>
 </ul>
 
   </div>

@@ -55,16 +55,19 @@ public sealed partial class Battery : Script
         // The generator writes the Charge property this line assigns.
         Charge = Define.Number(nameof(Charge), 40);
 
+        Discharge = Define.Message();
+
         On.Update(Charge.Subtract(Time.Delta));
-        On.Message("Discharge", Object.Create(Spark));
+        On.Message(Discharge, Object.Create(Spark));
     }
 }
 ```
 
 The class is `partial` because the generators write the other half of it: the `Charge` property that
-the `Define.Number` line assigns, and the `DefineAssets` override for `Spark`. A script that declares
-its variables and assets on properties it writes itself, with no `[Variable]` or `[Asset]`, and
-names each `Bind` line with `As`, is written without `partial`. `Spark` gets its own field on
+the `Define.Number` line assigns, the `Discharge` message property the `Define.Message` line
+assigns, and the `DefineAssets` override for `Spark`. A script that declares its variables and
+assets on properties it writes itself, with no `[Variable]` or `[Asset]`, and names each `Bind`
+line and each `Define` line without a name with `As`, is written without `partial`. `Spark` gets its own field on
 the `LunyScript Behaviour` component, below the script, and that is where the object assigns a
 prefab to it.
 
@@ -89,8 +92,8 @@ Available on both `Script` and `EditorScript`:
 
 ```csharp
 Var  Define  Shared  Bind  When  Math  Random  Operation  Asset
-CollectionResult  If(condition)  ForEach(collection)  Routine(name)
-InParallel(block, ..)  Run(block, ..)  Choose(subject)  Option(score)
+CollectionResult  If(condition)  ForEach(collection)  Routine(routine)
+InParallel(block, ..)  Run(block, ..)  Choose(choice)  Option(score)
 Seconds(n)  Milliseconds(n)  Minutes(n)  Hours(n)
 ```
 

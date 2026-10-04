@@ -47,7 +47,8 @@ curves. This lift has no Rigidbody, so `Motion` writes its transform:
 Block rise = Motion.MoveTo(0, 4, 0).Over(2).Seconds().Ease(Easing.InOutSine);
 Block sink = Motion.MoveTo(0, 0, 0).Over(2).Seconds().Ease(Easing.InOutSine);
 
-On.Ready(Routine("Lift").Run(rise, sink));
+Lift = Define.Routine();
+On.Ready(Routine(Lift).Run(rise, sink));
 ```
 
 **Work on a cadence, declared once and started from any event.** `Every` sets the interval, `For`
@@ -67,7 +68,8 @@ does not flip between the two when the scores sit close together. Write to `Food
 anywhere:
 
 ```csharp
-On.Ready(Choose("needs").Highest(
+Needs = Define.Choice();
+On.Ready(Choose(Needs).Highest(
     Option(Food).Then(Motion.MoveTo(4, 0, 0).AtSpeed(2)),
     Option(Rest).Then(Motion.MoveTo(0, 0, 6).AtSpeed(1)))
     .Hold(Seconds(1)));
@@ -144,7 +146,8 @@ On.Update(If(Charge < 5 & Armed).Then(Powered.Set(false)));
 When.Var(Charge).Changed(Alarm.Set(true));
 TeamScore = Define.Number(nameof(TeamScore)).Shared();
 On.Update(ForEach(Slots).Do(item => Total.Add(item)));
-On.Ready(Random.Number().From(loot).In(1, 100).Into(Roll));
+Loot = Define.Randomizer().Seed(42);
+On.Ready(Random.Number().From(Loot).In(1, 100).Into(Roll));
 On.LateUpdate(Readout.Set(Text.Format("{0:1} s", Age)));
 On.Update(Ratio.Set(Math.Clamp(Charge / 10, 0, 1)));
 
@@ -152,9 +155,12 @@ On.Update(Ratio.Set(Math.Clamp(Charge / 10, 0, 1)));
 On.Ready(Health.Set(100), Powered.Set(true));
 On.TriggerEnter(If(Other.HasTag("Spike")).Then(Hits.Increment()));
 On.Ready(Run(Pulse.Increment()).Every(1).Seconds().Start());
-On.Ready(Routine("Patrol").Run(walkOut, walkBack));
-On.Ready(Routine("Doors").Run(InParallel(openLeft, openRight)));
-On.Ready(Choose("ai").Highest(Option(Food).Then(eat), Option(Rest).Then(nap)));
+Patrol = Define.Routine();
+On.Ready(Routine(Patrol).Run(walkOut, walkBack));
+Doors = Define.Routine();
+On.Ready(Routine(Doors).Run(InParallel(openLeft, openRight)));
+Ai = Define.Choice();
+On.Ready(Choose(Ai).Highest(Option(Food).Then(eat), Option(Rest).Then(nap)));
 On.Ready(Behavior("Guard").Root(Repeat(Task(patrol))).Start());
 On.Update(If(MenuOpen).Then(Time.Pause()).Else(Time.Resume()));
 SetProcessMode(Process.Always);
@@ -192,8 +198,9 @@ When.SceneLoaded(Vault).Do(VaultReady.Set(true));
 Score = Var.DefineSynced<Number>(nameof(Score), SyncCadence.OnChange, 0);
 Sync.Position(SyncCadence.EveryTick);
 On.Update(If(Net.HasAuthority).Then(Score.Add(Time.Delta)));
-On.Message("Ping", Pings.Increment());
-On.Update(If(!Net.HasAuthority).Then(Net.Send.ToAuthority("Ping")));
+Ping = Define.Message();
+On.Message(Ping, Pings.Increment());
+On.Update(If(!Net.HasAuthority).Then(Net.Send.ToAuthority(Ping)));
 On.Ready(Cloud.Load(Career).As(Downloading));
 When.Cloud(Downloading).Succeeded(Prompt.Set("Loaded."));
 ```

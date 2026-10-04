@@ -39,7 +39,8 @@ that waits to respawn and `Deactivate` for an object that is gone.
 
 ```csharp
 On.TriggerEnter(Object.Hide());
-On.Message("Respawn", Object.Show());
+Respawn = Define.Message();
+On.Message(Respawn, Object.Show());
 On.Update(If(Object.IsVisible).Then(Seen.Set(true)));
 ```
 
@@ -59,8 +60,10 @@ protected override void Build()
     var shield = Object.For(Shield);
 
     On.Ready(shield.Hide());
-    On.Message("ShieldUp", shield.Show(), shield.SetColor(0.3, 0.6, 1));
-    On.Message("ShieldDown", shield.Hide());
+    ShieldUp = Define.Message();
+    ShieldDown = Define.Message();
+    On.Message(ShieldUp, shield.Show(), shield.SetColor(0.3, 0.6, 1));
+    On.Message(ShieldDown, shield.Hide());
 }
 ```
 
@@ -77,7 +80,8 @@ colliders, lights, particle systems and its own scripts - use `Activate` and `De
 ```csharp
 Blocker = Bind.Object();
 On.Ready(Object.For(Blocker).Activate());
-On.Message("Opened", Object.For(Blocker).Deactivate());
+Opened = Define.Message();
+On.Message(Opened, Object.For(Blocker).Deactivate());
 ```
 
 Both apply after the blocks running now have finished, as `Object.Deactivate()` on the script's own
@@ -95,7 +99,8 @@ one ignores. A channel above 1 is allowed, because an HDR colour property uses i
 On.Ready(Object.SetColor(1, 0.8, 0.2));
 On.Ready(Object.SetColor(1, 0.8, 0.2, 0.5));
 On.Update(Object.SetColor(1, Health / 3, Health / 3));
-On.Message("Healed", Object.ResetColor());
+Healed = Define.Message();
+On.Message(Healed, Object.ResetColor());
 ```
 
 The colour is written to the material's main colour: the colour property its shader marks
@@ -115,8 +120,10 @@ var glass = new Color(0.3, 0.6, 1, 0.5);
 glass.A = 0.25;                            // a channel is a field
 
 On.CollisionEnter(Object.SetColor(Color.Red));
-On.Message("Gold", Object.SetColor(gold));
-On.Message("Glass", Object.For(Shield).SetColor(glass));
+Gold = Define.Message();
+Glass = Define.Message();
+On.Message(Gold, Object.SetColor(gold));
+On.Message(Glass, Object.For(Shield).SetColor(glass));
 ```
 
 `Color.White`, `Black`, `Gray`, `Clear`, `Red`, `Green` and `Blue` hold the channels Unity's own
@@ -128,11 +135,13 @@ with the asset, and the script's copy of it is a colour variable `SetColor` read
 
 ```csharp
 Team = Bind.Data(TeamLook.Schema);    // TeamLook: Color Tint and Color Flash
+Hit = Define.Routine();
+Traitor = Define.Message();
 
 On.Ready(Object.SetColor(Team.Tint));
-On.CollisionEnter(Routine("Hit").Run(Object.SetColor(Team.Flash),
+On.CollisionEnter(Routine(Hit).Run(Object.SetColor(Team.Flash),
     Wait(0.15), Object.SetColor(Team.Tint)));
-On.Message("Traitor", Team.Tint.Set(Color.Green));
+On.Message(Traitor, Team.Tint.Set(Color.Green));
 ```
 
 `Team.Tint.Set(...)` changes this object's copy; the asset keeps its colour.
@@ -149,7 +158,8 @@ starts with an underscore:
 var dissolve = Object.MaterialNumber("_Dissolve");
 
 On.Update(If(Health <= 0).Then(Fade.Add(Time.Delta), dissolve.Set(Fade)));
-On.Message("Revive", dissolve.Reset());
+Revive = Define.Message();
+On.Message(Revive, dissolve.Reset());
 ```
 
 `Set` writes the value, and `Reset` removes it so the material's own value shows again. The property

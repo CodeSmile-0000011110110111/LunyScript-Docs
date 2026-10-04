@@ -14,8 +14,9 @@ public sealed partial class Worker : Script
     {
         Block work = Motion.MoveTo(4, 0, 0).AtSpeed(2);
         Block rest = Motion.MoveTo(0, 0, 6).AtSpeed(1);
+        Needs = Define.Choice();
 
-        On.Ready(Choose("needs").Highest(
+        On.Ready(Choose(Needs).Highest(
             Option(WorkScore).Then(work),
             Option(RestScore).Then(rest)));
     }
@@ -32,8 +33,11 @@ winner. Use it where the alternative would be a chain of `If` branches whose ord
 you would rather express as a number: which target to attack, whether to eat or sleep, which cover
 point to take.
 
-The subject you pass to `Choose` is what a diagnostic message and the runtime inspector call this
-selector. A blank subject is refused while `Build()` runs.
+`Choose` takes a choice `Define.Choice()` declared. Its declared name is what a diagnostic message
+and the runtime inspector call this selector, and a misspelt choice is a compile error. One
+declaration opens one selector: a second `Choose` with the same choice is refused while `Build()`
+runs, so two selectors need two declarations. Placing the block one `Choose` built in two places
+is allowed; each place runs its own copy.
 
 ## Options
 
@@ -63,24 +67,27 @@ either order.
 | `.Bias(margin)` | A challenger must exceed the current winner by this margin before it takes over. |
 | `.Hold(amount)` | The current winner is kept for at least this long, whatever the scores do. |
 
+Each statement below is one alternative for the choice `Needs = Define.Choice();` declares; a
+script writes one of them.
+
 ```csharp
 // Without either clause, work and rest swap every frame the scores cross.
-Choose("needs").Highest(
+Choose(Needs).Highest(
     Option(WorkScore).Then(work),
     Option(RestScore).Then(rest));
 
 // A challenger must beat the winner by 0.1 before it takes over.
-Choose("needs").Highest(
+Choose(Needs).Highest(
     Option(WorkScore).Then(work),
     Option(RestScore).Then(rest)).Bias(0.1);
 
 // The winner is kept for at least one second, whatever the scores do.
-Choose("needs").Highest(
+Choose(Needs).Highest(
     Option(WorkScore).Then(work),
     Option(RestScore).Then(rest)).Hold(1);
 
 // Both: a one-second minimum, then a 0.1 margin to take over.
-Choose("needs").Highest(
+Choose(Needs).Highest(
     Option(WorkScore).Then(work),
     Option(RestScore).Then(rest)).Bias(0.1).Hold(1);
 ```
@@ -101,7 +108,8 @@ working options are under Options, above.
 
 ```csharp
 Option(score).Then(block, ..)
-Choose(subject).Highest(option, ..)
+Define.Choice()
+Choose(choice).Highest(option, ..)
     [ .Bias(margin) ] [ .Hold(amount) [ .Seconds() ] ]
 ```
 

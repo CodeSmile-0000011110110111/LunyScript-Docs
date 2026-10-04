@@ -109,9 +109,23 @@ TeamScore = Define.Number(nameof(TeamScore)).Shared();
 Score = Bind.Number(nameof(ScoreKeeper.TeamScore)).Shared();
 ```
 
-`Shared()` with no argument uses `SharedStore.Default`. Pass a store to keep separate groups apart,
-and reset one store with `Shared.Clear(store)`. `Bind` always names a store, because a bound value is
-by definition one that another script declared.
+`Shared()` with no argument uses the default store, which needs no declaration. To keep a separate
+group apart, declare a store and pass it; another script names that store through the descriptor
+the generator writes for it:
+
+```csharp
+// MatchScript
+MatchData = Define.Store();
+Score = Define.Number(nameof(Score), 0).Shared(MatchData);
+
+// HudScript
+Score = Bind.Number(nameof(Score)).Shared(MatchScript.Stores.MatchData);
+```
+
+A store is the declaring script and its declared name, so two scripts that each declare their own
+`MatchData` hold two stores, and a misspelt store is a compile error. `Shared.Clear(MatchData)`
+resets one store to its declared defaults, and `Shared.Clear()` the default store. `Bind` always
+names a store, because a bound value is by definition one that another script declared.
 
 A `Vector3` and a text variable are shared the same way. Here a player publishes its position and a
 guard reacts when the player comes within 4 units of its post:
@@ -341,6 +355,8 @@ Bind.Flag(name)                         { .Shared() | .Shared(store) }
 Bind.Vector3(name)                         { .Shared() | .Shared(store) }
 Bind.Text(name)                         { .Shared() | .Shared(store) }     // grows
 Bind.Text(name, capacity)               { .Shared() | .Shared(store) }     // fixed
+Define.Store()                          // store, for .Shared(store)
+Shared.Clear([ store ])
 ```
 
 `Var.Define*` declares the same things; `Var.Define<Number>` returns a handle that converts to `Number`,

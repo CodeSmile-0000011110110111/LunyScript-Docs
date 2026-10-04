@@ -157,7 +157,8 @@ successful mutation on that same collection. <code class="language-plaintext hig
 
 <p><code class="language-plaintext highlighter-rouge">TryAdd</code> is the form of <code class="language-plaintext highlighter-rouge">Add</code> whose own outcome you branch on. Give it to <code class="language-plaintext highlighter-rouge">If</code>:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Pickup"</span><span class="p">,</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Pickup</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Pickup</span><span class="p">,</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Slots</span><span class="p">.</span><span class="nf">TryAdd</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
         <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Kept</span><span class="p">.</span><span class="nf">Increment</span><span class="p">())</span>
         <span class="p">.</span><span class="nf">Else</span><span class="p">(</span><span class="n">ShowFull</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
@@ -175,7 +176,8 @@ change it.</p>
 <span class="c1">// Inside Build():</span>
 <span class="n">Added</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">CollectionResult</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Added</span><span class="p">));</span>
 
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Pickup"</span><span class="p">,</span> <span class="n">Slots</span><span class="p">.</span><span class="nf">TryAdd</span><span class="p">(</span><span class="n">item</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Added</span><span class="p">));</span>
+<span class="n">Pickup</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Pickup</span><span class="p">,</span> <span class="n">Slots</span><span class="p">.</span><span class="nf">TryAdd</span><span class="p">(</span><span class="n">item</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Added</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Added</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Glow</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)),</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">Added</span><span class="p">.</span><span class="n">Failed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">ShowFull</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)));</span>
@@ -228,7 +230,8 @@ handle that <code class="language-plaintext highlighter-rouge">Build()</code> ne
 
         <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Scores</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"wave"</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="n">Scores</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"bonus"</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>
 
-        <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"WaveCleared"</span><span class="p">,</span>
+        <span class="n">WaveCleared</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">WaveCleared</span><span class="p">,</span>
             <span class="n">Wave</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Scores</span><span class="p">.</span><span class="nf">At</span><span class="p">(</span><span class="s">"wave"</span><span class="p">)),</span>
             <span class="n">Wave</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(),</span>
             <span class="n">Scores</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"wave"</span><span class="p">,</span> <span class="n">Wave</span><span class="p">));</span>

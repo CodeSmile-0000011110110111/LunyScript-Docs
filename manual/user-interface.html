@@ -198,6 +198,7 @@ place in an event list, and it writes every time that block runs.</p>
 <span class="n">bar</span><span class="p">.</span><span class="nf">BindValue</span><span class="p">(</span><span class="n">Health</span><span class="p">);</span>
 <span class="n">mute</span><span class="p">.</span><span class="nf">BindValue</span><span class="p">(</span><span class="n">Muted</span><span class="p">);</span>
 
+<span class="n">HideHud</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">health</span><span class="p">.</span><span class="nf">SetText</span><span class="p">(</span><span class="n">Score</span><span class="p">),</span> <span class="n">start</span><span class="p">.</span><span class="nf">SetEnabled</span><span class="p">(</span><span class="n">CanStart</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">HideHud</span><span class="p">,</span> <span class="n">panelBody</span><span class="p">.</span><span class="nf">SetVisible</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
 </code></pre></div></div>
@@ -352,7 +353,9 @@ sits on the projected point, so align the content in the fragment’s USS, for e
 Number the script raises:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">climb</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Rise</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">)).</span><span class="nf">Over</span><span class="p">(</span><span class="m">0.7</span><span class="p">);</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Hit</span><span class="p">,</span> <span class="n">Rise</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1.3</span><span class="p">),</span> <span class="n">climb</span><span class="p">.</span><span class="nf">Start</span><span class="p">(),</span> <span class="nf">Routine</span><span class="p">(</span><span class="s">"Show"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+<span class="n">Hit</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+<span class="n">Show</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Routine</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Hit</span><span class="p">,</span> <span class="n">Rise</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1.3</span><span class="p">),</span> <span class="n">climb</span><span class="p">.</span><span class="nf">Start</span><span class="p">(),</span> <span class="nf">Routine</span><span class="p">(</span><span class="n">Show</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
     <span class="n">amount</span><span class="p">.</span><span class="nf">SetVisible</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">0.7</span><span class="p">),</span> <span class="n">amount</span><span class="p">.</span><span class="nf">SetVisible</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
 </code></pre></div></div>
 
@@ -379,6 +382,7 @@ once need several placements.</p>
 <h2 id="opening-and-closing-a-menu">Opening and closing a menu</h2>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">PauseMenu</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+<span class="n">ClosePause</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
 
 <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Panel</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="n">PauseMenu</span><span class="p">).</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">ClosePause</span><span class="p">,</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Close</span><span class="p">(</span><span class="n">PauseMenu</span><span class="p">).</span><span class="nf">ForPlayer</span><span class="p">(</span><span class="m">0</span><span class="p">));</span>

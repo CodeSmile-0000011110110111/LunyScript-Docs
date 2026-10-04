@@ -9,16 +9,17 @@ public sealed partial class Door : Script
 {
     protected override void Build()
     {
-        On.Ready(Object.Create("Hinge Marker"));
-        On.Disabled(Object.Deactivate("Hinge Marker"));
-        On.Enabled(Object.Activate("Hinge Marker"));
-        On.Despawned(Object.Destroy("Hinge Marker"));
+        HingeMarker = Define.Object();
+        On.Ready(Object.Create(HingeMarker));
+        On.Disabled(Object.Deactivate(HingeMarker));
+        On.Enabled(Object.Activate(HingeMarker));
+        On.Despawned(Object.Destroy(HingeMarker));
     }
 }
 ```
 
 Add the component and pick `Door`. When the object starts, it creates an empty marker named
-`Hinge Marker`. Disabling the door deactivates that marker; enabling the door activates it again.
+`HingeMarker`, the name of the owned object `Define.Object()` declared. Disabling the door deactivates that marker; enabling the door activates it again.
 Ending the door destroys the marker.
 
 ## What `On` does
@@ -101,19 +102,28 @@ a built player may leave out, and an operating system that terminates an applica
 
 protected override void Build()
 {
-    On.Ready(Object.Create("Marker"));
-    On.Message("PostGuard",
+    Marker = Define.Object();
+    Guard = Define.Object();
+    PostGuard = Define.Message();
+    RecallGuard = Define.Message();
+    On.Ready(Object.Create(Marker));
+    On.Message(PostGuard,
         Object.Create(Sentry).At(new Vector3(0, 0.8, 0)).ChildOf()
-            .Into("Guard"));
-    On.Message("RecallGuard", Object.Destroy("Guard"));
+            .Into(Guard));
+    On.Message(RecallGuard, Object.Destroy(Guard));
     On.Update(If(Health <= 0).Then(Object.Destroy()));
 }
 ```
 
-`PostGuard` creates a copy of `Sentry`, parents it to this object, and names it `Guard` in this
-script. `RecallGuard` destroys that copy by the same name.
+`PostGuard` creates a copy of `Sentry`, parents it to this object, and holds it in the owned
+object `Guard`. `RecallGuard` destroys that copy through the same handle.
 
-`Object.Create(name)` makes an empty object immediately. It carries no script, and it is destroyed
+`Define.Object()` declares an owned object: a slot on every instance of the script that one
+`Create` or `Spawn` call of the script fills, and that `Activate`, `Deactivate`, `Destroy`,
+`Despawn`, `ChildOf` and `Object.Owned` take. It starts empty. A scene object bound with
+`Bind.Object()` is borrowed, not owned, so `Object.Destroy` and `Object.Despawn` do not take one.
+
+`Object.Create(owned)` makes an empty object immediately, called the owned object's declared name. It carries no script, and it is destroyed
 when this object's script ends.
 
 `Object.Create(prefab)` makes a fresh copy of a declared `Prefab` input or of a succeeded
@@ -137,8 +147,9 @@ is already ending, and is dropped.
 controls, on the same floor, facing the same way:
 
 ```csharp
+Guest2 = Define.Object();
 When.Player(2).Paired(Object.Create(Avatar).NearPlayer(1, 2)
-    .ForPlayer(2).Into("Guest2"));
+    .ForPlayer(2).Into(Guest2));
 ```
 
 Up to 16 points within `radius` metres are tried; the first with the target player's floor under it,
@@ -150,10 +161,10 @@ whose Local Player field names the player. No such object, no floor under it, or
 above zero is reported as an error and nothing is created. `NearPlayer` is the placement, so `At`
 and a frame do not follow it.
 
-With a name, `Activate`, `Deactivate` and `Destroy` act on that object after the current event's
-blocks finish, and `Destroy` drops the name where the block runs, so a later block no longer finds
-it. With no name they act on this object after the current dispatch finishes, so the rest of the
-block list still runs. `Object.Destroy()` on this object produces `On.Disabled`, then
+With an owned object, `Activate`, `Deactivate` and `Destroy` act on that object after the current
+event's blocks finish, and `Destroy` empties the owned object where the block runs, so a later
+block no longer finds it. With no argument they act on this object after the current dispatch
+finishes, so the rest of the block list still runs. `Object.Destroy()` on this object produces `On.Disabled`, then
 `On.Despawned`, and then destroys the host.
 
 `Object` also changes how an object is drawn while it keeps running: `Hide`, `Show`, `SetColor` and
@@ -166,7 +177,8 @@ leave out.
 
 | Call | What it does |
 | --- | --- |
-| `Object.Create(name)` | Makes an empty object named `name` in the scene and in this script. |
+| `Define.Object()` | Declares an owned object `owned`, which the property it is assigned to names. |
+| `Object.Create(owned)` | Makes an empty object in `owned`, called its declared name in the scene. |
 | `Object.Create(prefab)` | Makes a fresh copy of a declared `Prefab` input. |
 | `Object.Create(handle)` | Makes a fresh copy of a succeeded `Operation<Prefab>` payload. |
 | *`.At(position)`* | Places the copy at `position`. |
@@ -178,13 +190,13 @@ leave out.
 | *`.NearPlayer(player, radius)`* | Places the copy near that player's object. `At` does not follow it. |
 | *`.ForPlayer(player)`* | Binds scripts on the copy to local player `player`. |
 | *`.ChildOf()`* | Parents the copy to this object. |
-| *`.ChildOf(name)`* | Parents the copy to the object this script already named. ChildOf cannot parent to itself. |
-| *`.Into(name)`* | Names the copy in this script so later calls can address it. |
-| `name` | The name later `Activate`, `Deactivate` and `Destroy` use. |
+| *`.ChildOf(owned)`* | Parents the copy to the object `owned` holds. ChildOf cannot parent to itself. |
+| *`.Into(owned)`* | Holds the copy in `owned` so later calls can address it. |
+| `owned` | The owned object later `Activate`, `Deactivate` and `Destroy` take. |
 | *`.SurvivesCaller()`* | Leaves the copy in the scene when this script's object ends. |
-| `Object.Activate([name])` | Activates this object, or the named copy. |
-| `Object.Deactivate([name])` | Deactivates this object, or the named copy. |
-| `Object.Destroy([name])` | Destroys this object, or the named copy. |
+| `Object.Activate([owned])` | Activates this object, or the object `owned` holds. |
+| `Object.Deactivate([owned])` | Deactivates this object, or the object `owned` holds. |
+| `Object.Destroy([owned])` | Destroys this object, or the object `owned` holds. |
 
 ## What to read next
 

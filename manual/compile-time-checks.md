@@ -201,14 +201,16 @@ body or a `Choose` option's action. `Then`, `Else`, an `On.*` event list and a s
 all of their blocks in the frame they are reached, so a wait or a group written directly in one of them is reported on its line:
 
 ```csharp
-On.Ready(Routine("Blink").Run(
+Blink = Define.Routine();
+On.Ready(Routine(Blink).Run(
     If(ShouldBlink).Then(Wait(1))));   // Wait (here: Wait(..)) inside Then cannot
                                        // wait, Then runs its blocks in the frame it
                                        // is reached: move the Wait out of Then so
                                        // that it is a step of a routine
 On.Update(Wait(1));               // Wait (here: Wait(..)) in an event list
                                        // cannot wait, ...: make it a step of a
-                                       // routine, as in Routine("name").Run(Wait(..))
+                                       // routine, as in
+                                       // Routine(routine).Run(Wait(..))
 ```
 
 Move the wait out of `Then` so that it is a step of the routine. To wait only when the condition holds, set a `Number` inside `Then`
@@ -221,7 +223,7 @@ written inside it is reported the same way, and the fix moves the sequence:
 On.Update((Lamp.Set(true), Wait(1)));
 // Wait (here: Wait(..)) in a sequence in an event list cannot wait, ...:
 // make the sequence a step of a routine, as in
-// Routine("name").Run(Sequence(..))
+// Routine(routine).Run(Sequence(..))
 ```
 
 The script type is also refused when it is built, naming the line of the wait, or for a group the line of the `If` that holds it. That

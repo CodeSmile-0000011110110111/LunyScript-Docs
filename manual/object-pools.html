@@ -144,21 +144,24 @@ the pool. When that scene unloads, the pool and every copy go with it.</p>
 
 <h2 id="spawning-and-despawning">Spawning and despawning</h2>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="s">"Boss"</span><span class="p">));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Retreat"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">(</span><span class="s">"Boss"</span><span class="p">));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Boss</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+<span class="n">Retreat</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Spawn</span><span class="p">(</span><span class="n">Enemies</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Boss</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Retreat</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">(</span><span class="n">Boss</span><span class="p">));</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Despawn</span><span class="p">()));</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">Object.Spawn(pool)</code> takes one copy out of the pool. The pool reuses an idle copy when it has one and
-makes a new one below its hard cap. <code class="language-plaintext highlighter-rouge">Into(name)</code> gives the copy a name in this script. <code class="language-plaintext highlighter-rouge">Despawn</code> puts a
-copy back: with a name from the script that spawned it, or with no name from the copy’s own script.</p>
+makes a new one below its hard cap. <code class="language-plaintext highlighter-rouge">Into(owned)</code> holds the copy in an owned object this script declared with
+<code class="language-plaintext highlighter-rouge">Define.Object()</code>. <code class="language-plaintext highlighter-rouge">Despawn</code> puts a copy back: with that owned object from the script that spawned
+it, or with no argument from the copy’s own script.</p>
 
 <p>A spawn is applied after the current event’s blocks finish, so a copy held with <code class="language-plaintext highlighter-rouge">Into</code> is in its slot
 from the next event on. A copy that goes back becomes available to spawns made after that; a spawn
 written right after the despawn, in the same event, uses another copy.</p>
 
-<p><code class="language-plaintext highlighter-rouge">Object.Destroy()</code> or <code class="language-plaintext highlighter-rouge">Object.Destroy(name)</code> ends a pooled copy for good and takes it out of its pool,
+<p><code class="language-plaintext highlighter-rouge">Object.Destroy()</code> or <code class="language-plaintext highlighter-rouge">Object.Destroy(owned)</code> ends a pooled copy for good and takes it out of its pool,
 which can then make a new one in its place. <code class="language-plaintext highlighter-rouge">Despawn</code> works only on pooled copies; a fresh
 <code class="language-plaintext highlighter-rouge">Object.Create</code> copy ends with <code class="language-plaintext highlighter-rouge">Destroy</code>.</p>
 
@@ -363,16 +366,16 @@ leave out.</p>
       <td>Parents the copy to this object.</td>
     </tr>
     <tr>
-      <td><em><code class="language-plaintext highlighter-rouge">.ChildOf(name)</code></em></td>
-      <td>Parents the copy to the object this script already named. ChildOf cannot parent to itself.</td>
+      <td><em><code class="language-plaintext highlighter-rouge">.ChildOf(owned)</code></em></td>
+      <td>Parents the copy to the object <code class="language-plaintext highlighter-rouge">owned</code> holds. ChildOf cannot parent to itself.</td>
     </tr>
     <tr>
-      <td><em><code class="language-plaintext highlighter-rouge">.Into(name)</code></em></td>
-      <td>Names the copy in this script so later calls can address it.</td>
+      <td><em><code class="language-plaintext highlighter-rouge">.Into(owned)</code></em></td>
+      <td>Holds the copy in <code class="language-plaintext highlighter-rouge">owned</code> so later calls can address it.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">name</code></td>
-      <td>The name later <code class="language-plaintext highlighter-rouge">Despawn</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> use.</td>
+      <td><code class="language-plaintext highlighter-rouge">owned</code></td>
+      <td>An owned object <code class="language-plaintext highlighter-rouge">Define.Object()</code> declared, which <code class="language-plaintext highlighter-rouge">Despawn</code> and <code class="language-plaintext highlighter-rouge">Destroy</code> take.</td>
     </tr>
     <tr>
       <td><em><code class="language-plaintext highlighter-rouge">.ForPlayer(n)</code></em></td>
@@ -387,12 +390,12 @@ leave out.</p>
       <td>Binds the spawn to an attempt.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Object.Despawn([name])</code></td>
-      <td>Returns this copy, or the named copy, to its pool.</td>
+      <td><code class="language-plaintext highlighter-rouge">Object.Despawn([owned])</code></td>
+      <td>Returns this copy, or the copy <code class="language-plaintext highlighter-rouge">owned</code> holds, to its pool.</td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">Object.Destroy([name])</code></td>
-      <td>Ends this copy, or the named copy, for good.</td>
+      <td><code class="language-plaintext highlighter-rouge">Object.Destroy([owned])</code></td>
+      <td>Ends this copy, or the copy <code class="language-plaintext highlighter-rouge">owned</code> holds, for good.</td>
     </tr>
   </tbody>
 </table>

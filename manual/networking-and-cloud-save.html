@@ -166,14 +166,16 @@ notices that its copy has stopped arriving:</p>
 
 <h2 id="messages">Messages</h2>
 
-<p>A peer without authority asks the authority to act by sending a named message. The authority
+<p>A peer without authority asks the authority to act by sending a declared message. The authority
 receives it with <code class="language-plaintext highlighter-rouge">On.Message</code> in the same script:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
-    <span class="nf">If</span><span class="p">(!</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span> <span class="p">&amp;</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">IsFalse</span><span class="p">())</span>
-        <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">Send</span><span class="p">.</span><span class="nf">ToAuthority</span><span class="p">(</span><span class="s">"RequestReady"</span><span class="p">)));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RequestReady</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
 
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RequestReady"</span><span class="p">,</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span>
+    <span class="nf">If</span><span class="p">(!</span><span class="n">Net</span><span class="p">.</span><span class="n">HasAuthority</span> <span class="p">&amp;</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">IsFalse</span><span class="p">())</span>
+        <span class="p">.</span><span class="nf">Then</span><span class="p">(</span><span class="n">Net</span><span class="p">.</span><span class="n">Send</span><span class="p">.</span><span class="nf">ToAuthority</span><span class="p">(</span><span class="n">RequestReady</span><span class="p">)));</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">RequestReady</span><span class="p">,</span> <span class="n">IsReady</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 </code></pre></div></div>
 
 <p><a href="/LunyScript-Docs/manual/messaging.html">Messaging</a> is the <code class="language-plaintext highlighter-rouge">On.Message</code> surface, including
@@ -201,7 +203,8 @@ device and the copy in the cloud:</p>
     <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Pilot</span><span class="p">),</span> <span class="n">Pilot</span><span class="p">);</span>
 
 <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Cloud</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Career</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Downloading</span><span class="p">));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"RunEnded"</span><span class="p">,</span> <span class="n">Progress</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">Career</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Saving</span><span class="p">),</span>
+<span class="n">RunEnded</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">RunEnded</span><span class="p">,</span> <span class="n">Progress</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">Career</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Saving</span><span class="p">),</span>
     <span class="n">Cloud</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">Career</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Uploading</span><span class="p">));</span>
 <span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="n">Uploading</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Kept on this device"</span><span class="p">));</span>
 </code></pre></div></div>

@@ -177,9 +177,11 @@ level deeper for each <code class="language-plaintext highlighter-rouge">ElseIf<
     <span class="kt">var</span> <span class="n">burst</span>      <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Burst</span><span class="p">.</span><span class="nf">Inc</span><span class="p">()).</span><span class="nf">Every</span><span class="p">(</span><span class="m">500</span><span class="p">).</span><span class="nf">Milliseconds</span><span class="p">().</span><span class="nf">For</span><span class="p">(</span><span class="m">5</span><span class="p">);</span>
     <span class="kt">var</span> <span class="n">continuous</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Continuous</span><span class="p">.</span><span class="nf">Inc</span><span class="p">());</span>
 
+    <span class="n">Quiet</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+
     <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">pulse</span><span class="p">.</span><span class="nf">Start</span><span class="p">(),</span> <span class="n">cadence</span><span class="p">.</span><span class="nf">Start</span><span class="p">(),</span>
         <span class="n">burst</span><span class="p">.</span><span class="nf">Start</span><span class="p">(),</span> <span class="n">continuous</span><span class="p">.</span><span class="nf">Start</span><span class="p">());</span>
-    <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Quiet"</span><span class="p">,</span> <span class="n">continuous</span><span class="p">.</span><span class="nf">Stop</span><span class="p">(),</span> <span class="n">cadence</span><span class="p">.</span><span class="nf">Stop</span><span class="p">());</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Quiet</span><span class="p">,</span> <span class="n">continuous</span><span class="p">.</span><span class="nf">Stop</span><span class="p">(),</span> <span class="n">cadence</span><span class="p">.</span><span class="nf">Stop</span><span class="p">());</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -201,12 +203,22 @@ volume fade’s <code class="language-plaintext highlighter-rouge">Over(0.4)</co
 <p>A routine runs its steps in the order you wrote them, each one finishing before the next begins, over
 as many frames as they need.</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
-    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Door"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Door</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Routine</span><span class="p">();</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="n">Door</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
         <span class="n">Opening</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">3</span><span class="p">),</span> <span class="n">Opening</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">)));</span>
+<span class="p">}</span>
 </code></pre></div></div>
 
-<p>The name you pass to <code class="language-plaintext highlighter-rouge">Routine</code> is what a diagnostic message and the runtime inspector call it.</p>
+<p><code class="language-plaintext highlighter-rouge">Routine</code> takes a routine <code class="language-plaintext highlighter-rouge">Define.Routine()</code> declared. Its declared name is what a diagnostic
+message and the runtime inspector call it, and a misspelt routine is a compile error. The
+declaration starts nothing; <code class="language-plaintext highlighter-rouge">Run</code> builds the block that starts the routine. One declaration opens
+one routine: a second <code class="language-plaintext highlighter-rouge">Routine(Door).Run(...)</code> is refused while <code class="language-plaintext highlighter-rouge">Build()</code> runs, so two routines need
+two declarations.</p>
+
+<p>The examples below each declare their routine on the line before they use it, the way <code class="language-plaintext highlighter-rouge">Door</code> is
+declared here: <code class="language-plaintext highlighter-rouge">Flash = Define.Routine();</code> before <code class="language-plaintext highlighter-rouge">Routine(Flash)</code>, and so on.</p>
 
 <h2 id="waiting-inside-a-routine">Waiting inside a routine</h2>
 
@@ -243,7 +255,8 @@ as many frames as they need.</p>
   </tbody>
 </table>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Flash"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Flash</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Routine</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="n">Flash</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
     <span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.25</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">0.15</span><span class="p">),</span> <span class="n">Object</span><span class="p">.</span><span class="nf">ResetColor</span><span class="p">()));</span>
 </code></pre></div></div>
 
@@ -257,7 +270,8 @@ or an infinity also finishes at once and writes a warning to the Console.</p>
 runs its next step. <code class="language-plaintext highlighter-rouge">Then</code>, <code class="language-plaintext highlighter-rouge">Else</code> and an event list run all of their blocks one after another in the frame they are reached, so nothing
 there waits for a wait:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Blink"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Blink</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Routine</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="n">Blink</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">ShouldBlink</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Light</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="n">Light</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">))));</span>   <span class="c1">// refused</span>
 </code></pre></div></div>
 
@@ -270,7 +284,8 @@ the wait is written directly in the list, your IDE and Unity’s compiler also r
 <p>To wait only when the condition holds, set a <code class="language-plaintext highlighter-rouge">Number</code> inside <code class="language-plaintext highlighter-rouge">Then</code> and give it to a wait written after the <code class="language-plaintext highlighter-rouge">If</code>. A wait of zero finishes
 at once, so the routine goes straight on when the condition is false:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Blink"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Blink</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Routine</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="n">Blink</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
     <span class="n">BlinkDelay</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0</span><span class="p">),</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">ShouldBlink</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Light</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="n">BlinkDelay</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">1</span><span class="p">)),</span>
     <span class="nf">Wait</span><span class="p">(</span><span class="n">BlinkDelay</span><span class="p">),</span>
@@ -312,7 +327,8 @@ refused the way a wait is, because nothing there waits for the group to end.</p>
 <span class="kt">var</span> <span class="n">arrival</span> <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">moveCamera</span><span class="p">,</span> <span class="n">fadeMusic</span><span class="p">)</span>
     <span class="p">.</span><span class="nf">UntilOneFinishes</span><span class="p">().</span><span class="nf">OthersKeepRunning</span><span class="p">();</span>
 
-<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Arrival"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">arrival</span><span class="p">,</span> <span class="n">fadeInArrivalPanel</span><span class="p">));</span>
+<span class="n">Arrival</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Routine</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="n">Arrival</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">arrival</span><span class="p">,</span> <span class="n">fadeInArrivalPanel</span><span class="p">));</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">OthersKeepRunning()</code> comes after a terminal clause. Here <code class="language-plaintext highlighter-rouge">fadeInArrivalPanel</code> is a multi-frame
@@ -326,8 +342,9 @@ The enclosing routine owns the survivor and cancels it when the routine ends or 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="kt">var</span> <span class="n">race</span> <span class="p">=</span> <span class="nf">InParallel</span><span class="p">(</span><span class="n">reachExit</span><span class="p">,</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">5</span><span class="p">)).</span><span class="nf">UntilOneFinishes</span><span class="p">();</span>
+    <span class="n">Escape</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Routine</span><span class="p">();</span>
 
-    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Escape"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="n">Escape</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
         <span class="n">race</span><span class="p">,</span>
         <span class="nf">If</span><span class="p">(</span><span class="n">race</span><span class="p">.</span><span class="n">Succeeded</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">RaceOver</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)),</span>
         <span class="nf">If</span><span class="p">(</span><span class="n">race</span><span class="p">.</span><span class="n">Failed</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Alarm</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">)),</span>
@@ -388,8 +405,11 @@ what they would do written out in its place. There are three ways to write one:<
     <span class="c1">// The same as Sequence(...): a tuple of 2 to 9 blocks.</span>
     <span class="kt">var</span> <span class="n">blink</span> <span class="p">=</span> <span class="p">(</span><span class="n">Lamp</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">0.1</span><span class="p">),</span> <span class="n">Lamp</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
 
-    <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Dodge"</span><span class="p">,</span> <span class="nf">Routine</span><span class="p">(</span><span class="s">"Dodge"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">DodgeRoll</span><span class="p">));</span>
-    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Warm up"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">hop</span><span class="p">,</span> <span class="n">hop</span><span class="p">,</span> <span class="n">blink</span><span class="p">,</span> <span class="n">DodgeRoll</span><span class="p">));</span>
+    <span class="n">Roll</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+    <span class="n">Dodge</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Routine</span><span class="p">();</span>
+    <span class="n">WarmUp</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Routine</span><span class="p">();</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Roll</span><span class="p">,</span> <span class="nf">Routine</span><span class="p">(</span><span class="n">Dodge</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">DodgeRoll</span><span class="p">));</span>
+    <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="n">WarmUp</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">hop</span><span class="p">,</span> <span class="n">hop</span><span class="p">,</span> <span class="n">blink</span><span class="p">,</span> <span class="n">DodgeRoll</span><span class="p">));</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -450,22 +470,26 @@ any child’s.</p>
 place. A routine started from two events is two routines, each with its own progress, a timed
 move placed in two events is two moves, and a sequence placed in two routines is two sequences:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">tour</span> <span class="p">=</span> <span class="nf">Routine</span><span class="p">(</span><span class="s">"Tour"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">Starts</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(),</span> <span class="n">walk</span><span class="p">,</span> <span class="n">Ends</span><span class="p">.</span><span class="nf">Increment</span><span class="p">());</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Tour</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Routine</span><span class="p">();</span>
+<span class="n">Again</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+<span class="kt">var</span> <span class="n">tour</span> <span class="p">=</span> <span class="nf">Routine</span><span class="p">(</span><span class="n">Tour</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">Starts</span><span class="p">.</span><span class="nf">Increment</span><span class="p">(),</span> <span class="n">walk</span><span class="p">,</span> <span class="n">Ends</span><span class="p">.</span><span class="nf">Increment</span><span class="p">());</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">tour</span><span class="p">);</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Again"</span><span class="p">,</span> <span class="n">tour</span><span class="p">);</span>    <span class="c1">// a second routine, as if written out here</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Again</span><span class="p">,</span> <span class="n">tour</span><span class="p">);</span>    <span class="c1">// a second routine, as if written out here</span>
 </code></pre></div></div>
 
 <p>Inside one routine, a group’s <code class="language-plaintext highlighter-rouge">Succeeded</code>, <code class="language-plaintext highlighter-rouge">Failed</code> and <code class="language-plaintext highlighter-rouge">Canceled</code> read the copy of the group that
 the same routine runs, so the second routine above can read its own outcome.</p>
 
 <p>Something you declare keeps one identity wherever you name it: a variable, a <code class="language-plaintext highlighter-rouge">Run(...)</code> work, an
-audio voice, a UI element and an operation. Every <code class="language-plaintext highlighter-rouge">Start()</code> and <code class="language-plaintext highlighter-rouge">Stop()</code> of one <code class="language-plaintext highlighter-rouge">Run</code> names the one
+audio voice, a UI element and an operation. A routine placed twice this way is still one declared
+<code class="language-plaintext highlighter-rouge">Tour</code>, so the debugger names both copies <code class="language-plaintext highlighter-rouge">Tour</code>. Every <code class="language-plaintext highlighter-rouge">Start()</code> and <code class="language-plaintext highlighter-rouge">Stop()</code> of one <code class="language-plaintext highlighter-rouge">Run</code> names the one
 work, which is also how one routine is restarted from two events:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">go</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">tour</span><span class="p">).</span><span class="nf">For</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Halt</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+<span class="kt">var</span> <span class="n">go</span> <span class="p">=</span> <span class="nf">Run</span><span class="p">(</span><span class="n">tour</span><span class="p">).</span><span class="nf">For</span><span class="p">(</span><span class="m">1</span><span class="p">);</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">go</span><span class="p">.</span><span class="nf">Start</span><span class="p">());</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Again"</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="nf">Start</span><span class="p">());</span>    <span class="c1">// restarts the one routine</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Halt"</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="nf">Stop</span><span class="p">());</span>      <span class="c1">// stops the work both starts named</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Again</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="nf">Start</span><span class="p">());</span>    <span class="c1">// restarts the one routine</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Halt</span><span class="p">,</span> <span class="n">go</span><span class="p">.</span><span class="nf">Stop</span><span class="p">());</span>      <span class="c1">// stops the work both starts named</span>
 </code></pre></div></div>
 
 <h2 id="what-to-read-next">What to read next</h2>

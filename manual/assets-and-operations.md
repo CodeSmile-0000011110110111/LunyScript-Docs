@@ -9,8 +9,11 @@ public sealed partial class Turret : Script
 {
     [Asset] public Prefab Shell { get; private set; }
 
-    protected override void Build() =>
-        On.Message("Fire", Object.Create(Shell).At(new Vector3(0, 1, 0)));
+    protected override void Build()
+    {
+        Fire = Define.Message();
+        On.Message(Fire, Object.Create(Shell).At(new Vector3(0, 1, 0)));
+    }
 }
 ```
 
@@ -196,11 +199,12 @@ public sealed partial class GuardPost : Script
     protected override void Build()
     {
         Loading = Define.Operation<Prefab>(nameof(Loading));
+        Sentry = Define.Object();
 
         On.Ready(Asset.Load(Guard).As(Loading));
 
         When.Operation(Loading).Succeeded(
-            Object.Create(Loading).ChildOf().Into("Guard"),
+            Object.Create(Loading).ChildOf().Into(Sentry),
             Manned.Set(true));
         When.Operation(Loading).Failed(Manned.Set(false));
         When.Operation(Loading).Finished(Asset.Release(Loading));

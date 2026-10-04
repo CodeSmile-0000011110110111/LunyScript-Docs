@@ -66,8 +66,10 @@ position is read once, when the block runs:
 
 ```csharp
 On.Ready(Navigation.MoveTo(Post).As(Patrol));
-On.Message("Home", Navigation.MoveTo(Home).As(Patrol));
-On.Message("Corner", Navigation.MoveTo(8, 0, -4).As(Patrol));
+GoHome = Define.Message();
+Corner = Define.Message();
+On.Message(GoHome, Navigation.MoveTo(Home).As(Patrol));
+On.Message(Corner, Navigation.MoveTo(8, 0, -4).As(Patrol));
 ```
 
 A moving target is not followed by itself. A chase runs the move again, and each run reads the
@@ -109,7 +111,8 @@ route is being worked out, never takes a step along a refused route, and the att
 `Unreachable`:
 
 ```csharp
-On.Message("Cross", Navigation.MoveTo(Island)
+Cross = Define.Message();
+On.Message(Cross, Navigation.MoveTo(Island)
     .RequireComplete().As(Crossing));
 When.Operation(Crossing).Failed(Stuck.Set(true));
 ```
@@ -119,9 +122,12 @@ With `RequireComplete()`, `Succeeded` means the object arrived.
 ## Stopping, pausing and resuming
 
 ```csharp
-On.Message("Halt", Navigation.Stop());
-On.Message("Stun", Navigation.Pause());
-On.Message("Wake", Navigation.Resume());
+Halt = Define.Message();
+Stun = Define.Message();
+Wake = Define.Message();
+On.Message(Halt, Navigation.Stop());
+On.Message(Stun, Navigation.Pause());
+On.Message(Wake, Navigation.Resume());
 ```
 
 - `Stop()` clears the route. The attempt that was moving the object ends as `Canceled`, and the
@@ -138,8 +144,10 @@ A pause lasts until `Resume()`; a new move and a `Stop()` both leave it in place
 object the script runs on. That object carries its own `NavMeshAgent`:
 
 ```csharp
-On.Message("Heel", Navigation.MoveTo(Home).For(Hound).As(Heel));
-On.Message("Sit", Navigation.Stop().For(Hound));
+CallHeel = Define.Message();
+Sit = Define.Message();
+On.Message(CallHeel, Navigation.MoveTo(Home).For(Hound).As(Heel));
+On.Message(Sit, Navigation.Stop().For(Hound));
 ```
 
 `RequireComplete()` and `For` may be written in either order, each once, before `As`.

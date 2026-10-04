@@ -105,8 +105,9 @@ read of the variable’s kind, plus <code class="language-plaintext highlighter-
 </code></pre></div></div>
 
 <ul>
-  <li><strong>A target</strong> is a binding <code class="language-plaintext highlighter-rouge">Bind.Object()</code> declared, an object this script holds under a name,
-<code class="language-plaintext highlighter-rouge">Object.Owned("Companion")</code>, or inside a request handler, <code class="language-plaintext highlighter-rouge">Sender</code>.</li>
+  <li><strong>A target</strong> is a binding <code class="language-plaintext highlighter-rouge">Bind.Object()</code> declared, an object this script holds in an owned
+object, <code class="language-plaintext highlighter-rouge">Object.Owned(Companion)</code> after <code class="language-plaintext highlighter-rouge">Companion = Define.Object();</code>, or inside a request
+handler, <code class="language-plaintext highlighter-rouge">Sender</code>.</li>
   <li><strong>Every readable kind reads</strong>: Number, Flag, <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code>, <code class="language-plaintext highlighter-rouge">Rotation</code>, <code class="language-plaintext highlighter-rouge">Color</code> and a
 declared enum. A private variable, and a Text variable, is not on the reader.</li>
   <li><strong>A read runs when its block runs</strong>, so it returns the value the target holds at that moment.
@@ -117,8 +118,8 @@ A reader of a script also reads a script derived from it.</li>
 target that runs a script of another type writes one warning per <code class="language-plaintext highlighter-rouge">At(target)</code>, because that is
 a mistake in the scene.</li>
   <li><strong>A read never reaches another incarnation.</strong> When the target’s object is despawned and reused
-from a pool, an owned name that held it is empty again; the new use is read only through a name
-that holds it now.</li>
+from a pool, an owned object that held it is empty again; the new use is read only through an
+owned object that holds it now.</li>
 </ul>
 
 <p>A read is for blocks. C# reads another object’s script with <code class="language-plaintext highlighter-rouge">LunyScript.Find</code>, which throws after
@@ -129,7 +130,8 @@ the script ended instead of returning a default; see
 
 <p><code class="language-plaintext highlighter-rouge">When.Var</code> takes a Number, Flag or enum read and runs its blocks when the value changes:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">enemy</span> <span class="p">=</span> <span class="n">EnemyScript</span><span class="p">.</span><span class="nf">At</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Owned</span><span class="p">(</span><span class="s">"Target"</span><span class="p">));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Target</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
+<span class="kt">var</span> <span class="n">enemy</span> <span class="p">=</span> <span class="n">EnemyScript</span><span class="p">.</span><span class="nf">At</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Owned</span><span class="p">(</span><span class="n">Target</span><span class="p">));</span>
 <span class="n">When</span><span class="p">.</span><span class="nf">Var</span><span class="p">(</span><span class="n">enemy</span><span class="p">.</span><span class="n">Health</span><span class="p">).</span><span class="nf">Changed</span><span class="p">(</span><span class="n">Flash</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 </code></pre></div></div>
 
@@ -289,8 +291,8 @@ script.</li>
 <ul>
   <li><a href="/LunyScript-Docs/manual/binding-scene-objects.html">Binding scene objects</a> — the targets
 a reader and a request take.</li>
-  <li><a href="/LunyScript-Docs/manual/object-pools.html">Object pools</a> — the owned names
-<code class="language-plaintext highlighter-rouge">Object.Owned(name)</code> reads.</li>
+  <li><a href="/LunyScript-Docs/manual/object-pools.html">Object pools</a> — the owned objects
+<code class="language-plaintext highlighter-rouge">Object.Owned(owned)</code> reads.</li>
   <li><a href="/LunyScript-Docs/manual/reading-scripts-from-csharp.html">Reading scripts from C#</a> — the
 C# view of another object’s script.</li>
   <li>Generated reference:

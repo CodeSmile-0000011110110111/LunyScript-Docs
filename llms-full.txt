@@ -47,7 +47,8 @@ curves. This lift has no Rigidbody, so `Motion` writes its transform:
 Block rise = Motion.MoveTo(0, 4, 0).Over(2).Seconds().Ease(Easing.InOutSine);
 Block sink = Motion.MoveTo(0, 0, 0).Over(2).Seconds().Ease(Easing.InOutSine);
 
-On.Ready(Routine("Lift").Run(rise, sink));
+Lift = Define.Routine();
+On.Ready(Routine(Lift).Run(rise, sink));
 ```
 
 **Work on a cadence, declared once and started from any event.** `Every` sets the interval, `For`
@@ -67,7 +68,8 @@ does not flip between the two when the scores sit close together. Write to `Food
 anywhere:
 
 ```csharp
-On.Ready(Choose("needs").Highest(
+Needs = Define.Choice();
+On.Ready(Choose(Needs).Highest(
     Option(Food).Then(Motion.MoveTo(4, 0, 0).AtSpeed(2)),
     Option(Rest).Then(Motion.MoveTo(0, 0, 6).AtSpeed(1)))
     .Hold(Seconds(1)));
@@ -144,7 +146,8 @@ On.Update(If(Charge < 5 & Armed).Then(Powered.Set(false)));
 When.Var(Charge).Changed(Alarm.Set(true));
 TeamScore = Define.Number(nameof(TeamScore)).Shared();
 On.Update(ForEach(Slots).Do(item => Total.Add(item)));
-On.Ready(Random.Number().From(loot).In(1, 100).Into(Roll));
+Loot = Define.Randomizer().Seed(42);
+On.Ready(Random.Number().From(Loot).In(1, 100).Into(Roll));
 On.LateUpdate(Readout.Set(Text.Format("{0:1} s", Age)));
 On.Update(Ratio.Set(Math.Clamp(Charge / 10, 0, 1)));
 
@@ -152,9 +155,12 @@ On.Update(Ratio.Set(Math.Clamp(Charge / 10, 0, 1)));
 On.Ready(Health.Set(100), Powered.Set(true));
 On.TriggerEnter(If(Other.HasTag("Spike")).Then(Hits.Increment()));
 On.Ready(Run(Pulse.Increment()).Every(1).Seconds().Start());
-On.Ready(Routine("Patrol").Run(walkOut, walkBack));
-On.Ready(Routine("Doors").Run(InParallel(openLeft, openRight)));
-On.Ready(Choose("ai").Highest(Option(Food).Then(eat), Option(Rest).Then(nap)));
+Patrol = Define.Routine();
+On.Ready(Routine(Patrol).Run(walkOut, walkBack));
+Doors = Define.Routine();
+On.Ready(Routine(Doors).Run(InParallel(openLeft, openRight)));
+Ai = Define.Choice();
+On.Ready(Choose(Ai).Highest(Option(Food).Then(eat), Option(Rest).Then(nap)));
 On.Ready(Behavior("Guard").Root(Repeat(Task(patrol))).Start());
 On.Update(If(MenuOpen).Then(Time.Pause()).Else(Time.Resume()));
 SetProcessMode(Process.Always);
@@ -192,8 +198,9 @@ When.SceneLoaded(Vault).Do(VaultReady.Set(true));
 Score = Var.DefineSynced<Number>(nameof(Score), SyncCadence.OnChange, 0);
 Sync.Position(SyncCadence.EveryTick);
 On.Update(If(Net.HasAuthority).Then(Score.Add(Time.Delta)));
-On.Message("Ping", Pings.Increment());
-On.Update(If(!Net.HasAuthority).Then(Net.Send.ToAuthority("Ping")));
+Ping = Define.Message();
+On.Message(Ping, Pings.Increment());
+On.Update(If(!Net.HasAuthority).Then(Net.Send.ToAuthority(Ping)));
 On.Ready(Cloud.Load(Career).As(Downloading));
 When.Cloud(Downloading).Succeeded(Prompt.Set("Loaded."));
 ```
@@ -385,16 +392,19 @@ public sealed partial class Battery : Script
         // The generator writes the Charge property this line assigns.
         Charge = Define.Number(nameof(Charge), 40);
 
+        Discharge = Define.Message();
+
         On.Update(Charge.Subtract(Time.Delta));
-        On.Message("Discharge", Object.Create(Spark));
+        On.Message(Discharge, Object.Create(Spark));
     }
 }
 ```
 
 The class is `partial` because the generators write the other half of it: the `Charge` property that
-the `Define.Number` line assigns, and the `DefineAssets` override for `Spark`. A script that declares
-its variables and assets on properties it writes itself, with no `[Variable]` or `[Asset]`, and
-names each `Bind` line with `As`, is written without `partial`. `Spark` gets its own field on
+the `Define.Number` line assigns, the `Discharge` message property the `Define.Message` line
+assigns, and the `DefineAssets` override for `Spark`. A script that declares its variables and
+assets on properties it writes itself, with no `[Variable]` or `[Asset]`, and names each `Bind`
+line and each `Define` line without a name with `As`, is written without `partial`. `Spark` gets its own field on
 the `LunyScript Behaviour` component, below the script, and that is where the object assigns a
 prefab to it.
 
@@ -419,8 +429,8 @@ Available on both `Script` and `EditorScript`:
 
 ```csharp
 Var  Define  Shared  Bind  When  Math  Random  Operation  Asset
-CollectionResult  If(condition)  ForEach(collection)  Routine(name)
-InParallel(block, ..)  Run(block, ..)  Choose(subject)  Option(score)
+CollectionResult  If(condition)  ForEach(collection)  Routine(routine)
+InParallel(block, ..)  Run(block, ..)  Choose(choice)  Option(score)
 Seconds(n)  Milliseconds(n)  Minutes(n)  Hours(n)
 ```
 
@@ -650,14 +660,16 @@ body or a `Choose` option's action. `Then`, `Else`, an `On.*` event list and a s
 all of their blocks in the frame they are reached, so a wait or a group written directly in one of them is reported on its line:
 
 ```csharp
-On.Ready(Routine("Blink").Run(
+Blink = Define.Routine();
+On.Ready(Routine(Blink).Run(
     If(ShouldBlink).Then(Wait(1))));   // Wait (here: Wait(..)) inside Then cannot
                                        // wait, Then runs its blocks in the frame it
                                        // is reached: move the Wait out of Then so
                                        // that it is a step of a routine
 On.Update(Wait(1));               // Wait (here: Wait(..)) in an event list
                                        // cannot wait, ...: make it a step of a
-                                       // routine, as in Routine("name").Run(Wait(..))
+                                       // routine, as in
+                                       // Routine(routine).Run(Wait(..))
 ```
 
 Move the wait out of `Then` so that it is a step of the routine. To wait only when the condition holds, set a `Number` inside `Then`
@@ -670,7 +682,7 @@ written inside it is reported the same way, and the fix moves the sequence:
 On.Update((Lamp.Set(true), Wait(1)));
 // Wait (here: Wait(..)) in a sequence in an event list cannot wait, ...:
 // make the sequence a step of a routine, as in
-// Routine("name").Run(Sequence(..))
+// Routine(routine).Run(Sequence(..))
 ```
 
 The script type is also refused when it is built, naming the line of the wait, or for a group the line of the `If` that holds it. That
@@ -769,7 +781,8 @@ public sealed partial class GuardScript : Script
             If(Alert.IsTrue())
                 .Then(Speed.Set(6))
                 .Else(Speed.Set(2)));
-        On.Message("Hit", Hits.Add(1));
+        Hit = Define.Message();
+        On.Message(Hit, Hits.Add(1));
     }
 }
 ```
@@ -1317,9 +1330,23 @@ TeamScore = Define.Number(nameof(TeamScore)).Shared();
 Score = Bind.Number(nameof(ScoreKeeper.TeamScore)).Shared();
 ```
 
-`Shared()` with no argument uses `SharedStore.Default`. Pass a store to keep separate groups apart,
-and reset one store with `Shared.Clear(store)`. `Bind` always names a store, because a bound value is
-by definition one that another script declared.
+`Shared()` with no argument uses the default store, which needs no declaration. To keep a separate
+group apart, declare a store and pass it; another script names that store through the descriptor
+the generator writes for it:
+
+```csharp
+// MatchScript
+MatchData = Define.Store();
+Score = Define.Number(nameof(Score), 0).Shared(MatchData);
+
+// HudScript
+Score = Bind.Number(nameof(Score)).Shared(MatchScript.Stores.MatchData);
+```
+
+A store is the declaring script and its declared name, so two scripts that each declare their own
+`MatchData` hold two stores, and a misspelt store is a compile error. `Shared.Clear(MatchData)`
+resets one store to its declared defaults, and `Shared.Clear()` the default store. `Bind` always
+names a store, because a bound value is by definition one that another script declared.
 
 A `Vector3` and a text variable are shared the same way. Here a player publishes its position and a
 guard reacts when the player comes within 4 units of its post:
@@ -1549,6 +1576,8 @@ Bind.Flag(name)                         { .Shared() | .Shared(store) }
 Bind.Vector3(name)                         { .Shared() | .Shared(store) }
 Bind.Text(name)                         { .Shared() | .Shared(store) }     // grows
 Bind.Text(name, capacity)               { .Shared() | .Shared(store) }     // fixed
+Define.Store()                          // store, for .Shared(store)
+Shared.Clear([ store ])
 ```
 
 `Var.Define*` declares the same things; `Var.Define<Number>` returns a handle that converts to `Number`,
@@ -1684,7 +1713,8 @@ successful mutation on that same collection. `Contains` is a read and leaves the
 `TryAdd` is the form of `Add` whose own outcome you branch on. Give it to `If`:
 
 ```csharp
-On.Message("Pickup",
+Pickup = Define.Message();
+On.Message(Pickup,
     If(Slots.TryAdd(item))
         .Then(Kept.Increment())
         .Else(ShowFull.Set(true)));
@@ -1703,7 +1733,8 @@ public CollectionResult Added { get; private set; }
 // Inside Build():
 Added = Define.CollectionResult(nameof(Added));
 
-On.Message("Pickup", Slots.TryAdd(item).As(Added));
+Pickup = Define.Message();
+On.Message(Pickup, Slots.TryAdd(item).As(Added));
 On.Update(
     If(Added).Then(Glow.Set(true)),
     If(Added.Failed).Then(ShowFull.Set(true)));
@@ -1758,7 +1789,8 @@ public sealed partial class Scoreboard : Script
 
         On.Ready(Scores.Set("wave", 0), Scores.Set("bonus", 0));
 
-        On.Message("WaveCleared",
+        WaveCleared = Define.Message();
+        On.Message(WaveCleared,
             Wave.Set(Scores.At("wave")),
             Wave.Increment(),
             Scores.Set("wave", Wave));
@@ -1814,36 +1846,39 @@ public sealed partial class LootDrop : Script
 
     protected override void Build()
     {
-        var loot = Random.Stream("loot", 42);
+        Loot = Define.Randomizer().Seed(42);
 
-        On.Ready(Random.Number().From(loot).In(1, 100).Into(Roll));
+        On.Ready(Random.Number().From(Loot).In(1, 100).Into(Roll));
     }
 }
 ```
 
 `Roll` holds a number from 1 up to but excluding 100. Seed 42 produces the same number on every run
-of this stream, which is what makes the result reproducible while you are testing. `On.Ready` runs
+of this randomizer, which is what makes the result reproducible while you are testing. `On.Ready` runs
 once per spawn, so a pooled object that respawns draws again.
 
-## What a stream is
+## What a randomizer is
 
-A stream is a named source of random numbers that advances independently of every other stream, so a
-drop table and a camera shake each keep their own reproducible sequence whatever the other one
-draws.
+A randomizer is a declared source of random numbers that advances independently of every other
+randomizer, so a drop table and a camera shake each keep their own reproducible sequence whatever
+the other one draws. Each object running the script holds its own sequence, and a pooled object
+that respawns starts it again.
 
 ```csharp
-var loot = Random.Stream("loot", 42);   // a seed: the same draws every run
-var shake = Random.Stream("shake");     // no seed given
+Loot = Define.Randomizer().Seed(42);   // a seed: the same draws every run
+Shake = Define.Randomizer();           // no seed given
 ```
 
-A stream name is unique within a script; two streams with the same name are refused while `Build()`
-runs. A seed is a `UInt32`, and 0 is stored as 1. Leaving the seed out derives it from the session
-seed, the object's spawn index and the stream name, so two objects running the same script draw
-differently from each other and each of them repeats on a rerun of the same session seed.
+`Define.Randomizer()` takes no name: the property the line is assigned to names it, and a local
+names it with `.As(name)`. `Seed` is written on the declaring line, before the name. A seed is a
+`UInt32`, and 0 is stored as 1. Leaving the seed out derives it from the session seed, the object's
+spawn index and the declared name, so two objects running the same script draw differently from each
+other and each of them repeats on a rerun of the same session seed. Renaming an unseeded
+randomizer's property changes its sequence.
 
 ## The four kinds of draw
 
-Every draw names its stream with `From`, and the variable it writes with `Into`. The chain is
+Every draw names its randomizer with `From`, and the variable it writes with `Into`. The chain is
 incomplete until both are present.
 
 | Draw | What it produces |
@@ -1854,10 +1889,10 @@ incomplete until both are present.
 | `Random.Weighted(option, ..)` | One of the values you listed, at the weights you gave. |
 
 ```csharp
-Random.Number().From(loot).In(1, 100).Into(Roll);
-Random.Index().From(loot).In(3).Into(Pick);
-Random.Choice(1, 2, 5).From(loot).Into(Drop);
-Random.Weighted(10, 20, 30).WithWeights(70, 25, 5).From(loot).Into(Rare);
+Random.Number().From(Loot).In(1, 100).Into(Roll);
+Random.Index().From(Loot).In(3).Into(Pick);
+Random.Choice(1, 2, 5).From(Loot).Into(Drop);
+Random.Weighted(10, 20, 30).WithWeights(70, 25, 5).From(Loot).Into(Rare);
 ```
 
 `In(minInclusive, maxExclusive)` refuses a minimum at or above the maximum, and refuses NaN and an
@@ -1872,7 +1907,7 @@ A weighted draw over 0 and 1 is how you branch on a probability:
 
 ```csharp
 On.Ready(
-    Random.Weighted(0, 1).WithWeights(70, 30).From(loot).Into(WeaponPick),
+    Random.Weighted(0, 1).WithWeights(70, 30).From(Loot).Into(WeaponPick),
     If(WeaponPick == 0)
         .Then(Equipped.Set(Weapon.Sword))
         .Else(Equipped.Set(Weapon.Bow)));
@@ -1889,7 +1924,7 @@ value.
   `list.At(index)` to pick an element.
 - Generated reference:
   [`RandomFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RandomFactory.html),
-  [`RandomStream`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.RandomStream.html).
+  [`Randomizer`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Randomizer.html).
 
 Source: https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/random-numbers.md
 
@@ -2200,14 +2235,16 @@ its own `On.Message` blocks change it:
 
 ```csharp
 // in the script's Build():
-On.Message(nameof(Heal), Health.Add(25));
+Heal = Define.Message();
+On.Message(Heal, Health.Add(25));
 
 // in C#:
-playerBehaviour.Send(PlayerScript.Heal);
+playerBehaviour.Send(PlayerScript.Messages.Heal);
 ```
 
-`Heal` here is a `const string` the script declares, so the name is written once. The script
-decides what a heal does, including any limit it applies.
+`Heal` here is a message the script declares, and `PlayerScript.Messages.Heal` is the descriptor
+the generator writes for it, so a misspelt message does not compile. The script decides what a
+heal does, including any limit it applies.
 
 ## The object's own script
 
@@ -2253,16 +2290,17 @@ public sealed partial class Door : Script
 {
     protected override void Build()
     {
-        On.Ready(Object.Create("Hinge Marker"));
-        On.Disabled(Object.Deactivate("Hinge Marker"));
-        On.Enabled(Object.Activate("Hinge Marker"));
-        On.Despawned(Object.Destroy("Hinge Marker"));
+        HingeMarker = Define.Object();
+        On.Ready(Object.Create(HingeMarker));
+        On.Disabled(Object.Deactivate(HingeMarker));
+        On.Enabled(Object.Activate(HingeMarker));
+        On.Despawned(Object.Destroy(HingeMarker));
     }
 }
 ```
 
 Add the component and pick `Door`. When the object starts, it creates an empty marker named
-`Hinge Marker`. Disabling the door deactivates that marker; enabling the door activates it again.
+`HingeMarker`, the name of the owned object `Define.Object()` declared. Disabling the door deactivates that marker; enabling the door activates it again.
 Ending the door destroys the marker.
 
 ## What `On` does
@@ -2345,19 +2383,28 @@ a built player may leave out, and an operating system that terminates an applica
 
 protected override void Build()
 {
-    On.Ready(Object.Create("Marker"));
-    On.Message("PostGuard",
+    Marker = Define.Object();
+    Guard = Define.Object();
+    PostGuard = Define.Message();
+    RecallGuard = Define.Message();
+    On.Ready(Object.Create(Marker));
+    On.Message(PostGuard,
         Object.Create(Sentry).At(new Vector3(0, 0.8, 0)).ChildOf()
-            .Into("Guard"));
-    On.Message("RecallGuard", Object.Destroy("Guard"));
+            .Into(Guard));
+    On.Message(RecallGuard, Object.Destroy(Guard));
     On.Update(If(Health <= 0).Then(Object.Destroy()));
 }
 ```
 
-`PostGuard` creates a copy of `Sentry`, parents it to this object, and names it `Guard` in this
-script. `RecallGuard` destroys that copy by the same name.
+`PostGuard` creates a copy of `Sentry`, parents it to this object, and holds it in the owned
+object `Guard`. `RecallGuard` destroys that copy through the same handle.
 
-`Object.Create(name)` makes an empty object immediately. It carries no script, and it is destroyed
+`Define.Object()` declares an owned object: a slot on every instance of the script that one
+`Create` or `Spawn` call of the script fills, and that `Activate`, `Deactivate`, `Destroy`,
+`Despawn`, `ChildOf` and `Object.Owned` take. It starts empty. A scene object bound with
+`Bind.Object()` is borrowed, not owned, so `Object.Destroy` and `Object.Despawn` do not take one.
+
+`Object.Create(owned)` makes an empty object immediately, called the owned object's declared name. It carries no script, and it is destroyed
 when this object's script ends.
 
 `Object.Create(prefab)` makes a fresh copy of a declared `Prefab` input or of a succeeded
@@ -2381,8 +2428,9 @@ is already ending, and is dropped.
 controls, on the same floor, facing the same way:
 
 ```csharp
+Guest2 = Define.Object();
 When.Player(2).Paired(Object.Create(Avatar).NearPlayer(1, 2)
-    .ForPlayer(2).Into("Guest2"));
+    .ForPlayer(2).Into(Guest2));
 ```
 
 Up to 16 points within `radius` metres are tried; the first with the target player's floor under it,
@@ -2394,10 +2442,10 @@ whose Local Player field names the player. No such object, no floor under it, or
 above zero is reported as an error and nothing is created. `NearPlayer` is the placement, so `At`
 and a frame do not follow it.
 
-With a name, `Activate`, `Deactivate` and `Destroy` act on that object after the current event's
-blocks finish, and `Destroy` drops the name where the block runs, so a later block no longer finds
-it. With no name they act on this object after the current dispatch finishes, so the rest of the
-block list still runs. `Object.Destroy()` on this object produces `On.Disabled`, then
+With an owned object, `Activate`, `Deactivate` and `Destroy` act on that object after the current
+event's blocks finish, and `Destroy` empties the owned object where the block runs, so a later
+block no longer finds it. With no argument they act on this object after the current dispatch
+finishes, so the rest of the block list still runs. `Object.Destroy()` on this object produces `On.Disabled`, then
 `On.Despawned`, and then destroys the host.
 
 `Object` also changes how an object is drawn while it keeps running: `Hide`, `Show`, `SetColor` and
@@ -2410,7 +2458,8 @@ leave out.
 
 | Call | What it does |
 | --- | --- |
-| `Object.Create(name)` | Makes an empty object named `name` in the scene and in this script. |
+| `Define.Object()` | Declares an owned object `owned`, which the property it is assigned to names. |
+| `Object.Create(owned)` | Makes an empty object in `owned`, called its declared name in the scene. |
 | `Object.Create(prefab)` | Makes a fresh copy of a declared `Prefab` input. |
 | `Object.Create(handle)` | Makes a fresh copy of a succeeded `Operation<Prefab>` payload. |
 | *`.At(position)`* | Places the copy at `position`. |
@@ -2422,13 +2471,13 @@ leave out.
 | *`.NearPlayer(player, radius)`* | Places the copy near that player's object. `At` does not follow it. |
 | *`.ForPlayer(player)`* | Binds scripts on the copy to local player `player`. |
 | *`.ChildOf()`* | Parents the copy to this object. |
-| *`.ChildOf(name)`* | Parents the copy to the object this script already named. ChildOf cannot parent to itself. |
-| *`.Into(name)`* | Names the copy in this script so later calls can address it. |
-| `name` | The name later `Activate`, `Deactivate` and `Destroy` use. |
+| *`.ChildOf(owned)`* | Parents the copy to the object `owned` holds. ChildOf cannot parent to itself. |
+| *`.Into(owned)`* | Holds the copy in `owned` so later calls can address it. |
+| `owned` | The owned object later `Activate`, `Deactivate` and `Destroy` take. |
 | *`.SurvivesCaller()`* | Leaves the copy in the scene when this script's object ends. |
-| `Object.Activate([name])` | Activates this object, or the named copy. |
-| `Object.Deactivate([name])` | Deactivates this object, or the named copy. |
-| `Object.Destroy([name])` | Destroys this object, or the named copy. |
+| `Object.Activate([owned])` | Activates this object, or the object `owned` holds. |
+| `Object.Deactivate([owned])` | Deactivates this object, or the object `owned` holds. |
+| `Object.Destroy([owned])` | Destroys this object, or the object `owned` holds. |
 
 ## What to read next
 
@@ -2453,7 +2502,7 @@ Source: https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/even
 
 # Messaging
 
-Name a message in `Build()`, handle it with `On.Message`, and send it from C# or from a peer
+Declare a message in `Build()`, handle it with `On.Message`, and send it from C# or from a peer
 without authority:
 
 ```csharp
@@ -2461,32 +2510,43 @@ using CodeSmile.LunyScript;
 
 public sealed partial class Battery : Script
 {
-    public const string Heal = nameof(Heal);
-
     protected override void Build()
     {
         Health = Define.Number(nameof(Health), 40);
+        Heal = Define.Message();
         On.Message(Heal, Health.Add(25));
     }
 }
 ```
 
-From C# on the same object:
+From C# on the same object, through the descriptor the generator writes for every declared
+message:
 
 ```csharp
-behaviour.Send(Battery.Heal);
+behaviour.Send(Battery.Messages.Heal);
 ```
 
 The script decides what a heal does. C# does not write `Health` itself.
 
-## Receiving a message
+## Declaring a message
 
-`On.Message` takes the name and one or more blocks. Spell the name with `nameof` of a `const
-string` so a rename moves the send and the handler together.
+`Define.Message()` takes no name: the property the line is assigned to names the message, so a
+misspelt message is a compile error. A local or a hand-written property names it with
+`.As(name)`:
 
 ```csharp
-On.Message(nameof(Heal), Health.Add(25));
-On.Message("RequestReady", IsReady.Set(true));
+Heal = Define.Message();
+var ping = Define.Message().As("Ping");
+```
+
+## Receiving a message
+
+`On.Message` takes the message and one or more blocks. A script handles only the messages it
+declares.
+
+```csharp
+RequestReady = Define.Message();
+On.Message(RequestReady, IsReady.Set(true));
 ```
 
 Two `On.Message` calls naming the same message both fire, in the order they were written:
@@ -2497,17 +2557,18 @@ On.Message(Heal, Heals.Add(1));
 ```
 
 A send of `Heal` runs both handlers. A send with no matching `On.Message` in the same script is
-refused while `Build()` runs when the send is authored in that script. A C# `Send` of a name this
-script has no handler for throws `LunyScriptUsageException` naming the message and the script.
+refused while `Build()` runs when the send is authored in that script. A C# `Send` of a message
+this script has no handler for, or one another script type declares, throws
+`LunyScriptUsageException` naming the message and the reason.
 
 ## Sending from C#
 
-`LunyScriptBehaviour.Send` runs this object's `On.Message` handlers:
+`LunyScriptBehaviour.Send` runs this object's `On.Message` handlers for one declared message,
+named through the generated `Messages` class of the script that declares it:
 
 ```csharp
-var script = (PlayerScript)behaviour.Script;
 if (behaviour.IsRunning)
-    behaviour.Send(PlayerScript.Heal);
+    behaviour.Send(PlayerScript.Messages.Heal);
 ```
 
 `IsRunning` is the check before `Awake`, after the object is despawned or destroyed, and after
@@ -2521,11 +2582,13 @@ A peer without authority asks the authority to act with `Net.Send.ToAuthority`. 
 receives that send with `On.Message` in the same script:
 
 ```csharp
+RequestReady = Define.Message();
+
 On.Update(
     If(!Net.HasAuthority & IsReady.IsFalse())
-        .Then(Net.Send.ToAuthority("RequestReady")));
+        .Then(Net.Send.ToAuthority(RequestReady)));
 
-On.Message("RequestReady", IsReady.Set(true));
+On.Message(RequestReady, IsReady.Set(true));
 ```
 
 [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html) is the
@@ -2598,8 +2661,9 @@ On.Update(
     If(enemy.IsRunning & enemy.Alive).Then(Object.SetColor(enemy.Tint)));
 ```
 
-- **A target** is a binding `Bind.Object()` declared, an object this script holds under a name,
-  `Object.Owned("Companion")`, or inside a request handler, `Sender`.
+- **A target** is a binding `Bind.Object()` declared, an object this script holds in an owned
+  object, `Object.Owned(Companion)` after `Companion = Define.Object();`, or inside a request
+  handler, `Sender`.
 - **Every readable kind reads**: Number, Flag, `Vector3`, `Vector2`, `Rotation`, `Color` and a
   declared enum. A private variable, and a Text variable, is not on the reader.
 - **A read runs when its block runs**, so it returns the value the target holds at that moment.
@@ -2610,8 +2674,8 @@ On.Update(
   target that runs a script of another type writes one warning per `At(target)`, because that is
   a mistake in the scene.
 - **A read never reaches another incarnation.** When the target's object is despawned and reused
-  from a pool, an owned name that held it is empty again; the new use is read only through a name
-  that holds it now.
+  from a pool, an owned object that held it is empty again; the new use is read only through an
+  owned object that holds it now.
 
 A read is for blocks. C# reads another object's script with `LunyScript.Find`, which throws after
 the script ended instead of returning a default; see
@@ -2622,7 +2686,8 @@ the script ended instead of returning a default; see
 `When.Var` takes a Number, Flag or enum read and runs its blocks when the value changes:
 
 ```csharp
-var enemy = EnemyScript.At(Object.Owned("Target"));
+Target = Define.Object();
+var enemy = EnemyScript.At(Object.Owned(Target));
 When.Var(enemy.Health).Changed(Flash.Set(true));
 ```
 
@@ -2761,8 +2826,8 @@ a singleton has no binding another script can name.
 
 - [Binding scene objects](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/binding-scene-objects.html) — the targets
   a reader and a request take.
-- [Object pools](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/object-pools.html) — the owned names
-  `Object.Owned(name)` reads.
+- [Object pools](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/object-pools.html) — the owned objects
+  `Object.Owned(owned)` reads.
 - [Reading scripts from C#](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/reading-scripts-from-csharp.html) — the
   C# view of another object's script.
 - Generated reference:
@@ -2836,21 +2901,24 @@ the pool. When that scene unloads, the pool and every copy go with it.
 ## Spawning and despawning
 
 ```csharp
+Boss = Define.Object();
+Retreat = Define.Message();
 On.Ready(Object.Spawn(Enemies));
-On.Ready(Object.Spawn(Enemies).Into("Boss"));
-On.Message("Retreat", Object.Despawn("Boss"));
+On.Ready(Object.Spawn(Enemies).Into(Boss));
+On.Message(Retreat, Object.Despawn(Boss));
 On.Update(If(Health <= 0).Then(Object.Despawn()));
 ```
 
 `Object.Spawn(pool)` takes one copy out of the pool. The pool reuses an idle copy when it has one and
-makes a new one below its hard cap. `Into(name)` gives the copy a name in this script. `Despawn` puts a
-copy back: with a name from the script that spawned it, or with no name from the copy's own script.
+makes a new one below its hard cap. `Into(owned)` holds the copy in an owned object this script declared with
+`Define.Object()`. `Despawn` puts a copy back: with that owned object from the script that spawned
+it, or with no argument from the copy's own script.
 
 A spawn is applied after the current event's blocks finish, so a copy held with `Into` is in its slot
 from the next event on. A copy that goes back becomes available to spawns made after that; a spawn
 written right after the despawn, in the same event, uses another copy.
 
-`Object.Destroy()` or `Object.Destroy(name)` ends a pooled copy for good and takes it out of its pool,
+`Object.Destroy()` or `Object.Destroy(owned)` ends a pooled copy for good and takes it out of its pool,
 which can then make a new one in its place. `Despawn` works only on pooled copies; a fresh
 `Object.Create` copy ends with `Destroy`.
 
@@ -2971,14 +3039,14 @@ leave out.
 | *`.InWorldSpace()`* | Reads `At` or `SpawnAt` on the scene's axes. |
 | *`.InLocalSpace()`* | Reads `At` or `SpawnAt` on the parent's axes. |
 | *`.ChildOf()`* | Parents the copy to this object. |
-| *`.ChildOf(name)`* | Parents the copy to the object this script already named. ChildOf cannot parent to itself. |
-| *`.Into(name)`* | Names the copy in this script so later calls can address it. |
-| `name` | The name later `Despawn` and `Destroy` use. |
+| *`.ChildOf(owned)`* | Parents the copy to the object `owned` holds. ChildOf cannot parent to itself. |
+| *`.Into(owned)`* | Holds the copy in `owned` so later calls can address it. |
+| `owned` | An owned object `Define.Object()` declared, which `Despawn` and `Destroy` take. |
 | *`.ForPlayer(n)`* | Binds scripts on the copy to local player `n`. |
 | *`.SurvivesCaller()`* | Leaves the copy in the scene when this script's object ends. |
 | *`.As(operation)`* | Binds the spawn to an attempt. |
-| `Object.Despawn([name])` | Returns this copy, or the named copy, to its pool. |
-| `Object.Destroy([name])` | Ends this copy, or the named copy, for good. |
+| `Object.Despawn([owned])` | Returns this copy, or the copy `owned` holds, to its pool. |
+| `Object.Destroy([owned])` | Ends this copy, or the copy `owned` holds, for good. |
 
 ## What to read next
 
@@ -3093,9 +3161,11 @@ protected override void Build()
     var burst      = Run(Burst.Inc()).Every(500).Milliseconds().For(5);
     var continuous = Run(Continuous.Inc());
 
+    Quiet = Define.Message();
+
     On.Ready(pulse.Start(), cadence.Start(),
         burst.Start(), continuous.Start());
-    On.Message("Quiet", continuous.Stop(), cadence.Stop());
+    On.Message(Quiet, continuous.Stop(), cadence.Stop());
 }
 ```
 
@@ -3118,12 +3188,22 @@ A routine runs its steps in the order you wrote them, each one finishing before 
 as many frames as they need.
 
 ```csharp
-protected override void Build() =>
-    On.Ready(Routine("Door").Run(
+protected override void Build()
+{
+    Door = Define.Routine();
+    On.Ready(Routine(Door).Run(
         Opening.Set(true), Wait(3), Opening.Set(false)));
+}
 ```
 
-The name you pass to `Routine` is what a diagnostic message and the runtime inspector call it.
+`Routine` takes a routine `Define.Routine()` declared. Its declared name is what a diagnostic
+message and the runtime inspector call it, and a misspelt routine is a compile error. The
+declaration starts nothing; `Run` builds the block that starts the routine. One declaration opens
+one routine: a second `Routine(Door).Run(...)` is refused while `Build()` runs, so two routines need
+two declarations.
+
+The examples below each declare their routine on the line before they use it, the way `Door` is
+declared here: `Flash = Define.Routine();` before `Routine(Flash)`, and so on.
 
 ## Waiting inside a routine
 
@@ -3138,7 +3218,8 @@ The name you pass to `Routine` is what a diagnostic message and the runtime insp
 | `Wait(Seconds(0.15))` | A duration value, the one `Hold` takes. |
 
 ```csharp
-On.CollisionEnter(Routine("Flash").Run(
+Flash = Define.Routine();
+On.CollisionEnter(Routine(Flash).Run(
     Object.SetColor(1, 0.25, 0.25), Wait(0.15), Object.ResetColor()));
 ```
 
@@ -3153,7 +3234,8 @@ runs its next step. `Then`, `Else` and an event list run all of their blocks one
 there waits for a wait:
 
 ```csharp
-On.Ready(Routine("Blink").Run(
+Blink = Define.Routine();
+On.Ready(Routine(Blink).Run(
     If(ShouldBlink).Then(Light.Set(true), Wait(1), Light.Set(false))));   // refused
 ```
 
@@ -3167,7 +3249,8 @@ To wait only when the condition holds, set a `Number` inside `Then` and give it 
 at once, so the routine goes straight on when the condition is false:
 
 ```csharp
-On.Ready(Routine("Blink").Run(
+Blink = Define.Routine();
+On.Ready(Routine(Blink).Run(
     BlinkDelay.Set(0),
     If(ShouldBlink).Then(Light.Set(true), BlinkDelay.Set(1)),
     Wait(BlinkDelay),
@@ -3193,7 +3276,8 @@ var firstOpen  = InParallel(openLeft, openRight).UntilOneSucceeds();
 var arrival = InParallel(moveCamera, fadeMusic)
     .UntilOneFinishes().OthersKeepRunning();
 
-On.Ready(Routine("Arrival").Run(arrival, fadeInArrivalPanel));
+Arrival = Define.Routine();
+On.Ready(Routine(Arrival).Run(arrival, fadeInArrivalPanel));
 ```
 
 `OthersKeepRunning()` comes after a terminal clause. Here `fadeInArrivalPanel` is a multi-frame
@@ -3208,8 +3292,9 @@ A group publishes three conditions, and you read them by holding the group in a 
 protected override void Build()
 {
     var race = InParallel(reachExit, Wait(5)).UntilOneFinishes();
+    Escape = Define.Routine();
 
-    On.Ready(Routine("Escape").Run(
+    On.Ready(Routine(Escape).Run(
         race,
         If(race.Succeeded).Then(RaceOver.Set(true)),
         If(race.Failed).Then(Alarm.Set(true)),
@@ -3255,8 +3340,11 @@ protected override void Build()
     // The same as Sequence(...): a tuple of 2 to 9 blocks.
     var blink = (Lamp.Set(true), Wait(0.1), Lamp.Set(false));
 
-    On.Message("Dodge", Routine("Dodge").Run(DodgeRoll));
-    On.Ready(Routine("Warm up").Run(hop, hop, blink, DodgeRoll));
+    Roll = Define.Message();
+    Dodge = Define.Routine();
+    WarmUp = Define.Routine();
+    On.Message(Roll, Routine(Dodge).Run(DodgeRoll));
+    On.Ready(Routine(WarmUp).Run(hop, hop, blink, DodgeRoll));
 }
 ```
 
@@ -3302,23 +3390,27 @@ place. A routine started from two events is two routines, each with its own prog
 move placed in two events is two moves, and a sequence placed in two routines is two sequences:
 
 ```csharp
-var tour = Routine("Tour").Run(Starts.Increment(), walk, Ends.Increment());
+Tour = Define.Routine();
+Again = Define.Message();
+var tour = Routine(Tour).Run(Starts.Increment(), walk, Ends.Increment());
 On.Ready(tour);
-On.Message("Again", tour);    // a second routine, as if written out here
+On.Message(Again, tour);    // a second routine, as if written out here
 ```
 
 Inside one routine, a group's `Succeeded`, `Failed` and `Canceled` read the copy of the group that
 the same routine runs, so the second routine above can read its own outcome.
 
 Something you declare keeps one identity wherever you name it: a variable, a `Run(...)` work, an
-audio voice, a UI element and an operation. Every `Start()` and `Stop()` of one `Run` names the one
+audio voice, a UI element and an operation. A routine placed twice this way is still one declared
+`Tour`, so the debugger names both copies `Tour`. Every `Start()` and `Stop()` of one `Run` names the one
 work, which is also how one routine is restarted from two events:
 
 ```csharp
+Halt = Define.Message();
 var go = Run(tour).For(1);
 On.Ready(go.Start());
-On.Message("Again", go.Start());    // restarts the one routine
-On.Message("Halt", go.Stop());      // stops the work both starts named
+On.Message(Again, go.Start());    // restarts the one routine
+On.Message(Halt, go.Stop());      // stops the work both starts named
 ```
 
 ## What to read next
@@ -3358,8 +3450,9 @@ public sealed partial class Worker : Script
     {
         Block work = Motion.MoveTo(4, 0, 0).AtSpeed(2);
         Block rest = Motion.MoveTo(0, 0, 6).AtSpeed(1);
+        Needs = Define.Choice();
 
-        On.Ready(Choose("needs").Highest(
+        On.Ready(Choose(Needs).Highest(
             Option(WorkScore).Then(work),
             Option(RestScore).Then(rest)));
     }
@@ -3376,8 +3469,11 @@ winner. Use it where the alternative would be a chain of `If` branches whose ord
 you would rather express as a number: which target to attack, whether to eat or sleep, which cover
 point to take.
 
-The subject you pass to `Choose` is what a diagnostic message and the runtime inspector call this
-selector. A blank subject is refused while `Build()` runs.
+`Choose` takes a choice `Define.Choice()` declared. Its declared name is what a diagnostic message
+and the runtime inspector call this selector, and a misspelt choice is a compile error. One
+declaration opens one selector: a second `Choose` with the same choice is refused while `Build()`
+runs, so two selectors need two declarations. Placing the block one `Choose` built in two places
+is allowed; each place runs its own copy.
 
 ## Options
 
@@ -3407,24 +3503,27 @@ either order.
 | `.Bias(margin)` | A challenger must exceed the current winner by this margin before it takes over. |
 | `.Hold(amount)` | The current winner is kept for at least this long, whatever the scores do. |
 
+Each statement below is one alternative for the choice `Needs = Define.Choice();` declares; a
+script writes one of them.
+
 ```csharp
 // Without either clause, work and rest swap every frame the scores cross.
-Choose("needs").Highest(
+Choose(Needs).Highest(
     Option(WorkScore).Then(work),
     Option(RestScore).Then(rest));
 
 // A challenger must beat the winner by 0.1 before it takes over.
-Choose("needs").Highest(
+Choose(Needs).Highest(
     Option(WorkScore).Then(work),
     Option(RestScore).Then(rest)).Bias(0.1);
 
 // The winner is kept for at least one second, whatever the scores do.
-Choose("needs").Highest(
+Choose(Needs).Highest(
     Option(WorkScore).Then(work),
     Option(RestScore).Then(rest)).Hold(1);
 
 // Both: a one-second minimum, then a 0.1 margin to take over.
-Choose("needs").Highest(
+Choose(Needs).Highest(
     Option(WorkScore).Then(work),
     Option(RestScore).Then(rest)).Bias(0.1).Hold(1);
 ```
@@ -3445,7 +3544,8 @@ working options are under Options, above.
 
 ```csharp
 Option(score).Then(block, ..)
-Choose(subject).Highest(option, ..)
+Define.Choice()
+Choose(choice).Highest(option, ..)
     [ .Bias(margin) ] [ .Hold(amount) [ .Seconds() ] ]
 ```
 
@@ -3535,8 +3635,9 @@ On.Ready(Phases.Start());
 ## Enter, Update and Exit
 
 ```csharp
+Roar = Define.Routine();
 Phases.State(Angry)
-    .Enter(Speed.Set(3), Routine("Roar").Run(Roaring.Set(true),
+    .Enter(Speed.Set(3), Routine(Roar).Run(Roaring.Set(true),
         Wait(1), Roaring.Set(false)))
     .Update(Transform.RotateBy(0, 90, 0))
     .Exit(Speed.Set(1));
@@ -3697,7 +3798,8 @@ public sealed partial class LockedDoor : Script
                 Task(Transform.Child(0).SetLocalPosition(0, 2, 0)))
             .UntilOneFails());
 
-        On.Message("Use", open.Start());
+        Use = Define.Message();
+        On.Message(Use, open.Start());
         On.Update(If(open.Failed).Then(Locked.Set(true)));
     }
 }
@@ -4717,8 +4819,10 @@ position is read once, when the block runs:
 
 ```csharp
 On.Ready(Navigation.MoveTo(Post).As(Patrol));
-On.Message("Home", Navigation.MoveTo(Home).As(Patrol));
-On.Message("Corner", Navigation.MoveTo(8, 0, -4).As(Patrol));
+GoHome = Define.Message();
+Corner = Define.Message();
+On.Message(GoHome, Navigation.MoveTo(Home).As(Patrol));
+On.Message(Corner, Navigation.MoveTo(8, 0, -4).As(Patrol));
 ```
 
 A moving target is not followed by itself. A chase runs the move again, and each run reads the
@@ -4760,7 +4864,8 @@ route is being worked out, never takes a step along a refused route, and the att
 `Unreachable`:
 
 ```csharp
-On.Message("Cross", Navigation.MoveTo(Island)
+Cross = Define.Message();
+On.Message(Cross, Navigation.MoveTo(Island)
     .RequireComplete().As(Crossing));
 When.Operation(Crossing).Failed(Stuck.Set(true));
 ```
@@ -4770,9 +4875,12 @@ With `RequireComplete()`, `Succeeded` means the object arrived.
 ## Stopping, pausing and resuming
 
 ```csharp
-On.Message("Halt", Navigation.Stop());
-On.Message("Stun", Navigation.Pause());
-On.Message("Wake", Navigation.Resume());
+Halt = Define.Message();
+Stun = Define.Message();
+Wake = Define.Message();
+On.Message(Halt, Navigation.Stop());
+On.Message(Stun, Navigation.Pause());
+On.Message(Wake, Navigation.Resume());
 ```
 
 - `Stop()` clears the route. The attempt that was moving the object ends as `Canceled`, and the
@@ -4789,8 +4897,10 @@ A pause lasts until `Resume()`; a new move and a `Stop()` both leave it in place
 object the script runs on. That object carries its own `NavMeshAgent`:
 
 ```csharp
-On.Message("Heel", Navigation.MoveTo(Home).For(Hound).As(Heel));
-On.Message("Sit", Navigation.Stop().For(Hound));
+CallHeel = Define.Message();
+Sit = Define.Message();
+On.Message(CallHeel, Navigation.MoveTo(Home).For(Hound).As(Heel));
+On.Message(Sit, Navigation.Stop().For(Hound));
 ```
 
 `RequireComplete()` and `For` may be written in either order, each once, before `As`.
@@ -5454,7 +5564,8 @@ that waits to respawn and `Deactivate` for an object that is gone.
 
 ```csharp
 On.TriggerEnter(Object.Hide());
-On.Message("Respawn", Object.Show());
+Respawn = Define.Message();
+On.Message(Respawn, Object.Show());
 On.Update(If(Object.IsVisible).Then(Seen.Set(true)));
 ```
 
@@ -5474,8 +5585,10 @@ protected override void Build()
     var shield = Object.For(Shield);
 
     On.Ready(shield.Hide());
-    On.Message("ShieldUp", shield.Show(), shield.SetColor(0.3, 0.6, 1));
-    On.Message("ShieldDown", shield.Hide());
+    ShieldUp = Define.Message();
+    ShieldDown = Define.Message();
+    On.Message(ShieldUp, shield.Show(), shield.SetColor(0.3, 0.6, 1));
+    On.Message(ShieldDown, shield.Hide());
 }
 ```
 
@@ -5492,7 +5605,8 @@ colliders, lights, particle systems and its own scripts - use `Activate` and `De
 ```csharp
 Blocker = Bind.Object();
 On.Ready(Object.For(Blocker).Activate());
-On.Message("Opened", Object.For(Blocker).Deactivate());
+Opened = Define.Message();
+On.Message(Opened, Object.For(Blocker).Deactivate());
 ```
 
 Both apply after the blocks running now have finished, as `Object.Deactivate()` on the script's own
@@ -5510,7 +5624,8 @@ one ignores. A channel above 1 is allowed, because an HDR colour property uses i
 On.Ready(Object.SetColor(1, 0.8, 0.2));
 On.Ready(Object.SetColor(1, 0.8, 0.2, 0.5));
 On.Update(Object.SetColor(1, Health / 3, Health / 3));
-On.Message("Healed", Object.ResetColor());
+Healed = Define.Message();
+On.Message(Healed, Object.ResetColor());
 ```
 
 The colour is written to the material's main colour: the colour property its shader marks
@@ -5530,8 +5645,10 @@ var glass = new Color(0.3, 0.6, 1, 0.5);
 glass.A = 0.25;                            // a channel is a field
 
 On.CollisionEnter(Object.SetColor(Color.Red));
-On.Message("Gold", Object.SetColor(gold));
-On.Message("Glass", Object.For(Shield).SetColor(glass));
+Gold = Define.Message();
+Glass = Define.Message();
+On.Message(Gold, Object.SetColor(gold));
+On.Message(Glass, Object.For(Shield).SetColor(glass));
 ```
 
 `Color.White`, `Black`, `Gray`, `Clear`, `Red`, `Green` and `Blue` hold the channels Unity's own
@@ -5543,11 +5660,13 @@ with the asset, and the script's copy of it is a colour variable `SetColor` read
 
 ```csharp
 Team = Bind.Data(TeamLook.Schema);    // TeamLook: Color Tint and Color Flash
+Hit = Define.Routine();
+Traitor = Define.Message();
 
 On.Ready(Object.SetColor(Team.Tint));
-On.CollisionEnter(Routine("Hit").Run(Object.SetColor(Team.Flash),
+On.CollisionEnter(Routine(Hit).Run(Object.SetColor(Team.Flash),
     Wait(0.15), Object.SetColor(Team.Tint)));
-On.Message("Traitor", Team.Tint.Set(Color.Green));
+On.Message(Traitor, Team.Tint.Set(Color.Green));
 ```
 
 `Team.Tint.Set(...)` changes this object's copy; the asset keeps its colour.
@@ -5564,7 +5683,8 @@ starts with an underscore:
 var dissolve = Object.MaterialNumber("_Dissolve");
 
 On.Update(If(Health <= 0).Then(Fade.Add(Time.Delta), dissolve.Set(Fade)));
-On.Message("Revive", dissolve.Reset());
+Revive = Define.Message();
+On.Message(Revive, dissolve.Reset());
 ```
 
 `Set` writes the value, and `Reset` removes it so the material's own value shows again. The property
@@ -5754,7 +5874,8 @@ protected override void Build()
     Rebinding = Define.Operation(nameof(Rebinding));
     var fire  = Input.ForPlayer(0).Button("Fire");
 
-    On.Message("StartRebind", fire.Rebind().As(Rebinding));
+    StartRebind = Define.Message();
+    On.Message(StartRebind, fire.Rebind().As(Rebinding));
 
     When.Operation(Rebinding).Succeeded(Prompt.Set("Bound."));
     When.Operation(Rebinding).Failed(Prompt.Set("Nothing was bound."));
@@ -6344,6 +6465,7 @@ health.BindText(Text.Format("{0}% HP", Health));
 bar.BindValue(Health);
 mute.BindValue(Muted);
 
+HideHud = Define.Message();
 On.Ready(health.SetText(Score), start.SetEnabled(CanStart));
 On.Message(HideHud, panelBody.SetVisible(false));
 ```
@@ -6464,7 +6586,9 @@ Number the script raises:
 
 ```csharp
 var climb = Run(Rise.Add(Time.Delta)).Over(0.7);
-On.Message(Hit, Rise.Set(1.3), climb.Start(), Routine("Show").Run(
+Hit = Define.Message();
+Show = Define.Routine();
+On.Message(Hit, Rise.Set(1.3), climb.Start(), Routine(Show).Run(
     amount.SetVisible(true), Wait(0.7), amount.SetVisible(false)));
 ```
 
@@ -6490,6 +6614,7 @@ once need several placements.
 
 ```csharp
 PauseMenu = Bind.Object();
+ClosePause = Define.Message();
 
 On.Ready(Panel.Open(PauseMenu).ForPlayer(0));
 On.Message(ClosePause, Panel.Close(PauseMenu).ForPlayer(0));
@@ -6914,8 +7039,11 @@ public sealed partial class Turret : Script
 {
     [Asset] public Prefab Shell { get; private set; }
 
-    protected override void Build() =>
-        On.Message("Fire", Object.Create(Shell).At(new Vector3(0, 1, 0)));
+    protected override void Build()
+    {
+        Fire = Define.Message();
+        On.Message(Fire, Object.Create(Shell).At(new Vector3(0, 1, 0)));
+    }
 }
 ```
 
@@ -7101,11 +7229,12 @@ public sealed partial class GuardPost : Script
     protected override void Build()
     {
         Loading = Define.Operation<Prefab>(nameof(Loading));
+        Sentry = Define.Object();
 
         On.Ready(Asset.Load(Guard).As(Loading));
 
         When.Operation(Loading).Succeeded(
-            Object.Create(Loading).ChildOf().Into("Guard"),
+            Object.Create(Loading).ChildOf().Into(Sentry),
             Manned.Set(true));
         When.Operation(Loading).Failed(Manned.Set(false));
         When.Operation(Loading).Finished(Asset.Release(Loading));
@@ -7616,7 +7745,8 @@ public sealed partial class SoundMenu : Script
         On.Update(
             If(Sound.IsDirty).Then(Saved.Set(false))
                 .Else(Saved.Set(true)));
-        On.Message("CloseOptions",
+        CloseOptions = Define.Message();
+        On.Message(CloseOptions,
             Settings.Save(Sound).As(SavingSound));
     }
 }
@@ -7738,15 +7868,17 @@ It takes either a variable declared with `DefineSynced`, or a transform channel.
 
 ## Messages
 
-A peer without authority asks the authority to act by sending a named message. The authority
+A peer without authority asks the authority to act by sending a declared message. The authority
 receives it with `On.Message` in the same script:
 
 ```csharp
+RequestReady = Define.Message();
+
 On.Update(
     If(!Net.HasAuthority & IsReady.IsFalse())
-        .Then(Net.Send.ToAuthority("RequestReady")));
+        .Then(Net.Send.ToAuthority(RequestReady)));
 
-On.Message("RequestReady", IsReady.Set(true));
+On.Message(RequestReady, IsReady.Set(true));
 ```
 
 [Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html) is the `On.Message` surface, including
@@ -7776,7 +7908,8 @@ Career = Define.Document(nameof(Career))
     .Field(nameof(Pilot), Pilot);
 
 On.Ready(Cloud.Load(Career).As(Downloading));
-On.Message("RunEnded", Progress.Save(Career).As(Saving),
+RunEnded = Define.Message();
+On.Message(RunEnded, Progress.Save(Career).As(Saving),
     Cloud.Save(Career).As(Uploading));
 When.Cloud(Uploading).Failed(Status.Set("Kept on this device"));
 ```

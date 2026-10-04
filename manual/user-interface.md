@@ -85,6 +85,7 @@ health.BindText(Text.Format("{0}% HP", Health));
 bar.BindValue(Health);
 mute.BindValue(Muted);
 
+HideHud = Define.Message();
 On.Ready(health.SetText(Score), start.SetEnabled(CanStart));
 On.Message(HideHud, panelBody.SetVisible(false));
 ```
@@ -205,7 +206,9 @@ Number the script raises:
 
 ```csharp
 var climb = Run(Rise.Add(Time.Delta)).Over(0.7);
-On.Message(Hit, Rise.Set(1.3), climb.Start(), Routine("Show").Run(
+Hit = Define.Message();
+Show = Define.Routine();
+On.Message(Hit, Rise.Set(1.3), climb.Start(), Routine(Show).Run(
     amount.SetVisible(true), Wait(0.7), amount.SetVisible(false)));
 ```
 
@@ -231,6 +234,7 @@ once need several placements.
 
 ```csharp
 PauseMenu = Bind.Object();
+ClosePause = Define.Message();
 
 On.Ready(Panel.Open(PauseMenu).ForPlayer(0));
 On.Message(ClosePause, Panel.Close(PauseMenu).ForPlayer(0));

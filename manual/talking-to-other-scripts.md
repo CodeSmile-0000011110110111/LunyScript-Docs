@@ -48,8 +48,9 @@ On.Update(
     If(enemy.IsRunning & enemy.Alive).Then(Object.SetColor(enemy.Tint)));
 ```
 
-- **A target** is a binding `Bind.Object()` declared, an object this script holds under a name,
-  `Object.Owned("Companion")`, or inside a request handler, `Sender`.
+- **A target** is a binding `Bind.Object()` declared, an object this script holds in an owned
+  object, `Object.Owned(Companion)` after `Companion = Define.Object();`, or inside a request
+  handler, `Sender`.
 - **Every readable kind reads**: Number, Flag, `Vector3`, `Vector2`, `Rotation`, `Color` and a
   declared enum. A private variable, and a Text variable, is not on the reader.
 - **A read runs when its block runs**, so it returns the value the target holds at that moment.
@@ -60,8 +61,8 @@ On.Update(
   target that runs a script of another type writes one warning per `At(target)`, because that is
   a mistake in the scene.
 - **A read never reaches another incarnation.** When the target's object is despawned and reused
-  from a pool, an owned name that held it is empty again; the new use is read only through a name
-  that holds it now.
+  from a pool, an owned object that held it is empty again; the new use is read only through an
+  owned object that holds it now.
 
 A read is for blocks. C# reads another object's script with `LunyScript.Find`, which throws after
 the script ended instead of returning a default; see
@@ -72,7 +73,8 @@ the script ended instead of returning a default; see
 `When.Var` takes a Number, Flag or enum read and runs its blocks when the value changes:
 
 ```csharp
-var enemy = EnemyScript.At(Object.Owned("Target"));
+Target = Define.Object();
+var enemy = EnemyScript.At(Object.Owned(Target));
 When.Var(enemy.Health).Changed(Flash.Set(true));
 ```
 
@@ -211,8 +213,8 @@ a singleton has no binding another script can name.
 
 - [Binding scene objects](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/binding-scene-objects.html) — the targets
   a reader and a request take.
-- [Object pools](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/object-pools.html) — the owned names
-  `Object.Owned(name)` reads.
+- [Object pools](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/object-pools.html) — the owned objects
+  `Object.Owned(owned)` reads.
 - [Reading scripts from C#](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/reading-scripts-from-csharp.html) — the
   C# view of another object's script.
 - Generated reference:

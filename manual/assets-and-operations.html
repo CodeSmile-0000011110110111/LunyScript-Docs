@@ -66,8 +66,11 @@
 <span class="p">{</span>
     <span class="p">[</span><span class="n">Asset</span><span class="p">]</span> <span class="k">public</span> <span class="n">Prefab</span> <span class="n">Shell</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">private</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
 
-    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span> <span class="p">=&gt;</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="s">"Fire"</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Shell</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">)));</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Fire</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Fire</span><span class="p">,</span> <span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Shell</span><span class="p">).</span><span class="nf">At</span><span class="p">(</span><span class="k">new</span> <span class="nf">Vector3</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">)));</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -263,11 +266,12 @@ sources this version offers.</p>
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="n">Loading</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="n">Operation</span><span class="p">&lt;</span><span class="n">Prefab</span><span class="p">&gt;(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
+        <span class="n">Sentry</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Object</span><span class="p">();</span>
 
         <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Guard</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>
 
         <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span>
-            <span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">ChildOf</span><span class="p">().</span><span class="nf">Into</span><span class="p">(</span><span class="s">"Guard"</span><span class="p">),</span>
+            <span class="n">Object</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">ChildOf</span><span class="p">().</span><span class="nf">Into</span><span class="p">(</span><span class="n">Sentry</span><span class="p">),</span>
             <span class="n">Manned</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
         <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Manned</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">false</span><span class="p">));</span>
         <span class="n">When</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="n">Loading</span><span class="p">).</span><span class="nf">Finished</span><span class="p">(</span><span class="n">Asset</span><span class="p">.</span><span class="nf">Release</span><span class="p">(</span><span class="n">Loading</span><span class="p">));</span>

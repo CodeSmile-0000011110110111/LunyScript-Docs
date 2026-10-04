@@ -105,7 +105,8 @@ successful mutation on that same collection. `Contains` is a read and leaves the
 `TryAdd` is the form of `Add` whose own outcome you branch on. Give it to `If`:
 
 ```csharp
-On.Message("Pickup",
+Pickup = Define.Message();
+On.Message(Pickup,
     If(Slots.TryAdd(item))
         .Then(Kept.Increment())
         .Else(ShowFull.Set(true)));
@@ -124,7 +125,8 @@ public CollectionResult Added { get; private set; }
 // Inside Build():
 Added = Define.CollectionResult(nameof(Added));
 
-On.Message("Pickup", Slots.TryAdd(item).As(Added));
+Pickup = Define.Message();
+On.Message(Pickup, Slots.TryAdd(item).As(Added));
 On.Update(
     If(Added).Then(Glow.Set(true)),
     If(Added.Failed).Then(ShowFull.Set(true)));
@@ -179,7 +181,8 @@ public sealed partial class Scoreboard : Script
 
         On.Ready(Scores.Set("wave", 0), Scores.Set("bonus", 0));
 
-        On.Message("WaveCleared",
+        WaveCleared = Define.Message();
+        On.Message(WaveCleared,
             Wave.Set(Scores.At("wave")),
             Wave.Increment(),
             Scores.Set("wave", Wave));

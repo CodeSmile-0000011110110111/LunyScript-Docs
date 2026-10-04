@@ -123,7 +123,8 @@ protected override void Build()
     Rebinding = Define.Operation(nameof(Rebinding));
     var fire  = Input.ForPlayer(0).Button("Fire");
 
-    On.Message("StartRebind", fire.Rebind().As(Rebinding));
+    StartRebind = Define.Message();
+    On.Message(StartRebind, fire.Rebind().As(Rebinding));
 
     When.Operation(Rebinding).Succeeded(Prompt.Set("Bound."));
     When.Operation(Rebinding).Failed(Prompt.Set("Nothing was bound."));

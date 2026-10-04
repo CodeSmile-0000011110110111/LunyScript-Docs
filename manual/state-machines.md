@@ -66,8 +66,9 @@ On.Ready(Phases.Start());
 ## Enter, Update and Exit
 
 ```csharp
+Roar = Define.Routine();
 Phases.State(Angry)
-    .Enter(Speed.Set(3), Routine("Roar").Run(Roaring.Set(true),
+    .Enter(Speed.Set(3), Routine(Roar).Run(Roaring.Set(true),
         Wait(1), Roaring.Set(false)))
     .Update(Transform.RotateBy(0, 90, 0))
     .Exit(Speed.Set(1));

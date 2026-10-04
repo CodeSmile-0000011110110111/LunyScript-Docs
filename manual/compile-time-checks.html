@@ -289,14 +289,16 @@ never reported.</p>
 body or a <code class="language-plaintext highlighter-rouge">Choose</code> option’s action. <code class="language-plaintext highlighter-rouge">Then</code>, <code class="language-plaintext highlighter-rouge">Else</code>, an <code class="language-plaintext highlighter-rouge">On.*</code> event list and a state machine’s <code class="language-plaintext highlighter-rouge">Enter</code>, <code class="language-plaintext highlighter-rouge">Update</code>, <code class="language-plaintext highlighter-rouge">Exit</code> and <code class="language-plaintext highlighter-rouge">Do</code> run
 all of their blocks in the frame they are reached, so a wait or a group written directly in one of them is reported on its line:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="s">"Blink"</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Blink</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Routine</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="n">Blink</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span>
     <span class="nf">If</span><span class="p">(</span><span class="n">ShouldBlink</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="nf">Wait</span><span class="p">(</span><span class="m">1</span><span class="p">))));</span>   <span class="c1">// Wait (here: Wait(..)) inside Then cannot</span>
                                        <span class="c1">// wait, Then runs its blocks in the frame it</span>
                                        <span class="c1">// is reached: move the Wait out of Then so</span>
                                        <span class="c1">// that it is a step of a routine</span>
 <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">Wait</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>               <span class="c1">// Wait (here: Wait(..)) in an event list</span>
                                        <span class="c1">// cannot wait, ...: make it a step of a</span>
-                                       <span class="c1">// routine, as in Routine("name").Run(Wait(..))</span>
+                                       <span class="c1">// routine, as in</span>
+                                       <span class="c1">// Routine(routine).Run(Wait(..))</span>
 </code></pre></div></div>
 
 <p>Move the wait out of <code class="language-plaintext highlighter-rouge">Then</code> so that it is a step of the routine. To wait only when the condition holds, set a <code class="language-plaintext highlighter-rouge">Number</code> inside <code class="language-plaintext highlighter-rouge">Then</code>
@@ -308,7 +310,7 @@ written inside it is reported the same way, and the fix moves the sequence:</p>
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">((</span><span class="n">Lamp</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">),</span> <span class="nf">Wait</span><span class="p">(</span><span class="m">1</span><span class="p">)));</span>
 <span class="c1">// Wait (here: Wait(..)) in a sequence in an event list cannot wait, ...:</span>
 <span class="c1">// make the sequence a step of a routine, as in</span>
-<span class="c1">// Routine("name").Run(Sequence(..))</span>
+<span class="c1">// Routine(routine).Run(Sequence(..))</span>
 </code></pre></div></div>
 
 <p>The script type is also refused when it is built, naming the line of the wait, or for a group the line of the <code class="language-plaintext highlighter-rouge">If</code> that holds it. That

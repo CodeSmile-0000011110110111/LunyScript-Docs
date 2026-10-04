@@ -382,14 +382,16 @@ section shows.</p>
 its own <code class="language-plaintext highlighter-rouge">On.Message</code> blocks change it:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// in the script's Build():</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Heal</span><span class="p">),</span> <span class="n">Health</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">25</span><span class="p">));</span>
+<span class="n">Heal</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Heal</span><span class="p">,</span> <span class="n">Health</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">25</span><span class="p">));</span>
 
 <span class="c1">// in C#:</span>
-<span class="n">playerBehaviour</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="n">PlayerScript</span><span class="p">.</span><span class="n">Heal</span><span class="p">);</span>
+<span class="n">playerBehaviour</span><span class="p">.</span><span class="nf">Send</span><span class="p">(</span><span class="n">PlayerScript</span><span class="p">.</span><span class="n">Messages</span><span class="p">.</span><span class="n">Heal</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">Heal</code> here is a <code class="language-plaintext highlighter-rouge">const string</code> the script declares, so the name is written once. The script
-decides what a heal does, including any limit it applies.</p>
+<p><code class="language-plaintext highlighter-rouge">Heal</code> here is a message the script declares, and <code class="language-plaintext highlighter-rouge">PlayerScript.Messages.Heal</code> is the descriptor
+the generator writes for it, so a misspelt message does not compile. The script decides what a
+heal does, including any limit it applies.</p>
 
 <h2 id="the-objects-own-script">The object’s own script</h2>
 
