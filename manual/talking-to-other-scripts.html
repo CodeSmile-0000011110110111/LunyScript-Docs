@@ -106,8 +106,11 @@ read of the variable’s kind, plus <code class="language-plaintext highlighter-
 
 <ul>
   <li><strong>A target</strong> is a binding <code class="language-plaintext highlighter-rouge">Bind.Object()</code> declared, an object this script holds in an owned
-object, <code class="language-plaintext highlighter-rouge">Object.Owned(Companion)</code> after <code class="language-plaintext highlighter-rouge">Companion = Define.Object();</code>, or inside a request
-handler, <code class="language-plaintext highlighter-rouge">Sender</code>.</li>
+object, <code class="language-plaintext highlighter-rouge">Object.Owned(Companion)</code> after <code class="language-plaintext highlighter-rouge">Companion = Define.Object();</code>, inside a request handler
+<code class="language-plaintext highlighter-rouge">Sender</code>, inside a contact event <code class="language-plaintext highlighter-rouge">Other</code>, or <code class="language-plaintext highlighter-rouge">SpawnedBy</code>, the script whose <code class="language-plaintext highlighter-rouge">Object.Create(prefab)</code> or
+<code class="language-plaintext highlighter-rouge">Object.Spawn(pool)</code> made this object. <code class="language-plaintext highlighter-rouge">Other</code> names the script on the other collider’s object, or on
+its nearest parent that runs one. Outside its event, and on an object no script made, the target
+names nothing.</li>
   <li><strong>Every readable kind reads</strong>: Number, Flag, <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code>, <code class="language-plaintext highlighter-rouge">Rotation</code>, <code class="language-plaintext highlighter-rouge">Color</code> and a
 declared enum. A private variable, and a Text variable, is not on the reader.</li>
   <li><strong>A read runs when its block runs</strong>, so it returns the value the target holds at that moment.

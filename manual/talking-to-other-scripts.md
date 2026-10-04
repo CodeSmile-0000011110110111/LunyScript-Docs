@@ -49,8 +49,11 @@ On.Update(
 ```
 
 - **A target** is a binding `Bind.Object()` declared, an object this script holds in an owned
-  object, `Object.Owned(Companion)` after `Companion = Define.Object();`, or inside a request
-  handler, `Sender`.
+  object, `Object.Owned(Companion)` after `Companion = Define.Object();`, inside a request handler
+  `Sender`, inside a contact event `Other`, or `SpawnedBy`, the script whose `Object.Create(prefab)` or
+  `Object.Spawn(pool)` made this object. `Other` names the script on the other collider's object, or on
+  its nearest parent that runs one. Outside its event, and on an object no script made, the target
+  names nothing.
 - **Every readable kind reads**: Number, Flag, `Vector3`, `Vector2`, `Rotation`, `Color` and a
   declared enum. A private variable, and a Text variable, is not on the reader.
 - **A read runs when its block runs**, so it returns the value the target holds at that moment.
