@@ -922,7 +922,7 @@ inside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_Script_Options" data-uid="CodeSmile.LunyScript.Script.Options">
   Options
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/Script.Communication.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/Script.Communication.cs/#L46"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How this script type runs. Override it with <code>RunAs(Scope.Singleton)</code> to run one instance
@@ -1209,7 +1209,7 @@ releases none. <code>docs/proposals/scene-flow.md</code> is the family.</p>
 
   <h3 id="CodeSmile_LunyScript_Script_Sender" data-uid="CodeSmile.LunyScript.Script.Sender">
   Sender
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/Script.Communication.cs/#L100"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/Script.Communication.cs/#L103"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The script that sent the request running now, as a target. Available only inside
@@ -1290,6 +1290,55 @@ When.Var(MusicVolume).Changed(Settings.Save(Preferences).As(SavingPreferences));
   <div class="markdown level1 remarks"><p>A property or field of a script named <code>Settings</code> hides this surface inside that
 script, and one named <code>Options</code> hides the property that declares the script's scope, so name a
 document after what it holds, such as <code>Preferences</code> or <code>Controls</code>.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_Script_SpawnedBy_" data-uid="CodeSmile.LunyScript.Script.SpawnedBy*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Script_SpawnedBy" data-uid="CodeSmile.LunyScript.Script.SpawnedBy">
+  SpawnedBy
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/Script.Communication.cs/#L127"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The script whose <code>Object.Create(prefab)</code> or <code>Object.Spawn(pool)</code> made this object, as a
+target. Available only inside <code>Build()</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">protected LunyScriptTarget SpawnedBy { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptTarget.html">LunyScriptTarget</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Script_SpawnedBy_examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Request(Scored, Request(SpawnedBy, ShooterScript.Requests.CountHit));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Script_SpawnedBy_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Every script the made object carries, its children's included, names the incarnation of the script
+whose block asked for the copy. A pooled copy names the script of its current checkout. It names
+nothing on an object no script made, such as one saved in a scene, and after that incarnation ended,
+such as a pooled spawner that went back to its pool: a read through it returns the default and a
+request to it fails as <code>NotFound</code>.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
@@ -1478,7 +1527,7 @@ once.</p>
 
   <h3 id="CodeSmile_LunyScript_Script_Reject_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Script.Reject(System.String,System.Int32)">
   Reject(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/Script.Communication.cs/#L185"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/Script.Communication.cs/#L213"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Refuses the request this script is handling. The sections after the current one do not run, and
@@ -1547,7 +1596,7 @@ reported once.</p>
 
   <h3 id="CodeSmile_LunyScript_Script_Request_CodeSmile_LunyScript_LunyScriptTarget_CodeSmile_LunyScript_Request_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Script.Request(CodeSmile.LunyScript.LunyScriptTarget,CodeSmile.LunyScript.Request,System.String,System.Int32)">
   Request(LunyScriptTarget, Request, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/Script.Communication.cs/#L131"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/Script.Communication.cs/#L159"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Sends a request to the script running on a target's object. Its handlers run inside this block,
@@ -1570,8 +1619,8 @@ before the next one.</p>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptTarget.html">LunyScriptTarget</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>target</code></dt></td>
-    <td style="width: 99%"><dd><p>A binding <code>Bind.Object()</code> declared, <code>Object.Owned(owned)</code>, or inside
-<code>On.Request</code>, <code>Sender</code>.</p>
+    <td style="width: 99%"><dd><p>A binding <code>Bind.Object()</code> declared, <code>Object.Owned(owned)</code>, <code>SpawnedBy</code>,
+inside a contact event <code>Other</code>, or inside <code>On.Request</code>, <code>Sender</code>.</p>
 </dd></td>
   </tr>
   <tr>
@@ -1609,7 +1658,8 @@ before the next one.</p>
 
   <h4 class="section" id="CodeSmile_LunyScript_Script_Request_CodeSmile_LunyScript_LunyScriptTarget_CodeSmile_LunyScript_Request_System_String_System_Int32__examples">Examples</h4>
   <pre><code class="lang-csharp">On.Ready(Request(Patient, EnemyScript.Requests.Heal));
-On.Ready(Request(Door, DoorScript.Requests.Open).As(Opening));</code></pre>
+On.Ready(Request(Door, DoorScript.Requests.Open).As(Opening));
+On.TriggerEnter(If(Other.HasTag("Player")).Then(Request(Other, PlayerScript.Requests.Collect)));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_Script_Request_CodeSmile_LunyScript_LunyScriptTarget_CodeSmile_LunyScript_Request_System_String_System_Int32__remarks">Remarks</h4>
@@ -1633,7 +1683,7 @@ belongs to another script's <code>Build()</code>; or the request was never decla
 
   <h3 id="CodeSmile_LunyScript_Script_RunAs_CodeSmile_LunyScript_Scope_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Script.RunAs(CodeSmile.LunyScript.Scope,System.String,System.Int32)">
   RunAs(Scope, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/Script.Communication.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/Script.Communication.cs/#L61"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Makes the value the <code>Options</code> property returns.</p>
@@ -1705,7 +1755,7 @@ nothing, or given a value that is not a <a class="xref" href="CodeSmile.LunyScri
 
   <h3 id="CodeSmile_LunyScript_Script_SendEvent_CodeSmile_LunyScript_Event_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Script.SendEvent(CodeSmile.LunyScript.Event,System.String,System.Int32)">
   SendEvent(Event, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/Script.Communication.cs/#L159"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Script/Script.Communication.cs/#L187"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Sends one of this script's events to every local script listening to it. Their handlers run

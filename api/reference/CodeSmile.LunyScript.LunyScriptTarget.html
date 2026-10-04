@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct LunyScriptTarget | LunyScript API Reference ">
       
-      <meta name="description" content="Which object a read of another script, a request or an event filter is about: a declared object binding, an object this script holds under a name, or the script that sent the request running now.">
+      <meta name="description" content="Which object a read of another script, a request or an event filter is about: a declared object binding, an object this script holds under a name, the script that sent the request running now, the object on the other side of the contact event running now, or the script whose create or spawn made this object.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_LunyScriptTarget" data-uid="CodeSmile.LunyScript.LunyScriptTarget" class="text-break">
-Struct LunyScriptTarget  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Communication/LunyScriptTarget.cs/#L23"><i class="bi bi-code-slash"></i></a>
+Struct LunyScriptTarget  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Communication/LunyScriptTarget.cs/#L25"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -86,7 +86,8 @@ Struct LunyScriptTarget  <a class="header-action link-secondary" title="View sou
   </div>
 
   <div class="markdown summary"><p>Which object a read of another script, a request or an event filter is about: a declared object binding,
-an object this script holds under a name, or the script that sent the request running now.</p>
+an object this script holds under a name, the script that sent the request running now, the object on the
+other side of the contact event running now, or the script whose create or spawn made this object.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -116,9 +117,10 @@ var companion = EnemyScript.At(Object.Owned(Companion));</code></pre>
 
   <h2 id="CodeSmile_LunyScript_LunyScriptTarget_remarks">Remarks</h2>
   <div class="markdown level0 remarks"><p>A script rarely writes this type. A <a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a> converts to it, <code>Object.Owned(owned)</code>
-makes one for an owned object, and <code>Sender</code> is one. The target is resolved each time a block that uses
-it runs, to the script running on that object at that moment, and only to an incarnation that is still
-running; a pooled object handed out again is a new incarnation that an old slot no longer names.
+makes one for an owned object, <code>Other</code> converts to it, and <code>Sender</code> and <code>SpawnedBy</code> are one.
+The target is resolved each time a block that uses it runs, to the script running on that object at that
+moment, and only to an incarnation that is still running; a pooled object handed out again is a new
+incarnation that an old slot no longer names.
 <code>docs/proposals/script-communication.md</code> is the contract.</p>
 </div>
 
@@ -131,7 +133,7 @@ running; a pooled object handed out again is a new incarnation that an old slot 
 
   <h3 id="CodeSmile_LunyScript_LunyScriptTarget_IsDeclared" data-uid="CodeSmile.LunyScript.LunyScriptTarget.IsDeclared">
   IsDeclared
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Communication/LunyScriptTarget.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Communication/LunyScriptTarget.cs/#L58"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether this names anything: false for a default value.</p>
@@ -170,7 +172,7 @@ running; a pooled object handed out again is a new incarnation that an old slot 
 
   <h3 id="CodeSmile_LunyScript_LunyScriptTarget_ToString" data-uid="CodeSmile.LunyScript.LunyScriptTarget.ToString">
   ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Communication/LunyScriptTarget.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Communication/LunyScriptTarget.cs/#L71"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How a diagnostic names the target.</p>
@@ -185,7 +187,8 @@ running; a pooled object handed out again is a new incarnation that an old slot 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><span class="xref">string</span></dt>
-    <dd><p>The binding name, the owned object's name in quotes, or <code>Sender</code>.</p>
+    <dd><p>The binding name, the owned object's name in quotes, <code>Sender</code>, <code>Other</code> or
+<code>SpawnedBy</code>.</p>
 </dd>
   </dl>
 
@@ -207,7 +210,7 @@ running; a pooled object handed out again is a new incarnation that an old slot 
 
   <h3 id="CodeSmile_LunyScript_LunyScriptTarget_op_Implicit_CodeSmile_LunyScript_ObjectBinding__CodeSmile_LunyScript_LunyScriptTarget" data-uid="CodeSmile.LunyScript.LunyScriptTarget.op_Implicit(CodeSmile.LunyScript.ObjectBinding)~CodeSmile.LunyScript.LunyScriptTarget">
   implicit operator LunyScriptTarget(ObjectBinding)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Communication/LunyScriptTarget.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Communication/LunyScriptTarget.cs/#L64"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A declared object binding, as a target.</p>
@@ -259,7 +262,7 @@ running; a pooled object handed out again is a new incarnation that an old slot 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Communication/LunyScriptTarget.cs/#L23" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Communication/LunyScriptTarget.cs/#L25" class="edit-link">Edit this page</a>
         </div>
 
 
