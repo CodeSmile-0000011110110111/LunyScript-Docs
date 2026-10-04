@@ -16,6 +16,8 @@ links to the next page and to the generated
 - [Debugging a running script](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/debugging-a-running-script.html) — the
   Debugger window: which blocks ran, the branch each `If` took and how long ago, and changing a value
   while the game runs.
+- [Drawing a script as a graph](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/drawing-a-script.html) — the Visualize
+  button: the script's events, state machines and behaviour trees drawn with Graphviz.
 - [Writing to the Console](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/writing-to-the-console.html) —
   `Debug.Log`, `Debug.Warn` and `Debug.Error`, and the variable, value, script and object each line
   names.

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Drawing a script as a graph | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Drawing a script as a graph" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The Visualize button: the script’s events, state machines and behaviour trees drawn with Graphviz." />
+<meta name="twitter:description" property="og:description" content="The Visualize button: the script’s events, state machines and behaviour trees drawn with Graphviz." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/drawing-a-script.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/drawing-a-script.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Drawing a script as a graph" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"The Visualize button: the script’s events, state machines and behaviour trees drawn with Graphviz.","headline":"Drawing a script as a graph","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/drawing-a-script.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include and the
+    Markdown link below, which minima has no hook for: a page that needs its own stylesheet or
+    script has nowhere to declare one (see _includes/custom-head.html for how a page opts in), and
+    _plugins/agent_readable_copies.rb sets markdown_copy on each page it publishes a Markdown copy of.
+  --><link rel="alternate" type="text/markdown" href="/LunyScript-Docs/manual/drawing-a-script.md"></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Drawing a script as a graph</h1>
+  </header>
+
+  <div class="post-content">
+    <p>A door that opens once the player has the key:</p>
+
+<pre><code>using CodeSmile.LunyScript;
+
+public sealed partial class DoorScript : Script
+{
+    protected override void Build()
+    {
+        HasKey = Define.Flag(nameof(HasKey));
+        Opening = Define.Number(nameof(Opening));
+
+        (Door, Closed, Open) = Define.StateMachine(nameof(Door))
+            .WithStates(nameof(Closed), nameof(Open));
+        Door.Initial(Closed);
+        Door.State(Open).Enter(Opening.Set(1));
+        Door.From(Closed).To(Open).When(HasKey);
+
+        On.Ready(Door.Start());
+    }
+}
+</code></pre>
+
+<p>Select a GameObject whose LunyScript Behaviour runs <code class="language-plaintext highlighter-rouge">DoorScript</code> and press <strong>Visualize</strong> next to
+<strong>Edit</strong> in its <strong>Script To Run</strong> row. The <strong>LunyScript Graph</strong> window opens with two images:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">DoorScript: lifecycle</code> shows <code class="language-plaintext highlighter-rouge">On.Ready</code> and the <code class="language-plaintext highlighter-rouge">StateMachineStart</code> block that <code class="language-plaintext highlighter-rouge">Door.Start()</code>
+placed in it.</li>
+  <li><code class="language-plaintext highlighter-rouge">DoorScript: state machine Door</code> shows the states <code class="language-plaintext highlighter-rouge">Closed</code> and <code class="language-plaintext highlighter-rouge">Open</code>, an arrow from a start
+point to <code class="language-plaintext highlighter-rouge">Closed</code>, the <code class="language-plaintext highlighter-rouge">Enter</code> block of <code class="language-plaintext highlighter-rouge">Open</code>, and one edge from <code class="language-plaintext highlighter-rouge">Closed</code> to <code class="language-plaintext highlighter-rouge">Open</code> labelled
+<code class="language-plaintext highlighter-rouge">1. When FlagTruth(FlagVar)</code>.</li>
+</ul>
+
+<p>The images are drawn from the script as LunyScript built it, so they show what the script will
+run, in the order it runs it. The window shows images only: it runs no block and changes nothing.
+To watch a script while it runs, use the
+<a href="/LunyScript-Docs/manual/debugging-a-running-script.html">Debugger window</a>.</p>
+
+<h2 id="what-each-graph-shows">What each graph shows</h2>
+
+<p>A script gets one lifecycle graph, then one graph per state machine and one per behaviour tree, in
+the order <code class="language-plaintext highlighter-rouge">Build()</code> declared them. A script that declares no block gets none, and the window says
+so.</p>
+
+<p>Every node names its block type without the <code class="language-plaintext highlighter-rouge">Block</code> suffix, such as <code class="language-plaintext highlighter-rouge">If</code> or <code class="language-plaintext highlighter-rouge">SetNumber</code>, and the
+number of the line it was written on. The first node of each line also shows the text of that line.
+A condition or a value is written inside the node that reads it, such as
+<code class="language-plaintext highlighter-rouge">Condition: NumberComparison(NumberVar, NumberConstant)</code>, instead of being drawn as a node of its
+own. A sequence declared with <code class="language-plaintext highlighter-rouge">Define.Sequence</code> shows its name.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Graph</th>
+      <th>What it shows</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Lifecycle</td>
+      <td>One box per event, such as <code class="language-plaintext highlighter-rouge">On.Ready</code> or <code class="language-plaintext highlighter-rouge">On.Update</code>, and for watches, messages, requests and event handlers. Bold edges labelled <code class="language-plaintext highlighter-rouge">next</code> join blocks that run one after another; an edge labelled <code class="language-plaintext highlighter-rouge">ThenBlocks</code> or <code class="language-plaintext highlighter-rouge">ElseBlocks</code> leads to the blocks an <code class="language-plaintext highlighter-rouge">If</code> holds</td>
+    </tr>
+    <tr>
+      <td>State machine</td>
+      <td>One node per state, listing the first four blocks of its <code class="language-plaintext highlighter-rouge">Enter</code>, <code class="language-plaintext highlighter-rouge">Update</code> and <code class="language-plaintext highlighter-rouge">Exit</code>, with a double border on the initial state. One edge per transition, numbered in the order a pass reads them, with its condition and its <code class="language-plaintext highlighter-rouge">Do</code> blocks. A transition written <code class="language-plaintext highlighter-rouge">To(state)</code> starts at an <code class="language-plaintext highlighter-rouge">Any state</code> node, and one written <code class="language-plaintext highlighter-rouge">State(s).When(...)</code> is a dashed loop on its state</td>
+    </tr>
+    <tr>
+      <td>Behaviour tree</td>
+      <td>The tree from its name down. <code class="language-plaintext highlighter-rouge">InOrder</code>, <code class="language-plaintext highlighter-rouge">InAnyOrder</code> and <code class="language-plaintext highlighter-rouge">InParallel</code> are blue boxes and the wrappers <code class="language-plaintext highlighter-rouge">Repeat</code>, <code class="language-plaintext highlighter-rouge">Inverted</code> and <code class="language-plaintext highlighter-rouge">Always</code> are purple boxes, each with its ending clause or mode. A <code class="language-plaintext highlighter-rouge">Task</code> is a green box naming its action and a <code class="language-plaintext highlighter-rouge">Check</code> is a yellow ellipse naming its condition. Child edges are numbered in the order the composite advances them</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In Play Mode, <strong>Visualize</strong> draws the program the selected object is running. Outside Play Mode it
+runs the script’s <code class="language-plaintext highlighter-rouge">Build()</code> once in the Editor and spawns nothing. Both give the same graphs,
+because LunyScript builds a script type once and every object running it shares that build. When
+<code class="language-plaintext highlighter-rouge">Build()</code> throws, the window shows the error instead of a graph.</p>
+
+<h2 id="installing-graphviz">Installing Graphviz</h2>
+
+<p>The images are drawn by the <code class="language-plaintext highlighter-rouge">dot</code> program of <a href="https://graphviz.org/download/">Graphviz</a>, which
+LunyScript does not include. Install it once per machine:</p>
+
+<ul>
+  <li>Windows: the Graphviz installer from the download page.</li>
+  <li>macOS: <code class="language-plaintext highlighter-rouge">brew install graphviz</code>.</li>
+  <li>Linux: your distribution’s <code class="language-plaintext highlighter-rouge">graphviz</code> package.</li>
+</ul>
+
+<p><strong>Visualize</strong> looks for <code class="language-plaintext highlighter-rouge">dot</code> on the <code class="language-plaintext highlighter-rouge">PATH</code> the Unity Editor was started with, then in
+<code class="language-plaintext highlighter-rouge">Program Files\Graphviz\bin</code> on Windows, and in <code class="language-plaintext highlighter-rouge">/opt/homebrew/bin</code>, <code class="language-plaintext highlighter-rouge">/usr/local/bin</code>,
+<code class="language-plaintext highlighter-rouge">/opt/local/bin</code>, <code class="language-plaintext highlighter-rouge">/usr/bin</code> and <code class="language-plaintext highlighter-rouge">/snap/bin</code> on macOS and Linux. Without it, the window says where
+to get Graphviz and shows each graph’s DOT text, which any Graphviz tool draws.</p>
+
+<h2 id="where-the-images-are-kept">Where the images are kept</h2>
+
+<p>The images are written to <code class="language-plaintext highlighter-rouge">Library/LunyScript/ScriptGraphs/</code> in your project, one PNG file and one
+DOT file per graph. Each file name holds the script, the graph and a key computed from the graph’s
+DOT text.</p>
+
+<p>Press <strong>Visualize</strong> again on a script you have not changed and the window opens the image already
+on disk without running Graphviz; each graph says it is unchanged since it was last rendered.
+Change the script so that a graph shows something different, such as another block in a state’s
+<code class="language-plaintext highlighter-rouge">Exit</code>, and that graph is drawn again and its earlier image is deleted. A change a graph does not
+show, such as a different number in a comparison, keeps its image. The folder is safe to delete at any time: Unity does not import it, and
+version control ignores <code class="language-plaintext highlighter-rouge">Library/</code>.</p>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/state-machines.html">State machines</a> — the states, transitions
+and lists the state machine graph draws.</li>
+  <li><a href="/LunyScript-Docs/manual/behaviour-trees.html">Behaviour trees</a> — the composites, wrappers,
+tasks and checks the behaviour tree graph draws.</li>
+  <li><a href="/LunyScript-Docs/manual/debugging-a-running-script.html">Debugging a running script</a> —
+which blocks ran and what each value holds while the game runs.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
