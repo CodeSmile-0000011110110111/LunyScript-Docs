@@ -74,6 +74,9 @@ build.
 - **The body is checked at every write.** The error appears once per script type and line, and
   again when `Body.MakeKinematic()` or `Body.MakeDynamic()` changed the body, naming that body's
   calls.
+- **A project can turn the refusal off.** Edit, Project Settings, LunyScript, **Turn off physics
+  command checks** lets these writes through, and the page lists what that was measured to cause,
+  such as a write lost to the body's interpolation or an object carried through a wall.
 
 ## One Vector3 or three numbers
 

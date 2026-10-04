@@ -36,6 +36,13 @@ A call that is refused — because the object carries the wrong component, or be
 in an event the component does not take it in — is reported once and then ignored. Nothing is queued
 for a later step.
 
+These refusals, and the Transform refusal below, can be turned off for a whole project: Edit, Project
+Settings, LunyScript, **Turn off physics command checks**. The commands then reach Unity as written,
+and the page lists what that was measured to cause: Transform writes lost to interpolation, pushes
+that depend on the frame rate, objects passing through walls or pushed back and forth against them,
+Unity's own velocity warnings, and forces a kinematic body ignores without a report. Leave the
+checks on unless you have read that list.
+
 ## Instead of a Transform write
 
 On an object with a Rigidbody, kinematic or dynamic, Transform does not write the position or the
