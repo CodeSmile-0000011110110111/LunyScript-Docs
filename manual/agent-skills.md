@@ -28,6 +28,7 @@ An agent finds a skill only in its own skill folders. When you allow it, LunyScr
 | `lunyscript-ui` | writes to or reacts to a UI Toolkit panel |
 | `lunyscript-save` | saves or loads values on the device or in Cloud Save, or installs a Cloud Save provider of its own |
 | `lunyscript-data` | reads tuning values from a data asset or a JSON file |
+| `lunyscript-extend` | needs a backend or a block LunyScript does not ship: a provider for a LunyScript family, or a block family that wraps a package, an SDK or a service |
 
 ## Allowing the skill links
 
