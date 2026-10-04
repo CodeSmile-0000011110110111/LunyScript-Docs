@@ -48,20 +48,23 @@ incomplete until both are present.
 
 | Draw | What it produces |
 | --- | --- |
-| `Random.Number()` | A number in a half-open range. |
+| `Random.Number()` | A number in a half-open range, from 0 up to but excluding 1 when you name no range. |
 | `Random.Index()` | A whole number from 0 up to but excluding a count. |
 | `Random.Choice(option, ..)` | One of the values you listed. |
 | `Random.Weighted(option, ..)` | One of the values you listed, at the weights you gave. |
 
 ```csharp
 Random.Number().From(Loot).In(1, 100).Into(Roll);
+Random.Number().From(Loot).Into(Chance);
 Random.Index().From(Loot).In(3).Into(Pick);
 Random.Choice(1, 2, 5).From(Loot).Into(Drop);
 Random.Weighted(10, 20, 30).WithWeights(70, 25, 5).From(Loot).Into(Rare);
 ```
 
 `In(minInclusive, maxExclusive)` refuses a minimum at or above the maximum, and refuses NaN and an
-infinity, when the block runs. `Index().In(count)` needs a count of at least 1 and writes a value from
+infinity, when the block runs. A number draw without `In` stores a value from 0 up to but excluding 1:
+it never stores 1, and it stores the same value `In(0, 1)` would from the same randomizer. A signed
+value from -1 up to but excluding 1 is `In(-1, 1)`. `Index().In(count)` needs a count of at least 1 and writes a value from
 0 to `count - 1`. `Choice` refuses an empty option list while `Build()` runs. `Weighted` takes one
 weight per option, skips a weight of zero or less when it runs, and refuses a draw where no weight is
 usable.

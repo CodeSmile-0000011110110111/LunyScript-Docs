@@ -112,7 +112,7 @@ incomplete until both are present.</p>
   <tbody>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Random.Number()</code></td>
-      <td>A number in a half-open range.</td>
+      <td>A number in a half-open range, from 0 up to but excluding 1 when you name no range.</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">Random.Index()</code></td>
@@ -130,13 +130,16 @@ incomplete until both are present.</p>
 </table>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Random</span><span class="p">.</span><span class="nf">Number</span><span class="p">().</span><span class="nf">From</span><span class="p">(</span><span class="n">Loot</span><span class="p">).</span><span class="nf">In</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">100</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Roll</span><span class="p">);</span>
+<span class="n">Random</span><span class="p">.</span><span class="nf">Number</span><span class="p">().</span><span class="nf">From</span><span class="p">(</span><span class="n">Loot</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Chance</span><span class="p">);</span>
 <span class="n">Random</span><span class="p">.</span><span class="nf">Index</span><span class="p">().</span><span class="nf">From</span><span class="p">(</span><span class="n">Loot</span><span class="p">).</span><span class="nf">In</span><span class="p">(</span><span class="m">3</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Pick</span><span class="p">);</span>
 <span class="n">Random</span><span class="p">.</span><span class="nf">Choice</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">5</span><span class="p">).</span><span class="nf">From</span><span class="p">(</span><span class="n">Loot</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Drop</span><span class="p">);</span>
 <span class="n">Random</span><span class="p">.</span><span class="nf">Weighted</span><span class="p">(</span><span class="m">10</span><span class="p">,</span> <span class="m">20</span><span class="p">,</span> <span class="m">30</span><span class="p">).</span><span class="nf">WithWeights</span><span class="p">(</span><span class="m">70</span><span class="p">,</span> <span class="m">25</span><span class="p">,</span> <span class="m">5</span><span class="p">).</span><span class="nf">From</span><span class="p">(</span><span class="n">Loot</span><span class="p">).</span><span class="nf">Into</span><span class="p">(</span><span class="n">Rare</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">In(minInclusive, maxExclusive)</code> refuses a minimum at or above the maximum, and refuses NaN and an
-infinity, when the block runs. <code class="language-plaintext highlighter-rouge">Index().In(count)</code> needs a count of at least 1 and writes a value from
+infinity, when the block runs. A number draw without <code class="language-plaintext highlighter-rouge">In</code> stores a value from 0 up to but excluding 1:
+it never stores 1, and it stores the same value <code class="language-plaintext highlighter-rouge">In(0, 1)</code> would from the same randomizer. A signed
+value from -1 up to but excluding 1 is <code class="language-plaintext highlighter-rouge">In(-1, 1)</code>. <code class="language-plaintext highlighter-rouge">Index().In(count)</code> needs a count of at least 1 and writes a value from
 0 to <code class="language-plaintext highlighter-rouge">count - 1</code>. <code class="language-plaintext highlighter-rouge">Choice</code> refuses an empty option list while <code class="language-plaintext highlighter-rouge">Build()</code> runs. <code class="language-plaintext highlighter-rouge">Weighted</code> takes one
 weight per option, skips a weight of zero or less when it runs, and refuses a draw where no weight is
 usable.</p>
