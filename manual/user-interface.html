@@ -87,7 +87,7 @@ routes their events, places an authored fragment, and shows or hides a panel.</p
 that declares an element and finds no <code class="language-plaintext highlighter-rouge">PanelRenderer</code> reports the mistake once and the object still
 runs, with binds writing nothing and reads returning the kind’s resting value.</p>
 
-<h2 id="the-six-element-kinds">The six element kinds</h2>
+<h2 id="the-seven-element-kinds">The seven element kinds</h2>
 
 <p>Each call names an element in the document and returns a typed handle. The name must match the
 UXML <code class="language-plaintext highlighter-rouge">name</code> attribute, and comparison is case sensitive.</p>
@@ -117,6 +117,10 @@ UXML <code class="language-plaintext highlighter-rouge">name</code> attribute, a
       <td><code class="language-plaintext highlighter-rouge">ProgressBar</code></td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">Panel.Slider(name)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Slider</code></td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">Panel.TextField(name)</code></td>
       <td><code class="language-plaintext highlighter-rouge">TextField</code></td>
     </tr>
@@ -131,6 +135,7 @@ UXML <code class="language-plaintext highlighter-rouge">name</code> attribute, a
 <span class="kt">var</span> <span class="n">start</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Button</span><span class="p">(</span><span class="s">"start"</span><span class="p">);</span>
 <span class="kt">var</span> <span class="n">mute</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Toggle</span><span class="p">(</span><span class="s">"mute"</span><span class="p">);</span>
 <span class="kt">var</span> <span class="n">bar</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">ProgressBar</span><span class="p">(</span><span class="s">"health-bar"</span><span class="p">);</span>
+<span class="kt">var</span> <span class="n">volume</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Slider</span><span class="p">(</span><span class="s">"volume"</span><span class="p">);</span>
 <span class="kt">var</span> <span class="n">nameField</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">TextField</span><span class="p">(</span><span class="s">"player-name"</span><span class="p">);</span>
 <span class="kt">var</span> <span class="n">panelBody</span> <span class="p">=</span> <span class="n">Panel</span><span class="p">.</span><span class="nf">Group</span><span class="p">(</span><span class="s">"body"</span><span class="p">);</span>
 </code></pre></div></div>
@@ -174,6 +179,10 @@ place in an event list, and it writes every time that block runs.</p>
       <td>The progress bar’s value, once.</td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">volume.BindValue(number)</code></td>
+      <td>The slider’s value, whenever the number changes.</td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">handle.SetVisible(flag)</code></td>
       <td><code class="language-plaintext highlighter-rouge">display</code>, so a hidden element takes no space.</td>
     </tr>
@@ -194,12 +203,19 @@ place in an event list, and it writes every time that block runs.</p>
 
 <p><code class="language-plaintext highlighter-rouge">BindText</code> accepts a Number, a <code class="language-plaintext highlighter-rouge">Text.Format</code> and a Text variable. A label bound to a <code class="language-plaintext highlighter-rouge">Text.Format</code>, or to a
 text declared without a byte count, shows a line of any length; a label bound to a text declared with a
-<code class="language-plaintext highlighter-rouge">TextCapacity</code> shows what that text holds, up to its usable bytes. <code class="language-plaintext highlighter-rouge">BindValue</code> is on <code class="language-plaintext highlighter-rouge">Toggle</code> and
-<code class="language-plaintext highlighter-rouge">ProgressBar</code>. <code class="language-plaintext highlighter-rouge">SetVisible</code> and <code class="language-plaintext highlighter-rouge">SetEnabled</code> are on every kind.</p>
+<code class="language-plaintext highlighter-rouge">TextCapacity</code> shows what that text holds, up to its usable bytes. <code class="language-plaintext highlighter-rouge">BindValue</code> and <code class="language-plaintext highlighter-rouge">SetValue</code> are on
+<code class="language-plaintext highlighter-rouge">Toggle</code>, <code class="language-plaintext highlighter-rouge">ProgressBar</code> and <code class="language-plaintext highlighter-rouge">Slider</code>. <code class="language-plaintext highlighter-rouge">SetVisible</code> and <code class="language-plaintext highlighter-rouge">SetEnabled</code> are on every kind.</p>
+
+<p>A <code class="language-plaintext highlighter-rouge">Slider</code> holds a single-precision value inside the low and high values its UXML sets. A write
+converts the number to single precision, and the slider clamps it to its range. <code class="language-plaintext highlighter-rouge">volume.Value</code> reads
+the slider rounded to 7 significant digits, so 0.37 written to a slider reads back as 0.37, and a
+saved setting holds 0.37 rather than 0.3700000047683716. A script’s own write, from <code class="language-plaintext highlighter-rouge">BindValue</code> or
+<code class="language-plaintext highlighter-rouge">SetValue</code>, does not run <code class="language-plaintext highlighter-rouge">When.UI(volume).ValueChanged</code>; a player’s drag, key press or navigation
+does.</p>
 
 <h2 id="reading-an-element-back">Reading an element back</h2>
 
-<p><code class="language-plaintext highlighter-rouge">toggle.Value</code> and <code class="language-plaintext highlighter-rouge">bar.Value</code> are expressions you can use wherever a flag or a number is accepted.
+<p><code class="language-plaintext highlighter-rouge">toggle.Value</code>, <code class="language-plaintext highlighter-rouge">bar.Value</code> and <code class="language-plaintext highlighter-rouge">volume.Value</code> are expressions you can use wherever a flag or a number is accepted.
 <code class="language-plaintext highlighter-rouge">label.Text</code> and <code class="language-plaintext highlighter-rouge">field.Text</code> are text expressions a variable can be set from.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">mute</span><span class="p">.</span><span class="n">Value</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">MusicLevel</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0.0</span><span class="p">)));</span>
@@ -234,11 +250,17 @@ text declared without a byte count, shows a line of any length; a label bound to
       <td><code class="language-plaintext highlighter-rouge">When.UI(bar).ValueChanged(..)</code></td>
       <td>The progress bar’s value changed.</td>
     </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">When.UI(volume).ValueChanged(..)</code></td>
+      <td>The player moved the slider.</td>
+    </tr>
   </tbody>
 </table>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">When</span><span class="p">.</span><span class="nf">UI</span><span class="p">(</span><span class="n">start</span><span class="p">).</span><span class="nf">Activated</span><span class="p">(</span><span class="n">StartRequested</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="k">true</span><span class="p">));</span>
 <span class="n">When</span><span class="p">.</span><span class="nf">UI</span><span class="p">(</span><span class="n">mute</span><span class="p">).</span><span class="nf">ValueChanged</span><span class="p">(</span><span class="n">Muted</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">mute</span><span class="p">.</span><span class="n">Value</span><span class="p">));</span>
+<span class="n">volume</span><span class="p">.</span><span class="nf">BindValue</span><span class="p">(</span><span class="n">Volume</span><span class="p">);</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">UI</span><span class="p">(</span><span class="n">volume</span><span class="p">).</span><span class="nf">ValueChanged</span><span class="p">(</span><span class="n">Volume</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">volume</span><span class="p">.</span><span class="n">Value</span><span class="p">));</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">Activated</code> covers a pointer click and a navigation submit, so a control reached with a gamepad runs
