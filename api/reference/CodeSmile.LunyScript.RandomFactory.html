@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct RandomFactory | LunyScript API Reference ">
       
-      <meta name="description" content="The Random surface inside Build(): named streams and draws that store a result. A draw consumes one sample when the block runs; later reads of the result reuse it.">
+      <meta name="description" content="The Random surface inside Build(): draws from a declared randomizer that store a result. A draw consumes one sample when the block runs; later reads of the result reuse it. Define.Randomizer() declares the randomizer.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -85,9 +85,9 @@ Struct RandomFactory  <a class="header-action link-secondary" title="View source
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>The <code>Random</code> surface inside <code>Build()</code>: named streams and draws that store a
+  <div class="markdown summary"><p>The <code>Random</code> surface inside <code>Build()</code>: draws from a declared randomizer that store a
 result. A draw consumes one sample when the block runs; later reads of the result reuse
-it.</p>
+it. <code>Define.Randomizer()</code> declares the randomizer.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -110,8 +110,8 @@ it.</p>
 
 
   <h2 id="CodeSmile_LunyScript_RandomFactory_examples">Examples</h2>
-  <pre><code class="lang-csharp">var loot = Random.Stream("loot", 42);
-On.Ready(Random.Number().From(loot).In(1.0, 100.0).Into(Roll));</code></pre>
+  <pre><code class="lang-csharp">Loot = Define.Randomizer().Seed(42);
+On.Ready(Random.Number().From(Loot).In(1.0, 100.0).Into(Roll));</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_RandomFactory_remarks">Remarks</h2>
@@ -129,7 +129,7 @@ surface chooses among authored number values instead.</p>
 
   <h3 id="CodeSmile_LunyScript_RandomFactory_Choice_CodeSmile_LunyScript_NumberValueBlock___" data-uid="CodeSmile.LunyScript.RandomFactory.Choice(CodeSmile.LunyScript.NumberValueBlock[])">
   Choice(params NumberValueBlock[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Random/RandomFactory.cs/#L104"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Random/RandomFactory.cs/#L66"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts a choice among authored number values. Incomplete until <code>From</code> and
@@ -171,7 +171,7 @@ surface chooses among authored number values instead.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_RandomFactory_Choice_CodeSmile_LunyScript_NumberValueBlock____examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Random.Choice(1.0, 2.0, 5.0).From(loot).Into(Drop));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Random.Choice(1.0, 2.0, 5.0).From(Loot).Into(Drop));</code></pre>
 
 
 
@@ -189,7 +189,7 @@ this surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_RandomFactory_Index_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.RandomFactory.Index(System.String,System.Int32)">
   Index(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Random/RandomFactory.cs/#L86"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Random/RandomFactory.cs/#L48"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts an integer-index draw in <code>[0, count)</code>. Incomplete until
@@ -237,7 +237,7 @@ this surface was read outside <code>Build()</code>.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_RandomFactory_Index_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Random.Index().From(loot).In(3.0).Into(Pick));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Random.Index().From(Loot).In(3.0).Into(Pick));</code></pre>
 
 
 
@@ -248,7 +248,7 @@ this surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_RandomFactory_Number_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.RandomFactory.Number(System.String,System.Int32)">
   Number(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Random/RandomFactory.cs/#L71"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Random/RandomFactory.cs/#L33"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts a number draw. Incomplete until <code>From</code>, <code>In</code> and <code>Into</code>.</p>
@@ -295,161 +295,10 @@ this surface was read outside <code>Build()</code>.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_RandomFactory_Number_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Random.Number().From(loot).In(1.0, 100.0).Into(Roll));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Random.Number().From(Loot).In(1.0, 100.0).Into(Roll));</code></pre>
 
 
 
-
-
-
-  <a id="CodeSmile_LunyScript_RandomFactory_Stream_" data-uid="CodeSmile.LunyScript.RandomFactory.Stream*"></a>
-
-  <h3 id="CodeSmile_LunyScript_RandomFactory_Stream_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.RandomFactory.Stream(System.String,System.String,System.Int32)">
-  Stream(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Random/RandomFactory.cs/#L38"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Declares a named stream whose state lives on each instance. The runner derives
-the seed from the session seed, the spawn index and this name.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public RandomStream Stream(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <table>
-  <tr>
-  <th>Type</th>
-  <th>Name</th>
-  <th>Description</th>
-  </tr>
-  <dl class="parameters">
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
-    <td style="width: 99%"><dd><p>The stream's name. Purpose-specific: loot, damage, cosmetics each get
-their own so one draw does not consume another.</p>
-</dd></td>
-  </tr>
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
-    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
-</dd></td>
-  </tr>
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
-    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
-</dd></td>
-  </tr>
-  </dl>
-  </table>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.RandomStream.html">RandomStream</a></dt>
-    <dd><p>The handle <code>From</code> takes.</p>
-</dd>
-  </dl>
-
-
-
-
-
-
-  <h4 class="section" id="CodeSmile_LunyScript_RandomFactory_Stream_System_String_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">var loot = Random.Stream("loot");</code></pre>
-
-
-
-  <h4 class="section">Exceptions</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p>The name is empty or already used, or this
-surface was read outside <code>Build()</code>.</p>
-</dd>
-  </dl>
-
-
-
-  <a id="CodeSmile_LunyScript_RandomFactory_Stream_" data-uid="CodeSmile.LunyScript.RandomFactory.Stream*"></a>
-
-  <h3 id="CodeSmile_LunyScript_RandomFactory_Stream_System_String_System_UInt32_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.RandomFactory.Stream(System.String,System.UInt32,System.String,System.Int32)">
-  Stream(string, uint, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Random/RandomFactory.cs/#L57"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Declares a named stream with an explicit seed. The same name and seed produce
-the same sequence on every instance.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public RandomStream Stream(string name, uint seed, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <table>
-  <tr>
-  <th>Type</th>
-  <th>Name</th>
-  <th>Description</th>
-  </tr>
-  <dl class="parameters">
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
-    <td style="width: 99%"><dd><p>The stream's name.</p>
-</dd></td>
-  </tr>
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">uint</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>seed</code></dt></td>
-    <td style="width: 99%"><dd><p>The seed a test supplies so a run can be replayed.</p>
-</dd></td>
-  </tr>
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
-    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
-</dd></td>
-  </tr>
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
-    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
-</dd></td>
-  </tr>
-  </dl>
-  </table>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.RandomStream.html">RandomStream</a></dt>
-    <dd><p>The handle <code>From</code> takes.</p>
-</dd>
-  </dl>
-
-
-
-
-
-
-  <h4 class="section" id="CodeSmile_LunyScript_RandomFactory_Stream_System_String_System_UInt32_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">var loot = Random.Stream("loot", 42);</code></pre>
-
-
-
-  <h4 class="section">Exceptions</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p>The name is empty or already used, or this
-surface was read outside <code>Build()</code>.</p>
-</dd>
-  </dl>
 
 
 
@@ -457,7 +306,7 @@ surface was read outside <code>Build()</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_RandomFactory_Weighted_CodeSmile_LunyScript_NumberValueBlock___" data-uid="CodeSmile.LunyScript.RandomFactory.Weighted(CodeSmile.LunyScript.NumberValueBlock[])">
   Weighted(params NumberValueBlock[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Random/RandomFactory.cs/#L125"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Random/RandomFactory.cs/#L87"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts a weighted choice among authored number values. Incomplete until
@@ -499,7 +348,7 @@ surface was read outside <code>Build()</code>.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_RandomFactory_Weighted_CodeSmile_LunyScript_NumberValueBlock____examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Random.Weighted(1.0, 5.0, 20.0).WithWeights(70.0, 25.0, 5.0).From(loot).Into(Drop));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Random.Weighted(1.0, 5.0, 20.0).WithWeights(70.0, 25.0, 5.0).From(Loot).Into(Drop));</code></pre>
 
 
 

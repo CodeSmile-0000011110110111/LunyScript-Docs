@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_CreatePlacedBuilder" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder" class="text-break">
-Struct CreatePlacedBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L446"><i class="bi bi-code-slash"></i></a>
+Struct CreatePlacedBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L470"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -124,16 +124,93 @@ whose frame is still the default, the parent's.</p>
 
   <a id="CodeSmile_LunyScript_CreatePlacedBuilder_ChildOf_" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder.ChildOf*"></a>
 
-  <h3 id="CodeSmile_LunyScript_CreatePlacedBuilder_ChildOf_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder.ChildOf(System.String,System.String,System.Int32)">
-  ChildOf(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L479"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_CreatePlacedBuilder_ChildOf_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder.ChildOf(CodeSmile.LunyScript.OwnedObject,System.String,System.Int32)">
+  ChildOf(OwnedObject, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L510"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Parents the produced object to an object this script owns.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CreatePlacedBuilder ChildOf(string name = null, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CreatePlacedBuilder ChildOf(OwnedObject parent, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.OwnedObject.html">OwnedObject</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>parent</code></dt></td>
+    <td style="width: 99%"><dd><p>The owned object <code>Define.Object()</code> declared.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.CreatePlacedBuilder.html">CreatePlacedBuilder</a></dt>
+    <dd><p>A builder that can still take a placement and an owned object to hold it in.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CreatePlacedBuilder_ChildOf_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Object.Create(Sentry).ChildOf(Turret));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_CreatePlacedBuilder_ChildOf_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The parent is an owned object this script produced, by <code>Object.Create</code> or
+<code>Object.Spawn</code> with <code>Into</code>. A parent whose slot is empty when the create is applied leaves the
+produced object at the scene root and reports it.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">parent</code> is not an owned object this script
+declared, this chain already names a parent, or this builder is a <code>default</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_CreatePlacedBuilder_ChildOf_" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder.ChildOf*"></a>
+
+  <h3 id="CodeSmile_LunyScript_CreatePlacedBuilder_ChildOf_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder.ChildOf(System.String,System.Int32)">
+  ChildOf(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L503"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parents the produced object to the object this script runs on.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CreatePlacedBuilder ChildOf(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -146,18 +223,15 @@ whose frame is still the default, the parent's.</p>
   <dl class="parameters">
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
-  </tr>
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
   </tr>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
   </tr>
   </dl>
   </table>
@@ -165,7 +239,8 @@ whose frame is still the default, the parent's.</p>
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.CreatePlacedBuilder.html">CreatePlacedBuilder</a></dt>
-    <dd></dd>
+    <dd><p>A builder that can still take a placement and an owned object to hold it in.</p>
+</dd>
   </dl>
 
 
@@ -173,8 +248,22 @@ whose frame is still the default, the parent's.</p>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_CreatePlacedBuilder_ChildOf_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Object.Create(Sentry).ChildOf());</code></pre>
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_CreatePlacedBuilder_ChildOf_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>ChildOf cannot parent to itself.</b> <a class="xref" href="CodeSmile.LunyScript.CreateBuilder.html#CodeSmile_LunyScript_CreateBuilder_ChildOf_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32_">ChildOf(OwnedObject, string, int)</a>
+parents it to an object this script owns instead.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This chain already names a parent, or this builder is a
+<code>default</code>.</p>
+</dd>
+  </dl>
 
 
 
@@ -182,7 +271,7 @@ whose frame is still the default, the parent's.</p>
 
   <h3 id="CodeSmile_LunyScript_CreatePlacedBuilder_ForPlayer_System_Int32_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder.ForPlayer(System.Int32,System.String,System.Int32)">
   ForPlayer(int, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L493"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L534"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds every script the produced object starts to one local player, so its
@@ -260,7 +349,7 @@ this chain already names a player, or this builder is a <code>default</code>.</p
 
   <h3 id="CodeSmile_LunyScript_CreatePlacedBuilder_InLocalSpace" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder.InLocalSpace">
   InLocalSpace()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L472"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L496"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>States the default frame explicitly: the placement is read in the parent's
@@ -308,7 +397,7 @@ that mixes framed and unframed creates reads better when both say which frame th
 
   <h3 id="CodeSmile_LunyScript_CreatePlacedBuilder_InWorldSpace" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder.InWorldSpace">
   InWorldSpace()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L458"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L482"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reads the placement as world coordinates rather than the parent's.</p>
@@ -352,18 +441,18 @@ of 2026-09-13, so a script names a frame one way rather than two.</p>
 
   <a id="CodeSmile_LunyScript_CreatePlacedBuilder_Into_" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder.Into*"></a>
 
-  <h3 id="CodeSmile_LunyScript_CreatePlacedBuilder_Into_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder.Into(System.String,System.String,System.Int32)">
-  Into(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L486"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_CreatePlacedBuilder_Into_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder.Into(CodeSmile.LunyScript.OwnedObject,System.String,System.Int32)">
+  Into(OwnedObject, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L527"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Holds the produced object in this script's owned-object slot of that name, so later
-blocks can address it.</p>
+  <div class="markdown level1 summary"><p>Holds the produced object in one of this script's declared owned objects, so later blocks can
+address it.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CreatePlacedBuilder Into(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CreatePlacedBuilder Into(OwnedObject target, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -375,9 +464,9 @@ blocks can address it.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
-    <td style="width: 99%"><dd><p>The name this script addresses the produced object by.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.OwnedObject.html">OwnedObject</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>target</code></dt></td>
+    <td style="width: 99%"><dd><p>The owned object <code>Define.Object()</code> declared.</p>
 </dd></td>
   </tr>
   <tr>
@@ -407,22 +496,22 @@ blocks can address it.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_CreatePlacedBuilder_Into_System_String_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Object.Create(Sentry).Into("Guard"));</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_CreatePlacedBuilder_Into_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Guard = Define.Object();
+On.Ready(Object.Create(Sentry).Into(Guard));</code></pre>
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_CreatePlacedBuilder_Into_System_String_System_String_System_Int32__remarks">Remarks</h4>
-  <div class="markdown level1 remarks"><p><b>The name is an address and nothing else.</b> A copy is owned by the instance that created it
-whether or not <code>Into</code> is written; <code>Into</code> only lets later blocks name it, for example
-<code>Object.Destroy(name)</code>. The name is not the produced object's name in the scene: a prefab
-copy keeps the name the prefab gives it.</p>
+  <h4 class="section" id="CodeSmile_LunyScript_CreatePlacedBuilder_Into_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>The owned object is an address and nothing else.</b> A copy is owned by the instance that created
+it whether or not <code>Into</code> is written; <code>Into</code> only lets later blocks name it, for example
+<code>Object.Destroy(Guard)</code>. A prefab copy keeps the name the prefab gives it in the scene.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p><code class="paramref">name</code> is null or whitespace,
-this chain already names one, another call already produces that name, or this builder is a
+    <dd><p><code class="paramref">target</code> is not an owned object this script
+declared, this chain already names one, another call already produces it, or this builder is a
 <code>default</code>.</p>
 </dd>
   </dl>
@@ -433,7 +522,7 @@ this chain already names one, another call already produces that name, or this b
 
   <h3 id="CodeSmile_LunyScript_CreatePlacedBuilder_SurvivesCaller_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder.SurvivesCaller(System.String,System.Int32)">
   SurvivesCaller(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L500"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L541"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Lets the produced object outlive the instance that created it: it ends with its scene,
@@ -486,8 +575,8 @@ or when something ends it, rather than when this instance ends.</p>
 
   <h4 class="section" id="CodeSmile_LunyScript_CreatePlacedBuilder_SurvivesCaller_System_String_System_Int32__remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>Without it, the copy is owned by this instance and destroyed when the instance ends, with or
-without <a class="xref" href="CodeSmile.LunyScript.CreateBuilder.html#CodeSmile_LunyScript_CreateBuilder_Into_System_String_System_String_System_Int32_">Into(string, string, int)</a>. With it, the scene the copy is in holds that obligation, and
-<a class="xref" href="CodeSmile.LunyScript.CreateBuilder.html#CodeSmile_LunyScript_CreateBuilder_Into_System_String_System_String_System_Int32_">Into(string, string, int)</a> still lets this script address the copy while this instance runs. A copy that
+without <a class="xref" href="CodeSmile.LunyScript.CreateBuilder.html#CodeSmile_LunyScript_CreateBuilder_Into_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32_">Into(OwnedObject, string, int)</a>. With it, the scene the copy is in holds that obligation, and
+<a class="xref" href="CodeSmile.LunyScript.CreateBuilder.html#CodeSmile_LunyScript_CreateBuilder_Into_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32_">Into(OwnedObject, string, int)</a> still lets this script address the copy while this instance runs. A copy that
 survives the caller cannot be a child of the caller, because a child is destroyed with its
 parent, so <code>ChildOf()</code> with this clause is refused while the script type is built.</p>
 </div>
@@ -510,7 +599,7 @@ parent, so <code>ChildOf()</code> with this clause is refused while the script t
 
   <h3 id="CodeSmile_LunyScript_CreatePlacedBuilder_op_Implicit_CodeSmile_LunyScript_CreatePlacedBuilder__CodeSmile_LunyScript_Block" data-uid="CodeSmile.LunyScript.CreatePlacedBuilder.op_Implicit(CodeSmile.LunyScript.CreatePlacedBuilder)~CodeSmile.LunyScript.Block">
   implicit operator Block(CreatePlacedBuilder)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L512"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L553"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finishes a create whose placement is read in the parent's frame.</p>
@@ -569,7 +658,7 @@ parent, so <code>ChildOf()</code> with this clause is refused while the script t
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L446" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/CreateBuilder.cs/#L470" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_TextDefineBuilder" data-uid="CodeSmile.LunyScript.TextDefineBuilder" class="text-break">
-Struct TextDefineBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L994"><i class="bi bi-code-slash"></i></a>
+Struct TextDefineBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L1211"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -120,7 +120,7 @@ called.</p>
 
   <h3 id="CodeSmile_LunyScript_TextDefineBuilder_Allocating_System_Int32_" data-uid="CodeSmile.LunyScript.TextDefineBuilder.Allocating(System.Int32)">
   Allocating(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L1033"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L1255"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Bounds this growing text: it holds at most this many UTF-8 bytes, and a longer write is
@@ -174,7 +174,7 @@ refused. Synchronising this variable is refused: a growing text is not networked
 
   <h3 id="CodeSmile_LunyScript_TextDefineBuilder_Shared" data-uid="CodeSmile.LunyScript.TextDefineBuilder.Shared">
   Shared()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L1013"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L1230"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Places this text on the default shared store, where it grows with what is written into
@@ -209,17 +209,18 @@ it. Every script that declares the name declares it without a byte count.</p>
 
   <a id="CodeSmile_LunyScript_TextDefineBuilder_Shared_" data-uid="CodeSmile.LunyScript.TextDefineBuilder.Shared*"></a>
 
-  <h3 id="CodeSmile_LunyScript_TextDefineBuilder_Shared_CodeSmile_LunyScript_SharedStore_" data-uid="CodeSmile.LunyScript.TextDefineBuilder.Shared(CodeSmile.LunyScript.SharedStore)">
-  Shared(SharedStore)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L1021"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_TextDefineBuilder_Shared_CodeSmile_LunyScript_Store_" data-uid="CodeSmile.LunyScript.TextDefineBuilder.Shared(CodeSmile.LunyScript.Store)">
+  Shared(Store)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L1239"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Places this growing text on a named shared store.</p>
+  <div class="markdown level1 summary"><p>Places this growing text on a declared store: this script's own, or another script's through
+its generated descriptor such as <code>MatchScript.Stores.MatchData</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Text Shared(SharedStore store)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Text Shared(Store store)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -231,9 +232,9 @@ it. Every script that declares the name declares it without a byte count.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.SharedStore.html">SharedStore</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Store.html">Store</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>store</code></dt></td>
-    <td style="width: 99%"><dd><p>The store identity, usually a <code>const String</code>.</p>
+    <td style="width: 99%"><dd><p>The store <code>Define.Store()</code> declared.</p>
 </dd></td>
   </tr>
   </dl>
@@ -251,8 +252,8 @@ it. Every script that declares the name declares it without a byte count.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_TextDefineBuilder_Shared_CodeSmile_LunyScript_SharedStore__examples">Examples</h4>
-  <pre><code class="lang-csharp">LevelName = Define.Text(nameof(LevelName)).Shared(CurrentLevel);</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_TextDefineBuilder_Shared_CodeSmile_LunyScript_Store__examples">Examples</h4>
+  <pre><code class="lang-csharp">LevelName = Define.Text(nameof(LevelName)).Shared(MatchData);</code></pre>
 
 
 
@@ -274,7 +275,7 @@ byte count.</p>
 
   <h3 id="CodeSmile_LunyScript_TextDefineBuilder_op_Implicit_CodeSmile_LunyScript_TextDefineBuilder__CodeSmile_LunyScript_Text" data-uid="CodeSmile.LunyScript.TextDefineBuilder.op_Implicit(CodeSmile.LunyScript.TextDefineBuilder)~CodeSmile.LunyScript.Text">
   implicit operator Text(TextDefineBuilder)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L1043"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L1265"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finishes an object-local text that grows with what is written into it, which is what this
@@ -324,7 +325,7 @@ builder is without <code>Allocating</code> or <code>Shared</code>.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L994" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/DefineFactory.cs/#L1211" class="edit-link">Edit this page</a>
         </div>
 
 

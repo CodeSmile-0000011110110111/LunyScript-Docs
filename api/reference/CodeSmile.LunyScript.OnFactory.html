@@ -169,7 +169,7 @@ rule permits; AGENTS.md rule 33 forbids <code>params</code> on the run-time path
 
   <h3 id="CodeSmile_LunyScript_OnFactory_Authority" data-uid="CodeSmile.LunyScript.OnFactory.Authority">
   Authority
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L491"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L497"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The two authority events: gaining authority over this object, and losing it.</p>
@@ -497,7 +497,7 @@ its object are still valid.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Despawned_CodeSmile_LunyScript_Block____examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Despawned(Object.Destroy("Shield"));</code></pre>
+  <pre><code class="lang-csharp">On.Despawned(Object.Destroy(Shield));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Despawned_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
@@ -651,7 +651,7 @@ null.</p>
 
   <h3 id="CodeSmile_LunyScript_OnFactory_Event_CodeSmile_LunyScript_Event_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.OnFactory.Event(CodeSmile.LunyScript.Event,System.String,System.Int32)">
   Event(Event, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L474"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L480"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts a listener for an event: this script's own, or another script's generated descriptor such
@@ -963,18 +963,19 @@ null.</p>
 
   <a id="CodeSmile_LunyScript_OnFactory_Message_" data-uid="CodeSmile.LunyScript.OnFactory.Message*"></a>
 
-  <h3 id="CodeSmile_LunyScript_OnFactory_Message_System_String_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.Message(System.String,CodeSmile.LunyScript.Block[])">
-  Message(string, params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L422"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_OnFactory_Message_CodeSmile_LunyScript_Message_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.Message(CodeSmile.LunyScript.Message,CodeSmile.LunyScript.Block[])">
+  Message(Message, params Block[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L424"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Registers blocks that run on the peer this message is delivered to, which is the
-peer with authority over the object it was sent from.</p>
+  <div class="markdown level1 summary"><p>Registers blocks that run when one of this script's declared messages arrives: from
+<code>Net.Send.ToAuthority(message)</code> on the peer with authority over the object it was sent from, or from
+C# on the object, <code>behaviour.Send(ThisScript.Messages.Name)</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Message(string messageName, params Block[] blocks)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Message(Message message, params Block[] blocks)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -986,10 +987,9 @@ peer with authority over the object it was sent from.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>messageName</code></dt></td>
-    <td style="width: 99%"><dd><p>What the message is called. Use <code>nameof</code>, so that a rename
-moves this and the matching <code>Net.Send.ToAuthority</code> together.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Message.html">Message</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>A message this script declared with <code>Define.Message()</code>.</p>
 </dd></td>
   </tr>
   <tr>
@@ -1007,20 +1007,22 @@ moves this and the matching <code>Net.Send.ToAuthority</code> together.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Message_System_String_CodeSmile_LunyScript_Block____examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Message(nameof(RequestReady), isReady.Set(true));</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Message_CodeSmile_LunyScript_Message_CodeSmile_LunyScript_Block____examples">Examples</h4>
+  <pre><code class="lang-csharp">RequestReady = Define.Message();
+On.Message(RequestReady, isReady.Set(true));</code></pre>
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Message_System_String_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
+  <h4 class="section" id="CodeSmile_LunyScript_OnFactory_Message_CodeSmile_LunyScript_Message_CodeSmile_LunyScript_Block____remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>Two calls naming the same message both fire, in the order they were written,
-the way two <a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_Update_CodeSmile_LunyScript_Block___">Update(params Block[])</a> calls do.</p>
+the way two <a class="xref" href="CodeSmile.LunyScript.OnFactory.html#CodeSmile_LunyScript_OnFactory_Update_CodeSmile_LunyScript_Block___">Update(params Block[])</a> calls do. This takes a <code>params</code> array, so it captures no authored
+line; AGENTS.md rule 72.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p><code class="paramref">messageName</code> is null or
-whitespace, or <code class="paramref">blocks</code> is null or contains null.</p>
+    <dd><p>The message was never declared, has no name yet, or is another
+script's; or <code class="paramref">blocks</code> is null or contains null.</p>
 </dd>
   </dl>
 
@@ -1083,7 +1085,7 @@ null.</p>
 
   <h3 id="CodeSmile_LunyScript_OnFactory_Request_CodeSmile_LunyScript_Request_CodeSmile_LunyScript_Block___" data-uid="CodeSmile.LunyScript.OnFactory.Request(CodeSmile.LunyScript.Request,CodeSmile.LunyScript.Block[])">
   Request(Request, params Block[])
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L449"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Events/OnFactory.cs/#L455"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Registers one section of a request this script accepts. Another script sends the request with

@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct AudioVoice | LunyScript API Reference ">
       
-      <meta name="description" content="What Audio.Voice(name) returns: one tracked one-shot.">
+      <meta name="description" content="A declared voice: one tracked one-shot per instance, which Audio.PlayOneShot(clip).Into(voice) fills and which Stop, Pause, Detach, SetVolume and When.Audio(voice) address.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_AudioVoice" data-uid="CodeSmile.LunyScript.AudioVoice" class="text-break">
-Struct AudioVoice  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L13"><i class="bi bi-code-slash"></i></a>
+Struct AudioVoice  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L23"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,7 +85,9 @@ Struct AudioVoice  <a class="header-action link-secondary" title="View source" h
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>What <code>Audio.Voice(name)</code> returns: one tracked one-shot.</p>
+  <div class="markdown summary"><p>A declared voice: one tracked one-shot per instance, which <code>Audio.PlayOneShot(clip).Into(voice)</code>
+fills and which <code>Stop</code>, <code>Pause</code>, <code>Detach</code>, <code>SetVolume</code> and <code>When.Audio(voice)</code>
+address.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -108,9 +110,88 @@ Struct AudioVoice  <a class="header-action link-secondary" title="View source" h
 
 
   <h2 id="CodeSmile_LunyScript_AudioVoice_examples">Examples</h2>
-  <pre><code class="lang-csharp">var alarm = Audio.Voice("DoorAlarm");
-On.Ready(Audio.PlayOneShot(AlarmClip).At(doorPosition).Into(alarm));
-On.Message(CancelAlarm, alarm.Stop());</code></pre>
+  <pre><code class="lang-csharp">Alarm = Define.Voice();
+On.Ready(Audio.PlayOneShot(AlarmClip).At(doorPosition).Into(Alarm));
+On.Message(CancelAlarm, Alarm.Stop());</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_AudioVoice_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p><code>Alarm = Define.Voice();</code> declares one. It starts with no playback. Each instance tracks its own
+playback, a later <code>Into</code> on the same voice tracks the newer one, and the playback ends with its owner
+unless <code>Detach</code> lets it finish. <code>docs/proposals/declared-identity-handles.md</code> is the contract.</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_AudioVoice_IsDeclared_" data-uid="CodeSmile.LunyScript.AudioVoice.IsDeclared*"></a>
+
+  <h3 id="CodeSmile_LunyScript_AudioVoice_IsDeclared" data-uid="CodeSmile.LunyScript.AudioVoice.IsDeclared">
+  IsDeclared
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether this handle names a declared voice.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsDeclared { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_AudioVoice_IsDeclared_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (Alarm.IsDeclared) { }</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyScript_AudioVoice_Name_" data-uid="CodeSmile.LunyScript.AudioVoice.Name*"></a>
+
+  <h3 id="CodeSmile_LunyScript_AudioVoice_Name" data-uid="CodeSmile.LunyScript.AudioVoice.Name">
+  Name
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L36"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The name the voice was declared with, or null before it has one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Name { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_AudioVoice_Name_examples">Examples</h4>
+  <pre><code class="lang-csharp">var name = Alarm.Name;</code></pre>
+
+
 
 
 
@@ -119,11 +200,82 @@ On.Message(CancelAlarm, alarm.Stop());</code></pre>
 </h2>
 
 
+  <a id="CodeSmile_LunyScript_AudioVoice_As_" data-uid="CodeSmile.LunyScript.AudioVoice.As*"></a>
+
+  <h3 id="CodeSmile_LunyScript_AudioVoice_As_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.AudioVoice.As(System.String,System.String,System.Int32)">
+  As(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Names a voice a hand-written property or a local holds, which the generator does not name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public AudioVoice As(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The name; use <code>nameof</code> of the property.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.AudioVoice.html">AudioVoice</a></dt>
+    <dd><p>The named voice.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_AudioVoice_As_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var alarm = Define.Voice().As("DoorAlarm");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>Called outside <code>Build()</code>, on a voice that already has a
+name, or with an empty name or one this script already uses.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_AudioVoice_Detach_" data-uid="CodeSmile.LunyScript.AudioVoice.Detach*"></a>
 
   <h3 id="CodeSmile_LunyScript_AudioVoice_Detach" data-uid="CodeSmile.LunyScript.AudioVoice.Detach">
   Detach()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L80"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that lets this playback finish after the owner despawns.</p>
@@ -147,10 +299,17 @@ On.Message(CancelAlarm, alarm.Stop());</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_AudioVoice_Detach_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Despawned(alarm.Detach());</code></pre>
+  <pre><code class="lang-csharp">On.Despawned(Alarm.Detach());</code></pre>
 
 
 
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This voice is not one this script declared, or this is called
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
 
 
 
@@ -158,7 +317,7 @@ On.Message(CancelAlarm, alarm.Stop());</code></pre>
 
   <h3 id="CodeSmile_LunyScript_AudioVoice_Pause" data-uid="CodeSmile.LunyScript.AudioVoice.Pause">
   Pause()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L42"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L70"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that pauses this playback.</p>
@@ -182,10 +341,17 @@ On.Message(CancelAlarm, alarm.Stop());</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_AudioVoice_Pause_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Message(HoldAlarm, alarm.Pause());</code></pre>
+  <pre><code class="lang-csharp">On.Message(HoldAlarm, Alarm.Pause());</code></pre>
 
 
 
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This voice is not one this script declared, or this is called
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
 
 
 
@@ -193,7 +359,7 @@ On.Message(CancelAlarm, alarm.Stop());</code></pre>
 
   <h3 id="CodeSmile_LunyScript_AudioVoice_SetVolume_CodeSmile_LunyScript_NumberValueBlock_" data-uid="CodeSmile.LunyScript.AudioVoice.SetVolume(CodeSmile.LunyScript.NumberValueBlock)">
   SetVolume(NumberValueBlock)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L62"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L92"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that writes linear volume 0–1 on this playback.</p>
@@ -234,7 +400,7 @@ On.Message(CancelAlarm, alarm.Stop());</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_AudioVoice_SetVolume_CodeSmile_LunyScript_NumberValueBlock__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(alarm.SetVolume(0.0).Over(0.4));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Alarm.SetVolume(0.0).Over(0.4));</code></pre>
 
 
 
@@ -242,7 +408,7 @@ On.Message(CancelAlarm, alarm.Stop());</code></pre>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
     <dd><p><code class="paramref">value</code> is null, or this voice
-was not declared by <code>Audio.Voice</code>.</p>
+is not one this script declared with <code>Define.Voice()</code>.</p>
 </dd>
   </dl>
 
@@ -252,7 +418,7 @@ was not declared by <code>Audio.Voice</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_AudioVoice_Stop" data-uid="CodeSmile.LunyScript.AudioVoice.Stop">
   Stop()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L34"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L60"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that stops this playback.</p>
@@ -276,7 +442,47 @@ was not declared by <code>Audio.Voice</code>.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_AudioVoice_Stop_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Message(CancelAlarm, alarm.Stop());</code></pre>
+  <pre><code class="lang-csharp">On.Message(CancelAlarm, Alarm.Stop());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This voice is not one this script declared, or this is called
+outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_AudioVoice_ToString_" data-uid="CodeSmile.LunyScript.AudioVoice.ToString*"></a>
+
+  <h3 id="CodeSmile_LunyScript_AudioVoice_ToString" data-uid="CodeSmile.LunyScript.AudioVoice.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L137"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How a diagnostic names this voice: <code>DoorScript.Alarm</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>The declaring script and the name.</p>
+</dd>
+  </dl>
+
+
+
+
+
 
 
 
@@ -287,7 +493,7 @@ was not declared by <code>Audio.Voice</code>.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L13" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Audio/AudioVoices.cs/#L23" class="edit-link">Edit this page</a>
         </div>
 
 

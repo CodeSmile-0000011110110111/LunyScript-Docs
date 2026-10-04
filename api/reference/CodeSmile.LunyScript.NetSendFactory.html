@@ -108,7 +108,7 @@ Struct NetSendFactory  <a class="header-action link-secondary" title="View sourc
 
 
   <h2 id="CodeSmile_LunyScript_NetSendFactory_examples">Examples</h2>
-  <pre><code class="lang-csharp">Net.Send.ToAuthority(nameof(RequestReady))</code></pre>
+  <pre><code class="lang-csharp">Net.Send.ToAuthority(RequestReady)</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_NetSendFactory_remarks">Remarks</h2>
@@ -126,18 +126,18 @@ authority, and state comes back down through the cadences.</p>
 
   <a id="CodeSmile_LunyScript_NetSendFactory_ToAuthority_" data-uid="CodeSmile.LunyScript.NetSendFactory.ToAuthority*"></a>
 
-  <h3 id="CodeSmile_LunyScript_NetSendFactory_ToAuthority_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NetSendFactory.ToAuthority(System.String,System.String,System.Int32)">
-  ToAuthority(string, string, int)
+  <h3 id="CodeSmile_LunyScript_NetSendFactory_ToAuthority_CodeSmile_LunyScript_Message_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.NetSendFactory.ToAuthority(CodeSmile.LunyScript.Message,System.String,System.Int32)">
+  ToAuthority(Message, string, int)
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Net/NetFactory.cs/#L294"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Builds a block that sends one named message to the peer with authority over this
-object. The message carries its name and no payload.</p>
+  <div class="markdown level1 summary"><p>Builds a block that sends one of this script's declared messages to the peer with authority
+over this object. The message carries its identity and no payload.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block ToAuthority(string messageName, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block ToAuthority(Message message, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -149,10 +149,9 @@ object. The message carries its name and no payload.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>messageName</code></dt></td>
-    <td style="width: 99%"><dd><p>What the message is called. Use <code>nameof</code>, so that a rename
-moves the send and the matching <code>On.Message</code> together.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Message.html">Message</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>A message this script declared with <code>Define.Message()</code>.</p>
 </dd></td>
   </tr>
   <tr>
@@ -182,11 +181,12 @@ moves the send and the matching <code>On.Message</code> together.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_NetSendFactory_ToAuthority_System_String_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Update(If(!Net.HasAuthority).Then(Net.Send.ToAuthority(nameof(RequestReady))));</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_NetSendFactory_ToAuthority_CodeSmile_LunyScript_Message_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">RequestReady = Define.Message();
+On.Update(If(!Net.HasAuthority).Then(Net.Send.ToAuthority(RequestReady)));</code></pre>
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_NetSendFactory_ToAuthority_System_String_System_String_System_Int32__remarks">Remarks</h4>
+  <h4 class="section" id="CodeSmile_LunyScript_NetSendFactory_ToAuthority_CodeSmile_LunyScript_Message_System_String_System_Int32__remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>Sending while offline does nothing: there is no authority to send to, and that is a state
 rather than a mistake. Sending on the peer that already has authority delivers the message
 to itself, so a script does not need two paths for &quot;ask&quot; and &quot;do&quot;.</p>
@@ -195,9 +195,9 @@ to itself, so a script does not need two paths for &quot;ask&quot; and &quot;do&
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p>The name is null or whitespace. A name that no
-<code>On.Message</code> in this script receives is refused too, at the end of <code>Build()</code> rather
-than here, because the receive may be written below the send.</p>
+    <dd><p>The message was never declared, has no name yet, or is another
+script's. A message that no <code>On.Message</code> in this script receives is refused too, at the end of
+<code>Build()</code> rather than here, because the receive may be written below the send.</p>
 </dd>
   </dl>
 

@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_SharedFactory" data-uid="CodeSmile.LunyScript.SharedFactory" class="text-break">
-Struct SharedFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Shared/SharedFactory.cs/#L16"><i class="bi bi-code-slash"></i></a>
+Struct SharedFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Shared/SharedFactory.cs/#L17"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -110,7 +110,7 @@ on one variable.</p>
 
   <h2 id="CodeSmile_LunyScript_SharedFactory_examples">Examples</h2>
   <pre><code class="lang-csharp">On.Ready(Shared.Clear());
-On.Ready(Shared.Clear(CurrentLevel));</code></pre>
+On.Ready(Shared.Clear(MatchData));</code></pre>
 
 
 
@@ -121,18 +121,17 @@ On.Ready(Shared.Clear(CurrentLevel));</code></pre>
 
   <a id="CodeSmile_LunyScript_SharedFactory_Clear_" data-uid="CodeSmile.LunyScript.SharedFactory.Clear*"></a>
 
-  <h3 id="CodeSmile_LunyScript_SharedFactory_Clear_CodeSmile_LunyScript_SharedStore_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SharedFactory.Clear(CodeSmile.LunyScript.SharedStore,System.String,System.Int32)">
-  Clear(SharedStore, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Shared/SharedFactory.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_SharedFactory_Clear_CodeSmile_LunyScript_Store_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SharedFactory.Clear(CodeSmile.LunyScript.Store,System.String,System.Int32)">
+  Clear(Store, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Shared/SharedFactory.cs/#L48"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Resets every shared number and flag in a store to the defaults Defines
-registered. Omit <code class="paramref">store</code> for the default store.</p>
+  <div class="markdown level1 summary"><p>Resets every shared variable in a declared store to the defaults Defines registered.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Clear(SharedStore store = default, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Clear(Store store, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -144,11 +143,10 @@ registered. Omit <code class="paramref">store</code> for the default store.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.SharedStore.html">SharedStore</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Store.html">Store</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>store</code></dt></td>
-    <td style="width: 99%"><dd><p>The store to reset. Omit for the default store. A string const such as
-<code>CurrentLevel</code> converts to this, and must not be a <code>Clear(String)</code> overload,
-because that would steal the name as a caller file path.</p>
+    <td style="width: 99%"><dd><p>The store <code>Define.Store()</code> declared: this script's own, or another script's through
+its generated descriptor such as <code>MatchScript.Stores.MatchData</code>.</p>
 </dd></td>
   </tr>
   <tr>
@@ -178,9 +176,73 @@ because that would steal the name as a caller file path.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_SharedFactory_Clear_CodeSmile_LunyScript_SharedStore_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Shared.Clear());
-On.Ready(Shared.Clear(CurrentLevel));</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_SharedFactory_Clear_CodeSmile_LunyScript_Store_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Shared.Clear(MatchData));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The store was never declared or has no name yet, or this surface
+was read outside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_SharedFactory_Clear_" data-uid="CodeSmile.LunyScript.SharedFactory.Clear*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SharedFactory_Clear_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SharedFactory.Clear(System.String,System.Int32)">
+  Clear(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Shared/SharedFactory.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Resets every shared variable in the default store to the defaults Defines registered.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block Clear(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_SharedFactory_Clear_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Shared.Clear());</code></pre>
 
 
 
@@ -198,7 +260,7 @@ On.Ready(Shared.Clear(CurrentLevel));</code></pre>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Shared/SharedFactory.cs/#L16" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Shared/SharedFactory.cs/#L17" class="edit-link">Edit this page</a>
         </div>
 
 

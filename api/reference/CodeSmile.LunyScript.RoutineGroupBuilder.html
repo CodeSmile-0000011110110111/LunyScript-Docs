@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_RoutineGroupBuilder" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder" class="text-break">
-Struct RoutineGroupBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L92"><i class="bi bi-code-slash"></i></a>
+Struct RoutineGroupBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L84"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -108,7 +108,7 @@ Struct RoutineGroupBuilder  <a class="header-action link-secondary" title="View 
 
 
   <h2 id="CodeSmile_LunyScript_RoutineGroupBuilder_examples">Examples</h2>
-  <pre><code class="lang-csharp">On.Ready(Routine("Open").Run(InParallel(slideDoor, playSound)));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Routine(Open).Run(InParallel(slideDoor, playSound)));</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_RoutineGroupBuilder_remarks">Remarks</h2>
@@ -127,7 +127,7 @@ concurrent groups&quot;, is the contract this shape implements.</p>
 
   <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_Canceled" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.Canceled">
   Canceled
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L178"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L170"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A condition that is true once this group was cancelled before it produced a result.
@@ -154,7 +154,7 @@ Cancellation is neither a success nor a failure, so <a class="xref" href="CodeSm
 
   <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupBuilder_Canceled_examples">Examples</h4>
   <pre><code class="lang-csharp">var open = InParallel(slideDoor, playSound);
-On.Ready(Routine("Open").Run(open, If(open.Canceled).Then(retry.Set(true))));</code></pre>
+On.Ready(Routine(Open).Run(open, If(open.Canceled).Then(retry.Set(true))));</code></pre>
 
 
 
@@ -165,7 +165,7 @@ On.Ready(Routine("Open").Run(open, If(open.Canceled).Then(retry.Set(true))));</c
 
   <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_Failed" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.Failed">
   Failed
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L166"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L158"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A condition that is true once this group has ended Failed. A group that was
@@ -192,7 +192,7 @@ cancelled has no result, so neither this nor <a class="xref" href="CodeSmile.Lun
 
   <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupBuilder_Failed_examples">Examples</h4>
   <pre><code class="lang-csharp">var open = InParallel(slideDoor, playSound);
-On.Ready(Routine("Open").Run(open, If(open.Failed).Then(alarm.Set(true))));</code></pre>
+On.Ready(Routine(Open).Run(open, If(open.Failed).Then(alarm.Set(true))));</code></pre>
 
 
 
@@ -203,7 +203,7 @@ On.Ready(Routine("Open").Run(open, If(open.Failed).Then(alarm.Set(true))));</cod
 
   <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_Succeeded" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.Succeeded">
   Succeeded
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L154"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L146"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>A condition that is true once this group has ended Succeeded, for the routine steps
@@ -229,7 +229,7 @@ written after it.</p>
 
   <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupBuilder_Succeeded_examples">Examples</h4>
   <pre><code class="lang-csharp">var open = InParallel(slideDoor, playSound);
-On.Ready(Routine("Open").Run(open, If(open.Succeeded).Then(entered.Set(true))));</code></pre>
+On.Ready(Routine(Open).Run(open, If(open.Succeeded).Then(entered.Set(true))));</code></pre>
 
 
 
@@ -244,7 +244,7 @@ On.Ready(Routine("Open").Run(open, If(open.Succeeded).Then(entered.Set(true))));
 
   <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneFinishes" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.UntilOneFinishes">
   UntilOneFinishes()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L128"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L120"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The first child to reach a natural result, of either kind, ends this group with that
@@ -282,7 +282,7 @@ wins.</p>
 
   <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_UntilOneSucceeds" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.UntilOneSucceeds">
   UntilOneSucceeds()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L141"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L133"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The first child to succeed ends this group Succeeded. A child that fails ends
@@ -323,7 +323,7 @@ nothing on its own; the group ends Failed only when every child has failed.</p>
 
   <h3 id="CodeSmile_LunyScript_RoutineGroupBuilder_op_Implicit_CodeSmile_LunyScript_RoutineGroupBuilder__CodeSmile_LunyScript_Block" data-uid="CodeSmile.LunyScript.RoutineGroupBuilder.op_Implicit(CodeSmile.LunyScript.RoutineGroupBuilder)~CodeSmile.LunyScript.Block">
   implicit operator Block(RoutineGroupBuilder)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L181"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finalises this group as a step of a routine. A bare composite that already describes
@@ -364,7 +364,7 @@ buildable work needs no terminal call of its own.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_RoutineGroupBuilder_op_Implicit_CodeSmile_LunyScript_RoutineGroupBuilder__CodeSmile_LunyScript_Block_examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Routine("Open").Run(InParallel(slideDoor, playSound)));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Routine(Open).Run(InParallel(slideDoor, playSound)));</code></pre>
 
 
 
@@ -375,7 +375,7 @@ buildable work needs no terminal call of its own.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L92" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Flow/RoutineBuilder.cs/#L84" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_SpawnShapedBuilder" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder" class="text-break">
-Struct SpawnShapedBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L489"><i class="bi bi-code-slash"></i></a>
+Struct SpawnShapedBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L537"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -121,7 +121,7 @@ Struct SpawnShapedBuilder  <a class="header-action link-secondary" title="View s
 
   <h3 id="CodeSmile_LunyScript_SpawnShapedBuilder_As_CodeSmile_LunyScript_Operation_" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.As(CodeSmile.LunyScript.Operation)">
   As(Operation)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L540"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L605"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds the checkout to an operation handle, so the script can observe whether it succeeded
@@ -163,7 +163,7 @@ and why it was refused.</p>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_SpawnShapedBuilder_As_CodeSmile_LunyScript_Operation__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Object.Spawn(Guards).Into("Escort").As(TakeGuard));</code></pre>
+  <pre><code class="lang-csharp">On.Ready(Object.Spawn(Guards).Into(Escort).As(TakeGuard));</code></pre>
 
 
   <h4 class="section" id="CodeSmile_LunyScript_SpawnShapedBuilder_As_CodeSmile_LunyScript_Operation__remarks">Remarks</h4>
@@ -185,17 +185,17 @@ spawn produces nothing and fills no name.</p>
 
   <a id="CodeSmile_LunyScript_SpawnShapedBuilder_ChildOf_" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.ChildOf*"></a>
 
-  <h3 id="CodeSmile_LunyScript_SpawnShapedBuilder_ChildOf_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.ChildOf(System.String,System.String,System.Int32)">
-  ChildOf(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L512"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_SpawnShapedBuilder_ChildOf_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.ChildOf(CodeSmile.LunyScript.OwnedObject,System.String,System.Int32)">
+  ChildOf(OwnedObject, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L567"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Parents the object to the object this script runs on, or to one this script owns.</p>
+  <div class="markdown level1 summary"><p>Parents the object to an object this script owns.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnShapedBuilder ChildOf(string name = null, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnShapedBuilder ChildOf(OwnedObject parent, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -207,10 +207,9 @@ spawn produces nothing and fills no name.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
-    <td style="width: 99%"><dd><p>The name that addresses the parent, or null for the object this script runs
-on.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.OwnedObject.html">OwnedObject</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>parent</code></dt></td>
+    <td style="width: 99%"><dd><p>The owned object <code>Define.Object()</code> declared.</p>
 </dd></td>
   </tr>
   <tr>
@@ -240,21 +239,90 @@ on.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_SpawnShapedBuilder_ChildOf_System_String_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Object.Spawn(Shields).ChildOf());</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_SpawnShapedBuilder_ChildOf_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Object.Spawn(Shields).ChildOf(Turret));</code></pre>
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_SpawnShapedBuilder_ChildOf_System_String_System_String_System_Int32__remarks">Remarks</h4>
-  <div class="markdown level1 remarks"><p><b>ChildOf cannot parent to itself.</b> Omitting the name parents the produced object to
-the object the script runs on. A named parent is an object this script produced. A parent whose
-slot is empty when the spawn is applied leaves the object at the scene root and reports it.</p>
+  <h4 class="section" id="CodeSmile_LunyScript_SpawnShapedBuilder_ChildOf_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The parent is an owned object this script produced, by <code>Object.Create</code> or
+<code>Object.Spawn</code> with <code>Into</code>. A parent whose slot is empty when the spawn is applied leaves the
+object at the scene root and reports it.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p><code class="paramref">name</code> is whitespace, this chain
-already names a parent, or this builder is a <code>default</code>.</p>
+    <dd><p><code class="paramref">parent</code> is not an owned object this script
+declared, this chain already names a parent, or this builder is a <code>default</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_SpawnShapedBuilder_ChildOf_" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.ChildOf*"></a>
+
+  <h3 id="CodeSmile_LunyScript_SpawnShapedBuilder_ChildOf_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.ChildOf(System.String,System.Int32)">
+  ChildOf(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L560"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parents the object to the object this script runs on.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnShapedBuilder ChildOf(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SpawnShapedBuilder.html">SpawnShapedBuilder</a></dt>
+    <dd><p>A builder that can still take the clauses it could take before.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_SpawnShapedBuilder_ChildOf_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Object.Spawn(Shields).ChildOf());</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_SpawnShapedBuilder_ChildOf_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>ChildOf cannot parent to itself.</b> <a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html#CodeSmile_LunyScript_SpawnBuilder_ChildOf_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32_">ChildOf(OwnedObject, string, int)</a>
+parents it to an object this script owns instead.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>This chain already names a parent, or this builder is a
+<code>default</code>.</p>
 </dd>
   </dl>
 
@@ -264,7 +332,7 @@ already names a parent, or this builder is a <code>default</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnShapedBuilder_ForPlayer_System_Int32_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.ForPlayer(System.Int32,System.String,System.Int32)">
   ForPlayer(int, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L526"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L591"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Binds every script the checked-out object starts to one local player.</p>
@@ -340,7 +408,7 @@ already names a player, or this builder is a <code>default</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnShapedBuilder_InLocalSpace" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.InLocalSpace">
   InLocalSpace()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L504"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L552"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>States the default frame explicitly: the parent's coordinates, and the placement's own
@@ -383,7 +451,7 @@ axes for a shape.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnShapedBuilder_InWorldSpace" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.InWorldSpace">
   InWorldSpace()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L496"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L544"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reads the position as world coordinates, and lays any shape on the world's axes.</p>
@@ -427,18 +495,18 @@ for a shape and nothing else.</p>
 
   <a id="CodeSmile_LunyScript_SpawnShapedBuilder_Into_" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.Into*"></a>
 
-  <h3 id="CodeSmile_LunyScript_SpawnShapedBuilder_Into_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.Into(System.String,System.String,System.Int32)">
-  Into(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L519"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_SpawnShapedBuilder_Into_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.Into(CodeSmile.LunyScript.OwnedObject,System.String,System.Int32)">
+  Into(OwnedObject, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L584"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Addresses the checked-out object by a name in this script, so later blocks can deactivate,
-despawn or destroy it.</p>
+  <div class="markdown level1 summary"><p>Holds the checked-out object in one of this script's declared owned objects, so later blocks
+can deactivate, despawn or destroy it.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnShapedBuilder Into(string name, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnShapedBuilder Into(OwnedObject target, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -450,9 +518,9 @@ despawn or destroy it.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
-    <td style="width: 99%"><dd><p>The name this script addresses the object by.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.OwnedObject.html">OwnedObject</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>target</code></dt></td>
+    <td style="width: 99%"><dd><p>The owned object <code>Define.Object()</code> declared.</p>
 </dd></td>
   </tr>
   <tr>
@@ -482,21 +550,22 @@ despawn or destroy it.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_SpawnShapedBuilder_Into_System_String_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Object.Spawn(Guards).Into("Escort"));</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_SpawnShapedBuilder_Into_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Escort = Define.Object();
+On.Ready(Object.Spawn(Guards).Into(Escort));</code></pre>
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_SpawnShapedBuilder_Into_System_String_System_String_System_Int32__remarks">Remarks</h4>
-  <div class="markdown level1 remarks"><p><b>The name is an address and nothing else</b>: the use is owned by this instance with or
+  <h4 class="section" id="CodeSmile_LunyScript_SpawnShapedBuilder_Into_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>The owned object is an address and nothing else</b>: the use is owned by this instance with or
 without it, and the object keeps the name the prefab gives it in the scene. When the use ends by any
-path, the name is emptied.</p>
+path, the owned object is emptied.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p><code class="paramref">name</code> is null or whitespace, this chain
-already names one, another call already produces that name, or this builder is a
+    <dd><p><code class="paramref">target</code> is not an owned object this script
+declared, this chain already names one, another call already produces it, or this builder is a
 <code>default</code>.</p>
 </dd>
   </dl>
@@ -507,7 +576,7 @@ already names one, another call already produces that name, or this builder is a
 
   <h3 id="CodeSmile_LunyScript_SpawnShapedBuilder_SurvivesCaller_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.SurvivesCaller(System.String,System.Int32)">
   SurvivesCaller(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L533"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L598"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Lets the checked-out object outlive the instance that spawned it: it stays out of the pool
@@ -560,7 +629,7 @@ until it despawns itself, something ends it, or its scene unloads.</p>
 
   <h4 class="section" id="CodeSmile_LunyScript_SpawnShapedBuilder_SurvivesCaller_System_String_System_Int32__remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>Without it, the use goes back to its pool when this instance ends. With it,
-<a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html#CodeSmile_LunyScript_SpawnBuilder_Into_System_String_System_String_System_Int32_">Into(string, string, int)</a> still addresses the use while this instance runs. A use that survives the caller
+<a class="xref" href="CodeSmile.LunyScript.SpawnBuilder.html#CodeSmile_LunyScript_SpawnBuilder_Into_CodeSmile_LunyScript_OwnedObject_System_String_System_Int32_">Into(OwnedObject, string, int)</a> still addresses the use while this instance runs. A use that survives the caller
 cannot be a child of the caller, so <code>ChildOf()</code> with this clause is refused while the script type
 is built.</p>
 </div>
@@ -583,7 +652,7 @@ is built.</p>
 
   <h3 id="CodeSmile_LunyScript_SpawnShapedBuilder_op_Implicit_CodeSmile_LunyScript_SpawnShapedBuilder__CodeSmile_LunyScript_Block" data-uid="CodeSmile.LunyScript.SpawnShapedBuilder.op_Implicit(CodeSmile.LunyScript.SpawnShapedBuilder)~CodeSmile.LunyScript.Block">
   implicit operator Block(SpawnShapedBuilder)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L547"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L612"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finishes a spread spawn.</p>
@@ -641,7 +710,7 @@ is built.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L489" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/SpawnBuilder.cs/#L537" class="edit-link">Edit this page</a>
         </div>
 
 

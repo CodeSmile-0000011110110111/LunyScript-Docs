@@ -420,7 +420,7 @@ component too.</p>
   </h3>
 
   <div class="markdown level1 summary"><p>True while this object's script runs, from the object's creation until the object is
-destroyed. Every read and every <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Send_System_String_">Send(string)</a> succeeds while it is true and throws once it
+destroyed. Every read and every <a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Send_CodeSmile_LunyScript_Message__">Send(in Message)</a> succeeds while it is true and throws once it
 is false.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -1430,17 +1430,17 @@ or destroyed.</p>
 
   <a id="CodeSmile_LunyScript_LunyScriptBehaviour_Send_" data-uid="CodeSmile.LunyScript.LunyScriptBehaviour.Send*"></a>
 
-  <h3 id="CodeSmile_LunyScript_LunyScriptBehaviour_Send_System_String_" data-uid="CodeSmile.LunyScript.LunyScriptBehaviour.Send(System.String)">
-  Send(string)
+  <h3 id="CodeSmile_LunyScript_LunyScriptBehaviour_Send_CodeSmile_LunyScript_Message__" data-uid="CodeSmile.LunyScript.LunyScriptBehaviour.Send(CodeSmile.LunyScript.Message@)">
+  Send(in Message)
   <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Host/LunyScriptBehaviour.cs/#L509"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Runs this object's <code>On.Message</code> handlers for one named message.</p>
+  <div class="markdown level1 summary"><p>Runs this object's <code>On.Message</code> handlers for one declared message.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Send(string messageName)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Send(in Message message)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -1452,10 +1452,10 @@ or destroyed.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>messageName</code></dt></td>
-    <td style="width: 99%"><dd><p>What the message is called. Use the same name the script's
-<code>On.Message</code> call uses, from <code>nameof</code>.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Message.html">Message</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>message</code></dt></td>
+    <td style="width: 99%"><dd><p>The message, through the generated descriptor of the script that declares it, such as
+<code>PlayerScript.Messages.Heal</code>.</p>
 </dd></td>
   </tr>
   </dl>
@@ -1467,8 +1467,8 @@ or destroyed.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_LunyScriptBehaviour_Send_System_String__examples">Examples</h4>
-  <pre><code class="lang-csharp">behaviour.Send(PlayerScript.Heal);</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_LunyScriptBehaviour_Send_CodeSmile_LunyScript_Message___examples">Examples</h4>
+  <pre><code class="lang-csharp">behaviour.Send(PlayerScript.Messages.Heal);</code></pre>
 
 
 
@@ -1476,8 +1476,8 @@ or destroyed.</p>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
     <dd><p>This object's script is not running, which
-<a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_IsRunning">IsRunning</a> reports first; the name is null or whitespace; or the script has no
-<code>On.Message</code> for that name.</p>
+<a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_IsRunning">IsRunning</a> reports first; the message is not declared by this object's script type or a
+type it derives from; or the script has no <code>On.Message</code> for it.</p>
 </dd>
   </dl>
 
