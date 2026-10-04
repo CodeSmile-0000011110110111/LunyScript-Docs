@@ -240,6 +240,13 @@ the device has. A download migrates an older version and reports omitted
 fields the way <code class="language-plaintext highlighter-rouge">Progress.Load</code> does.</li>
   <li>A document never uploaded fails a download as <code class="language-plaintext highlighter-rouge">NotFound</code>, and every field
 keeps its value. A delete succeeds whether or not a copy existed.</li>
+  <li>A request reaches the provider at the start of the runner’s next frame
+update, before any script’s <code class="language-plaintext highlighter-rouge">On.Update</code> runs. A block in <code class="language-plaintext highlighter-rouge">On.Update</code>,
+<code class="language-plaintext highlighter-rouge">On.LateUpdate</code> or a watch therefore starts its request in the next frame;
+a block in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code> or a contact event, which Unity runs before
+<code class="language-plaintext highlighter-rouge">Update</code>, starts it in the same frame. The gateway checks each request once
+per frame at that point, and <code class="language-plaintext highlighter-rouge">When.Cloud(op)</code> reports the outcome in the
+frame it finds it.</li>
   <li>Requests for one document run one at a time, in the order their blocks ran.
 A download after an upload reads what the upload stored. When a request
 fails, the next one still runs with the values it captured; the failed one is
