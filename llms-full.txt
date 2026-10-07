@@ -6229,12 +6229,18 @@ runs it once for the host, through `When.Player(1)`, and the Console says so onc
 | --- | --- |
 | `Input.Pairing.Open()`, `.Close()` | Starts and stops pairing new players. |
 | `Input.Pairing.IsOpen` | A condition: pairing is open. |
+| `Input.Pairing.SetPlayerContact(PlayerContact.Overlap)` | Lets the players' objects pass through each other; `PlayerContact.Block`, the default, lets them stop at each other. |
 | `Input.ForPlayer(n).Leave()` | Releases a guest's devices and frees the number. The host stays. |
 | `Input.ForPlayer(n).IsPaired` | A condition: someone holds that player number. |
 | `Input.ForPlayer(n).IsLost` | A condition: that player's controller is unplugged. |
 | `Input.PlayerCount` | How many players are in, the host counted once. |
 | `When.Player(n).Paired`, `.Left` | Runs when someone takes the number, and when they leave it. |
 | `When.Player(n).Lost`, `.Returned` | Runs when that player's controller disconnects, and when it is back. |
+
+The players' objects, the ones `ForPlayer(n)` produced or a **Local Player** field names, stop at each other
+the way any two colliders do. Write `Input.Pairing.SetPlayerContact(PlayerContact.Overlap)` once, before the
+first player's object is created, and they pass through each other while the walls and every other
+collider still stop them; the policy belongs to the machine and the last write wins.
 
 A player whose controller is unplugged stays paired and reads resting values. Plugging the same
 controller back in returns it. Pressing a button on another controller that nobody holds also

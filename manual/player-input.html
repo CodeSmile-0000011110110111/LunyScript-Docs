@@ -370,6 +370,10 @@ runs it once for the host, through <code class="language-plaintext highlighter-r
       <td>A condition: pairing is open.</td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">Input.Pairing.SetPlayerContact(PlayerContact.Overlap)</code></td>
+      <td>Lets the players’ objects pass through each other; <code class="language-plaintext highlighter-rouge">PlayerContact.Block</code>, the default, lets them stop at each other.</td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">Input.ForPlayer(n).Leave()</code></td>
       <td>Releases a guest’s devices and frees the number. The host stays.</td>
     </tr>
@@ -395,6 +399,11 @@ runs it once for the host, through <code class="language-plaintext highlighter-r
     </tr>
   </tbody>
 </table>
+
+<p>The players’ objects, the ones <code class="language-plaintext highlighter-rouge">ForPlayer(n)</code> produced or a <strong>Local Player</strong> field names, stop at each other
+the way any two colliders do. Write <code class="language-plaintext highlighter-rouge">Input.Pairing.SetPlayerContact(PlayerContact.Overlap)</code> once, before the
+first player’s object is created, and they pass through each other while the walls and every other
+collider still stop them; the policy belongs to the machine and the last write wins.</p>
 
 <p>A player whose controller is unplugged stays paired and reads resting values. Plugging the same
 controller back in returns it. Pressing a button on another controller that nobody holds also
