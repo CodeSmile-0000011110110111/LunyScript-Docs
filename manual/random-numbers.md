@@ -41,6 +41,10 @@ spawn index and the declared name, so two objects running the same script draw d
 other and each of them repeats on a rerun of the same session seed. Renaming an unseeded
 randomizer's property changes its sequence.
 
+The session seed is **Random seed** under Edit, Project Settings, LunyScript. At 0, the default,
+each Play session takes a new seed from the clock and the Console names it; enter that number as
+the setting to replay the session's draws. Any other number gives every session the same draws.
+
 ## The four kinds of draw
 
 Every draw names its randomizer with `From`, and the variable it writes with `Into`. The chain is

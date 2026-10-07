@@ -276,17 +276,24 @@ it, and a download changes it only through the values it writes.</p>
 
 <h3 id="the-provider">The provider</h3>
 
-<p>The game names where cloud copies go once, before or after the first request:</p>
+<p>With the Cloud Save package installed, cloud copies go to Unity Cloud Save:
+when Play starts, LunyScript installs <code class="language-plaintext highlighter-rouge">UgsCloudSaveProvider</code>, unless
+<strong>Unity Cloud Save</strong> is turned off under Edit, Project Settings, LunyScript,
+Supplied providers. It signs in anonymously to Unity Gaming Services at the
+first request and needs the project’s Unity Cloud link.</p>
+
+<p>A game that keeps its copies in a folder on the device, the path <code class="language-plaintext highlighter-rouge">folder</code> below,
+names its own provider once, before the first request, and that replaces the
+supplied one:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">cloud</span> <span class="p">=</span> <span class="n">LunyScriptRuntime</span><span class="p">.</span><span class="n">DefaultRunner</span><span class="p">.</span><span class="n">CloudGateway</span><span class="p">;</span>
-<span class="n">cloud</span><span class="p">.</span><span class="nf">UseProvider</span><span class="p">(</span><span class="k">new</span> <span class="n">CodeSmile</span><span class="p">.</span><span class="n">LunyScript</span><span class="p">.</span><span class="n">Services</span><span class="p">.</span><span class="nf">UgsCloudSaveProvider</span><span class="p">());</span>
+<span class="n">cloud</span><span class="p">.</span><span class="nf">UseProvider</span><span class="p">(</span><span class="k">new</span> <span class="nf">FileCloudSaveProvider</span><span class="p">(</span><span class="n">folder</span><span class="p">));</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">UgsCloudSaveProvider</code> signs in anonymously to Unity Gaming Services and needs
-the project’s Unity Cloud link. <code class="language-plaintext highlighter-rouge">FileCloudSaveProvider</code> keeps each document as a
-file in a directory you name, which is how the API example and the tests run
-without an account; <code class="language-plaintext highlighter-rouge">DelayCompletion(frames)</code> makes it answer later, the way a
-network does.</p>
+<p><code class="language-plaintext highlighter-rouge">FileCloudSaveProvider</code> keeps each document as a file in the folder you name,
+which is how the API example and the tests run without an account;
+<code class="language-plaintext highlighter-rouge">DelayCompletion(frames)</code> makes it answer later, the way a network does. Once a
+provider has started signing in, it stays for the rest of the Play session.</p>
 
 <h2 id="a-worked-example">A worked example</h2>
 

@@ -87,14 +87,18 @@ navigation mesh for a route to the post and follows it. The move is an attempt o
 <p><code class="language-plaintext highlighter-rouge">Motion.MoveTo</code>, on the <a href="/LunyScript-Docs/manual/motion.html">Motion</a> page, moves in a straight
 line and stops at the first wall. <code class="language-plaintext highlighter-rouge">Navigation.MoveTo</code> finds the way around it.</p>
 
-<h2 id="installing-the-navigation-backend">Installing the navigation backend</h2>
+<h2 id="the-navigation-backend">The navigation backend</h2>
 
-<p>Navigation needs a backend, and nothing installs one by itself. The backend for Unity’s NavMesh is
-<code class="language-plaintext highlighter-rouge">NavMeshNavigationProvider</code> in the <code class="language-plaintext highlighter-rouge">CodeSmile.LunyScript.Navigation</code> assembly, which compiles when
-Unity’s AI module is enabled. Install it once, from C#, before the first script moves:</p>
+<p>Navigation needs a backend. The backend for Unity’s NavMesh is <code class="language-plaintext highlighter-rouge">NavMeshNavigationProvider</code> in the
+<code class="language-plaintext highlighter-rouge">CodeSmile.LunyScript.Navigation</code> assembly, which compiles when Unity’s AI module is enabled. When
+Play starts, LunyScript installs it by itself, unless <strong>NavMesh navigation</strong> is turned off under
+Edit, Project Settings, LunyScript, Supplied providers.</p>
+
+<p>A backend of your own for another pathfinding package is a class that implements
+<code class="language-plaintext highlighter-rouge">INavigationProvider</code>, <code class="language-plaintext highlighter-rouge">MyNavigationProvider</code> below. C# installs it before the first script moves,
+and it replaces the supplied one:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">CodeSmile.LunyScript.Navigation</span><span class="p">;</span>
 <span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
 
 <span class="k">public</span> <span class="k">sealed</span> <span class="k">class</span> <span class="nc">GameSetup</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
@@ -103,7 +107,7 @@ Unity’s AI module is enabled. Install it once, from C#, before the first scrip
     <span class="p">{</span>
         <span class="kt">var</span> <span class="n">runner</span> <span class="p">=</span> <span class="n">LunyScriptRuntime</span><span class="p">.</span><span class="n">DefaultRunner</span><span class="p">;</span>
         <span class="n">runner</span><span class="p">.</span><span class="n">NavigationGateway</span><span class="p">.</span><span class="nf">UseProvider</span><span class="p">(</span>
-            <span class="k">new</span> <span class="nf">NavMeshNavigationProvider</span><span class="p">());</span>
+            <span class="k">new</span> <span class="nf">MyNavigationProvider</span><span class="p">());</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>

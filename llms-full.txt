@@ -2035,6 +2035,10 @@ spawn index and the declared name, so two objects running the same script draw d
 other and each of them repeats on a rerun of the same session seed. Renaming an unseeded
 randomizer's property changes its sequence.
 
+The session seed is **Random seed** under Edit, Project Settings, LunyScript. At 0, the default,
+each Play session takes a new seed from the clock and the Console names it; enter that number as
+the setting to replay the session's draws. Any other number gives every session the same draws.
+
 ## The four kinds of draw
 
 Every draw names its randomizer with `From`, and the variable it writes with `Into`. The chain is
@@ -4958,15 +4962,19 @@ navigation mesh for a route to the post and follows it. The move is an attempt o
 `Motion.MoveTo`, on the [Motion](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/motion.html) page, moves in a straight
 line and stops at the first wall. `Navigation.MoveTo` finds the way around it.
 
-## Installing the navigation backend
+## The navigation backend
 
-Navigation needs a backend, and nothing installs one by itself. The backend for Unity's NavMesh is
-`NavMeshNavigationProvider` in the `CodeSmile.LunyScript.Navigation` assembly, which compiles when
-Unity's AI module is enabled. Install it once, from C#, before the first script moves:
+Navigation needs a backend. The backend for Unity's NavMesh is `NavMeshNavigationProvider` in the
+`CodeSmile.LunyScript.Navigation` assembly, which compiles when Unity's AI module is enabled. When
+Play starts, LunyScript installs it by itself, unless **NavMesh navigation** is turned off under
+Edit, Project Settings, LunyScript, Supplied providers.
+
+A backend of your own for another pathfinding package is a class that implements
+`INavigationProvider`, `MyNavigationProvider` below. C# installs it before the first script moves,
+and it replaces the supplied one:
 
 ```csharp
 using CodeSmile.LunyScript;
-using CodeSmile.LunyScript.Navigation;
 using UnityEngine;
 
 public sealed class GameSetup : MonoBehaviour
@@ -4975,7 +4983,7 @@ public sealed class GameSetup : MonoBehaviour
     {
         var runner = LunyScriptRuntime.DefaultRunner;
         runner.NavigationGateway.UseProvider(
-            new NavMeshNavigationProvider());
+            new MyNavigationProvider());
     }
 }
 ```
@@ -5960,6 +5968,18 @@ public sealed partial class Shooter : Script
 `"Fire"` is the action name as your Input System action asset spells it. The first local player is
 index 0.
 
+## The input backend
+
+Nothing has to be installed. When Play starts, LunyScript installs the Input System backend for
+four local players, reading the project-wide actions assigned under Edit, Project Settings, Input
+System Package. **Input System** under Edit, Project Settings, LunyScript, Supplied providers turns
+it off.
+
+Nobody is present until someone presses a button. The first press makes the host, local player 0,
+who then reads every keyboard, mouse and gamepad, so a game for one player needs no other line. That
+first press is not delivered to the host's actions. Local players below says what changes once a
+script opens pairing for more players.
+
 ## Declaring an action
 
 `Input.ForPlayer(n)` returns the surface for one local player. Its four calls declare an action and
@@ -6170,19 +6190,25 @@ write wins. Before any write, the cursor is unlocked and visible.
 
 ## Local players
 
-A second player joins by pressing a button on their own gamepad. Give the input backend a number of
-local players where your C# installs it:
+A second player joins by pressing a button on their own gamepad. The input backend LunyScript
+installs holds four local players: the host and three guests.
+
+A script opens pairing with `Input.Pairing.Open()`. The first time it does, the host stops reading
+every device and keeps its place: the next device pressed becomes the host's. Each later press pairs
+a guest with the lowest free number from 2. A key pairs the keyboard and the mouse together as one
+player. When a script opens pairing before anyone pressed a button, the first press after that makes
+the host.
+
+A game that needs another number of players, or another action asset, installs its own backend from
+C#, and it replaces the one LunyScript installed. `actions` is your `InputActionAsset`:
 
 ```csharp
-var provider = new InputSystemProvider(actions, 4);
+var provider = new InputSystemProvider(actions, 2);
 LunyScriptRuntime.DefaultRunner.InputGateway.UseProvider(provider);
 ```
 
-With that setup nobody is present until a button press. A script opens pairing, and the first press
-on a device that no player holds makes that player the host. Each later press pairs a guest with the
-lowest free number from 2. The number 4 in the line above allows the host and three guests. A key
-pairs the keyboard and the mouse together as one player. `new InputSystemProvider(actions)`, with no
-number, keeps player 0 present from the start on every device and pairs nothing.
+The number 2 allows the host and one guest. `new InputSystemProvider(actions)`, with no number, keeps
+player 0 present from the start on every device and pairs nothing.
 
 ```csharp
 On.Ready(Input.Pairing.Open());
@@ -6258,8 +6284,8 @@ control, Rebind and Reset, and Save and Load for a Settings document that keeps 
 
 ## Taking the backend back out
 
-A project-asset action asset outlives every scene, so installing the backend once in the first scene
-needs no teardown. A component that creates the action asset itself, with
+The backend LunyScript installs, and one your C# installs on a project-asset action asset, outlive
+every scene and need no teardown. A component that creates the action asset itself, with
 `ScriptableObject.CreateInstance<InputActionAsset>()`, releases the backend before it destroys that
 asset:
 
@@ -6343,8 +6369,10 @@ which objects it keeps in frame.
 
 Both take an object binding, which
 [Binding scene objects](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/binding-scene-objects.html) explains. A camera
-rig is a Cinemachine rig; where Cinemachine is absent, every `View` and `Camera` block writes nothing
-and reports that once.
+rig is a Cinemachine rig. With the Cinemachine package installed, LunyScript installs its camera
+backend when Play starts, unless **Cinemachine** is turned off under Edit, Project Settings,
+LunyScript, Supplied providers. Where Cinemachine is absent or turned off, every `View` and `Camera`
+block writes nothing and reports that once.
 
 ## Views
 
@@ -8182,18 +8210,25 @@ it, and a download changes it only through the values it writes.
 
 ### The provider
 
-The game names where cloud copies go once, before or after the first request:
+With the Cloud Save package installed, cloud copies go to Unity Cloud Save:
+when Play starts, LunyScript installs `UgsCloudSaveProvider`, unless
+**Unity Cloud Save** is turned off under Edit, Project Settings, LunyScript,
+Supplied providers. It signs in anonymously to Unity Gaming Services at the
+first request and needs the project's Unity Cloud link.
+
+A game that keeps its copies in a folder on the device, the path `folder` below,
+names its own provider once, before the first request, and that replaces the
+supplied one:
 
 ```csharp
 var cloud = LunyScriptRuntime.DefaultRunner.CloudGateway;
-cloud.UseProvider(new CodeSmile.LunyScript.Services.UgsCloudSaveProvider());
+cloud.UseProvider(new FileCloudSaveProvider(folder));
 ```
 
-`UgsCloudSaveProvider` signs in anonymously to Unity Gaming Services and needs
-the project's Unity Cloud link. `FileCloudSaveProvider` keeps each document as a
-file in a directory you name, which is how the API example and the tests run
-without an account; `DelayCompletion(frames)` makes it answer later, the way a
-network does.
+`FileCloudSaveProvider` keeps each document as a file in the folder you name,
+which is how the API example and the tests run without an account;
+`DelayCompletion(frames)` makes it answer later, the way a network does. Once a
+provider has started signing in, it stays for the rest of the Play session.
 
 ## A worked example
 

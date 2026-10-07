@@ -21,6 +21,18 @@ public sealed partial class Shooter : Script
 `"Fire"` is the action name as your Input System action asset spells it. The first local player is
 index 0.
 
+## The input backend
+
+Nothing has to be installed. When Play starts, LunyScript installs the Input System backend for
+four local players, reading the project-wide actions assigned under Edit, Project Settings, Input
+System Package. **Input System** under Edit, Project Settings, LunyScript, Supplied providers turns
+it off.
+
+Nobody is present until someone presses a button. The first press makes the host, local player 0,
+who then reads every keyboard, mouse and gamepad, so a game for one player needs no other line. That
+first press is not delivered to the host's actions. Local players below says what changes once a
+script opens pairing for more players.
+
 ## Declaring an action
 
 `Input.ForPlayer(n)` returns the surface for one local player. Its four calls declare an action and
@@ -231,19 +243,25 @@ write wins. Before any write, the cursor is unlocked and visible.
 
 ## Local players
 
-A second player joins by pressing a button on their own gamepad. Give the input backend a number of
-local players where your C# installs it:
+A second player joins by pressing a button on their own gamepad. The input backend LunyScript
+installs holds four local players: the host and three guests.
+
+A script opens pairing with `Input.Pairing.Open()`. The first time it does, the host stops reading
+every device and keeps its place: the next device pressed becomes the host's. Each later press pairs
+a guest with the lowest free number from 2. A key pairs the keyboard and the mouse together as one
+player. When a script opens pairing before anyone pressed a button, the first press after that makes
+the host.
+
+A game that needs another number of players, or another action asset, installs its own backend from
+C#, and it replaces the one LunyScript installed. `actions` is your `InputActionAsset`:
 
 ```csharp
-var provider = new InputSystemProvider(actions, 4);
+var provider = new InputSystemProvider(actions, 2);
 LunyScriptRuntime.DefaultRunner.InputGateway.UseProvider(provider);
 ```
 
-With that setup nobody is present until a button press. A script opens pairing, and the first press
-on a device that no player holds makes that player the host. Each later press pairs a guest with the
-lowest free number from 2. The number 4 in the line above allows the host and three guests. A key
-pairs the keyboard and the mouse together as one player. `new InputSystemProvider(actions)`, with no
-number, keeps player 0 present from the start on every device and pairs nothing.
+The number 2 allows the host and one guest. `new InputSystemProvider(actions)`, with no number, keeps
+player 0 present from the start on every device and pairs nothing.
 
 ```csharp
 On.Ready(Input.Pairing.Open());
@@ -319,8 +337,8 @@ control, Rebind and Reset, and Save and Load for a Settings document that keeps 
 
 ## Taking the backend back out
 
-A project-asset action asset outlives every scene, so installing the backend once in the first scene
-needs no teardown. A component that creates the action asset itself, with
+The backend LunyScript installs, and one your C# installs on a project-asset action asset, outlive
+every scene and need no teardown. A component that creates the action asset itself, with
 `ScriptableObject.CreateInstance<InputActionAsset>()`, releases the backend before it destroys that
 asset:
 

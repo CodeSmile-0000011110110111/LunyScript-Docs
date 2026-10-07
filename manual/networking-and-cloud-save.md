@@ -187,18 +187,25 @@ it, and a download changes it only through the values it writes.
 
 ### The provider
 
-The game names where cloud copies go once, before or after the first request:
+With the Cloud Save package installed, cloud copies go to Unity Cloud Save:
+when Play starts, LunyScript installs `UgsCloudSaveProvider`, unless
+**Unity Cloud Save** is turned off under Edit, Project Settings, LunyScript,
+Supplied providers. It signs in anonymously to Unity Gaming Services at the
+first request and needs the project's Unity Cloud link.
+
+A game that keeps its copies in a folder on the device, the path `folder` below,
+names its own provider once, before the first request, and that replaces the
+supplied one:
 
 ```csharp
 var cloud = LunyScriptRuntime.DefaultRunner.CloudGateway;
-cloud.UseProvider(new CodeSmile.LunyScript.Services.UgsCloudSaveProvider());
+cloud.UseProvider(new FileCloudSaveProvider(folder));
 ```
 
-`UgsCloudSaveProvider` signs in anonymously to Unity Gaming Services and needs
-the project's Unity Cloud link. `FileCloudSaveProvider` keeps each document as a
-file in a directory you name, which is how the API example and the tests run
-without an account; `DelayCompletion(frames)` makes it answer later, the way a
-network does.
+`FileCloudSaveProvider` keeps each document as a file in the folder you name,
+which is how the API example and the tests run without an account;
+`DelayCompletion(frames)` makes it answer later, the way a network does. Once a
+provider has started signing in, it stays for the rest of the Play session.
 
 ## A worked example
 

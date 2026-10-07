@@ -30,15 +30,19 @@ navigation mesh for a route to the post and follows it. The move is an attempt o
 `Motion.MoveTo`, on the [Motion](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/motion.html) page, moves in a straight
 line and stops at the first wall. `Navigation.MoveTo` finds the way around it.
 
-## Installing the navigation backend
+## The navigation backend
 
-Navigation needs a backend, and nothing installs one by itself. The backend for Unity's NavMesh is
-`NavMeshNavigationProvider` in the `CodeSmile.LunyScript.Navigation` assembly, which compiles when
-Unity's AI module is enabled. Install it once, from C#, before the first script moves:
+Navigation needs a backend. The backend for Unity's NavMesh is `NavMeshNavigationProvider` in the
+`CodeSmile.LunyScript.Navigation` assembly, which compiles when Unity's AI module is enabled. When
+Play starts, LunyScript installs it by itself, unless **NavMesh navigation** is turned off under
+Edit, Project Settings, LunyScript, Supplied providers.
+
+A backend of your own for another pathfinding package is a class that implements
+`INavigationProvider`, `MyNavigationProvider` below. C# installs it before the first script moves,
+and it replaces the supplied one:
 
 ```csharp
 using CodeSmile.LunyScript;
-using CodeSmile.LunyScript.Navigation;
 using UnityEngine;
 
 public sealed class GameSetup : MonoBehaviour
@@ -47,7 +51,7 @@ public sealed class GameSetup : MonoBehaviour
     {
         var runner = LunyScriptRuntime.DefaultRunner;
         runner.NavigationGateway.UseProvider(
-            new NavMeshNavigationProvider());
+            new MyNavigationProvider());
     }
 }
 ```

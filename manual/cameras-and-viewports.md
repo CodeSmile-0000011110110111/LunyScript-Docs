@@ -29,8 +29,10 @@ which objects it keeps in frame.
 
 Both take an object binding, which
 [Binding scene objects](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/binding-scene-objects.html) explains. A camera
-rig is a Cinemachine rig; where Cinemachine is absent, every `View` and `Camera` block writes nothing
-and reports that once.
+rig is a Cinemachine rig. With the Cinemachine package installed, LunyScript installs its camera
+backend when Play starts, unless **Cinemachine** is turned off under Edit, Project Settings,
+LunyScript, Supplied providers. Where Cinemachine is absent or turned off, every `View` and `Camera`
+block writes nothing and reports that once.
 
 ## Views
 
