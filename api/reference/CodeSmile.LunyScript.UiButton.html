@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_UiButton" data-uid="CodeSmile.LunyScript.UiButton" class="text-break">
-Struct UiButton  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L118"><i class="bi bi-code-slash"></i></a>
+Struct UiButton  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L196"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -128,7 +128,7 @@ When.UI(start).Activated(StartRequested.Set(true));</code></pre>
 
   <h3 id="CodeSmile_LunyScript_UiButton_DeclarationIndex" data-uid="CodeSmile.LunyScript.UiButton.DeclarationIndex">
   DeclarationIndex
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L127"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L205"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Where this element's declaration sits in its program's declaration list.</p>
@@ -160,7 +160,7 @@ When.UI(start).Activated(StartRequested.Set(true));</code></pre>
 
   <h3 id="CodeSmile_LunyScript_UiButton_IsDeclared" data-uid="CodeSmile.LunyScript.UiButton.IsDeclared">
   IsDeclared
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L202"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>False for a handle <code>Build()</code> never assigned.</p>
@@ -192,19 +192,229 @@ When.UI(start).Activated(StartRequested.Set(true));</code></pre>
 </h2>
 
 
-  <a id="CodeSmile_LunyScript_UiButton_SetEnabled_" data-uid="CodeSmile.LunyScript.UiButton.SetEnabled*"></a>
+  <a id="CodeSmile_LunyScript_UiButton_BindEnabled_" data-uid="CodeSmile.LunyScript.UiButton.BindEnabled*"></a>
 
-  <h3 id="CodeSmile_LunyScript_UiButton_SetEnabled_CodeSmile_LunyScript_FlagValueBlock_" data-uid="CodeSmile.LunyScript.UiButton.SetEnabled(CodeSmile.LunyScript.FlagValueBlock)">
-  SetEnabled(FlagValueBlock)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L141"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_UiButton_BindEnabled_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UiButton.BindEnabled(CodeSmile.LunyScript.ConditionBlock,System.String,System.Int32)">
+  BindEnabled(ConditionBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L296"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Sets whether this button can be activated.</p>
+  <div class="markdown level1 summary"><p>Keeps this button enabled while <code class="paramref">enabled</code> is true and disabled while it is
+false. The element is written once it resolves, and again on each frame where the condition's value
+changed. A bind is declared once in <code>Build()</code> and never placed in an event.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block SetEnabled(FlagValueBlock enabled)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void BindEnabled(ConditionBlock enabled, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>enabled</code></dt></td>
+    <td style="width: 99%"><dd><p>A condition or a Flag, evaluated each frame with the script's other binds.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_UiButton_BindEnabled_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">resume.BindEnabled(!Time.IsPaused);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The handle is one <code>Build()</code> never assigned,
+<code class="paramref">enabled</code> is null, or this element's enabled state already has a <code>BindEnabled</code> or
+a <code>SetEnabled</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_UiButton_BindVisible_" data-uid="CodeSmile.LunyScript.UiButton.BindVisible*"></a>
+
+  <h3 id="CodeSmile_LunyScript_UiButton_BindVisible_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UiButton.BindVisible(CodeSmile.LunyScript.ConditionBlock,System.String,System.Int32)">
+  BindVisible(ConditionBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L251"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Keeps this button shown while <code class="paramref">visible</code> is true and hidden while it is false.
+The element is written once it resolves, and again on each frame where the condition's value changed. A
+bind is declared once in <code>Build()</code> and never placed in an event.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void BindVisible(ConditionBlock visible, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>visible</code></dt></td>
+    <td style="width: 99%"><dd><p>A condition or a Flag, evaluated each frame with the script's other binds.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_UiButton_BindVisible_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">resume.BindVisible(Time.IsPaused);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The handle is one <code>Build()</code> never assigned,
+<code class="paramref">visible</code> is null, or this element's display already has a <code>BindVisible</code> or a
+<code>SetVisible</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_UiButton_SetEnabled_" data-uid="CodeSmile.LunyScript.UiButton.SetEnabled*"></a>
+
+  <h3 id="CodeSmile_LunyScript_UiButton_SetEnabled_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UiButton.SetEnabled(CodeSmile.LunyScript.ConditionBlock,System.String,System.Int32)">
+  SetEnabled(ConditionBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L281"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets whether this button can be activated: enabled when <code class="paramref">enabled</code> is true where the
+block runs, disabled when it is false.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block SetEnabled(ConditionBlock enabled, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>enabled</code></dt></td>
+    <td style="width: 99%"><dd><p>A condition, such as <code>Coins &gt;= 10</code> or <code>!Locked</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_UiButton_SetEnabled_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Message(Bought, resume.SetEnabled(Coins &gt;= 10));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The handle is one <code>Build()</code> never assigned,
+<code class="paramref">enabled</code> is null, or <a class="xref" href="CodeSmile.LunyScript.UiButton.html#CodeSmile_LunyScript_UiButton_BindEnabled_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_">BindEnabled(ConditionBlock, string, int)</a> binds this element's enabled
+state.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_UiButton_SetEnabled_" data-uid="CodeSmile.LunyScript.UiButton.SetEnabled*"></a>
+
+  <h3 id="CodeSmile_LunyScript_UiButton_SetEnabled_CodeSmile_LunyScript_FlagValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UiButton.SetEnabled(CodeSmile.LunyScript.FlagValueBlock,System.String,System.Int32)">
+  SetEnabled(FlagValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L266"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets whether this button can be activated, where the block runs. A disabled element stays on screen,
+drawn with UI Toolkit's <code>:disabled</code> style.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block SetEnabled(FlagValueBlock enabled, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -218,7 +428,20 @@ When.UI(start).Activated(StartRequested.Set(true));</code></pre>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.FlagValueBlock.html">FlagValueBlock</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>enabled</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
+    <td style="width: 99%"><dd><p>A Flag, <code>true</code> or <code>false</code>, read when the block runs.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
   </tr>
   </dl>
   </table>
@@ -226,7 +449,8 @@ When.UI(start).Activated(StartRequested.Set(true));</code></pre>
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
-    <dd></dd>
+    <dd><p>A block to place in an event list.</p>
+</dd>
   </dl>
 
 
@@ -234,24 +458,108 @@ When.UI(start).Activated(StartRequested.Set(true));</code></pre>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_UiButton_SetEnabled_CodeSmile_LunyScript_FlagValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(resume.SetEnabled(false));</code></pre>
 
 
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The handle is one <code>Build()</code> never assigned,
+<code class="paramref">enabled</code> is null, or <a class="xref" href="CodeSmile.LunyScript.UiButton.html#CodeSmile_LunyScript_UiButton_BindEnabled_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_">BindEnabled(ConditionBlock, string, int)</a> binds this element's enabled
+state.</p>
+</dd>
+  </dl>
 
 
 
   <a id="CodeSmile_LunyScript_UiButton_SetVisible_" data-uid="CodeSmile.LunyScript.UiButton.SetVisible*"></a>
 
-  <h3 id="CodeSmile_LunyScript_UiButton_SetVisible_CodeSmile_LunyScript_FlagValueBlock_" data-uid="CodeSmile.LunyScript.UiButton.SetVisible(CodeSmile.LunyScript.FlagValueBlock)">
-  SetVisible(FlagValueBlock)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L136"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_UiButton_SetVisible_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UiButton.SetVisible(CodeSmile.LunyScript.ConditionBlock,System.String,System.Int32)">
+  SetVisible(ConditionBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L236"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Shows or hides this button.</p>
+  <div class="markdown level1 summary"><p>Shows this button when <code class="paramref">visible</code> is true where the block runs, and hides it
+when it is false.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block SetVisible(FlagValueBlock visible)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block SetVisible(ConditionBlock visible, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>visible</code></dt></td>
+    <td style="width: 99%"><dd><p>A condition, such as <code>Health &lt; 25</code> or <code>!Ended</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_UiButton_SetVisible_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Message(Hit, resume.SetVisible(Health &lt; 25));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The handle is one <code>Build()</code> never assigned,
+<code class="paramref">visible</code> is null, or <a class="xref" href="CodeSmile.LunyScript.UiButton.html#CodeSmile_LunyScript_UiButton_BindVisible_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_">BindVisible(ConditionBlock, string, int)</a> binds this element's display.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_UiButton_SetVisible_" data-uid="CodeSmile.LunyScript.UiButton.SetVisible*"></a>
+
+  <h3 id="CodeSmile_LunyScript_UiButton_SetVisible_CodeSmile_LunyScript_FlagValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UiButton.SetVisible(CodeSmile.LunyScript.FlagValueBlock,System.String,System.Int32)">
+  SetVisible(FlagValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L222"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Shows or hides this button where the block runs. Hidden is <code>display: none</code>, which removes
+the element from the layout.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block SetVisible(FlagValueBlock visible, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -265,7 +573,20 @@ When.UI(start).Activated(StartRequested.Set(true));</code></pre>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.FlagValueBlock.html">FlagValueBlock</a></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>visible</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
+    <td style="width: 99%"><dd><p>A Flag, <code>true</code> or <code>false</code>, read when the block runs.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
   </tr>
   </dl>
   </table>
@@ -273,7 +594,8 @@ When.UI(start).Activated(StartRequested.Set(true));</code></pre>
   <h4 class="section">Returns</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
-    <dd></dd>
+    <dd><p>A block to place in an event list.</p>
+</dd>
   </dl>
 
 
@@ -281,8 +603,18 @@ When.UI(start).Activated(StartRequested.Set(true));</code></pre>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_UiButton_SetVisible_CodeSmile_LunyScript_FlagValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(resume.SetVisible(false));</code></pre>
 
 
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The handle is one <code>Build()</code> never assigned,
+<code class="paramref">visible</code> is null, or <a class="xref" href="CodeSmile.LunyScript.UiButton.html#CodeSmile_LunyScript_UiButton_BindVisible_CodeSmile_LunyScript_ConditionBlock_System_String_System_Int32_">BindVisible(ConditionBlock, string, int)</a> binds this element's display.</p>
+</dd>
+  </dl>
 
 
 
@@ -290,7 +622,7 @@ When.UI(start).Activated(StartRequested.Set(true));</code></pre>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L118" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UiHandles.cs/#L196" class="edit-link">Edit this page</a>
         </div>
 
 
