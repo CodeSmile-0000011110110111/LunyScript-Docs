@@ -5408,9 +5408,12 @@ public sealed partial class Hazard : Script
 }
 ```
 
-Add the component, give the spike a `Spike` tag and a trigger collider, and put a `Rigidbody` on
-the spike or on this object. The object loses ten health each time it enters that trigger. The
-`Rigidbody` is Unity's rule for a trigger contact; the script does not create it.
+Add the component, give the spike a `Spike` tag and a trigger collider, and put a `Rigidbody` or a
+`CharacterController` on the spike or on this object. The object loses ten health each time it
+enters that trigger. One of the two on either object is Unity's rule for a trigger contact, and the
+script creates neither. A `CharacterController` that moves into a trigger raises the contact with no
+`Rigidbody` on either object; a `Rigidbody` added only for the contact makes LunyScript refuse the
+`Transform` position and rotation writes on its object.
 
 ## Contact events
 
