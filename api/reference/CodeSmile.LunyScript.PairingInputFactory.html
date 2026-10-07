@@ -111,7 +111,7 @@ and 1 both name the host, who stays.</p>
 
 
   <h2 id="CodeSmile_LunyScript_PairingInputFactory_examples">Examples</h2>
-  <pre><code class="lang-csharp">On.Ready(Input.Pairing.Open());
+  <pre><code class="lang-csharp">On.Ready(Input.Pairing.SetPlayerContact(PlayerContact.Overlap), Input.Pairing.Open());
 On.Update(If(Input.PlayerCount &gt;= 2.0).Then(Input.Pairing.Close()));</code></pre>
 
 
@@ -133,7 +133,7 @@ the contract.</p>
 
   <h3 id="CodeSmile_LunyScript_PairingInputFactory_IsOpen" data-uid="CodeSmile.LunyScript.PairingInputFactory.IsOpen">
   IsOpen
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Input/PairingInputFactory.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Input/PairingInputFactory.cs/#L97"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>True while pairing is open.</p>
@@ -302,6 +302,85 @@ the block does nothing.</p>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
     <dd><p>The factory is a default one.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_PairingInputFactory_SetPlayerContact_" data-uid="CodeSmile.LunyScript.PairingInputFactory.SetPlayerContact*"></a>
+
+  <h3 id="CodeSmile_LunyScript_PairingInputFactory_SetPlayerContact_CodeSmile_LunyScript_PlayerContact_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.PairingInputFactory.SetPlayerContact(CodeSmile.LunyScript.PlayerContact,System.String,System.Int32)">
+  SetPlayerContact(PlayerContact, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Input/PairingInputFactory.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes whether the objects local players control stop at each other or pass through each
+other: <a class="xref" href="CodeSmile.LunyScript.PlayerContact.html#CodeSmile_LunyScript_PlayerContact_Block">Block</a>, the default, or <a class="xref" href="CodeSmile.LunyScript.PlayerContact.html#CodeSmile_LunyScript_PlayerContact_Overlap">Overlap</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Block SetPlayerContact(PlayerContact contact, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.PlayerContact.html">PlayerContact</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>contact</code></dt></td>
+    <td style="width: 99%"><dd><p>Whether the players' objects block or overlap each other.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.Block.html">Block</a></dt>
+    <dd><p>A block to place in an event list.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_PairingInputFactory_SetPlayerContact_CodeSmile_LunyScript_PlayerContact_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Input.Pairing.SetPlayerContact(PlayerContact.Overlap), Input.Pairing.Open());</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_PairingInputFactory_SetPlayerContact_CodeSmile_LunyScript_PlayerContact_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The policy belongs to the machine, like pairing: the last write wins, it applies to every player
+object in play and to every one produced later, and despawning the script that wrote it changes nothing.
+A player's object is one <code>ForPlayer(n)</code> produced or one whose Local Player field names a player; the
+policy is written between those objects' body colliders, a CharacterController or the first collider on
+the object, so the walls and every other collider still stop them.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The factory is a default one, or <code class="paramref">contact</code> is
+not one of the two values.</p>
 </dd>
   </dl>
 
