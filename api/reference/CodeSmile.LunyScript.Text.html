@@ -328,7 +328,7 @@ or <a class="xref" href="CodeSmile.LunyScript.SlotKind.html#CodeSmile_LunyScript
 
   <h3 id="CodeSmile_LunyScript_Text_Clear_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Text.Clear(System.String,System.Int32)">
   Clear(string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L239"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that empties this variable.</p>
@@ -386,7 +386,7 @@ or <a class="xref" href="CodeSmile.LunyScript.SlotKind.html#CodeSmile_LunyScript
 
   <h3 id="CodeSmile_LunyScript_Text_Equals_System_Object_" data-uid="CodeSmile.LunyScript.Text.Equals(System.Object)">
   Equals(object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L259"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L301"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>True when both handles address the same slot.</p>
@@ -524,7 +524,7 @@ null or carries no value, or a hole names an argument that was not passed.</p>
 
   <h3 id="CodeSmile_LunyScript_Text_GetHashCode" data-uid="CodeSmile.LunyScript.Text.GetHashCode">
   GetHashCode()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L263"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L305"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Returns the hash code for this instance.</p>
@@ -553,11 +553,106 @@ null or carries no value, or a hole names an argument that was not passed.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_Text_Join_" data-uid="CodeSmile.LunyScript.Text.Join*"></a>
+
+  <h3 id="CodeSmile_LunyScript_Text_Join_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Text.Join(System.String,System.String,System.Int32)">
+  Join(string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L140"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts a text built from parts, each written while its condition holds, for a text
+variable's <code>Set</code>: a sentence whose wording depends on several values, written as one block in
+place of one <code>If</code> branch per combination of those values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static TextJoinBuilder Join(string separator, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>separator</code></dt></td>
+    <td style="width: 99%"><dd><p>The text written between two written parts, such as <code>&quot;, &quot;</code>; <code>&quot;&quot;</code>
+writes the parts next to each other.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one: this is the line this call's
+refusals name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TextJoinBuilder.html">TextJoinBuilder</a></dt>
+    <dd><p>A builder whose <code>Part</code> adds the first part.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Text_Join_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Update(Augments.Set(Text.Join(", ")
+    .Part(RingVolley, "Ring volley")
+    .Part(MineLayer, "Mine layer")
+    .Else("none")));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_Text_Join_System_String_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Each time the block that writes the join runs, it tests every part's condition once, in the order
+the parts were written, and writes the text of each part whose condition holds, with the separator
+between two written parts. <code>Else</code> names the text written when no condition holds; without
+it, the empty text is written then. A part's text is a literal, written as it is, or a
+<code>Text.Format</code> or another join, whose values are read when the part is written.</p>
+<p>
+    Writing a join into a fixed text allocates nothing, and writing one into a growing text
+    allocates only when the composed characters change, as for <code>Text.Format</code>. Inside a
+    script, <code>Text.Join</code> reaches the same call through the script's <code>Text</code> member.
+</p>
+<p>
+    A join is started while a script's <code>Build()</code> runs, from the script or from a helper it
+    calls, because <code>Build()</code> refuses a join that was started and never finished with
+    <code>Else</code> or by being used as a text.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">separator</code> is null or longer than
+<a class="xref" href="CodeSmile.LunyScript.Text.html#CodeSmile_LunyScript_Text_MaxLiteralBytes">MaxLiteralBytes</a> UTF-8 bytes, or no script's <code>Build()</code> is running.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_Text_Set_" data-uid="CodeSmile.LunyScript.Text.Set*"></a>
 
   <h3 id="CodeSmile_LunyScript_Text_Set_CodeSmile_LunyScript_CollectionRead_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Text.Set(CodeSmile.LunyScript.CollectionRead,System.String,System.Int32)">
   Set(CollectionRead, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L151"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L193"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that writes one collection entry into this variable.</p>
@@ -621,7 +716,7 @@ null or carries no value, or a hole names an argument that was not passed.</p>
 
   <h3 id="CodeSmile_LunyScript_Text_Set_CodeSmile_LunyScript_InputControlText_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Text.Set(CodeSmile.LunyScript.InputControlText,System.String,System.Int32)">
   Set(InputControlText, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L177"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L219"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that writes the control path an input action or part uses now into this
@@ -693,7 +788,7 @@ variable, such as <code>&lt;Keyboard&gt;/space</code>, for a settings row.</p>
 
   <h3 id="CodeSmile_LunyScript_Text_Set_CodeSmile_LunyScript_Text_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Text.Set(CodeSmile.LunyScript.Text,System.String,System.Int32)">
   Set(Text, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L171"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that copies another text variable into this one.</p>
@@ -757,7 +852,7 @@ variable, such as <code>&lt;Keyboard&gt;/space</code>, for a settings row.</p>
 
   <h3 id="CodeSmile_LunyScript_Text_Set_CodeSmile_LunyScript_TextFormat_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Text.Set(CodeSmile.LunyScript.TextFormat,System.String,System.Int32)">
   Set(TextFormat, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L140"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L182"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that writes a formatted text into this variable.</p>
@@ -821,7 +916,7 @@ variable, such as <code>&lt;Keyboard&gt;/space</code>, for a settings row.</p>
 
   <h3 id="CodeSmile_LunyScript_Text_Set_CodeSmile_LunyScript_UiText_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Text.Set(CodeSmile.LunyScript.UiText,System.String,System.Int32)">
   Set(UiText, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L163"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L205"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that writes a Label or TextField's current text into this
@@ -886,7 +981,7 @@ variable.</p>
 
   <h3 id="CodeSmile_LunyScript_Text_Set_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.Text.Set(System.String,System.String,System.Int32)">
   Set(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L154"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a block that writes a literal into this variable.</p>
@@ -957,7 +1052,7 @@ variable.</p>
 
   <h3 id="CodeSmile_LunyScript_Text_ToString" data-uid="CodeSmile.LunyScript.Text.ToString">
   ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L266"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L308"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Returns the fully qualified type name of this instance.</p>
@@ -994,7 +1089,7 @@ variable.</p>
 
   <h3 id="CodeSmile_LunyScript_Text_op_Equality_CodeSmile_LunyScript_Text_CodeSmile_LunyScript_Text_" data-uid="CodeSmile.LunyScript.Text.op_Equality(CodeSmile.LunyScript.Text,CodeSmile.LunyScript.Text)">
   operator ==(Text, Text)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L245"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L287"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a condition that is true when two text variables hold the same characters.
@@ -1053,7 +1148,7 @@ It does not compare handles; <a class="xref" href="CodeSmile.LunyScript.Text.htm
 
   <h3 id="CodeSmile_LunyScript_Text_op_Equality_CodeSmile_LunyScript_Text_System_String_" data-uid="CodeSmile.LunyScript.Text.op_Equality(CodeSmile.LunyScript.Text,System.String)">
   operator ==(Text, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L215"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L257"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a condition that is true when this variable holds exactly these
@@ -1112,7 +1207,7 @@ characters, compared ordinally.</p>
 
   <h3 id="CodeSmile_LunyScript_Text_op_Equality_System_String_CodeSmile_LunyScript_Text_" data-uid="CodeSmile.LunyScript.Text.op_Equality(System.String,CodeSmile.LunyScript.Text)">
   operator ==(string, Text)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L230"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L272"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The literal-first spelling of the equality condition.</p>
@@ -1170,7 +1265,7 @@ characters, compared ordinally.</p>
 
   <h3 id="CodeSmile_LunyScript_Text_op_Implicit_CodeSmile_LunyScript_Var_CodeSmile_LunyScript_Text___CodeSmile_LunyScript_Text" data-uid="CodeSmile.LunyScript.Text.op_Implicit(CodeSmile.LunyScript.Var{CodeSmile.LunyScript.Text})~CodeSmile.LunyScript.Text">
   implicit operator Text(Var&lt;Text&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L207"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L249"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Converts a handle from the generic factory to the same variable's
@@ -1223,7 +1318,7 @@ characters, compared ordinally.</p>
 
   <h3 id="CodeSmile_LunyScript_Text_op_Inequality_CodeSmile_LunyScript_Text_CodeSmile_LunyScript_Text_" data-uid="CodeSmile.LunyScript.Text.op_Inequality(CodeSmile.LunyScript.Text,CodeSmile.LunyScript.Text)">
   operator !=(Text, Text)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L253"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L295"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a condition that is true when two text variables differ.</p>
@@ -1281,7 +1376,7 @@ characters, compared ordinally.</p>
 
   <h3 id="CodeSmile_LunyScript_Text_op_Inequality_CodeSmile_LunyScript_Text_System_String_" data-uid="CodeSmile.LunyScript.Text.op_Inequality(CodeSmile.LunyScript.Text,System.String)">
   operator !=(Text, string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L223"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L265"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds a condition that is true when this variable does not hold exactly these
@@ -1340,7 +1435,7 @@ characters.</p>
 
   <h3 id="CodeSmile_LunyScript_Text_op_Inequality_System_String_CodeSmile_LunyScript_Text_" data-uid="CodeSmile.LunyScript.Text.op_Inequality(System.String,CodeSmile.LunyScript.Text)">
   operator !=(string, Text)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L237"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/Text.cs/#L279"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The literal-first spelling of the inequality condition.</p>

@@ -662,9 +662,10 @@ it, parents it, and holds it in an owned-object slot when the chain named one.</
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.TextFormat.html">TextFormat</a></dt>
-      <dd><p>A parsed <code>Text.Format</code> call: the literal pieces of the format, which value fills
-each hole, and how many decimal places each number hole asks for. Pass it to a text variable's
-<code>Set</code>.</p>
+      <dd><p>A text built at build time for a text variable's <code>Set</code>, or a Label's <code>SetText</code> or
+<code>BindText</code>: a parsed <code>Text.Format</code> call, which holds the literal pieces of the format, which value
+fills each hole and how many decimal places each number hole asks for, or a <code>Text.Join</code> of parts, each
+written while its condition holds.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2578,9 +2579,9 @@ called.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.TextFactory.html">TextFactory</a></dt>
-      <dd><p>Builds text formats. Inside a script, <code>Text</code> in an expression means this member; in a
-declaration it is still the <a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a> type. A text variable is
-declared with <code>Define.Text</code>.</p>
+      <dd><p>Builds text formats: <code>Text.Format</code> and <code>Text.Join</code>. Inside a script, <code>Text</code> in an
+expression means this member; in a declaration it is still the
+<a class="xref" href="CodeSmile.LunyScript.Text.html">Text</a> type. A text variable is declared with <code>Define.Text</code>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2604,6 +2605,18 @@ named.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.TextFileLoadBuilder.html">TextFileLoadBuilder</a></dt>
       <dd><p>What <code>Asset.Load(textFile)</code> returns: a text load waiting for the <code>Text</code> it fills.
 <a class="xref" href="CodeSmile.LunyScript.TextFileLoadBuilder.html#CodeSmile_LunyScript_TextFileLoadBuilder_Into_CodeSmile_LunyScript_Text_System_String_System_Int32_">Into(Text, string, int)</a> names it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.TextJoinBuilder.html">TextJoinBuilder</a></dt>
+      <dd><p>What <code>Text.Join(separator)</code> returns. Its only member is <code>Part</code>, so a join with no part does not
+compile where a text is expected.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.TextJoinPartBuilder.html">TextJoinPartBuilder</a></dt>
+      <dd><p>What <code>Text.Join(separator).Part(...)</code> returns: add a <code>Part</code>, add an <code>Else</code>, or use it as a
+<a class="xref" href="CodeSmile.LunyScript.TextFormat.html">TextFormat</a>, which the implicit conversion does.</p>
 </dd>
     </dl>
     <dl class="jumplist">

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Struct TextJoinBuilder | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Struct TextJoinBuilder | LunyScript API Reference ">
+      
+      <meta name="description" content="What Text.Join(separator) returns. Its only member is Part, so a join with no part does not compile where a text is expected.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_TextJoinBuilder.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.TextJoinBuilder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyScript.TextJoinBuilder">
+
+
+
+  <h1 id="CodeSmile_LunyScript_TextJoinBuilder" data-uid="CodeSmile.LunyScript.TextJoinBuilder" class="text-break">
+Struct TextJoinBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/TextJoinBuilder.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunyScript.html">LunyScript</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>What <code>Text.Join(separator)</code> returns. Its only member is <code>Part</code>, so a join with no part does not
+compile where a text is expected.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly struct TextJoinBuilder</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyScript_TextJoinBuilder_examples">Examples</h2>
+  <pre><code class="lang-csharp">On.Update(Augments.Set(Text.Join(", ").Part(RingVolley, "Ring volley").Part(MineLayer, "Mine layer").Else("none")));</code></pre>
+
+
+  <h2 id="CodeSmile_LunyScript_TextJoinBuilder_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>The two join builders are a typestate: <code>Text.Join(...)</code> offers only <code>Part</code>, and
+<a class="xref" href="CodeSmile.LunyScript.TextJoinPartBuilder.html">TextJoinPartBuilder</a> offers <code>Part</code>, <code>Else</code> and the conversion to a
+<a class="xref" href="CodeSmile.LunyScript.TextFormat.html">TextFormat</a>. Collapsing them into one type would turn a join with no part from a compiler
+error into a text that is always empty; AGENTS.md rule 41.</p>
+<p>
+    Both carry the build lease <code>Text.Join</code> opens, which <code>Else</code> and the conversion to a
+    <a class="xref" href="CodeSmile.LunyScript.TextFormat.html">TextFormat</a> close, so a join started and never finished is refused when <code>Build()</code>
+    ends, naming its line, and one written as a statement is error LUNY004. A join is therefore started
+    while a script's <code>Build()</code> runs; AGENTS.md rule 42.
+</p>
+</div>
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyScript_TextJoinBuilder_Part_" data-uid="CodeSmile.LunyScript.TextJoinBuilder.Part*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TextJoinBuilder_Part_CodeSmile_LunyScript_ConditionBlock_CodeSmile_LunyScript_TextFormat_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TextJoinBuilder.Part(CodeSmile.LunyScript.ConditionBlock,CodeSmile.LunyScript.TextFormat,System.String,System.Int32)">
+  Part(ConditionBlock, TextFormat, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/TextJoinBuilder.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds the first part: a format written while a condition holds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public TextJoinPartBuilder Part(ConditionBlock condition, TextFormat text, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>condition</code></dt></td>
+    <td style="width: 99%"><dd><p>Tested each time the joined text is written: a condition block, a
+<code>Flag</code>, a <code>Number</code>, or a flag or number expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.TextFormat.html">TextFormat</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>text</code></dt></td>
+    <td style="width: 99%"><dd><p>What the part writes: a <code>Text.Format</code>, whose holes are read when the part is
+written, or another <code>Text.Join</code>.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one: this is the line this part's
+refusals name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TextJoinPartBuilder.html">TextJoinPartBuilder</a></dt>
+    <dd><p>A builder that takes another <code>Part</code> or an <code>Else</code>, or is used as a text format.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TextJoinBuilder_Part_CodeSmile_LunyScript_ConditionBlock_CodeSmile_LunyScript_TextFormat_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Rolls.Set(Text.Join(", ").Part(DamageRoll &gt; 0, Text.Format("damage +{0:0}", DamageRoll)))</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">condition</code> or <code class="paramref">text</code> is
+null, or this builder is a <code>default</code> that no <code>Text.Join</code> call produced.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_TextJoinBuilder_Part_" data-uid="CodeSmile.LunyScript.TextJoinBuilder.Part*"></a>
+
+  <h3 id="CodeSmile_LunyScript_TextJoinBuilder_Part_CodeSmile_LunyScript_ConditionBlock_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.TextJoinBuilder.Part(CodeSmile.LunyScript.ConditionBlock,System.String,System.String,System.Int32)">
+  Part(ConditionBlock, string, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/TextJoinBuilder.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds the first part: text written while a condition holds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public TextJoinPartBuilder Part(ConditionBlock condition, string text, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ConditionBlock.html">ConditionBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>condition</code></dt></td>
+    <td style="width: 99%"><dd><p>Tested each time the joined text is written: a condition block, a
+<code>Flag</code>, a <code>Number</code>, or a flag or number expression.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>text</code></dt></td>
+    <td style="width: 99%"><dd><p>The literal text the part writes, as it is: braces are written and open no
+hole. <code>&quot;&quot;</code> writes no characters.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one: this is the line this part's
+refusals name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.TextJoinPartBuilder.html">TextJoinPartBuilder</a></dt>
+    <dd><p>A builder that takes another <code>Part</code> or an <code>Else</code>, or is used as a text format.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_TextJoinBuilder_Part_CodeSmile_LunyScript_ConditionBlock_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Augments.Set(Text.Join(", ").Part(RingVolley, "Ring volley").Else("none"))</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">condition</code> or <code class="paramref">text</code> is
+null, the text is longer than <a class="xref" href="CodeSmile.LunyScript.Text.html#CodeSmile_LunyScript_Text_MaxLiteralBytes">MaxLiteralBytes</a> UTF-8 bytes, or this builder is a
+<code>default</code> that no <code>Text.Join</code> call produced.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Variables/TextJoinBuilder.cs/#L28" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
