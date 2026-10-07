@@ -173,7 +173,7 @@ place in an event list, and it writes every time that block runs.</p>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">toggle.BindValue(flag)</code></td>
-      <td>The toggle’s checked state, whenever the flag changes.</td>
+      <td>The toggle’s checked state, whenever the flag or condition changes.</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">bar.SetValue(number)</code></td>
@@ -185,11 +185,19 @@ place in an event list, and it writes every time that block runs.</p>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">handle.SetVisible(flag)</code></td>
-      <td><code class="language-plaintext highlighter-rouge">display</code>, so a hidden element takes no space.</td>
+      <td><code class="language-plaintext highlighter-rouge">display</code>, once, so a hidden element takes no space.</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">handle.SetEnabled(flag)</code></td>
-      <td>Whether the element accepts input.</td>
+      <td>Whether the element accepts input, once.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">handle.BindVisible(condition)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">display</code>, whenever the condition’s value changes.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">handle.BindEnabled(condition)</code></td>
+      <td>Whether the element accepts input, whenever the condition changes.</td>
     </tr>
   </tbody>
 </table>
@@ -206,7 +214,8 @@ place in an event list, and it writes every time that block runs.</p>
 <p><code class="language-plaintext highlighter-rouge">BindText</code> accepts a Number, a <code class="language-plaintext highlighter-rouge">Text.Format</code> and a Text variable. A label bound to a <code class="language-plaintext highlighter-rouge">Text.Format</code>, or to a
 text declared without a byte count, shows a line of any length; a label bound to a text declared with a
 <code class="language-plaintext highlighter-rouge">TextCapacity</code> shows what that text holds, up to its usable bytes. <code class="language-plaintext highlighter-rouge">BindValue</code> and <code class="language-plaintext highlighter-rouge">SetValue</code> are on
-<code class="language-plaintext highlighter-rouge">Toggle</code>, <code class="language-plaintext highlighter-rouge">ProgressBar</code> and <code class="language-plaintext highlighter-rouge">Slider</code>. <code class="language-plaintext highlighter-rouge">SetVisible</code> and <code class="language-plaintext highlighter-rouge">SetEnabled</code> are on every kind.</p>
+<code class="language-plaintext highlighter-rouge">Toggle</code>, <code class="language-plaintext highlighter-rouge">ProgressBar</code> and <code class="language-plaintext highlighter-rouge">Slider</code>. <code class="language-plaintext highlighter-rouge">SetVisible</code>, <code class="language-plaintext highlighter-rouge">SetEnabled</code>, <code class="language-plaintext highlighter-rouge">BindVisible</code> and <code class="language-plaintext highlighter-rouge">BindEnabled</code>
+are on every kind.</p>
 
 <p>A <code class="language-plaintext highlighter-rouge">Slider</code> holds a single-precision value inside the low and high values its UXML sets. A write
 converts the number to single precision, and the slider clamps it to its range. <code class="language-plaintext highlighter-rouge">volume.Value</code> reads
@@ -214,6 +223,34 @@ the slider rounded to 7 significant digits, so 0.37 written to a slider reads ba
 saved setting holds 0.37 rather than 0.3700000047683716. A script’s own write, from <code class="language-plaintext highlighter-rouge">BindValue</code> or
 <code class="language-plaintext highlighter-rouge">SetValue</code>, does not run <code class="language-plaintext highlighter-rouge">When.UI(volume).ValueChanged</code>; a player’s drag, key press or navigation
 does.</p>
+
+<h2 id="following-a-condition">Following a condition</h2>
+
+<p>A condition, such as <code class="language-plaintext highlighter-rouge">Coins &gt;= 10</code>, <code class="language-plaintext highlighter-rouge">Time.IsPaused</code> or <code class="language-plaintext highlighter-rouge">!Ended</code>, goes wherever an element takes a
+flag. <code class="language-plaintext highlighter-rouge">SetVisible</code>, <code class="language-plaintext highlighter-rouge">SetEnabled</code> and a toggle’s <code class="language-plaintext highlighter-rouge">SetValue</code> write what the condition says when the
+block runs. <code class="language-plaintext highlighter-rouge">BindVisible</code>, <code class="language-plaintext highlighter-rouge">BindEnabled</code> and a toggle’s <code class="language-plaintext highlighter-rouge">BindValue</code> keep the element following the
+condition: they write it once it resolves and again on each frame where the condition’s value
+changed. A Flag variable works as a condition too.</p>
+
+<pre><code>Choosing = Define.Flag(nameof(Choosing), true);
+Ended = Define.Flag(nameof(Ended), false);
+Coins = Define.Number(nameof(Coins), 0);
+Bought = Define.Message();
+var review = Panel.Group("review");
+var resume = Panel.Button("resume");
+var buy = Panel.Button("buy");
+
+<strong>review.BindVisible(Choosing &amp; !Ended)</strong>;
+<strong>resume.BindEnabled(Time.IsPaused)</strong>;
+On.Message(Bought, Coins.Subtract(10), <strong>buy.SetEnabled(Coins &gt;= 10)</strong>);
+</code></pre>
+
+<p>A script runs its binds after <code class="language-plaintext highlighter-rouge">On.Update</code>, its state machines and its routines, so a bound element
+follows a state machine’s transition in the same frame. One element’s display has one
+<code class="language-plaintext highlighter-rouge">BindVisible</code> or any number of <code class="language-plaintext highlighter-rouge">SetVisible</code> writes, never both, and the same holds for
+<code class="language-plaintext highlighter-rouge">BindEnabled</code> and <code class="language-plaintext highlighter-rouge">SetEnabled</code>: <code class="language-plaintext highlighter-rouge">Build()</code> refuses a second bind, and a bind beside a write, naming
+both lines. <code class="language-plaintext highlighter-rouge">BindVisible</code> and <code class="language-plaintext highlighter-rouge">BindEnabled</code> take no <code class="language-plaintext highlighter-rouge">true</code> or <code class="language-plaintext highlighter-rouge">false</code>, because a bound literal
+never changes; write <code class="language-plaintext highlighter-rouge">SetVisible(false)</code> in <code class="language-plaintext highlighter-rouge">On.Ready</code> instead.</p>
 
 <h2 id="reading-an-element-back">Reading an element back</h2>
 

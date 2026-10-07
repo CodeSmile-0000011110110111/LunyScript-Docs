@@ -103,6 +103,18 @@ that waits to respawn and <code class="language-plaintext highlighter-rouge">Dea
 <p><code class="language-plaintext highlighter-rouge">IsVisible</code> is the state <code class="language-plaintext highlighter-rouge">Hide</code> and <code class="language-plaintext highlighter-rouge">Show</code> write. Unity’s <code class="language-plaintext highlighter-rouge">Renderer.isVisible</code>, which says whether a
 camera sees the renderer, is a different reading and is not on this surface.</p>
 
+<p><code class="language-plaintext highlighter-rouge">Object.SetVisible(condition)</code> shows the renderer when the condition is true where the block runs
+and hides it when the condition is false. It takes a condition or a Flag; <code class="language-plaintext highlighter-rouge">Show()</code> and <code class="language-plaintext highlighter-rouge">Hide()</code> are
+the forms for a fixed answer.</p>
+
+<pre><code>Health = Define.Number(nameof(Health), 100);
+Elite = Define.Flag(nameof(Elite), false);
+Crown = Bind.Object();
+
+On.Update(<strong>Object.SetVisible(Health &gt; 0)</strong>);
+On.Spawned(<strong>Object.For(Crown).SetVisible(Elite)</strong>);
+</code></pre>
+
 <h2 id="the-objects-own-renderer">The object’s own renderer</h2>
 
 <p>These calls reach the one <code class="language-plaintext highlighter-rouge">Renderer</code> on the object the script runs on. A model imported from a
@@ -245,6 +257,7 @@ out.</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Object</span><span class="p">.</span><span class="nf">Hide</span><span class="p">()</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">Show</span><span class="p">()</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">SetVisible</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>                 <span class="c1">// a condition or a Flag</span>
 <span class="n">Object</span><span class="p">.</span><span class="n">IsVisible</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span> <span class="p">[</span> <span class="p">,</span> <span class="n">alpha</span> <span class="p">])</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">colour</span><span class="p">)</span>                      <span class="c1">// a Color or a colour variable</span>

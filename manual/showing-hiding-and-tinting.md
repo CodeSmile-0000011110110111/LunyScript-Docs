@@ -47,6 +47,18 @@ On.Update(If(Object.IsVisible).Then(Seen.Set(true)));
 `IsVisible` is the state `Hide` and `Show` write. Unity's `Renderer.isVisible`, which says whether a
 camera sees the renderer, is a different reading and is not on this surface.
 
+`Object.SetVisible(condition)` shows the renderer when the condition is true where the block runs
+and hides it when the condition is false. It takes a condition or a Flag; `Show()` and `Hide()` are
+the forms for a fixed answer.
+
+<pre><code>Health = Define.Number(nameof(Health), 100);
+Elite = Define.Flag(nameof(Elite), false);
+Crown = Bind.Object();
+
+On.Update(<strong>Object.SetVisible(Health &gt; 0)</strong>);
+On.Spawned(<strong>Object.For(Crown).SetVisible(Elite)</strong>);
+</code></pre>
+
 ## The object's own renderer
 
 These calls reach the one `Renderer` on the object the script runs on. A model imported from a
@@ -196,6 +208,7 @@ out.
 ```csharp
 Object.Hide()
 Object.Show()
+Object.SetVisible(condition)                 // a condition or a Flag
 Object.IsVisible
 Object.SetColor(red, green, blue [ , alpha ])
 Object.SetColor(colour)                      // a Color or a colour variable

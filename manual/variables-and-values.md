@@ -201,6 +201,15 @@ A `Flag` is itself a condition, so `If(Powered)` and `If(Powered.IsTrue())` are 
 On.Update(If(!Powered).Then(OffSeconds.Add(Time.Delta)));
 ```
 
+A condition can also be written into a flag. `Set` takes a flag, `true`, `false` or a condition, and
+writes what the condition says when the block runs. Placed in `On.Update`, the flag follows the
+condition every frame, and `When.Var(Lit).Changed` runs only on the frames where its value changed.
+
+<pre><code>Lit = Define.Flag(nameof(Lit), false);
+
+On.Update(<strong>Lit.Set(Charge &gt; 10 &amp; !Powered)</strong>);
+</code></pre>
+
 ## Math as expressions
 
 Every `Math` call returns a value instead of writing one, so it composes into an assignment or a

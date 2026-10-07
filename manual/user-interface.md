@@ -74,11 +74,13 @@ place in an event list, and it writes every time that block runs.
 | --- | --- |
 | `label.BindText(value)` | The label's text, whenever the value changes. |
 | `label.SetText(value)` | The label's text, once, where the block runs. |
-| `toggle.BindValue(flag)` | The toggle's checked state, whenever the flag changes. |
+| `toggle.BindValue(flag)` | The toggle's checked state, whenever the flag or condition changes. |
 | `bar.SetValue(number)` | The progress bar's value, once. |
 | `volume.BindValue(number)` | The slider's value, whenever the number changes. |
-| `handle.SetVisible(flag)` | `display`, so a hidden element takes no space. |
-| `handle.SetEnabled(flag)` | Whether the element accepts input. |
+| `handle.SetVisible(flag)` | `display`, once, so a hidden element takes no space. |
+| `handle.SetEnabled(flag)` | Whether the element accepts input, once. |
+| `handle.BindVisible(condition)` | `display`, whenever the condition's value changes. |
+| `handle.BindEnabled(condition)` | Whether the element accepts input, whenever the condition changes. |
 
 ```csharp
 health.BindText(Text.Format("{0}% HP", Health));
@@ -93,7 +95,8 @@ On.Message(HideHud, panelBody.SetVisible(false));
 `BindText` accepts a Number, a `Text.Format` and a Text variable. A label bound to a `Text.Format`, or to a
 text declared without a byte count, shows a line of any length; a label bound to a text declared with a
 `TextCapacity` shows what that text holds, up to its usable bytes. `BindValue` and `SetValue` are on
-`Toggle`, `ProgressBar` and `Slider`. `SetVisible` and `SetEnabled` are on every kind.
+`Toggle`, `ProgressBar` and `Slider`. `SetVisible`, `SetEnabled`, `BindVisible` and `BindEnabled`
+are on every kind.
 
 A `Slider` holds a single-precision value inside the low and high values its UXML sets. A write
 converts the number to single precision, and the slider clamps it to its range. `volume.Value` reads
@@ -101,6 +104,34 @@ the slider rounded to 7 significant digits, so 0.37 written to a slider reads ba
 saved setting holds 0.37 rather than 0.3700000047683716. A script's own write, from `BindValue` or
 `SetValue`, does not run `When.UI(volume).ValueChanged`; a player's drag, key press or navigation
 does.
+
+## Following a condition
+
+A condition, such as `Coins >= 10`, `Time.IsPaused` or `!Ended`, goes wherever an element takes a
+flag. `SetVisible`, `SetEnabled` and a toggle's `SetValue` write what the condition says when the
+block runs. `BindVisible`, `BindEnabled` and a toggle's `BindValue` keep the element following the
+condition: they write it once it resolves and again on each frame where the condition's value
+changed. A Flag variable works as a condition too.
+
+<pre><code>Choosing = Define.Flag(nameof(Choosing), true);
+Ended = Define.Flag(nameof(Ended), false);
+Coins = Define.Number(nameof(Coins), 0);
+Bought = Define.Message();
+var review = Panel.Group("review");
+var resume = Panel.Button("resume");
+var buy = Panel.Button("buy");
+
+<strong>review.BindVisible(Choosing &amp; !Ended)</strong>;
+<strong>resume.BindEnabled(Time.IsPaused)</strong>;
+On.Message(Bought, Coins.Subtract(10), <strong>buy.SetEnabled(Coins &gt;= 10)</strong>);
+</code></pre>
+
+A script runs its binds after `On.Update`, its state machines and its routines, so a bound element
+follows a state machine's transition in the same frame. One element's display has one
+`BindVisible` or any number of `SetVisible` writes, never both, and the same holds for
+`BindEnabled` and `SetEnabled`: `Build()` refuses a second bind, and a bind beside a write, naming
+both lines. `BindVisible` and `BindEnabled` take no `true` or `false`, because a bound literal
+never changes; write `SetVisible(false)` in `On.Ready` instead.
 
 ## Reading an element back
 
