@@ -244,6 +244,16 @@ finite is stored as the text `"NaN"`, `"Infinity"` or `"-Infinity"`.
   `Cloud.Load` and `Cloud.Delete` keep a copy of the same document in the cloud;
   see [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html).
 
+## Documents in plain C#
+
+A `MonoBehaviour` with no script keeps its own documents with LunySave, a module
+that ships with LunyScript: `LocalSave` saves and loads a `SaveSchema`'s fields
+at a path relative to `Application.persistentDataPath`, such as
+`savegames/001.sav`, and reads documents the build ships from StreamingAssets.
+Scripts' documents are stored through the same writer, file layout and migration
+rules. LunySave's own folder, `Assets/CodeSmile/LunySave`, holds its guide, an
+agent skill and a demo scene.
+
 ## A worked example
 
 ```csharp
