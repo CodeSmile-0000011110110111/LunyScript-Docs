@@ -161,7 +161,7 @@ attempt; a download or a delete joins a waiting one of the same kind. That is th
 
   <h3 id="CodeSmile_LunyScript_CloudSaveGateway_HasProvider" data-uid="CodeSmile.LunyScript.CloudSaveGateway.HasProvider">
   HasProvider
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/CloudSaveGateway.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/CloudSaveGateway.cs/#L68"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether a provider has been named. Requests made while this is false are queued, not
@@ -194,7 +194,7 @@ thrown; AGENTS.md rule 51.</p>
 
   <h3 id="CodeSmile_LunyScript_CloudSaveGateway_IsReady" data-uid="CodeSmile.LunyScript.CloudSaveGateway.IsReady">
   IsReady
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/CloudSaveGateway.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/CloudSaveGateway.cs/#L75"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether sign-in has completed successfully, so requests dispatch immediately.</p>
@@ -230,7 +230,7 @@ thrown; AGENTS.md rule 51.</p>
 
   <h3 id="CodeSmile_LunyScript_CloudSaveGateway_Tick" data-uid="CodeSmile.LunyScript.CloudSaveGateway.Tick">
   Tick()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/CloudSaveGateway.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/CloudSaveGateway.cs/#L153"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Polls once. Called by <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html#CodeSmile_LunyScript_ScriptRunner_TickFrameUpdate">TickFrameUpdate()</a> before any instance runs, so a
@@ -269,7 +269,7 @@ with the original exception text. A provider that returns no operation is classi
 
   <h3 id="CodeSmile_LunyScript_CloudSaveGateway_UseProvider_CodeSmile_LunyScript_ICloudSaveProvider_" data-uid="CodeSmile.LunyScript.CloudSaveGateway.UseProvider(CodeSmile.LunyScript.ICloudSaveProvider)">
   UseProvider(ICloudSaveProvider)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/CloudSaveGateway.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Services/CloudSaveGateway.cs/#L106"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Names the backend this gateway talks to. Called once, by whoever owns the runner, before or
@@ -314,6 +314,13 @@ completes.</p>
 to name the provider in its log line and in that exception's message, and it is guarded: a
 provider whose <code>Describe</code> throws is named by its type instead, and the exception does not
 leave this method.</p>
+<pre><code>&lt;p&gt;
+    &lt;b&gt;The supplied provider is replaced.&lt;/b&gt; With the Cloud Save package installed, the default runner
+    starts with &lt;code&gt;UgsCloudSaveProvider&lt;/code&gt;, unless the project settings turn it off. A provider named here
+    replaces it until it starts signing in, which it does at the first cloud request; requests queued
+    before then go to the replacement. &lt;code&gt;docs/proposals/supplied-providers.md&lt;/code&gt; is the contract.
+&lt;/p&gt;
+</code></pre>
 </div>
 
   <h4 class="section">Exceptions</h4>
@@ -322,9 +329,10 @@ leave this method.</p>
     <dd><p><code class="paramref">provider</code> is null.</p>
 </dd>
     <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
-    <dd><p>A provider was already named. A gateway talks to one
-backend for its lifetime; with domain reload disabled the default runner and its gateway are
-reset between Play sessions, so each session names its provider once.</p>
+    <dd><p>A provider was already named, other than a supplied one that
+has not started signing in. A gateway talks to one backend for its lifetime; with domain reload disabled
+the default runner and its gateway are reset between Play sessions, so each session names its provider
+once.</p>
 </dd>
   </dl>
 
