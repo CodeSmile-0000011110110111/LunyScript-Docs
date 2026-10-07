@@ -316,6 +316,53 @@ The format is parsed once, inside `Build()`. Writing the result into a fixed tex
 buffer the size of the destination and allocates nothing; writing it into a growing text allocates only when
 the result differs from what the text holds.
 
+### Text from conditional parts
+
+`Text.Join` writes a sentence whose parts each depend on a condition, in one block, where an `If`
+chain would need one branch for every combination of the conditions:
+
+<pre><code>RingVolley = Define.Flag(nameof(RingVolley), true);
+MineLayer = Define.Flag(nameof(MineLayer), false);
+Augments = Define.Text(nameof(Augments));
+
+On.Update(Augments.Set(<strong>Text.Join(", ")
+    .Part(</strong>RingVolley<strong>, "Ring volley")
+    .Part(</strong>MineLayer<strong>, "Mine layer")
+    .Else("none")</strong>));
+</code></pre>
+
+Each time the block runs, it tests every part's condition once, in the order you wrote them, and
+writes the text of each part whose condition is true, with the separator between two written parts.
+With both flags true, `Augments` holds `Ring volley, Mine layer`; with only `MineLayer` true,
+`Mine layer`; with neither, the `Else` text, `none`. Without `Else`, the text is empty when no
+condition is true. A part's condition is anything `If` takes.
+
+A part's text is a literal, written as it is with any braces, a `Text.Format`, whose holes are read
+when the part is written, or another `Text.Join`, written in that part's place:
+
+<pre><code>Damage = Define.Number(nameof(Damage), 2);
+Pierce = Define.Number(nameof(Pierce), 0);
+Rolls = Define.Text(nameof(Rolls));
+
+On.Update(Rolls.Set(<strong>Text.Join(", ")
+    .Part(</strong>Damage &gt; 0<strong>, </strong>Text.Format("damage +{0:0}", Damage)<strong>)
+    .Part(</strong>Pierce &gt; 0<strong>, </strong>Text.Format("pierce +{0:0}", Pierce)<strong>)
+    .Else("no rolls")</strong>));
+</code></pre>
+
+A join goes wherever `Text.Format` goes: a text's `Set`, and a Label's `SetText` and `BindText` on
+[User interface](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/user-interface.html). It needs at least one `Part`
+before a `Set` takes it, and `Else` ends it. Start a join inside `Build()` and use it there: a join
+stored and never used is refused when `Build()` ends, and one written as a statement is the compile
+error LUNY004. Writing a join allocates exactly what writing a `Text.Format` into the same text
+allocates.
+
+| Write | What it adds |
+| --- | --- |
+| `Text.Join(separator).Part(condition, text)` | the first part; `text` is a literal or a format |
+| `.Part(condition, text)` | another part, written after the ones before it |
+| `.Else(text)` | the text written when no condition is true; ends the join |
+
 To give a growing text an upper bound, add `Allocating`. A longer write is refused the way a fixed slot
 refuses one:
 

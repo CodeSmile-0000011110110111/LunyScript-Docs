@@ -424,6 +424,70 @@ number hole for exactly two decimal places. A literal brace is written twice: <c
 buffer the size of the destination and allocates nothing; writing it into a growing text allocates only when
 the result differs from what the text holds.</p>
 
+<h3 id="text-from-conditional-parts">Text from conditional parts</h3>
+
+<p><code class="language-plaintext highlighter-rouge">Text.Join</code> writes a sentence whose parts each depend on a condition, in one block, where an <code class="language-plaintext highlighter-rouge">If</code>
+chain would need one branch for every combination of the conditions:</p>
+
+<pre><code>RingVolley = Define.Flag(nameof(RingVolley), true);
+MineLayer = Define.Flag(nameof(MineLayer), false);
+Augments = Define.Text(nameof(Augments));
+
+On.Update(Augments.Set(<strong>Text.Join(", ")
+    .Part(</strong>RingVolley<strong>, "Ring volley")
+    .Part(</strong>MineLayer<strong>, "Mine layer")
+    .Else("none")</strong>));
+</code></pre>
+
+<p>Each time the block runs, it tests every part’s condition once, in the order you wrote them, and
+writes the text of each part whose condition is true, with the separator between two written parts.
+With both flags true, <code class="language-plaintext highlighter-rouge">Augments</code> holds <code class="language-plaintext highlighter-rouge">Ring volley, Mine layer</code>; with only <code class="language-plaintext highlighter-rouge">MineLayer</code> true,
+<code class="language-plaintext highlighter-rouge">Mine layer</code>; with neither, the <code class="language-plaintext highlighter-rouge">Else</code> text, <code class="language-plaintext highlighter-rouge">none</code>. Without <code class="language-plaintext highlighter-rouge">Else</code>, the text is empty when no
+condition is true. A part’s condition is anything <code class="language-plaintext highlighter-rouge">If</code> takes.</p>
+
+<p>A part’s text is a literal, written as it is with any braces, a <code class="language-plaintext highlighter-rouge">Text.Format</code>, whose holes are read
+when the part is written, or another <code class="language-plaintext highlighter-rouge">Text.Join</code>, written in that part’s place:</p>
+
+<pre><code>Damage = Define.Number(nameof(Damage), 2);
+Pierce = Define.Number(nameof(Pierce), 0);
+Rolls = Define.Text(nameof(Rolls));
+
+On.Update(Rolls.Set(<strong>Text.Join(", ")
+    .Part(</strong>Damage &gt; 0<strong>, </strong>Text.Format("damage +{0:0}", Damage)<strong>)
+    .Part(</strong>Pierce &gt; 0<strong>, </strong>Text.Format("pierce +{0:0}", Pierce)<strong>)
+    .Else("no rolls")</strong>));
+</code></pre>
+
+<p>A join goes wherever <code class="language-plaintext highlighter-rouge">Text.Format</code> goes: a text’s <code class="language-plaintext highlighter-rouge">Set</code>, and a Label’s <code class="language-plaintext highlighter-rouge">SetText</code> and <code class="language-plaintext highlighter-rouge">BindText</code> on
+<a href="/LunyScript-Docs/manual/user-interface.html">User interface</a>. It needs at least one <code class="language-plaintext highlighter-rouge">Part</code>
+before a <code class="language-plaintext highlighter-rouge">Set</code> takes it, and <code class="language-plaintext highlighter-rouge">Else</code> ends it. Start a join inside <code class="language-plaintext highlighter-rouge">Build()</code> and use it there: a join
+stored and never used is refused when <code class="language-plaintext highlighter-rouge">Build()</code> ends, and one written as a statement is the compile
+error LUNY004. Writing a join allocates exactly what writing a <code class="language-plaintext highlighter-rouge">Text.Format</code> into the same text
+allocates.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Write</th>
+      <th>What it adds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Text.Join(separator).Part(condition, text)</code></td>
+      <td>the first part; <code class="language-plaintext highlighter-rouge">text</code> is a literal or a format</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.Part(condition, text)</code></td>
+      <td>another part, written after the ones before it</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.Else(text)</code></td>
+      <td>the text written when no condition is true; ends the join</td>
+    </tr>
+  </tbody>
+</table>
+
 <p>To give a growing text an upper bound, add <code class="language-plaintext highlighter-rouge">Allocating</code>. A longer write is refused the way a fixed slot
 refuses one:</p>
 
