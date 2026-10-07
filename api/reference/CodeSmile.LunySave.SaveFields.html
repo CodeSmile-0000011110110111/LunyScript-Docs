@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class SaveFields | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SaveFields | LunyScript API Reference ">
+      
+      <meta name="description" content="The stored fields of one document while a  step converts them. Reads and writes a copy: nothing here reaches the stored file or a document a caller holds.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunySave_SaveFields.md&amp;value=---%0Auid%3A%20CodeSmile.LunySave.SaveFields%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunySave.SaveFields">
+
+
+
+  <h1 id="CodeSmile_LunySave_SaveFields" data-uid="CodeSmile.LunySave.SaveFields" class="text-break">
+Class SaveFields  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunySave.html">LunySave</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The stored fields of one document while a <a class="xref" href="CodeSmile.LunySave.SaveMigration.html">SaveMigration</a> step converts them. Reads and writes a
+copy: nothing here reaches the stored file or a document a caller holds.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class SaveFields</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">SaveFields</span></div>
+    </dd>
+  </dl>
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunySave_SaveFields_examples">Examples</h2>
+  <pre><code class="lang-csharp">fields.Rename("best", "BestScore");
+fields.DefaultNumber("Coins", 0);
+if (fields.TryGetNumber("seconds", out var seconds))
+    fields.SetNumber("Minutes", seconds / 60.0);</code></pre>
+
+
+  <h2 id="CodeSmile_LunySave_SaveFields_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>A field is read by the kind the reader asks for, because the file stores values, not kinds: a number reads with
+<a class="xref" href="CodeSmile.LunySave.SaveFields.html#CodeSmile_LunySave_SaveFields_TryGetNumber_System_String_System_Double__">TryGetNumber(string, out double)</a>, <code>true</code> or <code>false</code> with <a class="xref" href="CodeSmile.LunySave.SaveFields.html#CodeSmile_LunySave_SaveFields_TryGetFlag_System_String_System_Boolean__">TryGetFlag(string, out bool)</a>, a text with
+<a class="xref" href="CodeSmile.LunySave.SaveFields.html#CodeSmile_LunySave_SaveFields_TryGetText_System_String_System_String__">TryGetText(string, out string)</a>, an array of two, three or four numbers with <a class="xref" href="CodeSmile.LunySave.SaveFields.html#CodeSmile_LunySave_SaveFields_TryGetVector2_System_String_UnityEngine_Vector2__">TryGetVector2(string, out Vector2)</a>,
+<a class="xref" href="CodeSmile.LunySave.SaveFields.html#CodeSmile_LunySave_SaveFields_TryGetVector3_System_String_UnityEngine_Vector3__">TryGetVector3(string, out Vector3)</a> or <a class="xref" href="CodeSmile.LunySave.SaveFields.html#CodeSmile_LunySave_SaveFields_TryGetQuaternion_System_String_UnityEngine_Quaternion__">TryGetQuaternion(string, out Quaternion)</a>, and an object of texts with
+<a class="xref" href="CodeSmile.LunySave.SaveFields.html#CodeSmile_LunySave_SaveFields_TryGetTextMap_System_String_System_Collections_Generic_KeyValuePair_System_String_System_String_____">TryGetTextMap(string, out KeyValuePair&lt;string, string&gt;[])</a>. Names are case sensitive. A name written by a step uses letters, digits, dash and
+underscore, 1 to 64 of them, the rule <a class="xref" href="CodeSmile.LunySave.SaveSchema.html">SaveSchema</a> applies; any other name throws, and the load
+fails as <a class="xref" href="CodeSmile.LunySave.SaveFailure.html#CodeSmile_LunySave_SaveFailure_Unsupported">Unsupported</a>.</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunySave_SaveFields_Count_" data-uid="CodeSmile.LunySave.SaveFields.Count*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_Count" data-uid="CodeSmile.LunySave.SaveFields.Count">
+  Count
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many fields the document holds now.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int Count { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_Count_examples">Examples</h4>
+  <pre><code class="lang-csharp">var empty = fields.Count == 0;</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunySave_SaveFields_Contains_" data-uid="CodeSmile.LunySave.SaveFields.Contains*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_Contains_System_String_" data-uid="CodeSmile.LunySave.SaveFields.Contains(System.String)">
+  Contains(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether a field of this name exists, whatever it holds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Contains(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when the field exists.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_Contains_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">if (fields.Contains("legacy")) fields.Remove("legacy");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_DefaultFlag_" data-uid="CodeSmile.LunySave.SaveFields.DefaultFlag*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_DefaultFlag_System_String_System_Boolean_" data-uid="CodeSmile.LunySave.SaveFields.DefaultFlag(System.String,System.Boolean)">
+  DefaultFlag(string, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L231"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds <code>true</code> or <code>false</code> when the field is absent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool DefaultFlag(string name, bool value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">bool</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The flag to add.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when the field was added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_DefaultFlag_System_String_System_Boolean__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.DefaultFlag("Unlocked", false);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_DefaultNumber_" data-uid="CodeSmile.LunySave.SaveFields.DefaultNumber*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_DefaultNumber_System_String_System_Double_" data-uid="CodeSmile.LunySave.SaveFields.DefaultNumber(System.String,System.Double)">
+  DefaultNumber(string, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L216"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds a number when the field is absent. A field that exists keeps what it holds, whatever that
+is.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool DefaultNumber(string name, double value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The number to add.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when the field was added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_DefaultNumber_System_String_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.DefaultNumber("Coins", 0);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_DefaultQuaternion_" data-uid="CodeSmile.LunySave.SaveFields.DefaultQuaternion*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_DefaultQuaternion_System_String_UnityEngine_Quaternion_" data-uid="CodeSmile.LunySave.SaveFields.DefaultQuaternion(System.String,UnityEngine.Quaternion)">
+  DefaultQuaternion(string, Quaternion)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L291"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds a <code>Quaternion</code> when the field is absent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool DefaultQuaternion(string name, Quaternion value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Quaternion</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The value to add.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when the field was added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_DefaultQuaternion_System_String_UnityEngine_Quaternion__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.DefaultQuaternion("Facing", Quaternion.identity);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_DefaultText_" data-uid="CodeSmile.LunySave.SaveFields.DefaultText*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_DefaultText_System_String_System_String_" data-uid="CodeSmile.LunySave.SaveFields.DefaultText(System.String,System.String)">
+  DefaultText(string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L246"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds a text when the field is absent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool DefaultText(string name, string value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The text to add.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when the field was added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_DefaultText_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.DefaultText("PilotName", "Pilot");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name, or the text is null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_DefaultTextMap_" data-uid="CodeSmile.LunySave.SaveFields.DefaultTextMap*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_DefaultTextMap_System_String_" data-uid="CodeSmile.LunySave.SaveFields.DefaultTextMap(System.String)">
+  DefaultTextMap(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L306"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds an object of texts holding no entry when the field is absent. A step into a version that
+declares a new text map field calls it, because a migrated document must hold every declared field.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool DefaultTextMap(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when the field was added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_DefaultTextMap_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.DefaultTextMap("Bindings");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_DefaultVector2_" data-uid="CodeSmile.LunySave.SaveFields.DefaultVector2*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_DefaultVector2_System_String_UnityEngine_Vector2_" data-uid="CodeSmile.LunySave.SaveFields.DefaultVector2(System.String,UnityEngine.Vector2)">
+  DefaultVector2(string, Vector2)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L261"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds a <code>Vector2</code> when the field is absent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool DefaultVector2(string name, Vector2 value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Vector2</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The value to add.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when the field was added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_DefaultVector2_System_String_UnityEngine_Vector2__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.DefaultVector2("Cursor", new Vector2(0.5f, 0.5f));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_DefaultVector3_" data-uid="CodeSmile.LunySave.SaveFields.DefaultVector3*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_DefaultVector3_System_String_UnityEngine_Vector3_" data-uid="CodeSmile.LunySave.SaveFields.DefaultVector3(System.String,UnityEngine.Vector3)">
+  DefaultVector3(string, Vector3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L276"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds a <code>Vector3</code> when the field is absent.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool DefaultVector3(string name, Vector3 value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Vector3</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The value to add.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when the field was added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_DefaultVector3_System_String_UnityEngine_Vector3__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.DefaultVector3("Spawn", Vector3.zero);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_Remove_" data-uid="CodeSmile.LunySave.SaveFields.Remove*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_Remove_System_String_" data-uid="CodeSmile.LunySave.SaveFields.Remove(System.String)">
+  Remove(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L328"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes a field.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Remove(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when the field existed.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_Remove_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.Remove("seconds");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_Rename_" data-uid="CodeSmile.LunySave.SaveFields.Rename*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_Rename_System_String_System_String_" data-uid="CodeSmile.LunySave.SaveFields.Rename(System.String,System.String)">
+  Rename(string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L322"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Moves a field's value to a new name. A field already named <code class="paramref">to</code> is
+replaced.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Rename(string from, string to)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>from</code></dt></td>
+    <td style="width: 99%"><dd><p>The name the stored document uses.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>to</code></dt></td>
+    <td style="width: 99%"><dd><p>The name the next version uses.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when <code class="paramref">from</code> existed.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_Rename_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.Rename("best", "BestScore");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p><code class="paramref">to</code> is not a storable field name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_SetFlag_" data-uid="CodeSmile.LunySave.SaveFields.SetFlag*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_SetFlag_System_String_System_Boolean_" data-uid="CodeSmile.LunySave.SaveFields.SetFlag(System.String,System.Boolean)">
+  SetFlag(string, bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L159"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes <code>true</code> or <code>false</code>, adding the field or replacing what it held.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void SetFlag(string name, bool value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">bool</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The flag.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_SetFlag_System_String_System_Boolean__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.SetFlag("Unlocked", best &gt;= 10);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_SetNumber_" data-uid="CodeSmile.LunySave.SaveFields.SetNumber*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_SetNumber_System_String_System_Double_" data-uid="CodeSmile.LunySave.SaveFields.SetNumber(System.String,System.Double)">
+  SetNumber(string, double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L151"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes a number, adding the field or replacing what it held.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void SetNumber(string name, double value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The number.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_SetNumber_System_String_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.SetNumber("Minutes", seconds / 60.0);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_SetQuaternion_" data-uid="CodeSmile.LunySave.SaveFields.SetQuaternion*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_SetQuaternion_System_String_UnityEngine_Quaternion_" data-uid="CodeSmile.LunySave.SaveFields.SetQuaternion(System.String,UnityEngine.Quaternion)">
+  SetQuaternion(string, Quaternion)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes a <code>Quaternion</code>, adding the field or replacing what it held.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void SetQuaternion(string name, Quaternion value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Quaternion</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The value.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_SetQuaternion_System_String_UnityEngine_Quaternion__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.SetQuaternion("Facing", Quaternion.identity);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_SetText_" data-uid="CodeSmile.LunySave.SaveFields.SetText*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_SetText_System_String_System_String_" data-uid="CodeSmile.LunySave.SaveFields.SetText(System.String,System.String)">
+  SetText(string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L167"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes a text, adding the field or replacing what it held.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void SetText(string name, string value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The text. A load checks it against the field's byte bound.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_SetText_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.SetText("PilotName", "Ada");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name, or the text is null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_SetTextMap_" data-uid="CodeSmile.LunySave.SaveFields.SetTextMap*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_SetTextMap_System_String_System_Collections_Generic_IReadOnlyList_System_Collections_Generic_KeyValuePair_System_String_System_String___" data-uid="CodeSmile.LunySave.SaveFields.SetTextMap(System.String,System.Collections.Generic.IReadOnlyList{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+  SetTextMap(string, IReadOnlyList&lt;KeyValuePair&lt;string, string&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L206"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes an object of texts, adding the field or replacing what it held.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void SetTextMap(string name, IReadOnlyList&lt;KeyValuePair&lt;string, string&gt;&gt; entries)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">IReadOnlyList</span>&lt;<span class="xref">KeyValuePair</span>&lt;<span class="xref">string</span>, <span class="xref">string</span>&gt;&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>entries</code></dt></td>
+    <td style="width: 99%"><dd><p>The entries, in the order they are stored; each key once.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_SetTextMap_System_String_System_Collections_Generic_IReadOnlyList_System_Collections_Generic_KeyValuePair_System_String_System_String____examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.SetTextMap("Bindings", new[] { new KeyValuePair&lt;String, String&gt;("Fire", "&lt;Keyboard&gt;/f") });</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name, the entries are null, or a key or
+a value is null or a key is given twice.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_SetVector2_" data-uid="CodeSmile.LunySave.SaveFields.SetVector2*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_SetVector2_System_String_UnityEngine_Vector2_" data-uid="CodeSmile.LunySave.SaveFields.SetVector2(System.String,UnityEngine.Vector2)">
+  SetVector2(string, Vector2)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L181"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes a <code>Vector2</code>, adding the field or replacing what it held.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void SetVector2(string name, Vector2 value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Vector2</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The value.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_SetVector2_System_String_UnityEngine_Vector2__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.SetVector2("Cursor", new Vector2(0.5f, 0.5f));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_SetVector3_" data-uid="CodeSmile.LunySave.SaveFields.SetVector3*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_SetVector3_System_String_UnityEngine_Vector3_" data-uid="CodeSmile.LunySave.SaveFields.SetVector3(System.String,UnityEngine.Vector3)">
+  SetVector3(string, Vector3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes a <code>Vector3</code>, adding the field or replacing what it held.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void SetVector3(string name, Vector3 value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Vector3</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The value.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_SetVector3_System_String_UnityEngine_Vector3__examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.SetVector3("Spawn", new Vector3(0f, 1f, 0f));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not a storable field name.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_TryGetFlag_" data-uid="CodeSmile.LunySave.SaveFields.TryGetFlag*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_TryGetFlag_System_String_System_Boolean__" data-uid="CodeSmile.LunySave.SaveFields.TryGetFlag(System.String,System.Boolean@)">
+  TryGetFlag(string, out bool)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads <code>true</code> or <code>false</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool TryGetFlag(string name, out bool value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">bool</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The flag, or false when the call returns false.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when the field is absent or holds something else.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_TryGetFlag_System_String_System_Boolean___examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.TryGetFlag("hard", out var hard);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_TryGetNumber_" data-uid="CodeSmile.LunySave.SaveFields.TryGetNumber*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_TryGetNumber_System_String_System_Double__" data-uid="CodeSmile.LunySave.SaveFields.TryGetNumber(System.String,System.Double@)">
+  TryGetNumber(string, out double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads a number. The strings &quot;NaN&quot;, &quot;Infinity&quot; and &quot;-Infinity&quot; read as those values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool TryGetNumber(string name, out double value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The number, or 0 when the call returns false.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when the field is absent or holds something else.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_TryGetNumber_System_String_System_Double___examples">Examples</h4>
+  <pre><code class="lang-csharp">if (fields.TryGetNumber("best", out var best)) fields.SetNumber("BestScore", best);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_TryGetQuaternion_" data-uid="CodeSmile.LunySave.SaveFields.TryGetQuaternion*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_TryGetQuaternion_System_String_UnityEngine_Quaternion__" data-uid="CodeSmile.LunySave.SaveFields.TryGetQuaternion(System.String,UnityEngine.Quaternion@)">
+  TryGetQuaternion(string, out Quaternion)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads an array of four numbers as a <code>Quaternion</code>, with its components as stored.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool TryGetQuaternion(string name, out Quaternion value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Quaternion</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The value, or the identity when the call returns false.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when the field is absent or holds something else.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_TryGetQuaternion_System_String_UnityEngine_Quaternion___examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.TryGetQuaternion("facing", out var facing);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_TryGetText_" data-uid="CodeSmile.LunySave.SaveFields.TryGetText*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_TryGetText_System_String_System_String__" data-uid="CodeSmile.LunySave.SaveFields.TryGetText(System.String,System.String@)">
+  TryGetText(string, out string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads a text.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool TryGetText(string name, out string value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The text, or null when the call returns false.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when the field is absent or holds something else.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_TryGetText_System_String_System_String___examples">Examples</h4>
+  <pre><code class="lang-csharp">if (fields.TryGetText("name", out var pilot)) fields.SetText("PilotName", pilot);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_TryGetTextMap_" data-uid="CodeSmile.LunySave.SaveFields.TryGetTextMap*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_TryGetTextMap_System_String_System_Collections_Generic_KeyValuePair_System_String_System_String_____" data-uid="CodeSmile.LunySave.SaveFields.TryGetTextMap(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[]@)">
+  TryGetTextMap(string, out KeyValuePair&lt;string, string&gt;[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L136"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads an object whose every value is a text.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool TryGetTextMap(string name, out KeyValuePair&lt;string, string&gt;[] entries)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">KeyValuePair</span>&lt;<span class="xref">string</span>, <span class="xref">string</span>&gt;[]</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>entries</code></dt></td>
+    <td style="width: 99%"><dd><p>A copy of the entries in stored order, or null when the call returns false.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when the field is absent or holds something else.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_TryGetTextMap_System_String_System_Collections_Generic_KeyValuePair_System_String_System_String______examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.TryGetTextMap("Bindings", out var bindings);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_TryGetVector2_" data-uid="CodeSmile.LunySave.SaveFields.TryGetVector2*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_TryGetVector2_System_String_UnityEngine_Vector2__" data-uid="CodeSmile.LunySave.SaveFields.TryGetVector2(System.String,UnityEngine.Vector2@)">
+  TryGetVector2(string, out Vector2)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads an array of two numbers as a <code>Vector2</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool TryGetVector2(string name, out Vector2 value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Vector2</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The value, or zero when the call returns false.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when the field is absent or holds something else.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_TryGetVector2_System_String_UnityEngine_Vector2___examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.TryGetVector2("cursor", out var cursor);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_SaveFields_TryGetVector3_" data-uid="CodeSmile.LunySave.SaveFields.TryGetVector3*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveFields_TryGetVector3_System_String_UnityEngine_Vector3__" data-uid="CodeSmile.LunySave.SaveFields.TryGetVector3(System.String,UnityEngine.Vector3@)">
+  TryGetVector3(string, out Vector3)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L106"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads an array of three numbers as a <code>Vector3</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool TryGetVector3(string name, out Vector3 value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Vector3</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>value</code></dt></td>
+    <td style="width: 99%"><dd><p>The value, or zero when the call returns false.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>False when the field is absent or holds something else.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveFields_TryGetVector3_System_String_UnityEngine_Vector3___examples">Examples</h4>
+  <pre><code class="lang-csharp">fields.TryGetVector3("spawn", out var spawn);</code></pre>
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveFields.cs/#L28" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

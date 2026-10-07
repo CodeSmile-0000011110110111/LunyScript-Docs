@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class SaveSchema | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SaveSchema | LunyScript API Reference ">
+      
+      <meta name="description" content="What one kind of document holds: its version, its fields by name and kind, and the migration steps that convert an older stored version. Each method returns a new schema and leaves this one as it was, so a schema kept in a static readonly field never changes after it is built.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunySave_SaveSchema.md&amp;value=---%0Auid%3A%20CodeSmile.LunySave.SaveSchema%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunySave.SaveSchema">
+
+
+
+  <h1 id="CodeSmile_LunySave_SaveSchema" data-uid="CodeSmile.LunySave.SaveSchema" class="text-break">
+Class SaveSchema  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunySave.html">LunySave</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>What one kind of document holds: its version, its fields by name and kind, and the migration steps that convert
+an older stored version. Each method returns a new schema and leaves this one as it was, so a schema kept in a
+<code>static readonly</code> field never changes after it is built.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class SaveSchema</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">SaveSchema</span></div>
+    </dd>
+  </dl>
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunySave_SaveSchema_examples">Examples</h2>
+  <pre><code class="lang-csharp">static readonly SaveSchema Progress = new SaveSchema(2)
+    .Number("BestScore").Text("PilotName", 64).Vector3("Position")
+    .Migration(new ProgressVersion1To2());</code></pre>
+
+
+  <h2 id="CodeSmile_LunySave_SaveSchema_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>A field name is 1 to 64 letters, digits, dashes and underscores, case sensitive, and is the key stored in the
+file, so keep it when the C# that fills it is renamed. Each method checks what it can at once and throws a
+<a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a>: a name given twice, a step from a version the schema cannot have, two steps
+from one version. A schema with no field, or whose steps leave a version without a step between the oldest one
+and the current one, is refused where it is first used, because a later call may still add the field or step.</p>
+</div>
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="CodeSmile_LunySave_SaveSchema__ctor_" data-uid="CodeSmile.LunySave.SaveSchema.#ctor*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveSchema__ctor_System_Int32_" data-uid="CodeSmile.LunySave.SaveSchema.#ctor(System.Int32)">
+  SaveSchema(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a schema of <code class="paramref">version</code> with no field and no step.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveSchema(int version = 1)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>version</code></dt></td>
+    <td style="width: 99%"><dd><p>The schema version a save writes, 1 or more. Raise it when the fields change, and register
+a <a class="xref" href="CodeSmile.LunySave.SaveMigration.html">SaveMigration</a> from the previous version.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveSchema__ctor_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var settings = new SaveSchema().Number("MusicVolume");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The version is below 1.</p>
+</dd>
+  </dl>
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunySave_SaveSchema_FieldCount_" data-uid="CodeSmile.LunySave.SaveSchema.FieldCount*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveSchema_FieldCount" data-uid="CodeSmile.LunySave.SaveSchema.FieldCount">
+  FieldCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L58"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many fields the schema declares.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int FieldCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveSchema_FieldCount_examples">Examples</h4>
+  <pre><code class="lang-csharp">Debug.Log($"{Progress.FieldCount} fields");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_SaveSchema_Version_" data-uid="CodeSmile.LunySave.SaveSchema.Version*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveSchema_Version" data-uid="CodeSmile.LunySave.SaveSchema.Version">
+  Version
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The schema version a save writes and a load converts to.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int Version { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveSchema_Version_examples">Examples</h4>
+  <pre><code class="lang-csharp">Debug.Log($"progress schema version {Progress.Version}");</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunySave_SaveSchema_Declares_" data-uid="CodeSmile.LunySave.SaveSchema.Declares*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveSchema_Declares_System_String_" data-uid="CodeSmile.LunySave.SaveSchema.Declares(System.String)">
+  Declares(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Whether the schema declares a field of this name.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Declares(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name, compared case sensitively.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when the schema declares it.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveSchema_Declares_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">if (Progress.Declares("BestScore")) Debug.Log("keeps the best score");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_SaveSchema_Flag_" data-uid="CodeSmile.LunySave.SaveSchema.Flag*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveSchema_Flag_System_String_" data-uid="CodeSmile.LunySave.SaveSchema.Flag(System.String)">
+  Flag(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L82"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a field holding <code>true</code> or <code>false</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveSchema Flag(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.SaveSchema.html">SaveSchema</a></dt>
+    <dd><p>A new schema with the field added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveSchema_Flag_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var schema = new SaveSchema().Flag("Unlocked");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not storable or already declared.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveSchema_Migration_" data-uid="CodeSmile.LunySave.SaveSchema.Migration*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveSchema_Migration_CodeSmile_LunySave_SaveMigration_" data-uid="CodeSmile.LunySave.SaveSchema.Migration(CodeSmile.LunySave.SaveMigration)">
+  Migration(SaveMigration)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L144"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Registers the step that converts a stored document of <a class="xref" href="CodeSmile.LunySave.SaveMigration.html#CodeSmile_LunySave_SaveMigration_FromVersion">FromVersion</a> to the
+next version.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveSchema Migration(SaveMigration step)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunySave.SaveMigration.html">SaveMigration</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>step</code></dt></td>
+    <td style="width: 99%"><dd><p>The step. It keeps no state between calls.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.SaveSchema.html">SaveSchema</a></dt>
+    <dd><p>A new schema with the step added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveSchema_Migration_CodeSmile_LunySave_SaveMigration__examples">Examples</h4>
+  <pre><code class="lang-csharp">var schema = new SaveSchema(2).Number("BestScore").Migration(new ProgressVersion1To2());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The step is null, starts from a version outside 1 to
+<a class="xref" href="CodeSmile.LunySave.SaveSchema.html#CodeSmile_LunySave_SaveSchema_Version">Version</a> minus 1, or starts from a version another step starts from.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveSchema_Number_" data-uid="CodeSmile.LunySave.SaveSchema.Number*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveSchema_Number_System_String_" data-uid="CodeSmile.LunySave.SaveSchema.Number(System.String)">
+  Number(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a field holding a <code>Double</code>, which every value of stores and loads back exactly,
+including NaN and the infinities.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveSchema Number(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.SaveSchema.html">SaveSchema</a></dt>
+    <dd><p>A new schema with the field added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveSchema_Number_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var schema = new SaveSchema().Number("BestScore");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not storable or already declared.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveSchema_Quaternion_" data-uid="CodeSmile.LunySave.SaveSchema.Quaternion*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveSchema_Quaternion_System_String_" data-uid="CodeSmile.LunySave.SaveSchema.Quaternion(System.String)">
+  Quaternion(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L127"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a field holding a <code>Quaternion</code>, stored as an array of four numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveSchema Quaternion(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.SaveSchema.html">SaveSchema</a></dt>
+    <dd><p>A new schema with the field added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveSchema_Quaternion_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var schema = new SaveSchema().Quaternion("Facing");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not storable or already declared.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveSchema_Text_" data-uid="CodeSmile.LunySave.SaveSchema.Text*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveSchema_Text_System_String_" data-uid="CodeSmile.LunySave.SaveSchema.Text(System.String)">
+  Text(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a field holding a text of any length.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveSchema Text(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.SaveSchema.html">SaveSchema</a></dt>
+    <dd><p>A new schema with the field added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveSchema_Text_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var schema = new SaveSchema().Text("Notes");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not storable or already declared.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveSchema_Text_" data-uid="CodeSmile.LunySave.SaveSchema.Text*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveSchema_Text_System_String_System_Int32_" data-uid="CodeSmile.LunySave.SaveSchema.Text(System.String,System.Int32)">
+  Text(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a field holding a text of at most <code class="paramref">maxBytes</code> UTF-8 bytes. A stored text
+longer than that is omitted by a load, never shortened.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveSchema Text(string name, int maxBytes)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>maxBytes</code></dt></td>
+    <td style="width: 99%"><dd><p>The most UTF-8 bytes the text holds, 1 or more.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.SaveSchema.html">SaveSchema</a></dt>
+    <dd><p>A new schema with the field added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveSchema_Text_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var schema = new SaveSchema().Text("PilotName", 64);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not storable or already declared, or the bound is below
+1.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveSchema_TextMap_" data-uid="CodeSmile.LunySave.SaveSchema.TextMap*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveSchema_TextMap_System_String_" data-uid="CodeSmile.LunySave.SaveSchema.TextMap(System.String)">
+  TextMap(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L135"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a field holding an object whose every value is a text, such as the binding overrides
+LunyInput lists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveSchema TextMap(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.SaveSchema.html">SaveSchema</a></dt>
+    <dd><p>A new schema with the field added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveSchema_TextMap_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var schema = new SaveSchema().TextMap("Bindings");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not storable or already declared.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveSchema_Vector2_" data-uid="CodeSmile.LunySave.SaveSchema.Vector2*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveSchema_Vector2_System_String_" data-uid="CodeSmile.LunySave.SaveSchema.Vector2(System.String)">
+  Vector2(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a field holding a <code>Vector2</code>, stored as an array of two numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveSchema Vector2(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.SaveSchema.html">SaveSchema</a></dt>
+    <dd><p>A new schema with the field added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveSchema_Vector2_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var schema = new SaveSchema().Vector2("Cursor");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not storable or already declared.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySave_SaveSchema_Vector3_" data-uid="CodeSmile.LunySave.SaveSchema.Vector3*"></a>
+
+  <h3 id="CodeSmile_LunySave_SaveSchema_Vector3_System_String_" data-uid="CodeSmile.LunySave.SaveSchema.Vector3(System.String)">
+  Vector3(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a field holding a <code>Vector3</code>, stored as an array of three numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveSchema Vector3(string name)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
+    <td style="width: 99%"><dd><p>The field name.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.SaveSchema.html">SaveSchema</a></dt>
+    <dd><p>A new schema with the field added.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_SaveSchema_Vector3_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var schema = new SaveSchema().Vector3("Position");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The name is not storable or already declared.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSchema.cs/#L25" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
