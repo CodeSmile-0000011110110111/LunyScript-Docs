@@ -263,6 +263,13 @@ LunyScriptRuntime.DefaultRunner.InputGateway.UseProvider(provider);
 The number 2 allows the host and one guest. `new InputSystemProvider(actions)`, with no number, keeps
 player 0 present from the start on every device and pairs nothing.
 
+The backend reads its players through LunyInput, a C# module that ships with LunyScript in
+`Assets/CodeSmile/LunyInput`. A `MonoBehaviour` that reads input without a script uses LunyInput's
+`LocalInput` directly, and C# beside your scripts reads the same players through the backend's
+`Input` property. LunyInput numbers its players from 0 with the host at 0, so a script's numbers 0
+and 1 are LunyInput's player 0 and a script's number 2 is LunyInput's player 1. The folder's
+`README.md` and its agent skill, `AgentSkills/lunyinput/SKILL.md`, show the C#.
+
 ```csharp
 On.Ready(Input.Pairing.Open());
 When.Player(1).Paired(Status.Set("Player 1 is in"));
