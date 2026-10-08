@@ -266,9 +266,11 @@ player 0 present from the start on every device and pairs nothing.
 The backend reads its players through LunyInput, a C# module that ships with LunyScript in
 `Assets/CodeSmile/LunyInput`. A `MonoBehaviour` that reads input without a script uses LunyInput's
 `LocalInput` directly, and C# beside your scripts reads the same players through the backend's
-`Input` property. LunyInput numbers its players from 0 with the host at 0, so a script's numbers 0
-and 1 are LunyInput's player 0 and a script's number 2 is LunyInput's player 1. The folder's
-`README.md` and its agent skill, `AgentSkills/lunyinput/SKILL.md`, show the C#.
+`LocalPlayer(n)` method, which returns the LunyInput player a script reads as `Input.ForPlayer(n)`.
+LunyInput numbers its players from 0 with the host at 0, so a script's numbers 0 and 1 are LunyInput's
+player 0 and a script's number 2 is LunyInput's player 1; `LocalPlayer(2)` does that arithmetic, and
+the backend's `Input` property is the `LocalInput` itself. The folder's `README.md` and its agent
+skill, `AgentSkills/lunyinput/SKILL.md`, show the C#.
 
 ```csharp
 On.Ready(Input.Pairing.Open());

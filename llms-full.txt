@@ -1173,8 +1173,10 @@ the task it is for, so an agent opens only those its task needs. One of them, `a
 signatures of the family, and `api-index.md` in the `lunyscript` folder lists every such file.
 `api-types.md` beside it gives the file and lines of each type, so an agent that searches it for a
 member or type name reads only that type's lines. The skills are in your project at
-`Assets/CodeSmile/LunyScript/AgentSkills/`, and they match the LunyScript version you installed:
-every C# example in them compiles against that version, and the signature files are generated from it.
+`Assets/CodeSmile/LunyScript/AgentSkills/`, with the skills of the two plain C# modules that ship with
+LunyScript at `Assets/CodeSmile/LunyInput/AgentSkills/` and `Assets/CodeSmile/LunySave/AgentSkills/`,
+and they match the LunyScript version you installed: every C# example in them compiles against that
+version, and the signature files are generated from it.
 
 An agent finds a skill only in its own skill folders. When you allow it, LunyScript writes a short
 **skill link** for each skill into those folders, and keeps the links up to date.
@@ -1196,6 +1198,14 @@ An agent finds a skill only in its own skill folders. When you allow it, LunyScr
 | `lunyscript-data` | reads tuning values from a data asset or a JSON file |
 | `lunyscript-extend` | needs a backend or a block LunyScript does not ship: a provider for a LunyScript family, or a block family that wraps a package, an SDK or a service |
 
+Two more skills are for C# that has no LunyScript script, such as a `MonoBehaviour`, and for C# that
+reads the same players or documents as the scripts beside it:
+
+| Skill | An agent loads it when C# without a script |
+| --- | --- |
+| `lunyinput` | reads a button, stick or trigger with LunyInput's `LocalInput`, pairs local players, handles a lost gamepad, rebinds a control or stores rebound controls |
+| `lunysave` | keeps progress, settings, a save slot or a high score between sessions with LunySave's `LocalSave`, migrates an older save, reads a document from StreamingAssets, or is asked to save at an absolute path or as raw bytes |
+
 ## Allowing the skill links
 
 **Tools > LunyScript > Welcome** opens the welcome window. It also opens by itself once each time
@@ -1206,14 +1216,14 @@ After the welcome window opens, and while no skill link exists, a message box ti
 LunyScript AI Skills** asks:
 
 > LunyScript includes AI agent skills. To ensure agents find and use the LunyScript skills, we need
-> to create .agents/skills/lunyscript* and .claude/skills/lunyscript* in the project's root. These
-> redirecting skills guide AI agents to use the actual LunyScript skills located in
-> Assets/CodeSmile/LunyScript/AgentSkills/lunyscript*
+> to create .agents/skills/luny* and .claude/skills/luny* in the project's root. These redirecting
+> skills guide AI agents to use the actual LunyScript, LunyInput and LunySave skills located in
+> Assets/CodeSmile/*/AgentSkills/luny*
 >
 > Allow LunyScript to install the links to its AI agent skills?
 
 **Yes** writes one link per skill, in a folder named after the skill, in each of these folders of
-your Unity project. **No** writes nothing.
+your Unity project: the twelve `lunyscript*` skills, `lunyinput` and `lunysave`. **No** writes nothing.
 
 | Folder | Read by |
 | --- | --- |
@@ -1295,8 +1305,8 @@ you answer **Yes** in the Install LunyScript AI Skills box.
 
 ## Removing the links
 
-Delete the folder `lunyscript` and every folder whose name starts with `lunyscript-` from
-`.claude/skills/` and `.agents/skills/`. With no link left that LunyScript recognises as its own, it writes nothing
+Delete the folders `lunyscript`, `lunyinput` and `lunysave` and every folder whose name starts with
+`lunyscript-` from `.claude/skills/` and `.agents/skills/`. With no link left that LunyScript recognises as its own, it writes nothing
 until you answer **Yes** in the box again. Delete `.claude`, `.claude/skills`, `.agents` and
 `.agents/skills` as well if you have no other use for them; LunyScript records in
 `UserSettings/LunyScriptAgentSkillFolders.txt` which of them it created.
@@ -1307,7 +1317,8 @@ no longer exists, and the agent then has nothing to read.
 ## Without the links
 
 - Tell the agent where the skill is: "read
-  `Assets/CodeSmile/LunyScript/AgentSkills/lunyscript/SKILL.md` first".
+  `Assets/CodeSmile/LunyScript/AgentSkills/lunyscript/SKILL.md` first", or
+  `Assets/CodeSmile/LunySave/AgentSkills/lunysave/SKILL.md` for C# that saves without a script.
 - Or copy a skill's folder into a skill folder your agent reads, such as `~/.claude/skills/` for
   every project of one user. A copy does not update with LunyScript.
 
@@ -6216,9 +6227,11 @@ player 0 present from the start on every device and pairs nothing.
 The backend reads its players through LunyInput, a C# module that ships with LunyScript in
 `Assets/CodeSmile/LunyInput`. A `MonoBehaviour` that reads input without a script uses LunyInput's
 `LocalInput` directly, and C# beside your scripts reads the same players through the backend's
-`Input` property. LunyInput numbers its players from 0 with the host at 0, so a script's numbers 0
-and 1 are LunyInput's player 0 and a script's number 2 is LunyInput's player 1. The folder's
-`README.md` and its agent skill, `AgentSkills/lunyinput/SKILL.md`, show the C#.
+`LocalPlayer(n)` method, which returns the LunyInput player a script reads as `Input.ForPlayer(n)`.
+LunyInput numbers its players from 0 with the host at 0, so a script's numbers 0 and 1 are LunyInput's
+player 0 and a script's number 2 is LunyInput's player 1; `LocalPlayer(2)` does that arithmetic, and
+the backend's `Input` property is the `LocalInput` itself. The folder's `README.md` and its agent
+skill, `AgentSkills/lunyinput/SKILL.md`, show the C#.
 
 ```csharp
 On.Ready(Input.Pairing.Open());
