@@ -52,6 +52,7 @@ game runs.
 | `.InRadius(r, DiskPlane.XY)` | The same disk on the X and Y axes, for a 2D scene. `DiskPlane.YZ` is the third plane. |
 | `.InSphere(r)` | Spreads `SpawnAt` through a ball of radius `r`. |
 | `.InWorldSpace()` | Reads `SpawnAt` and its shape in world coordinates and axes. |
+| `.Lifetime(seconds)` | Returns each copy to the pool that much game time after its spawn. The last clause. |
 
 The copies live in the scene of the object that runs the script, under an inactive object named after
 the pool. When that scene unloads, the pool and every copy go with it.
@@ -79,6 +80,86 @@ written right after the despawn, in the same event, uses another copy.
 `Object.Destroy()` or `Object.Destroy(owned)` ends a pooled copy for good and takes it out of its pool,
 which can then make a new one in its place. `Despawn` works only on pooled copies; a fresh
 `Object.Create` copy ends with `Destroy`.
+
+## A copy that goes back after a time
+
+`Lifetime(seconds)` returns each copy to the pool once that much game time has passed since its
+spawn, the way `Object.Despawn()` returns it, so the copy needs no timer of its own. `Bolts` is a
+`Pool` property the script declares, `public Pool Bolts { get; private set; }`.
+
+<pre><code>Bolt = Bind.Prefab();
+Fire = Define.Message();
+Bolts = Define.Pool(nameof(Bolts)).From(Bolt).HardCap(16)
+    <strong>.Lifetime(1.5)</strong>;
+
+On.Message(Fire, Object.Spawn(Bolts));
+</code></pre>
+
+Each `Fire` spawns a bolt, and each bolt goes back to the pool 1.5 seconds later.
+
+- **The time is game time.** `Lifetime(1.5)` is seconds; `.Milliseconds()`, `.Minutes()` or
+  `.Hours()` after it names another unit. A paused game holds a lifetime, and a time scale stretches
+  it.
+- **The amount is read at each spawn.** A Number variable gives each copy the value it holds when the
+  spawn block runs.
+- **A copy that goes back earlier ends its lifetime there.** A despawn, a destroy or its spawner's end
+  returns it as before, and its next spawn counts a new lifetime.
+- **The return runs at the start of a frame**, before that frame's `On.Update`, and delivers
+  `On.Disabled` and then `On.Despawned`.
+- **The lifetime comes last.** `HardCap`, `Prewarm` and `SpawnAt` go before it, so
+  `.Lifetime(1).HardCap(4)` does not compile. A lifetime that is negative, not a number or infinite
+  writes one warning per script type and pool, and that copy goes back at the next frame.
+
+## Returning every copy at once
+
+`Object.DespawnAll(pool)` returns every copy of the pool that this script's object spawned and still
+owns. `Coins` is a `Pool` property the script declares, `public Pool Coins { get; private set; }`.
+
+<pre><code>Coin = Bind.Prefab();
+Restart = Define.Message();
+Refill = Define.Flag(nameof(Refill), false);
+Coins = Define.Pool(nameof(Coins)).From(Coin).HardCap(3).Prewarm(3);
+var spawnSet = Sequence(Object.Spawn(Coins).At(-2, 0.5, 0),
+    Object.Spawn(Coins).At(0, 0.5, 0), Object.Spawn(Coins).At(2, 0.5, 0));
+
+On.Ready(spawnSet);
+On.Message(Restart, <strong>Object.DespawnAll(Coins)</strong>, Refill.Set(true));
+On.LateUpdate(If(Refill).Then(Refill.Set(false), spawnSet));
+</code></pre>
+
+Each `Restart` puts the three coins back, and the next `On.LateUpdate` spawns a fresh set.
+
+- **Only the copies this object owns.** A copy another object spawned from the same pool, and one
+  spawned with `SurvivesCaller()`, stay out. When each player spawns its own shots, send every player
+  one event and let each run `Object.DespawnAll`.
+- **The copies go back after the event's blocks finish**, the way `Object.Despawn(owned)` returns one:
+  each copy's scripts run `On.Disabled` and then `On.Despawned`, and an owned object that held a copy
+  is empty from the next block on.
+- **A returned copy is free for spawns made after its return finished.** In an event the runner
+  dispatches, such as `On.Update` or an event another script sends, a spawn later in the same list
+  takes another copy or is refused at the hard cap. A message sent from C# with `Send` runs outside
+  that dispatch and returns the copies at once. Spawning the set again in a later call, here
+  `On.LateUpdate`, reuses the returned copies either way.
+
+## Whether a copy is ending
+
+`Object.IsEnding` is a condition: true from the moment this object's despawn or destroy is asked for
+until its scripts have ended.
+
+<pre><code>Ended = Define.Number(nameof(Ended), 0).Shared();
+
+On.TriggerEnter(Object.Despawn());
+On.Disabled(If(<strong>Object.IsEnding</strong>).Then(Ended.Inc()));
+</code></pre>
+
+- **A despawn or destroy takes effect after the event's blocks finish.** Blocks that run on the object
+  before then read `IsEnding` true: later blocks of the same list, the copy's own `On.Update` after its
+  spawner's `Object.DespawnAll` ran earlier in the frame, and a request another script sends it in the
+  same event.
+- **It is true in the `On.Disabled` and `On.Despawned` an end delivers**, so `Ended` counts ends. The
+  `On.Disabled` that `Object.Deactivate()` delivers reads it false.
+- **The last request counts.** A later `Object.Activate()` or `Object.Deactivate()` in the same event
+  replaces this script's own despawn or destroy, and `IsEnding` reads false again.
 
 ## Where a spawn goes
 
@@ -189,6 +270,7 @@ leave out.
 | *`.SpawnAt(position)`* | Where a spawn goes when the spawn itself names no place. |
 | *`.InRadius(r)`* | Spreads `SpawnAt` over a disk of radius `r`. |
 | *`.InSphere(r)`* | Spreads `SpawnAt` through a ball of radius `r`. |
+| *`.Lifetime(seconds)`* | Returns each copy that much game time after its spawn. The last clause. |
 | `Object.Spawn(pool)` | Takes one copy out of the pool. |
 | *`.At(position)`* | Places this spawn at `position`. Replaces the pool's `SpawnAt`. |
 | *`.At(position, rotation)`* | Places this spawn at `position` with `rotation`. |
@@ -204,6 +286,8 @@ leave out.
 | *`.SurvivesCaller()`* | Leaves the copy in the scene when this script's object ends. |
 | *`.As(operation)`* | Binds the spawn to an attempt. |
 | `Object.Despawn([owned])` | Returns this copy, or the copy `owned` holds, to its pool. |
+| `Object.DespawnAll(pool)` | Returns every copy of `pool` this object spawned and still owns. |
+| `Object.IsEnding` | A condition: this object's despawn or destroy is asked for and not done yet. |
 | `Object.Destroy([owned])` | Ends this copy, or the copy `owned` holds, for good. |
 
 ## What to read next
@@ -216,4 +300,5 @@ leave out.
   [`DefineFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.DefineFactory.html),
   [`ObjectLifetimeFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectLifetimeFactory.html),
   [`SpawnBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SpawnBuilder.html),
-  [`PoolBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.PoolBuilder.html).
+  [`PoolBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.PoolBuilder.html),
+  [`PoolLifetimeBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.PoolLifetimeBuilder.html).

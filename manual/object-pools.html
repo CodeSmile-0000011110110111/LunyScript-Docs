@@ -136,6 +136,10 @@ game runs.</p>
       <td><code class="language-plaintext highlighter-rouge">.InWorldSpace()</code></td>
       <td>Reads <code class="language-plaintext highlighter-rouge">SpawnAt</code> and its shape in world coordinates and axes.</td>
     </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">.Lifetime(seconds)</code></td>
+      <td>Returns each copy to the pool that much game time after its spawn. The last clause.</td>
+    </tr>
   </tbody>
 </table>
 
@@ -164,6 +168,92 @@ written right after the despawn, in the same event, uses another copy.</p>
 <p><code class="language-plaintext highlighter-rouge">Object.Destroy()</code> or <code class="language-plaintext highlighter-rouge">Object.Destroy(owned)</code> ends a pooled copy for good and takes it out of its pool,
 which can then make a new one in its place. <code class="language-plaintext highlighter-rouge">Despawn</code> works only on pooled copies; a fresh
 <code class="language-plaintext highlighter-rouge">Object.Create</code> copy ends with <code class="language-plaintext highlighter-rouge">Destroy</code>.</p>
+
+<h2 id="a-copy-that-goes-back-after-a-time">A copy that goes back after a time</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Lifetime(seconds)</code> returns each copy to the pool once that much game time has passed since its
+spawn, the way <code class="language-plaintext highlighter-rouge">Object.Despawn()</code> returns it, so the copy needs no timer of its own. <code class="language-plaintext highlighter-rouge">Bolts</code> is a
+<code class="language-plaintext highlighter-rouge">Pool</code> property the script declares, <code class="language-plaintext highlighter-rouge">public Pool Bolts { get; private set; }</code>.</p>
+
+<pre><code>Bolt = Bind.Prefab();
+Fire = Define.Message();
+Bolts = Define.Pool(nameof(Bolts)).From(Bolt).HardCap(16)
+    <strong>.Lifetime(1.5)</strong>;
+
+On.Message(Fire, Object.Spawn(Bolts));
+</code></pre>
+
+<p>Each <code class="language-plaintext highlighter-rouge">Fire</code> spawns a bolt, and each bolt goes back to the pool 1.5 seconds later.</p>
+
+<ul>
+  <li><strong>The time is game time.</strong> <code class="language-plaintext highlighter-rouge">Lifetime(1.5)</code> is seconds; <code class="language-plaintext highlighter-rouge">.Milliseconds()</code>, <code class="language-plaintext highlighter-rouge">.Minutes()</code> or
+<code class="language-plaintext highlighter-rouge">.Hours()</code> after it names another unit. A paused game holds a lifetime, and a time scale stretches
+it.</li>
+  <li><strong>The amount is read at each spawn.</strong> A Number variable gives each copy the value it holds when the
+spawn block runs.</li>
+  <li><strong>A copy that goes back earlier ends its lifetime there.</strong> A despawn, a destroy or its spawner’s end
+returns it as before, and its next spawn counts a new lifetime.</li>
+  <li><strong>The return runs at the start of a frame</strong>, before that frame’s <code class="language-plaintext highlighter-rouge">On.Update</code>, and delivers
+<code class="language-plaintext highlighter-rouge">On.Disabled</code> and then <code class="language-plaintext highlighter-rouge">On.Despawned</code>.</li>
+  <li><strong>The lifetime comes last.</strong> <code class="language-plaintext highlighter-rouge">HardCap</code>, <code class="language-plaintext highlighter-rouge">Prewarm</code> and <code class="language-plaintext highlighter-rouge">SpawnAt</code> go before it, so
+<code class="language-plaintext highlighter-rouge">.Lifetime(1).HardCap(4)</code> does not compile. A lifetime that is negative, not a number or infinite
+writes one warning per script type and pool, and that copy goes back at the next frame.</li>
+</ul>
+
+<h2 id="returning-every-copy-at-once">Returning every copy at once</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Object.DespawnAll(pool)</code> returns every copy of the pool that this script’s object spawned and still
+owns. <code class="language-plaintext highlighter-rouge">Coins</code> is a <code class="language-plaintext highlighter-rouge">Pool</code> property the script declares, <code class="language-plaintext highlighter-rouge">public Pool Coins { get; private set; }</code>.</p>
+
+<pre><code>Coin = Bind.Prefab();
+Restart = Define.Message();
+Refill = Define.Flag(nameof(Refill), false);
+Coins = Define.Pool(nameof(Coins)).From(Coin).HardCap(3).Prewarm(3);
+var spawnSet = Sequence(Object.Spawn(Coins).At(-2, 0.5, 0),
+    Object.Spawn(Coins).At(0, 0.5, 0), Object.Spawn(Coins).At(2, 0.5, 0));
+
+On.Ready(spawnSet);
+On.Message(Restart, <strong>Object.DespawnAll(Coins)</strong>, Refill.Set(true));
+On.LateUpdate(If(Refill).Then(Refill.Set(false), spawnSet));
+</code></pre>
+
+<p>Each <code class="language-plaintext highlighter-rouge">Restart</code> puts the three coins back, and the next <code class="language-plaintext highlighter-rouge">On.LateUpdate</code> spawns a fresh set.</p>
+
+<ul>
+  <li><strong>Only the copies this object owns.</strong> A copy another object spawned from the same pool, and one
+spawned with <code class="language-plaintext highlighter-rouge">SurvivesCaller()</code>, stay out. When each player spawns its own shots, send every player
+one event and let each run <code class="language-plaintext highlighter-rouge">Object.DespawnAll</code>.</li>
+  <li><strong>The copies go back after the event’s blocks finish</strong>, the way <code class="language-plaintext highlighter-rouge">Object.Despawn(owned)</code> returns one:
+each copy’s scripts run <code class="language-plaintext highlighter-rouge">On.Disabled</code> and then <code class="language-plaintext highlighter-rouge">On.Despawned</code>, and an owned object that held a copy
+is empty from the next block on.</li>
+  <li><strong>A returned copy is free for spawns made after its return finished.</strong> In an event the runner
+dispatches, such as <code class="language-plaintext highlighter-rouge">On.Update</code> or an event another script sends, a spawn later in the same list
+takes another copy or is refused at the hard cap. A message sent from C# with <code class="language-plaintext highlighter-rouge">Send</code> runs outside
+that dispatch and returns the copies at once. Spawning the set again in a later call, here
+<code class="language-plaintext highlighter-rouge">On.LateUpdate</code>, reuses the returned copies either way.</li>
+</ul>
+
+<h2 id="whether-a-copy-is-ending">Whether a copy is ending</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Object.IsEnding</code> is a condition: true from the moment this object’s despawn or destroy is asked for
+until its scripts have ended.</p>
+
+<pre><code>Ended = Define.Number(nameof(Ended), 0).Shared();
+
+On.TriggerEnter(Object.Despawn());
+On.Disabled(If(<strong>Object.IsEnding</strong>).Then(Ended.Inc()));
+</code></pre>
+
+<ul>
+  <li><strong>A despawn or destroy takes effect after the event’s blocks finish.</strong> Blocks that run on the object
+before then read <code class="language-plaintext highlighter-rouge">IsEnding</code> true: later blocks of the same list, the copy’s own <code class="language-plaintext highlighter-rouge">On.Update</code> after its
+spawner’s <code class="language-plaintext highlighter-rouge">Object.DespawnAll</code> ran earlier in the frame, and a request another script sends it in the
+same event.</li>
+  <li><strong>It is true in the <code class="language-plaintext highlighter-rouge">On.Disabled</code> and <code class="language-plaintext highlighter-rouge">On.Despawned</code> an end delivers</strong>, so <code class="language-plaintext highlighter-rouge">Ended</code> counts ends. The
+<code class="language-plaintext highlighter-rouge">On.Disabled</code> that <code class="language-plaintext highlighter-rouge">Object.Deactivate()</code> delivers reads it false.</li>
+  <li><strong>The last request counts.</strong> A later <code class="language-plaintext highlighter-rouge">Object.Activate()</code> or <code class="language-plaintext highlighter-rouge">Object.Deactivate()</code> in the same event
+replaces this script’s own despawn or destroy, and <code class="language-plaintext highlighter-rouge">IsEnding</code> reads false again.</li>
+</ul>
 
 <h2 id="where-a-spawn-goes">Where a spawn goes</h2>
 
@@ -334,6 +424,10 @@ leave out.</p>
       <td>Spreads <code class="language-plaintext highlighter-rouge">SpawnAt</code> through a ball of radius <code class="language-plaintext highlighter-rouge">r</code>.</td>
     </tr>
     <tr>
+      <td><em><code class="language-plaintext highlighter-rouge">.Lifetime(seconds)</code></em></td>
+      <td>Returns each copy that much game time after its spawn. The last clause.</td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">Object.Spawn(pool)</code></td>
       <td>Takes one copy out of the pool.</td>
     </tr>
@@ -394,6 +488,14 @@ leave out.</p>
       <td>Returns this copy, or the copy <code class="language-plaintext highlighter-rouge">owned</code> holds, to its pool.</td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.DespawnAll(pool)</code></td>
+      <td>Returns every copy of <code class="language-plaintext highlighter-rouge">pool</code> this object spawned and still owns.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Object.IsEnding</code></td>
+      <td>A condition: this object’s despawn or destroy is asked for and not done yet.</td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">Object.Destroy([owned])</code></td>
       <td>Ends this copy, or the copy <code class="language-plaintext highlighter-rouge">owned</code> holds, for good.</td>
     </tr>
@@ -411,7 +513,8 @@ prefab and scene inputs a pool reads, and operation handles.</li>
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.DefineFactory.html"><code class="language-plaintext highlighter-rouge">DefineFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectLifetimeFactory.html"><code class="language-plaintext highlighter-rouge">ObjectLifetimeFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SpawnBuilder.html"><code class="language-plaintext highlighter-rouge">SpawnBuilder</code></a>,
-<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.PoolBuilder.html"><code class="language-plaintext highlighter-rouge">PoolBuilder</code></a>.</li>
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.PoolBuilder.html"><code class="language-plaintext highlighter-rouge">PoolBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.PoolLifetimeBuilder.html"><code class="language-plaintext highlighter-rouge">PoolLifetimeBuilder</code></a>.</li>
 </ul>
 
   </div>
