@@ -125,7 +125,9 @@ Score = Bind.Number(nameof(Score)).Shared(MatchScript.Stores.MatchData);
 A store is the declaring script and its declared name, so two scripts that each declare their own
 `MatchData` hold two stores, and a misspelt store is a compile error. `Shared.Clear(MatchData)`
 resets one store to its declared defaults, and `Shared.Clear()` the default store. `Bind` always
-names a store, because a bound value is by definition one that another script declared.
+names a store, because a bound value is by definition one that another script declared. A data
+asset's values are shared the same way with `Bind.Data(schema).Shared()`; the
+[Custom data and files](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/custom-data-and-files.html) page has the rules.
 
 A `Vector3` and a text variable are shared the same way. Here a player publishes its position and a
 guard reacts when the player comes within 4 units of its post:

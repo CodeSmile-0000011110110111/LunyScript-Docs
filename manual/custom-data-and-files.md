@@ -88,6 +88,37 @@ with an error naming the input, when nothing is assigned, when the asset has no 
 that name or that schema, when the named field holds no number, or when the asset has two fields of
 the schema.
 
+## One copy for every script
+
+When many scripts read the same tuning, share one copy of it instead of copying each field into a
+`.Shared()` number. `LootStats` here is a `[LunyScriptData]` struct with a `GoldWeight` number and a
+`DropsGuns` flag, which an asset holds the way `WeaponAsset` holds `WeaponBalance` above. Every
+script that reads it declares the same line under the same name:
+
+<pre><code>LootTuning = <strong>Bind.Data(LootStats.Schema).Shared()</strong>;
+Gold = Define.Number(nameof(Gold), 0);
+On.Ready(If(<strong>LootTuning.DropsGuns</strong>.IsTrue())
+    .Then(Gold.Set(<strong>LootTuning.GoldWeight</strong>)));
+</code></pre>
+
+Assign the asset on one object, such as the session that runs the round, and leave the `LootTuning`
+field empty on the others, such as the loot prefab. The first object that spawns with an asset
+assigned copies it into the shared copy, before its `On.Ready`. `LootTuning.GoldWeight` is then one
+value every script reads and writes, as a `.Shared()` number is, and the asset keeps its values.
+Every object of a loaded scene spawns before any of them runs `On.Ready`, so they all read the
+asset's values there, whichever spawned first. An object that spawns before any object with an
+asset reads zero, false and empty text until one does.
+
+Every asset assigned to the copy holds the same values. An object whose asset holds other values
+does not start, and the error names the field and both values. The same asset, or another one with
+equal values, writes nothing, so a value a block changed stays changed. `Shared.Clear()` puts the
+copy back to the asset's values, and `.Shared(RunState)` places the copy on a store
+`Define.Store()` declared, as it does for a shared number.
+
+A shared copy holds numbers, `bool`, `string` and `Vector3` fields, and nested structs of those. A
+schema with another field type, such as a `Color`, is refused when the script type is built; give
+each object its own copy of it with `Bind.Data(schema)`.
+
 ## Files
 
 A file is read when the load that names it runs, and never before:
@@ -191,6 +222,8 @@ writes one into the object's renderer.
   not save that type's components. Store such values as number fields. A `Vector3`, `Vector2` or
   `Color` field is saved.
 - A text or JSON load reads a file; it cannot read a `TextAsset` assigned in the Inspector.
+- A shared copy is filled once per Play session and has no JSON form. A later scene that assigns an
+  asset with other values to the same copy does not start those objects.
 
 The `DataInputs` scene in `ApiExamples` shows every call on this page, and the `Colors` scene shows
 a colour saved in a team asset.

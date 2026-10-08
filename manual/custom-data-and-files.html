@@ -145,6 +145,37 @@ with an error naming the input, when nothing is assigned, when the asset has no 
 that name or that schema, when the named field holds no number, or when the asset has two fields of
 the schema.</p>
 
+<h2 id="one-copy-for-every-script">One copy for every script</h2>
+
+<p>When many scripts read the same tuning, share one copy of it instead of copying each field into a
+<code class="language-plaintext highlighter-rouge">.Shared()</code> number. <code class="language-plaintext highlighter-rouge">LootStats</code> here is a <code class="language-plaintext highlighter-rouge">[LunyScriptData]</code> struct with a <code class="language-plaintext highlighter-rouge">GoldWeight</code> number and a
+<code class="language-plaintext highlighter-rouge">DropsGuns</code> flag, which an asset holds the way <code class="language-plaintext highlighter-rouge">WeaponAsset</code> holds <code class="language-plaintext highlighter-rouge">WeaponBalance</code> above. Every
+script that reads it declares the same line under the same name:</p>
+
+<pre><code>LootTuning = <strong>Bind.Data(LootStats.Schema).Shared()</strong>;
+Gold = Define.Number(nameof(Gold), 0);
+On.Ready(If(<strong>LootTuning.DropsGuns</strong>.IsTrue())
+    .Then(Gold.Set(<strong>LootTuning.GoldWeight</strong>)));
+</code></pre>
+
+<p>Assign the asset on one object, such as the session that runs the round, and leave the <code class="language-plaintext highlighter-rouge">LootTuning</code>
+field empty on the others, such as the loot prefab. The first object that spawns with an asset
+assigned copies it into the shared copy, before its <code class="language-plaintext highlighter-rouge">On.Ready</code>. <code class="language-plaintext highlighter-rouge">LootTuning.GoldWeight</code> is then one
+value every script reads and writes, as a <code class="language-plaintext highlighter-rouge">.Shared()</code> number is, and the asset keeps its values.
+Every object of a loaded scene spawns before any of them runs <code class="language-plaintext highlighter-rouge">On.Ready</code>, so they all read the
+asset’s values there, whichever spawned first. An object that spawns before any object with an
+asset reads zero, false and empty text until one does.</p>
+
+<p>Every asset assigned to the copy holds the same values. An object whose asset holds other values
+does not start, and the error names the field and both values. The same asset, or another one with
+equal values, writes nothing, so a value a block changed stays changed. <code class="language-plaintext highlighter-rouge">Shared.Clear()</code> puts the
+copy back to the asset’s values, and <code class="language-plaintext highlighter-rouge">.Shared(RunState)</code> places the copy on a store
+<code class="language-plaintext highlighter-rouge">Define.Store()</code> declared, as it does for a shared number.</p>
+
+<p>A shared copy holds numbers, <code class="language-plaintext highlighter-rouge">bool</code>, <code class="language-plaintext highlighter-rouge">string</code> and <code class="language-plaintext highlighter-rouge">Vector3</code> fields, and nested structs of those. A
+schema with another field type, such as a <code class="language-plaintext highlighter-rouge">Color</code>, is refused when the script type is built; give
+each object its own copy of it with <code class="language-plaintext highlighter-rouge">Bind.Data(schema)</code>.</p>
+
 <h2 id="files">Files</h2>
 
 <p>A file is read when the load that names it runs, and never before:</p>
@@ -261,6 +292,8 @@ writes one into the object’s renderer.</p>
 not save that type’s components. Store such values as number fields. A <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code> or
 <code class="language-plaintext highlighter-rouge">Color</code> field is saved.</li>
   <li>A text or JSON load reads a file; it cannot read a <code class="language-plaintext highlighter-rouge">TextAsset</code> assigned in the Inspector.</li>
+  <li>A shared copy is filled once per Play session and has no JSON form. A later scene that assigns an
+asset with other values to the same copy does not start those objects.</li>
 </ul>
 
 <p>The <code class="language-plaintext highlighter-rouge">DataInputs</code> scene in <code class="language-plaintext highlighter-rouge">ApiExamples</code> shows every call on this page, and the <code class="language-plaintext highlighter-rouge">Colors</code> scene shows
