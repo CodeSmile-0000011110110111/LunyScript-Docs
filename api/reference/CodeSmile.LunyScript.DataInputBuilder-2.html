@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_DataInputBuilder_2" data-uid="CodeSmile.LunyScript.DataInputBuilder`2" class="text-break">
-Struct DataInputBuilder&lt;TValue, THandle&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L96"><i class="bi bi-code-slash"></i></a>
+Struct DataInputBuilder&lt;TValue, THandle&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L101"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -119,7 +119,8 @@ that schema.</p>
 
   <h2 id="CodeSmile_LunyScript_DataInputBuilder_2_examples">Examples</h2>
   <pre><code class="lang-csharp">Balance = Bind.Data(WeaponStats.Schema);
-StatsFile = Bind.Data(WeaponStats.Schema).FromStreamingAssets("weapon.json");</code></pre>
+StatsFile = Bind.Data(WeaponStats.Schema).FromStreamingAssets("weapon.json");
+LootTuning = Bind.Data(LootStats.Schema).Shared();</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_DataInputBuilder_2_remarks">Remarks</h2>
@@ -132,6 +133,10 @@ placeholder.</p>
     <b><code>FromStreamingAssets</code>, <code>FromUserData</code> and <code>FromTemp</code> name a JSON file instead</b>, which
     <code>Asset.Load(file).Into(data)</code> reads into a <code>Define.Data</code> of the same schema.
 </p>
+<p>
+    <b><code>Shared()</code> makes it one copy every script reads</b>: the first object that spawns with an asset
+    assigned fills it, and an object may leave its field empty.
+</p>
 </div>
 
 
@@ -143,7 +148,7 @@ placeholder.</p>
 
   <h3 id="CodeSmile_LunyScript_DataInputBuilder_2_As_System_String_" data-uid="CodeSmile.LunyScript.DataInputBuilder`2.As(System.String)">
   As(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L151"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L202"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares the Inspector input under an explicit name.</p>
@@ -202,7 +207,7 @@ already.</p>
 
   <h3 id="CodeSmile_LunyScript_DataInputBuilder_2_FromStreamingAssets_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DataInputBuilder`2.FromStreamingAssets(System.String,System.String,System.Int32)">
   FromStreamingAssets(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L116"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L121"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Names a JSON file packaged with the build, under <code>Application.streamingAssetsPath</code>.</p>
@@ -272,7 +277,7 @@ already.</p>
 
   <h3 id="CodeSmile_LunyScript_DataInputBuilder_2_FromTemp_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DataInputBuilder`2.FromTemp(System.String,System.String,System.Int32)">
   FromTemp(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L140"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L145"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Names a JSON file under <code>Application.temporaryCachePath</code>, which the platform may clear.</p>
@@ -342,7 +347,7 @@ already.</p>
 
   <h3 id="CodeSmile_LunyScript_DataInputBuilder_2_FromUserData_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DataInputBuilder`2.FromUserData(System.String,System.String,System.Int32)">
   FromUserData(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L128"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L133"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Names a JSON file under <code>Application.persistentDataPath</code>, which survives between runs.</p>
@@ -408,6 +413,147 @@ already.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_DataInputBuilder_2_Shared_" data-uid="CodeSmile.LunyScript.DataInputBuilder`2.Shared*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DataInputBuilder_2_Shared_CodeSmile_LunyScript_Store_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DataInputBuilder`2.Shared(CodeSmile.LunyScript.Store,System.String,System.Int32)">
+  Shared(Store, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L186"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Makes this one copy on a declared store: this script's own, or another script's through its generated
+descriptor such as <code>SessionScript.Stores.RunState</code>. <code>Shared.Clear(store)</code> restores the asset's
+values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SharedDataInputBuilder&lt;TValue, THandle&gt; Shared(Store store, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Store.html">Store</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>store</code></dt></td>
+    <td style="width: 99%"><dd><p>The store <code>Define.Store()</code> declared.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SharedDataInputBuilder-2.html">SharedDataInputBuilder</a>&lt;TValue, THandle&gt;</dt>
+    <dd><p>The shared declaration; assigning it declares the copy.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DataInputBuilder_2_Shared_CodeSmile_LunyScript_Store_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">WaveTuning = Bind.Data(WaveStats.Schema).Shared(SessionScript.Stores.RunState);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>The store was never declared or has no name yet.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_DataInputBuilder_2_Shared_" data-uid="CodeSmile.LunyScript.DataInputBuilder`2.Shared*"></a>
+
+  <h3 id="CodeSmile_LunyScript_DataInputBuilder_2_Shared_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.DataInputBuilder`2.Shared(System.String,System.Int32)">
+  Shared(string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L172"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Makes this one copy on the default shared store, which every script that declares
+<code>Bind.Data(schema).Shared()</code> under the same name reads and writes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SharedDataInputBuilder&lt;TValue, THandle&gt; Shared(string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SharedDataInputBuilder-2.html">SharedDataInputBuilder</a>&lt;TValue, THandle&gt;</dt>
+    <dd><p>The shared declaration; assigning it declares the copy.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DataInputBuilder_2_Shared_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">LootTuning = Bind.Data(LootStats.Schema).Shared();
+On.Ready(Gold.Set(LootTuning.GoldWeight));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_DataInputBuilder_2_Shared_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>The first object that spawns with an asset assigned fills the copy</b>, before its <code>On.Ready</code>, and
+the asset's values are the copy's defaults, which <code>Shared.Clear()</code> restores, for as long as the runner
+runs. An object may leave its field empty and reads the copy; until an object with an asset spawned, the
+fields hold zero, false, empty text and the zero vector. An object whose asset holds other values is
+refused, with an error naming the field and both values; an object with the same asset, or one with equal
+values, writes nothing. The schema's fields are numbers, <code>bool</code>, <code>string</code> and <code>Vector3</code>,
+the kinds a shared store holds.</p>
+</div>
+
+
+
+
   <h2 class="section" id="operators">Operators
 </h2>
 
@@ -416,7 +562,7 @@ already.</p>
 
   <h3 id="CodeSmile_LunyScript_DataInputBuilder_2_op_Implicit_CodeSmile_LunyScript_DataInputBuilder__0__1____1" data-uid="CodeSmile.LunyScript.DataInputBuilder`2.op_Implicit(CodeSmile.LunyScript.DataInputBuilder{`0,`1})~`1">
   implicit operator THandle(DataInputBuilder&lt;TValue, THandle&gt;)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L157"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L208"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Declares the Inspector input, named by the generated property the line assigns it to.</p>
@@ -468,7 +614,7 @@ already.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L96" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Data/DataBuilders.cs/#L101" class="edit-link">Edit this page</a>
         </div>
 
 
