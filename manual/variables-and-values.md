@@ -161,6 +161,42 @@ Inspector.
 `Assets/CodeSmile/LunyScript/ApiExamples/Perception.unity` runs this with two guards that chase the
 player.
 
+## Putting variables back to their declared values
+
+A restart usually writes every variable of a run back to the value it started from. Declare a group,
+end the Define line of each run variable with `.In(group)`, and one `Reset(group)` block writes all
+of them back to the values their Define lines declared:
+
+<pre><code><strong>RunState = Define.Group()</strong>;
+Health = Define.Number(nameof(Health), 100)<strong>.In(RunState)</strong>;
+Gold = Define.Number(nameof(Gold))<strong>.In(RunState)</strong>;
+Down = Define.Flag(nameof(Down))<strong>.In(RunState)</strong>;
+Status = Define.Text(nameof(Status))<strong>.In(RunState)</strong>;
+BestWave = Define.Number(nameof(BestWave));
+Restart = Define.Message();
+
+On.Message(Restart, <strong>Reset(RunState)</strong>);
+</code></pre>
+
+`Reset(RunState)` sets `Health` to 100, `Gold` to 0, `Down` to false and `Status` to empty.
+`BestWave` is not in the group, so it keeps its value. A Number, Flag, `Vector3`, `Vector2`, `Color`
+or enum goes back to its Define line's default, a `Rotation` to its default or the identity, and a
+text to empty, because a text declares no start value.
+
+- Every Define line of a variable the object keeps for itself takes `.In(group)`: `Define.Number`,
+  `Flag`, `Text` with or without a byte count or `.Allocating(maxBytes)`, `Vector3`, `Vector2`,
+  `Rotation`, `Color` and `Enum`. `.In` ends the line, so a variable is in one group. A `.Shared()`
+  variable has no `.In`; `Shared.Clear(store)` resets a store.
+- `Reset` writes the variables of the object the block runs on. Every other object running the
+  script keeps its own values; another script resets them by sending that object an event or a
+  message whose handler runs `Reset`.
+- The writes are the ones `Set` makes, so `When.Var(x).Changed` sees each change the next time it
+  polls, and the debugger names the `Reset` block as the variable's last writer.
+- A group belongs to the script that declares it, and a script derived from it uses the same group.
+  A local names its group with `Define.Group().As("WaveState")`.
+- A `Reset` of a group no variable is in is refused when `Build()` ends, and so is a
+  `Define.Group()` line that never gets a name.
+
 ## Writing a variable
 
 ```csharp
@@ -403,7 +439,9 @@ Define.Text(name, capacity)             [ .Shared() | .Shared(store) ]     // fi
 Define.Vector3(name [ , defaultValue ])    [ .Shared() | .Shared(store) ]
 Define.Vector2(name [ , defaultValue ])
 Define.Rotation(name [ , defaultValue ])
+Define.Color(name [ , defaultValue ])
 Define.Enum<T>(name, defaultValue)
+// .In(group) ends any Define line above that has no .Shared()
 Var.Define<T>(name [ , defaultValue ])
 Var.DefineText(name)                    // grows
 Var.DefineText(name, capacity)          // fixed
@@ -415,6 +453,8 @@ Bind.Text(name)                         { .Shared() | .Shared(store) }     // gr
 Bind.Text(name, capacity)               { .Shared() | .Shared(store) }     // fixed
 Define.Store()                          // store, for .Shared(store)
 Shared.Clear([ store ])
+Define.Group()                          // group, for .In(group)
+Reset(group)
 ```
 
 `Var.Define*` declares the same things; `Var.Define<Number>` returns a handle that converts to `Number`,

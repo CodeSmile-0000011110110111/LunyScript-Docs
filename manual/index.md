@@ -27,7 +27,8 @@ links to the next page and to the generated
 ## Values and state
 
 - [Variables and values](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/variables-and-values.html) — numbers, flags,
-  text, vectors and rotations, the arithmetic on them, and how two objects share one value.
+  text, vectors and rotations, the arithmetic on them, how two objects share one value, and how one
+  block puts a group of them back to their declared values.
 - [Lists and maps](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/lists-and-maps.html) — fixed-capacity collections
   and the loop that visits them.
 - [Random numbers](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/random-numbers.html) — named streams that produce

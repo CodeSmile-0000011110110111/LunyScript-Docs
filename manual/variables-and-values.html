@@ -7,8 +7,8 @@
 <meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="Variables and values" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Numbers, flags, text, vectors and rotations, the arithmetic on them, and how two objects share one value." />
-<meta name="twitter:description" property="og:description" content="Numbers, flags, text, vectors and rotations, the arithmetic on them, and how two objects share one value." />
+<meta name="description" content="Numbers, flags, text, vectors and rotations, the arithmetic on them, how two objects share one value, and how one block puts a group of them back to their declared values." />
+<meta name="twitter:description" property="og:description" content="Numbers, flags, text, vectors and rotations, the arithmetic on them, how two objects share one value, and how one block puts a group of them back to their declared values." />
 <link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/variables-and-values.html" />
 <meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/variables-and-values.html" />
 <meta property="og:site_name" content="LunyScript Docs" />
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Variables and values" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Numbers, flags, text, vectors and rotations, the arithmetic on them, and how two objects share one value.","headline":"Variables and values","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/variables-and-values.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Numbers, flags, text, vectors and rotations, the arithmetic on them, how two objects share one value, and how one block puts a group of them back to their declared values.","headline":"Variables and values","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/variables-and-values.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
     Override of minima 2.5's stock head.html. Identical to it apart from the include and the
@@ -248,6 +248,44 @@ shows a <code class="language-plaintext highlighter-rouge">MonoBehaviour</code> 
 Inspector.
 <code class="language-plaintext highlighter-rouge">Assets/CodeSmile/LunyScript/ApiExamples/Perception.unity</code> runs this with two guards that chase the
 player.</p>
+
+<h2 id="putting-variables-back-to-their-declared-values">Putting variables back to their declared values</h2>
+
+<p>A restart usually writes every variable of a run back to the value it started from. Declare a group,
+end the Define line of each run variable with <code class="language-plaintext highlighter-rouge">.In(group)</code>, and one <code class="language-plaintext highlighter-rouge">Reset(group)</code> block writes all
+of them back to the values their Define lines declared:</p>
+
+<pre><code><strong>RunState = Define.Group()</strong>;
+Health = Define.Number(nameof(Health), 100)<strong>.In(RunState)</strong>;
+Gold = Define.Number(nameof(Gold))<strong>.In(RunState)</strong>;
+Down = Define.Flag(nameof(Down))<strong>.In(RunState)</strong>;
+Status = Define.Text(nameof(Status))<strong>.In(RunState)</strong>;
+BestWave = Define.Number(nameof(BestWave));
+Restart = Define.Message();
+
+On.Message(Restart, <strong>Reset(RunState)</strong>);
+</code></pre>
+
+<p><code class="language-plaintext highlighter-rouge">Reset(RunState)</code> sets <code class="language-plaintext highlighter-rouge">Health</code> to 100, <code class="language-plaintext highlighter-rouge">Gold</code> to 0, <code class="language-plaintext highlighter-rouge">Down</code> to false and <code class="language-plaintext highlighter-rouge">Status</code> to empty.
+<code class="language-plaintext highlighter-rouge">BestWave</code> is not in the group, so it keeps its value. A Number, Flag, <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code>, <code class="language-plaintext highlighter-rouge">Color</code>
+or enum goes back to its Define line’s default, a <code class="language-plaintext highlighter-rouge">Rotation</code> to its default or the identity, and a
+text to empty, because a text declares no start value.</p>
+
+<ul>
+  <li>Every Define line of a variable the object keeps for itself takes <code class="language-plaintext highlighter-rouge">.In(group)</code>: <code class="language-plaintext highlighter-rouge">Define.Number</code>,
+<code class="language-plaintext highlighter-rouge">Flag</code>, <code class="language-plaintext highlighter-rouge">Text</code> with or without a byte count or <code class="language-plaintext highlighter-rouge">.Allocating(maxBytes)</code>, <code class="language-plaintext highlighter-rouge">Vector3</code>, <code class="language-plaintext highlighter-rouge">Vector2</code>,
+<code class="language-plaintext highlighter-rouge">Rotation</code>, <code class="language-plaintext highlighter-rouge">Color</code> and <code class="language-plaintext highlighter-rouge">Enum</code>. <code class="language-plaintext highlighter-rouge">.In</code> ends the line, so a variable is in one group. A <code class="language-plaintext highlighter-rouge">.Shared()</code>
+variable has no <code class="language-plaintext highlighter-rouge">.In</code>; <code class="language-plaintext highlighter-rouge">Shared.Clear(store)</code> resets a store.</li>
+  <li><code class="language-plaintext highlighter-rouge">Reset</code> writes the variables of the object the block runs on. Every other object running the
+script keeps its own values; another script resets them by sending that object an event or a
+message whose handler runs <code class="language-plaintext highlighter-rouge">Reset</code>.</li>
+  <li>The writes are the ones <code class="language-plaintext highlighter-rouge">Set</code> makes, so <code class="language-plaintext highlighter-rouge">When.Var(x).Changed</code> sees each change the next time it
+polls, and the debugger names the <code class="language-plaintext highlighter-rouge">Reset</code> block as the variable’s last writer.</li>
+  <li>A group belongs to the script that declares it, and a script derived from it uses the same group.
+A local names its group with <code class="language-plaintext highlighter-rouge">Define.Group().As("WaveState")</code>.</li>
+  <li>A <code class="language-plaintext highlighter-rouge">Reset</code> of a group no variable is in is refused when <code class="language-plaintext highlighter-rouge">Build()</code> ends, and so is a
+<code class="language-plaintext highlighter-rouge">Define.Group()</code> line that never gets a name.</li>
+</ul>
 
 <h2 id="writing-a-variable">Writing a variable</h2>
 
@@ -525,7 +563,9 @@ declarations are above.</p>
 <span class="n">Define</span><span class="p">.</span><span class="nf">Vector3</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>    <span class="p">[</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">]</span>
 <span class="n">Define</span><span class="p">.</span><span class="nf">Vector2</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
 <span class="n">Define</span><span class="p">.</span><span class="nf">Rotation</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Color</span><span class="p">(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
 <span class="n">Define</span><span class="p">.</span><span class="n">Enum</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultValue</span><span class="p">)</span>
+<span class="c1">// .In(group) ends any Define line above that has no .Shared()</span>
 <span class="n">Var</span><span class="p">.</span><span class="n">Define</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;(</span><span class="n">name</span> <span class="p">[</span> <span class="p">,</span> <span class="n">defaultValue</span> <span class="p">])</span>
 <span class="n">Var</span><span class="p">.</span><span class="nf">DefineText</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>                    <span class="c1">// grows</span>
 <span class="n">Var</span><span class="p">.</span><span class="nf">DefineText</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>          <span class="c1">// fixed</span>
@@ -537,6 +577,8 @@ declarations are above.</p>
 <span class="n">Bind</span><span class="p">.</span><span class="nf">Text</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">capacity</span><span class="p">)</span>               <span class="p">{</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">()</span> <span class="p">|</span> <span class="p">.</span><span class="nf">Shared</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="p">}</span>     <span class="c1">// fixed</span>
 <span class="n">Define</span><span class="p">.</span><span class="nf">Store</span><span class="p">()</span>                          <span class="c1">// store, for .Shared(store)</span>
 <span class="n">Shared</span><span class="p">.</span><span class="nf">Clear</span><span class="p">([</span> <span class="n">store</span> <span class="p">])</span>
+<span class="n">Define</span><span class="p">.</span><span class="nf">Group</span><span class="p">()</span>                          <span class="c1">// group, for .In(group)</span>
+<span class="nf">Reset</span><span class="p">(</span><span class="k">group</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p><code class="language-plaintext highlighter-rouge">Var.Define*</code> declares the same things; <code class="language-plaintext highlighter-rouge">Var.Define&lt;Number&gt;</code> returns a handle that converts to <code class="language-plaintext highlighter-rouge">Number</code>,
