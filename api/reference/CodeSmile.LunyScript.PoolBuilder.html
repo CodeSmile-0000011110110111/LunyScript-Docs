@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Struct PoolBuilder | LunyScript API Reference ">
       
-      <meta name="description" content="What Define.Pool(name).From(prefab) returns: a pool declaration that converts to its  handle, or takes a hard cap, a prewarm count and a default placement first.">
+      <meta name="description" content="What Define.Pool(name).From(prefab) returns: a pool declaration that converts to its  handle, or takes a hard cap, a prewarm count, a default placement and a lifetime first.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_PoolBuilder" data-uid="CodeSmile.LunyScript.PoolBuilder" class="text-break">
-Struct PoolBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L166"><i class="bi bi-code-slash"></i></a>
+Struct PoolBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L188"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -86,7 +86,7 @@ Struct PoolBuilder  <a class="header-action link-secondary" title="View source" 
   </div>
 
   <div class="markdown summary"><p>What <code>Define.Pool(name).From(prefab)</code> returns: a pool declaration that converts to its
-<a class="xref" href="CodeSmile.LunyScript.Pool.html">Pool</a> handle, or takes a hard cap, a prewarm count and a default placement first.</p>
+<a class="xref" href="CodeSmile.LunyScript.Pool.html">Pool</a> handle, or takes a hard cap, a prewarm count, a default placement and a lifetime first.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -132,7 +132,7 @@ from a use and never creates an object outside itself.</p>
 
   <h3 id="CodeSmile_LunyScript_PoolBuilder_HardCap_System_Int32_" data-uid="CodeSmile.LunyScript.PoolBuilder.HardCap(System.Int32)">
   HardCap(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L178"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L200"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The most entries the pool may hold, idle and in use together.</p>
@@ -187,11 +187,89 @@ already names one, or this builder is a <code>default</code>.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_PoolBuilder_Lifetime_" data-uid="CodeSmile.LunyScript.PoolBuilder.Lifetime*"></a>
+
+  <h3 id="CodeSmile_LunyScript_PoolBuilder_Lifetime_CodeSmile_LunyScript_NumberValueBlock_" data-uid="CodeSmile.LunyScript.PoolBuilder.Lifetime(CodeSmile.LunyScript.NumberValueBlock)">
+  Lifetime(NumberValueBlock)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L237"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How long each use of this pool lasts: once this amount of game time has passed since its checkout,
+the use goes back to the pool the way <code>Object.Despawn()</code> returns it. Seconds unless a unit call
+follows.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public PoolLifetimeBuilder Lifetime(NumberValueBlock amount)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>amount</code></dt></td>
+    <td style="width: 99%"><dd><p>How long a use lasts, such as <code>1.5</code> or a Number variable.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.PoolLifetimeBuilder.html">PoolLifetimeBuilder</a></dt>
+    <dd><p>The declaration with its lifetime in seconds, which converts to the pool handle, or takes one of
+<code>Seconds</code>, <code>Milliseconds</code>, <code>Minutes</code> and <code>Hours</code>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_PoolBuilder_Lifetime_CodeSmile_LunyScript_NumberValueBlock__examples">Examples</h4>
+  <pre><code class="lang-csharp">Shots = Define.Pool(nameof(Shots)).From(Shot).HardCap(32).Lifetime(1.5);</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_PoolBuilder_Lifetime_CodeSmile_LunyScript_NumberValueBlock__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The amount is evaluated where each spawn block runs, as <code>SpawnAt</code> is, so a Number variable gives each
+use the value it holds then. A use that goes back earlier, by a despawn, a destroy or its owner's end, ends
+its lifetime there, and the next use of the same object counts its own. A paused game clock holds a
+lifetime and a time scale stretches it. The return runs at the start of the first frame update whose game
+time has reached the end, before any script's <code>On.Update</code> in that frame, and every script on the use
+runs <code>On.Disabled</code> and then <code>On.Despawned</code>.</p>
+<p>
+    An amount that is negative, not a number or infinite is reported once per script type and pool, and
+    that use goes back at the next frame update, as it does with <code>Lifetime(0)</code>.
+</p>
+<p>
+    <b>The lifetime is the last clause of a pool declaration</b>: <code>HardCap</code>, <code>Prewarm</code> and
+    <code>SpawnAt</code> come before it.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p><code class="paramref">amount</code> is null, or this builder is a
+<code>default</code>.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_LunyScript_PoolBuilder_Prewarm_" data-uid="CodeSmile.LunyScript.PoolBuilder.Prewarm*"></a>
 
   <h3 id="CodeSmile_LunyScript_PoolBuilder_Prewarm_System_Int32_" data-uid="CodeSmile.LunyScript.PoolBuilder.Prewarm(System.Int32)">
   Prewarm(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L188"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L210"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many inactive entries the pool prepares when its storage is created in a scene, which
@@ -252,7 +330,7 @@ the declaration converts to its handle.</p>
 
   <h3 id="CodeSmile_LunyScript_PoolBuilder_SpawnAt_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_" data-uid="CodeSmile.LunyScript.PoolBuilder.SpawnAt(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock)">
   SpawnAt(NumberValueBlock, NumberValueBlock, NumberValueBlock)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L216"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L266"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Where a spawn from this pool goes when the call names no <code>At</code>: a position given as three
@@ -328,7 +406,7 @@ and Z, evaluated where each spawn block runs.</p>
 
   <h3 id="CodeSmile_LunyScript_PoolBuilder_SpawnAt_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_RotationValueBlock_" data-uid="CodeSmile.LunyScript.PoolBuilder.SpawnAt(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.RotationValueBlock)">
   SpawnAt(NumberValueBlock, NumberValueBlock, NumberValueBlock, RotationValueBlock)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L252"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L302"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Where a spawn from this pool goes when the call names no <code>At</code>: a position given as three
@@ -410,7 +488,7 @@ position's X, Y and Z.</p>
 
   <h3 id="CodeSmile_LunyScript_PoolBuilder_SpawnAt_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.PoolBuilder.SpawnAt(CodeSmile.LunyScript.ObjectBinding,System.String,System.Int32)">
   SpawnAt(ObjectBinding, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L271"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L321"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Where a spawn from this pool goes when the call names no <code>At</code>: on a landmark, at its
@@ -482,7 +560,7 @@ script's <code>Build()</code> declared it, or it is declared as a type with no p
 
   <h3 id="CodeSmile_LunyScript_PoolBuilder_SpawnAt_CodeSmile_LunyScript_Vector3ValueBlock_" data-uid="CodeSmile.LunyScript.PoolBuilder.SpawnAt(CodeSmile.LunyScript.Vector3ValueBlock)">
   SpawnAt(Vector3ValueBlock)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L247"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Where a spawn from this pool goes when the call names no <code>At</code>: a position, turned the
@@ -542,7 +620,7 @@ a <code>default</code>.</p>
 
   <h3 id="CodeSmile_LunyScript_PoolBuilder_SpawnAt_CodeSmile_LunyScript_Vector3ValueBlock_CodeSmile_LunyScript_RotationValueBlock_" data-uid="CodeSmile.LunyScript.PoolBuilder.SpawnAt(CodeSmile.LunyScript.Vector3ValueBlock,CodeSmile.LunyScript.RotationValueBlock)">
   SpawnAt(Vector3ValueBlock, RotationValueBlock)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L231"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L281"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Where a spawn from this pool goes when the call names no <code>At</code>: a position and a
@@ -612,7 +690,7 @@ rotation.</p>
 
   <h3 id="CodeSmile_LunyScript_PoolBuilder_op_Implicit_CodeSmile_LunyScript_PoolBuilder__CodeSmile_LunyScript_Pool" data-uid="CodeSmile.LunyScript.PoolBuilder.op_Implicit(CodeSmile.LunyScript.PoolBuilder)~CodeSmile.LunyScript.Pool">
   implicit operator Pool(PoolBuilder)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L287"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L337"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finishes the declaration.</p>
@@ -668,7 +746,7 @@ hard cap, or <code class="paramref">builder</code> is a <code>default</code>.</p
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L166" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Objects/PoolBuilders.cs/#L188" class="edit-link">Edit this page</a>
         </div>
 
 
