@@ -217,6 +217,293 @@ assigned, or this factory was not obtained inside <code>Build()</code>.</p>
 
 
 
+  <a id="CodeSmile_LunyScript_ViewFactory_SplitScreen_" data-uid="CodeSmile.LunyScript.ViewFactory.SplitScreen*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ViewFactory_SplitScreen_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ViewFactory.SplitScreen(CodeSmile.LunyScript.ObjectBinding,CodeSmile.LunyScript.ObjectBinding,CodeSmile.LunyScript.ObjectBinding,CodeSmile.LunyScript.ObjectBinding,System.String,System.Int32)">
+  SplitScreen(ObjectBinding, ObjectBinding, ObjectBinding, ObjectBinding, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/View/ViewFactory.cs/#L155"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a split screen of four views for local players 1 to 4, laid out from the players who are
+paired.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SplitScreenBuilder SplitScreen(ObjectBinding view1, ObjectBinding view2, ObjectBinding view3, ObjectBinding view4, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>view1</code></dt></td>
+    <td style="width: 99%"><dd><p>Local player 1's view, the host's: an object input holding a Camera.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>view2</code></dt></td>
+    <td style="width: 99%"><dd><p>Local player 2's view.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>view3</code></dt></td>
+    <td style="width: 99%"><dd><p>Local player 3's view.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>view4</code></dt></td>
+    <td style="width: 99%"><dd><p>Local player 4's view.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SplitScreenBuilder.html">SplitScreenBuilder</a></dt>
+    <dd><p>A builder that converts to the block and takes <a class="xref" href="CodeSmile.LunyScript.SplitScreenBuilder.html#CodeSmile_LunyScript_SplitScreenBuilder_Within_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_">Within(NumberValueBlock, NumberValueBlock, NumberValueBlock, NumberValueBlock)</a>
+and <a class="xref" href="CodeSmile.LunyScript.SplitScreenBuilder.html#CodeSmile_LunyScript_SplitScreenBuilder_Shared_CodeSmile_LunyScript_ObjectBinding_">Shared(ObjectBinding)</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ViewFactory_SplitScreen_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(View.SplitScreen(View1, View2, View3, View4));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ViewFactory_SplitScreen_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><b>The layout.</b> View <code>n</code> is local player <code>n</code>'s: the first is the host's, local player 1,
+whom local player 0 also names, and the others are guests 2 to 4. A player is in while
+<code>Input.ForPlayer(n).IsPaired</code> reads true, so a player whose controller is lost keeps the view.
+With nobody in, the shared view <a class="xref" href="CodeSmile.LunyScript.SplitScreenBuilder.html#CodeSmile_LunyScript_SplitScreenBuilder_Shared_CodeSmile_LunyScript_ObjectBinding_">Shared(ObjectBinding)</a> names covers the area, or the
+first view without one. One player in takes the whole area. Two players take the top half, the lower
+number, and the bottom half. Three or four players take the quarter of their number: 1 top left, 2 top
+right, 3 bottom left, 4 bottom right, and with three in the shared view takes the quarter nobody
+holds. Every view with no share gets a viewport of zero width and height, which Unity does not
+render. The area is the whole screen unless <a class="xref" href="CodeSmile.LunyScript.SplitScreenBuilder.html#CodeSmile_LunyScript_SplitScreenBuilder_Within_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_">Within(NumberValueBlock, NumberValueBlock, NumberValueBlock, NumberValueBlock)</a>
+names a part of it.</p>
+<p>
+    <b>When.</b> Running the block writes the layout for the players in at that moment, and the runner
+    writes it again at the end of every frame update in which the players in changed, which is the
+    frame a player pairs or leaves. A frame with no change writes nothing.
+</p>
+<p>
+    <b>How long.</b> One split screen is in force at a time. It belongs to the instance that ran the
+    block and ends when that instance ends, when another <code>View.SplitScreen</code> block runs, and when
+    <code>View.For(view).SetViewport</code> writes one of its views. Ending it writes nothing; every view keeps
+    the viewport it has. <code>docs/proposals/split-screen.md</code> is the contract.
+</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A view is one <code>Build()</code> never declared, two of them are the
+same input, or this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ViewFactory_SplitScreen_" data-uid="CodeSmile.LunyScript.ViewFactory.SplitScreen*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ViewFactory_SplitScreen_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ViewFactory.SplitScreen(CodeSmile.LunyScript.ObjectBinding,CodeSmile.LunyScript.ObjectBinding,CodeSmile.LunyScript.ObjectBinding,System.String,System.Int32)">
+  SplitScreen(ObjectBinding, ObjectBinding, ObjectBinding, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/View/ViewFactory.cs/#L109"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a split screen of three views for local players 1 to 3, laid out from the players who are
+paired: one player in takes the whole screen, two players the top and bottom halves, and three players
+the quarters of their numbers.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SplitScreenBuilder SplitScreen(ObjectBinding view1, ObjectBinding view2, ObjectBinding view3, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>view1</code></dt></td>
+    <td style="width: 99%"><dd><p>Local player 1's view, the host's: an object input holding a Camera.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>view2</code></dt></td>
+    <td style="width: 99%"><dd><p>Local player 2's view.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>view3</code></dt></td>
+    <td style="width: 99%"><dd><p>Local player 3's view.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SplitScreenBuilder.html">SplitScreenBuilder</a></dt>
+    <dd><p>A builder that converts to the block and takes <a class="xref" href="CodeSmile.LunyScript.SplitScreenBuilder.html#CodeSmile_LunyScript_SplitScreenBuilder_Within_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_">Within(NumberValueBlock, NumberValueBlock, NumberValueBlock, NumberValueBlock)</a>
+and <a class="xref" href="CodeSmile.LunyScript.SplitScreenBuilder.html#CodeSmile_LunyScript_SplitScreenBuilder_Shared_CodeSmile_LunyScript_ObjectBinding_">Shared(ObjectBinding)</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ViewFactory_SplitScreen_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(View.SplitScreen(View1, View2, View3));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ViewFactory_SplitScreen_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><a class="xref" href="CodeSmile.LunyScript.ViewFactory.html#CodeSmile_LunyScript_ViewFactory_SplitScreen_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_">SplitScreen(ObjectBinding, ObjectBinding, ObjectBinding, ObjectBinding, string, int)</a>
+states the layout and how long it lasts.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A view is one <code>Build()</code> never declared, two of them are the
+same input, or this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyScript_ViewFactory_SplitScreen_" data-uid="CodeSmile.LunyScript.ViewFactory.SplitScreen*"></a>
+
+  <h3 id="CodeSmile_LunyScript_ViewFactory_SplitScreen_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.ViewFactory.SplitScreen(CodeSmile.LunyScript.ObjectBinding,CodeSmile.LunyScript.ObjectBinding,System.String,System.Int32)">
+  SplitScreen(ObjectBinding, ObjectBinding, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/View/ViewFactory.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds a split screen of two views for local players 1 and 2, laid out from the players who are
+paired: one player in takes the whole screen, two players the top and bottom halves.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SplitScreenBuilder SplitScreen(ObjectBinding view1, ObjectBinding view2, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>view1</code></dt></td>
+    <td style="width: 99%"><dd><p>Local player 1's view, the host's: an object input holding a Camera.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>view2</code></dt></td>
+    <td style="width: 99%"><dd><p>Local player 2's view.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.SplitScreenBuilder.html">SplitScreenBuilder</a></dt>
+    <dd><p>A builder that converts to the block and takes <a class="xref" href="CodeSmile.LunyScript.SplitScreenBuilder.html#CodeSmile_LunyScript_SplitScreenBuilder_Within_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_">Within(NumberValueBlock, NumberValueBlock, NumberValueBlock, NumberValueBlock)</a>
+and <a class="xref" href="CodeSmile.LunyScript.SplitScreenBuilder.html#CodeSmile_LunyScript_SplitScreenBuilder_Shared_CodeSmile_LunyScript_ObjectBinding_">Shared(ObjectBinding)</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ViewFactory_SplitScreen_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(View.SplitScreen(View1, View2));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_ViewFactory_SplitScreen_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p><a class="xref" href="CodeSmile.LunyScript.ViewFactory.html#CodeSmile_LunyScript_ViewFactory_SplitScreen_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_">SplitScreen(ObjectBinding, ObjectBinding, ObjectBinding, ObjectBinding, string, int)</a>
+states the layout and how long it lasts.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyScript.LunyScriptUsageException.html">LunyScriptUsageException</a></dt>
+    <dd><p>A view is one <code>Build()</code> never declared, the two are the same
+input, or this factory was not obtained inside <code>Build()</code>.</p>
+</dd>
+  </dl>
+
+
+
 
 </article>
 
