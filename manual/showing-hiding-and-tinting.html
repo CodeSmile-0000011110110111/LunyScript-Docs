@@ -68,21 +68,17 @@ never changes:</p>
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="n">Health</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Health</span><span class="p">),</span> <span class="m">3</span><span class="p">);</span>
-        <span class="n">Flash</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Flash</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>
 
-        <span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> <span class="n">Flash</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="m">0.15</span><span class="p">),</span>
-            <span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.25</span><span class="p">));</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Flash</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Flash</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="n">Time</span><span class="p">.</span><span class="n">Delta</span><span class="p">),</span>
-            <span class="nf">If</span><span class="p">(</span><span class="n">Flash</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">ResetColor</span><span class="p">())));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="n">Health</span><span class="p">.</span><span class="nf">Subtract</span><span class="p">(</span><span class="m">1</span><span class="p">),</span>
+            <span class="n">Object</span><span class="p">.</span><span class="nf">Flash</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">0.25</span><span class="p">,</span> <span class="m">0.25</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">0.15</span><span class="p">));</span>
         <span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Health</span> <span class="p">&lt;=</span> <span class="m">0</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Hide</span><span class="p">()));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Put the script on an object that has a <code class="language-plaintext highlighter-rouge">MeshRenderer</code> and a collider. Each hit tints the object red
-and starts a 0.15-second countdown in <code class="language-plaintext highlighter-rouge">Flash</code>; the frame the countdown reaches zero, <code class="language-plaintext highlighter-rouge">ResetColor</code>
-removes the tint. At zero health the object is no longer drawn, and its collider and its script keep
-running.</p>
+<p>Put the script on an object that has a <code class="language-plaintext highlighter-rouge">MeshRenderer</code> and a collider. Each hit draws the object red
+for 0.15 seconds of game time, and then the material’s own colour again. At zero health the object
+is no longer drawn, and its collider and its script keep running.</p>
 
 <h2 id="hiding-is-not-deactivating">Hiding is not deactivating</h2>
 
@@ -198,18 +194,55 @@ channel above 1 is kept for an HDR colour property.</p>
 with the asset, and the script’s copy of it is a colour variable <code class="language-plaintext highlighter-rouge">SetColor</code> reads each time it runs:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Team</span> <span class="p">=</span> <span class="n">Bind</span><span class="p">.</span><span class="nf">Data</span><span class="p">(</span><span class="n">TeamLook</span><span class="p">.</span><span class="n">Schema</span><span class="p">);</span>    <span class="c1">// TeamLook: Color Tint and Color Flash</span>
-<span class="n">Hit</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Routine</span><span class="p">();</span>
 <span class="n">Traitor</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
 
 <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">Team</span><span class="p">.</span><span class="n">Tint</span><span class="p">));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="nf">Routine</span><span class="p">(</span><span class="n">Hit</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">Team</span><span class="p">.</span><span class="n">Flash</span><span class="p">),</span>
-    <span class="nf">Wait</span><span class="p">(</span><span class="m">0.15</span><span class="p">),</span> <span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">Team</span><span class="p">.</span><span class="n">Tint</span><span class="p">)));</span>
-<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Traitor</span><span class="p">,</span> <span class="n">Team</span><span class="p">.</span><span class="n">Tint</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">Green</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">CollisionEnter</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="nf">Flash</span><span class="p">(</span><span class="n">Team</span><span class="p">.</span><span class="n">Flash</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="m">0.15</span><span class="p">));</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">Traitor</span><span class="p">,</span> <span class="n">Team</span><span class="p">.</span><span class="n">Tint</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="n">Color</span><span class="p">.</span><span class="n">Green</span><span class="p">),</span> <span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">Team</span><span class="p">.</span><span class="n">Tint</span><span class="p">));</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">Team.Tint.Set(...)</code> changes this object’s copy; the asset keeps its colour.
+<p><code class="language-plaintext highlighter-rouge">Team.Tint.Set(...)</code> changes this object’s copy; the asset keeps its colour. The next section says
+how a flash ends.
 <a href="/LunyScript-Docs/manual/custom-data-and-files.html">Custom data, JSON and text files</a> shows the
 schema and the asset.</p>
+
+<h2 id="flashing-on-a-hit">Flashing on a hit</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Object.Flash(colour).Over(seconds)</code> draws a colour for an amount of game time, and then draws the
+colour the script last wrote with <code class="language-plaintext highlighter-rouge">SetColor</code> again. It takes the colour forms <code class="language-plaintext highlighter-rouge">SetColor</code> takes: a
+<code class="language-plaintext highlighter-rouge">Color</code> value, a colour variable, or channel numbers.</p>
+
+<pre><code>Health = Define.Number(nameof(Health), 3);
+Healed = Define.Message();
+Shield = Bind.Object();
+
+On.Ready(Object.SetColor(0.2, 0.4, 1));
+On.CollisionEnter(Health.Subtract(1),
+    <strong>Object.Flash(Color.Red).Over(0.1)</strong>);
+On.Message(Healed,
+    <strong>Object.For(Shield).Flash(0.3, 1, 0.3).Over(250).Milliseconds()</strong>);
+</code></pre>
+
+<p>The object starts blue. A hit draws it red, and a tenth of a second later blue again. When the script
+wrote no colour before the flash, or its last colour write was <code class="language-plaintext highlighter-rouge">ResetColor()</code>, the flash ends by
+removing the tint, and the material’s own colour shows.</p>
+
+<ul>
+  <li><strong>A colour written during the flash waits for it.</strong> While a flash runs, <code class="language-plaintext highlighter-rouge">SetColor</code> and
+<code class="language-plaintext highlighter-rouge">ResetColor</code> on the same object change the colour the flash ends on and draw nothing until then.
+A state colour written in the middle of a hit flash shows when the flash ends.</li>
+  <li><strong>A second flash replaces the first.</strong> Its colour shows at once and its duration counts from then.</li>
+  <li><strong>The duration is game time.</strong> <code class="language-plaintext highlighter-rouge">Over(0.1)</code> is seconds; <code class="language-plaintext highlighter-rouge">.Milliseconds()</code>, <code class="language-plaintext highlighter-rouge">.Minutes()</code> or
+<code class="language-plaintext highlighter-rouge">.Hours()</code> after it names another unit. The amount is read when the flash starts. A paused game
+holds the flash, and a time scale stretches it.</li>
+  <li><strong>Each object has its own flash.</strong> The object the script runs on and each <code class="language-plaintext highlighter-rouge">Object.For</code> binding
+flash and restore separately.</li>
+  <li><strong>Only this script’s colour writes are restored.</strong> A colour another script or C# writes on the same
+renderer is replaced when the flash ends.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">Object.Flash(Color.Red)</code> on its own is not a block: a flash needs <code class="language-plaintext highlighter-rouge">Over</code>. <code class="language-plaintext highlighter-rouge">For</code> counts repetitions
+elsewhere in LunyScript, so <code class="language-plaintext highlighter-rouge">Object.Flash(Color.Red).For(0.1)</code> does not compile.</p>
 
 <h2 id="material-numbers">Material numbers</h2>
 
@@ -248,7 +281,8 @@ under any other name is removed.</p>
 <p>The object still runs. The first call that finds no renderer, no main colour or no property of that
 name writes one error to the Console, naming the script, the object and the property, and after that
 the calls do nothing. A colour channel that is negative, not a number or larger than the largest
-<code class="language-plaintext highlighter-rouge">Single</code>, 3.4028235E+38, and a material number that is not finite, are refused the same way.</p>
+<code class="language-plaintext highlighter-rouge">Single</code>, 3.4028235E+38, a material number that is not finite, and a flash duration that is negative,
+not a number or infinite, are refused the same way.</p>
 
 <h2 id="call-list">Call list</h2>
 
@@ -262,6 +296,9 @@ out.</p>
 <span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span> <span class="p">[</span> <span class="p">,</span> <span class="n">alpha</span> <span class="p">])</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">SetColor</span><span class="p">(</span><span class="n">colour</span><span class="p">)</span>                      <span class="c1">// a Color or a colour variable</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">ResetColor</span><span class="p">()</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">Flash</span><span class="p">(</span><span class="n">colour</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>           <span class="c1">// a Color or a colour variable</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">Flash</span><span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="n">blue</span> <span class="p">[</span> <span class="p">,</span> <span class="n">alpha</span> <span class="p">]).</span><span class="nf">Over</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span>
+<span class="n">Object</span><span class="p">.</span><span class="nf">Flash</span><span class="p">(</span><span class="n">colour</span><span class="p">).</span><span class="nf">Over</span><span class="p">(</span><span class="n">amount</span><span class="p">).</span><span class="nf">Milliseconds</span><span class="p">()</span>  <span class="c1">// or Seconds, Minutes, Hours</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">MaterialNumber</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="nf">Set</span><span class="p">(</span><span class="k">value</span><span class="p">)</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">MaterialNumber</span><span class="p">(</span><span class="n">name</span><span class="p">).</span><span class="nf">Reset</span><span class="p">()</span>
 <span class="n">Object</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">target</span><span class="p">).</span><span class="nf">Hide</span><span class="p">()</span>                    <span class="c1">// and every call above</span>
@@ -275,11 +312,12 @@ out.</p>
   <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> —
 <code class="language-plaintext highlighter-rouge">Object.Deactivate</code>.</li>
   <li><a href="/LunyScript-Docs/manual/physics.html">Physics</a> — the contact events that start a flash.</li>
-  <li><a href="/LunyScript-Docs/manual/flow.html">Flow: conditions, timed work and routines</a> — conditions
-like the one that ends a flash.</li>
+  <li><a href="/LunyScript-Docs/manual/flow.html">Flow: conditions, timed work and routines</a> — <code class="language-plaintext highlighter-rouge">Wait</code>
+and the other durations that read their amount the way <code class="language-plaintext highlighter-rouge">Over</code> does.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectLifetimeFactory.html"><code class="language-plaintext highlighter-rouge">ObjectLifetimeFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectHandle.html"><code class="language-plaintext highlighter-rouge">ObjectHandle</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectFlashBuilder.html"><code class="language-plaintext highlighter-rouge">ObjectFlashBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.MaterialNumber.html"><code class="language-plaintext highlighter-rouge">MaterialNumber</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Color.html"><code class="language-plaintext highlighter-rouge">Color</code></a>.</li>
 </ul>

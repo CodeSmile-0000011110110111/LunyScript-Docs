@@ -5776,21 +5776,17 @@ public sealed partial class Enemy : Script
     protected override void Build()
     {
         Health = Define.Number(nameof(Health), 3);
-        Flash = Define.Number(nameof(Flash), 0);
 
-        On.CollisionEnter(Health.Subtract(1), Flash.Set(0.15),
-            Object.SetColor(1, 0.25, 0.25));
-        On.Update(If(Flash > 0).Then(Flash.Subtract(Time.Delta),
-            If(Flash <= 0).Then(Object.ResetColor())));
+        On.CollisionEnter(Health.Subtract(1),
+            Object.Flash(1, 0.25, 0.25).Over(0.15));
         On.Update(If(Health <= 0).Then(Object.Hide()));
     }
 }
 ```
 
-Put the script on an object that has a `MeshRenderer` and a collider. Each hit tints the object red
-and starts a 0.15-second countdown in `Flash`; the frame the countdown reaches zero, `ResetColor`
-removes the tint. At zero health the object is no longer drawn, and its collider and its script keep
-running.
+Put the script on an object that has a `MeshRenderer` and a collider. Each hit draws the object red
+for 0.15 seconds of game time, and then the material's own colour again. At zero health the object
+is no longer drawn, and its collider and its script keep running.
 
 ## Hiding is not deactivating
 
@@ -5912,18 +5908,53 @@ with the asset, and the script's copy of it is a colour variable `SetColor` read
 
 ```csharp
 Team = Bind.Data(TeamLook.Schema);    // TeamLook: Color Tint and Color Flash
-Hit = Define.Routine();
 Traitor = Define.Message();
 
 On.Ready(Object.SetColor(Team.Tint));
-On.CollisionEnter(Routine(Hit).Run(Object.SetColor(Team.Flash),
-    Wait(0.15), Object.SetColor(Team.Tint)));
-On.Message(Traitor, Team.Tint.Set(Color.Green));
+On.CollisionEnter(Object.Flash(Team.Flash).Over(0.15));
+On.Message(Traitor, Team.Tint.Set(Color.Green), Object.SetColor(Team.Tint));
 ```
 
-`Team.Tint.Set(...)` changes this object's copy; the asset keeps its colour.
+`Team.Tint.Set(...)` changes this object's copy; the asset keeps its colour. The next section says
+how a flash ends.
 [Custom data, JSON and text files](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/custom-data-and-files.html) shows the
 schema and the asset.
+
+## Flashing on a hit
+
+`Object.Flash(colour).Over(seconds)` draws a colour for an amount of game time, and then draws the
+colour the script last wrote with `SetColor` again. It takes the colour forms `SetColor` takes: a
+`Color` value, a colour variable, or channel numbers.
+
+<pre><code>Health = Define.Number(nameof(Health), 3);
+Healed = Define.Message();
+Shield = Bind.Object();
+
+On.Ready(Object.SetColor(0.2, 0.4, 1));
+On.CollisionEnter(Health.Subtract(1),
+    <strong>Object.Flash(Color.Red).Over(0.1)</strong>);
+On.Message(Healed,
+    <strong>Object.For(Shield).Flash(0.3, 1, 0.3).Over(250).Milliseconds()</strong>);
+</code></pre>
+
+The object starts blue. A hit draws it red, and a tenth of a second later blue again. When the script
+wrote no colour before the flash, or its last colour write was `ResetColor()`, the flash ends by
+removing the tint, and the material's own colour shows.
+
+- **A colour written during the flash waits for it.** While a flash runs, `SetColor` and
+  `ResetColor` on the same object change the colour the flash ends on and draw nothing until then.
+  A state colour written in the middle of a hit flash shows when the flash ends.
+- **A second flash replaces the first.** Its colour shows at once and its duration counts from then.
+- **The duration is game time.** `Over(0.1)` is seconds; `.Milliseconds()`, `.Minutes()` or
+  `.Hours()` after it names another unit. The amount is read when the flash starts. A paused game
+  holds the flash, and a time scale stretches it.
+- **Each object has its own flash.** The object the script runs on and each `Object.For` binding
+  flash and restore separately.
+- **Only this script's colour writes are restored.** A colour another script or C# writes on the same
+  renderer is replaced when the flash ends.
+
+`Object.Flash(Color.Red)` on its own is not a block: a flash needs `Over`. `For` counts repetitions
+elsewhere in LunyScript, so `Object.Flash(Color.Red).For(0.1)` does not compile.
 
 ## Material numbers
 
@@ -5963,7 +5994,8 @@ under any other name is removed.
 The object still runs. The first call that finds no renderer, no main colour or no property of that
 name writes one error to the Console, naming the script, the object and the property, and after that
 the calls do nothing. A colour channel that is negative, not a number or larger than the largest
-`Single`, 3.4028235E+38, and a material number that is not finite, are refused the same way.
+`Single`, 3.4028235E+38, a material number that is not finite, and a flash duration that is negative,
+not a number or infinite, are refused the same way.
 
 ## Call list
 
@@ -5978,6 +6010,9 @@ Object.IsVisible
 Object.SetColor(red, green, blue [ , alpha ])
 Object.SetColor(colour)                      // a Color or a colour variable
 Object.ResetColor()
+Object.Flash(colour).Over(seconds)           // a Color or a colour variable
+Object.Flash(red, green, blue [ , alpha ]).Over(seconds)
+Object.Flash(colour).Over(amount).Milliseconds()  // or Seconds, Minutes, Hours
 Object.MaterialNumber(name).Set(value)
 Object.MaterialNumber(name).Reset()
 Object.For(target).Hide()                    // and every call above
@@ -5990,11 +6025,12 @@ Object.For(target).Deactivate()
 - [Events and object lifetime](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/events-and-object-lifetime.html) —
   `Object.Deactivate`.
 - [Physics](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/physics.html) — the contact events that start a flash.
-- [Flow: conditions, timed work and routines](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/flow.html) — conditions
-  like the one that ends a flash.
+- [Flow: conditions, timed work and routines](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/flow.html) — `Wait`
+  and the other durations that read their amount the way `Over` does.
 - Generated reference:
   [`ObjectLifetimeFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectLifetimeFactory.html),
   [`ObjectHandle`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectHandle.html),
+  [`ObjectFlashBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ObjectFlashBuilder.html),
   [`MaterialNumber`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.MaterialNumber.html),
   [`Color`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.Color.html).
 
