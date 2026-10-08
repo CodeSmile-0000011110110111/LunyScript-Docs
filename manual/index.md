@@ -84,7 +84,8 @@ links to the next page and to the generated
 - [Player input](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/player-input.html) — per-player actions, action
   watches, local players pairing and leaving, rebinding and the cursor.
 - [Cameras and viewports](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cameras-and-viewports.html) — which camera
-  a view renders, split-screen viewports, and what a camera rig follows.
+  a view renders, split-screen viewports, a split screen laid out from the paired local players, and
+  what a camera rig follows.
 - [User interface](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/user-interface.html) — binding values to named UI
   Toolkit elements, reacting to buttons and controls, placing a fragment, keeping a label over a
   point in the scene, and opening a menu.

@@ -315,7 +315,8 @@ links to the next page and to the generated
 - [Player input](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/player-input.html) — per-player actions, action
   watches, local players pairing and leaving, rebinding and the cursor.
 - [Cameras and viewports](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cameras-and-viewports.html) — which camera
-  a view renders, split-screen viewports, and what a camera rig follows.
+  a view renders, split-screen viewports, a split screen laid out from the paired local players, and
+  what a camera rig follows.
 - [User interface](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/user-interface.html) — binding values to named UI
   Toolkit elements, reacting to buttons and controls, placing a fragment, keeping a label over a
   point in the scene, and opening a menu.
@@ -6591,6 +6592,64 @@ On.Ready(
     View.For(BottomScreen).SetCamera(PlayerTwoRig));
 ```
 
+## A split screen for local players
+
+`View.SplitScreen` gives each paired local player a view of their own and lays the views out again
+whenever a player pairs or leaves, so a script writes no viewport and no pairing watch for it:
+
+<pre><code>View1 = Bind.Object();
+View2 = Bind.Object();
+View3 = Bind.Object();
+View4 = Bind.Object();
+
+On.Ready(Input.Pairing.Open(),
+    <strong>View.SplitScreen(View1, View2, View3, View4)</strong>);
+</code></pre>
+
+The first view is local player 1's, the host's, and the others are local players 2 to 4. A player is
+in while `Input.ForPlayer(n).IsPaired` reads true, so a player whose controller is unplugged keeps
+the view. Two or three views work the same way, for two or three players.
+
+| Players in | Where each view goes |
+| --- | --- |
+| None | The first view covers the screen, or the shared view when there is one. |
+| One | That player's view covers the screen. |
+| Two | The lower player number takes the top half, the other the bottom half. |
+| Three or four | Each takes the quarter of their number: 1 top left, 2 top right, 3 bottom left, 4 bottom right. |
+
+A view with no share gets a viewport of zero width and height, and Unity does not draw a camera
+whose viewport is empty.
+
+`Within` keeps the views in a part of the screen, here right of a menu that takes the left third,
+and `Shared` names a view for the screen while nobody is in and for the free quarter while three
+players are:
+
+<pre><code>GroupView = Bind.Object();
+
+On.Ready(<strong>View.SplitScreen(View1, View2, View3, View4)
+    .Within(0.33, 0, 0.67, 1).Shared(GroupView)</strong>);
+</code></pre>
+
+- **The area** takes the four fractions `SetViewport` takes, or a position and a size as two
+  `Vector2` values. It has to lie on the screen: an area that does not is refused when the script
+  type is built, or reported once when its numbers come from variables.
+- **When.** The block lays the views out when it runs, and again at the end of every frame in which a
+  player paired or left, before that frame is drawn. A frame with no change writes nothing, so the
+  block may sit in `On.Update` to follow an area held in variables.
+- **One split screen at a time.** It belongs to the object whose script ran it and ends when that
+  object's script ends. Running `View.SplitScreen` again replaces it; one from another object
+  replaces it too and writes a warning.
+- **`View.For(view).SetViewport` on one of its views ends it**, and every view keeps the viewport it
+  has. That is how a screen switches to one view for everybody; running `View.SplitScreen` again
+  switches back. `View.For(view).SetCamera(rig)` does not end it.
+- **`Within` comes before `Shared`**, each once, and one view given twice, or a shared view that is
+  also a player's view, is refused when the script type is built.
+
+Each view carries a Camera and a Cinemachine Brain that listens to that player's output channel, so
+every view shows its own player's rig. A scene with screen-space UI also keeps a camera with a depth
+above every view and a viewport that is not empty: the Universal Render Pipeline draws that UI with
+the last camera it renders, and a view with an empty viewport hides the UI when it is last.
+
 ## What a rig tracks
 
 | Call | What it sets |
@@ -6779,6 +6838,7 @@ Gate.Close("Cutscene");
   finishes.
 - Generated reference:
   [`ViewFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ViewFactory.html),
+  [`SplitScreenBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SplitScreenBuilder.html),
   [`CameraFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CameraFactory.html),
   [`ScreenRay`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ScreenRay.html),
   [`CameraTargetsBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CameraTargetsBuilder.html).

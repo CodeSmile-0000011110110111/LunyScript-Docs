@@ -7,8 +7,8 @@
 <meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="Cameras and viewports" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Which camera a view renders, split-screen viewports, and what a camera rig follows." />
-<meta name="twitter:description" property="og:description" content="Which camera a view renders, split-screen viewports, and what a camera rig follows." />
+<meta name="description" content="Which camera a view renders, split-screen viewports, a split screen laid out from the paired local players, and what a camera rig follows." />
+<meta name="twitter:description" property="og:description" content="Which camera a view renders, split-screen viewports, a split screen laid out from the paired local players, and what a camera rig follows." />
 <link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cameras-and-viewports.html" />
 <meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cameras-and-viewports.html" />
 <meta property="og:site_name" content="LunyScript Docs" />
@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Cameras and viewports" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","description":"Which camera a view renders, split-screen viewports, and what a camera rig follows.","headline":"Cameras and viewports","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cameras-and-viewports.html"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Which camera a view renders, split-screen viewports, a split screen laid out from the paired local players, and what a camera rig follows.","headline":"Cameras and viewports","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cameras-and-viewports.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
     Override of minima 2.5's stock head.html. Identical to it apart from the include and the
@@ -112,6 +112,86 @@ size, so the two lines above set the same viewport.</p>
     <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">BottomScreen</span><span class="p">).</span><span class="nf">SetViewport</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">),</span>
     <span class="n">View</span><span class="p">.</span><span class="nf">For</span><span class="p">(</span><span class="n">BottomScreen</span><span class="p">).</span><span class="nf">SetCamera</span><span class="p">(</span><span class="n">PlayerTwoRig</span><span class="p">));</span>
 </code></pre></div></div>
+
+<h2 id="a-split-screen-for-local-players">A split screen for local players</h2>
+
+<p><code class="language-plaintext highlighter-rouge">View.SplitScreen</code> gives each paired local player a view of their own and lays the views out again
+whenever a player pairs or leaves, so a script writes no viewport and no pairing watch for it:</p>
+
+<pre><code>View1 = Bind.Object();
+View2 = Bind.Object();
+View3 = Bind.Object();
+View4 = Bind.Object();
+
+On.Ready(Input.Pairing.Open(),
+    <strong>View.SplitScreen(View1, View2, View3, View4)</strong>);
+</code></pre>
+
+<p>The first view is local player 1’s, the host’s, and the others are local players 2 to 4. A player is
+in while <code class="language-plaintext highlighter-rouge">Input.ForPlayer(n).IsPaired</code> reads true, so a player whose controller is unplugged keeps
+the view. Two or three views work the same way, for two or three players.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Players in</th>
+      <th>Where each view goes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>None</td>
+      <td>The first view covers the screen, or the shared view when there is one.</td>
+    </tr>
+    <tr>
+      <td>One</td>
+      <td>That player’s view covers the screen.</td>
+    </tr>
+    <tr>
+      <td>Two</td>
+      <td>The lower player number takes the top half, the other the bottom half.</td>
+    </tr>
+    <tr>
+      <td>Three or four</td>
+      <td>Each takes the quarter of their number: 1 top left, 2 top right, 3 bottom left, 4 bottom right.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A view with no share gets a viewport of zero width and height, and Unity does not draw a camera
+whose viewport is empty.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Within</code> keeps the views in a part of the screen, here right of a menu that takes the left third,
+and <code class="language-plaintext highlighter-rouge">Shared</code> names a view for the screen while nobody is in and for the free quarter while three
+players are:</p>
+
+<pre><code>GroupView = Bind.Object();
+
+On.Ready(<strong>View.SplitScreen(View1, View2, View3, View4)
+    .Within(0.33, 0, 0.67, 1).Shared(GroupView)</strong>);
+</code></pre>
+
+<ul>
+  <li><strong>The area</strong> takes the four fractions <code class="language-plaintext highlighter-rouge">SetViewport</code> takes, or a position and a size as two
+<code class="language-plaintext highlighter-rouge">Vector2</code> values. It has to lie on the screen: an area that does not is refused when the script
+type is built, or reported once when its numbers come from variables.</li>
+  <li><strong>When.</strong> The block lays the views out when it runs, and again at the end of every frame in which a
+player paired or left, before that frame is drawn. A frame with no change writes nothing, so the
+block may sit in <code class="language-plaintext highlighter-rouge">On.Update</code> to follow an area held in variables.</li>
+  <li><strong>One split screen at a time.</strong> It belongs to the object whose script ran it and ends when that
+object’s script ends. Running <code class="language-plaintext highlighter-rouge">View.SplitScreen</code> again replaces it; one from another object
+replaces it too and writes a warning.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">View.For(view).SetViewport</code> on one of its views ends it</strong>, and every view keeps the viewport it
+has. That is how a screen switches to one view for everybody; running <code class="language-plaintext highlighter-rouge">View.SplitScreen</code> again
+switches back. <code class="language-plaintext highlighter-rouge">View.For(view).SetCamera(rig)</code> does not end it.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">Within</code> comes before <code class="language-plaintext highlighter-rouge">Shared</code></strong>, each once, and one view given twice, or a shared view that is
+also a player’s view, is refused when the script type is built.</li>
+</ul>
+
+<p>Each view carries a Camera and a Cinemachine Brain that listens to that player’s output channel, so
+every view shows its own player’s rig. A scene with screen-space UI also keeps a camera with a depth
+above every view and a viewport that is not empty: the Universal Render Pipeline draws that UI with
+the last camera it renders, and a view with an empty viewport hides the UI when it is last.</p>
 
 <h2 id="what-a-rig-tracks">What a rig tracks</h2>
 
@@ -317,6 +397,7 @@ view and rig bindings these calls take.</li>
 finishes.</li>
   <li>Generated reference:
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ViewFactory.html"><code class="language-plaintext highlighter-rouge">ViewFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SplitScreenBuilder.html"><code class="language-plaintext highlighter-rouge">SplitScreenBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CameraFactory.html"><code class="language-plaintext highlighter-rouge">CameraFactory</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.ScreenRay.html"><code class="language-plaintext highlighter-rouge">ScreenRay</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CameraTargetsBuilder.html"><code class="language-plaintext highlighter-rouge">CameraTargetsBuilder</code></a>.</li>
