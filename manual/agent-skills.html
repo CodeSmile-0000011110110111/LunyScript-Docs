@@ -75,6 +75,12 @@ version, and the signature files are generated from it.</p>
 
 <h2 id="the-skills">The skills</h2>
 
+<p><code class="language-plaintext highlighter-rouge">luny</code> is the skill an agent loads first. It names each Luny product, LunyScript, LunyInput and LunySave,
+says which of the skills below a task needs, and states the rules every task with them follows. It also
+tells the agent to begin every reply to you with <code class="language-plaintext highlighter-rouge">Oy!</code>, so you can see that the skills loaded. It ships
+in <code class="language-plaintext highlighter-rouge">Assets/CodeSmile/LunyScript/AgentSkills/luny/</code>, and the <code class="language-plaintext highlighter-rouge">lunyscript</code>, <code class="language-plaintext highlighter-rouge">lunyinput</code> and <code class="language-plaintext highlighter-rouge">lunysave</code>
+descriptions tell an agent to load it first.</p>
+
 <table>
   <thead>
     <tr>
@@ -128,6 +134,10 @@ version, and the signature files are generated from it.</p>
       <td>reads tuning values from a data asset or a JSON file</td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">lunyscript-testing</code></td>
+      <td>is tested, or a test hosts it without a scene, in Edit Mode or Play Mode</td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">lunyscript-extend</code></td>
       <td>needs a backend or a block LunyScript does not ship: a provider for a LunyScript family, or a block family that wraps a package, an SDK or a service</td>
     </tr>
@@ -175,7 +185,8 @@ Assets/CodeSmile/<em>/AgentSkills/luny</em></p>
 </blockquote>
 
 <p><strong>Yes</strong> writes one link per skill, in a folder named after the skill, in each of these folders of
-your Unity project: the twelve <code class="language-plaintext highlighter-rouge">lunyscript*</code> skills, <code class="language-plaintext highlighter-rouge">lunyinput</code> and <code class="language-plaintext highlighter-rouge">lunysave</code>. <strong>No</strong> writes nothing.</p>
+your Unity project: <code class="language-plaintext highlighter-rouge">luny</code>, the thirteen <code class="language-plaintext highlighter-rouge">lunyscript*</code> skills, <code class="language-plaintext highlighter-rouge">lunyinput</code> and <code class="language-plaintext highlighter-rouge">lunysave</code>. <strong>No</strong> writes
+nothing.</p>
 
 <table>
   <thead>
@@ -274,8 +285,8 @@ you answer <strong>Yes</strong> in the Install LunyScript AI Skills box.</p>
 
 <h2 id="removing-the-links">Removing the links</h2>
 
-<p>Delete the folders <code class="language-plaintext highlighter-rouge">lunyscript</code>, <code class="language-plaintext highlighter-rouge">lunyinput</code> and <code class="language-plaintext highlighter-rouge">lunysave</code> and every folder whose name starts with
-<code class="language-plaintext highlighter-rouge">lunyscript-</code> from <code class="language-plaintext highlighter-rouge">.claude/skills/</code> and <code class="language-plaintext highlighter-rouge">.agents/skills/</code>. With no link left that LunyScript recognises as its own, it writes nothing
+<p>Delete the folders <code class="language-plaintext highlighter-rouge">luny</code>, <code class="language-plaintext highlighter-rouge">lunyscript</code>, <code class="language-plaintext highlighter-rouge">lunyinput</code> and <code class="language-plaintext highlighter-rouge">lunysave</code> and every folder whose name starts
+with <code class="language-plaintext highlighter-rouge">lunyscript-</code> from <code class="language-plaintext highlighter-rouge">.claude/skills/</code> and <code class="language-plaintext highlighter-rouge">.agents/skills/</code>. With no link left that LunyScript recognises as its own, it writes nothing
 until you answer <strong>Yes</strong> in the box again. Delete <code class="language-plaintext highlighter-rouge">.claude</code>, <code class="language-plaintext highlighter-rouge">.claude/skills</code>, <code class="language-plaintext highlighter-rouge">.agents</code> and
 <code class="language-plaintext highlighter-rouge">.agents/skills</code> as well if you have no other use for them; LunyScript records in
 <code class="language-plaintext highlighter-rouge">UserSettings/LunyScriptAgentSkillFolders.txt</code> which of them it created.</p>

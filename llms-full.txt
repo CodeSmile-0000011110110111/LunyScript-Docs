@@ -1185,6 +1185,12 @@ An agent finds a skill only in its own skill folders. When you allow it, LunyScr
 
 ## The skills
 
+`luny` is the skill an agent loads first. It names each Luny product, LunyScript, LunyInput and LunySave,
+says which of the skills below a task needs, and states the rules every task with them follows. It also
+tells the agent to begin every reply to you with `Oy!`, so you can see that the skills loaded. It ships
+in `Assets/CodeSmile/LunyScript/AgentSkills/luny/`, and the `lunyscript`, `lunyinput` and `lunysave`
+descriptions tell an agent to load it first.
+
 | Skill | An agent loads it when a script |
 | --- | --- |
 | `lunyscript` | is written or changed at all: `Build()`, variables, events, conditions, errors, attaching it from Editor C#, reading it from C# |
@@ -1198,6 +1204,7 @@ An agent finds a skill only in its own skill folders. When you allow it, LunyScr
 | `lunyscript-ui` | writes to or reacts to a UI Toolkit panel |
 | `lunyscript-save` | saves or loads values on the device or in Cloud Save, or installs a Cloud Save provider of its own |
 | `lunyscript-data` | reads tuning values from a data asset or a JSON file |
+| `lunyscript-testing` | is tested, or a test hosts it without a scene, in Edit Mode or Play Mode |
 | `lunyscript-extend` | needs a backend or a block LunyScript does not ship: a provider for a LunyScript family, or a block family that wraps a package, an SDK or a service |
 
 Two more skills are for C# that has no LunyScript script, such as a `MonoBehaviour`, and for C# that
@@ -1225,7 +1232,8 @@ LunyScript AI Skills** asks:
 > Allow LunyScript to install the links to its AI agent skills?
 
 **Yes** writes one link per skill, in a folder named after the skill, in each of these folders of
-your Unity project: the twelve `lunyscript*` skills, `lunyinput` and `lunysave`. **No** writes nothing.
+your Unity project: `luny`, the thirteen `lunyscript*` skills, `lunyinput` and `lunysave`. **No** writes
+nothing.
 
 | Folder | Read by |
 | --- | --- |
@@ -1307,8 +1315,8 @@ you answer **Yes** in the Install LunyScript AI Skills box.
 
 ## Removing the links
 
-Delete the folders `lunyscript`, `lunyinput` and `lunysave` and every folder whose name starts with
-`lunyscript-` from `.claude/skills/` and `.agents/skills/`. With no link left that LunyScript recognises as its own, it writes nothing
+Delete the folders `luny`, `lunyscript`, `lunyinput` and `lunysave` and every folder whose name starts
+with `lunyscript-` from `.claude/skills/` and `.agents/skills/`. With no link left that LunyScript recognises as its own, it writes nothing
 until you answer **Yes** in the box again. Delete `.claude`, `.claude/skills`, `.agents` and
 `.agents/skills` as well if you have no other use for them; LunyScript records in
 `UserSettings/LunyScriptAgentSkillFolders.txt` which of them it created.
