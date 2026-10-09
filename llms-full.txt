@@ -8482,12 +8482,12 @@ describes.
   fields the way `Progress.Load` does.
 - A document never uploaded fails a download as `NotFound`, and every field
   keeps its value. A delete succeeds whether or not a copy existed.
-- A request reaches the provider at the start of the runner's next frame
+- A request reaches the backend at the start of the runner's next frame
   update, before any script's `On.Update` runs. A block in `On.Update`,
   `On.LateUpdate` or a watch therefore starts its request in the next frame;
   a block in `On.FixedUpdate` or a contact event, which Unity runs before
-  `Update`, starts it in the same frame. The gateway checks each request once
-  per frame at that point, and `When.Cloud(op)` reports the outcome in the
+  `Update`, starts it in the same frame. The cloud client checks each request
+  once per frame at that point, and `When.Cloud(op)` reports the outcome in the
   frame it finds it.
 - Requests for one document run one at a time, in the order their blocks ran.
   A download after an upload reads what the upload stored. When a request
@@ -8512,27 +8512,55 @@ On.Update(If(Career.Unsynced).Then(Status.Set("Not uploaded yet")));
 `doc.IsDirty` keeps describing the copy on the device: an upload does not change
 it, and a download changes it only through the values it writes.
 
-### The provider
+### The backends
 
+LunyCloud, the cloud module that ships with LunyScript, sends the requests.
 With the Cloud Save package installed, cloud copies go to Unity Cloud Save:
-when Play starts, LunyScript installs `UgsCloudSaveProvider`, unless
+the default runner is given LunyCloud's `UgsCloudBackend`, and
+`UgsLeaderboardBackend` when the Leaderboards package is installed too, unless
 **Unity Cloud Save** is turned off under Edit, Project Settings, LunyScript,
-Supplied providers. It signs in anonymously to Unity Gaming Services at the
-first request and needs the project's Unity Cloud link.
+Supplied providers. The client signs in anonymously to Unity Gaming Services at
+the first request and needs the project's Unity Cloud link.
 
 A game that keeps its copies in a folder on the device, the path `folder` below,
-names its own provider once, before the first request, and that replaces the
-supplied one:
+names its own backend once, before the first request, and that replaces the
+supplied ones:
 
 ```csharp
-var cloud = LunyScriptRuntime.DefaultRunner.CloudGateway;
-cloud.UseProvider(new FileCloudSaveProvider(folder));
+CloudGateway.Of(LunyScriptRuntime.DefaultRunner).UseBackend(new FileCloudBackend(folder));
 ```
 
-`FileCloudSaveProvider` keeps each document as a file in the folder you name,
-which is how the API example and the tests run without an account;
-`DelayCompletion(frames)` makes it answer later, the way a network does. Once a
-provider has started signing in, it stays for the rest of the Play session.
+`FileCloudBackend` keeps the account, the player's data and files, game data
+and leaderboards in JSON files in the folder you name, which is how the API
+example and the tests run without an account; `DelayCompletion(frames)` makes it
+answer later, the way a network does, and `FailNext(failure)` fails the next
+call with a chosen reason. `CloudGateway.Of(runner).UseServices(services)` names
+other backends, one per service. The supplied backends can be replaced until
+the first sign-in starts; backends a game names stay for the rest of the Play
+session. An assembly definition whose scripts use `Cloud`, `Account` or
+`Leaderboard` references `CodeSmile.LunyCloud.LunyScriptAdapter`, the assembly
+that holds those calls.
+
+### Accounts, keys, game data, files and leaderboards
+
+The same module carries the rest of the cloud surface:
+
+- `Account.SignIn().As(op)`, `Account.SignOut()`, `Account.Delete().As(op)` and
+  the condition `Account.IsSignedIn()`, observed with `When.Account(op)`. After a
+  sign-out, requests fail as `NotSignedIn` until the next `Account.SignIn()`.
+- `Define.CloudKey(name)` names another key in the player's data:
+  `Cloud.Save(doc).To(key)`, `Cloud.Load(key).Into(doc)` and `Cloud.Delete(key)`.
+- `Define.GameData(collection, key)` names an item the game publishes, which a
+  script reads with `Cloud.Load(item).Into(doc)` and cannot write.
+- `Define.CloudFile(name)` names a file in the player's file storage; C# hands
+  the bytes to a registered `ICloudFileSource`, and the script never holds them.
+- `Define.Leaderboard(name)` with `Leaderboard.Submit(score).To(board).As(op)`,
+  `Leaderboard.Load(board).Into(page)` and `Leaderboard.LoadEntry(board).Into(entry)`,
+  observed with `When.Leaderboard(op)`. A score submitted offline waits in a
+  queue on the device that a restart keeps, and `board.Waiting` counts it.
+
+The agent skill at `Assets/CodeSmile/LunyCloud/AgentSkills/lunycloud/SKILL.md`
+states every rule of these calls.
 
 ## A worked example
 
@@ -8590,6 +8618,7 @@ the field on every peer; the example keeps the best score in its own `Best`.
   [`CloudSaveBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudSaveBuilder.html),
   [`CloudLoadBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudLoadBuilder.html),
   [`CloudDeleteBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudDeleteBuilder.html),
-  [`FileCloudSaveProvider`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.FileCloudSaveProvider.html).
+  [`CloudGateway`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudGateway.html),
+  [`FileCloudBackend`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyCloud.FileCloudBackend.html).
 
 Source: https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.md

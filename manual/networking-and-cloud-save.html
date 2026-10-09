@@ -244,12 +244,12 @@ the device has. A download migrates an older version and reports omitted
 fields the way <code class="language-plaintext highlighter-rouge">Progress.Load</code> does.</li>
   <li>A document never uploaded fails a download as <code class="language-plaintext highlighter-rouge">NotFound</code>, and every field
 keeps its value. A delete succeeds whether or not a copy existed.</li>
-  <li>A request reaches the provider at the start of the runner’s next frame
+  <li>A request reaches the backend at the start of the runner’s next frame
 update, before any script’s <code class="language-plaintext highlighter-rouge">On.Update</code> runs. A block in <code class="language-plaintext highlighter-rouge">On.Update</code>,
 <code class="language-plaintext highlighter-rouge">On.LateUpdate</code> or a watch therefore starts its request in the next frame;
 a block in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code> or a contact event, which Unity runs before
-<code class="language-plaintext highlighter-rouge">Update</code>, starts it in the same frame. The gateway checks each request once
-per frame at that point, and <code class="language-plaintext highlighter-rouge">When.Cloud(op)</code> reports the outcome in the
+<code class="language-plaintext highlighter-rouge">Update</code>, starts it in the same frame. The cloud client checks each request
+once per frame at that point, and <code class="language-plaintext highlighter-rouge">When.Cloud(op)</code> reports the outcome in the
 frame it finds it.</li>
   <li>Requests for one document run one at a time, in the order their blocks ran.
 A download after an upload reads what the upload stored. When a request
@@ -274,26 +274,56 @@ a value changed and then returned to what was uploaded:</p>
 <p><code class="language-plaintext highlighter-rouge">doc.IsDirty</code> keeps describing the copy on the device: an upload does not change
 it, and a download changes it only through the values it writes.</p>
 
-<h3 id="the-provider">The provider</h3>
+<h3 id="the-backends">The backends</h3>
 
-<p>With the Cloud Save package installed, cloud copies go to Unity Cloud Save:
-when Play starts, LunyScript installs <code class="language-plaintext highlighter-rouge">UgsCloudSaveProvider</code>, unless
+<p>LunyCloud, the cloud module that ships with LunyScript, sends the requests.
+With the Cloud Save package installed, cloud copies go to Unity Cloud Save:
+the default runner is given LunyCloud’s <code class="language-plaintext highlighter-rouge">UgsCloudBackend</code>, and
+<code class="language-plaintext highlighter-rouge">UgsLeaderboardBackend</code> when the Leaderboards package is installed too, unless
 <strong>Unity Cloud Save</strong> is turned off under Edit, Project Settings, LunyScript,
-Supplied providers. It signs in anonymously to Unity Gaming Services at the
-first request and needs the project’s Unity Cloud link.</p>
+Supplied providers. The client signs in anonymously to Unity Gaming Services at
+the first request and needs the project’s Unity Cloud link.</p>
 
 <p>A game that keeps its copies in a folder on the device, the path <code class="language-plaintext highlighter-rouge">folder</code> below,
-names its own provider once, before the first request, and that replaces the
-supplied one:</p>
+names its own backend once, before the first request, and that replaces the
+supplied ones:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">var</span> <span class="n">cloud</span> <span class="p">=</span> <span class="n">LunyScriptRuntime</span><span class="p">.</span><span class="n">DefaultRunner</span><span class="p">.</span><span class="n">CloudGateway</span><span class="p">;</span>
-<span class="n">cloud</span><span class="p">.</span><span class="nf">UseProvider</span><span class="p">(</span><span class="k">new</span> <span class="nf">FileCloudSaveProvider</span><span class="p">(</span><span class="n">folder</span><span class="p">));</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CloudGateway</span><span class="p">.</span><span class="nf">Of</span><span class="p">(</span><span class="n">LunyScriptRuntime</span><span class="p">.</span><span class="n">DefaultRunner</span><span class="p">).</span><span class="nf">UseBackend</span><span class="p">(</span><span class="k">new</span> <span class="nf">FileCloudBackend</span><span class="p">(</span><span class="n">folder</span><span class="p">));</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">FileCloudSaveProvider</code> keeps each document as a file in the folder you name,
-which is how the API example and the tests run without an account;
-<code class="language-plaintext highlighter-rouge">DelayCompletion(frames)</code> makes it answer later, the way a network does. Once a
-provider has started signing in, it stays for the rest of the Play session.</p>
+<p><code class="language-plaintext highlighter-rouge">FileCloudBackend</code> keeps the account, the player’s data and files, game data
+and leaderboards in JSON files in the folder you name, which is how the API
+example and the tests run without an account; <code class="language-plaintext highlighter-rouge">DelayCompletion(frames)</code> makes it
+answer later, the way a network does, and <code class="language-plaintext highlighter-rouge">FailNext(failure)</code> fails the next
+call with a chosen reason. <code class="language-plaintext highlighter-rouge">CloudGateway.Of(runner).UseServices(services)</code> names
+other backends, one per service. The supplied backends can be replaced until
+the first sign-in starts; backends a game names stay for the rest of the Play
+session. An assembly definition whose scripts use <code class="language-plaintext highlighter-rouge">Cloud</code>, <code class="language-plaintext highlighter-rouge">Account</code> or
+<code class="language-plaintext highlighter-rouge">Leaderboard</code> references <code class="language-plaintext highlighter-rouge">CodeSmile.LunyCloud.LunyScriptAdapter</code>, the assembly
+that holds those calls.</p>
+
+<h3 id="accounts-keys-game-data-files-and-leaderboards">Accounts, keys, game data, files and leaderboards</h3>
+
+<p>The same module carries the rest of the cloud surface:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Account.SignIn().As(op)</code>, <code class="language-plaintext highlighter-rouge">Account.SignOut()</code>, <code class="language-plaintext highlighter-rouge">Account.Delete().As(op)</code> and
+the condition <code class="language-plaintext highlighter-rouge">Account.IsSignedIn()</code>, observed with <code class="language-plaintext highlighter-rouge">When.Account(op)</code>. After a
+sign-out, requests fail as <code class="language-plaintext highlighter-rouge">NotSignedIn</code> until the next <code class="language-plaintext highlighter-rouge">Account.SignIn()</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">Define.CloudKey(name)</code> names another key in the player’s data:
+<code class="language-plaintext highlighter-rouge">Cloud.Save(doc).To(key)</code>, <code class="language-plaintext highlighter-rouge">Cloud.Load(key).Into(doc)</code> and <code class="language-plaintext highlighter-rouge">Cloud.Delete(key)</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">Define.GameData(collection, key)</code> names an item the game publishes, which a
+script reads with <code class="language-plaintext highlighter-rouge">Cloud.Load(item).Into(doc)</code> and cannot write.</li>
+  <li><code class="language-plaintext highlighter-rouge">Define.CloudFile(name)</code> names a file in the player’s file storage; C# hands
+the bytes to a registered <code class="language-plaintext highlighter-rouge">ICloudFileSource</code>, and the script never holds them.</li>
+  <li><code class="language-plaintext highlighter-rouge">Define.Leaderboard(name)</code> with <code class="language-plaintext highlighter-rouge">Leaderboard.Submit(score).To(board).As(op)</code>,
+<code class="language-plaintext highlighter-rouge">Leaderboard.Load(board).Into(page)</code> and <code class="language-plaintext highlighter-rouge">Leaderboard.LoadEntry(board).Into(entry)</code>,
+observed with <code class="language-plaintext highlighter-rouge">When.Leaderboard(op)</code>. A score submitted offline waits in a
+queue on the device that a restart keeps, and <code class="language-plaintext highlighter-rouge">board.Waiting</code> counts it.</li>
+</ul>
+
+<p>The agent skill at <code class="language-plaintext highlighter-rouge">Assets/CodeSmile/LunyCloud/AgentSkills/lunycloud/SKILL.md</code>
+states every rule of these calls.</p>
 
 <h2 id="a-worked-example">A worked example</h2>
 
@@ -351,7 +381,8 @@ synchronised variable is read and written.</li>
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudSaveBuilder.html"><code class="language-plaintext highlighter-rouge">CloudSaveBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudLoadBuilder.html"><code class="language-plaintext highlighter-rouge">CloudLoadBuilder</code></a>,
 <a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudDeleteBuilder.html"><code class="language-plaintext highlighter-rouge">CloudDeleteBuilder</code></a>,
-<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.FileCloudSaveProvider.html"><code class="language-plaintext highlighter-rouge">FileCloudSaveProvider</code></a>.</li>
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudGateway.html"><code class="language-plaintext highlighter-rouge">CloudGateway</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyCloud.FileCloudBackend.html"><code class="language-plaintext highlighter-rouge">FileCloudBackend</code></a>.</li>
 </ul>
 
   </div>
