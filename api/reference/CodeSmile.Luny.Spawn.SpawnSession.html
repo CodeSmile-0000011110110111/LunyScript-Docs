@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class SpawnSession | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SpawnSession | LunyScript API Reference ">
+      
+      <meta name="description" content="The plain C# spawn director of one scene: it runs any number of recipes, each a separately owned run with its own seed, phases, groups and objects (the captain&#39;s Q12 answer), shares one live population limit and one attempt budget between them, and asks its  to place and release objects. A Unity SpawnHost owns one per scene and advances it by game time; a test advances it by hand.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_Luny_Spawn_SpawnSession.md&amp;value=---%0Auid%3A%20CodeSmile.Luny.Spawn.SpawnSession%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.Luny.Spawn.SpawnSession">
+
+
+
+  <h1 id="CodeSmile_Luny_Spawn_SpawnSession" data-uid="CodeSmile.Luny.Spawn.SpawnSession" class="text-break">
+Class SpawnSession  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.Uses.cs/#L5"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<span class="xref">Luny</span>.<a class="xref" href="CodeSmile.Luny.Spawn.html">Spawn</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The plain C# spawn director of one scene: it runs any number of recipes, each a separately owned run with its own
+seed, phases, groups and objects (the captain's Q12 answer), shares one live population limit and one attempt
+budget between them, and asks its <a class="xref" href="CodeSmile.Luny.Spawn.ISpawnWorld.html">ISpawnWorld</a> to place and release objects. A Unity
+<code>SpawnHost</code> owns one per scene and advances it by game time; a test advances it by hand.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class SpawnSession</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">SpawnSession</span></div>
+    </dd>
+  </dl>
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_Luny_Spawn_SpawnSession_examples">Examples</h2>
+  <pre><code class="lang-csharp">var session = new SpawnSession(world, new SpawnSessionOptions(populationLimit: 100));
+var run = session.Start(recipe, seed: 7);
+session.Advance(1.0 / 60.0);                 // the run enters its first phase and admits its due members
+Console.WriteLine(run.Read().Live);</code></pre>
+
+
+  <h2 id="CodeSmile_Luny_Spawn_SpawnSession_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>
+    <b>One boundary per <a class="xref" href="CodeSmile.Luny.Spawn.SpawnSession.html#CodeSmile_Luny_Spawn_SpawnSession_Advance_System_Double_">Advance(double)</a>.</b> Every command made since the last boundary is applied first,
+    in call order: starts, ended uses, latched signals, participant changes and cancellations. Then, for each
+    run, a stop signal or a source group's end stops its groups, a cancellation ends the run, a latched failure
+    signal or a required member's passed deadline fails it, and only then can its phase succeed, at most one
+    transition per boundary (the captain's Q40 answer: failure before success). Last, due members are admitted
+    in round-robin turns over runs and groups under the attempt budget (Q30: work delayed by the budget stays
+    visible and can expire under its deadline). A terminal run admits nothing more.
+</p>
+<p>
+    <b>Absence is completion.</b> Any end of a member's use clears it (the captain's Q29 answer); only a Combat
+    defeat counts as clear-speed evidence (Q46).
+</p>
+<p>
+    <b>Steady state allocates nothing.</b> Starting a run allocates its group and cohort state; admitting,
+    ending, signalling and reading reuse arrays sized when the run started or the population first grew.
+</p>
+</div>
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession__ctor_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.#ctor*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession__ctor_CodeSmile_Luny_Spawn_ISpawnWorld_CodeSmile_Luny_Spawn_SpawnSessionOptions_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.#ctor(CodeSmile.Luny.Spawn.ISpawnWorld,CodeSmile.Luny.Spawn.SpawnSessionOptions)">
+  SpawnSession(ISpawnWorld, SpawnSessionOptions)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a session over a world.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnSession(ISpawnWorld world, SpawnSessionOptions options)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.Luny.Spawn.ISpawnWorld.html">ISpawnWorld</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>world</code></dt></td>
+    <td style="width: 99%"><dd><p>What places and releases the objects.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.Luny.Spawn.SpawnSessionOptions.html">SpawnSessionOptions</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>options</code></dt></td>
+    <td style="width: 99%"><dd><p>The limits; default values take the documented defaults.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession__ctor_CodeSmile_Luny_Spawn_ISpawnWorld_CodeSmile_Luny_Spawn_SpawnSessionOptions__examples">Examples</h4>
+  <pre><code class="lang-csharp">var session = new SpawnSession(world, default);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Spawn.LunySpawnException.html">LunySpawnException</a></dt>
+    <dd><p>The world is null.</p>
+</dd>
+  </dl>
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession_IsEnded_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.IsEnded*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession_IsEnded" data-uid="CodeSmile.Luny.Spawn.SpawnSession.IsEnded">
+  IsEnded
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True once <a class="xref" href="CodeSmile.Luny.Spawn.SpawnSession.html#CodeSmile_Luny_Spawn_SpawnSession_End">End()</a> ran.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsEnded { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession_IsEnded_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (session.IsEnded) return;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession_Journal_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.Journal*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession_Journal" data-uid="CodeSmile.Luny.Spawn.SpawnSession.Journal">
+  Journal
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The bounded record of what the session observed and decided.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnJournal Journal { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Spawn.SpawnJournal.html">SpawnJournal</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession_Journal_examples">Examples</h4>
+  <pre><code class="lang-csharp">var page = session.Journal.Read(ref m_Cursor, m_Buffer);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession_LivePopulation_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.LivePopulation*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession_LivePopulation" data-uid="CodeSmile.Luny.Spawn.SpawnSession.LivePopulation">
+  LivePopulation
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Live objects of every run.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int LivePopulation { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession_LivePopulation_examples">Examples</h4>
+  <pre><code class="lang-csharp">Console.WriteLine($"{session.LivePopulation}/{session.Options.PopulationLimit}");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession_Options_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.Options*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession_Options" data-uid="CodeSmile.Luny.Spawn.SpawnSession.Options">
+  Options
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The limits in force.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnSessionOptions Options { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Spawn.SpawnSessionOptions.html">SpawnSessionOptions</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession_Options_examples">Examples</h4>
+  <pre><code class="lang-csharp">Console.WriteLine(session.Options.PopulationLimit);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession_Participants_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.Participants*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession_Participants" data-uid="CodeSmile.Luny.Spawn.SpawnSession.Participants">
+  Participants
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.cs/#L80"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The joined participants every run counts with, 1 to 4.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int Participants { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession_Participants_examples">Examples</h4>
+  <pre><code class="lang-csharp">Console.WriteLine(session.Participants);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession_RunSlots_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.RunSlots*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession_RunSlots" data-uid="CodeSmile.Luny.Spawn.SpawnSession.RunSlots">
+  RunSlots
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many run slots the session has, released ones included; <a class="xref" href="CodeSmile.Luny.Spawn.SpawnSession.html#CodeSmile_Luny_Spawn_SpawnSession_RunAt_System_Int32_">RunAt(int)</a> reads each.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int RunSlots { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession_RunSlots_examples">Examples</h4>
+  <pre><code class="lang-csharp">for (var i = 0; i &lt; session.RunSlots; i++) Show(session.RunAt(i));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession_Time_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.Time*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession_Time" data-uid="CodeSmile.Luny.Spawn.SpawnSession.Time">
+  Time
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The session's game time: the sum of every <a class="xref" href="CodeSmile.Luny.Spawn.SpawnSession.html#CodeSmile_Luny_Spawn_SpawnSession_Advance_System_Double_">Advance(double)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double Time { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession_Time_examples">Examples</h4>
+  <pre><code class="lang-csharp">Console.WriteLine(session.Time);</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession_Advance_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.Advance*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession_Advance_System_Double_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.Advance(System.Double)">
+  Advance(double)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.Boundary.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Runs one boundary after <code class="paramref">seconds</code> of game time: applies every queued command, ends
+runs by cancellation, failure or success in that order, and admits due members under the attempt budget. A
+paused game advances by 0 or not at all, which freezes every schedule and deadline (the captain's Q30 answer).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Advance(double seconds)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seconds</code></dt></td>
+    <td style="width: 99%"><dd><p>Game seconds since the last boundary, finite and 0 or more.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession_Advance_System_Double__examples">Examples</h4>
+  <pre><code class="lang-csharp">session.Advance(Time.deltaTime);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Spawn.LunySpawnException.html">LunySpawnException</a></dt>
+    <dd><p>The time is negative or not finite, the session ended, or a boundary is
+already running.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession_End_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.End*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession_End" data-uid="CodeSmile.Luny.Spawn.SpawnSession.End">
+  End()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.cs/#L173"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Ends the session: every run that has not ended is cancelled with <a class="xref" href="CodeSmile.Luny.Spawn.RunEnd.html#CodeSmile_Luny_Spawn_RunEnd_SessionEnded">SessionEnded</a>,
+every live object is released and every handle becomes stale. A second call does nothing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void End()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession_End_examples">Examples</h4>
+  <pre><code class="lang-csharp">session.End();</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Spawn.LunySpawnException.html">LunySpawnException</a></dt>
+    <dd><p>Called during a boundary.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession_ReportEnded_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.ReportEnded*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession_ReportEnded_CodeSmile_Luny_Spawn_SpawnUse_CodeSmile_Luny_Spawn_UseEnd_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.ReportEnded(CodeSmile.Luny.Spawn.SpawnUse,CodeSmile.Luny.Spawn.UseEnd)">
+  ReportEnded(SpawnUse, UseEnd)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.cs/#L159"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reports that a live use's object ended outside the session, at the next boundary: a Combat defeat
+(<a class="xref" href="CodeSmile.Luny.Spawn.UseEnd.html#CodeSmile_Luny_Spawn_UseEnd_Defeated">Defeated</a>, the captain's Q39 answer) or a removal by something else
+(<a class="xref" href="CodeSmile.Luny.Spawn.UseEnd.html#CodeSmile_Luny_Spawn_UseEnd_Removed">Removed</a>). A stale use is ignored.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void ReportEnded(SpawnUse use, UseEnd cause)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.Luny.Spawn.SpawnUse.html">SpawnUse</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>use</code></dt></td>
+    <td style="width: 99%"><dd><p>The use.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.Luny.Spawn.UseEnd.html">UseEnd</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>cause</code></dt></td>
+    <td style="width: 99%"><dd><p>Defeated or Removed.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession_ReportEnded_CodeSmile_Luny_Spawn_SpawnUse_CodeSmile_Luny_Spawn_UseEnd__examples">Examples</h4>
+  <pre><code class="lang-csharp">session.ReportEnded(use, UseEnd.Defeated);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Spawn.LunySpawnException.html">LunySpawnException</a></dt>
+    <dd><p>The cause is one the session itself decides.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession_RunAt_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.RunAt*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession_RunAt_System_Int32_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.RunAt(System.Int32)">
+  RunAt(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.cs/#L102"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The handle of the run in a slot, or a default handle when the slot is free.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnRun RunAt(int slot)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>slot</code></dt></td>
+    <td style="width: 99%"><dd><p>From 0 to <a class="xref" href="CodeSmile.Luny.Spawn.SpawnSession.html#CodeSmile_Luny_Spawn_SpawnSession_RunSlots">RunSlots</a> - 1.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Spawn.SpawnRun.html">SpawnRun</a></dt>
+    <dd><p>The handle.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession_RunAt_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var run = session.RunAt(0);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession_SetParticipants_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.SetParticipants*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession_SetParticipants_System_Int32_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.SetParticipants(System.Int32)">
+  SetParticipants(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.cs/#L145"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the joined participant count from the next boundary: in-progress cohorts revise their pending
+members to <code>max(0, count for the new total - admitted so far)</code>, completed groups stay complete, and every
+cohort out at the change stops being a clear-speed sample (the captain's Q35 and Q44 answers).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void SetParticipants(int participants)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>participants</code></dt></td>
+    <td style="width: 99%"><dd><p>1 to 4; values outside are clamped.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession_SetParticipants_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">session.SetParticipants(roster.Count);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Spawn_SpawnSession_Start_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.Start*"></a>
+
+  <h3 id="CodeSmile_Luny_Spawn_SpawnSession_Start_CodeSmile_Luny_Spawn_SpawnRecipe_System_Int32_" data-uid="CodeSmile.Luny.Spawn.SpawnSession.Start(CodeSmile.Luny.Spawn.SpawnRecipe,System.Int32)">
+  Start(SpawnRecipe, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts a run of an admitted recipe with an explicit seed (the captain's Q34 answer). It enters its first
+phase at the next boundary.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnRun Start(SpawnRecipe recipe, int seed)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.Luny.Spawn.SpawnRecipe.html">SpawnRecipe</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>recipe</code></dt></td>
+    <td style="width: 99%"><dd><p>The recipe, which the run keeps for its life.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seed</code></dt></td>
+    <td style="width: 99%"><dd><p>The seed of every group's random stream.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Spawn.SpawnRun.html">SpawnRun</a></dt>
+    <dd><p>The run's handle.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Spawn_SpawnSession_Start_CodeSmile_Luny_Spawn_SpawnRecipe_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var run = session.Start(recipe, seed: 7);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Spawn.LunySpawnException.html">LunySpawnException</a></dt>
+    <dd><p>The recipe is null or the session ended.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Session/SpawnSession.Uses.cs/#L5" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class LunyCloud | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class LunyCloud | LunyScript API Reference ">
+      
+      <meta name="description" content="LunyCloud&#39;s entry type:  makes the  that is one game&#39;s client of the cloud services, the signed-in player&#39;s account, the player&#39;s data and files, the game&#39;s read-only data and leaderboards. It forwards to the  constructor; the caller installs the services with  and calls  once per frame. A scene&#39;s CloudHost owns and ticks a client for C# with no script, and a LunyScript script reaches its runner&#39;s client through its Cloud, Account and Leaderboard verbs.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_Luny_Cloud_LunyCloud.md&amp;value=---%0Auid%3A%20CodeSmile.Luny.Cloud.LunyCloud%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.Luny.Cloud.LunyCloud">
+
+
+
+  <h1 id="CodeSmile_Luny_Cloud_LunyCloud" data-uid="CodeSmile.Luny.Cloud.LunyCloud" class="text-break">
+Class LunyCloud  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/LunyCloud.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<span class="xref">Luny</span>.<a class="xref" href="CodeSmile.Luny.Cloud.html">Cloud</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>LunyCloud's entry type: <a class="xref" href="CodeSmile.Luny.Cloud.LunyCloud.html#CodeSmile_Luny_Cloud_LunyCloud_CreateClient_CodeSmile_Luny_Cloud_ICloudClock_CodeSmile_Luny_Cloud_ICloudLog_System_Int32_">CreateClient(ICloudClock, ICloudLog, int)</a> makes the <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> that is one game's client
+of the cloud services, the signed-in player's account, the player's data and files, the game's read-only data and
+leaderboards. It forwards to the <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> constructor; the caller installs the services with
+<a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html#CodeSmile_Luny_Cloud_CloudClient_UseServices_CodeSmile_Luny_Cloud_CloudServices_">UseServices(CloudServices)</a> and calls <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html#CodeSmile_Luny_Cloud_CloudClient_Tick">Tick()</a> once per frame. A scene's
+<code>CloudHost</code> owns and ticks a client for C# with no script, and a LunyScript script reaches its runner's client
+through its <code>Cloud</code>, <code>Account</code> and <code>Leaderboard</code> verbs.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class LunyCloud</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">LunyCloud</span></div>
+    </dd>
+  </dl>
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_Luny_Cloud_LunyCloud_examples">Examples</h2>
+  <pre><code class="lang-csharp">var cloud = LunyCloud.CreateClient();
+cloud.UseServices(CloudServices.From(new FileCloudBackend(folder)));</code></pre>
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_Luny_Cloud_LunyCloud_CreateClient_" data-uid="CodeSmile.Luny.Cloud.LunyCloud.CreateClient*"></a>
+
+  <h3 id="CodeSmile_Luny_Cloud_LunyCloud_CreateClient_CodeSmile_Luny_Cloud_ICloudClock_CodeSmile_Luny_Cloud_ICloudLog_System_Int32_" data-uid="CodeSmile.Luny.Cloud.LunyCloud.CreateClient(CodeSmile.Luny.Cloud.ICloudClock,CodeSmile.Luny.Cloud.ICloudLog,System.Int32)">
+  CreateClient(ICloudClock, ICloudLog, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/LunyCloud.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Makes a client with no services; requests wait until <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html#CodeSmile_Luny_Cloud_CloudClient_UseServices_CodeSmile_Luny_Cloud_CloudServices_">UseServices(CloudServices)</a> names them.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static CloudClient CreateClient(ICloudClock clock = null, ICloudLog log = null, int queueCapacity = 64)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.Luny.Cloud.ICloudClock.html">ICloudClock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>clock</code></dt></td>
+    <td style="width: 99%"><dd><p>The clock; the system clock when null.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.Luny.Cloud.ICloudLog.html">ICloudLog</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>log</code></dt></td>
+    <td style="width: 99%"><dd><p>Where log lines go; nowhere when null.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>queueCapacity</code></dt></td>
+    <td style="width: 99%"><dd><p>How many scores the durable score queue holds, 1 or more.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a></dt>
+    <dd><p>The new client, which the caller ticks once per frame.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Cloud_LunyCloud_CreateClient_CodeSmile_Luny_Cloud_ICloudClock_CodeSmile_Luny_Cloud_ICloudLog_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var cloud = LunyCloud.CreateClient();</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Cloud.LunyCloudException.html">LunyCloudException</a></dt>
+    <dd><p><code class="paramref">queueCapacity</code> is below 1.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/LunyCloud.cs/#L19" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

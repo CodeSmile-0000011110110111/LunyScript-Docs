@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class ContentFiles | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class ContentFiles | LunyScript API Reference ">
+      
+      <meta name="description" content="A game&#39;s authored content files, in two named places LunySave chooses: the project&#39;s Luny folder beside Assets, which the Editor reads and writes, and StreamingAssets/GameData.luny, the uncompressed archive of that folder a player reads. Every path is relative to the Luny folder, such as &amp;quot;Encounter/room-breach.json&amp;quot;.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_Luny_Save_ContentFiles.md&amp;value=---%0Auid%3A%20CodeSmile.Luny.Save.ContentFiles%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.Luny.Save.ContentFiles">
+
+
+
+  <h1 id="CodeSmile_Luny_Save_ContentFiles" data-uid="CodeSmile.Luny.Save.ContentFiles" class="text-break">
+Class ContentFiles  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentFiles.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<span class="xref">Luny</span>.<a class="xref" href="CodeSmile.Luny.Save.html">Save</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>A game's authored content files, in two named places LunySave chooses: the project's <code>Luny</code> folder beside
+<code>Assets</code>, which the Editor reads and writes, and <code>StreamingAssets/GameData.luny</code>, the uncompressed
+archive of that folder a player reads. Every path is relative to the <code>Luny</code> folder, such as
+&quot;Encounter/room-breach.json&quot;.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class ContentFiles</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">ContentFiles</span></div>
+    </dd>
+  </dl>
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_Luny_Save_ContentFiles_examples">Examples</h2>
+  <pre><code class="lang-csharp">ContentFiles.WriteProjectText("Encounter/room-breach.json", json);
+var written = ContentFiles.WriteArchive();
+Debug.Log(written);</code></pre>
+
+
+  <h2 id="CodeSmile_Luny_Save_ContentFiles_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>
+    <b>Two named roots, no caller-chosen folder.</b> The captain's path rules of 2026-10-07 keep every LunySave
+    call inside a folder LunySave names; his LunySpawn answers of 2026-10-09 (Q11, Q21) added these two: the
+    project-root database folder <code>Luny/</code> and its archive. No call here takes an absolute path or a folder
+    of the caller's choosing, reads or writes bytes, or writes StreamingAssets anywhere except the one archive.
+</p>
+<p>
+    <b>Content files.</b> A content file's name ends in ".json" and no folder or file name on its path starts with
+    a dot; a read skips every other file and lists it in <a class="xref" href="CodeSmile.Luny.Save.ContentReadOperation.html#CodeSmile_Luny_Save_ContentReadOperation_Skipped">Skipped</a>. Each content
+    path follows <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html">LocalSave</a>'s path rule, and two paths that differ only in case fail the read, because
+    Windows and macOS store them as one file.
+</p>
+<p>
+    LunyData reads content through this class for its consumers, so game code queries LunyData and never reads
+    these files itself; this class is for the Editor tools and agents that author the files.
+</p>
+</div>
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="CodeSmile_Luny_Save_ContentFiles_ArchiveAssetPath" data-uid="CodeSmile.Luny.Save.ContentFiles.ArchiveAssetPath">
+  ArchiveAssetPath
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentFiles.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The archive's asset path, which <a class="xref" href="CodeSmile.Luny.Save.ContentFiles.html#CodeSmile_Luny_Save_ContentFiles_WriteArchive">WriteArchive()</a> writes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const string ArchiveAssetPath = &quot;Assets/StreamingAssets/GameData.luny&quot;</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Save_ContentFiles_ArchiveAssetPath_examples">Examples</h4>
+  <pre><code class="lang-csharp">AssetDatabase.ImportAsset(ContentFiles.ArchiveAssetPath);</code></pre>
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_Luny_Save_ContentFiles_ArchiveName" data-uid="CodeSmile.Luny.Save.ContentFiles.ArchiveName">
+  ArchiveName
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentFiles.cs/#L48"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The archive's file name in StreamingAssets.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const string ArchiveName = &quot;GameData.luny&quot;</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Save_ContentFiles_ArchiveName_examples">Examples</h4>
+  <pre><code class="lang-csharp">Debug.Log($"a player reads StreamingAssets/{ContentFiles.ArchiveName}");</code></pre>
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_Luny_Save_ContentFiles_ProjectFolder" data-uid="CodeSmile.Luny.Save.ContentFiles.ProjectFolder">
+  ProjectFolder
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentFiles.cs/#L44"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The project's content folder, beside <code>Assets</code>: <code>&lt;project&gt;/Luny</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const string ProjectFolder = &quot;Luny&quot;</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Save_ContentFiles_ProjectFolder_examples">Examples</h4>
+  <pre><code class="lang-csharp">var folder = Path.Combine(projectFolder, ContentFiles.ProjectFolder);</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_Luny_Save_ContentFiles_Read_" data-uid="CodeSmile.Luny.Save.ContentFiles.Read*"></a>
+
+  <h3 id="CodeSmile_Luny_Save_ContentFiles_Read" data-uid="CodeSmile.Luny.Save.ContentFiles.Read">
+  Read()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentFiles.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads the game's content where it is: the project's <code>Luny</code> folder in the Editor, so an edit is read
+at once, and <code>StreamingAssets/GameData.luny</code> in a player.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static ContentReadOperation Read()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Save.ContentReadOperation.html">ContentReadOperation</a></dt>
+    <dd><p>The read.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Save_ContentFiles_Read_examples">Examples</h4>
+  <pre><code class="lang-csharp">var reading = ContentFiles.Read();</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Save_ContentFiles_ReadArchive_" data-uid="CodeSmile.Luny.Save.ContentFiles.ReadArchive*"></a>
+
+  <h3 id="CodeSmile_Luny_Save_ContentFiles_ReadArchive" data-uid="CodeSmile.Luny.Save.ContentFiles.ReadArchive">
+  ReadArchive()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentFiles.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads every content file of <code>StreamingAssets/GameData.luny</code> into memory.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static ContentReadOperation ReadArchive()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Save.ContentReadOperation.html">ContentReadOperation</a></dt>
+    <dd><p>The read. It has ended when this returns where StreamingAssets is a local folder, and in a later frame
+on Android and the web.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Save_ContentFiles_ReadArchive_examples">Examples</h4>
+  <pre><code class="lang-csharp">var reading = ContentFiles.ReadArchive();</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Save_ContentFiles_ReadProject_" data-uid="CodeSmile.Luny.Save.ContentFiles.ReadProject*"></a>
+
+  <h3 id="CodeSmile_Luny_Save_ContentFiles_ReadProject" data-uid="CodeSmile.Luny.Save.ContentFiles.ReadProject">
+  ReadProject()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentFiles.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads every content file of the project's <code>Luny</code> folder, in the Editor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static ContentReadOperation ReadProject()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Save.ContentReadOperation.html">ContentReadOperation</a></dt>
+    <dd><p>The read; it has ended when this returns. <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_NotFound">NotFound</a> when the project has no
+<code>Luny</code> folder.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Save_ContentFiles_ReadProject_examples">Examples</h4>
+  <pre><code class="lang-csharp">var reading = ContentFiles.ReadProject();</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Save.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>Called in a player, which has no project folder.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_Luny_Save_ContentFiles_ReadProjectText_" data-uid="CodeSmile.Luny.Save.ContentFiles.ReadProjectText*"></a>
+
+  <h3 id="CodeSmile_Luny_Save_ContentFiles_ReadProjectText_System_String_" data-uid="CodeSmile.Luny.Save.ContentFiles.ReadProjectText(System.String)">
+  ReadProjectText(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentFiles.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The text of one content file in the project's <code>Luny</code> folder, in the Editor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static string ReadProjectText(string path)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>path</code></dt></td>
+    <td style="width: 99%"><dd><p>A content path such as &quot;Encounter/room-breach.json&quot;, compared case sensitively.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>The text, decoded from UTF-8 without a byte-order mark, or null when no file of exactly that name is
+there.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Save_ContentFiles_ReadProjectText_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var json = ContentFiles.ReadProjectText("Encounter/room-breach.json");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Save.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>Called in a player, the path is refused or does not end in &quot;.json&quot;, or the
+file is not UTF-8.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_Luny_Save_ContentFiles_WriteArchive_" data-uid="CodeSmile.Luny.Save.ContentFiles.WriteArchive*"></a>
+
+  <h3 id="CodeSmile_Luny_Save_ContentFiles_WriteArchive" data-uid="CodeSmile.Luny.Save.ContentFiles.WriteArchive">
+  WriteArchive()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentFiles.cs/#L119"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Packages the project's <code>Luny</code> folder into <code>Assets/StreamingAssets/GameData.luny</code>, in the
+Editor: every content file uncompressed, in ordinal path order, so unchanged content gives the same bytes. The
+new archive replaces the old one only once it is complete; a read that fails writes nothing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static ContentArchiveResult WriteArchive()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Save.ContentArchiveResult.html">ContentArchiveResult</a></dt>
+    <dd><p>What was written, or why nothing was.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Save_ContentFiles_WriteArchive_examples">Examples</h4>
+  <pre><code class="lang-csharp">var written = ContentFiles.WriteArchive();</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Save.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>Called in a player.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_Luny_Save_ContentFiles_WriteProjectText_" data-uid="CodeSmile.Luny.Save.ContentFiles.WriteProjectText*"></a>
+
+  <h3 id="CodeSmile_Luny_Save_ContentFiles_WriteProjectText_System_String_System_String_" data-uid="CodeSmile.Luny.Save.ContentFiles.WriteProjectText(System.String,System.String)">
+  WriteProjectText(string, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentFiles.cs/#L106"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes one content file in the project's <code>Luny</code> folder, in the Editor: the direct JSON write for
+agents and tools. The text must be one well-formed JSON value; it is written as UTF-8 to a copy beside the file
+and replaces the file in one rename, creating its folders.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static SaveOperation WriteProjectText(string path, string json)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>path</code></dt></td>
+    <td style="width: 99%"><dd><p>A content path such as &quot;Encounter/room-breach.json&quot;.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>json</code></dt></td>
+    <td style="width: 99%"><dd><p>The file's text.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Save.SaveOperation.html">SaveOperation</a></dt>
+    <dd><p>The write; it has ended when this returns. <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_Unknown">Unknown</a> with the system's message
+when the file system refused.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Save_ContentFiles_WriteProjectText_System_String_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">ContentFiles.WriteProjectText("Encounter/room-breach.json", "{ \"id\": \"room-breach\" }");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Save.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>Called in a player, the path is refused, does not end in &quot;.json&quot; or names a
+file or folder that exists in another case, or the text is not one JSON value; the message names its
+line.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentFiles.cs/#L40" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

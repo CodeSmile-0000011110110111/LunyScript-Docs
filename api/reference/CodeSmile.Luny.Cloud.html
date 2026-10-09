@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Namespace CodeSmile.Luny.Cloud | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Namespace CodeSmile.Luny.Cloud | LunyScript API Reference ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.Luny.Cloud">
+
+  <h1 id="CodeSmile_Luny_Cloud" data-uid="CodeSmile.Luny.Cloud" class="text-break">Namespace CodeSmile.Luny.Cloud</h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+
+    <h3 id="classes">
+Classes
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudAccount.html">CloudAccount</a></dt>
+      <dd><p>The account part of a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a>: explicit sign-in, sign-out and account delete, and the account
+state. Each call returns a request that waits until every request before it ended, and that every request made
+after it waits for.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudCalls.html">CloudCalls</a></dt>
+      <dd><p>Calls that were already complete when they were made: what a backend returns when it did its work inside the
+call, as <a class="xref" href="CodeSmile.Luny.Cloud.FileCloudBackend.html">FileCloudBackend</a> does. The client observes the outcome at its next poll, so a caller sees
+the same order of events it sees against a service.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a></dt>
+      <dd><p>One game's client of the cloud services: the account, player and game data, player files and leaderboards,
+reached through <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html#CodeSmile_Luny_Cloud_CloudClient_Account">Account</a>, <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html#CodeSmile_Luny_Cloud_CloudClient_Data">Data</a>, <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html#CodeSmile_Luny_Cloud_CloudClient_Files">Files</a> and <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html#CodeSmile_Luny_Cloud_CloudClient_Leaderboards">Leaderboards</a>.
+Every call returns a <a class="xref" href="CodeSmile.Luny.Cloud.CloudRequest.html">CloudRequest</a> at once; <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html#CodeSmile_Luny_Cloud_CloudClient_Tick">Tick()</a>, called once per frame on the main
+thread, sends each request in its turn, polls the backends, and ends each request with a classified outcome. No
+caller ever sees a task or an exception for a service outcome.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudData.html">CloudData</a></dt>
+      <dd><p>The data part of a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a>: one JSON value per key in the player's data, which the client reads
+and writes, and the game's published data, which it only reads.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudFiles.html">CloudFiles</a></dt>
+      <dd><p>The file part of a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a>: player files, and the C# sources registered by name that produce
+a save's bytes and receive a load's. A LunyScript script names a registered file and never holds bytes (C20 B);
+C# may also pass bytes directly.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudJournal.html">CloudJournal</a></dt>
+      <dd><p>The client's last events in a fixed ring, oldest first: what an agent or a test reads to see what the client
+did, in order, without a debugger. Recording an event copies a struct into a slot and allocates nothing.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudKeys.html">CloudKeys</a></dt>
+      <dd><p>The rule every key, file name, game data collection and leaderboard id follows: 1 to 255 characters, each a
+letter <code>A-Z</code> or <code>a-z</code>, a digit, <code>_</code> or <code>-</code>. Unity Cloud Save refuses other keys with HTTP
+400, so the client checks the rule once for every backend and fails such a request as
+<a class="xref" href="CodeSmile.Luny.Cloud.CloudFailure.html#CodeSmile_Luny_Cloud_CloudFailure_Denied">Denied</a> without calling one; the file backend then refuses what the service refuses.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudLeaderboards.html">CloudLeaderboards</a></dt>
+      <dd><p>The leaderboard part of a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a>: board declarations, the durable score queue, and the reads
+of a page, one entry and the past seasons.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudRequest.html">CloudRequest</a></dt>
+      <dd><p>One request a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> carries out: what it asks, where, where it is, and how it ended. Made by
+the client's services, never by a caller; read it after each <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html#CodeSmile_Luny_Cloud_CloudClient_Tick">Tick()</a>, or set an
+<a class="xref" href="CodeSmile.Luny.Cloud.CloudRequest.html#CodeSmile_Luny_Cloud_CloudRequest_Observer">Observer</a> to be told when it ends.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudServices.html">CloudServices</a></dt>
+      <dd><p>The backends a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> talks to, one per service. A service with no backend fails its requests
+as <a class="xref" href="CodeSmile.Luny.Cloud.CloudFailure.html#CodeSmile_Luny_Cloud_CloudFailure_Unknown">Unknown</a> with one logged error naming what to install, so a game that uses Cloud
+Save without leaderboards names no leaderboard backend.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.FileCloudBackend.html">FileCloudBackend</a></dt>
+      <dd><p>The file backend: accounts, player data, game data, player files and leaderboards kept in five kinds of JSON
+file under one directory. <b>A first-class part of the product, not a test fixture</b> (AGENTS.md rule 52): it is
+how every branch is reached without a network, and what makes the automated suite run with no credentials.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.LeaderboardRow.html">LeaderboardRow</a></dt>
+      <dd><p>One entry of a leaderboard as a read returned it. Immutable.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.LeaderboardRows.html">LeaderboardRows</a></dt>
+      <dd><p>The rows of one page of a leaderboard's entries in rank order, as a read returned them, and the board's
+total. Immutable.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.LeaderboardSeasons.html">LeaderboardSeasons</a></dt>
+      <dd><p>A leaderboard's past seasons, as a read returned them. A board that never reset has none. Immutable.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.LeaderboardSpec.html">LeaderboardSpec</a></dt>
+      <dd><p>A leaderboard as the game declares it: the service's board id, the update rule and the sort order configured on
+the dashboard (C23 A). Immutable.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.LunyCloud.html">LunyCloud</a></dt>
+      <dd><p>LunyCloud's entry type: <a class="xref" href="CodeSmile.Luny.Cloud.LunyCloud.html#CodeSmile_Luny_Cloud_LunyCloud_CreateClient_CodeSmile_Luny_Cloud_ICloudClock_CodeSmile_Luny_Cloud_ICloudLog_System_Int32_">CreateClient(ICloudClock, ICloudLog, int)</a> makes the <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> that is one game's client
+of the cloud services, the signed-in player's account, the player's data and files, the game's read-only data and
+leaderboards. It forwards to the <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> constructor; the caller installs the services with
+<a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html#CodeSmile_Luny_Cloud_CloudClient_UseServices_CodeSmile_Luny_Cloud_CloudServices_">UseServices(CloudServices)</a> and calls <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html#CodeSmile_Luny_Cloud_CloudClient_Tick">Tick()</a> once per frame. A scene's
+<code>CloudHost</code> owns and ticks a client for C# with no script, and a LunyScript script reaches its runner's client
+through its <code>Cloud</code>, <code>Account</code> and <code>Leaderboard</code> verbs.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.LunyCloudException.html">LunyCloudException</a></dt>
+      <dd><p>A mistake in the C# that uses LunyCloud, raised where it was made: a null argument, a write to game data, which
+is read only to the client, a second set of services after signing in started, a leaderboard declared twice with
+different rules, or a completed call created as failed with no failure. The message names the call and what to
+change. A service outcome, such as a failed upload, is never an exception: it is a <a class="xref" href="CodeSmile.Luny.Cloud.CloudRequest.html">CloudRequest</a>
+whose <a class="xref" href="CodeSmile.Luny.Cloud.CloudRequest.html#CodeSmile_Luny_Cloud_CloudRequest_State">State</a> is <a class="xref" href="CodeSmile.Luny.Cloud.CloudRequestState.html#CodeSmile_Luny_Cloud_CloudRequestState_Failed">Failed</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.MemoryCloudQueueStore.html">MemoryCloudQueueStore</a></dt>
+      <dd><p>A queue store that keeps the text in memory: the queue lasts as long as this object.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.SystemCloudClock.html">SystemCloudClock</a></dt>
+      <dd><p>The clock a client uses when none is named: the system's UTC time and a stopwatch.</p>
+</dd>
+    </dl>
+    <h3 id="structs">
+Structs
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudAddress.html">CloudAddress</a></dt>
+      <dd><p>A typed place a request reads or writes: a key in the player's data, an item of the game's published data, a
+player file or a leaderboard. Requests for one address run one at a time in the order they were made; requests
+for different addresses do not wait for each other. Keys are case sensitive.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudJournalEntry.html">CloudJournalEntry</a></dt>
+      <dd><p>One event of the client, as the journal keeps it. Holds references the client already held, so recording
+one allocates nothing.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.LeaderboardSeason.html">LeaderboardSeason</a></dt>
+      <dd><p>One past season of a leaderboard: a version a reset archived, with the moment it started and ended.</p>
+</dd>
+    </dl>
+    <h3 id="interfaces">
+Interfaces
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.ICloudAccountBackend.html">ICloudAccountBackend</a></dt>
+      <dd><p>The account service a backend provides: signing in, signing out and deleting the account. The client calls it on
+the main thread, one call at a time, and never while a data or leaderboard call is in flight for a sign-out or a
+delete.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.ICloudCall.html">ICloudCall</a></dt>
+      <dd><p>One backend call in flight, which the client polls once per <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html#CodeSmile_Luny_Cloud_CloudClient_Tick">Tick()</a> and never awaits. A
+backend wraps whatever its service hands back, a task or a callback, behind this interface; a backend that did
+its work inside the call returns a completed one from <a class="xref" href="CodeSmile.Luny.Cloud.CloudCalls.html">CloudCalls</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.ICloudCall-1.html">ICloudCall&lt;TResult&gt;</a></dt>
+      <dd><p>A call whose success carries a result: a JSON value, a file's bytes, a page of entries.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.ICloudClock.html">ICloudClock</a></dt>
+      <dd><p>The two times the client reads: the device's UTC time, which a queued score records as the moment of its Submit
+(C24 A compares it with a season's end), and a monotonic count of seconds, which spaces the score queue's retries.
+The domain's seam over <code>System.DateTime.UtcNow</code> and <code>System.Diagnostics.Stopwatch</code>; AGENTS.md section 4.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.ICloudDataBackend.html">ICloudDataBackend</a></dt>
+      <dd><p>The data service a backend provides: JSON values under player data keys, read-only game data items, and player
+files. Every address the client passes has a key that follows <a class="xref" href="CodeSmile.Luny.Cloud.CloudKeys.html">CloudKeys</a>, and every call is made on
+the main thread for a signed-in account.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.ICloudFileSource.html">ICloudFileSource</a></dt>
+      <dd><p>The C# that produces and consumes the bytes of named player files, registered with
+<a class="xref" href="CodeSmile.Luny.Cloud.CloudFiles.html#CodeSmile_Luny_Cloud_CloudFiles_Register_System_String_CodeSmile_Luny_Cloud_ICloudFileSource_">Register(string, ICloudFileSource)</a>. A script names the file and never holds its bytes, by the captain's rule
+&quot;bytes are low-level constructs&quot; (C20 B).</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.ICloudLog.html">ICloudLog</a></dt>
+      <dd><p>Where the client writes its log lines. The domain names no engine type, so the LunyScript adapter writes them
+through <code>LunyScriptLog</code> in its <code>Cloud</code> area and the Unity host through <code>UnityEngine.Debug</code>. Lines
+are composed only at state changes and failures, never per frame.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.ICloudQueueStore.html">ICloudQueueStore</a></dt>
+      <dd><p>Where the score queue keeps its waiting scores between sessions, so &quot;a Submit that cannot be sent waits in a
+bounded queue on the device, survives a restart, and is sent later for the same account&quot; (2026-09-09). The client
+reads it once when it is named and writes the whole queue, a few hundred bytes of JSON, at each change; never per
+frame.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.ICloudRequestObserver.html">ICloudRequestObserver</a></dt>
+      <dd><p>Told about one <a class="xref" href="CodeSmile.Luny.Cloud.CloudRequest.html">CloudRequest</a>: asked whether to send it at the moment it would be sent, and told when
+it ended. Both calls happen inside <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html#CodeSmile_Luny_Cloud_CloudClient_Tick">Tick()</a>, on the main thread, so a caller reacts to an
+outcome in the same frame the client observed it. Set with <a class="xref" href="CodeSmile.Luny.Cloud.CloudRequest.html#CodeSmile_Luny_Cloud_CloudRequest_Observer">Observer</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.ICloudText.html">ICloudText</a></dt>
+      <dd><p>The JSON text a save sends, read when the request is sent rather than when it is made. A caller that captured
+values when its save was made and encodes them only at sending, as the LunyScript adapter does, implements this,
+so a save that waits behind another can take later values without a new text per frame.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.ILeaderboardBackend.html">ILeaderboardBackend</a></dt>
+      <dd><p>The leaderboard service a backend provides: sending a score, reading a page of entries, one account's entry, and
+a board's past seasons. The client calls it on the main thread for a signed-in account; the score queue sends
+one score at a time.</p>
+</dd>
+    </dl>
+    <h3 id="enums">
+Enums
+</h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.AccountState.html">AccountState</a></dt>
+      <dd><p>Where the client's account is.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudAddressKind.html">CloudAddressKind</a></dt>
+      <dd><p>Which kind of place a <a class="xref" href="CodeSmile.Luny.Cloud.CloudAddress.html">CloudAddress</a> names.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudCommit.html">CloudCommit</a></dt>
+      <dd><p>What a write request did on the service, the commit-status receipt of the settled answer C09 A: a failure keeps
+its classification, and this says whether the service may already hold the write.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudFailure.html">CloudFailure</a></dt>
+      <dd><p>Why a cloud request failed, classified once by the client or the backend that answered, so no caller ever sees an
+exception type for a service outcome. The LunyScript adapter maps each value to the <code>OperationFailure</code> of
+the same name.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudJournalEvent.html">CloudJournalEvent</a></dt>
+      <dd><p>What a <a class="xref" href="CodeSmile.Luny.Cloud.CloudJournalEntry.html">CloudJournalEntry</a> records.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudLogLevel.html">CloudLogLevel</a></dt>
+      <dd><p>How serious a <a class="xref" href="CodeSmile.Luny.Cloud.ICloudLog.html">ICloudLog</a> line is.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudRequestKind.html">CloudRequestKind</a></dt>
+      <dd><p>What a <a class="xref" href="CodeSmile.Luny.Cloud.CloudRequest.html">CloudRequest</a> asks a service to do.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.CloudRequestState.html">CloudRequestState</a></dt>
+      <dd><p>Where a <a class="xref" href="CodeSmile.Luny.Cloud.CloudRequest.html">CloudRequest</a> is: waiting its turn, sent to a backend, or ended.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.LeaderboardKeeps.html">LeaderboardKeeps</a></dt>
+      <dd><p>Which score a leaderboard keeps for an account when the account submits again: the update rule configured on the
+service's dashboard. The client cannot read that configuration, so the game declares it; the file backend applies
+it and the journal names it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Cloud.LeaderboardRanks.html">LeaderboardRanks</a></dt>
+      <dd><p>The order a leaderboard ranks its entries in: the sort order configured on the service's dashboard.</p>
+</dd>
+    </dl>
+
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
