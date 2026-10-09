@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class CloudRequest | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class CloudRequest | LunyScript API Reference ">
+      
+      <meta name="description" content="One request a  carries out: what it asks, where, where it is, and how it ended. Made by the client&#39;s services, never by a caller; read it after each , or set an  to be told when it ends.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyCloud_CloudRequest.md&amp;value=---%0Auid%3A%20CodeSmile.LunyCloud.CloudRequest%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyCloud.CloudRequest">
+
+
+
+  <h1 id="CodeSmile_LunyCloud_CloudRequest" data-uid="CodeSmile.LunyCloud.CloudRequest" class="text-break">
+Class CloudRequest  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunyCloud.html">LunyCloud</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>One request a <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html">CloudClient</a> carries out: what it asks, where, where it is, and how it ended. Made by
+the client's services, never by a caller; read it after each <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html#CodeSmile_LunyCloud_CloudClient_Tick">Tick()</a>, or set an
+<a class="xref" href="CodeSmile.LunyCloud.CloudRequest.html#CodeSmile_LunyCloud_CloudRequest_Observer">Observer</a> to be told when it ends.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class CloudRequest</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">CloudRequest</span></div>
+    </dd>
+  </dl>
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyCloud_CloudRequest_examples">Examples</h2>
+  <pre><code class="lang-csharp">var loading = cloud.Data.Load(CloudAddress.PlayerData("Career"));
+cloud.Tick();
+if (loading.State == CloudRequestState.Succeeded) Apply(loading.Text);</code></pre>
+
+
+  <h2 id="CodeSmile_LunyCloud_CloudRequest_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>A request allocates once, when it is made: the request boundary AGENTS.md rule 31 names. Reading it allocates
+nothing except <a class="xref" href="CodeSmile.LunyCloud.CloudRequest.html#CodeSmile_LunyCloud_CloudRequest_Describe">Describe()</a>. A request ends once, and its state never changes after that except a
+cancelled write whose backend answered later, which updates <a class="xref" href="CodeSmile.LunyCloud.CloudRequest.html#CodeSmile_LunyCloud_CloudRequest_Commit">Commit</a> (C09 A).</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Address_" data-uid="CodeSmile.LunyCloud.CloudRequest.Address*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Address" data-uid="CodeSmile.LunyCloud.CloudRequest.Address">
+  Address
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Where it reads or writes; a default address for the account requests.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudAddress Address { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudAddress.html">CloudAddress</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Address_examples">Examples</h4>
+  <pre><code class="lang-csharp">var where = request.Address;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Board_" data-uid="CodeSmile.LunyCloud.CloudRequest.Board*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Board" data-uid="CodeSmile.LunyCloud.CloudRequest.Board">
+  Board
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L93"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The board a leaderboard request names; null for every other kind.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public LeaderboardSpec Board { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LeaderboardSpec.html">LeaderboardSpec</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Board_examples">Examples</h4>
+  <pre><code class="lang-csharp">var board = request.Board;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Bytes_" data-uid="CodeSmile.LunyCloud.CloudRequest.Bytes*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Bytes" data-uid="CodeSmile.LunyCloud.CloudRequest.Bytes">
+  Bytes
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L73"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A successful <a class="xref" href="CodeSmile.LunyCloud.CloudRequestKind.html#CodeSmile_LunyCloud_CloudRequestKind_LoadFile">LoadFile</a>'s bytes when no registered
+<a class="xref" href="CodeSmile.LunyCloud.ICloudFileSource.html">ICloudFileSource</a> received them; null otherwise.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public byte[] Bytes { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">byte</span>[]</dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Bytes_examples">Examples</h4>
+  <pre><code class="lang-csharp">var bytes = loading.Bytes;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Commit_" data-uid="CodeSmile.LunyCloud.CloudRequest.Commit*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Commit" data-uid="CodeSmile.LunyCloud.CloudRequest.Commit">
+  Commit
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>What a write did on the service; <a class="xref" href="CodeSmile.LunyCloud.CloudCommit.html#CodeSmile_LunyCloud_CloudCommit_None">None</a> for a read and while a write has not
+ended.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudCommit Commit { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudCommit.html">CloudCommit</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Commit_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (request.Commit == CloudCommit.Unknown) ReloadBeforeRetrying();</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_DeliveredToSource_" data-uid="CodeSmile.LunyCloud.CloudRequest.DeliveredToSource*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_DeliveredToSource" data-uid="CodeSmile.LunyCloud.CloudRequest.DeliveredToSource">
+  DeliveredToSource
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L77"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True when a successful file load handed its bytes to the file's registered source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool DeliveredToSource { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_DeliveredToSource_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (loading.DeliveredToSource) Console.WriteLine("the recorder has it");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Entry_" data-uid="CodeSmile.LunyCloud.CloudRequest.Entry*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Entry" data-uid="CodeSmile.LunyCloud.CloudRequest.Entry">
+  Entry
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A successful <a class="xref" href="CodeSmile.LunyCloud.CloudRequestKind.html#CodeSmile_LunyCloud_CloudRequestKind_LoadEntry">LoadEntry</a>'s row; null otherwise.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public LeaderboardRow Entry { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LeaderboardRow.html">LeaderboardRow</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Entry_examples">Examples</h4>
+  <pre><code class="lang-csharp">var rank = reading.Entry.Rank;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Failure_" data-uid="CodeSmile.LunyCloud.CloudRequest.Failure*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Failure" data-uid="CodeSmile.LunyCloud.CloudRequest.Failure">
+  Failure
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Why the request failed, or <a class="xref" href="CodeSmile.LunyCloud.CloudFailure.html#CodeSmile_LunyCloud_CloudFailure_None">None</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudFailure Failure { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudFailure.html">CloudFailure</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Failure_examples">Examples</h4>
+  <pre><code class="lang-csharp">var why = request.Failure;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Id_" data-uid="CodeSmile.LunyCloud.CloudRequest.Id*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Id" data-uid="CodeSmile.LunyCloud.CloudRequest.Id">
+  Id
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The request's number, unique within its client, from 1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public long Id { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">long</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Id_examples">Examples</h4>
+  <pre><code class="lang-csharp">var id = request.Id;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_IsEnded_" data-uid="CodeSmile.LunyCloud.CloudRequest.IsEnded*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_IsEnded" data-uid="CodeSmile.LunyCloud.CloudRequest.IsEnded">
+  IsEnded
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True once the request succeeded, failed or was cancelled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsEnded { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_IsEnded_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (request.IsEnded) m_Requests.Remove(request);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_IsWrite_" data-uid="CodeSmile.LunyCloud.CloudRequest.IsWrite*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_IsWrite" data-uid="CodeSmile.LunyCloud.CloudRequest.IsWrite">
+  IsWrite
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L136"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True for a request that changes something on the service, which carries a
+<a class="xref" href="CodeSmile.LunyCloud.CloudRequest.html#CodeSmile_LunyCloud_CloudRequest_Commit">Commit</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsWrite { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_IsWrite_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (request.IsWrite) Console.WriteLine(request.Commit);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Kind_" data-uid="CodeSmile.LunyCloud.CloudRequest.Kind*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Kind" data-uid="CodeSmile.LunyCloud.CloudRequest.Kind">
+  Kind
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L33"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>What the request asks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudRequestKind Kind { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudRequestKind.html">CloudRequestKind</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Kind_examples">Examples</h4>
+  <pre><code class="lang-csharp">var kind = request.Kind;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Observer_" data-uid="CodeSmile.LunyCloud.CloudRequest.Observer*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Observer" data-uid="CodeSmile.LunyCloud.CloudRequest.Observer">
+  Observer
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L64"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Told when the request is about to be sent and when it ended. Set it right after the request is made,
+before the next <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html#CodeSmile_LunyCloud_CloudClient_Tick">Tick()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public ICloudRequestObserver Observer { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.ICloudRequestObserver.html">ICloudRequestObserver</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Observer_examples">Examples</h4>
+  <pre><code class="lang-csharp">request.Observer = this;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Page_" data-uid="CodeSmile.LunyCloud.CloudRequest.Page*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Page" data-uid="CodeSmile.LunyCloud.CloudRequest.Page">
+  Page
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A successful <a class="xref" href="CodeSmile.LunyCloud.CloudRequestKind.html#CodeSmile_LunyCloud_CloudRequestKind_LoadPage">LoadPage</a>'s page; null otherwise.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public LeaderboardPageResult Page { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LeaderboardPageResult.html">LeaderboardPageResult</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Page_examples">Examples</h4>
+  <pre><code class="lang-csharp">var top = paging.Page.Row(0);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Problem_" data-uid="CodeSmile.LunyCloud.CloudRequest.Problem*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Problem" data-uid="CodeSmile.LunyCloud.CloudRequest.Problem">
+  Problem
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The cause of a failure in the backend's or the client's own words, such as an exception message, or
+null. The failure's log line carries the same text.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Problem { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Problem_examples">Examples</h4>
+  <pre><code class="lang-csharp">Console.WriteLine(request.Problem);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Score_" data-uid="CodeSmile.LunyCloud.CloudRequest.Score*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Score" data-uid="CodeSmile.LunyCloud.CloudRequest.Score">
+  Score
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The score a <a class="xref" href="CodeSmile.LunyCloud.CloudRequestKind.html#CodeSmile_LunyCloud_CloudRequestKind_Submit">Submit</a> sends; 0 for every other kind.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public double Score { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Score_examples">Examples</h4>
+  <pre><code class="lang-csharp">var score = submitting.Score;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Seasons_" data-uid="CodeSmile.LunyCloud.CloudRequest.Seasons*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Seasons" data-uid="CodeSmile.LunyCloud.CloudRequest.Seasons">
+  Seasons
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A successful <a class="xref" href="CodeSmile.LunyCloud.CloudRequestKind.html#CodeSmile_LunyCloud_CloudRequestKind_LoadSeasons">LoadSeasons</a>'s seasons; null otherwise.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public LeaderboardSeasons Seasons { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LeaderboardSeasons.html">LeaderboardSeasons</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Seasons_examples">Examples</h4>
+  <pre><code class="lang-csharp">var seasons = reading.Seasons;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_State_" data-uid="CodeSmile.LunyCloud.CloudRequest.State*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_State" data-uid="CodeSmile.LunyCloud.CloudRequest.State">
+  State
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Where the request is.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudRequestState State { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudRequestState.html">CloudRequestState</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_State_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (request.State == CloudRequestState.Failed) Console.WriteLine(request.Failure);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Text_" data-uid="CodeSmile.LunyCloud.CloudRequest.Text*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Text" data-uid="CodeSmile.LunyCloud.CloudRequest.Text">
+  Text
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A successful <a class="xref" href="CodeSmile.LunyCloud.CloudRequestKind.html#CodeSmile_LunyCloud_CloudRequestKind_Load">Load</a>'s JSON text; null otherwise.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Text { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Text_examples">Examples</h4>
+  <pre><code class="lang-csharp">var json = loading.Text;</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Cancel_" data-uid="CodeSmile.LunyCloud.CloudRequest.Cancel*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Cancel" data-uid="CodeSmile.LunyCloud.CloudRequest.Cancel">
+  Cancel()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L150"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Stops waiting for the request. One still waiting is never sent: it ends as cancelled, not submitted, at the
+next tick. One already sent ends as cancelled now with <a class="xref" href="CodeSmile.LunyCloud.CloudCommit.html#CodeSmile_LunyCloud_CloudCommit_Unknown">Unknown</a>; the backend's call
+is still polled, so a later request for the same address still waits for it, and its answer updates
+<a class="xref" href="CodeSmile.LunyCloud.CloudRequest.html#CodeSmile_LunyCloud_CloudRequest_Commit">Commit</a>. Nothing is rolled back on the service. A request that already ended is left as it is.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Cancel()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Cancel_examples">Examples</h4>
+  <pre><code class="lang-csharp">uploading.Cancel();</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_Describe_" data-uid="CodeSmile.LunyCloud.CloudRequest.Describe*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_Describe" data-uid="CodeSmile.LunyCloud.CloudRequest.Describe">
+  Describe()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L155"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>&quot;request 7: Save player data 'Career', Failed as Offline, NotSubmitted&quot;. <b>Allocates.</b></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Describe()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>The line.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudRequest_Describe_examples">Examples</h4>
+  <pre><code class="lang-csharp">Console.WriteLine(request.Describe());</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudRequest_ToString_" data-uid="CodeSmile.LunyCloud.CloudRequest.ToString*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudRequest_ToString" data-uid="CodeSmile.LunyCloud.CloudRequest.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L165"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Returns a string that represents the current object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>A string that represents the current object.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudRequest.cs/#L23" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

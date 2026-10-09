@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class CloudClient | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class CloudClient | LunyScript API Reference ">
+      
+      <meta name="description" content="One game&#39;s client of the cloud services: the account, player and game data, player files and leaderboards, reached through , ,  and . Every call returns a  at once; , called once per frame on the main thread, sends each request in its turn, polls the backends, and ends each request with a classified outcome. No caller ever sees a task or an exception for a service outcome.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyCloud_CloudClient.md&amp;value=---%0Auid%3A%20CodeSmile.LunyCloud.CloudClient%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyCloud.CloudClient">
+
+
+
+  <h1 id="CodeSmile_LunyCloud_CloudClient" data-uid="CodeSmile.LunyCloud.CloudClient" class="text-break">
+Class CloudClient  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.Send.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunyCloud.html">LunyCloud</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>One game's client of the cloud services: the account, player and game data, player files and leaderboards,
+reached through <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html#CodeSmile_LunyCloud_CloudClient_Account">Account</a>, <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html#CodeSmile_LunyCloud_CloudClient_Data">Data</a>, <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html#CodeSmile_LunyCloud_CloudClient_Files">Files</a> and <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html#CodeSmile_LunyCloud_CloudClient_Leaderboards">Leaderboards</a>.
+Every call returns a <a class="xref" href="CodeSmile.LunyCloud.CloudRequest.html">CloudRequest</a> at once; <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html#CodeSmile_LunyCloud_CloudClient_Tick">Tick()</a>, called once per frame on the main
+thread, sends each request in its turn, polls the backends, and ends each request with a classified outcome. No
+caller ever sees a task or an exception for a service outcome.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class CloudClient</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">CloudClient</span></div>
+    </dd>
+  </dl>
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyCloud_CloudClient_examples">Examples</h2>
+  <pre><code class="lang-csharp">var cloud = new CloudClient();
+cloud.UseServices(CloudServices.From(new FileCloudBackend(directory)));
+var saving = cloud.Data.Save(CloudAddress.PlayerData("Career"), "{\"Best\":12}");
+cloud.Tick();   // every frame</code></pre>
+
+
+  <h2 id="CodeSmile_LunyCloud_CloudClient_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>
+    <b>Order.</b> Requests for one address run one at a time in the order they were made, whatever the one
+    before ended with; requests for different addresses do not wait for each other. A failed request is never
+    sent again. A sign-out and an account delete wait until no request is in flight, and requests made after
+    them wait until they ended, so work admitted under one account is never sent under another.
+</p>
+<p>
+    <b>Sign-in.</b> The first request made while signed out starts a sign-in, unless the player signed out or
+    deleted the account since; then requests fail as <a class="xref" href="CodeSmile.LunyCloud.CloudFailure.html#CodeSmile_LunyCloud_CloudFailure_NotSignedIn">NotSignedIn</a> until
+    <a class="xref" href="CodeSmile.LunyCloud.CloudAccount.html#CodeSmile_LunyCloud_CloudAccount_SignIn">SignIn()</a>. A failed sign-in fails every waiting request with its reason, and every
+    later one at once, until a sign-in succeeds.
+</p>
+<p>
+    <b>Timing belongs to the backends.</b> The client sets no deadline; "we do not implement timeout ourselves,
+    this is all handled by unity services package" (the captain, 2026-09-26). Before services are named,
+    requests wait.
+</p>
+<p>
+    <b>A backend that throws cannot leave <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html#CodeSmile_LunyCloud_CloudClient_Tick">Tick()</a>.</b> Every call into a backend, a call it returned,
+    an <a class="xref" href="CodeSmile.LunyCloud.ICloudText.html">ICloudText</a>, an <a class="xref" href="CodeSmile.LunyCloud.ICloudFileSource.html">ICloudFileSource</a> or an observer is guarded; a throw ends that
+    request as <a class="xref" href="CodeSmile.LunyCloud.CloudFailure.html#CodeSmile_LunyCloud_CloudFailure_Unknown">Unknown</a>, logged once with the exception text.
+</p>
+<p>
+    <b>Allocation.</b> Making a request allocates it; a tick that only polls allocates nothing, and a tick with
+    nothing to do returns on its first line.
+</p>
+</div>
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="CodeSmile_LunyCloud_CloudClient__ctor_" data-uid="CodeSmile.LunyCloud.CloudClient.#ctor*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient__ctor_CodeSmile_LunyCloud_ICloudClock_CodeSmile_LunyCloud_ICloudLog_System_Int32_" data-uid="CodeSmile.LunyCloud.CloudClient.#ctor(CodeSmile.LunyCloud.ICloudClock,CodeSmile.LunyCloud.ICloudLog,System.Int32)">
+  CloudClient(ICloudClock, ICloudLog, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a client with no services; requests wait until <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html#CodeSmile_LunyCloud_CloudClient_UseServices_CodeSmile_LunyCloud_CloudServices_">UseServices(CloudServices)</a> names them.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudClient(ICloudClock clock = null, ICloudLog log = null, int queueCapacity = 64)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyCloud.ICloudClock.html">ICloudClock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>clock</code></dt></td>
+    <td style="width: 99%"><dd><p>The clock; the system clock when null.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyCloud.ICloudLog.html">ICloudLog</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>log</code></dt></td>
+    <td style="width: 99%"><dd><p>Where log lines go; nowhere when null.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>queueCapacity</code></dt></td>
+    <td style="width: 99%"><dd><p>How many scores the queue holds, 1 or more.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient__ctor_CodeSmile_LunyCloud_ICloudClock_CodeSmile_LunyCloud_ICloudLog_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var cloud = new CloudClient(log: new ConsoleLog());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LunyCloudException.html">LunyCloudException</a></dt>
+    <dd><p><code class="paramref">queueCapacity</code> is below 1.</p>
+</dd>
+  </dl>
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient_DefaultQueueCapacity" data-uid="CodeSmile.LunyCloud.CloudClient.DefaultQueueCapacity">
+  DefaultQueueCapacity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many scores the queue holds when no capacity is named; docs/proposals/lunycloud.md L11.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const int DefaultQueueCapacity = 64</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_DefaultQueueCapacity_examples">Examples</h4>
+  <pre><code class="lang-csharp">var cloud = new CloudClient(queueCapacity: CloudClient.DefaultQueueCapacity * 2);</code></pre>
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient_QueueRetrySeconds" data-uid="CodeSmile.LunyCloud.CloudClient.QueueRetrySeconds">
+  QueueRetrySeconds
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How long the score queue waits before it tries again after a season read failed or a score was
+refused as <a class="xref" href="CodeSmile.LunyCloud.CloudFailure.html#CodeSmile_LunyCloud_CloudFailure_Offline">Offline</a> or <a class="xref" href="CodeSmile.LunyCloud.CloudFailure.html#CodeSmile_LunyCloud_CloudFailure_RateLimited">RateLimited</a>, unless a Submit or a
+sign-in comes first; docs/proposals/lunycloud.md L09.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const double QueueRetrySeconds = 30</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">double</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_QueueRetrySeconds_examples">Examples</h4>
+  <pre><code class="lang-csharp">clock.Advance(CloudClient.QueueRetrySeconds);</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyCloud_CloudClient_Account_" data-uid="CodeSmile.LunyCloud.CloudClient.Account*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient_Account" data-uid="CodeSmile.LunyCloud.CloudClient.Account">
+  Account
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Signing in, out and deleting the account.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudAccount Account { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudAccount.html">CloudAccount</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_Account_examples">Examples</h4>
+  <pre><code class="lang-csharp">cloud.Account.SignIn();</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudClient_Data_" data-uid="CodeSmile.LunyCloud.CloudClient.Data*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient_Data" data-uid="CodeSmile.LunyCloud.CloudClient.Data">
+  Data
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Player data and game data: JSON values under keys.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudData Data { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudData.html">CloudData</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_Data_examples">Examples</h4>
+  <pre><code class="lang-csharp">cloud.Data.Load(CloudAddress.PlayerData("Career"));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudClient_Files_" data-uid="CodeSmile.LunyCloud.CloudClient.Files*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient_Files" data-uid="CodeSmile.LunyCloud.CloudClient.Files">
+  Files
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L102"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Player files and the C# sources that produce and consume them.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudFiles Files { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudFiles.html">CloudFiles</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_Files_examples">Examples</h4>
+  <pre><code class="lang-csharp">cloud.Files.Register("Replay", recorder);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudClient_HasServices_" data-uid="CodeSmile.LunyCloud.CloudClient.HasServices*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient_HasServices" data-uid="CodeSmile.LunyCloud.CloudClient.HasServices">
+  HasServices
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L118"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True once services are named.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool HasServices { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_HasServices_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (cloud.HasServices == false) cloud.UseServices(services);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudClient_Journal_" data-uid="CodeSmile.LunyCloud.CloudClient.Journal*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient_Journal" data-uid="CodeSmile.LunyCloud.CloudClient.Journal">
+  Journal
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L110"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The last events, oldest first.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudJournal Journal { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudJournal.html">CloudJournal</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_Journal_examples">Examples</h4>
+  <pre><code class="lang-csharp">Console.WriteLine(cloud.Journal.Describe(20));</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudClient_Leaderboards_" data-uid="CodeSmile.LunyCloud.CloudClient.Leaderboards*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient_Leaderboards" data-uid="CodeSmile.LunyCloud.CloudClient.Leaderboards">
+  Leaderboards
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L106"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Leaderboard declarations, the score queue and the reads.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudLeaderboards Leaderboards { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudLeaderboards.html">CloudLeaderboards</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_Leaderboards_examples">Examples</h4>
+  <pre><code class="lang-csharp">cloud.Leaderboards.Submit(weekly, 1250);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudClient_PendingCount_" data-uid="CodeSmile.LunyCloud.CloudClient.PendingCount*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient_PendingCount" data-uid="CodeSmile.LunyCloud.CloudClient.PendingCount">
+  PendingCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L122"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many requests wait or are in flight, the score queue not counted.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int PendingCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_PendingCount_examples">Examples</h4>
+  <pre><code class="lang-csharp">var busy = cloud.PendingCount &gt; 0;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudClient_Services_" data-uid="CodeSmile.LunyCloud.CloudClient.Services*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient_Services" data-uid="CodeSmile.LunyCloud.CloudClient.Services">
+  Services
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The named services, or null before <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html#CodeSmile_LunyCloud_CloudClient_UseServices_CodeSmile_LunyCloud_CloudServices_">UseServices(CloudServices)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudServices Services { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudServices.html">CloudServices</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_Services_examples">Examples</h4>
+  <pre><code class="lang-csharp">var named = cloud.Services != null;</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyCloud_CloudClient_Describe_" data-uid="CodeSmile.LunyCloud.CloudClient.Describe*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient_Describe" data-uid="CodeSmile.LunyCloud.CloudClient.Describe">
+  Describe()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L209"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Everything an agent needs to see what the client is doing, one line each: the services, the account, every
+waiting and in-flight request, every queued score and the last 20 events. <b>Allocates</b>; for diagnosis.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Describe()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>The description.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_Describe_examples">Examples</h4>
+  <pre><code class="lang-csharp">Console.WriteLine(cloud.Describe());</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudClient_Tick_" data-uid="CodeSmile.LunyCloud.CloudClient.Tick*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient_Tick" data-uid="CodeSmile.LunyCloud.CloudClient.Tick">
+  Tick()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L175"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sends every request whose turn came, polls every one in flight, ends each one that has an outcome and tells
+its observer, then advances the score queue. Call it once per frame on the main thread. With nothing waiting
+or in flight it returns on its first line and allocates nothing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Tick()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_Tick_examples">Examples</h4>
+  <pre><code class="lang-csharp">private void Update() =&gt; m_Cloud.Tick();</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudClient_UseServices_" data-uid="CodeSmile.LunyCloud.CloudClient.UseServices*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudClient_UseServices_CodeSmile_LunyCloud_CloudServices_" data-uid="CodeSmile.LunyCloud.CloudClient.UseServices(CodeSmile.LunyCloud.CloudServices)">
+  UseServices(CloudServices)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.cs/#L140"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Names the backends. Called once, before or after the first request; requests made before it wait.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void UseServices(CloudServices services)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyCloud.CloudServices.html">CloudServices</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>services</code></dt></td>
+    <td style="width: 99%"><dd><p>The backends.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_UseServices_CodeSmile_LunyCloud_CloudServices__examples">Examples</h4>
+  <pre><code class="lang-csharp">cloud.UseServices(CloudServices.From(new FileCloudBackend(directory)));</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudClient_UseServices_CodeSmile_LunyCloud_CloudServices__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The only backend code this calls is <code>Describe</code>, for the log line, and it is guarded.</p>
+</div>
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LunyCloudException.html">LunyCloudException</a></dt>
+    <dd><p><code class="paramref">services</code> is null, or services were already named,
+other than supplied ones before a sign-in started. A client talks to one set of backends for its
+lifetime.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Client/CloudClient.Send.cs/#L8" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -83,6 +83,13 @@
 Classes
 </h3>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.AccountScripting.html">AccountScripting</a></dt>
+      <dd><p>The <code>Account</code> verbs a script writes inside <code>Build()</code>: sign in, sign out and delete the cloud account,
+and <code>Account.IsSignedIn()</code> (C03, the captain's choice of the Account family on 2026-09-20; C22 A). Outcomes
+arrive through <code>When.Account(handle)</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.ActionBlock.html">ActionBlock</a></dt>
       <dd><p>A block whose objective can take more than one frame, and which therefore reports
 <a class="xref" href="CodeSmile.LunyScript.ActionResult.html">ActionResult</a> rather than simply running to completion.</p>
@@ -161,12 +168,33 @@ each authored operation to it, and reports a refused one once.</p>
 </dd>
     </dl>
     <dl class="jumplist">
-      <dt><a class="xref" href="CodeSmile.LunyScript.CloudSaveGateway.html">CloudSaveGateway</a></dt>
-      <dd><p>Owns every cloud upload, download and delete of a document one <a class="xref" href="CodeSmile.LunyScript.ScriptRunner.html">ScriptRunner</a>'s scripts
-start: signs in when the first request arrives, queues requests in the order their blocks ran, sends
-one request per document at a time, polls each operation once per frame, and completes each request's
-attempts with its classified outcome. No script and no block ever sees a <code>Task</code> or an exception
-type; AGENTS.md section 12.</p>
+      <dt><a class="xref" href="CodeSmile.LunyScript.CloudDefinitions.html">CloudDefinitions</a></dt>
+      <dd><p>The cloud declarations a script writes inside <code>Build()</code> with <code>Define</code>: a key of the player's data, a
+game data item, a player file, a leaderboard, and the page and entry a leaderboard read fills. LunyCloud adds
+them to the core's <a class="xref" href="CodeSmile.LunyScript.DefineFactory.html">DefineFactory</a> surface in namespace <code>CodeSmile.LunyScript</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CloudGateway.html">CloudGateway</a></dt>
+      <dd><p>The one place C# reaches the cloud client a runner's scripts use: which backends it talks to, where its score
+queue is kept, and the <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html">CloudClient</a> itself for C# reads and diagnosis. The runner ticks the client
+once per frame, before any instance runs, so an outcome reaches the watches of the same frame.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CloudScripting.html">CloudScripting</a></dt>
+      <dd><p>The <code>Cloud</code> verbs a script writes inside <code>Build()</code>: save, load and delete a declared document, a key of
+the player's data, a game data item or a player file, each bound to an operation handle with <code>.As(handle)</code>,
+and <code>Cloud.CommitIs</code>, the commit status of a write. Outcomes arrive through <code>When.Cloud(handle)</code> and
+<code>When.Operation(handle)</code>. AGENTS.md rule 50.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CloudWatches.html">CloudWatches</a></dt>
+      <dd><p>The cloud watches a script writes inside <code>Build()</code> with <code>When</code>: <code>When.Cloud</code>,
+<code>When.Account</code> and <code>When.Leaderboard</code>. Each observes the attempt a start of its family bound to the
+handle, the same attempt <code>When.Operation(handle)</code> observes: both can be registered, and the runtime starts
+no second attempt (C02 A). A handle no start of the family binds is refused when <code>Build()</code> finishes.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -360,14 +388,6 @@ test says so. It reports the native Loaded and Unloaded phases the way Unity's c
 </dd>
     </dl>
     <dl class="jumplist">
-      <dt><a class="xref" href="CodeSmile.LunyScript.FileCloudSaveProvider.html">FileCloudSaveProvider</a></dt>
-      <dd><p>The file-based Cloud Save provider: one file per document, under a directory the caller names.
-<b>A first-class part of the product, not a test fixture</b>; AGENTS.md rule 52. It is how
-every failure branch is tested without a network, and what makes the automated suite runnable
-with no credentials.</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.FileLoadBlock.html">FileLoadBlock</a></dt>
       <dd><p>What <code>Asset.Load(file).Into(destination).As(handle)</code> builds: starts reading one declared text or JSON file
 and, when the read and the decoding succeed, writes the destination in one step.</p>
@@ -402,6 +422,13 @@ from. Built once per script type and never changed afterwards.</p>
       <dd><p>How a target's visual moves while players focus it: how far it rises, how much it grows, how fast it
 turns and how long it takes to blend in and out. An asset an <code>Interaction.Target(...).Visual(child)</code>
 script's Inspector assigns to its <code>InteractionStyle</code> input.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardScripting.html">LeaderboardScripting</a></dt>
+      <dd><p>The <code>Leaderboard</code> verbs a script writes inside <code>Build()</code>: submit a score to a declared board, and read
+a page of its entries or one account's entry (C06 A, C07 B, C23 A). Outcomes arrive through
+<code>When.Leaderboard(handle)</code>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -719,6 +746,18 @@ when the block holding it runs.</p>
     <h3 id="structs">
 Structs
 </h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.AccountFactory.html">AccountFactory</a></dt>
+      <dd><p>The <code>Account</code> surface inside <code>Build()</code>: the build in progress, to which LunyCloud's LunyScript adapter
+adds <code>SignIn</code>, <code>SignOut</code>, <code>Delete</code> and <code>IsSignedIn</code> as extension methods in this namespace.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.AccountRequestBuilder.html">AccountRequestBuilder</a></dt>
+      <dd><p>What <code>Account.SignIn()</code> and <code>Account.Delete()</code> return: an account request that becomes a block when
+<a class="xref" href="CodeSmile.LunyScript.AccountRequestBuilder.html#CodeSmile_LunyScript_AccountRequestBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle. An unbound request is refused when <code>Build()</code> finishes.</p>
+</dd>
+    </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.AdapterRegistration.html">AdapterRegistration</a></dt>
       <dd><p>One extension block type an adapter registered, with the Unity package and minimum
@@ -1039,29 +1078,63 @@ the selector.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.CloudDeleteBuilder.html">CloudDeleteBuilder</a></dt>
-      <dd><p>What <code>Cloud.Delete(document)</code> returns: a delete of the cloud copy that becomes a block when
-<a class="xref" href="CodeSmile.LunyScript.CloudDeleteBuilder.html#CodeSmile_LunyScript_CloudDeleteBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle. An unbound delete is refused when <code>Build()</code>
-finishes.</p>
+      <dd><p>What <code>Cloud.Delete(document)</code> and <code>Cloud.Delete(key)</code> return: a delete that becomes a block when
+<a class="xref" href="CodeSmile.LunyScript.CloudDeleteBuilder.html#CodeSmile_LunyScript_CloudDeleteBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle. An unbound delete is refused when <code>Build()</code> finishes.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.CloudFactory.html">CloudFactory</a></dt>
-      <dd><p>The <code>Cloud</code> surface inside <code>Build()</code>: uploads a declared document to the signed-in
-player's Cloud Save data, downloads it back, and deletes the cloud copy. Each start is one attempt
-on an operation handle, bound with <code>.As(handle)</code>, which is required; the outcome arrives through
-<code>When.Cloud(handle)</code> and <code>When.Operation(handle)</code>. AGENTS.md rule 50.</p>
+      <dd><p>The <code>Cloud</code> surface inside <code>Build()</code>. It carries the build in progress and nothing else: LunyCloud's
+LunyScript adapter, <code>CodeSmile.LunyCloud.LunyScriptAdapter</code>, adds the verbs <code>Save</code>, <code>Load</code>,
+<code>Delete</code> and <code>CommitIs</code> as extension methods in this namespace, so a script writes
+<code>Cloud.Save(Career).As(Uploading)</code> with no <code>using</code> line. AGENTS.md rule 50.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CloudFile.html">CloudFile</a></dt>
+      <dd><p>A file in the signed-in player's cloud file storage, declared with <code>Define.CloudFile(name)</code>. The script
+names the file and never holds its bytes (C20 B, the captain's rule &quot;bytes are low-level constructs&quot;): C#
+registers an <code>ICloudFileSource</code> for the name, which produces a save's bytes and receives a load's.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CloudFileBuilder.html">CloudFileBuilder</a></dt>
+      <dd><p>What <code>Cloud.Save(file)</code>, <code>Cloud.Load(file)</code> and <code>Cloud.Delete(file)</code> return: a request for a player
+file that becomes a block when <a class="xref" href="CodeSmile.LunyScript.CloudFileBuilder.html#CodeSmile_LunyScript_CloudFileBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle. An unbound request is refused when
+<code>Build()</code> finishes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CloudKey.html">CloudKey</a></dt>
+      <dd><p>A key in the signed-in player's own cloud data, declared with <code>Define.CloudKey(name)</code>: another place a
+document can be saved to and loaded from than its own name (C01 <code>.To(destination)</code>, C04 player document).
+<code>Cloud.Save(doc).To(key)</code>, <code>Cloud.Load(key).Into(doc)</code> and <code>Cloud.Delete(key)</code> use it.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.CloudLoadBuilder.html">CloudLoadBuilder</a></dt>
-      <dd><p>What <code>Cloud.Load(document)</code> returns: a download that becomes a block when <a class="xref" href="CodeSmile.LunyScript.CloudLoadBuilder.html#CodeSmile_LunyScript_CloudLoadBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds
-the operation handle. An unbound download is refused when <code>Build()</code> finishes.</p>
+      <dd><p>What <code>Cloud.Load(document)</code> and <code>Cloud.Load(source).Into(document)</code> return: a download that becomes a
+block when <a class="xref" href="CodeSmile.LunyScript.CloudLoadBuilder.html#CodeSmile_LunyScript_CloudLoadBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle. An unbound download is refused when <code>Build()</code>
+finishes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CloudLoadSourceStep.html">CloudLoadSourceStep</a></dt>
+      <dd><p>What <code>Cloud.Load(key)</code> and <code>Cloud.Load(item)</code> return: a download from a key of the player's
+data or a game data item that needs <a class="xref" href="CodeSmile.LunyScript.CloudLoadSourceStep.html#CodeSmile_LunyScript_CloudLoadSourceStep_Into_CodeSmile_LunyScript_Document_System_String_System_Int32_">Into(Document, string, int)</a> to name the document it is written into.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.CloudSaveBuilder.html">CloudSaveBuilder</a></dt>
-      <dd><p>What <code>Cloud.Save(document)</code> returns: an upload that becomes a block when <a class="xref" href="CodeSmile.LunyScript.CloudSaveBuilder.html#CodeSmile_LunyScript_CloudSaveBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds
-the operation handle. An unbound upload is refused when <code>Build()</code> finishes.</p>
+      <dd><p>What <code>Cloud.Save(document)</code> returns: an upload that becomes a block when <a class="xref" href="CodeSmile.LunyScript.CloudSaveBuilder.html#CodeSmile_LunyScript_CloudSaveBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the
+operation handle, stored under the document's name, or under another key of the player's data with
+<a class="xref" href="CodeSmile.LunyScript.CloudSaveBuilder.html#CodeSmile_LunyScript_CloudSaveBuilder_To_CodeSmile_LunyScript_CloudKey_System_String_System_Int32_">To(CloudKey, string, int)</a> (C01 A). An unbound upload is refused when <code>Build()</code> finishes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.CloudSaveToBuilder.html">CloudSaveToBuilder</a></dt>
+      <dd><p>What <code>Cloud.Save(document).To(key)</code> returns: an upload to another key that becomes a block when
+<a class="xref" href="CodeSmile.LunyScript.CloudSaveToBuilder.html#CodeSmile_LunyScript_CloudSaveToBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -1337,6 +1410,13 @@ run once per stored entry, in Unity's order.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.GameDataItem.html">GameDataItem</a></dt>
+      <dd><p>An item of the game's published cloud data, declared with <code>Define.GameData(collection, key)</code>: read only to
+the client, so <code>Cloud.Load(item).Into(doc)</code> reads it and no save or delete takes it (C04, C28). In Unity
+Cloud Save it is a key of a custom item, which the dashboard or a server writes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyScript.Gate.html">Gate</a></dt>
       <dd><p>A declared gate: a named hold on input or camera for every script on the runner, which
 <code>Gate.Open(gate, categories)</code> opens and <code>Gate.Close(gate)</code> closes.</p>
@@ -1468,6 +1548,91 @@ clauses name. Each clause is optional and written once.</p>
       <dt><a class="xref" href="CodeSmile.LunyScript.LayerMask.html">LayerMask</a></dt>
       <dd><p>A set of the project's layers that a Collision query searches: what <code>Define.LayerMask</code> makes
 and a query's <code>Layers(mask)</code> takes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardDefineBuilder.html">LeaderboardDefineBuilder</a></dt>
+      <dd><p>What <code>Define.Leaderboard(name)</code> returns: a board declaration that takes <a class="xref" href="CodeSmile.LunyScript.LeaderboardDefineBuilder.html#CodeSmile_LunyScript_LeaderboardDefineBuilder_Keeps_CodeSmile_LunyCloud_LeaderboardKeeps_System_String_System_Int32_">Keeps(LeaderboardKeeps, string, int)</a> and
+<a class="xref" href="CodeSmile.LunyScript.LeaderboardDefineBuilder.html#CodeSmile_LunyScript_LeaderboardDefineBuilder_Ranks_CodeSmile_LunyCloud_LeaderboardRanks_System_String_System_Int32_">Ranks(LeaderboardRanks, string, int)</a>, each once, and converts to a <a class="xref" href="CodeSmile.LunyScript.LeaderboardHandle.html">LeaderboardHandle</a> when it is assigned.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardEntry.html">LeaderboardEntry</a></dt>
+      <dd><p>One account's entry of a leaderboard a script reads, declared with <code>Define.LeaderboardEntry(name)</code>:
+<code>Leaderboard.LoadEntry(board).Into(entry)</code> fills it with this account's entry, or another player's with
+<code>.ForPlayer(id)</code> (C07 B). Its values are internal storage of the object, so a read allocates nothing and the
+debugger shows it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardEntryBuilder.html">LeaderboardEntryBuilder</a></dt>
+      <dd><p>What <code>Leaderboard.LoadEntry(board).Into(entry)</code> returns: an entry read that becomes a block when
+<a class="xref" href="CodeSmile.LunyScript.LeaderboardEntryBuilder.html#CodeSmile_LunyScript_LeaderboardEntryBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle, optionally writing the entry's public details into a document with
+<a class="xref" href="CodeSmile.LunyScript.LeaderboardEntryBuilder.html#CodeSmile_LunyScript_LeaderboardEntryBuilder_WithDetails_CodeSmile_LunyScript_Document_System_String_System_Int32_">WithDetails(Document, string, int)</a> first. An unbound read is refused when <code>Build()</code> finishes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardEntryStep.html">LeaderboardEntryStep</a></dt>
+      <dd><p>What <code>Leaderboard.LoadEntry(board)</code> returns: an entry read that names its entry with
+<a class="xref" href="CodeSmile.LunyScript.LeaderboardEntryStep.html#CodeSmile_LunyScript_LeaderboardEntryStep_Into_CodeSmile_LunyScript_LeaderboardEntry_System_String_System_Int32_">Into(LeaderboardEntry, string, int)</a>, and optionally another player with <a class="xref" href="CodeSmile.LunyScript.LeaderboardEntryStep.html#CodeSmile_LunyScript_LeaderboardEntryStep_ForPlayer_CodeSmile_LunyScript_Text_System_String_System_Int32_">ForPlayer(Text, string, int)</a> first.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardFactory.html">LeaderboardFactory</a></dt>
+      <dd><p>The <code>Leaderboard</code> surface inside <code>Build()</code>: the build in progress, to which LunyCloud's LunyScript
+adapter adds <code>Submit</code>, <code>Load</code> and <code>LoadEntry</code> as extension methods in this namespace.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardHandle.html">LeaderboardHandle</a></dt>
+      <dd><p>A leaderboard, declared with <code>Define.Leaderboard(nameof(Weekly))</code>: the name is the service's board id, and
+<code>.Keeps</code> and <code>.Ranks</code> record the update rule and order configured on the dashboard (C23 A).
+<code>Leaderboard.Submit(score).To(board)</code>, <code>Leaderboard.Load(board)</code> and <code>Leaderboard.LoadEntry(board)</code>
+use it, and <a class="xref" href="CodeSmile.LunyScript.LeaderboardHandle.html#CodeSmile_LunyScript_LeaderboardHandle_Waiting">Waiting</a> counts its queued scores.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardLoadRankStep.html">LeaderboardLoadRankStep</a></dt>
+      <dd><p>What <code>Leaderboard.Load(board).FromRank(n)</code> returns: a page read from a later rank that names its page
+with <a class="xref" href="CodeSmile.LunyScript.LeaderboardLoadRankStep.html#CodeSmile_LunyScript_LeaderboardLoadRankStep_Into_CodeSmile_LunyScript_LeaderboardPage_System_String_System_Int32_">Into(LeaderboardPage, string, int)</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardLoadStep.html">LeaderboardLoadStep</a></dt>
+      <dd><p>What <code>Leaderboard.Load(board)</code> returns: a page read that names its page with <a class="xref" href="CodeSmile.LunyScript.LeaderboardLoadStep.html#CodeSmile_LunyScript_LeaderboardLoadStep_Into_CodeSmile_LunyScript_LeaderboardPage_System_String_System_Int32_">Into(LeaderboardPage, string, int)</a>,
+and optionally a later first rank with <a class="xref" href="CodeSmile.LunyScript.LeaderboardLoadStep.html#CodeSmile_LunyScript_LeaderboardLoadStep_FromRank_System_Int32_System_String_System_Int32_">FromRank(int, string, int)</a> first.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardPage.html">LeaderboardPage</a></dt>
+      <dd><p>A page of a leaderboard's entries a script reads, declared with <code>Define.LeaderboardPage(name, rows)</code>:
+<code>Leaderboard.Load(board).Into(page)</code> fills it, top first, and <a class="xref" href="CodeSmile.LunyScript.LeaderboardPage.html#CodeSmile_LunyScript_LeaderboardPage_Count">Count</a>, <a class="xref" href="CodeSmile.LunyScript.LeaderboardPage.html#CodeSmile_LunyScript_LeaderboardPage_Rank_System_Int32_System_String_System_Int32_">Rank(int, string, int)</a>,
+<a class="xref" href="CodeSmile.LunyScript.LeaderboardPage.html#CodeSmile_LunyScript_LeaderboardPage_Score_System_Int32_System_String_System_Int32_">Score(int, string, int)</a>, <a class="xref" href="CodeSmile.LunyScript.LeaderboardPage.html#CodeSmile_LunyScript_LeaderboardPage_PlayerName_System_Int32_System_String_System_Int32_">PlayerName(int, string, int)</a> and <a class="xref" href="CodeSmile.LunyScript.LeaderboardPage.html#CodeSmile_LunyScript_LeaderboardPage_PlayerId_System_Int32_System_String_System_Int32_">PlayerId(int, string, int)</a> read it (C07 B). Each row is internal
+storage of the object, so a read allocates nothing and the debugger shows it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardPageBuilder.html">LeaderboardPageBuilder</a></dt>
+      <dd><p>What <code>Leaderboard.Load(board).Into(page)</code> returns: a page read that becomes a block when
+<a class="xref" href="CodeSmile.LunyScript.LeaderboardPageBuilder.html#CodeSmile_LunyScript_LeaderboardPageBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle. An unbound read is refused when <code>Build()</code> finishes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardSubmitBuilder.html">LeaderboardSubmitBuilder</a></dt>
+      <dd><p>What <code>Leaderboard.Submit(score).To(board)</code> returns: a Submit that becomes a block when
+<a class="xref" href="CodeSmile.LunyScript.LeaderboardSubmitBuilder.html#CodeSmile_LunyScript_LeaderboardSubmitBuilder_As_CodeSmile_LunyScript_Operation_System_String_System_Int32_">As(Operation, string, int)</a> binds the operation handle. An unbound Submit is refused when <code>Build()</code> finishes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardSubmitDetailsStep.html">LeaderboardSubmitDetailsStep</a></dt>
+      <dd><p>What <code>Leaderboard.Submit(score).With(document)</code> returns: a Submit with public details that names its
+board with <a class="xref" href="CodeSmile.LunyScript.LeaderboardSubmitDetailsStep.html#CodeSmile_LunyScript_LeaderboardSubmitDetailsStep_To_CodeSmile_LunyScript_LeaderboardHandle_System_String_System_Int32_">To(LeaderboardHandle, string, int)</a>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunyScript.LeaderboardSubmitStep.html">LeaderboardSubmitStep</a></dt>
+      <dd><p>What <code>Leaderboard.Submit(score)</code> returns: a Submit that names its board with <a class="xref" href="CodeSmile.LunyScript.LeaderboardSubmitStep.html#CodeSmile_LunyScript_LeaderboardSubmitStep_To_CodeSmile_LunyScript_LeaderboardHandle_System_String_System_Int32_">To(LeaderboardHandle, string, int)</a>, and
+optionally its public details with <a class="xref" href="CodeSmile.LunyScript.LeaderboardSubmitStep.html#CodeSmile_LunyScript_LeaderboardSubmitStep_With_CodeSmile_LunyScript_Document_System_String_System_Int32_">With(Document, string, int)</a> first.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -2948,19 +3113,6 @@ code never sees this type; it sees <code>Asset.Load</code> and <code>When.Operat
       <dd><p>What a camera backend provides to the <a class="xref" href="CodeSmile.LunyScript.CameraGateway.html">CameraGateway</a>: choosing which rig a
 view renders, sizing that view, and writing a rig's tracking targets. Script code never
 sees this type; it sees the <code>View</code> and <code>Camera</code> surfaces.</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="CodeSmile.LunyScript.ICloudLoadOperation.html">ICloudLoadOperation</a></dt>
-      <dd><p>A load in flight. Adds the loaded document to <a class="xref" href="CodeSmile.LunyScript.Platform.IAsyncOperation.html">IAsyncOperation</a>; the document is
-meaningful only once the operation completed successfully.</p>
-</dd>
-    </dl>
-    <dl class="jumplist">
-      <dt><a class="xref" href="CodeSmile.LunyScript.ICloudSaveProvider.html">ICloudSaveProvider</a></dt>
-      <dd><p>What a Cloud Save backend provides to the <a class="xref" href="CodeSmile.LunyScript.CloudSaveGateway.html">CloudSaveGateway</a>: sign-in, and the upload,
-download and delete of one whole document, each returned as an operation the gateway polls once per
-frame. Script code never sees this type; it sees start blocks and outcome events. AGENTS.md section 12.</p>
 </dd>
     </dl>
     <dl class="jumplist">

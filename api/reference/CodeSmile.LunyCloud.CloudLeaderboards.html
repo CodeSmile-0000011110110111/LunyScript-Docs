@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class CloudLeaderboards | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class CloudLeaderboards | LunyScript API Reference ">
+      
+      <meta name="description" content="The leaderboard part of a : board declarations, the durable score queue, and the reads of a page, one entry and the past seasons.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyCloud_CloudLeaderboards.md&amp;value=---%0Auid%3A%20CodeSmile.LunyCloud.CloudLeaderboards%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunyCloud.CloudLeaderboards">
+
+
+
+  <h1 id="CodeSmile_LunyCloud_CloudLeaderboards" data-uid="CodeSmile.LunyCloud.CloudLeaderboards" class="text-break">
+Class CloudLeaderboards  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Leaderboards/CloudLeaderboards.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunyCloud.html">LunyCloud</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The leaderboard part of a <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html">CloudClient</a>: board declarations, the durable score queue, and the reads
+of a page, one entry and the past seasons.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class CloudLeaderboards</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">CloudLeaderboards</span></div>
+    </dd>
+  </dl>
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunyCloud_CloudLeaderboards_examples">Examples</h2>
+  <pre><code class="lang-csharp">var weekly = cloud.Leaderboards.Declare(new LeaderboardSpec("Weekly"));
+    cloud.Leaderboards.Submit(weekly, 1250);</code></pre>
+
+
+  <h2 id="CodeSmile_LunyCloud_CloudLeaderboards_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>
+    <b>The score queue.</b> A Submit enters a bounded queue on the device (<a class="xref" href="CodeSmile.LunyCloud.CloudLeaderboards.html#CodeSmile_LunyCloud_CloudLeaderboards_QueueCapacity">QueueCapacity</a>
+    scores), written to the client's <a class="xref" href="CodeSmile.LunyCloud.ICloudQueueStore.html">ICloudQueueStore</a> at each change so a restart keeps it, and
+    is sent for the account it was submitted for, oldest first, while that account is signed in; a score
+    submitted while signed out belongs to the next account that signs in. Before sending, the queue reads the
+    board's seasons; a season that ended after the Submit ends the score as
+    <a class="xref" href="CodeSmile.LunyCloud.CloudFailure.html#CodeSmile_LunyCloud_CloudFailure_Expired">Expired</a>, unsent (C24 A). A season read that fails, and a send refused as
+    <a class="xref" href="CodeSmile.LunyCloud.CloudFailure.html#CodeSmile_LunyCloud_CloudFailure_Offline">Offline</a> or <a class="xref" href="CodeSmile.LunyCloud.CloudFailure.html#CodeSmile_LunyCloud_CloudFailure_RateLimited">RateLimited</a>, leave the score waiting; the
+    queue tries again after <a class="xref" href="CodeSmile.LunyCloud.CloudClient.html#CodeSmile_LunyCloud_CloudClient_QueueRetrySeconds">QueueRetrySeconds</a>, or at the next Submit or sign-in. Any
+    other outcome of a send ends the score, and a score is never sent again after the service may have taken it
+    (the 2026-09-09 queue contract).
+</p>
+<p>
+    <b>Reads do not wait for the queue</b> (docs/proposals/lunycloud.md L13): a page read right after a Submit
+    can come back before the score arrived.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunyCloud_CloudLeaderboards_QueueCapacity_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.QueueCapacity*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudLeaderboards_QueueCapacity" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.QueueCapacity">
+  QueueCapacity
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Leaderboards/CloudLeaderboards.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many scores the queue holds at most.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int QueueCapacity { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudLeaderboards_QueueCapacity_examples">Examples</h4>
+  <pre><code class="lang-csharp">var room = cloud.Leaderboards.QueueCapacity - cloud.Leaderboards.QueuedCount;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudLeaderboards_QueuedCount_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.QueuedCount*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudLeaderboards_QueuedCount" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.QueuedCount">
+  QueuedCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Leaderboards/CloudLeaderboards.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many scores the queue holds, for every board and account.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int QueuedCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudLeaderboards_QueuedCount_examples">Examples</h4>
+  <pre><code class="lang-csharp">var queued = cloud.Leaderboards.QueuedCount;</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunyCloud_CloudLeaderboards_Declare_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.Declare*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudLeaderboards_Declare_CodeSmile_LunyCloud_LeaderboardSpec_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.Declare(CodeSmile.LunyCloud.LeaderboardSpec)">
+  Declare(LeaderboardSpec)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Leaderboards/CloudLeaderboards.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares a board, or returns the one declared before under the same id.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public LeaderboardSpec Declare(LeaderboardSpec board)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyCloud.LeaderboardSpec.html">LeaderboardSpec</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>board</code></dt></td>
+    <td style="width: 99%"><dd><p>The board.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LeaderboardSpec.html">LeaderboardSpec</a></dt>
+    <dd><p>The declared board.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudLeaderboards_Declare_CodeSmile_LunyCloud_LeaderboardSpec__examples">Examples</h4>
+  <pre><code class="lang-csharp">var weekly = cloud.Leaderboards.Declare(new LeaderboardSpec("Weekly", LeaderboardKeeps.Best));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LunyCloudException.html">LunyCloudException</a></dt>
+    <dd><p><code class="paramref">board</code> is null, or the id was declared with different
+rules.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudLeaderboards_Find_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.Find*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudLeaderboards_Find_System_String_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.Find(System.String)">
+  Find(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Leaderboards/CloudLeaderboards.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The board declared under <code class="paramref">id</code>, or null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public LeaderboardSpec Find(string id)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>id</code></dt></td>
+    <td style="width: 99%"><dd><p>The board id.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LeaderboardSpec.html">LeaderboardSpec</a></dt>
+    <dd><p>The declaration.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudLeaderboards_Find_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var weekly = cloud.Leaderboards.Find("Weekly");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudLeaderboards_LoadEntry_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.LoadEntry*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudLeaderboards_LoadEntry_CodeSmile_LunyCloud_LeaderboardSpec_System_String_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.LoadEntry(CodeSmile.LunyCloud.LeaderboardSpec,System.String)">
+  LoadEntry(LeaderboardSpec, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Leaderboards/CloudLeaderboards.cs/#L148"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads one account's entry into <a class="xref" href="CodeSmile.LunyCloud.CloudRequest.html#CodeSmile_LunyCloud_CloudRequest_Entry">Entry</a>. An account with no entry fails as
+<a class="xref" href="CodeSmile.LunyCloud.CloudFailure.html#CodeSmile_LunyCloud_CloudFailure_NotFound">NotFound</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudRequest LoadEntry(LeaderboardSpec board, string playerId = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyCloud.LeaderboardSpec.html">LeaderboardSpec</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>board</code></dt></td>
+    <td style="width: 99%"><dd><p>The board.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>playerId</code></dt></td>
+    <td style="width: 99%"><dd><p>The account, or null for the signed-in one.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudRequest.html">CloudRequest</a></dt>
+    <dd><p>The request.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudLeaderboards_LoadEntry_CodeSmile_LunyCloud_LeaderboardSpec_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var mine = cloud.Leaderboards.LoadEntry(weekly);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LunyCloudException.html">LunyCloudException</a></dt>
+    <dd><p><code class="paramref">board</code> is null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudLeaderboards_LoadPage_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.LoadPage*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudLeaderboards_LoadPage_CodeSmile_LunyCloud_LeaderboardSpec_System_Int32_System_Int32_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.LoadPage(CodeSmile.LunyCloud.LeaderboardSpec,System.Int32,System.Int32)">
+  LoadPage(LeaderboardSpec, int, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Leaderboards/CloudLeaderboards.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads up to <code class="paramref">limit</code> entries in rank order into <a class="xref" href="CodeSmile.LunyCloud.CloudRequest.html#CodeSmile_LunyCloud_CloudRequest_Page">Page</a>,
+skipping <code class="paramref">offset</code> from the top.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudRequest LoadPage(LeaderboardSpec board, int offset, int limit)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyCloud.LeaderboardSpec.html">LeaderboardSpec</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>board</code></dt></td>
+    <td style="width: 99%"><dd><p>The board.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>offset</code></dt></td>
+    <td style="width: 99%"><dd><p>Entries to skip, 0 or more.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>limit</code></dt></td>
+    <td style="width: 99%"><dd><p>Entries to read, 1 to 100.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudRequest.html">CloudRequest</a></dt>
+    <dd><p>The request.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudLeaderboards_LoadPage_CodeSmile_LunyCloud_LeaderboardSpec_System_Int32_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var paging = cloud.Leaderboards.LoadPage(weekly, 0, 10);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LunyCloudException.html">LunyCloudException</a></dt>
+    <dd><p>An argument is null or out of range.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudLeaderboards_LoadSeasons_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.LoadSeasons*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudLeaderboards_LoadSeasons_CodeSmile_LunyCloud_LeaderboardSpec_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.LoadSeasons(CodeSmile.LunyCloud.LeaderboardSpec)">
+  LoadSeasons(LeaderboardSpec)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Leaderboards/CloudLeaderboards.cs/#L162"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads the board's past seasons into <a class="xref" href="CodeSmile.LunyCloud.CloudRequest.html#CodeSmile_LunyCloud_CloudRequest_Seasons">Seasons</a>: what the score queue checks
+before it sends a score.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudRequest LoadSeasons(LeaderboardSpec board)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyCloud.LeaderboardSpec.html">LeaderboardSpec</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>board</code></dt></td>
+    <td style="width: 99%"><dd><p>The board.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudRequest.html">CloudRequest</a></dt>
+    <dd><p>The request.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudLeaderboards_LoadSeasons_CodeSmile_LunyCloud_LeaderboardSpec__examples">Examples</h4>
+  <pre><code class="lang-csharp">var seasons = cloud.Leaderboards.LoadSeasons(weekly);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LunyCloudException.html">LunyCloudException</a></dt>
+    <dd><p><code class="paramref">board</code> is null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudLeaderboards_Submit_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.Submit*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudLeaderboards_Submit_CodeSmile_LunyCloud_LeaderboardSpec_System_Double_System_String_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.Submit(CodeSmile.LunyCloud.LeaderboardSpec,System.Double,System.String)">
+  Submit(LeaderboardSpec, double, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Leaderboards/CloudLeaderboards.cs/#L112"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Queues a score for the board (C06 A: the caller names the score). The request stays waiting while the score
+is queued, and succeeds when the service confirmed it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudRequest Submit(LeaderboardSpec board, double score, string details = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyCloud.LeaderboardSpec.html">LeaderboardSpec</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>board</code></dt></td>
+    <td style="width: 99%"><dd><p>The board; declared here when it was not.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">double</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>score</code></dt></td>
+    <td style="width: 99%"><dd><p>The score, a finite number.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>details</code></dt></td>
+    <td style="width: 99%"><dd><p>The entry's public details as JSON text, or null.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.CloudRequest.html">CloudRequest</a></dt>
+    <dd><p>The request. A full queue fails it as <a class="xref" href="CodeSmile.LunyCloud.CloudFailure.html#CodeSmile_LunyCloud_CloudFailure_CapacityExhausted">CapacityExhausted</a>, and a client
+whose services have no leaderboard backend as <a class="xref" href="CodeSmile.LunyCloud.CloudFailure.html#CodeSmile_LunyCloud_CloudFailure_Unknown">Unknown</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudLeaderboards_Submit_CodeSmile_LunyCloud_LeaderboardSpec_System_Double_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">cloud.Leaderboards.Submit(weekly, 1250, "{\"Ship\":\"Kestrel\"}");</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LunyCloudException.html">LunyCloudException</a></dt>
+    <dd><p><code class="paramref">board</code> is null or declared with different rules, or
+<code class="paramref">score</code> is not finite.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudLeaderboards_UseQueueStore_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.UseQueueStore*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudLeaderboards_UseQueueStore_CodeSmile_LunyCloud_ICloudQueueStore_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.UseQueueStore(CodeSmile.LunyCloud.ICloudQueueStore)">
+  UseQueueStore(ICloudQueueStore)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Leaderboards/CloudLeaderboards.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Names where the queue is kept between sessions, and reads the queue stored there. Call it before the first
+Submit; a client without a store keeps its queue in memory for the session.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void UseQueueStore(ICloudQueueStore store)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyCloud.ICloudQueueStore.html">ICloudQueueStore</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>store</code></dt></td>
+    <td style="width: 99%"><dd><p>The store.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudLeaderboards_UseQueueStore_CodeSmile_LunyCloud_ICloudQueueStore__examples">Examples</h4>
+  <pre><code class="lang-csharp">cloud.Leaderboards.UseQueueStore(new CloudQueueFile());</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunyCloud.LunyCloudException.html">LunyCloudException</a></dt>
+    <dd><p><code class="paramref">store</code> is null, or a score was already submitted or a
+store named.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunyCloud_CloudLeaderboards_Waiting_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.Waiting*"></a>
+
+  <h3 id="CodeSmile_LunyCloud_CloudLeaderboards_Waiting_System_String_" data-uid="CodeSmile.LunyCloud.CloudLeaderboards.Waiting(System.String)">
+  Waiting(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Leaderboards/CloudLeaderboards.cs/#L176"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>How many scores wait for the board for this device's account, the one being sent included (C25 A): the
+scores of the signed-in account, or of the last account that signed in, and those submitted before any
+sign-in. Allocates nothing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int Waiting(string board)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>board</code></dt></td>
+    <td style="width: 99%"><dd><p>The board id.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd><p>The count.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunyCloud_CloudLeaderboards_Waiting_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">uploadNote.visible = cloud.Leaderboards.Waiting("Weekly") &gt; 0;</code></pre>
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Runtime/Leaderboards/CloudLeaderboards.cs/#L31" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

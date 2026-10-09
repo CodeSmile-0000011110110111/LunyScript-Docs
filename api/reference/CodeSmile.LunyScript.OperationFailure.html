@@ -113,13 +113,18 @@ no block ever sees an exception type. See AGENTS.md section 12, rule 51.</p>
   <dl class="parameters">
     <dt id="CodeSmile_LunyScript_OperationFailure_CapacityExhausted"><code>CapacityExhausted = 11</code></dt>
   
-  <dd><p>An object pool at its hard cap refused a spawn: every entry was in use or still
-returning. No entry was taken back from another use and no object was created outside the pool;
-the spawn produced nothing.</p>
+  <dd><p>A bounded store was full and refused the request: an object pool at its hard cap refused a
+spawn, every entry being in use or still returning, and no object was created outside the pool; or the
+leaderboard score queue was full, and the score was not queued.</p>
 </dd>
     <dt id="CodeSmile_LunyScript_OperationFailure_Denied"><code>Denied = 4</code></dt>
   
   <dd><p>The service understood the call and refused it. Not retried.</p>
+</dd>
+    <dt id="CodeSmile_LunyScript_OperationFailure_Expired"><code>Expired = 12</code></dt>
+  
+  <dd><p>A queued leaderboard score whose board ended a season after the score was submitted. It left
+the queue and was never sent: a score counts in its own season or nowhere (C24 A).</p>
 </dd>
     <dt id="CodeSmile_LunyScript_OperationFailure_None"><code>None = 0</code></dt>
   
