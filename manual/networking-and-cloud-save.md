@@ -211,7 +211,7 @@ call with a chosen reason. `CloudGateway.Of(runner).UseServices(services)` names
 other backends, one per service. The supplied backends can be replaced until
 the first sign-in starts; backends a game names stay for the rest of the Play
 session. An assembly definition whose scripts use `Cloud`, `Account` or
-`Leaderboard` references `CodeSmile.LunyCloud.LunyScriptAdapter`, the assembly
+`Leaderboard` references `CodeSmile.Luny.Cloud.LunyScriptAdapter`, the assembly
 that holds those calls.
 
 ### Accounts, keys, game data, files and leaderboards
@@ -292,4 +292,4 @@ the field on every peer; the example keeps the best score in its own `Best`.
   [`CloudLoadBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudLoadBuilder.html),
   [`CloudDeleteBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudDeleteBuilder.html),
   [`CloudGateway`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudGateway.html),
-  [`FileCloudBackend`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyCloud.FileCloudBackend.html).
+  [`FileCloudBackend`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.Luny.Cloud.FileCloudBackend.html).
