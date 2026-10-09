@@ -6,22 +6,20 @@ when to use it, and the instructions. The instructions name the other files in t
 the task it is for, so an agent opens only those its task needs. One of them, `api.md`, lists the
 signatures of the family, and `api-index.md` in the `lunyscript` folder lists every such file.
 `api-types.md` beside it gives the file and lines of each type, so an agent that searches it for a
-member or type name reads only that type's lines. The skills are in your project at
-`Assets/CodeSmile/LunyScript/AgentSkills/`, with the skills of the two plain C# modules that ship with
-LunyScript at `Assets/CodeSmile/LunyInput/AgentSkills/` and `Assets/CodeSmile/LunySave/AgentSkills/`,
-and they match the LunyScript version you installed: every C# example in them compiles against that
-version, and the signature files are generated from it.
+member or type name reads only that type's lines. The skills are in your project, in the `AgentSkills`
+folder of each Luny product under `Assets/CodeSmile/`, and they match the version you installed: every
+C# example in them compiles against that version, and the signature files are generated from it.
 
 An agent finds a skill only in its own skill folders. When you allow it, LunyScript writes a short
 **skill link** for each skill into those folders, and keeps the links up to date.
 
 ## The skills
 
-`luny` is the skill an agent loads first. It names each Luny product, LunyScript, LunyInput and LunySave,
-says which of the skills below a task needs, and states the rules every task with them follows. It also
-tells the agent to begin every reply to you with `Oy!`, so you can see that the skills loaded. It ships
-in `Assets/CodeSmile/LunyScript/AgentSkills/luny/`, and the `lunyscript`, `lunyinput` and `lunysave`
-descriptions tell an agent to load it first.
+`luny` is the skill an agent loads first. It names each Luny product in your project and the skill to
+load for it, and states the rules every task with them follows. It also tells the agent to begin every
+reply to you with `Oy!`, so you can see that the skills loaded. It ships in
+`Assets/CodeSmile/Luny/AgentSkills/luny/`, and the description of `lunyscript` and of every product's skill
+tells an agent to load it first.
 
 | Skill | An agent loads it when a script |
 | --- | --- |
@@ -34,18 +32,13 @@ descriptions tell an agent to load it first.
 | `lunyscript-input` | reads Input System actions |
 | `lunyscript-interaction` | lets local players focus, highlight and use objects, with a prompt per player |
 | `lunyscript-ui` | writes to or reacts to a UI Toolkit panel |
-| `lunyscript-save` | saves or loads values on the device or in Cloud Save, or installs a Cloud Save provider of its own |
+| `lunyscript-save` | saves or loads values on the device |
 | `lunyscript-data` | reads tuning values from a data asset or a JSON file |
 | `lunyscript-testing` | is tested, or a test hosts it without a scene, in Edit Mode or Play Mode |
 | `lunyscript-extend` | needs a backend or a block LunyScript does not ship: a provider for a LunyScript family, or a block family that wraps a package, an SDK or a service |
 
-Two more skills are for C# that has no LunyScript script, such as a `MonoBehaviour`, and for C# that
-reads the same players or documents as the scripts beside it:
-
-| Skill | An agent loads it when C# without a script |
-| --- | --- |
-| `lunyinput` | reads a button, stick or trigger with LunyInput's `LocalInput`, pairs local players, handles a lost gamepad, rebinds a control or stores rebound controls |
-| `lunysave` | keeps progress, settings, a save slot or a high score between sessions with LunySave's `LocalSave`, migrates an older save, reads a document from StreamingAssets, or is asked to save at an absolute path or as raw bytes |
+Every other Luny product has one skill, named after the product in lowercase letters, for its plain C#
+and any script calls it adds; `luny` lists them and says when each one applies.
 
 ## Allowing the skill links
 
@@ -56,16 +49,15 @@ the project's `UserSettings` folder.
 After the welcome window opens, and while no skill link exists, a message box titled **Install
 LunyScript AI Skills** asks:
 
-> LunyScript includes AI agent skills. To ensure agents find and use the LunyScript skills, we need
-> to create .agents/skills/luny* and .claude/skills/luny* in the project's root. These redirecting
-> skills guide AI agents to use the actual LunyScript, LunyInput and LunySave skills located in
-> Assets/CodeSmile/*/AgentSkills/luny*
+> LunyScript includes AI agent skills. To ensure agents find and use them, we need to create
+> .agents/skills/luny* and .claude/skills/luny* in the project's root. These redirecting skills guide
+> AI agents to the skills located in Assets/CodeSmile/*/AgentSkills/luny*, where the luny skill in
+> Assets/CodeSmile/Luny/AgentSkills names each Luny product and the skill for each of its parts.
 >
 > Allow LunyScript to install the links to its AI agent skills?
 
-**Yes** writes one link per skill, in a folder named after the skill, in each of these folders of
-your Unity project: `luny`, the thirteen `lunyscript*` skills, `lunyinput` and `lunysave`. **No** writes
-nothing.
+**Yes** writes one link for each skill whose name starts with `luny`, in a folder named after the
+skill, in each of these folders of your Unity project. **No** writes nothing.
 
 | Folder | Read by |
 | --- | --- |
@@ -147,8 +139,8 @@ you answer **Yes** in the Install LunyScript AI Skills box.
 
 ## Removing the links
 
-Delete the folders `luny`, `lunyscript`, `lunyinput` and `lunysave` and every folder whose name starts
-with `lunyscript-` from `.claude/skills/` and `.agents/skills/`. With no link left that LunyScript recognises as its own, it writes nothing
+Delete every folder whose name starts with `luny` that LunyScript wrote from `.claude/skills/` and
+`.agents/skills/`. With no link left that LunyScript recognises as its own, it writes nothing
 until you answer **Yes** in the box again. Delete `.claude`, `.claude/skills`, `.agents` and
 `.agents/skills` as well if you have no other use for them; LunyScript records in
 `UserSettings/LunyScriptAgentSkillFolders.txt` which of them it created.
@@ -158,9 +150,9 @@ no longer exists, and the agent then has nothing to read.
 
 ## Without the links
 
-- Tell the agent where the skill is: "read
-  `Assets/CodeSmile/LunyScript/AgentSkills/lunyscript/SKILL.md` first", or
-  `Assets/CodeSmile/LunySave/AgentSkills/lunysave/SKILL.md` for C# that saves without a script.
+- Tell the agent where the skills are: "read
+  `Assets/CodeSmile/Luny/AgentSkills/luny/SKILL.md` first". That skill names the skill of every Luny
+  product in your project.
 - Or copy a skill's folder into a skill folder your agent reads, such as `~/.claude/skills/` for
   every project of one user. A copy does not update with LunyScript.
 
