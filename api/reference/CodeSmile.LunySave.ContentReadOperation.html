@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class ContentReadOperation | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class ContentReadOperation | LunyScript API Reference ">
+      
+      <meta name="description" content="One read of a game&#39;s content files: from the project&#39;s Luny folder in the Editor, or from StreamingAssets/GameData.luny in a player. It holds every JSON file it read, in ordinal path order, and the paths it skipped.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunySave_ContentReadOperation.md&amp;value=---%0Auid%3A%20CodeSmile.LunySave.ContentReadOperation%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunySave.ContentReadOperation">
+
+
+
+  <h1 id="CodeSmile_LunySave_ContentReadOperation" data-uid="CodeSmile.LunySave.ContentReadOperation" class="text-break">
+Class ContentReadOperation  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentReadOperation.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunySave.html">LunySave</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>One read of a game's content files: from the project's <code>Luny</code> folder in the Editor, or from
+<code>StreamingAssets/GameData.luny</code> in a player. It holds every JSON file it read, in ordinal path order, and
+the paths it skipped.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class ContentReadOperation</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">ContentReadOperation</span></div>
+    </dd>
+  </dl>
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunySave_ContentReadOperation_examples">Examples</h2>
+  <pre><code class="lang-csharp">var reading = ContentFiles.Read();
+if (reading.IsDone &amp;&amp; reading.Succeeded)
+    foreach (var file in reading.Files) Debug.Log(file.Path);</code></pre>
+
+
+  <h2 id="CodeSmile_LunySave_ContentReadOperation_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>
+    A read of the project folder, and of the archive where StreamingAssets is a local folder, completes inside the
+    call that starts it. On Android and the web the archive is read with a web request and the read completes in
+    a later frame; <a class="xref" href="CodeSmile.LunySave.ContentReadOperation.html#CodeSmile_LunySave_ContentReadOperation_IsDone">IsDone</a> turns true when it has, and reading any property finishes it then.
+</p>
+<p>
+    A read is all or nothing: one refused path, one file that is not UTF-8 or a compressed archive entry fails it
+    as <a class="xref" href="CodeSmile.LunySave.SaveFailure.html#CodeSmile_LunySave_SaveFailure_Unreadable">Unreadable</a> with every refused path named in <a class="xref" href="CodeSmile.LunySave.ContentReadOperation.html#CodeSmile_LunySave_ContentReadOperation_Problem">Problem</a>, and it then
+    holds no file. A missing folder or archive is <a class="xref" href="CodeSmile.LunySave.SaveFailure.html#CodeSmile_LunySave_SaveFailure_NotFound">NotFound</a>.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunySave_ContentReadOperation_Failure_" data-uid="CodeSmile.LunySave.ContentReadOperation.Failure*"></a>
+
+  <h3 id="CodeSmile_LunySave_ContentReadOperation_Failure" data-uid="CodeSmile.LunySave.ContentReadOperation.Failure">
+  Failure
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentReadOperation.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Why the read failed; <a class="xref" href="CodeSmile.LunySave.SaveFailure.html#CodeSmile_LunySave_SaveFailure_None">None</a> while pending and after success.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveFailure Failure { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySave.SaveFailure.html">SaveFailure</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_ContentReadOperation_Failure_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (reading.Failure == SaveFailure.NotFound) Debug.Log("this game has no content files");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_ContentReadOperation_Files_" data-uid="CodeSmile.LunySave.ContentReadOperation.Files*"></a>
+
+  <h3 id="CodeSmile_LunySave_ContentReadOperation_Files" data-uid="CodeSmile.LunySave.ContentReadOperation.Files">
+  Files
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentReadOperation.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Every JSON file the read found, in ordinal path order; empty until the read succeeded.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public IReadOnlyList&lt;ContentFile&gt; Files { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="CodeSmile.LunySave.ContentFile.html">ContentFile</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_ContentReadOperation_Files_examples">Examples</h4>
+  <pre><code class="lang-csharp">Debug.Log($"{reading.Files.Count} content files");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_ContentReadOperation_IsDone_" data-uid="CodeSmile.LunySave.ContentReadOperation.IsDone*"></a>
+
+  <h3 id="CodeSmile_LunySave_ContentReadOperation_IsDone" data-uid="CodeSmile.LunySave.ContentReadOperation.IsDone">
+  IsDone
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentReadOperation.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True once the read has ended, successfully or not.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsDone { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_ContentReadOperation_IsDone_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (m_Reading != null &amp;&amp; m_Reading.IsDone) Use(m_Reading);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_ContentReadOperation_Problem_" data-uid="CodeSmile.LunySave.ContentReadOperation.Problem*"></a>
+
+  <h3 id="CodeSmile_LunySave_ContentReadOperation_Problem" data-uid="CodeSmile.LunySave.ContentReadOperation.Problem">
+  Problem
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentReadOperation.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>What went wrong, or null: the missing folder or archive, every refused path, or the file system's
+message.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Problem { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_ContentReadOperation_Problem_examples">Examples</h4>
+  <pre><code class="lang-csharp">Debug.LogError(reading.Problem);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_ContentReadOperation_Skipped_" data-uid="CodeSmile.LunySave.ContentReadOperation.Skipped*"></a>
+
+  <h3 id="CodeSmile_LunySave_ContentReadOperation_Skipped" data-uid="CodeSmile.LunySave.ContentReadOperation.Skipped">
+  Skipped
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentReadOperation.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The paths a read of the project folder skipped because they are not content: a file whose name does
+not end in &quot;.json&quot;, or one with a folder or file name that starts with a dot. Empty for an archive.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public IReadOnlyList&lt;string&gt; Skipped { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">IReadOnlyList</span>&lt;<span class="xref">string</span>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_ContentReadOperation_Skipped_examples">Examples</h4>
+  <pre><code class="lang-csharp">foreach (var path in reading.Skipped) Debug.Log($"not content: {path}");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_ContentReadOperation_Source_" data-uid="CodeSmile.LunySave.ContentReadOperation.Source*"></a>
+
+  <h3 id="CodeSmile_LunySave_ContentReadOperation_Source" data-uid="CodeSmile.LunySave.ContentReadOperation.Source">
+  Source
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentReadOperation.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>What the read reads: &quot;the project folder Luny&quot; or &quot;StreamingAssets/GameData.luny&quot;.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Source { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_ContentReadOperation_Source_examples">Examples</h4>
+  <pre><code class="lang-csharp">Debug.Log($"read {reading.Source}");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySave_ContentReadOperation_Succeeded_" data-uid="CodeSmile.LunySave.ContentReadOperation.Succeeded*"></a>
+
+  <h3 id="CodeSmile_LunySave_ContentReadOperation_Succeeded" data-uid="CodeSmile.LunySave.ContentReadOperation.Succeeded">
+  Succeeded
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentReadOperation.cs/#L74"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True when the read has ended and <a class="xref" href="CodeSmile.LunySave.ContentReadOperation.html#CodeSmile_LunySave_ContentReadOperation_Files">Files</a> holds every content file.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Succeeded { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_ContentReadOperation_Succeeded_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (reading.Succeeded) Admit(reading.Files);</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunySave_ContentReadOperation_ToString_" data-uid="CodeSmile.LunySave.ContentReadOperation.ToString*"></a>
+
+  <h3 id="CodeSmile_LunySave_ContentReadOperation_ToString" data-uid="CodeSmile.LunySave.ContentReadOperation.ToString">
+  ToString()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentReadOperation.cs/#L98"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>&quot;read 47 files from ...&quot;, or the failure and its problem; &quot;reading&quot; and the source while
+pending.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override string ToString()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd><p>The outcome.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySave_ContentReadOperation_ToString_examples">Examples</h4>
+  <pre><code class="lang-csharp">Debug.Log(reading.ToString());</code></pre>
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/ContentReadOperation.cs/#L30" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

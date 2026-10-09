@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class SpawnHost | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SpawnHost | LunyScript API Reference ">
+      
+      <meta name="description" content="The scene host of LunySpawn: it owns one , advances it by game time once per frame, resolves a recipe&#39;s keys through its  asset and the scene&#39;s placements, places, pools and releases the objects, and ends every run with the scene (the captain&#39;s Q12 answer: one scene host with separately owned runs).">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunySpawn_Unity_SpawnHost.md&amp;value=---%0Auid%3A%20CodeSmile.LunySpawn.Unity.SpawnHost%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunySpawn.Unity.SpawnHost">
+
+
+
+  <h1 id="CodeSmile_LunySpawn_Unity_SpawnHost" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost" class="text-break">
+Class SpawnHost  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Unity/Runtime/SpawnHost.World.cs/#L8"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunySpawn.html">LunySpawn</a>.<a class="xref" href="CodeSmile.LunySpawn.Unity.html">Unity</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The scene host of LunySpawn: it owns one <a class="xref" href="CodeSmile.LunySpawn.SpawnSession.html">SpawnSession</a>, advances it by game time once per frame,
+resolves a recipe's keys through its <a class="xref" href="CodeSmile.LunySpawn.Unity.SpawnBindings.html">SpawnBindings</a> asset and the scene's placements, places,
+pools and releases the objects, and ends every run with the scene (the captain's Q12 answer: one scene host with
+separately owned runs).</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[DefaultExecutionOrder(300)]
+public sealed class SpawnHost : MonoBehaviour</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">Object</span></div>
+      <div><span class="xref">Component</span></div>
+      <div><span class="xref">Behaviour</span></div>
+      <div><span class="xref">MonoBehaviour</span></div>
+      <div><span class="xref">SpawnHost</span></div>
+    </dd>
+  </dl>
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunySpawn_Unity_SpawnHost_examples">Examples</h2>
+  <pre><code class="lang-csharp">public sealed class ArenaGate : MonoBehaviour
+{
+    [SerializeField] private SpawnHost m_Host;
+    private SpawnRun m_Run;
+
+    public void Open(SpawnRecipe recipe) =&gt; m_Run = m_Host.StartRun(recipe, this, seed: 7).Require();
+    public void Close() =&gt; m_Run.Cancel();
+}</code></pre>
+
+
+  <h2 id="CodeSmile_LunySpawn_Unity_SpawnHost_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>
+    <b>Runs are owned.</b> <a class="xref" href="CodeSmile.LunySpawn.Unity.SpawnHost.html#CodeSmile_LunySpawn_Unity_SpawnHost_StartRun_CodeSmile_LunySpawn_SpawnRecipe_UnityEngine_Object_System_Int32_">StartRun(SpawnRecipe, Object, int)</a> names the scene object that owns the run; when that object is
+    destroyed, the run is cancelled at the next boundary. A paused game (time scale 0) advances nothing.
+</p>
+<p>
+    <b>Participants.</b> <a class="xref" href="CodeSmile.LunySpawn.Unity.SpawnHost.html#CodeSmile_LunySpawn_Unity_SpawnHost_AddParticipant_UnityEngine_Transform_">AddParticipant(Transform)</a> and <a class="xref" href="CodeSmile.LunySpawn.Unity.SpawnHost.html#CodeSmile_LunySpawn_Unity_SpawnHost_RemoveParticipant_UnityEngine_Transform_">RemoveParticipant(Transform)</a> keep the joined
+    players: their count, 1 to 4, sets every cohort's authored total, and their positions keep arrivals at each
+    binding's separation.
+</p>
+<p>
+    <b>Objects.</b> A binding is fresh by default and pooled when it says so (the captain's Q13 answer). Every
+    object carries a <a class="xref" href="CodeSmile.LunySpawn.Unity.SpawnedObject.html">SpawnedObject</a> marker that reports a removal by anything other than the host,
+    and every <a class="xref" href="CodeSmile.LunySpawn.Unity.ISpawnParticipant.html">ISpawnParticipant</a> on it begins and ends each use.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_LunySpawn_Unity_SpawnHost_Bindings_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.Bindings*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_Unity_SpawnHost_Bindings" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.Bindings">
+  Bindings
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Unity/Runtime/SpawnHost.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The bindings asset assigned in the Inspector.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnBindings Bindings { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySpawn.Unity.SpawnBindings.html">SpawnBindings</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_Unity_SpawnHost_Bindings_examples">Examples</h4>
+  <pre><code class="lang-csharp">Debug.Log(host.Bindings.Prefabs.Count);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySpawn_Unity_SpawnHost_Hosts_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.Hosts*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_Unity_SpawnHost_Hosts" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.Hosts">
+  Hosts
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Unity/Runtime/SpawnHost.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Every enabled host, in the order they were enabled.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static IReadOnlyList&lt;SpawnHost&gt; Hosts { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">IReadOnlyList</span>&lt;<a class="xref" href="CodeSmile.LunySpawn.Unity.SpawnHost.html">SpawnHost</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_Unity_SpawnHost_Hosts_examples">Examples</h4>
+  <pre><code class="lang-csharp">foreach (var host in SpawnHost.Hosts) Debug.Log(host.Session.LivePopulation);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySpawn_Unity_SpawnHost_ParticipantCount_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.ParticipantCount*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_Unity_SpawnHost_ParticipantCount" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.ParticipantCount">
+  ParticipantCount
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Unity/Runtime/SpawnHost.cs/#L89"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Joined participants, which every new cohort counts with, at least 1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public int ParticipantCount { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_Unity_SpawnHost_ParticipantCount_examples">Examples</h4>
+  <pre><code class="lang-csharp">Debug.Log(host.ParticipantCount);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySpawn_Unity_SpawnHost_Session_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.Session*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_Unity_SpawnHost_Session" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.Session">
+  Session
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Unity/Runtime/SpawnHost.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The session, or null before the host woke and after it was destroyed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SpawnSession Session { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySpawn.SpawnSession.html">SpawnSession</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_Unity_SpawnHost_Session_examples">Examples</h4>
+  <pre><code class="lang-csharp">Debug.Log(host.Session.LivePopulation);</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunySpawn_Unity_SpawnHost_AddParticipant_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.AddParticipant*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_Unity_SpawnHost_AddParticipant_UnityEngine_Transform_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.AddParticipant(UnityEngine.Transform)">
+  AddParticipant(Transform)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Unity/Runtime/SpawnHost.cs/#L186"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds a joined participant; from the next frame every new cohort counts with the new total and arrivals
+keep their separation from it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void AddParticipant(Transform participant)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Transform</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>participant</code></dt></td>
+    <td style="width: 99%"><dd><p>The participant's transform, such as a player's avatar.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_Unity_SpawnHost_AddParticipant_UnityEngine_Transform__examples">Examples</h4>
+  <pre><code class="lang-csharp">host.AddParticipant(avatar.transform);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySpawn_Unity_SpawnHost_Check_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.Check*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_Unity_SpawnHost_Check_CodeSmile_LunySpawn_SpawnRecipe_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.Check(CodeSmile.LunySpawn.SpawnRecipe)">
+  Check(SpawnRecipe)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Unity/Runtime/SpawnHost.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Every problem a run of the recipe would meet in this host's scene now: unbound prefab keys, pooled
+prefabs with uncovered components, placement keys with no enabled marker or area, and degenerate areas.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public IReadOnlyList&lt;string&gt; Check(SpawnRecipe recipe)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunySpawn.SpawnRecipe.html">SpawnRecipe</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>recipe</code></dt></td>
+    <td style="width: 99%"><dd><p>The recipe.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">IReadOnlyList</span>&lt;<span class="xref">string</span>&gt;</dt>
+    <dd><p>The problems; empty when a run can start.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_Unity_SpawnHost_Check_CodeSmile_LunySpawn_SpawnRecipe__examples">Examples</h4>
+  <pre><code class="lang-csharp">foreach (var problem in host.Check(recipe)) Debug.LogWarning(problem);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySpawn_Unity_SpawnHost_InScene_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.InScene*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_Unity_SpawnHost_InScene_UnityEngine_SceneManagement_Scene_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.InScene(UnityEngine.SceneManagement.Scene)">
+  InScene(Scene)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Unity/Runtime/SpawnHost.cs/#L95"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The enabled host of a scene, or null when the scene has none or more than one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public static SpawnHost InScene(Scene scene)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Scene</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>scene</code></dt></td>
+    <td style="width: 99%"><dd><p>The scene.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySpawn.Unity.SpawnHost.html">SpawnHost</a></dt>
+    <dd><p>The host, or null.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_Unity_SpawnHost_InScene_UnityEngine_SceneManagement_Scene__examples">Examples</h4>
+  <pre><code class="lang-csharp">var host = SpawnHost.InScene(gameObject.scene);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySpawn_Unity_SpawnHost_RemoveParticipant_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.RemoveParticipant*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_Unity_SpawnHost_RemoveParticipant_UnityEngine_Transform_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.RemoveParticipant(UnityEngine.Transform)">
+  RemoveParticipant(Transform)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Unity/Runtime/SpawnHost.cs/#L198"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Removes a participant who left.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void RemoveParticipant(Transform participant)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Transform</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>participant</code></dt></td>
+    <td style="width: 99%"><dd><p>The participant's transform.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_Unity_SpawnHost_RemoveParticipant_UnityEngine_Transform__examples">Examples</h4>
+  <pre><code class="lang-csharp">host.RemoveParticipant(avatar.transform);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySpawn_Unity_SpawnHost_ReportDefeated_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.ReportDefeated*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_Unity_SpawnHost_ReportDefeated_CodeSmile_LunySpawn_SpawnUse_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.ReportDefeated(CodeSmile.LunySpawn.SpawnUse)">
+  ReportDefeated(SpawnUse)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Unity/Runtime/SpawnHost.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reports that Combat committed the defeat of a use's object; the use ends at the next boundary and its
+object is released (the captain's Q39 answer: end on defeat). A stale use is ignored.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void ReportDefeated(SpawnUse use)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunySpawn.SpawnUse.html">SpawnUse</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>use</code></dt></td>
+    <td style="width: 99%"><dd><p>The use.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_Unity_SpawnHost_ReportDefeated_CodeSmile_LunySpawn_SpawnUse__examples">Examples</h4>
+  <pre><code class="lang-csharp">context.Host.ReportDefeated(context.Use);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySpawn_Unity_SpawnHost_StartRun_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.StartRun*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_Unity_SpawnHost_StartRun_CodeSmile_LunySpawn_SpawnRecipe_UnityEngine_Object_System_Int32_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.StartRun(CodeSmile.LunySpawn.SpawnRecipe,UnityEngine.Object,System.Int32)">
+  StartRun(SpawnRecipe, Object, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Unity/Runtime/SpawnHost.cs/#L118"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts a run of a recipe owned by a scene object, after checking every binding it names.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public RunStart StartRun(SpawnRecipe recipe, Object owner, int seed)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunySpawn.SpawnRecipe.html">SpawnRecipe</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>recipe</code></dt></td>
+    <td style="width: 99%"><dd><p>The admitted recipe.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">Object</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>owner</code></dt></td>
+    <td style="width: 99%"><dd><p>The object whose end cancels the run.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>seed</code></dt></td>
+    <td style="width: 99%"><dd><p>The seed of every group's random stream (the captain's Q34 answer).</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySpawn.Unity.RunStart.html">RunStart</a></dt>
+    <dd><p>The run, or every problem that refused it.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_Unity_SpawnHost_StartRun_CodeSmile_LunySpawn_SpawnRecipe_UnityEngine_Object_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var run = host.StartRun(recipe, this, seed: 7).Require();</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySpawn.LunySpawnException.html">LunySpawnException</a></dt>
+    <dd><p>The recipe or the owner is null, or the host has no session.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_LunySpawn_Unity_SpawnHost_TryGetObject_" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.TryGetObject*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_Unity_SpawnHost_TryGetObject_CodeSmile_LunySpawn_SpawnUse_UnityEngine_GameObject__" data-uid="CodeSmile.LunySpawn.Unity.SpawnHost.TryGetObject(CodeSmile.LunySpawn.SpawnUse,UnityEngine.GameObject@)">
+  TryGetObject(SpawnUse, out GameObject)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Unity/Runtime/SpawnHost.cs/#L215"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The object of a live use.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool TryGetObject(SpawnUse use, out GameObject target)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunySpawn.SpawnUse.html">SpawnUse</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>use</code></dt></td>
+    <td style="width: 99%"><dd><p>The use.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">GameObject</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>target</code></dt></td>
+    <td style="width: 99%"><dd><p>The object, or null.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd><p>True when the use is live and its object exists.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_Unity_SpawnHost_TryGetObject_CodeSmile_LunySpawn_SpawnUse_UnityEngine_GameObject___examples">Examples</h4>
+  <pre><code class="lang-csharp">if (host.TryGetObject(use, out var enemy)) Debug.Log(enemy.name);</code></pre>
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Unity/Runtime/SpawnHost.World.cs/#L8" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

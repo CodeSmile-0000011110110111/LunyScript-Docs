@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class PhaseSpec | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class PhaseSpec | LunyScript API Reference ">
+      
+      <meta name="description" content="One phase of a recipe as C# writes it: its groups, which run together, the condition that ends it with success, the signals that fail the run while it is current, and what happens to its live objects when it ends.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunySpawn_PhaseSpec.md&amp;value=---%0Auid%3A%20CodeSmile.LunySpawn.PhaseSpec%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.LunySpawn.PhaseSpec">
+
+
+
+  <h1 id="CodeSmile_LunySpawn_PhaseSpec" data-uid="CodeSmile.LunySpawn.PhaseSpec" class="text-break">
+Class PhaseSpec  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Content/PhaseSpec.cs/#L17"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.LunySpawn.html">LunySpawn</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>One phase of a recipe as C# writes it: its groups, which run together, the condition that ends it with success,
+the signals that fail the run while it is current, and what happens to its live objects when it ends.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class PhaseSpec</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">PhaseSpec</span></div>
+    </dd>
+  </dl>
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_LunySpawn_PhaseSpec_examples">Examples</h2>
+  <pre><code class="lang-csharp">var entry = new PhaseSpec("entry")
+    .SucceedWhenAll(PhaseRule.GroupsClear("guards"))
+    .Group(new GroupSpec("guards", "enemy.melee", "entry.east").Counts(8, 12, 16, 20));</code></pre>
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="CodeSmile_LunySpawn_PhaseSpec__ctor_" data-uid="CodeSmile.LunySpawn.PhaseSpec.#ctor*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_PhaseSpec__ctor_System_String_" data-uid="CodeSmile.LunySpawn.PhaseSpec.#ctor(System.String)">
+  PhaseSpec(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Content/PhaseSpec.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts a phase.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public PhaseSpec(string id)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>id</code></dt></td>
+    <td style="width: 99%"><dd><p>The phase's stable id, unique in the recipe.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_PhaseSpec__ctor_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">new PhaseSpec("reinforcements")</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_LunySpawn_PhaseSpec_FailOn_" data-uid="CodeSmile.LunySpawn.PhaseSpec.FailOn*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_PhaseSpec_FailOn_System_String___" data-uid="CodeSmile.LunySpawn.PhaseSpec.FailOn(System.String[])">
+  FailOn(params string[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Content/PhaseSpec.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Signals that fail the run while this phase is current, besides the recipe's own.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public PhaseSpec FailOn(params string[] signals)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span>[]</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>signals</code></dt></td>
+    <td style="width: 99%"><dd><p>Declared signal keys.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySpawn.PhaseSpec.html">PhaseSpec</a></dt>
+    <dd><p>This phase.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_PhaseSpec_FailOn_System_String____examples">Examples</h4>
+  <pre><code class="lang-csharp">phase.FailOn("objective-lost")</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySpawn_PhaseSpec_Group_" data-uid="CodeSmile.LunySpawn.PhaseSpec.Group*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_PhaseSpec_Group_CodeSmile_LunySpawn_GroupSpec_" data-uid="CodeSmile.LunySpawn.PhaseSpec.Group(CodeSmile.LunySpawn.GroupSpec)">
+  Group(GroupSpec)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Content/PhaseSpec.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds a group; the phase's groups run together.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public PhaseSpec Group(GroupSpec group)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunySpawn.GroupSpec.html">GroupSpec</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>group</code></dt></td>
+    <td style="width: 99%"><dd><p>The group.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySpawn.PhaseSpec.html">PhaseSpec</a></dt>
+    <dd><p>This phase.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_PhaseSpec_Group_CodeSmile_LunySpawn_GroupSpec__examples">Examples</h4>
+  <pre><code class="lang-csharp">phase.Group(new GroupSpec("archers", "enemy.ranged", "ledge"))</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySpawn_PhaseSpec_OnExit_" data-uid="CodeSmile.LunySpawn.PhaseSpec.OnExit*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_PhaseSpec_OnExit_CodeSmile_LunySpawn_Survivors_" data-uid="CodeSmile.LunySpawn.PhaseSpec.OnExit(CodeSmile.LunySpawn.Survivors)">
+  OnExit(Survivors)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Content/PhaseSpec.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>What happens to this phase's live objects when it ends; <a class="xref" href="CodeSmile.LunySpawn.Survivors.html#CodeSmile_LunySpawn_Survivors_Carry">Carry</a> by default.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public PhaseSpec OnExit(Survivors survivors)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunySpawn.Survivors.html">Survivors</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>survivors</code></dt></td>
+    <td style="width: 99%"><dd><p>Carry or End.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySpawn.PhaseSpec.html">PhaseSpec</a></dt>
+    <dd><p>This phase.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_PhaseSpec_OnExit_CodeSmile_LunySpawn_Survivors__examples">Examples</h4>
+  <pre><code class="lang-csharp">phase.OnExit(Survivors.End)</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySpawn_PhaseSpec_SucceedWhenAll_" data-uid="CodeSmile.LunySpawn.PhaseSpec.SucceedWhenAll*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_PhaseSpec_SucceedWhenAll_CodeSmile_LunySpawn_PhaseTerm___" data-uid="CodeSmile.LunySpawn.PhaseSpec.SucceedWhenAll(CodeSmile.LunySpawn.PhaseTerm[])">
+  SucceedWhenAll(params PhaseTerm[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Content/PhaseSpec.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The phase succeeds when every term holds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public PhaseSpec SucceedWhenAll(params PhaseTerm[] terms)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunySpawn.PhaseTerm.html">PhaseTerm</a>[]</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>terms</code></dt></td>
+    <td style="width: 99%"><dd><p>One or more terms.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySpawn.PhaseSpec.html">PhaseSpec</a></dt>
+    <dd><p>This phase.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_PhaseSpec_SucceedWhenAll_CodeSmile_LunySpawn_PhaseTerm____examples">Examples</h4>
+  <pre><code class="lang-csharp">phase.SucceedWhenAll(PhaseRule.GroupsClear("boss"), PhaseRule.Elapsed(20))</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_LunySpawn_PhaseSpec_SucceedWhenAny_" data-uid="CodeSmile.LunySpawn.PhaseSpec.SucceedWhenAny*"></a>
+
+  <h3 id="CodeSmile_LunySpawn_PhaseSpec_SucceedWhenAny_CodeSmile_LunySpawn_PhaseTerm___" data-uid="CodeSmile.LunySpawn.PhaseSpec.SucceedWhenAny(CodeSmile.LunySpawn.PhaseTerm[])">
+  SucceedWhenAny(params PhaseTerm[])
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Content/PhaseSpec.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The phase succeeds when at least one term holds.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public PhaseSpec SucceedWhenAny(params PhaseTerm[] terms)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunySpawn.PhaseTerm.html">PhaseTerm</a>[]</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>terms</code></dt></td>
+    <td style="width: 99%"><dd><p>One or more terms.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.LunySpawn.PhaseSpec.html">PhaseSpec</a></dt>
+    <dd><p>This phase.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_LunySpawn_PhaseSpec_SucceedWhenAny_CodeSmile_LunySpawn_PhaseTerm____examples">Examples</h4>
+  <pre><code class="lang-csharp">phase.SucceedWhenAny(PhaseRule.Elapsed(120), PhaseRule.Signal("extracted"))</code></pre>
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/Runtime/Content/PhaseSpec.cs/#L17" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

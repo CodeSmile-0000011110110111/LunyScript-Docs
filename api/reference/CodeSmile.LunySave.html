@@ -83,6 +83,21 @@
 Classes
 </h3>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunySave.ContentFiles.html">ContentFiles</a></dt>
+      <dd><p>A game's authored content files, in two named places LunySave chooses: the project's <code>Luny</code> folder beside
+<code>Assets</code>, which the Editor reads and writes, and <code>StreamingAssets/GameData.luny</code>, the uncompressed
+archive of that folder a player reads. Every path is relative to the <code>Luny</code> folder, such as
+&quot;Encounter/room-breach.json&quot;.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunySave.ContentReadOperation.html">ContentReadOperation</a></dt>
+      <dd><p>One read of a game's content files: from the project's <code>Luny</code> folder in the Editor, or from
+<code>StreamingAssets/GameData.luny</code> in a player. It holds every JSON file it read, in ordinal path order, and
+the paths it skipped.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunySave.DeleteOperation.html">DeleteOperation</a></dt>
       <dd><p>One <a class="xref" href="CodeSmile.LunySave.LocalSave.html#CodeSmile_LunySave_LocalSave_Delete_System_String_">Delete(string)</a>: whether it is done, and how it ended.</p>
 </dd>
@@ -142,6 +157,18 @@ an older stored version. Each method returns a new schema and leaves this one as
     <h3 id="structs">
 Structs
 </h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunySave.ContentArchiveResult.html">ContentArchiveResult</a></dt>
+      <dd><p>What <a class="xref" href="CodeSmile.LunySave.ContentFiles.html#CodeSmile_LunySave_ContentFiles_WriteArchive">WriteArchive()</a> did: whether <code>Assets/StreamingAssets/GameData.luny</code> now holds
+the project's content, how many files and bytes it holds, and why it was not written.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.LunySave.ContentFile.html">ContentFile</a></dt>
+      <dd><p>One JSON content file a <a class="xref" href="CodeSmile.LunySave.ContentReadOperation.html">ContentReadOperation</a> read: its path relative to the content folder, with
+'/' between names, and its text.</p>
+</dd>
+    </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunySave.SaveMigrationResult.html">SaveMigrationResult</a></dt>
       <dd><p>What one <a class="xref" href="CodeSmile.LunySave.SaveMigration.html">SaveMigration</a> step returns: the document was converted, or it was rejected with a
