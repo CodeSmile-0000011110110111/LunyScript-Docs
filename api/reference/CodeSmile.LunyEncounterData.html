@@ -84,14 +84,19 @@ Classes
 </h3>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyEncounterData.Encounter.html">Encounter</a></dt>
-      <dd><p>One encounter file: its recipe and the title and description it gives the encounter.</p>
+      <dd><p>One encounter file: its recipe and the title and description it gives the encounter; the
+<span class="xref">CodeSmile.LunyData.IDataDefinition</span> of LunySpawn's module of the game database, found by its <a class="xref" href="CodeSmile.LunyEncounterData.Encounter.html#CodeSmile_LunyEncounterData_Encounter_Id">Id</a>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.LunyEncounterData.EncounterCatalog.html">EncounterCatalog</a></dt>
       <dd><p>Every encounter of one admitted database revision, each an admitted <a class="xref" href="CodeSmile.LunySpawn.SpawnRecipe.html">SpawnRecipe</a> that names the
 revision it came from. <a class="xref" href="CodeSmile.LunyEncounterData.EncounterData.html">EncounterData</a> reads it from the database's <code>Encounter/</code> folder, one file
-per encounter (the captain's Q20 answer), and the game queries it through LunyData without reading JSON.</p>
+per encounter (the captain's Q20 answer), and the game queries it through LunyData without reading JSON. It is the
+<span class="xref">CodeSmile.LunyData.DefinitionCatalog&lt;TDefinition&gt;</span> of LunySpawn's module of the game database, so
+<span class="xref">CodeSmile.LunyData.DefinitionCatalog&lt;TDefinition&gt;.Get(string)</span> and <span class="xref">CodeSmile.LunyData.DefinitionCatalog&lt;TDefinition&gt;.TryGet(string, out TDefinition)</span> find an
+<a class="xref" href="CodeSmile.LunyEncounterData.Encounter.html">Encounter</a> by its id, and <span class="xref">CodeSmile.LunyData.DefinitionCatalog&lt;TDefinition&gt;.Get(string)</span> throws a
+<a class="xref" href="CodeSmile.LunySpawn.LunySpawnException.html">LunySpawnException</a> for an id no encounter has.</p>
 </dd>
     </dl>
     <dl class="jumplist">

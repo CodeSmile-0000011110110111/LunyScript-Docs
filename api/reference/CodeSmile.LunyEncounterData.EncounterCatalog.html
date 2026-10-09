@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Class EncounterCatalog | LunyScript API Reference ">
       
-      <meta name="description" content="Every encounter of one admitted database revision, each an admitted  that names the revision it came from.  reads it from the database&#39;s Encounter/ folder, one file per encounter (the captain&#39;s Q20 answer), and the game queries it through LunyData without reading JSON.">
+      <meta name="description" content="Every encounter of one admitted database revision, each an admitted  that names the revision it came from.  reads it from the database&#39;s Encounter/ folder, one file per encounter (the captain&#39;s Q20 answer), and the game queries it through LunyData without reading JSON. It is the  of LunySpawn&#39;s module of the game database, so  and  find an  by its id, and  throws a  for an id no encounter has.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyEncounterData_EncounterCatalog" data-uid="CodeSmile.LunyEncounterData.EncounterCatalog" class="text-break">
-Class EncounterCatalog  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/EncounterData/Runtime/EncounterCatalog.cs/#L20"><i class="bi bi-code-slash"></i></a>
+Class EncounterCatalog  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/EncounterData/Runtime/EncounterCatalog.cs/#L25"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -87,12 +87,16 @@ Class EncounterCatalog  <a class="header-action link-secondary" title="View sour
 
   <div class="markdown summary"><p>Every encounter of one admitted database revision, each an admitted <a class="xref" href="CodeSmile.LunySpawn.SpawnRecipe.html">SpawnRecipe</a> that names the
 revision it came from. <a class="xref" href="CodeSmile.LunyEncounterData.EncounterData.html">EncounterData</a> reads it from the database's <code>Encounter/</code> folder, one file
-per encounter (the captain's Q20 answer), and the game queries it through LunyData without reading JSON.</p>
+per encounter (the captain's Q20 answer), and the game queries it through LunyData without reading JSON. It is the
+<span class="xref">CodeSmile.LunyData.DefinitionCatalog&lt;TDefinition&gt;</span> of LunySpawn's module of the game database, so
+<span class="xref">CodeSmile.LunyData.DefinitionCatalog&lt;TDefinition&gt;.Get(string)</span> and <span class="xref">CodeSmile.LunyData.DefinitionCatalog&lt;TDefinition&gt;.TryGet(string, out TDefinition)</span> find an
+<a class="xref" href="CodeSmile.LunyEncounterData.Encounter.html">Encounter</a> by its id, and <span class="xref">CodeSmile.LunyData.DefinitionCatalog&lt;TDefinition&gt;.Get(string)</span> throws a
+<a class="xref" href="CodeSmile.LunySpawn.LunySpawnException.html">LunySpawnException</a> for an id no encounter has.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class EncounterCatalog</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class EncounterCatalog : DefinitionCatalog&lt;Encounter&gt;</code></pre>
   </div>
 
 
@@ -105,6 +109,7 @@ per encounter (the captain's Q20 answer), and the game queries it through LunyDa
     <dt>Inheritance</dt>
     <dd>
       <div><span class="xref">object</span></div>
+      <div><span class="xref">DefinitionCatalog</span>&lt;<a class="xref" href="CodeSmile.LunyEncounterData.Encounter.html">Encounter</a>&gt;</div>
       <div><span class="xref">EncounterCatalog</span></div>
     </dd>
   </dl>
@@ -133,10 +138,10 @@ var recipe = encounters.Recipe("room-breach");</code></pre>
 
   <h3 id="CodeSmile_LunyEncounterData_EncounterCatalog_Encounters" data-uid="CodeSmile.LunyEncounterData.EncounterCatalog.Encounters">
   Encounters
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/EncounterData/Runtime/EncounterCatalog.cs/#L39"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/EncounterData/Runtime/EncounterCatalog.cs/#L31"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Every encounter in file order.</p>
+  <div class="markdown level1 summary"><p>Every encounter in file order, the same list as <span class="xref">CodeSmile.LunyData.DefinitionCatalog&lt;TDefinition&gt;.Definitions</span>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -164,50 +169,68 @@ var recipe = encounters.Recipe("room-breach");</code></pre>
 
 
 
-  <a id="CodeSmile_LunyEncounterData_EncounterCatalog_Revision_" data-uid="CodeSmile.LunyEncounterData.EncounterCatalog.Revision*"></a>
+  <h2 class="section" id="methods">Methods
+</h2>
 
-  <h3 id="CodeSmile_LunyEncounterData_EncounterCatalog_Revision" data-uid="CodeSmile.LunyEncounterData.EncounterCatalog.Revision">
-  Revision
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/EncounterData/Runtime/EncounterCatalog.cs/#L35"><i class="bi bi-code-slash"></i></a>
+
+  <a id="CodeSmile_LunyEncounterData_EncounterCatalog_MissingDefinition_" data-uid="CodeSmile.LunyEncounterData.EncounterCatalog.MissingDefinition*"></a>
+
+  <h3 id="CodeSmile_LunyEncounterData_EncounterCatalog_MissingDefinition_System_String_" data-uid="CodeSmile.LunyEncounterData.EncounterCatalog.MissingDefinition(System.String)">
+  MissingDefinition(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/EncounterData/Runtime/EncounterCatalog.cs/#L52"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>The database revision every recipe names.</p>
+  <div class="markdown level1 summary"><p>The exception <span class="xref">CodeSmile.LunyData.DefinitionCatalog&lt;TDefinition&gt;.Get(string)</span> throws for an id no definition has. A module whose catalog threw its own
+exception type before it followed this scheme overrides it to keep that type.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Revision { get; }</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">protected override Exception MissingDefinition(string id)</code></pre>
   </div>
 
-
-
-
-
-  <h4 class="section">Property Value</h4>
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
   <dl class="parameters">
-    <dt><span class="xref">string</span></dt>
-    <dd></dd>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>id</code></dt></td>
+    <td style="width: 99%"><dd><p>The id, which may be null.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Exception</span></dt>
+    <dd><p>The exception to throw.</p>
+</dd>
   </dl>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyEncounterData_EncounterCatalog_Revision_examples">Examples</h4>
-  <pre><code class="lang-csharp">Debug.Log(encounters.Revision);</code></pre>
+
+
+
+  <h4 class="section" id="CodeSmile_LunyEncounterData_EncounterCatalog_MissingDefinition_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">protected override Exception MissingDefinition(String id) =&gt; new WeatherException($"No weather is named \"{id}\".");</code></pre>
 
 
 
 
-
-
-  <h2 class="section" id="methods">Methods
-</h2>
 
 
   <a id="CodeSmile_LunyEncounterData_EncounterCatalog_Recipe_" data-uid="CodeSmile.LunyEncounterData.EncounterCatalog.Recipe*"></a>
 
   <h3 id="CodeSmile_LunyEncounterData_EncounterCatalog_Recipe_System_String_" data-uid="CodeSmile.LunyEncounterData.EncounterCatalog.Recipe(System.String)">
   Recipe(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/EncounterData/Runtime/EncounterCatalog.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/EncounterData/Runtime/EncounterCatalog.cs/#L38"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The recipe of an encounter.</p>
@@ -261,69 +284,11 @@ var recipe = encounters.Recipe("room-breach");</code></pre>
 
 
 
-  <a id="CodeSmile_LunyEncounterData_EncounterCatalog_TryGet_" data-uid="CodeSmile.LunyEncounterData.EncounterCatalog.TryGet*"></a>
-
-  <h3 id="CodeSmile_LunyEncounterData_EncounterCatalog_TryGet_System_String_CodeSmile_LunyEncounterData_Encounter__" data-uid="CodeSmile.LunyEncounterData.EncounterCatalog.TryGet(System.String,CodeSmile.LunyEncounterData.Encounter@)">
-  TryGet(string, out Encounter)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/EncounterData/Runtime/EncounterCatalog.cs/#L66"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>An encounter's entry, with its title and description.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool TryGet(string id, out Encounter encounter)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <table>
-  <tr>
-  <th>Type</th>
-  <th>Name</th>
-  <th>Description</th>
-  </tr>
-  <dl class="parameters">
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>id</code></dt></td>
-    <td style="width: 99%"><dd><p>The encounter's id.</p>
-</dd></td>
-  </tr>
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyEncounterData.Encounter.html">Encounter</a></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>encounter</code></dt></td>
-    <td style="width: 99%"><dd><p>The entry, or null.</p>
-</dd></td>
-  </tr>
-  </dl>
-  </table>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><span class="xref">bool</span></dt>
-    <dd><p>True when the catalog has it.</p>
-</dd>
-  </dl>
-
-
-
-
-
-
-  <h4 class="section" id="CodeSmile_LunyEncounterData_EncounterCatalog_TryGet_System_String_CodeSmile_LunyEncounterData_Encounter___examples">Examples</h4>
-  <pre><code class="lang-csharp">if (catalog.TryGet("staged-boss", out var boss)) Debug.Log(boss.Title);</code></pre>
-
-
-
-
-
-
   <a id="CodeSmile_LunyEncounterData_EncounterCatalog_TryGetRecipe_" data-uid="CodeSmile.LunyEncounterData.EncounterCatalog.TryGetRecipe*"></a>
 
   <h3 id="CodeSmile_LunyEncounterData_EncounterCatalog_TryGetRecipe_System_String_CodeSmile_LunySpawn_SpawnRecipe__" data-uid="CodeSmile.LunyEncounterData.EncounterCatalog.TryGetRecipe(System.String,CodeSmile.LunySpawn.SpawnRecipe@)">
   TryGetRecipe(string, out SpawnRecipe)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/EncounterData/Runtime/EncounterCatalog.cs/#L55"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/EncounterData/Runtime/EncounterCatalog.cs/#L45"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The recipe of an encounter, when the catalog has it.</p>
@@ -381,7 +346,7 @@ var recipe = encounters.Recipe("room-breach");</code></pre>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/EncounterData/Runtime/EncounterCatalog.cs/#L20" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySpawn/EncounterData/Runtime/EncounterCatalog.cs/#L25" class="edit-link">Edit this page</a>
         </div>
 
 
