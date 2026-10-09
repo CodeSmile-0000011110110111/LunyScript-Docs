@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-      <title>Struct PanelFactory | LunyScript API Reference </title>
+      <title>Struct UIWorldPlacement | LunyScript API Reference </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="Struct PanelFactory | LunyScript API Reference ">
+      <meta name="title" content="Struct UIWorldPlacement | LunyScript API Reference ">
       
-      <meta name="description" content="The Panel surface inside Build(): typed binds, Place of a UXML fragment, and Open/Close of a menu. It hides PanelRenderer inside a Script the same way Transform hides UnityEngine.Transform.">
+      <meta name="description" content="What Panel.Place(uxml).Over() and At(position) return: a clone kept over a world point, and the name scope for elements inside it. Offset is optional and written once.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -17,7 +17,7 @@
       <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_PanelFactory.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.PanelFactory%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_LunyScript_UIWorldPlacement.md&amp;value=---%0Auid%3A%20CodeSmile.LunyScript.UIWorldPlacement%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -72,12 +72,12 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="CodeSmile.LunyScript.PanelFactory">
+        <article data-uid="CodeSmile.LunyScript.UIWorldPlacement">
 
 
 
-  <h1 id="CodeSmile_LunyScript_PanelFactory" data-uid="CodeSmile.LunyScript.PanelFactory" class="text-break">
-Struct PanelFactory  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/PanelFactory.cs/#L23"><i class="bi bi-code-slash"></i></a>
+  <h1 id="CodeSmile_LunyScript_UIWorldPlacement" data-uid="CodeSmile.LunyScript.UIWorldPlacement" class="text-break">
+Struct UIWorldPlacement  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UIWorldPlacement.cs/#L22"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,14 +85,13 @@ Struct PanelFactory  <a class="header-action link-secondary" title="View source"
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>The <code>Panel</code> surface inside <code>Build()</code>: typed binds, Place of a UXML fragment, and
-Open/Close of a menu. It hides <code>PanelRenderer</code> inside a <code>Script</code> the same way
-<code>Transform</code> hides <code>UnityEngine.Transform</code>.</p>
+  <div class="markdown summary"><p>What <code>Panel.Place(uxml).Over()</code> and <code>At(position)</code> return: a clone kept over a world
+point, and the name scope for elements inside it. <code>Offset</code> is optional and written once.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly struct PanelFactory</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly struct UIWorldPlacement</code></pre>
   </div>
 
 
@@ -109,15 +108,16 @@ Open/Close of a menu. It hides <code>PanelRenderer</code> inside a <code>Script<
 
 
 
-  <h2 id="CodeSmile_LunyScript_PanelFactory_examples">Examples</h2>
-  <pre><code class="lang-csharp">var health = Panel.Label("health");
-health.BindText(Text.Format("{0}% HP", Health));</code></pre>
+  <h2 id="CodeSmile_LunyScript_UIWorldPlacement_examples">Examples</h2>
+  <pre><code class="lang-csharp">var plate = Panel.Place(NamePlate).Over();
+plate.Label("health").BindText(Health);</code></pre>
 
 
-  <h2 id="CodeSmile_LunyScript_PanelFactory_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p><b>Authors never type <code>PanelRenderer</code> or <code>VisualElement</code>.</b> The supported scene
-component is PanelRenderer. UIDocument is not probed. Runtime-only: a scene-free editor host
-reports once and writes nothing.</p>
+  <h2 id="CodeSmile_LunyScript_UIWorldPlacement_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>The placement is declared when <code>Over()</code> or <code>At(position)</code> is called, so this handle is
+not a block and is not placed in an event list. The clone is made when the object spawns and its
+panel has loaded, and it leaves the panel when the object despawns.
+docs/proposals/world-anchored-labels.md is the contract.</p>
 </div>
 
 
@@ -125,14 +125,14 @@ reports once and writes nothing.</p>
 </h2>
 
 
-  <a id="CodeSmile_LunyScript_PanelFactory_Button_" data-uid="CodeSmile.LunyScript.PanelFactory.Button*"></a>
+  <a id="CodeSmile_LunyScript_UIWorldPlacement_Button_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Button*"></a>
 
-  <h3 id="CodeSmile_LunyScript_PanelFactory_Button_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.PanelFactory.Button(System.String,System.String,System.Int32)">
+  <h3 id="CodeSmile_LunyScript_UIWorldPlacement_Button_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Button(System.String,System.String,System.Int32)">
   Button(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/PanelFactory.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UIWorldPlacement.cs/#L88"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A named Button on the host panel.</p>
+  <div class="markdown level1 summary"><p>A named Button inside this clone.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -177,141 +177,22 @@ reports once and writes nothing.</p>
 
 
 
-
-
-
-
-
-  <a id="CodeSmile_LunyScript_PanelFactory_Close_" data-uid="CodeSmile.LunyScript.PanelFactory.Close*"></a>
-
-  <h3 id="CodeSmile_LunyScript_PanelFactory_Close_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.PanelFactory.Close(CodeSmile.LunyScript.ObjectBinding,System.String,System.Int32)">
-  Close(ObjectBinding, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/PanelFactory.cs/#L128"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Hides a panel and keeps its element cache. <code>ForPlayer</code> is required.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public PanelCloseBuilder Close(ObjectBinding menu, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <table>
-  <tr>
-  <th>Type</th>
-  <th>Name</th>
-  <th>Description</th>
-  </tr>
-  <dl class="parameters">
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>menu</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
-  </tr>
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
-  </tr>
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
-  </tr>
-  </dl>
-  </table>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.PanelCloseBuilder.html">PanelCloseBuilder</a></dt>
-    <dd></dd>
-  </dl>
+  <h4 class="section" id="CodeSmile_LunyScript_UIWorldPlacement_Button_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var use = Panel.Place(Prompt).Over().Button("use");</code></pre>
 
 
 
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_PanelFactory_Close_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Message(ClosePause, Panel.Close(PauseMenu).ForPlayer(0));</code></pre>
+  <a id="CodeSmile_LunyScript_UIWorldPlacement_Group_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Group*"></a>
 
-
-
-
-
-
-  <a id="CodeSmile_LunyScript_PanelFactory_For_" data-uid="CodeSmile.LunyScript.PanelFactory.For*"></a>
-
-  <h3 id="CodeSmile_LunyScript_PanelFactory_For_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.PanelFactory.For(CodeSmile.LunyScript.ObjectBinding,System.String,System.Int32)">
-  For(ObjectBinding, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/PanelFactory.cs/#L86"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Targets the <code>PanelRenderer</code> on a declared GameObject input rather than on
-this script's object.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public PanelHandle For(ObjectBinding panel, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <table>
-  <tr>
-  <th>Type</th>
-  <th>Name</th>
-  <th>Description</th>
-  </tr>
-  <dl class="parameters">
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>panel</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
-  </tr>
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
-  </tr>
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
-  </tr>
-  </dl>
-  </table>
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.PanelHandle.html">PanelHandle</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-
-
-
-  <h4 class="section" id="CodeSmile_LunyScript_PanelFactory_For_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">var health = Panel.For(Hud).Label("health");</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_LunyScript_PanelFactory_Group_" data-uid="CodeSmile.LunyScript.PanelFactory.Group*"></a>
-
-  <h3 id="CodeSmile_LunyScript_PanelFactory_Group_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.PanelFactory.Group(System.String,System.String,System.Int32)">
+  <h3 id="CodeSmile_LunyScript_UIWorldPlacement_Group_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Group(System.String,System.String,System.Int32)">
   Group(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/PanelFactory.cs/#L77"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UIWorldPlacement.cs/#L130"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A named Group on the host panel, for showing or hiding a cluster. Not a Place
-target.</p>
+  <div class="markdown level1 summary"><p>A named Group inside this clone.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -356,19 +237,22 @@ target.</p>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_UIWorldPlacement_Group_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">On.Ready(Panel.Place(NamePlate).Over().Group("plate").SetVisible(false));</code></pre>
 
 
 
 
 
-  <a id="CodeSmile_LunyScript_PanelFactory_Label_" data-uid="CodeSmile.LunyScript.PanelFactory.Label*"></a>
 
-  <h3 id="CodeSmile_LunyScript_PanelFactory_Label_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.PanelFactory.Label(System.String,System.String,System.Int32)">
+  <a id="CodeSmile_LunyScript_UIWorldPlacement_Label_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Label*"></a>
+
+  <h3 id="CodeSmile_LunyScript_UIWorldPlacement_Label_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Label(System.String,System.String,System.Int32)">
   Label(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/PanelFactory.cs/#L31"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UIWorldPlacement.cs/#L80"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A named Label on the panel of the object this script runs on.</p>
+  <div class="markdown level1 summary"><p>A named Label inside this clone.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -413,24 +297,28 @@ target.</p>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_UIWorldPlacement_Label_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Panel.Place(DamageNumber).Over().Label("amount").BindText(Damage);</code></pre>
 
 
 
 
 
-  <a id="CodeSmile_LunyScript_PanelFactory_Open_" data-uid="CodeSmile.LunyScript.PanelFactory.Open*"></a>
 
-  <h3 id="CodeSmile_LunyScript_PanelFactory_Open_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.PanelFactory.Open(CodeSmile.LunyScript.ObjectBinding,System.String,System.Int32)">
-  Open(ObjectBinding, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/PanelFactory.cs/#L116"><i class="bi bi-code-slash"></i></a>
+  <a id="CodeSmile_LunyScript_UIWorldPlacement_Offset_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Offset*"></a>
+
+  <h3 id="CodeSmile_LunyScript_UIWorldPlacement_Offset_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Offset(CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,CodeSmile.LunyScript.NumberValueBlock,System.String,System.Int32)">
+  Offset(NumberValueBlock, NumberValueBlock, NumberValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UIWorldPlacement.cs/#L44"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Shows a panel that is already in the scene. <code>ForPlayer</code> is required.</p>
+  <div class="markdown level1 summary"><p>Adds world units to the point the clone is kept over. Each value is read every frame, so
+a Number moves the clone.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public PanelOpenBuilder Open(ObjectBinding menu, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public UIOffsetPlacement Offset(NumberValueBlock x, NumberValueBlock y, NumberValueBlock z, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -442,27 +330,43 @@ target.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.ObjectBinding.html">ObjectBinding</a></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>menu</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>x</code></dt></td>
+    <td style="width: 99%"><dd><p>World units along X.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>y</code></dt></td>
+    <td style="width: 99%"><dd><p>World units along Y.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.NumberValueBlock.html">NumberValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>z</code></dt></td>
+    <td style="width: 99%"><dd><p>World units along Z.</p>
+</dd></td>
   </tr>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
   </tr>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
   </tr>
   </dl>
   </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.PanelOpenBuilder.html">PanelOpenBuilder</a></dt>
-    <dd></dd>
+    <dt><a class="xref" href="CodeSmile.LunyScript.UIOffsetPlacement.html">UIOffsetPlacement</a></dt>
+    <dd><p>The same name scope, without a second <code>Offset</code>.</p>
+</dd>
   </dl>
 
 
@@ -470,28 +374,28 @@ target.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_PanelFactory_Open_CodeSmile_LunyScript_ObjectBinding_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">On.Ready(Panel.Open(PauseMenu).ForPlayer(0));</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_UIWorldPlacement_Offset_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_CodeSmile_LunyScript_NumberValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var popup = Panel.Place(DamageNumber).Over().Offset(0, Rise, 0);</code></pre>
 
 
 
 
 
 
-  <a id="CodeSmile_LunyScript_PanelFactory_Place_" data-uid="CodeSmile.LunyScript.PanelFactory.Place*"></a>
+  <a id="CodeSmile_LunyScript_UIWorldPlacement_Offset_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Offset*"></a>
 
-  <h3 id="CodeSmile_LunyScript_PanelFactory_Place_CodeSmile_LunyScript_VisualTreeAsset_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.PanelFactory.Place(CodeSmile.LunyScript.VisualTreeAsset,System.String,System.Int32)">
-  Place(VisualTreeAsset, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/PanelFactory.cs/#L104"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_LunyScript_UIWorldPlacement_Offset_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Offset(CodeSmile.LunyScript.Vector3ValueBlock,System.String,System.Int32)">
+  Offset(Vector3ValueBlock, string, int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UIWorldPlacement.cs/#L67"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Clones a UXML asset into a HUD region. <code>At</code> is required. The returned
-handle after <code>At</code> is the name scope for names inside that clone.</p>
+  <div class="markdown level1 summary"><p>Adds world units, held in one spatial value, to the point the clone is kept over. The value
+is read every frame, so a Vector3 variable moves the clone.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public PlaceAtBuilder Place(VisualTreeAsset uxml, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public UIOffsetPlacement Offset(Vector3ValueBlock offset, string callerFilePath = null, int callerLineNumber = 0)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -503,27 +407,31 @@ handle after <code>At</code> is the name scope for names inside that clone.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.VisualTreeAsset.html">VisualTreeAsset</a></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>uxml</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.LunyScript.Vector3ValueBlock.html">Vector3ValueBlock</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>offset</code></dt></td>
+    <td style="width: 99%"><dd><p>World units along the three axes.</p>
+</dd></td>
   </tr>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>callerFilePath</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler. Do not pass one.</p>
+</dd></td>
   </tr>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">int</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>callerLineNumber</code></dt></td>
-    <td style="width: 99%"><dd></dd></td>
+    <td style="width: 99%"><dd><p>Supplied by the compiler.</p>
+</dd></td>
   </tr>
   </dl>
   </table>
 
   <h4 class="section">Returns</h4>
   <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.LunyScript.PlaceAtBuilder.html">PlaceAtBuilder</a></dt>
-    <dd></dd>
+    <dt><a class="xref" href="CodeSmile.LunyScript.UIOffsetPlacement.html">UIOffsetPlacement</a></dt>
+    <dd><p>The same name scope, without a second <code>Offset</code>.</p>
+</dd>
   </dl>
 
 
@@ -531,23 +439,26 @@ handle after <code>At</code> is the name scope for names inside that clone.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_LunyScript_PanelFactory_Place_CodeSmile_LunyScript_VisualTreeAsset_System_String_System_Int32__examples">Examples</h4>
-  <pre><code class="lang-csharp">var portrait = Panel.Place(PlayerPortrait).At(Anchor.TopLeft);
-portrait.Label("health").BindText(Health);</code></pre>
+  <h4 class="section" id="CodeSmile_LunyScript_UIWorldPlacement_Offset_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var plate = Panel.Place(NamePlate).Over().Offset(Lift);</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_LunyScript_UIWorldPlacement_Offset_CodeSmile_LunyScript_Vector3ValueBlock_System_String_System_Int32__remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>The same offset as the three-number form, with the value's X, Y and Z as the world units
+along X, Y and Z.</p>
+</div>
 
 
 
 
+  <a id="CodeSmile_LunyScript_UIWorldPlacement_ProgressBar_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.ProgressBar*"></a>
 
-
-  <a id="CodeSmile_LunyScript_PanelFactory_ProgressBar_" data-uid="CodeSmile.LunyScript.PanelFactory.ProgressBar*"></a>
-
-  <h3 id="CodeSmile_LunyScript_PanelFactory_ProgressBar_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.PanelFactory.ProgressBar(System.String,System.String,System.Int32)">
+  <h3 id="CodeSmile_LunyScript_UIWorldPlacement_ProgressBar_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.ProgressBar(System.String,System.String,System.Int32)">
   ProgressBar(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/PanelFactory.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UIWorldPlacement.cs/#L104"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A named ProgressBar on the host panel.</p>
+  <div class="markdown level1 summary"><p>A named ProgressBar inside this clone.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -592,19 +503,22 @@ portrait.Label("health").BindText(Health);</code></pre>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_UIWorldPlacement_ProgressBar_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Panel.Place(HealthBar).Over().ProgressBar("health").BindValue(Health);</code></pre>
 
 
 
 
 
-  <a id="CodeSmile_LunyScript_PanelFactory_Slider_" data-uid="CodeSmile.LunyScript.PanelFactory.Slider*"></a>
 
-  <h3 id="CodeSmile_LunyScript_PanelFactory_Slider_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.PanelFactory.Slider(System.String,System.String,System.Int32)">
+  <a id="CodeSmile_LunyScript_UIWorldPlacement_Slider_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Slider*"></a>
+
+  <h3 id="CodeSmile_LunyScript_UIWorldPlacement_Slider_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Slider(System.String,System.String,System.Int32)">
   Slider(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/PanelFactory.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UIWorldPlacement.cs/#L113"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A named Slider on the host panel.</p>
+  <div class="markdown level1 summary"><p>A named Slider inside this clone.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -649,19 +563,22 @@ portrait.Label("health").BindText(Health);</code></pre>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_UIWorldPlacement_Slider_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">Panel.Place(Mixer).Over().Slider("volume").BindValue(Volume);</code></pre>
 
 
 
 
 
-  <a id="CodeSmile_LunyScript_PanelFactory_TextField_" data-uid="CodeSmile.LunyScript.PanelFactory.TextField*"></a>
 
-  <h3 id="CodeSmile_LunyScript_PanelFactory_TextField_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.PanelFactory.TextField(System.String,System.String,System.Int32)">
+  <a id="CodeSmile_LunyScript_UIWorldPlacement_TextField_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.TextField*"></a>
+
+  <h3 id="CodeSmile_LunyScript_UIWorldPlacement_TextField_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.TextField(System.String,System.String,System.Int32)">
   TextField(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/PanelFactory.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UIWorldPlacement.cs/#L122"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A named TextField on the host panel.</p>
+  <div class="markdown level1 summary"><p>A named TextField inside this clone.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -706,19 +623,22 @@ portrait.Label("health").BindText(Health);</code></pre>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_UIWorldPlacement_TextField_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var sign = Panel.Place(Signpost).Over().TextField("sign");</code></pre>
 
 
 
 
 
-  <a id="CodeSmile_LunyScript_PanelFactory_Toggle_" data-uid="CodeSmile.LunyScript.PanelFactory.Toggle*"></a>
 
-  <h3 id="CodeSmile_LunyScript_PanelFactory_Toggle_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.PanelFactory.Toggle(System.String,System.String,System.Int32)">
+  <a id="CodeSmile_LunyScript_UIWorldPlacement_Toggle_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Toggle*"></a>
+
+  <h3 id="CodeSmile_LunyScript_UIWorldPlacement_Toggle_System_String_System_String_System_Int32_" data-uid="CodeSmile.LunyScript.UIWorldPlacement.Toggle(System.String,System.String,System.Int32)">
   Toggle(string, string, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/PanelFactory.cs/#L45"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UIWorldPlacement.cs/#L96"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A named Toggle on the host panel.</p>
+  <div class="markdown level1 summary"><p>A named Toggle inside this clone.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -763,6 +683,9 @@ portrait.Label("health").BindText(Health);</code></pre>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_UIWorldPlacement_Toggle_System_String_System_String_System_Int32__examples">Examples</h4>
+  <pre><code class="lang-csharp">var watch = Panel.Place(Prompt).Over().Toggle("watch");</code></pre>
+
 
 
 
@@ -772,7 +695,7 @@ portrait.Label("health").BindText(Health);</code></pre>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/PanelFactory.cs/#L23" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Api/Ui/UIWorldPlacement.cs/#L22" class="edit-link">Edit this page</a>
         </div>
 
 
