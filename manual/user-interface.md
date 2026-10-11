@@ -285,7 +285,7 @@ Code-only control creation (`Panel.Create`), Unity's runtime DataBinding bridge,
 `Destroy`, `Slider`, class-list writes, `Focus` and `SetShared` are planned and not implemented.
 For labels at world positions, `Over(target)` for another object and a new label for each hit from a
 fixed number of clones are planned; world-space panels turned to face the camera are not.
-`docs/proposals/ui-toolkit.md` is the family document and records which of those are should-have.
+`docs/development/proposals/ui-toolkit.md` is the family document and records which of those are should-have.
 
 ## Seeing it run
 
