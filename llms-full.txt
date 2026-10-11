@@ -1168,15 +1168,16 @@ Source: https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/writ
 
 # AI agent skills
 
-LunyScript ships skills that teach AI coding agents, such as Claude Code, Codex and Grok, to write
-LunyScript scripts. A skill is a folder with one `SKILL.md` file: a name, a one-line description of
-when to use it, and the instructions. The instructions name the other files in the folder, each with
-the task it is for, so an agent opens only those its task needs. One of them, `api.md`, lists the
-signatures of the family, and `api-index.md` in the `lunyscript` folder lists every such file.
-`api-types.md` beside it gives the file and lines of each type, so an agent that searches it for a
-member or type name reads only that type's lines. The skills are in your project, in the `AgentSkills`
-folder of each Luny product under `Assets/CodeSmile/`, and they match the version you installed: every
-C# example in them compiles against that version, and the signature files are generated from it.
+LunyScript ships skills that teach AI coding agents to write LunyScript scripts. Claude Code, Codex
+and Grok are the agents that find them, through the links described below. A skill is a folder with
+one `SKILL.md` file: a name, a one-line description of when to use it, and the instructions. The
+instructions name the other files in the folder, each with the task it is for, so an agent opens
+only those its task needs. One of them, `api.md`, lists the signatures of the family, and
+`api-index.md` in the `lunyscript` folder lists every such file. `api-types.md` beside it gives the
+file and lines of each type, so an agent that searches it for a member or type name reads only that
+type's lines. The skills are in your project, in the `AgentSkills` folder of each Luny product under
+`Assets/CodeSmile/`, and they match the version you installed: every C# example in them compiles
+against that version, and the signature files are generated from it.
 
 An agent finds a skill only in its own skill folders. When you allow it, LunyScript writes a short
 **skill link** for each skill into those folders, and keeps the links up to date.
@@ -1231,6 +1232,10 @@ skill, in each of these folders of your Unity project. **No** writes nothing.
 | --- | --- |
 | `.claude/skills/` | Claude Code, and Grok |
 | `.agents/skills/` | Codex, and Grok |
+
+LunyScript supports these three agents. Another agent finds the skills only when it reads one of
+these two folders. The links are the only files LunyScript writes for an agent: it never writes or
+changes an `AGENTS.md`, a `CLAUDE.md` or a skill of your own.
 
 LunyScript keeps your answer in `UserSettings/LunyScriptAgentSkills.asset`, yours alone like the
 **Don't show again** choice. When the welcome window opens by itself, the box asks only until you
