@@ -142,7 +142,7 @@ LunyScript. A debugger filter, a catch block or a diagnostic layer could not sel
     <a class="xref" href="CodeSmile.LunyScript.LunyScriptException.html">LunyScriptException</a>, and the choice between them was made in favour of the
     base class: a user of a scripting API is not writing general .NET code against these
     types and should almost never catch one at all, because they name a mistake to fix rather
-    than a condition to handle. Recorded in <code>docs/api-changes.md</code>.
+    than a condition to handle. Recorded in <code>docs/development/api-changes.md</code>.
 </p>
 <p>
     <b>An exception that knows the authored location presents it as the topmost stack
@@ -152,14 +152,14 @@ LunyScript. A debugger filter, a catch block or a diagnostic layer could not sel
     given the running block's location by <code>ScriptRunner.ReportBlockFailure</code>, through
     <code>AttachBlockContext</code>, because the checks that raise it are too far from the block to
     name it themselves; which of the two wins, and when there is neither, is
-    <code>docs/console-navigation.md</code>'s "Which authored location a diagnostic carries".
+    <code>docs/development/console-navigation.md</code>'s "Which authored location a diagnostic carries".
     <a class="xref" href="CodeSmile.LunyScript.LunyScriptException.html#CodeSmile_LunyScript_LunyScriptException_StackTrace">StackTrace</a> prepends <a class="xref" href="CodeSmile.LunyScript.LunyScriptException.html#CodeSmile_LunyScript_LunyScriptException_Location">Location</a> in Unity's own stack-frame
     format, which is what <code>UnityEngine.StackTraceUtility.ExtractStringFromExceptionInternal</code>
     reads through this virtual property, so the Console <b>prints</b> the user's own line as
     the topmost frame. <b>It does not navigate there.</b> A Console entry's double-click
     target is the <code>file</code> and <code>line</code> Unity fills in from the live call stack when
     the entry is written; where that lands differs by path and is measured in
-    <code>docs/console-navigation.md</code>. See <a class="xref" href="CodeSmile.LunyScript.SourceLocation.html">SourceLocation</a> for how the
+    <code>docs/development/console-navigation.md</code>. See <a class="xref" href="CodeSmile.LunyScript.SourceLocation.html">SourceLocation</a> for how the
     location is captured.
 </p>
 </div>
@@ -415,7 +415,7 @@ by a maintainer.</p>
 <p>
     <b>This changes what the entry prints and not where a double-click on it goes.</b>
     Unity chooses that target from the live call stack at log time rather than from this
-    string. <code>docs/console-navigation.md</code> records the measurement.
+    string. <code>docs/development/console-navigation.md</code> records the measurement.
 </p>
 <p>
     <b>Where that target lands depends on who wrote the entry, and this property moves it

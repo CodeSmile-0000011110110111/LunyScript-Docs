@@ -124,7 +124,7 @@ var instance = runner.Spawn(program, host);</code></pre>
   <div class="markdown level0 remarks"><p><b>A program is built once per script type, not once per object.</b> The predecessor called
 <code>Build()</code> once per object, at roughly ninety managed allocations per spawn, which made it
 unusable for a game that spawns enemies and pickups. AGENTS.md rule 21;
-<code>docs/execution-model.md</code> has the whole model.</p>
+<code>docs/development/execution-model.md</code> has the whole model.</p>
 <p>
     Nothing on a program is mutable. Per-object state lives in slots on a
     <a class="xref" href="CodeSmile.LunyScript.ScriptInstance.html">ScriptInstance</a>, and running the same block against a different instance is
@@ -310,7 +310,7 @@ var health = instance.GetNumber(script.Health.NumberSlot);</code></pre>
   <h4 class="section" id="CodeSmile_LunyScript_ScriptProgram_BuiltScript_remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p><a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a> returns this object from <code>Awake</code> onward,
 which is how a component reaches it without holding a program.
-<code>docs/slice-decisions.md</code> D4.42 records the decision, what it costs, and the one
+<code>docs/development/slice-decisions.md</code> D4.42 records the decision, what it costs, and the one
 ordering hazard: a component with a negative <code>DefaultExecutionOrder</code> that caches
 <code>behaviour.Script</code> in its own <code>Awake</code> caches the prototype in
 the serialized field, because <code>LunyScriptBehaviour.Awake</code> has not run yet.</p>
@@ -1145,7 +1145,7 @@ was declared.</p>
 It exists so that code holding a program and a name - a runtime inspector, a debugging
 window, a test - can reach a variable without holding a <a class="xref" href="CodeSmile.LunyScript.Script.html">Script</a> object at
 all. Ordinary code reads the variable from <a class="xref" href="CodeSmile.LunyScript.ScriptProgram.html#CodeSmile_LunyScript_ScriptProgram_BuiltScript">BuiltScript</a>, which
-<a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a> returns. <code>docs/slice-decisions.md</code> D4.42
+<a class="xref" href="CodeSmile.LunyScript.LunyScriptBehaviour.html#CodeSmile_LunyScript_LunyScriptBehaviour_Script">Script</a> returns. <code>docs/development/slice-decisions.md</code> D4.42
 records both and which is which.</p>
 <p>
     It is never read on the run-time path: a block holds the handle its build gave it. The

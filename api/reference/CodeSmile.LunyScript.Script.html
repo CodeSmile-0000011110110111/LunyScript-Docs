@@ -360,7 +360,7 @@ When.Input(jump).Performed(Animator.Trigger("Jump").Set());</code></pre>
   <div class="markdown level1 remarks"><p>Number is Unity Float, Integer is Unity Int, Flag is Unity Bool, and Trigger is Unity
 Trigger. The object's <code>Animator</code> is looked up when it spawns; a missing Animator or
 parameter is reported once per script type and the object still runs.
-<code>docs/proposals/animation.md</code> is the family.</p>
+<code>docs/development/proposals/animation.md</code> is the family.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
@@ -409,7 +409,7 @@ On.Ready(Audio.For(MotorSource).Play());</code></pre>
   <h4 class="section" id="CodeSmile_LunyScript_Script_Audio_remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>A one-shot plays on a runner-owned pooled voice. A bound source is the
 <code>AudioSource</code> already on an object. Mixer writes are a third surface.
-<code>docs/proposals/audio.md</code> is the family.</p>
+<code>docs/development/proposals/audio.md</code> is the family.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
@@ -548,7 +548,7 @@ Available only inside <code>Build()</code>.</p>
 
   <h4 class="section" id="CodeSmile_LunyScript_Script_Cloud_remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>The verbs are LunyCloud's: <code>CodeSmile.Luny.Cloud.LunyScriptAdapter</code> adds them to this surface in
-namespace <code>CodeSmile.LunyScript</code>, so a script needs no <code>using</code> line; docs/proposals/lunycloud.md
+namespace <code>CodeSmile.LunyScript</code>, so a script needs no <code>using</code> line; docs/development/proposals/lunycloud.md
 L01.</p>
 </div>
 
@@ -598,7 +598,7 @@ On.FixedUpdate(Collision.SphereOverlap().Radius(5).InLocalSpace().Into(Nearby));
 
   <h4 class="section" id="CodeSmile_LunyScript_Script_Collision_remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>Runtime-only. A query runs where it is written, in any event, and reads the physics world as the
-last physics step left it. <code>docs/proposals/collision-queries.md</code> is the family.</p>
+last physics step left it. <code>docs/development/proposals/collision-queries.md</code> is the family.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
@@ -738,7 +738,7 @@ On.Interacted(Interaction.Disable(), Object.Destroy());</code></pre>
 
   <h4 class="section" id="CodeSmile_LunyScript_Script_Interaction_remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>Runtime-only. The runner arbitrates focus and activation once per frame, before any script's
-<code>On.Update</code>; <code>docs/proposals/interaction.md</code> is the family.</p>
+<code>On.Update</code>; <code>docs/development/proposals/interaction.md</code> is the family.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
@@ -883,7 +883,7 @@ When.Operation(Patrol).Succeeded(If(Navigation.Arrived(Patrol)).Then(OnGuard.Set
   <div class="markdown level1 remarks"><p>Runtime-only. The route comes from the navigation backend the C# code that owns the runner
 installs, <code>NavMeshNavigationProvider</code> for Unity's NavMesh; with none, every move fails as
 <code>Denied</code>. Speed, acceleration and stopping distance stay on the actor's agent.
-<code>Motion.MoveTo</code> is the straight-line move. <code>docs/proposals/navigation.md</code> is the
+<code>Motion.MoveTo</code> is the straight-line move. <code>docs/development/proposals/navigation.md</code> is the
 family.</p>
 </div>
 
@@ -1056,7 +1056,7 @@ script.</p>
   <h4 class="section" id="CodeSmile_LunyScript_Script_Options_remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>Read once per script type, when the runner builds it, just before <code>Build()</code>. A singleton starts when
 the game starts, on an ordinary GameObject named after the script type, in DontDestroyOnLoad, and a copy
-of the script on any other object does not run. <code>docs/proposals/singleton-scripts.md</code> is the
+of the script on any other object does not run. <code>docs/development/proposals/singleton-scripts.md</code> is the
 contract.</p>
 </div>
 
@@ -1099,7 +1099,7 @@ On.TriggerStay(HitAt.Set(Other.WorldPosition));</code></pre>
   <h4 class="section" id="CodeSmile_LunyScript_Script_Other_remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>The same members exist on all six contact events, because they are properties of the
 other collider. A read outside those events throws when the block runs.
-<code>docs/proposals/physics-contact-events.md</code> is the surface.</p>
+<code>docs/development/proposals/physics-contact-events.md</code> is the surface.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
@@ -1197,7 +1197,7 @@ When.Input(fire).Performed(Particles.For(MuzzleFlash).Emit(12));</code></pre>
 
   <h4 class="section" id="CodeSmile_LunyScript_Script_Particles_remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>Unity owns the effect's modules and look. A target with no <code>ParticleSystem</code> is
-reported once per script type and the object still runs. <code>docs/proposals/particles.md</code>
+reported once per script type and the object still runs. <code>docs/development/proposals/particles.md</code>
 is the family.</p>
 </div>
 
@@ -1219,7 +1219,7 @@ is the family.</p>
 
   <div class="markdown level1 summary"><p>Saves and loads documents among the user's progress, in local storage. Each save and
 load is an attempt on an operation handle bound with <code>.As</code>. Available only inside
-<code>Build()</code>. <code>docs/proposals/local-documents.md</code> is the family.</p>
+<code>Build()</code>. <code>docs/development/proposals/local-documents.md</code> is the family.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -1295,7 +1295,7 @@ When.SceneLoaded(Vault).Do(VaultReady.Set(true));</code></pre>
 
   <h4 class="section" id="CodeSmile_LunyScript_Script_Scene_remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>Runtime-only. A replacement load releases every loaded scene; an additive load
-releases none. <code>docs/proposals/scene-flow.md</code> is the family.</p>
+releases none. <code>docs/development/proposals/scene-flow.md</code> is the family.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
@@ -1768,7 +1768,7 @@ On.TriggerEnter(If(Other.HasTag("Player")).Then(Request(Other, PlayerScript.Requ
   <div class="markdown level1 remarks"><p>Name the request through the receiver's generated descriptor, such as
 <code>EnemyScript.Requests.Heal</code>, or this script's own when another object runs the same script. The
 receiver decides what to do; <code>.As(operation)</code> observes whether it did it.
-<code>docs/proposals/script-communication.md</code> is the contract.</p>
+<code>docs/development/proposals/script-communication.md</code> is the contract.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
@@ -1917,7 +1917,7 @@ On.Request(Open, IsOpen.Set(true), SendEvent(Opened));</code></pre>
 
   <h4 class="section" id="CodeSmile_LunyScript_Script_SendEvent_CodeSmile_LunyScript_Event_System_String_System_Int32__remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>A script sends only its own events, so a listener hearing <code>DoorScript.Events.Opened</code> knows a
-<code>DoorScript</code> sent it. <code>docs/proposals/script-communication.md</code> is the contract.</p>
+<code>DoorScript</code> sent it. <code>docs/development/proposals/script-communication.md</code> is the contract.</p>
 </div>
 
   <h4 class="section">Exceptions</h4>
