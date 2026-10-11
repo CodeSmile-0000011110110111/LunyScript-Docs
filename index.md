@@ -1,6 +1,10 @@
 # LunyScript Docs
 
-**LunyScript** is a C# scripting layer for Unity. A script is one class with one `Build()` method.
+**Luny** is a gameplay toolkit in C# for Unity, built from peer modules. **LunyScript** is its module for readable
+high-level game-rule orchestration; these pages document that module. The
+[AI agent skills guide](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/agent-skills.html) explains the toolkit overview and module routing.
+
+LunyScript provides a C# scripting layer for Unity. A script is one class with one `Build()` method.
 Inside `Build()` you compose blocks that say what an object does, and the runtime runs those blocks
 against every object that carries the script. Add the `LunyScript Behaviour` component to a game
 object, pick the script, press Play.

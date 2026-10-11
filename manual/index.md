@@ -1,9 +1,10 @@
 # Manual
 
-Every page here covers one LunyScript feature. Each one opens with the shortest script that uses
-the feature, explains what the feature is for, then lists what you can write. Each page ends with
-links to the next page and to the generated
-[API Reference](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/), which carries the full signature of every member.
+Luny is a gameplay toolkit in C# for Unity. Its modules own distinct systems, and LunyScript supplies readable
+high-level game-rule orchestration alongside them. The current feature pages document that scripting module.
+Each explains a concept through working examples and links to the generated
+[API Reference](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/). The [AI agent skills guide](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/agent-skills.html)
+explains the central overview and routing to the other modules.
 
 ## Start here
 

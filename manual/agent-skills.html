@@ -58,27 +58,24 @@
   </header>
 
   <div class="post-content">
-    <p>LunyScript ships skills that teach AI coding agents to write LunyScript scripts. Claude Code, Codex
-and Grok are the agents that find them, through the links described below. A skill is a folder with
-one <code class="language-plaintext highlighter-rouge">SKILL.md</code> file: a name, a one-line description of when to use it, and the instructions. The
-instructions name the other files in the folder, each with the task it is for, so an agent opens
-only those its task needs. One of them, <code class="language-plaintext highlighter-rouge">api.md</code>, lists the signatures of the family, and
-<code class="language-plaintext highlighter-rouge">api-index.md</code> in the <code class="language-plaintext highlighter-rouge">lunyscript</code> folder lists every such file. <code class="language-plaintext highlighter-rouge">api-types.md</code> beside it gives the
-file and lines of each type, so an agent that searches it for a member or type name reads only that
-type’s lines. The skills are in your project, in the <code class="language-plaintext highlighter-rouge">AgentSkills</code> folder of each Luny product under
-<code class="language-plaintext highlighter-rouge">Assets/CodeSmile/</code>, and they match the version you installed: every C# example in them compiles
-against that version, and the signature files are generated from it.</p>
+    <p>Luny’s module-owned skills teach AI coding agents the gameplay toolkit’s supported APIs and boundaries. LunyScript
+provides the installer that makes those skills discoverable to Claude Code, Codex and Grok. Each skill contains a
+<code class="language-plaintext highlighter-rouge">SKILL.md</code> entry and references loaded for the relevant task. The generated <code class="language-plaintext highlighter-rouge">api.md</code> signatures match the installed
+version; <code class="language-plaintext highlighter-rouge">api-types.md</code> in the LunyScript skill locates a type without loading its entire API reference.</p>
 
 <p>An agent finds a skill only in its own skill folders. When you allow it, LunyScript writes a short
 <strong>skill link</strong> for each skill into those folders, and keeps the links up to date.</p>
 
 <h2 id="the-skills">The skills</h2>
 
-<p><code class="language-plaintext highlighter-rouge">luny</code> is the skill an agent loads first. It names each Luny product in your project and the skill to
-load for it, and states the rules every task with them follows. It also tells the agent to begin every
-reply to you with <code class="language-plaintext highlighter-rouge">Oy!</code>, so you can see that the skills loaded. It ships in
-<code class="language-plaintext highlighter-rouge">Assets/CodeSmile/Luny/AgentSkills/luny/</code>, and the description of <code class="language-plaintext highlighter-rouge">lunyscript</code> and of every product’s skill
-tells an agent to load it first.</p>
+<p><code class="language-plaintext highlighter-rouge">luny</code> loads first and explains Luny as the overall toolkit. Its modules are peers; LunyScript provides readable
+high-level game-rule orchestration. Engine integration, transport, storage, rendering, movement and transactions
+remain with their owner modules. A first general query gives the supported core loops, the additional systems other
+loops need, and planned modules. When available, <code class="language-plaintext highlighter-rouge">luny-new-game</code> opens with that same overview and asks unanswered
+questions one at a time. Other replies start with <code class="language-plaintext highlighter-rouge">Oy!</code> to indicate that the skill loaded.</p>
+
+<p>The central skill is <code class="language-plaintext highlighter-rouge">Assets/CodeSmile/Luny/AgentSkills/luny/SKILL.md</code>. Module skill descriptions direct the agent
+there first. The following skills apply once the task needs a LunyScript script:</p>
 
 <table>
   <thead>
@@ -143,8 +140,8 @@ tells an agent to load it first.</p>
   </tbody>
 </table>
 
-<p>Every other Luny product has one skill, named after the product in lowercase letters, for its plain C#
-and any script calls it adds; <code class="language-plaintext highlighter-rouge">luny</code> lists them and says when each one applies.</p>
+<p>Modules with supported agent entry points have a skill named after the module in lowercase letters, covering
+plain C# and any script adapter. The central skill also identifies prototypes whose README defines their limits.</p>
 
 <h2 id="allowing-the-skill-links">Allowing the skill links</h2>
 
@@ -223,7 +220,7 @@ and one instruction: read the skill’s file under <code class="language-plainte
 
 <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
 name: lunyscript
-description: Write, change, review or explain a LunyScript script ...
+description: Write, change or review high-level game rules ... Load the luny skill first.
 ---
 
 &lt;!-- Written by LunyScript to make its lunyscript skill discoverable
@@ -282,7 +279,7 @@ no longer exists, and the agent then has nothing to read.</p>
 <ul>
   <li>Tell the agent where the skills are: “read
 <code class="language-plaintext highlighter-rouge">Assets/CodeSmile/Luny/AgentSkills/luny/SKILL.md</code> first”. That skill names the skill of every Luny
-product in your project.</li>
+module in your project.</li>
   <li>Or copy a skill’s folder into a skill folder your agent reads, such as <code class="language-plaintext highlighter-rouge">~/.claude/skills/</code> for
 every project of one user. A copy does not update with LunyScript.</li>
 </ul>
