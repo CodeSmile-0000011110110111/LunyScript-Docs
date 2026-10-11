@@ -248,7 +248,8 @@ public sealed partial class Turret : Script // LUNY008: Turret is in
 Check **No Engine References** on that assembly definition, and keep MonoBehaviours and other code
 that uses the engine in a second assembly definition that references the first. A script with no
 assembly definition compiles into `Assembly-CSharp` and is not reported, and neither is an
-`EditorScript`. An assembly that has to keep scripts beside engine code, such as a test assembly,
+`EditorScript`. An assembly definition with **No Engine References** checked is not reported when it
+lists a package assembly whose name starts with `UnityEngine`, such as `UnityEngine.TestRunner`. An assembly that has to keep scripts beside engine code, such as a test assembly,
 turns the warning off for the whole assembly:
 
 ```csharp
