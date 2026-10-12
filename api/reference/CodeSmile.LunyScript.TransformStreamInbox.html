@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Class TransformStreamInbox | LunyScript API Reference ">
       
-      <meta name="description" content="Holds the transform streams that arrived since the last tick drained them, in one buffer the inbox owns. Every  uses one, so that the receive side of the stream is written once rather than once per backend.">
+      <meta name="description" content="Holds the transform streams that arrived since the last tick drained them, in one buffer the inbox owns.  uses one, and an  of a real backend can, so that the receive side of the stream is written once rather than once per backend.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_TransformStreamInbox" data-uid="CodeSmile.LunyScript.TransformStreamInbox" class="text-break">
-Class TransformStreamInbox  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L30"><i class="bi bi-code-slash"></i></a>
+Class TransformStreamInbox  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L32"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -86,8 +86,9 @@ Class TransformStreamInbox  <a class="header-action link-secondary" title="View 
   </div>
 
   <div class="markdown summary"><p>Holds the transform streams that arrived since the last tick drained them, in one
-buffer the inbox owns. Every <a class="xref" href="CodeSmile.LunyScript.INetworkProvider.html">INetworkProvider</a> uses one, so that the receive side
-of the stream is written once rather than once per backend.</p>
+buffer the inbox owns. <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html">FakeNetworkProvider</a> uses one, and an
+<a class="xref" href="CodeSmile.LunyScript.INetworkProvider.html">INetworkProvider</a> of a real backend can, so that the receive side of the stream is
+written once rather than once per backend.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -132,9 +133,10 @@ on every one of those ticks, which <code>AGENTS.md</code> rule 29 forbids and wh
     bytes arrive, and a view that old is stale in any case.
 </p>
 <p>
-    <b>What it assumes about threads.</b> Nothing here is thread safe. Both providers append
-    from the netcode backend's own receive callback and drain from
-    <code>ScriptRunner.TickFrameUpdate</code>, and both of those run on the main thread in
+    <b>What it assumes about threads.</b> Nothing here is thread safe. A provider appends
+    as a stream arrives, from its netcode backend's receive callback or, in
+    <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html">FakeNetworkProvider</a>, from the other peer's send, and
+    <code>ScriptRunner.TickFrameUpdate</code> drains it; both of those run on the main thread in
     separate phases of one frame.
 </p>
 </div>
@@ -147,7 +149,7 @@ on every one of those ticks, which <code>AGENTS.md</code> rule 29 forbids and wh
 
   <h3 id="CodeSmile_LunyScript_TransformStreamInbox_HeaderBytes" data-uid="CodeSmile.LunyScript.TransformStreamInbox.HeaderBytes">
   HeaderBytes
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L45"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many bytes of a payload <a class="xref" href="CodeSmile.LunyScript.TransformStreamInbox.html#CodeSmile_LunyScript_TransformStreamInbox_IsStreamHeader_System_Byte_System_Byte_System_Byte_">IsStreamHeader(byte, byte, byte)</a> reads.</p>
@@ -183,7 +185,7 @@ on every one of those ticks, which <code>AGENTS.md</code> rule 29 forbids and wh
 
   <h3 id="CodeSmile_LunyScript_TransformStreamInbox_Count" data-uid="CodeSmile.LunyScript.TransformStreamInbox.Count">
   Count
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L42"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many streams are waiting.</p>
@@ -219,7 +221,7 @@ on every one of those ticks, which <code>AGENTS.md</code> rule 29 forbids and wh
 
   <h3 id="CodeSmile_LunyScript_TransformStreamInbox_Append_System_Byte___System_Int32_System_Int32_" data-uid="CodeSmile.LunyScript.TransformStreamInbox.Append(System.Byte[],System.Int32,System.Int32)">
   Append(byte[], int, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L77"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L79"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Copies one arrived stream in.</p>
@@ -274,7 +276,7 @@ on every one of those ticks, which <code>AGENTS.md</code> rule 29 forbids and wh
 
   <h3 id="CodeSmile_LunyScript_TransformStreamInbox_Clear" data-uid="CodeSmile.LunyScript.TransformStreamInbox.Clear">
   Clear()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L117"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L119"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Drops everything waiting. Called when a session ends, so that a stream from the
@@ -302,7 +304,7 @@ previous session cannot be applied in the next one.</p>
 
   <h3 id="CodeSmile_LunyScript_TransformStreamInbox_IsStreamHeader_System_Byte_System_Byte_System_Byte_" data-uid="CodeSmile.LunyScript.TransformStreamInbox.IsStreamHeader(System.Byte,System.Byte,System.Byte)">
   IsStreamHeader(byte, byte, byte)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L70"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether the first three bytes of an arriving payload are a transform stream's.</p>
@@ -379,7 +381,7 @@ its size, and neither ever shrinks. It is three byte comparisons and not a parse
 
   <h3 id="CodeSmile_LunyScript_TransformStreamInbox_TryDequeue_System_Byte____System_Int32__System_Int32__" data-uid="CodeSmile.LunyScript.TransformStreamInbox.TryDequeue(System.Byte[]@,System.Int32@,System.Int32@)">
   TryDequeue(out byte[], out int, out int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L98"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The next waiting stream, as a view into the inbox's own buffer.</p>
@@ -440,7 +442,7 @@ its size, and neither ever shrinks. It is three byte comparisons and not a parse
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L30" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/TransformStreamInbox.cs/#L32" class="edit-link">Edit this page</a>
         </div>
 
 

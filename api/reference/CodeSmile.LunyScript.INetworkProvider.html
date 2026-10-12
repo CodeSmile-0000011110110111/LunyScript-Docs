@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Interface INetworkProvider | LunyScript API Reference ">
       
-      <meta name="description" content="What a netcode backend provides to the : a session to start and end, the connection facts a script is allowed to read, and two queues the gateway drains once per tick. Script code never sees this type; it sees the Net and Sync surfaces. AGENTS.md rule 49.">
+      <meta name="description" content="What a netcode backend provides to the : the state of a session it runs, the connection facts a script is allowed to read, and the queues the gateway drains once per tick. Script code never sees this type; it sees the Net and Sync surfaces. AGENTS.md rule 49.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_INetworkProvider" data-uid="CodeSmile.LunyScript.INetworkProvider" class="text-break">
-Interface INetworkProvider  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L34"><i class="bi bi-code-slash"></i></a>
+Interface INetworkProvider  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L40"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,8 +85,8 @@ Interface INetworkProvider  <a class="header-action link-secondary" title="View 
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>What a netcode backend provides to the <a class="xref" href="CodeSmile.LunyScript.NetworkGateway.html">NetworkGateway</a>: a session to start and
-end, the connection facts a script is allowed to read, and two queues the gateway drains once
+  <div class="markdown summary"><p>What a netcode backend provides to the <a class="xref" href="CodeSmile.LunyScript.NetworkGateway.html">NetworkGateway</a>: the state of a session it
+runs, the connection facts a script is allowed to read, and the queues the gateway drains once
 per tick. Script code never sees this type; it sees the <code>Net</code> and <code>Sync</code> surfaces.
 AGENTS.md rule 49.</p>
 </div>
@@ -115,12 +115,18 @@ AGENTS.md rule 49.</p>
 
 
   <h2 id="CodeSmile_LunyScript_INetworkProvider_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>Two implementations exist, and the tests that matter run against both.
-<a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html">FakeNetworkProvider</a> runs two peers in one process with no network and no
-Editor, which is what makes the message and cadence tests runnable in Edit Mode; it is a
-second real implementation rather than a mock, in the same way <code>FakeHost</code> is for blocks.
-<code>NgoNetworkProvider</code> in <code>CodeSmile.LunyScript.Netcode</code> is the Netcode for GameObjects
-one, and it is the only place in the product that references that package.</p>
+  <div class="markdown level0 remarks"><p><b>LunyScript starts, joins and ends no session.</b> A provider's session is started and ended by
+the provider's owner outside LunyScript: LunyNet owns sessions in C# (<code>NetHost</code>,
+<code>NetSession.Host</code>, <code>NetSession.Join</code>, <code>NetSession.Leave</code>), and a script reads the
+session's state through this interface. A game installs its provider with
+<a class="xref" href="CodeSmile.LunyScript.NetworkGateway.html#CodeSmile_LunyScript_NetworkGateway_UseProvider_CodeSmile_LunyScript_INetworkProvider_">UseProvider(INetworkProvider)</a>.</p>
+<p>
+    LunyScript ships one implementation. <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html">FakeNetworkProvider</a> runs two peers in one
+    process with no network and no Editor, which is what makes the message and cadence tests
+    runnable in Edit Mode; it is a real implementation rather than a mock, in the same way
+    <code>FakeHost</code> is for blocks. A provider over LunyNet is the follow-up that gives scripts a
+    real session.
+</p>
 <p>
     <b>Authority, not "server".</b> <a class="xref" href="CodeSmile.LunyScript.INetworkProvider.html#CodeSmile_LunyScript_INetworkProvider_HasAuthority_System_Int32_">HasAuthority(int)</a> answers for one object and
     means owner under distributed authority and server under client-server, which is why a
@@ -142,7 +148,7 @@ one, and it is the only place in the product that references that package.</p>
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_IsHost" data-uid="CodeSmile.LunyScript.INetworkProvider.IsHost">
   IsHost
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L49"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>True when this peer is the host. False for a client and for no session at all.
@@ -176,7 +182,7 @@ the defect that hiding it produces.</p>
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_MaximumTransformStreamBytes" data-uid="CodeSmile.LunyScript.INetworkProvider.MaximumTransformStreamBytes">
   MaximumTransformStreamBytes
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L103"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L96"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many payload bytes of transform stream this backend can carry in one send.
@@ -223,7 +229,7 @@ carries unfragmented, so this is not a limit only an unusual session meets.</p>
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_PeerCount" data-uid="CodeSmile.LunyScript.INetworkProvider.PeerCount">
   PeerCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L52"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many peers are in the session, including this one. Zero when offline.</p>
@@ -255,7 +261,7 @@ carries unfragmented, so this is not a limit only an unusual session meets.</p>
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_RoundTripMilliseconds" data-uid="CodeSmile.LunyScript.INetworkProvider.RoundTripMilliseconds">
   RoundTripMilliseconds
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L50"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L56"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Round trip time to the host in milliseconds, or 0 when offline or when this peer is
@@ -288,7 +294,7 @@ the host. Latency is a state a script may read, not an error; AGENTS.md rule 45.
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_State" data-uid="CodeSmile.LunyScript.INetworkProvider.State">
   State
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L44"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>What the session is doing right now. Never throws and is meaningful before any
@@ -325,7 +331,7 @@ session has been started.</p>
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_Describe" data-uid="CodeSmile.LunyScript.INetworkProvider.Describe">
   Describe()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L166"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L160"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Names this provider for the gateway's log lines, so a reader of the Console can tell
@@ -357,40 +363,11 @@ never per tick.</p>
 
 
 
-  <a id="CodeSmile_LunyScript_INetworkProvider_EndSession_" data-uid="CodeSmile.LunyScript.INetworkProvider.EndSession*"></a>
-
-  <h3 id="CodeSmile_LunyScript_INetworkProvider_EndSession" data-uid="CodeSmile.LunyScript.INetworkProvider.EndSession">
-  EndSession()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L63"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Ends the session and returns to <a class="xref" href="CodeSmile.LunyScript.SessionState.html#CodeSmile_LunyScript_SessionState_Offline">Offline</a>. Called again on
-an already-offline provider, it does nothing, so that a restart is
-<code>EndSession</code> then <code>StartHost</code> without the caller tracking state.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">void EndSession()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
   <a id="CodeSmile_LunyScript_INetworkProvider_HasAuthority_" data-uid="CodeSmile.LunyScript.INetworkProvider.HasAuthority*"></a>
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_HasAuthority_System_Int32_" data-uid="CodeSmile.LunyScript.INetworkProvider.HasAuthority(System.Int32)">
   HasAuthority(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L63"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether this peer may write the state of one object.</p>
@@ -441,7 +418,7 @@ of and a script that guards on authority then does nothing rather than misbehavi
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_SendToAuthority_System_Int32_System_Int32_" data-uid="CodeSmile.LunyScript.INetworkProvider.SendToAuthority(System.Int32,System.Int32)">
   SendToAuthority(int, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L69"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Sends one message to whichever peer holds authority over the object. The message has
@@ -491,7 +468,7 @@ a name and no payload in this milestone.</p>
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_SendTransformStream_System_Byte___System_Int32_" data-uid="CodeSmile.LunyScript.INetworkProvider.SendTransformStream(System.Byte[],System.Int32)">
   SendTransformStream(byte[], int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L113"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L106"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Sends one authority's whole transform stream for one network tick.</p>
@@ -547,7 +524,7 @@ half-precision position costs.</p>
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_SendVariable_System_Int32_System_Int32_CodeSmile_LunyScript_NetworkValue__" data-uid="CodeSmile.LunyScript.INetworkProvider.SendVariable(System.Int32,System.Int32,CodeSmile.LunyScript.NetworkValue@)">
   SendVariable(int, int, in NetworkValue)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L85"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L78"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Sends one variable's value to every other peer. Called only by the authority, and
@@ -601,82 +578,11 @@ slot index.</p>
 
 
 
-  <a id="CodeSmile_LunyScript_INetworkProvider_StartClient_" data-uid="CodeSmile.LunyScript.INetworkProvider.StartClient*"></a>
-
-  <h3 id="CodeSmile_LunyScript_INetworkProvider_StartClient_System_String_" data-uid="CodeSmile.LunyScript.INetworkProvider.StartClient(System.String)">
-  StartClient(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L58"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Joins a session. Refused by the gateway when a session is already running.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">void StartClient(string address)</code></pre>
-  </div>
-
-  <h4 class="section">Parameters</h4>
-  <table>
-  <tr>
-  <th>Type</th>
-  <th>Name</th>
-  <th>Description</th>
-  </tr>
-  <dl class="parameters">
-  <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>address</code></dt></td>
-    <td style="width: 99%"><dd><p>Where to connect. An implementation that needs no address ignores it.</p>
-</dd></td>
-  </tr>
-  </dl>
-  </table>
-
-
-
-
-
-
-
-
-
-
-
-
-  <a id="CodeSmile_LunyScript_INetworkProvider_StartHost_" data-uid="CodeSmile.LunyScript.INetworkProvider.StartHost*"></a>
-
-  <h3 id="CodeSmile_LunyScript_INetworkProvider_StartHost" data-uid="CodeSmile.LunyScript.INetworkProvider.StartHost">
-  StartHost()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L54"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Starts hosting. Refused by the gateway when a session is already running, so an
-implementation may assume it is offline.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">void StartHost()</code></pre>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
   <a id="CodeSmile_LunyScript_INetworkProvider_TryDequeueMessage_" data-uid="CodeSmile.LunyScript.INetworkProvider.TryDequeueMessage*"></a>
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_TryDequeueMessage_CodeSmile_LunyScript_NetworkMessage__" data-uid="CodeSmile.LunyScript.INetworkProvider.TryDequeueMessage(CodeSmile.LunyScript.NetworkMessage@)">
   TryDequeueMessage(out NetworkMessage)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L126"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Takes one received message off the queue, if there is one. The gateway drains this
@@ -730,7 +636,7 @@ every tick and a returned collection would allocate every tick; AGENTS.md rule 2
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_TryDequeuePeerJoined_System_Int32__" data-uid="CodeSmile.LunyScript.INetworkProvider.TryDequeuePeerJoined(System.Int32@)">
   TryDequeuePeerJoined(out int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L159"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L153"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Takes one &quot;a peer joined&quot; notification off the queue, if there is one. Drained the
@@ -795,7 +701,7 @@ current value of all of them.</p>
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_TryDequeueTransformStream_System_Byte____System_Int32__System_Int32__" data-uid="CodeSmile.LunyScript.INetworkProvider.TryDequeueTransformStream(System.Byte[]@,System.Int32@,System.Int32@)">
   TryDequeueTransformStream(out byte[], out int, out int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L124"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L118"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The next transform stream that arrived, as a view into a buffer the provider owns.
@@ -852,7 +758,8 @@ The view is valid until the next stream arrives.</p>
   <h4 class="section" id="CodeSmile_LunyScript_INetworkProvider_TryDequeueTransformStream_System_Byte____System_Int32__System_Int32___remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>A view rather than an array, because a peer that is not the authority receives a
 stream on every tick and returning a fresh array would allocate on every one of them.
-<a class="xref" href="CodeSmile.LunyScript.TransformStreamInbox.html">TransformStreamInbox</a> is the implementation both providers use.</p>
+<a class="xref" href="CodeSmile.LunyScript.TransformStreamInbox.html">TransformStreamInbox</a> is the implementation <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html">FakeNetworkProvider</a> uses,
+and a provider of a real backend can use it too.</p>
 </div>
 
 
@@ -862,7 +769,7 @@ stream on every tick and returning a fresh array would allocate on every one of 
 
   <h3 id="CodeSmile_LunyScript_INetworkProvider_TryDequeueVariable_CodeSmile_LunyScript_NetworkVariableUpdate__" data-uid="CodeSmile.LunyScript.INetworkProvider.TryDequeueVariable(CodeSmile.LunyScript.NetworkVariableUpdate@)">
   TryDequeueVariable(out NetworkVariableUpdate)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L138"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L132"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Takes one received variable update off the queue, if there is one. Drained the same
@@ -912,7 +819,7 @@ way and for the same reason as <a class="xref" href="CodeSmile.LunyScript.INetwo
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L34" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/INetworkProvider.cs/#L40" class="edit-link">Edit this page</a>
         </div>
 
 

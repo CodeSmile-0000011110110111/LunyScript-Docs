@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_LunyScript_FakeNetworkProvider" data-uid="CodeSmile.LunyScript.FakeNetworkProvider" class="text-break">
-Class FakeNetworkProvider  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L39"><i class="bi bi-code-slash"></i></a>
+Class FakeNetworkProvider  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L45"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -129,13 +129,19 @@ host.StartHost();</code></pre>
 
 
   <h2 id="CodeSmile_LunyScript_FakeNetworkProvider_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p><b>This is a second real implementation, not a mock.</b> It is the netcode counterpart of
+  <div class="markdown level0 remarks"><p><b>This is a real implementation, not a mock.</b> It is the netcode counterpart of
 LunyCloud's <code>FileCloudBackend</code>, which AGENTS.md rule 52 makes a first-class part of the product
 because it is how every branch is tested without a service. The message and cadence tests run
-against this provider with no network and no Editor session, and the same behaviour is
-exercised against <code>NgoNetworkProvider</code> where a real session is available.
-<code>TestKit.NetworkProviderConformance</code> is the one list of assertions both providers are
-held to, so that the double cannot drift from the backend without a test saying so.</p>
+against this provider with no network and no Editor session. <code>TestKit.NetworkProviderConformance</code>
+is the list of offline-contract assertions a test runs against this provider and can run against any
+other, so that a provider cannot drift from the contract without a test saying so.</p>
+<p>
+    <b>Its session is simulated, and the test owns it.</b> LunyScript starts, joins and ends no
+    session: a real provider's session is started and ended by its owner outside LunyScript, and
+    LunyNet owns sessions in C#. <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html#CodeSmile_LunyScript_FakeNetworkProvider_StartHost">StartHost()</a>, <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html#CodeSmile_LunyScript_FakeNetworkProvider_StartClient_System_String_">StartClient(string)</a> and
+    <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html#CodeSmile_LunyScript_FakeNetworkProvider_EndSession">EndSession()</a> are this provider's own members, which a test calls to put the
+    simulated session into the state it needs.
+</p>
 <p>
     <b>Authority here is ownership, which is the distributed-authority meaning.</b> Each
     object is owned by exactly one peer, set with <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html#CodeSmile_LunyScript_FakeNetworkProvider_SetAuthority_System_Int32_System_Int32_">SetAuthority(int, int)</a>. That is the
@@ -146,7 +152,7 @@ held to, so that the double cannot drift from the backend without a test saying 
     <b>Delivery is immediate and ordered.</b> A send lands in the peer's queue before the
     call returns, so a test observes it on the next drain with no waiting and no frames. That
     makes the tests deterministic; it also means this provider cannot reproduce a latency or
-    reordering defect, and a test that needs those needs the real provider.
+    reordering defect, and a test that needs those needs a provider over a real transport.
 </p>
 </div>
 
@@ -158,7 +164,7 @@ held to, so that the double cannot drift from the backend without a test saying 
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_NoPracticalLimit" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.NoPracticalLimit">
   NoPracticalLimit
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L201"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L234"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>What <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html#CodeSmile_LunyScript_FakeNetworkProvider_MaximumTransformStreamBytes">MaximumTransformStreamBytes</a> reports unless a test lowers it.
@@ -195,7 +201,7 @@ Large enough that a thousand objects fit in one stream.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_IsHost" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.IsHost">
   IsHost
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L63"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L69"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>True when this peer is the host. False for a client and for no session at all.
@@ -229,7 +235,7 @@ the defect that hiding it produces.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_MaximumTransformStreamBytes" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.MaximumTransformStreamBytes">
   MaximumTransformStreamBytes
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L197"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L230"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many payload bytes of transform stream this backend can carry in one send.
@@ -276,7 +282,7 @@ carries unfragmented, so this is not a limit only an unusual session meets.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_PeerCount" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.PeerCount">
   PeerCount
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L66"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L72"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many peers are in the session, including this one. Zero when offline.</p>
@@ -308,7 +314,7 @@ carries unfragmented, so this is not a limit only an unusual session meets.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_PeerId" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.PeerId">
   PeerId
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L52"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L58"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Which peer this is. The host is 0 and the joining peer is 1, fixed so a test can
@@ -341,7 +347,7 @@ name an owner without first reading it back.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_RoundTripMilliseconds" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.RoundTripMilliseconds">
   RoundTripMilliseconds
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L78"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Round trip time to the host in milliseconds, or 0 when offline or when this peer is
@@ -367,9 +373,9 @@ the host. Latency is a state a script may read, not an error; AGENTS.md rule 45.
 
 
   <h4 class="section" id="CodeSmile_LunyScript_FakeNetworkProvider_RoundTripMilliseconds_remarks">Remarks</h4>
-  <div class="markdown level1 remarks"><p>Zero unless this peer is in a session and is not the host, which is the same shape
-<code>NgoNetworkProvider</code> reports: a peer with no session has no round trip to report, and
-the host's round trip to itself is zero.</p>
+  <div class="markdown level1 remarks"><p>Zero unless this peer is in a session and is not the host, which is the shape the
+interface states: a peer with no session has no round trip to report, and the host's round trip
+to itself is zero.</p>
 </div>
 
 
@@ -379,7 +385,7 @@ the host's round trip to itself is zero.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_SimulatedRoundTripMilliseconds" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.SimulatedRoundTripMilliseconds">
   SimulatedRoundTripMilliseconds
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L63"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many milliseconds this provider reports as round trip time. Settable so a test
@@ -413,7 +419,7 @@ anything, because delivery here is immediate.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_State" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.State">
   State
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L66"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>What the session is doing right now. Never throws and is meaningful before any
@@ -446,7 +452,7 @@ session has been started.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_TransformStreamBytesSent" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.TransformStreamBytesSent">
   TransformStreamBytesSent
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L224"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L256"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many payload bytes those delivered streams carried in total. Returned to zero
@@ -479,7 +485,7 @@ by <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html#CodeSmile
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_TransformStreamsSent" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.TransformStreamsSent">
   TransformStreamsSent
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L220"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L252"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many transform streams this peer has delivered since the session started.
@@ -512,11 +518,10 @@ measured with a network is a figure nobody measures. These two count the stream'
 payload; what a real backend adds around it is measured at the transport, which is what
 <code>docs/development/netcode-bandwidth.md</code> records.</p>
 <p>
-    <b>Only a delivered stream is counted</b>, which is what <code>NgoNetworkProvider</code>
-    counts too: a call made while this provider has no session, or with no connected
-    peer to receive it, is not a send and does not move either figure. The two
-    providers implement one documented property and a reading that meant different
-    things on each would be worse than either meaning.
+    <b>Only a delivered stream is counted</b>, which is what the Netcode for GameObjects
+    provider those measurements were taken with counted too: a call made while this
+    provider has no session, or with no connected peer to receive it, is not a send and
+    does not move either figure.
 </p>
 </div>
 
@@ -531,7 +536,7 @@ payload; what a real backend adds around it is measured at the transport, which 
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_Describe" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.Describe">
   Describe()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L287"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L319"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Names this provider for the gateway's log lines, so a reader of the Console can tell
@@ -567,12 +572,13 @@ never per tick.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_EndSession" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.EndSession">
   EndSession()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L164"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Ends the session and returns to <a class="xref" href="CodeSmile.LunyScript.SessionState.html#CodeSmile_LunyScript_SessionState_Offline">Offline</a>. Called again on
-an already-offline provider, it does nothing, so that a restart is
-<code>EndSession</code> then <code>StartHost</code> without the caller tracking state.</p>
+  <div class="markdown level1 summary"><p>Ends this provider's simulated session, the way a test ends one: the state returns to
+<a class="xref" href="CodeSmile.LunyScript.SessionState.html#CodeSmile_LunyScript_SessionState_Offline">Offline</a>, every queue is emptied, and the two stream counters return to
+zero. Called on a provider that is already offline, it leaves it offline, so a restart is
+<code>EndSession</code> then <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html#CodeSmile_LunyScript_FakeNetworkProvider_StartHost">StartHost()</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -587,6 +593,10 @@ an already-offline provider, it does nothing, so that a restart is
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNetworkProvider_EndSession_examples">Examples</h4>
+  <pre><code class="lang-csharp">host.EndSession();
+host.StartHost();</code></pre>
+
 
 
 
@@ -596,7 +606,7 @@ an already-offline provider, it does nothing, so that a restart is
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_HasAuthority_System_Int32_" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.HasAuthority(System.Int32)">
   HasAuthority(int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L142"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L177"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether this peer may write the state of one object.</p>
@@ -647,7 +657,7 @@ of and a script that guards on authority then does nothing rather than misbehavi
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_Pair_CodeSmile_LunyScript_FakeNetworkProvider__CodeSmile_LunyScript_FakeNetworkProvider__" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.Pair(CodeSmile.LunyScript.FakeNetworkProvider@,CodeSmile.LunyScript.FakeNetworkProvider@)">
   Pair(out FakeNetworkProvider, out FakeNetworkProvider)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L85"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Builds two providers that deliver to each other, one host and one client, both still
@@ -697,7 +707,7 @@ offline until their session is started.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_SendToAuthority_System_Int32_System_Int32_" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.SendToAuthority(System.Int32,System.Int32)">
   SendToAuthority(int, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L156"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L190"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Sends one message to whichever peer holds authority over the object. The message has
@@ -741,10 +751,9 @@ a name and no payload in this milestone.</p>
 
   <h4 class="section" id="CodeSmile_LunyScript_FakeNetworkProvider_SendToAuthority_System_Int32_System_Int32__remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>Delivered only while this peer is in a session, and to another peer only while that
-peer is in one too, which is what <code>NgoNetworkProvider</code> does: it refuses an unconnected
-session and then sends over a transport that reaches connected clients only. A message left
-in an unstarted peer's queue would run the moment it joined, which no real session
-does.</p>
+peer is in one too, which is what a real session does: a transport reaches connected peers only.
+A message left in an unstarted peer's queue would run the moment it joined, which no real
+session does.</p>
 </div>
 
 
@@ -754,7 +763,7 @@ does.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_SendTransformStream_System_Byte___System_Int32_" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.SendTransformStream(System.Byte[],System.Int32)">
   SendTransformStream(byte[], int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L230"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L262"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Sends one authority's whole transform stream for one network tick.</p>
@@ -810,7 +819,7 @@ half-precision position costs.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_SendVariable_System_Int32_System_Int32_CodeSmile_LunyScript_NetworkValue__" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.SendVariable(System.Int32,System.Int32,CodeSmile.LunyScript.NetworkValue@)">
   SendVariable(int, int, in NetworkValue)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L182"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L215"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Sends one variable's value to every other peer. Called only by the authority, and
@@ -862,10 +871,9 @@ slot index.</p>
 
   <h4 class="section" id="CodeSmile_LunyScript_FakeNetworkProvider_SendVariable_System_Int32_System_Int32_CodeSmile_LunyScript_NetworkValue___remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>Delivered only to a peer that is in a session, which is the condition
-<a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html#CodeSmile_LunyScript_FakeNetworkProvider_SendToAuthority_System_Int32_System_Int32_">SendToAuthority(int, int)</a> and <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html#CodeSmile_LunyScript_FakeNetworkProvider_SendTransformStream_System_Byte___System_Int32_">SendTransformStream(byte[], int)</a> apply too, and the one
-<code>NgoNetworkProvider</code> applies to all three of its send paths. An update handed to a peer
-that has not joined would be drained by it the moment it did, delivering a value no real
-session would have carried and hiding whether the join resend that is supposed to carry it
+<a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html#CodeSmile_LunyScript_FakeNetworkProvider_SendToAuthority_System_Int32_System_Int32_">SendToAuthority(int, int)</a> and <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html#CodeSmile_LunyScript_FakeNetworkProvider_SendTransformStream_System_Byte___System_Int32_">SendTransformStream(byte[], int)</a> apply too. An update handed
+to a peer that has not joined would be drained by it the moment it did, delivering a value no
+real session would have carried and hiding whether the join resend that is supposed to carry it
 works.</p>
 </div>
 
@@ -876,7 +884,7 @@ works.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_SetAuthority_System_Int32_System_Int32_" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.SetAuthority(System.Int32,System.Int32)">
   SetAuthority(int, int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L97"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Says which peer owns one object, on both providers at once so the two never
@@ -926,10 +934,13 @@ disagree about authority.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_StartClient_System_String_" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.StartClient(System.String)">
   StartClient(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L133"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Joins a session. Refused by the gateway when a session is already running.</p>
+  <div class="markdown level1 summary"><p>Puts this provider's simulated session into a client's connected state, the way a test
+joins a peer to a session. Nothing is dialled: delivery is in process, so the address is not
+read. When the paired peer is connected already, each of the two learns that the other
+joined.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -948,7 +959,7 @@ disagree about authority.</p>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>address</code></dt></td>
-    <td style="width: 99%"><dd><p>Where to connect. An implementation that needs no address ignores it.</p>
+    <td style="width: 99%"><dd><p>Where a real client would connect. This provider does not read it.</p>
 </dd></td>
   </tr>
   </dl>
@@ -960,6 +971,11 @@ disagree about authority.</p>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNetworkProvider_StartClient_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">FakeNetworkProvider.Pair(out var host, out var client);
+host.StartHost();
+client.StartClient("test");</code></pre>
+
 
 
 
@@ -969,11 +985,12 @@ disagree about authority.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_StartHost" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.StartHost">
   StartHost()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L99"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L114"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Starts hosting. Refused by the gateway when a session is already running, so an
-implementation may assume it is offline.</p>
+  <div class="markdown level1 summary"><p>Puts this provider's simulated session into the host's connected state, the way a test
+stands up a session: a real provider's owner starts its session outside LunyScript. When the paired
+peer is connected already, each of the two learns that the other joined.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -988,6 +1005,11 @@ implementation may assume it is offline.</p>
 
 
 
+  <h4 class="section" id="CodeSmile_LunyScript_FakeNetworkProvider_StartHost_examples">Examples</h4>
+  <pre><code class="lang-csharp">FakeNetworkProvider.Pair(out var host, out var client);
+runner.NetworkGateway.UseProvider(host);
+host.StartHost();</code></pre>
+
 
 
 
@@ -997,7 +1019,7 @@ implementation may assume it is offline.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_TryDequeueMessage_CodeSmile_LunyScript_NetworkMessage__" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.TryDequeueMessage(CodeSmile.LunyScript.NetworkMessage@)">
   TryDequeueMessage(out NetworkMessage)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L248"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L280"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Takes one received message off the queue, if there is one. The gateway drains this
@@ -1051,7 +1073,7 @@ every tick and a returned collection would allocate every tick; AGENTS.md rule 2
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_TryDequeuePeerJoined_System_Int32__" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.TryDequeuePeerJoined(System.Int32@)">
   TryDequeuePeerJoined(out int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L274"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L306"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Takes one &quot;a peer joined&quot; notification off the queue, if there is one. Drained the
@@ -1116,7 +1138,7 @@ current value of all of them.</p>
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_TryDequeueTransformStream_System_Byte____System_Int32__System_Int32__" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.TryDequeueTransformStream(System.Byte[]@,System.Int32@,System.Int32@)">
   TryDequeueTransformStream(out byte[], out int, out int)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L244"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L276"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The next transform stream that arrived, as a view into a buffer the provider owns.
@@ -1173,7 +1195,8 @@ The view is valid until the next stream arrives.</p>
   <h4 class="section" id="CodeSmile_LunyScript_FakeNetworkProvider_TryDequeueTransformStream_System_Byte____System_Int32__System_Int32___remarks">Remarks</h4>
   <div class="markdown level1 remarks"><p>A view rather than an array, because a peer that is not the authority receives a
 stream on every tick and returning a fresh array would allocate on every one of them.
-<a class="xref" href="CodeSmile.LunyScript.TransformStreamInbox.html">TransformStreamInbox</a> is the implementation both providers use.</p>
+<a class="xref" href="CodeSmile.LunyScript.TransformStreamInbox.html">TransformStreamInbox</a> is the implementation <a class="xref" href="CodeSmile.LunyScript.FakeNetworkProvider.html">FakeNetworkProvider</a> uses,
+and a provider of a real backend can use it too.</p>
 </div>
 
 
@@ -1183,7 +1206,7 @@ stream on every tick and returning a fresh array would allocate on every one of 
 
   <h3 id="CodeSmile_LunyScript_FakeNetworkProvider_TryDequeueVariable_CodeSmile_LunyScript_NetworkVariableUpdate__" data-uid="CodeSmile.LunyScript.FakeNetworkProvider.TryDequeueVariable(CodeSmile.LunyScript.NetworkVariableUpdate@)">
   TryDequeueVariable(out NetworkVariableUpdate)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L261"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L293"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Takes one received variable update off the queue, if there is one. Drained the same
@@ -1233,7 +1256,7 @@ way and for the same reason as <a class="xref" href="CodeSmile.LunyScript.INetwo
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L39" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Net/FakeNetworkProvider.cs/#L45" class="edit-link">Edit this page</a>
         </div>
 
 

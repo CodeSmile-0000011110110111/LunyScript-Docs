@@ -5216,7 +5216,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "CodeSmile.LunyScript.INetworkProvider",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.INetworkProvider.yml\" sourcestartlinenumber=\"1\">What a netcode backend provides to the <xref href=\"CodeSmile.LunyScript.NetworkGateway\" data-throw-if-not-resolved=\"false\"></xref>: a session to start and\nend, the connection facts a script is allowed to read, and two queues the gateway drains once\nper tick. Script code never sees this type; it sees the <code>Net</code> and <code>Sync</code> surfaces.\nAGENTS.md rule 49.</p>\n"
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.INetworkProvider.yml\" sourcestartlinenumber=\"1\">What a netcode backend provides to the <xref href=\"CodeSmile.LunyScript.NetworkGateway\" data-throw-if-not-resolved=\"false\"></xref>: the state of a session it\nruns, the connection facts a script is allowed to read, and the queues the gateway drains once\nper tick. Script code never sees this type; it sees the <code>Net</code> and <code>Sync</code> surfaces.\nAGENTS.md rule 49.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -7096,48 +7096,6 @@
     },
     {
       "type": "ManagedReference",
-      "source_relative_path": "reference/CodeSmile.LunyScript.Netcode.LunyScriptNetworkBehaviour.yml",
-      "output": {
-        ".html": {
-          "relative_path": "reference/CodeSmile.LunyScript.Netcode.LunyScriptNetworkBehaviour.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "CodeSmile.LunyScript.Netcode.LunyScriptNetworkBehaviour",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.Netcode.LunyScriptNetworkBehaviour.yml\" sourcestartlinenumber=\"1\">Binds the script instance on this object to the object's network identity, so that its\nsynchronised variables and its messages reach the same object on every peer.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "reference/CodeSmile.LunyScript.Netcode.NgoNetworkProvider.yml",
-      "output": {
-        ".html": {
-          "relative_path": "reference/CodeSmile.LunyScript.Netcode.NgoNetworkProvider.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "CodeSmile.LunyScript.Netcode.NgoNetworkProvider",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.Netcode.NgoNetworkProvider.yml\" sourcestartlinenumber=\"1\">The Netcode for GameObjects backend for <xref href=\"CodeSmile.LunyScript.INetworkProvider\" data-throw-if-not-resolved=\"false\"></xref>: starts and ends a\nsession on <code>NetworkManager</code>, answers the connection facts a script may read, and carries\nLunyScript's messages and synchronised variables over one named message channel.</p>\n"
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "reference/CodeSmile.LunyScript.Netcode.yml",
-      "output": {
-        ".html": {
-          "relative_path": "reference/CodeSmile.LunyScript.Netcode.html"
-        }
-      },
-      "version": "",
-      "Uid": null,
-      "IsMRef": true,
-      "Title": "CodeSmile.LunyScript.Netcode",
-      "Summary": null
-    },
-    {
-      "type": "ManagedReference",
       "source_relative_path": "reference/CodeSmile.LunyScript.NetworkGateway.yml",
       "output": {
         ".html": {
@@ -7148,7 +7106,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "CodeSmile.LunyScript.NetworkGateway",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.NetworkGateway.yml\" sourcestartlinenumber=\"1\">The core's one entry point to netcode. Owns the <xref href=\"CodeSmile.LunyScript.INetworkProvider\" data-throw-if-not-resolved=\"false\"></xref>, refuses the\nsession calls that are a user mistake, and drains the provider's two queues once per tick.\nAGENTS.md rules 44 to 49.</p>\n"
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.NetworkGateway.yml\" sourcestartlinenumber=\"1\">The core's one entry point to netcode. Holds the <xref href=\"CodeSmile.LunyScript.INetworkProvider\" data-throw-if-not-resolved=\"false\"></xref> a game installs,\nanswers the session reads a script makes, and drains the provider's queues once per tick.\nAGENTS.md rules 44 to 49.</p>\n"
     },
     {
       "type": "ManagedReference",
@@ -10102,7 +10060,7 @@
       "Uid": null,
       "IsMRef": true,
       "Title": "CodeSmile.LunyScript.TransformStreamInbox",
-      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.TransformStreamInbox.yml\" sourcestartlinenumber=\"1\">Holds the transform streams that arrived since the last tick drained them, in one\nbuffer the inbox owns. Every <xref href=\"CodeSmile.LunyScript.INetworkProvider\" data-throw-if-not-resolved=\"false\"></xref> uses one, so that the receive side\nof the stream is written once rather than once per backend.</p>\n"
+      "Summary": "<p sourcefile=\"reference/CodeSmile.LunyScript.TransformStreamInbox.yml\" sourcestartlinenumber=\"1\">Holds the transform streams that arrived since the last tick drained them, in one\nbuffer the inbox owns. <xref href=\"CodeSmile.LunyScript.FakeNetworkProvider\" data-throw-if-not-resolved=\"false\"></xref> uses one, and an\n<xref href=\"CodeSmile.LunyScript.INetworkProvider\" data-throw-if-not-resolved=\"false\"></xref> of a real backend can, so that the receive side of the stream is\nwritten once rather than once per backend.</p>\n"
     },
     {
       "type": "ManagedReference",
