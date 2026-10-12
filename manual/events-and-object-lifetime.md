@@ -31,8 +31,7 @@ the same event both fire, in the order they were written.
 This page is the object's lifetime: created, spawned, ready, enabled, disabled, despawned, the
 three ticks, application pause and focus, and creating or removing objects. Contact events live
 on [Physics](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/physics.html). `On.Message` lives on
-[Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html). Authority gain and loss live on
-[Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html).
+[Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html).
 
 ## Lifecycle events
 
@@ -202,8 +201,6 @@ leave out.
 
 - [Physics](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/physics.html) — contact events and `Other`.
 - [Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html) — `On.Message` and sending from C#.
-- [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html) —
-  `On.Authority.Gained` and `On.Authority.Lost`.
 - [Object pools](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/object-pools.html) — reuse spawned objects with
   `Define.Pool`, `Object.Spawn` and `Object.Despawn`.
 - [Time, pausing and gates](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/time-and-pausing.html) — which tick events

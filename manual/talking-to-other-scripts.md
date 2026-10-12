@@ -209,8 +209,7 @@ a singleton has no binding another script can name.
   script.
 - Values carried by a request or an event.
 - Finding a script by its type or a singleton by its name.
-- Requests and events between peers; those use
-  [Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html) and `Net.Send`.
+- Requests and events between peers. LunyScript communication is local to one runner; LunyNet owns networking.
 
 ## What to read next
 

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.9.1 -->
+<title>Cloud save | LunyScript Docs</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Cloud save" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Uploading, downloading and deleting cloud copies of documents." />
+<meta name="twitter:description" property="og:description" content="Uploading, downloading and deleting cloud copies of documents." />
+<link rel="canonical" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cloud-save.html" />
+<meta property="og:url" content="https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cloud-save.html" />
+<meta property="og:site_name" content="LunyScript Docs" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Cloud save" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Uploading, downloading and deleting cloud copies of documents.","headline":"Cloud save","url":"https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cloud-save.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/LunyScript-Docs/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://codesmile-0000011110110111.github.io/LunyScript-Docs/feed.xml" title="LunyScript Docs" /><!--
+    Override of minima 2.5's stock head.html. Identical to it apart from the include and the
+    Markdown link below, which minima has no hook for: a page that needs its own stylesheet or
+    script has nowhere to declare one (see _includes/custom-head.html for how a page opts in), and
+    _plugins/agent_readable_copies.rb sets markdown_copy on each page it publishes a Markdown copy of.
+  --><link rel="alternate" type="text/markdown" href="/LunyScript-Docs/manual/cloud-save.md"></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/LunyScript-Docs/">LunyScript Docs</a>
+
+    <nav class="site-nav">
+      <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+      <label for="nav-trigger">
+        <span class="menu-icon">
+          <svg viewBox="0 0 18 15" width="18px" height="15px">
+            <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+          </svg>
+        </span>
+      </label>
+
+      <div class="trigger"><a class="page-link" href="/LunyScript-Docs/manual/">Manual</a><!--
+          Override of minima's stock header.html (which only resolves header_pages against
+          site.pages) so the nav can link straight to the generated DocFX API reference. /api/
+          is published onto this same gh-pages branch by a separate workflow (docfx.yml), not
+          built by Jekyll, so it has no site.pages entry to look up.
+        -->
+        <a class="page-link" href="/LunyScript-Docs/api/">API Reference</a>
+      </div>
+    </nav>
+  </div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Cloud save</h1>
+  </header>
+
+  <div class="post-content">
+    <p>LunyCloud uploads and downloads LunyScript documents. LunyScript has no networking surface; LunyNet owns game networking.</p>
+
+<h2 id="cloud-save">Cloud save</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Cloud</code> uploads a document to the signed-in player’s Cloud Save data, downloads
+it back, and deletes the cloud copy. The document is the one
+<a href="/LunyScript-Docs/manual/saving-progress-and-settings.html">Saving progress and settings</a>
+declares with <code class="language-plaintext highlighter-rouge">Define.Document</code>, so one declaration serves the copy on the
+device and the copy in the cloud:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Career</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Document</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Career</span><span class="p">))</span>
+    <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Best</span><span class="p">),</span> <span class="n">Best</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Pilot</span><span class="p">),</span> <span class="n">Pilot</span><span class="p">);</span>
+
+<span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Cloud</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Career</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Downloading</span><span class="p">));</span>
+<span class="n">RunEnded</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Message</span><span class="p">();</span>
+<span class="n">On</span><span class="p">.</span><span class="nf">Message</span><span class="p">(</span><span class="n">RunEnded</span><span class="p">,</span> <span class="n">Progress</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">Career</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Saving</span><span class="p">),</span>
+    <span class="n">Cloud</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="n">Career</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Uploading</span><span class="p">));</span>
+<span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="n">Uploading</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Kept on this device"</span><span class="p">));</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Start</th>
+      <th>What it does</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Cloud.Save(doc).As(op)</code></td>
+      <td>Uploads every field’s value when the block runs, as one stored value.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Cloud.Load(doc).As(op)</code></td>
+      <td>Downloads the copy and writes its fields together.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Cloud.Delete(doc).As(op)</code></td>
+      <td>Removes the cloud copy; the fields are not touched.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Every start needs <code class="language-plaintext highlighter-rouge">.As(handle)</code>, a handle <code class="language-plaintext highlighter-rouge">Define.Operation</code> declared.
+<code class="language-plaintext highlighter-rouge">When.Cloud(handle)</code> is the same watch as <code class="language-plaintext highlighter-rouge">When.Operation(handle)</code>, so
+<code class="language-plaintext highlighter-rouge">Succeeded</code>, <code class="language-plaintext highlighter-rouge">Failed</code>, <code class="language-plaintext highlighter-rouge">Canceled</code>, <code class="language-plaintext highlighter-rouge">Finished</code> and the handle’s conditions work
+the way <a href="/LunyScript-Docs/manual/assets-and-operations.html">Assets and operations</a>
+describes.</p>
+
+<ul>
+  <li>The cloud copy is stored under the document’s name, in the layout the copy on
+the device has. A download migrates an older version and reports omitted
+fields the way <code class="language-plaintext highlighter-rouge">Progress.Load</code> does.</li>
+  <li>A document never uploaded fails a download as <code class="language-plaintext highlighter-rouge">NotFound</code>, and every field
+keeps its value. A delete succeeds whether or not a copy existed.</li>
+  <li>A request reaches the backend at the start of the runner’s next frame
+update, before any script’s <code class="language-plaintext highlighter-rouge">On.Update</code> runs. A block in <code class="language-plaintext highlighter-rouge">On.Update</code>,
+<code class="language-plaintext highlighter-rouge">On.LateUpdate</code> or a watch therefore starts its request in the next frame;
+a block in <code class="language-plaintext highlighter-rouge">On.FixedUpdate</code> or a contact event, which Unity runs before
+<code class="language-plaintext highlighter-rouge">Update</code>, starts it in the same frame. The cloud client checks each request
+once per frame at that point, and <code class="language-plaintext highlighter-rouge">When.Cloud(op)</code> reports the outcome in the
+frame it finds it.</li>
+  <li>Requests for one document run one at a time, in the order their blocks ran.
+A download after an upload reads what the upload stored. When a request
+fails, the next one still runs with the values it captured; the failed one is
+not sent again.</li>
+  <li>Cancelling a request that has not been sent yet removes it.</li>
+  <li>LunyScript sets no time limit on a cloud request. The service decides when a
+request has timed out and reports <code class="language-plaintext highlighter-rouge">Timeout</code>.</li>
+</ul>
+
+<h3 id="unsynced">Unsynced</h3>
+
+<p><code class="language-plaintext highlighter-rouge">doc.Unsynced</code> is true when the document was edited since the cloud last
+confirmed an upload, or when the copy on the device is newer than that upload.
+A download never makes it false. An upload that the cloud confirms makes it
+false only when no field changed after the upload captured its values, even if
+a value changed and then returned to what was uploaded:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">On</span><span class="p">.</span><span class="nf">Update</span><span class="p">(</span><span class="nf">If</span><span class="p">(</span><span class="n">Career</span><span class="p">.</span><span class="n">Unsynced</span><span class="p">).</span><span class="nf">Then</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Not uploaded yet"</span><span class="p">)));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">doc.IsDirty</code> keeps describing the copy on the device: an upload does not change
+it, and a download changes it only through the values it writes.</p>
+
+<h3 id="the-backends">The backends</h3>
+
+<p>LunyCloud, the cloud module that ships with LunyScript, sends the requests.
+With the Cloud Save package installed, cloud copies go to Unity Cloud Save:
+the default runner is given LunyCloud’s <code class="language-plaintext highlighter-rouge">UgsCloudBackend</code>, and
+<code class="language-plaintext highlighter-rouge">UgsLeaderboardBackend</code> when the Leaderboards package is installed too, unless
+<strong>Unity Cloud Save</strong> is turned off under Edit, Project Settings, LunyScript,
+Supplied providers. The client signs in anonymously to Unity Gaming Services at
+the first request and needs the project’s Unity Cloud link.</p>
+
+<p>A game that keeps its copies in a folder on the device, the path <code class="language-plaintext highlighter-rouge">folder</code> below,
+names its own backend once, before the first request, and that replaces the
+supplied ones:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">CloudGateway</span><span class="p">.</span><span class="nf">Of</span><span class="p">(</span><span class="n">LunyScriptRuntime</span><span class="p">.</span><span class="n">DefaultRunner</span><span class="p">).</span><span class="nf">UseBackend</span><span class="p">(</span><span class="k">new</span> <span class="nf">FileCloudBackend</span><span class="p">(</span><span class="n">folder</span><span class="p">));</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">FileCloudBackend</code> keeps the account, the player’s data and files, game data
+and leaderboards in JSON files in the folder you name, which is how the API
+example and the tests run without an account; <code class="language-plaintext highlighter-rouge">DelayCompletion(frames)</code> makes it
+answer later, the way a network does, and <code class="language-plaintext highlighter-rouge">FailNext(failure)</code> fails the next
+call with a chosen reason. <code class="language-plaintext highlighter-rouge">CloudGateway.Of(runner).UseServices(services)</code> names
+other backends, one per service. The supplied backends can be replaced until
+the first sign-in starts; backends a game names stay for the rest of the Play
+session. An assembly definition whose scripts use <code class="language-plaintext highlighter-rouge">Cloud</code>, <code class="language-plaintext highlighter-rouge">Account</code> or
+<code class="language-plaintext highlighter-rouge">Leaderboard</code> references <code class="language-plaintext highlighter-rouge">CodeSmile.Luny.Cloud.LunyScriptAdapter</code>, the assembly
+that holds those calls.</p>
+
+<h3 id="accounts-keys-game-data-files-and-leaderboards">Accounts, keys, game data, files and leaderboards</h3>
+
+<p>The same module carries the rest of the cloud surface:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Account.SignIn().As(op)</code>, <code class="language-plaintext highlighter-rouge">Account.SignOut()</code>, <code class="language-plaintext highlighter-rouge">Account.Delete().As(op)</code> and
+the condition <code class="language-plaintext highlighter-rouge">Account.IsSignedIn()</code>, observed with <code class="language-plaintext highlighter-rouge">When.Account(op)</code>. After a
+sign-out, requests fail as <code class="language-plaintext highlighter-rouge">NotSignedIn</code> until the next <code class="language-plaintext highlighter-rouge">Account.SignIn()</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">Define.CloudKey(name)</code> names another key in the player’s data:
+<code class="language-plaintext highlighter-rouge">Cloud.Save(doc).To(key)</code>, <code class="language-plaintext highlighter-rouge">Cloud.Load(key).Into(doc)</code> and <code class="language-plaintext highlighter-rouge">Cloud.Delete(key)</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">Define.GameData(collection, key)</code> names an item the game publishes, which a
+script reads with <code class="language-plaintext highlighter-rouge">Cloud.Load(item).Into(doc)</code> and cannot write.</li>
+  <li><code class="language-plaintext highlighter-rouge">Define.CloudFile(name)</code> names a file in the player’s file storage; C# hands
+the bytes to a registered <code class="language-plaintext highlighter-rouge">ICloudFileSource</code>, and the script never holds them.</li>
+  <li><code class="language-plaintext highlighter-rouge">Define.Leaderboard(name)</code> with <code class="language-plaintext highlighter-rouge">Leaderboard.Submit(score).To(board).As(op)</code>,
+<code class="language-plaintext highlighter-rouge">Leaderboard.Load(board).Into(page)</code> and <code class="language-plaintext highlighter-rouge">Leaderboard.LoadEntry(board).Into(entry)</code>,
+observed with <code class="language-plaintext highlighter-rouge">When.Leaderboard(op)</code>. A score submitted offline waits in a
+queue on the device that a restart keeps, and <code class="language-plaintext highlighter-rouge">board.Waiting</code> counts it.</li>
+</ul>
+
+<p>The agent skill at <code class="language-plaintext highlighter-rouge">Assets/CodeSmile/LunyCloud/AgentSkills/lunycloud/SKILL.md</code>
+states every rule of these calls.</p>
+
+<h2 id="a-worked-example">A worked example</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">CodeSmile.LunyScript</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">CareerCloudScript</span> <span class="p">:</span> <span class="n">Script</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">Best</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Best</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>
+        <span class="n">Record</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Document</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Record</span><span class="p">))</span>
+            <span class="p">.</span><span class="nf">Field</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Best</span><span class="p">),</span> <span class="n">Best</span><span class="p">);</span>
+        <span class="n">Downloading</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Operation</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Downloading</span><span class="p">));</span>
+
+        <span class="n">On</span><span class="p">.</span><span class="nf">Ready</span><span class="p">(</span><span class="n">Cloud</span><span class="p">.</span><span class="nf">Load</span><span class="p">(</span><span class="n">Record</span><span class="p">).</span><span class="nf">As</span><span class="p">(</span><span class="n">Downloading</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="n">Downloading</span><span class="p">).</span><span class="nf">Succeeded</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Loaded."</span><span class="p">));</span>
+        <span class="n">When</span><span class="p">.</span><span class="nf">Cloud</span><span class="p">(</span><span class="n">Downloading</span><span class="p">).</span><span class="nf">Failed</span><span class="p">(</span><span class="n">Status</span><span class="p">.</span><span class="nf">Set</span><span class="p">(</span><span class="s">"Kept on this device."</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="what-to-read-next">What to read next</h2>
+
+<ul>
+  <li><a href="/LunyScript-Docs/manual/messaging.html">Messaging</a> — <code class="language-plaintext highlighter-rouge">On.Message</code> and sending from C#.</li>
+  <li><a href="/LunyScript-Docs/manual/events-and-object-lifetime.html">Events and object lifetime</a> —
+lifecycle and tick events.</li>
+  <li><a href="/LunyScript-Docs/manual/variables-and-values.html">Variables and values</a> — local variable declarations and writes.</li>
+  <li>Generated reference:
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudFactory.html"><code class="language-plaintext highlighter-rouge">CloudFactory</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudSaveBuilder.html"><code class="language-plaintext highlighter-rouge">CloudSaveBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudLoadBuilder.html"><code class="language-plaintext highlighter-rouge">CloudLoadBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudDeleteBuilder.html"><code class="language-plaintext highlighter-rouge">CloudDeleteBuilder</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudGateway.html"><code class="language-plaintext highlighter-rouge">CloudGateway</code></a>,
+<a href="/LunyScript-Docs/api/reference/CodeSmile.Luny.Cloud.FileCloudBackend.html"><code class="language-plaintext highlighter-rouge">FileCloudBackend</code></a>.</li>
+</ul>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/LunyScript-Docs/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">LunyScript Docs</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">LunyScript Docs</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Documentation for LunyScript, a C# scripting layer for Unity.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

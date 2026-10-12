@@ -115,18 +115,6 @@ On.Ready(
     View.For(BottomScreen).SetCamera(PlayerTwoRig));
 ```
 
-**Networking by naming a cadence.** A synchronised variable and a transform channel each say how
-often they are sent. `Score` is written and read with the same calls as any other variable, and
-every peer reads the same value. LunyNet runs the session in C#, and a script reads it through the
-provider a game installs:
-
-```csharp
-Score = Var.DefineSynced<Number>(nameof(Score), SyncCadence.OnChange, 0);
-Sync.Position(SyncCadence.EveryTick);
-
-On.Update(If(Net.HasAuthority).Then(Score.Add(Time.Delta)));
-```
-
 **Work that takes more than a frame ends in one of four outcomes.** A load, an interactive rebind,
 a scene load and a cloud round trip are each observed through one operation handle, with the same
 four words: `Succeeded`, `Failed`, `Canceled`, `Finished`:
@@ -199,13 +187,9 @@ When.Input(fire).Performed(Particles.For(MuzzleFlash).Emit(12));
 On.Ready(Scene.Load(Vault).Additive().As(LoadingVault));
 When.SceneLoaded(Vault).Do(VaultReady.Set(true));
 
-// Peers and the cloud
-Score = Var.DefineSynced<Number>(nameof(Score), SyncCadence.OnChange, 0);
-Sync.Position(SyncCadence.EveryTick);
-On.Update(If(Net.HasAuthority).Then(Score.Add(Time.Delta)));
+// Local messages and the cloud
 Ping = Define.Message();
 On.Message(Ping, Pings.Increment());
-On.Update(If(!Net.HasAuthority).Then(Net.Send.ToAuthority(Ping)));
 On.Ready(Cloud.Load(Career).As(Downloading));
 When.Cloud(Downloading).Succeeded(Prompt.Set("Loaded."));
 ```
@@ -220,8 +204,8 @@ composing a script by dragging instead of writing C#. The visual surface it comm
 runtime debugger, which observes a running script and changes its state from the outside while the
 game runs.
 
-v1 targets Unity 6.7 LTS, desktop and web, four local split-screen players as the design point and
-sixteen networked players as the high-end target.
+v1 targets Unity 6.7 LTS, desktop and web, with four local split-screen players as the design point. LunyNet owns
+networked games.
 
 ## Documentation
 

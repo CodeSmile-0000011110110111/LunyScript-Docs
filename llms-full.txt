@@ -115,18 +115,6 @@ On.Ready(
     View.For(BottomScreen).SetCamera(PlayerTwoRig));
 ```
 
-**Networking by naming a cadence.** A synchronised variable and a transform channel each say how
-often they are sent. `Score` is written and read with the same calls as any other variable, and
-every peer reads the same value. LunyNet runs the session in C#, and a script reads it through the
-provider a game installs:
-
-```csharp
-Score = Var.DefineSynced<Number>(nameof(Score), SyncCadence.OnChange, 0);
-Sync.Position(SyncCadence.EveryTick);
-
-On.Update(If(Net.HasAuthority).Then(Score.Add(Time.Delta)));
-```
-
 **Work that takes more than a frame ends in one of four outcomes.** A load, an interactive rebind,
 a scene load and a cloud round trip are each observed through one operation handle, with the same
 four words: `Succeeded`, `Failed`, `Canceled`, `Finished`:
@@ -199,13 +187,9 @@ When.Input(fire).Performed(Particles.For(MuzzleFlash).Emit(12));
 On.Ready(Scene.Load(Vault).Additive().As(LoadingVault));
 When.SceneLoaded(Vault).Do(VaultReady.Set(true));
 
-// Peers and the cloud
-Score = Var.DefineSynced<Number>(nameof(Score), SyncCadence.OnChange, 0);
-Sync.Position(SyncCadence.EveryTick);
-On.Update(If(Net.HasAuthority).Then(Score.Add(Time.Delta)));
+// Local messages and the cloud
 Ping = Define.Message();
 On.Message(Ping, Pings.Increment());
-On.Update(If(!Net.HasAuthority).Then(Net.Send.ToAuthority(Ping)));
 On.Ready(Cloud.Load(Career).As(Downloading));
 When.Cloud(Downloading).Succeeded(Prompt.Set("Loaded."));
 ```
@@ -220,8 +204,8 @@ composing a script by dragging instead of writing C#. The visual surface it comm
 runtime debugger, which observes a running script and changes its state from the outside while the
 game runs.
 
-v1 targets Unity 6.7 LTS, desktop and web, four local split-screen players as the design point and
-sixteen networked players as the high-end target.
+v1 targets Unity 6.7 LTS, desktop and web, with four local split-screen players as the design point. LunyNet owns
+networked games.
 
 ## Documentation
 
@@ -277,8 +261,7 @@ explains the central overview and routing to the other modules.
 
 - [Events and object lifetime](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/events-and-object-lifetime.html) — the
   object's lifetime and ticks, and creating or removing objects.
-- [Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html) — `On.Message`, sending from C#, and
-  asking the authority to act.
+- [Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html) — local `On.Message` delivery and sending from C#.
 - [Talking to other scripts](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/talking-to-other-scripts.html) — read
   another object's script, ask it with a request it declares, hear its events, share its gates,
   and run a script once per game.
@@ -338,8 +321,8 @@ explains the central overview and routing to the other modules.
 - [Saving progress and settings](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/saving-progress-and-settings.html) —
   documents that keep variables between sessions on the player's device, and changing them between
   versions.
-- [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html) —
-  reading the session, synchronising state at a chosen cadence, authority events and stored values.
+- [Cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cloud-save.html) — uploading, downloading and deleting cloud copies of
+  documents.
 
 Source: https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/index.md
 
@@ -864,7 +847,7 @@ say otherwise, its Live reading is shown in blue. Fire its `If` to record the cu
 A condition built from your script's variables, numbers, text, enums and spatial values, with
 comparisons, `&`, `|` and `!`, has a Live reading, and so does each part of it when you unfold
 its row. A condition that reads anything else, such as the object's position, the game clock, input,
-the network, the other collider of a collision or a list, reads **unavailable**, and so does a
+the other collider of a collision or a list, reads **unavailable**, and so does a
 condition you wrote as your own C# class, because the debugger never runs your code to find out.
 The row's tooltip says why.
 
@@ -879,9 +862,6 @@ has an editor for its kind: a number field, a checkbox, a text field, three fiel
 the value once and shows the value it read back, or why the write was refused, such as text longer
 than the variable holds. **Revert** puts the stored value back into the editor. Applying a value
 runs no block.
-
-A synchronized value that another peer has authority over cannot be changed from this Editor; its
-editor is disabled and says why.
 
 ## Running a block and forcing an If
 
@@ -1754,10 +1734,7 @@ refuses one:
 Log = Define.Text(nameof(Log)).Allocating(65536);
 ```
 
-The bound is UTF-8 bytes, from 1 to 1048576. A growing text, bounded or not, is local to its peer. A
-synchronised text is always fixed, 64 bytes unless you name another capacity, because its size is what it
-costs on the wire; [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html)
-sends it.
+The bound is UTF-8 bytes, from 1 to 1048576.
 
 `Assets/CodeSmile/LunyScript/ApiExamples/GrowingText.unity` binds one label to a growing text and one to a
 64-byte text.
@@ -2542,8 +2519,7 @@ the same event both fire, in the order they were written.
 This page is the object's lifetime: created, spawned, ready, enabled, disabled, despawned, the
 three ticks, application pause and focus, and creating or removing objects. Contact events live
 on [Physics](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/physics.html). `On.Message` lives on
-[Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html). Authority gain and loss live on
-[Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html).
+[Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html).
 
 ## Lifecycle events
 
@@ -2713,8 +2689,6 @@ leave out.
 
 - [Physics](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/physics.html) — contact events and `Other`.
 - [Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html) — `On.Message` and sending from C#.
-- [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html) —
-  `On.Authority.Gained` and `On.Authority.Lost`.
 - [Object pools](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/object-pools.html) — reuse spawned objects with
   `Define.Pool`, `Object.Spawn` and `Object.Despawn`.
 - [Time, pausing and gates](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/time-and-pausing.html) — which tick events
@@ -2732,8 +2706,7 @@ Source: https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/even
 
 # Messaging
 
-Declare a message in `Build()`, handle it with `On.Message`, and send it from C# or from a peer
-without authority:
+Declare a local message in `Build()`, handle it with `On.Message`, and send it from C#:
 
 ```csharp
 using CodeSmile.LunyScript;
@@ -2786,9 +2759,8 @@ On.Message(Heal, Health.Add(5));
 On.Message(Heal, Heals.Add(1));
 ```
 
-A send of `Heal` runs both handlers. A send with no matching `On.Message` in the same script is
-refused while `Build()` runs when the send is authored in that script. A C# `Send` of a message
-this script has no handler for, or one another script type declares, throws
+A send of `Heal` runs both handlers. A C# `Send` of a message this script has no handler for, or one another script
+type declares, throws
 `LunyScriptUsageException` naming the message and the reason.
 
 ## Sending from C#
@@ -2806,36 +2778,17 @@ Play Mode ends. A send in those states throws. See
 [Reading scripts from C#](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/reading-scripts-from-csharp.html) for
 finding another object's script.
 
-## Sending from a peer
-
-A peer without authority asks the authority to act with `Net.Send.ToAuthority`. The authority
-receives that send with `On.Message` in the same script:
-
-```csharp
-RequestReady = Define.Message();
-
-On.Update(
-    If(!Net.HasAuthority & IsReady.IsFalse())
-        .Then(Net.Send.ToAuthority(RequestReady)));
-
-On.Message(RequestReady, IsReady.Set(true));
-```
-
-[Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html) is the
-session, cadence and authority surface. `On.Authority.Gained` and `On.Authority.Lost` live there.
+Messages deliver only within one runner. LunyScript has no remote-message surface; LunyNet owns networking.
 
 ## What to read next
 
 - [Reading scripts from C#](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/reading-scripts-from-csharp.html) —
   `Send` from a `MonoBehaviour`.
-- [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html) —
-  `Net.Send.ToAuthority` and authority events.
 - [Events and object lifetime](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/events-and-object-lifetime.html) —
   lifecycle and tick events.
 - Generated reference:
   [`OnFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OnFactory.html),
-  [`LunyScriptBehaviour`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.LunyScriptBehaviour.html),
-  [`NetSendFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.NetSendFactory.html).
+  [`LunyScriptBehaviour`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.LunyScriptBehaviour.html).
 
 Source: https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.md
 
@@ -3052,8 +3005,7 @@ a singleton has no binding another script can name.
   script.
 - Values carried by a request or an event.
 - Finding a script by its type or a singleton by its name.
-- Requests and events between peers; those use
-  [Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html) and `Net.Send`.
+- Requests and events between peers. LunyScript communication is local to one runner; LunyNet owns networking.
 
 ## What to read next
 
@@ -7763,8 +7715,7 @@ public sealed partial class GuardPost : Script
   `Define.Pool` and `Object.Spawn`.
 - [Player input](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/player-input.html) — rebinding, which uses the same
   operation handle.
-- [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html) — the
-  cloud family and its own watches.
+- [Cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cloud-save.html) — the cloud family and its own watches.
 - Generated reference:
   [`AssetFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.AssetFactory.html),
   [`AssetAttribute`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.AssetAttribute.html),
@@ -8088,9 +8039,8 @@ save and a load do with the controls.
 
 Names use letters, digits, dash and underscore, 1 to 64 of them, and are case
 sensitive: `Career` and `career` are two documents. `Build()` refuses a document with
-no field, two fields of one name, one variable listed twice, a constant, a
-synchronised variable, and a document name Windows reserves for a device such
-as `NUL`.
+no field, two fields of one name, one variable listed twice, a constant, and a document name Windows reserves for a
+device such as `NUL`.
 
 ## Saving and loading
 
@@ -8151,7 +8101,7 @@ load that omits fields writes one warning naming each of them.
 | Condition | True when |
 | --- | --- |
 | `doc.IsDirty` | A field holds something other than what the last save wrote or the last load read, or the last load omitted a field. |
-| `doc.Unsynced` | The document is stored on this device and not uploaded. `Cloud.Save` clears it; [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html) says exactly when. |
+| `doc.Unsynced` | The document is stored on this device and not uploaded. `Cloud.Save` clears it; [Cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cloud-save.html) says exactly when. |
 | `doc.HasOmissions` | The last load omitted at least one field. |
 | `doc.Omitted(field)` | The last load omitted that field. |
 
@@ -8258,7 +8208,7 @@ finite is stored as the text `"NaN"`, `"Infinity"` or `"-Infinity"`.
 - Fields of an enum, list or map type.
 - Deleting a document from the device, and reading one from C#. `Cloud.Save`,
   `Cloud.Load` and `Cloud.Delete` keep a copy of the same document in the cloud;
-  see [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html).
+  see [Cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cloud-save.html).
 
 ## Documents in plain C#
 
@@ -8326,132 +8276,9 @@ Source: https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/savi
 
 ---
 
-# Networking and cloud save
+# Cloud save
 
-Synchronise a variable by naming how often it should be sent:
-
-```csharp
-using CodeSmile.LunyScript;
-
-public sealed class Scorer : Script
-{
-    public Number Score { get; private set; }
-
-    protected override void Build()
-    {
-        Score = Var.DefineSynced<Number>(
-            nameof(Score), SyncCadence.OnChange, 0);
-
-        On.Update(If(Net.HasAuthority).Then(Score.Add(Time.Delta)));
-    }
-}
-```
-
-The authority counts, and every peer reads the same `Score`. `Score` is written and read with the
-same calls as any other variable.
-
-## How synchronisation is expressed
-
-Each channel and each variable names its own cadence. There is one call per channel rather than one
-switch that sends everything, so a scale that never changes stays off the wire while a position that
-changes every tick is sent every tick.
-
-| Cadence | When the value is sent |
-| --- | --- |
-| `SyncCadence.Once` | One time, the first time the value is known. |
-| `SyncCadence.OnChange` | Whenever the value changes. |
-| `SyncCadence.EveryTick` | On every network tick. |
-| `SyncCadence.OnChangeCapped(maxPerSecond)` | On change, at most that many times per second. |
-
-```csharp
-Sync.Position(SyncCadence.EveryTick);
-Sync.Rotation(SyncCadence.OnChange);
-Sync.Scale(SyncCadence.Once);
-
-Score = Var.DefineSynced<Number>(nameof(Score), SyncCadence.OnChange, 0);
-IsReady = Var.DefineSynced<Flag>(
-    nameof(IsReady), SyncCadence.OnChange, false);
-Health = Var.DefineSynced<Number>(
-    nameof(Health), SyncCadence.OnChangeCapped(10), 100);
-PlayerName = Var.DefineSyncedText(nameof(PlayerName), SyncCadence.Once);
-```
-
-The cadence is required, so no channel is synchronised at a cost nobody chose. Declaring one channel
-twice in a script is refused, and so is leaving the cadence out.
-
-`Var.DefineSynced<T>` takes `Number` or `Flag`; text uses `Var.DefineSyncedText`. The cadence comes
-before the capacity, because C# allows no required parameter after an optional one. Text carries a
-managed string on the wire, so `EveryTick` is refused for it and `Once` is the usual choice.
-
-Position is sent as the change since the last one, in 6 bytes, and in full in 12 bytes when the change
-is too large to encode that way or a peer has just joined. Rotation is a quaternion compressed into 4
-bytes. What the channels carry crosses as one stream per authority per network tick.
-
-Only the authority may move an object whose position is synchronised. A move on another peer is
-refused, and the diagnostic message names what to write instead.
-
-## Reading the session
-
-```csharp
-If(Net.HasAuthority).Then(Driving.Set(true));
-If(Net.IsConnected).Then(Online.Set(true));
-If(Net.IsHost).Then(Hosting.Set(true));
-
-Peers.Set(Net.PeerCount);
-Latency.Set(Net.RoundTripMilliseconds);
-```
-
-`Net.HasAuthority` is whether this peer owns this object, `Net.IsConnected` whether it is in a
-session at all, and `Net.IsHost` whether it is the host.
-
-A script reads the session and never starts, joins or ends it. LunyNet starts, joins and leaves
-sessions in C# (`NetHost`, `NetSession.Host`, `NetSession.Join`, `NetSession.Leave`). The `Net`
-reads, the `Sync` channels and `On.Authority` read the provider a game installs with
-`NetworkGateway.UseProvider`. LunyScript ships only `FakeNetworkProvider`, which tests use; a
-provider over LunyNet is the planned follow-up that connects scripts to a LunyNet session. With no
-provider installed, `Net.IsConnected` and `Net.HasAuthority` are false and a send does nothing.
-
-## Noticing a stale replica
-
-`Net.SecondsSinceUpdate` is how long since this peer last received a value, which is how a script
-notices that its copy has stopped arriving:
-
-```csharp
-On.Update(
-    If(Net.SecondsSinceUpdate(Score) > 2)
-        .Then(Stale.Set(true))
-        .Else(Stale.Set(false)));
-```
-
-It takes either a variable declared with `DefineSynced`, or a transform channel.
-
-## Messages
-
-A peer without authority asks the authority to act by sending a declared message. The authority
-receives it with `On.Message` in the same script:
-
-```csharp
-RequestReady = Define.Message();
-
-On.Update(
-    If(!Net.HasAuthority & IsReady.IsFalse())
-        .Then(Net.Send.ToAuthority(RequestReady)));
-
-On.Message(RequestReady, IsReady.Set(true));
-```
-
-[Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html) is the `On.Message` surface, including
-two handlers for one name and sending from C#.
-
-## Authority changing hands
-
-```csharp
-On.Authority.Gained(Driving.Set(true));
-On.Authority.Lost(Driving.Set(false));
-```
-
-An object spawned with authority raises `Gained` on the first networked tick. `Lost` also runs when
-the session ends.
+LunyCloud uploads and downloads LunyScript documents. LunyScript has no networking surface; LunyNet owns game networking.
 
 ## Cloud save
 
@@ -8575,53 +8402,29 @@ states every rule of these calls.
 ```csharp
 using CodeSmile.LunyScript;
 
-public sealed partial class NetworkedRunner : Script
+public sealed partial class CareerCloudScript : Script
 {
-    public Number Score { get; private set; }
-    public Document Record { get; private set; }
-    public Operation Downloading { get; private set; }
-    [Variable] public Flag Stale { get; private set; }
-
     protected override void Build()
     {
-        Score = Var.DefineSynced<Number>(
-            nameof(Score), SyncCadence.OnChange, 0);
         Best = Define.Number(nameof(Best), 0);
         Record = Define.Document(nameof(Record))
             .Field(nameof(Best), Best);
         Downloading = Define.Operation(nameof(Downloading));
-        Sync.Position(SyncCadence.EveryTick);
-        Sync.Rotation(SyncCadence.OnChange);
 
         On.Ready(Cloud.Load(Record).As(Downloading));
-
-        On.Update(
-            If(Net.HasAuthority).Then(Score.Add(Time.Delta)),
-            If(Net.SecondsSinceUpdate(Score) > 2)
-                .Then(Stale.Set(true))
-                .Else(Stale.Set(false)));
-
-        When.Cloud(Downloading).Succeeded(Stale.Set(false));
+        When.Cloud(Downloading).Succeeded(Status.Set("Loaded."));
+        When.Cloud(Downloading).Failed(Status.Set("Kept on this device."));
     }
 }
 ```
-
-A document field cannot be a synchronised variable, because a download writes
-the field on every peer; the example keeps the best score in its own `Best`.
 
 ## What to read next
 
 - [Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html) — `On.Message` and sending from C#.
 - [Events and object lifetime](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/events-and-object-lifetime.html) —
   lifecycle and tick events.
-- [Variables and values](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/variables-and-values.html) — how a
-  synchronised variable is read and written.
+- [Variables and values](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/variables-and-values.html) — local variable declarations and writes.
 - Generated reference:
-  [`OnAuthorityFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OnAuthorityFactory.html),
-  [`NetFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.NetFactory.html),
-  [`NetSendFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.NetSendFactory.html),
-  [`SyncFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SyncFactory.html),
-  [`SyncCadence`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.SyncCadence.html),
   [`CloudFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudFactory.html),
   [`CloudSaveBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudSaveBuilder.html),
   [`CloudLoadBuilder`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudLoadBuilder.html),
@@ -8629,4 +8432,4 @@ the field on every peer; the example keeps the best score in its own `Best`.
   [`CloudGateway`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.CloudGateway.html),
   [`FileCloudBackend`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.Luny.Cloud.FileCloudBackend.html).
 
-Source: https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.md
+Source: https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cloud-save.md

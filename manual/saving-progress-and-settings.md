@@ -72,9 +72,8 @@ save and a load do with the controls.
 
 Names use letters, digits, dash and underscore, 1 to 64 of them, and are case
 sensitive: `Career` and `career` are two documents. `Build()` refuses a document with
-no field, two fields of one name, one variable listed twice, a constant, a
-synchronised variable, and a document name Windows reserves for a device such
-as `NUL`.
+no field, two fields of one name, one variable listed twice, a constant, and a document name Windows reserves for a
+device such as `NUL`.
 
 ## Saving and loading
 
@@ -135,7 +134,7 @@ load that omits fields writes one warning naming each of them.
 | Condition | True when |
 | --- | --- |
 | `doc.IsDirty` | A field holds something other than what the last save wrote or the last load read, or the last load omitted a field. |
-| `doc.Unsynced` | The document is stored on this device and not uploaded. `Cloud.Save` clears it; [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html) says exactly when. |
+| `doc.Unsynced` | The document is stored on this device and not uploaded. `Cloud.Save` clears it; [Cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cloud-save.html) says exactly when. |
 | `doc.HasOmissions` | The last load omitted at least one field. |
 | `doc.Omitted(field)` | The last load omitted that field. |
 
@@ -242,7 +241,7 @@ finite is stored as the text `"NaN"`, `"Infinity"` or `"-Infinity"`.
 - Fields of an enum, list or map type.
 - Deleting a document from the device, and reading one from C#. `Cloud.Save`,
   `Cloud.Load` and `Cloud.Delete` keep a copy of the same document in the cloud;
-  see [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html).
+  see [Cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cloud-save.html).
 
 ## Documents in plain C#
 

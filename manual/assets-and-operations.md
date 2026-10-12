@@ -224,8 +224,7 @@ public sealed partial class GuardPost : Script
   `Define.Pool` and `Object.Spawn`.
 - [Player input](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/player-input.html) — rebinding, which uses the same
   operation handle.
-- [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html) — the
-  cloud family and its own watches.
+- [Cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cloud-save.html) — the cloud family and its own watches.
 - Generated reference:
   [`AssetFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.AssetFactory.html),
   [`AssetAttribute`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.AssetAttribute.html),

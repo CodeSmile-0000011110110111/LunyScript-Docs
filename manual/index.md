@@ -41,8 +41,7 @@ explains the central overview and routing to the other modules.
 
 - [Events and object lifetime](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/events-and-object-lifetime.html) — the
   object's lifetime and ticks, and creating or removing objects.
-- [Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html) — `On.Message`, sending from C#, and
-  asking the authority to act.
+- [Messaging](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/messaging.html) — local `On.Message` delivery and sending from C#.
 - [Talking to other scripts](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/talking-to-other-scripts.html) — read
   another object's script, ask it with a request it declares, hear its events, share its gates,
   and run a script once per game.
@@ -102,5 +101,5 @@ explains the central overview and routing to the other modules.
 - [Saving progress and settings](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/saving-progress-and-settings.html) —
   documents that keep variables between sessions on the player's device, and changing them between
   versions.
-- [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html) —
-  reading the session, synchronising state at a chosen cadence, authority events and stored values.
+- [Cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/cloud-save.html) — uploading, downloading and deleting cloud copies of
+  documents.

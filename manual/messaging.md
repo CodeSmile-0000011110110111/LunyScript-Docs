@@ -1,7 +1,6 @@
 # Messaging
 
-Declare a message in `Build()`, handle it with `On.Message`, and send it from C# or from a peer
-without authority:
+Declare a local message in `Build()`, handle it with `On.Message`, and send it from C#:
 
 ```csharp
 using CodeSmile.LunyScript;
@@ -54,9 +53,8 @@ On.Message(Heal, Health.Add(5));
 On.Message(Heal, Heals.Add(1));
 ```
 
-A send of `Heal` runs both handlers. A send with no matching `On.Message` in the same script is
-refused while `Build()` runs when the send is authored in that script. A C# `Send` of a message
-this script has no handler for, or one another script type declares, throws
+A send of `Heal` runs both handlers. A C# `Send` of a message this script has no handler for, or one another script
+type declares, throws
 `LunyScriptUsageException` naming the message and the reason.
 
 ## Sending from C#
@@ -74,33 +72,14 @@ Play Mode ends. A send in those states throws. See
 [Reading scripts from C#](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/reading-scripts-from-csharp.html) for
 finding another object's script.
 
-## Sending from a peer
-
-A peer without authority asks the authority to act with `Net.Send.ToAuthority`. The authority
-receives that send with `On.Message` in the same script:
-
-```csharp
-RequestReady = Define.Message();
-
-On.Update(
-    If(!Net.HasAuthority & IsReady.IsFalse())
-        .Then(Net.Send.ToAuthority(RequestReady)));
-
-On.Message(RequestReady, IsReady.Set(true));
-```
-
-[Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html) is the
-session, cadence and authority surface. `On.Authority.Gained` and `On.Authority.Lost` live there.
+Messages deliver only within one runner. LunyScript has no remote-message surface; LunyNet owns networking.
 
 ## What to read next
 
 - [Reading scripts from C#](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/reading-scripts-from-csharp.html) —
   `Send` from a `MonoBehaviour`.
-- [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html) —
-  `Net.Send.ToAuthority` and authority events.
 - [Events and object lifetime](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/events-and-object-lifetime.html) —
   lifecycle and tick events.
 - Generated reference:
   [`OnFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.OnFactory.html),
-  [`LunyScriptBehaviour`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.LunyScriptBehaviour.html),
-  [`NetSendFactory`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.NetSendFactory.html).
+  [`LunyScriptBehaviour`](https://codesmile-0000011110110111.github.io/LunyScript-Docs/api/reference/CodeSmile.LunyScript.LunyScriptBehaviour.html).

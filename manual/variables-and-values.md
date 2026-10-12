@@ -408,10 +408,7 @@ refuses one:
 Log = Define.Text(nameof(Log)).Allocating(65536);
 ```
 
-The bound is UTF-8 bytes, from 1 to 1048576. A growing text, bounded or not, is local to its peer. A
-synchronised text is always fixed, 64 bytes unless you name another capacity, because its size is what it
-costs on the wire; [Networking and cloud save](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/networking-and-cloud-save.html)
-sends it.
+The bound is UTF-8 bytes, from 1 to 1048576.
 
 `Assets/CodeSmile/LunyScript/ApiExamples/GrowingText.unity` binds one label to a growing text and one to a
 64-byte text.

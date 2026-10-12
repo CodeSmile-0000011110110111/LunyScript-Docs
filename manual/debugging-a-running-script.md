@@ -89,7 +89,7 @@ say otherwise, its Live reading is shown in blue. Fire its `If` to record the cu
 A condition built from your script's variables, numbers, text, enums and spatial values, with
 comparisons, `&`, `|` and `!`, has a Live reading, and so does each part of it when you unfold
 its row. A condition that reads anything else, such as the object's position, the game clock, input,
-the network, the other collider of a collision or a list, reads **unavailable**, and so does a
+the other collider of a collision or a list, reads **unavailable**, and so does a
 condition you wrote as your own C# class, because the debugger never runs your code to find out.
 The row's tooltip says why.
 
@@ -104,9 +104,6 @@ has an editor for its kind: a number field, a checkbox, a text field, three fiel
 the value once and shows the value it read back, or why the write was refused, such as text longer
 than the variable holds. **Revert** puts the stored value back into the editor. Applying a value
 runs no block.
-
-A synchronized value that another peer has authority over cannot be changed from this Editor; its
-editor is disabled and says why.
 
 ## Running a block and forcing an If
 
