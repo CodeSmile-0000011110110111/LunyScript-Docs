@@ -232,7 +232,7 @@ Interaction.UsesPointer
 
 ## What to read next
 
-- The example scene `ApiDemos/Interaction.unity`: a door, a lamp and a pickup for two local players,
+- The example scene `ApiExamples/Interaction.unity`: a door, a lamp and a pickup for two local players,
   one with the keyboard and mouse and one with a gamepad.
 - [Player input](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/player-input.html) — actions, and pairing local
   players.

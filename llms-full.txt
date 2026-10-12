@@ -117,7 +117,8 @@ On.Ready(
 
 **Networking by naming a cadence.** A synchronised variable and a transform channel each say how
 often they are sent. `Score` is written and read with the same calls as any other variable, and
-every peer reads the same value:
+every peer reads the same value. LunyNet runs the session in C#, and a script reads it through the
+provider a game installs:
 
 ```csharp
 Score = Var.DefineSynced<Number>(nameof(Score), SyncCadence.OnChange, 0);
@@ -7404,7 +7405,7 @@ Interaction.UsesPointer
 
 ## What to read next
 
-- The example scene `ApiDemos/Interaction.unity`: a door, a lamp and a pickup for two local players,
+- The example scene `ApiExamples/Interaction.unity`: a door, a lamp and a pickup for two local players,
   one with the keyboard and mouse and one with a gamepad.
 - [Player input](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/player-input.html) — actions, and pairing local
   players.
@@ -8402,6 +8403,13 @@ Latency.Set(Net.RoundTripMilliseconds);
 
 `Net.HasAuthority` is whether this peer owns this object, `Net.IsConnected` whether it is in a
 session at all, and `Net.IsHost` whether it is the host.
+
+A script reads the session and never starts, joins or ends it. LunyNet starts, joins and leaves
+sessions in C# (`NetHost`, `NetSession.Host`, `NetSession.Join`, `NetSession.Leave`). The `Net`
+reads, the `Sync` channels and `On.Authority` read the provider a game installs with
+`NetworkGateway.UseProvider`. LunyScript ships only `FakeNetworkProvider`, which tests use; a
+provider over LunyNet is the planned follow-up that connects scripts to a LunyNet session. With no
+provider installed, `Net.IsConnected` and `Net.HasAuthority` are false and a send does nothing.
 
 ## Noticing a stale replica
 

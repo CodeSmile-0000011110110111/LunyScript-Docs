@@ -117,7 +117,8 @@ On.Ready(
 
 **Networking by naming a cadence.** A synchronised variable and a transform channel each say how
 often they are sent. `Score` is written and read with the same calls as any other variable, and
-every peer reads the same value:
+every peer reads the same value. LunyNet runs the session in C#, and a script reads it through the
+provider a game installs:
 
 ```csharp
 Score = Var.DefineSynced<Number>(nameof(Score), SyncCadence.OnChange, 0);

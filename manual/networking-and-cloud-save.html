@@ -151,6 +151,13 @@ refused, and the diagnostic message names what to write instead.</p>
 <p><code class="language-plaintext highlighter-rouge">Net.HasAuthority</code> is whether this peer owns this object, <code class="language-plaintext highlighter-rouge">Net.IsConnected</code> whether it is in a
 session at all, and <code class="language-plaintext highlighter-rouge">Net.IsHost</code> whether it is the host.</p>
 
+<p>A script reads the session and never starts, joins or ends it. LunyNet starts, joins and leaves
+sessions in C# (<code class="language-plaintext highlighter-rouge">NetHost</code>, <code class="language-plaintext highlighter-rouge">NetSession.Host</code>, <code class="language-plaintext highlighter-rouge">NetSession.Join</code>, <code class="language-plaintext highlighter-rouge">NetSession.Leave</code>). The <code class="language-plaintext highlighter-rouge">Net</code>
+reads, the <code class="language-plaintext highlighter-rouge">Sync</code> channels and <code class="language-plaintext highlighter-rouge">On.Authority</code> read the provider a game installs with
+<code class="language-plaintext highlighter-rouge">NetworkGateway.UseProvider</code>. LunyScript ships only <code class="language-plaintext highlighter-rouge">FakeNetworkProvider</code>, which tests use; a
+provider over LunyNet is the planned follow-up that connects scripts to a LunyNet session. With no
+provider installed, <code class="language-plaintext highlighter-rouge">Net.IsConnected</code> and <code class="language-plaintext highlighter-rouge">Net.HasAuthority</code> are false and a send does nothing.</p>
+
 <h2 id="noticing-a-stale-replica">Noticing a stale replica</h2>
 
 <p><code class="language-plaintext highlighter-rouge">Net.SecondsSinceUpdate</code> is how long since this peer last received a value, which is how a script

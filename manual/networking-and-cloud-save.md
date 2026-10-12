@@ -76,6 +76,13 @@ Latency.Set(Net.RoundTripMilliseconds);
 `Net.HasAuthority` is whether this peer owns this object, `Net.IsConnected` whether it is in a
 session at all, and `Net.IsHost` whether it is the host.
 
+A script reads the session and never starts, joins or ends it. LunyNet starts, joins and leaves
+sessions in C# (`NetHost`, `NetSession.Host`, `NetSession.Join`, `NetSession.Leave`). The `Net`
+reads, the `Sync` channels and `On.Authority` read the provider a game installs with
+`NetworkGateway.UseProvider`. LunyScript ships only `FakeNetworkProvider`, which tests use; a
+provider over LunyNet is the planned follow-up that connects scripts to a LunyNet session. With no
+provider installed, `Net.IsConnected` and `Net.HasAuthority` are false and a send does nothing.
+
 ## Noticing a stale replica
 
 `Net.SecondsSinceUpdate` is how long since this peer last received a value, which is how a script

@@ -161,7 +161,8 @@ of the screen it covers:</p>
 
 <p><strong>Networking by naming a cadence.</strong> A synchronised variable and a transform channel each say how
 often they are sent. <code class="language-plaintext highlighter-rouge">Score</code> is written and read with the same calls as any other variable, and
-every peer reads the same value:</p>
+every peer reads the same value. LunyNet runs the session in C#, and a script reads it through the
+provider a game installs:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Score</span> <span class="p">=</span> <span class="n">Var</span><span class="p">.</span><span class="n">DefineSynced</span><span class="p">&lt;</span><span class="n">Number</span><span class="p">&gt;(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Score</span><span class="p">),</span> <span class="n">SyncCadence</span><span class="p">.</span><span class="n">OnChange</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
 <span class="n">Sync</span><span class="p">.</span><span class="nf">Position</span><span class="p">(</span><span class="n">SyncCadence</span><span class="p">.</span><span class="n">EveryTick</span><span class="p">);</span>
