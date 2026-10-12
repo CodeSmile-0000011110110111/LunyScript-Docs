@@ -172,14 +172,14 @@ with a string is a third. Every other rule of gates applies; see
 A script declares that it runs once per game in its `Options` property:
 
 ```csharp
-public sealed partial class QuestDirector : Script
+public sealed partial class GoalDirector : Script
 {
     protected override LunyScriptOptions Options => RunAs(Scope.Singleton);
 
     protected override void Build()
     {
         Completed = Define.Number(nameof(Completed), 0);
-        On.Event(QuestGiver.Events.Finished).Do(Completed.Add(1));
+        On.Event(GoalGiver.Events.Finished).Do(Completed.Add(1));
     }
 }
 ```

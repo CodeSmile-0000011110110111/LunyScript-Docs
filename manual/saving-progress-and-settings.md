@@ -31,7 +31,7 @@ The first time the game runs there is nothing to load, so the load fails and
 session's load puts the saved value back.
 
 A document is stored on the player's device, in a file of its own. `Progress`
-keeps what a player earned: unlocks, counters, quest flags and records.
+keeps what a player earned: unlocks, counters, goal flags and records.
 `Settings` keeps how a player configured the game: volume, sensitivity and
 difficulty. Both belong to the local user, and both work without a network.
 

@@ -245,14 +245,14 @@ with a string is a third. Every other rule of gates applies; see
 
 <p>A script declares that it runs once per game in its <code class="language-plaintext highlighter-rouge">Options</code> property:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">QuestDirector</span> <span class="p">:</span> <span class="n">Script</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">sealed</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">GoalDirector</span> <span class="p">:</span> <span class="n">Script</span>
 <span class="p">{</span>
     <span class="k">protected</span> <span class="k">override</span> <span class="n">LunyScriptOptions</span> <span class="n">Options</span> <span class="p">=&gt;</span> <span class="nf">RunAs</span><span class="p">(</span><span class="n">Scope</span><span class="p">.</span><span class="n">Singleton</span><span class="p">);</span>
 
     <span class="k">protected</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Build</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="n">Completed</span> <span class="p">=</span> <span class="n">Define</span><span class="p">.</span><span class="nf">Number</span><span class="p">(</span><span class="k">nameof</span><span class="p">(</span><span class="n">Completed</span><span class="p">),</span> <span class="m">0</span><span class="p">);</span>
-        <span class="n">On</span><span class="p">.</span><span class="nf">Event</span><span class="p">(</span><span class="n">QuestGiver</span><span class="p">.</span><span class="n">Events</span><span class="p">.</span><span class="n">Finished</span><span class="p">).</span><span class="nf">Do</span><span class="p">(</span><span class="n">Completed</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
+        <span class="n">On</span><span class="p">.</span><span class="nf">Event</span><span class="p">(</span><span class="n">GoalGiver</span><span class="p">.</span><span class="n">Events</span><span class="p">.</span><span class="n">Finished</span><span class="p">).</span><span class="nf">Do</span><span class="p">(</span><span class="n">Completed</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="m">1</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
