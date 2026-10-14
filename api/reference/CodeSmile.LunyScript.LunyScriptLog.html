@@ -151,6 +151,14 @@ failing test rather than a convention.</p>
     <code>Debug.Error</code>, and only in a build that defines <code>DEBUG</code>: that write is the sixth
     boundary AGENTS.md rule 31 names, and a build without <code>DEBUG</code> compiles it out.
 </p>
+<p>
+    <b>A release player stays silent until the game sets
+    <a class="xref" href="CodeSmile.Luny.DiagnosticReports.html#CodeSmile_Luny_DiagnosticReports_Enabled">Enabled</a>.</b> <a class="xref" href="CodeSmile.LunyScript.LunyScriptLog.html#CodeSmile_LunyScript_LunyScriptLog_Info_System_String_System_String_UnityEngine_Object_">Info(string, string, Object)</a>, <a class="xref" href="CodeSmile.LunyScript.LunyScriptLog.html#CodeSmile_LunyScript_LunyScriptLog_Warning_System_String_System_String_UnityEngine_Object_">Warning(string, string, Object)</a>,
+    <a class="xref" href="CodeSmile.LunyScript.LunyScriptLog.html#CodeSmile_LunyScript_LunyScriptLog_Error_System_String_System_String_UnityEngine_Object_">Error(string, string, Object)</a>, <a class="xref" href="CodeSmile.LunyScript.LunyScriptLog.html#CodeSmile_LunyScript_LunyScriptLog_Exception_System_Exception_UnityEngine_Object_">Exception(Exception, Object)</a> and a record that is not an authored log
+    return before they compose a line while that flag is false. An authored Debug block still
+    writes, and the release gate writes through <span class="xref">CodeSmile.LunyScript.LunyScriptLog.InfoAlways(string, string, UnityEngine.Object)</span> so its lines stay in
+    the player log.
+</p>
 </div>
 
 
@@ -161,7 +169,7 @@ failing test rather than a convention.</p>
 
   <h3 id="CodeSmile_LunyScript_LunyScriptLog_Prefix" data-uid="CodeSmile.LunyScript.LunyScriptLog.Prefix">
   Prefix
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L63"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>What every LunyScript log line starts with. The product's name, never the
@@ -193,7 +201,7 @@ repository's; AGENTS.md section 1.</p>
 
   <h3 id="CodeSmile_LunyScript_LunyScriptLog_Separator" data-uid="CodeSmile.LunyScript.LunyScriptLog.Separator">
   Separator
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L57"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L66"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>What separates the area from the message, and one context field from the next.</p>
@@ -269,7 +277,7 @@ AutoStaticsCleanup resets storage between Play sessions. Players compile no auto
 
   <h3 id="CodeSmile_LunyScript_LunyScriptLog_Compose_CodeSmile_LunyScript_LunyScriptLogRecord__" data-uid="CodeSmile.LunyScript.LunyScriptLog.Compose(CodeSmile.LunyScript.LunyScriptLogRecord@)">
   Compose(in LunyScriptLogRecord)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L90"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L99"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Turns a record into the one line the Console shows.</p>
@@ -342,7 +350,7 @@ names when the record names them, then the authored location when it has one.</p
 
   <h3 id="CodeSmile_LunyScript_LunyScriptLog_Error_System_String_System_String_UnityEngine_Object_" data-uid="CodeSmile.LunyScript.LunyScriptLog.Error(System.String,System.String,UnityEngine.Object)">
   Error(string, string, Object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L174"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L223"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Writes something that failed.</p>
@@ -400,7 +408,7 @@ names when the record names them, then the authored location when it has one.</p
 
   <h3 id="CodeSmile_LunyScript_LunyScriptLog_Exception_System_Exception_UnityEngine_Object_" data-uid="CodeSmile.LunyScript.LunyScriptLog.Exception(System.Exception,UnityEngine.Object)">
   Exception(Exception, Object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L202"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L256"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reports an exception with its own type and its own stack preserved.</p>
@@ -466,7 +474,7 @@ presents the authored location as the topmost frame of that stack, so the entry
 
   <h3 id="CodeSmile_LunyScript_LunyScriptLog_Info_System_String_System_String_UnityEngine_Object_" data-uid="CodeSmile.LunyScript.LunyScriptLog.Info(System.String,System.String,UnityEngine.Object)">
   Info(string, string, Object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L177"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Writes something a user may want to see that is not a problem.</p>
@@ -525,7 +533,7 @@ presents the authored location as the topmost frame of that stack, so the entry
 
   <h3 id="CodeSmile_LunyScript_LunyScriptLog_Warning_System_String_System_String_UnityEngine_Object_" data-uid="CodeSmile.LunyScript.LunyScriptLog.Warning(System.String,System.String,UnityEngine.Object)">
   Warning(string, string, Object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L161"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L205"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Writes something a user probably wants to change, which did not stop the
@@ -584,10 +592,11 @@ operation.</p>
 
   <h3 id="CodeSmile_LunyScript_LunyScriptLog_Write_CodeSmile_LunyScript_LunyScriptLogRecord__UnityEngine_Object_" data-uid="CodeSmile.LunyScript.LunyScriptLog.Write(CodeSmile.LunyScript.LunyScriptLogRecord@,UnityEngine.Object)">
   Write(in LunyScriptLogRecord, Object)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L116"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyScript/Core/Runtime/Diagnostics/LunyScriptLog.cs/#L128"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Writes a record at its own severity.</p>
+  <div class="markdown level1 summary"><p>Writes a record at its own severity. A record that is not an authored log is skipped while
+<a class="xref" href="CodeSmile.Luny.DiagnosticReports.html#CodeSmile_Luny_DiagnosticReports_Enabled">Enabled</a> is false, before the line is composed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
