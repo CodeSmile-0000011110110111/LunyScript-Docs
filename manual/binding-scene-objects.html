@@ -74,7 +74,9 @@
 
 <p><code class="language-plaintext highlighter-rouge">Beacon</code> binds the object the <code class="language-plaintext highlighter-rouge">LunyScript Behaviour</code>’s Inspector assigns to the <code class="language-plaintext highlighter-rouge">Beacon</code> field. With
 nothing assigned, it binds the first object named <code class="language-plaintext highlighter-rouge">Beacon</code> in the same scene as the object the script
-runs on, whether that object is active or not.</p>
+runs on, whether that object is active or not. When that scene is DontDestroyOnLoad, the search uses
+the active scene first, then still DontDestroyOnLoad when the active scene held no match. CameraHost
+and CoopHost move to DontDestroyOnLoad.</p>
 
 <h2 id="where-the-object-comes-from">Where the object comes from</h2>
 
@@ -92,7 +94,7 @@ runs on, whether that object is active or not.</p>
     </tr>
     <tr>
       <td>2</td>
-      <td>The first object in the script’s own scene that the search finds</td>
+      <td>The first object in the script’s own scene that the search finds, or the active scene then DontDestroyOnLoad when the script’s object is in DontDestroyOnLoad</td>
     </tr>
     <tr>
       <td>3</td>

@@ -17,14 +17,16 @@ public sealed partial class Lighthouse : Script
 
 `Beacon` binds the object the `LunyScript Behaviour`'s Inspector assigns to the `Beacon` field. With
 nothing assigned, it binds the first object named `Beacon` in the same scene as the object the script
-runs on, whether that object is active or not.
+runs on, whether that object is active or not. When that scene is DontDestroyOnLoad, the search uses
+the active scene first, then still DontDestroyOnLoad when the active scene held no match. CameraHost
+and CoopHost move to DontDestroyOnLoad.
 
 ## Where the object comes from
 
 | Order | What the binding takes |
 | --- | --- |
 | 1 | The object assigned in the Inspector, whatever its name |
-| 2 | The first object in the script's own scene that the search finds |
+| 2 | The first object in the script's own scene that the search finds, or the active scene then DontDestroyOnLoad when the script's object is in DontDestroyOnLoad |
 | 3 | Nothing: the binding is unavailable |
 
 A binding never creates an object in place of a missing one. The search finds objects by the
