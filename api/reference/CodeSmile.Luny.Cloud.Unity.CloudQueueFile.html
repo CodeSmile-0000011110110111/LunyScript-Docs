@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Class CloudQueueFile | LunyScript API Reference ">
       
-      <meta name="description" content="Keeps the score queue in the player&#39;s data folder through LunySave, so &amp;quot;a Submit that cannot be sent waits in a bounded queue on the device, survives a restart&amp;quot; (2026-09-09): one version 1 LunySave document whose Queue text field holds the queue&#39;s JSON, written with LunySave&#39;s replace-by-rename at each change of the queue.">
+      <meta name="description" content="Keeps the score queue in the player&#39;s data folder through LunySave, so &amp;quot;a Submit that cannot be sent waits in a bounded queue on the device, survives a restart&amp;quot; (2026-09-09): one LunySave document of the family &amp;quot;lunycloud.score-queue&amp;quot; whose Queue text field holds the queue&#39;s JSON, written with LunySave&#39;s replace-by-rename at each change of the queue. The owner it is given acquires the path until it is destroyed.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_Luny_Cloud_Unity_CloudQueueFile" data-uid="CodeSmile.Luny.Cloud.Unity.CloudQueueFile" class="text-break">
-Class CloudQueueFile  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Unity/Runtime/CloudQueueFile.cs/#L15"><i class="bi bi-code-slash"></i></a>
+Class CloudQueueFile  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Unity/Runtime/CloudQueueFile.cs/#L19"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -86,8 +86,9 @@ Class CloudQueueFile  <a class="header-action link-secondary" title="View source
   </div>
 
   <div class="markdown summary"><p>Keeps the score queue in the player's data folder through LunySave, so &quot;a Submit that cannot be sent waits in a
-bounded queue on the device, survives a restart&quot; (2026-09-09): one version 1 LunySave document whose <code>Queue</code>
-text field holds the queue's JSON, written with LunySave's replace-by-rename at each change of the queue.</p>
+bounded queue on the device, survives a restart&quot; (2026-09-09): one LunySave document of the family
+&quot;lunycloud.score-queue&quot; whose <code>Queue</code> text field holds the queue's JSON, written with LunySave's
+replace-by-rename at each change of the queue. The owner it is given acquires the path until it is destroyed.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -123,13 +124,14 @@ text field holds the queue's JSON, written with LunySave's replace-by-rename at 
 
 
   <h2 id="CodeSmile_Luny_Cloud_Unity_CloudQueueFile_examples">Examples</h2>
-  <pre><code class="lang-csharp">cloud.Leaderboards.UseQueueStore(new CloudQueueFile());</code></pre>
+  <pre><code class="lang-csharp">cloud.Leaderboards.UseQueueStore(new CloudQueueFile(this));</code></pre>
 
 
   <h2 id="CodeSmile_Luny_Cloud_Unity_CloudQueueFile_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>LunyScript's default runner uses one at <a class="xref" href="CodeSmile.Luny.Cloud.Unity.CloudQueueFile.html#CodeSmile_Luny_Cloud_Unity_CloudQueueFile_DefaultPath">DefaultPath</a> when it is given the supplied services;
-a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> a game creates uses one when it is named with
-<a class="xref" href="CodeSmile.Luny.Cloud.CloudLeaderboards.html#CodeSmile_Luny_Cloud_CloudLeaderboards_UseQueueStore_CodeSmile_Luny_Cloud_ICloudQueueStore_">UseQueueStore(ICloudQueueStore)</a>.</p>
+  <div class="markdown level0 remarks"><p>LunyScript's default runner uses one at <a class="xref" href="CodeSmile.Luny.Cloud.Unity.CloudQueueFile.html#CodeSmile_Luny_Cloud_Unity_CloudQueueFile_DefaultPath">DefaultPath</a>, owned by its driver, when it is given
+the supplied services; a <a class="xref" href="CodeSmile.Luny.Cloud.Unity.CloudHost.html">CloudHost</a> uses one it owns; a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> a game creates uses
+one when it is named with <a class="xref" href="CodeSmile.Luny.Cloud.CloudLeaderboards.html#CodeSmile_Luny_Cloud_CloudLeaderboards_UseQueueStore_CodeSmile_Luny_Cloud_ICloudQueueStore_">UseQueueStore(ICloudQueueStore)</a>. A queue file written before families
+existed, format 1, still loads.</p>
 </div>
 
 
@@ -139,17 +141,18 @@ a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> a
 
   <a id="CodeSmile_Luny_Cloud_Unity_CloudQueueFile__ctor_" data-uid="CodeSmile.Luny.Cloud.Unity.CloudQueueFile.#ctor*"></a>
 
-  <h3 id="CodeSmile_Luny_Cloud_Unity_CloudQueueFile__ctor_System_String_" data-uid="CodeSmile.Luny.Cloud.Unity.CloudQueueFile.#ctor(System.String)">
-  CloudQueueFile(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Unity/Runtime/CloudQueueFile.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_Luny_Cloud_Unity_CloudQueueFile__ctor_UnityEngine_MonoBehaviour_System_String_" data-uid="CodeSmile.Luny.Cloud.Unity.CloudQueueFile.#ctor(UnityEngine.MonoBehaviour,System.String)">
+  CloudQueueFile(MonoBehaviour, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Unity/Runtime/CloudQueueFile.cs/#L37"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>A store at <code class="paramref">path</code> in the player's data folder.</p>
+  <div class="markdown level1 summary"><p>A store at <code class="paramref">path</code> in the player's data folder, acquired for
+<code class="paramref">owner</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudQueueFile(string path = &quot;LunyCloud/score-queue.sav&quot;)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CloudQueueFile(MonoBehaviour owner, string path = &quot;LunyCloud/score-queue.sav&quot;)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -160,6 +163,12 @@ a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> a
   <th>Description</th>
   </tr>
   <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">MonoBehaviour</span></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>owner</code></dt></td>
+    <td style="width: 99%"><dd><p>The component whose destruction ends the store, such as a <a class="xref" href="CodeSmile.Luny.Cloud.Unity.CloudHost.html">CloudHost</a>.</p>
+</dd></td>
+  </tr>
   <tr>
     <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
     <td style="width: fit-content;white-space: nowrap"><dt><code>path</code></dt></td>
@@ -175,11 +184,18 @@ a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> a
 
 
 
-  <h4 class="section" id="CodeSmile_Luny_Cloud_Unity_CloudQueueFile__ctor_System_String__examples">Examples</h4>
-  <pre><code class="lang-csharp">var store = new CloudQueueFile("profiles/ada/scores.sav");</code></pre>
+  <h4 class="section" id="CodeSmile_Luny_Cloud_Unity_CloudQueueFile__ctor_UnityEngine_MonoBehaviour_System_String__examples">Examples</h4>
+  <pre><code class="lang-csharp">var store = new CloudQueueFile(this, "profiles/ada/scores.sav");</code></pre>
 
 
 
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Save.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The owner is null or destroyed, the path is refused, or another owner
+acquired it.</p>
+</dd>
+  </dl>
 
 
 
@@ -190,7 +206,7 @@ a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> a
 
   <h3 id="CodeSmile_Luny_Cloud_Unity_CloudQueueFile_DefaultPath" data-uid="CodeSmile.Luny.Cloud.Unity.CloudQueueFile.DefaultPath">
   DefaultPath
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Unity/Runtime/CloudQueueFile.cs/#L19"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Unity/Runtime/CloudQueueFile.cs/#L24"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Where the queue is kept, relative to the player's data folder, when no path is named.</p>
@@ -214,7 +230,7 @@ a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> a
 
 
   <h4 class="section" id="CodeSmile_Luny_Cloud_Unity_CloudQueueFile_DefaultPath_examples">Examples</h4>
-  <pre><code class="lang-csharp">var store = new CloudQueueFile(CloudQueueFile.DefaultPath);</code></pre>
+  <pre><code class="lang-csharp">var store = new CloudQueueFile(this, CloudQueueFile.DefaultPath);</code></pre>
 
 
 
@@ -229,7 +245,7 @@ a <a class="xref" href="CodeSmile.Luny.Cloud.CloudClient.html">CloudClient</a> a
 
   <h3 id="CodeSmile_Luny_Cloud_Unity_CloudQueueFile_Read" data-uid="CodeSmile.Luny.Cloud.Unity.CloudQueueFile.Read">
   Read()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Unity/Runtime/CloudQueueFile.cs/#L41"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Unity/Runtime/CloudQueueFile.cs/#L46"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The stored queue as written by <a class="xref" href="CodeSmile.Luny.Cloud.ICloudQueueStore.html#CodeSmile_Luny_Cloud_ICloudQueueStore_Write_System_String_">Write(string)</a>, or null when nothing is stored.</p>
@@ -272,7 +288,7 @@ queue and logs why.</p>
 
   <h3 id="CodeSmile_Luny_Cloud_Unity_CloudQueueFile_Write_System_String_" data-uid="CodeSmile.Luny.Cloud.Unity.CloudQueueFile.Write(System.String)">
   Write(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Unity/Runtime/CloudQueueFile.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Unity/Runtime/CloudQueueFile.cs/#L59"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Replaces the stored queue.</p>
@@ -324,7 +340,7 @@ queue and logs why.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Unity/Runtime/CloudQueueFile.cs/#L15" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunyCloud/Unity/Runtime/CloudQueueFile.cs/#L19" class="edit-link">Edit this page</a>
         </div>
 
 

@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Class LoadOperation | LunyScript API Reference ">
       
-      <meta name="description" content="One  or : whether it is done, how it ended, the document it read, and which declared fields the stored copy could not give.">
+      <meta name="description" content="One  or : where it stands, how it ended, the document it read, and which declared fields the stored copy could not give.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_Luny_Save_LoadOperation" data-uid="CodeSmile.Luny.Save.LoadOperation" class="text-break">
-Class LoadOperation  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L32"><i class="bi bi-code-slash"></i></a>
+Class LoadOperation  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L34"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,13 +85,13 @@ Class LoadOperation  <a class="header-action link-secondary" title="View source"
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>One <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Load_System_String_CodeSmile_Luny_Save_SaveSchema_">Load(string, SaveSchema)</a> or <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_LoadStreamingAsset_System_String_CodeSmile_Luny_Save_SaveSchema_">LoadStreamingAsset(string, SaveSchema)</a>: whether it is done, how it
-ended, the document it read, and which declared fields the stored copy could not give.</p>
+  <div class="markdown summary"><p>One <a class="xref" href="CodeSmile.Luny.Save.SaveSlot.html#CodeSmile_Luny_Save_SaveSlot_Load">Load()</a> or <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_LoadStreamingAsset_UnityEngine_MonoBehaviour_System_String_CodeSmile_Luny_Save_SaveSchema_">LoadStreamingAsset(MonoBehaviour, string, SaveSchema)</a>: where it stands, how it ended, the
+document it read, and which declared fields the stored copy could not give.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class LoadOperation</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class LoadOperation : SaveRequest</code></pre>
   </div>
 
 
@@ -104,39 +104,101 @@ ended, the document it read, and which declared fields the stored copy could not
     <dt>Inheritance</dt>
     <dd>
       <div><span class="xref">object</span></div>
+      <div><a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html">SaveRequest</a></div>
       <div><span class="xref">LoadOperation</span></div>
     </dd>
   </dl>
 
 
 
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <ul>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_Path">SaveRequest.Path</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_State">SaveRequest.State</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_IsDone">SaveRequest.IsDone</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_Succeeded">SaveRequest.Succeeded</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_Refusal">SaveRequest.Refusal</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_ToString">SaveRequest.ToString()</a>
+    </li>
+    </ul>
+  </dd></dl>
 
   </details>
 
 
 
   <h2 id="CodeSmile_Luny_Save_LoadOperation_examples">Examples</h2>
-  <pre><code class="lang-csharp">var loading = m_Saves.Load("savegames/001.sav", Progress);
-if (loading.IsDone &amp;&amp; loading.Succeeded &amp;&amp; loading.Document.TryGetNumber("BestScore", out var best))
+  <pre><code class="lang-csharp">var loading = m_Slot.Load();
+if (loading.Succeeded &amp;&amp; loading.Document.TryGet(BestScore, out var best))
     m_BestScore = best;</code></pre>
 
 
   <h2 id="CodeSmile_Luny_Save_LoadOperation_remarks">Remarks</h2>
   <div class="markdown level0 remarks"><p>
-    A load from the player's data folder, and from StreamingAssets on a platform where that folder is a local
-    folder, completes inside the call that starts it. On Android and the web StreamingAssets is read with a web
-    request, and the load completes in a later frame; <a class="xref" href="CodeSmile.Luny.Save.LoadOperation.html#CodeSmile_Luny_Save_LoadOperation_IsDone">IsDone</a> turns true when it has, and reading
-    any property finishes it then. Nothing calls back: the code that holds the operation reads it, so an object
-    destroyed before a load completes is never handed its result.
+    A load from the player's data folder runs in its path's order and has ended when the call returns on an idle
+    path. A load from StreamingAssets on Android and the web downloads the file and ends in a later frame by itself:
+    nothing has to read it for it to finish, and its download is released when it ends. It fails as
+    <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_Timeout">Timeout</a> after 30 seconds of real time, and is canceled when its owner is destroyed
+    first.
 </p>
 <p>
-    A load that fails hands back no document. A load that succeeds hands back a <a class="xref" href="CodeSmile.Luny.Save.SaveDocument.html">SaveDocument</a>
-    holding every field the stored copy could give; <a class="xref" href="CodeSmile.Luny.Save.LoadOperation.html#CodeSmile_Luny_Save_LoadOperation_Omitted_System_String_">Omitted(string)</a> names the others, which hold no
-    value, so the caller's own values for them stay as they were. A stored copy of an older version is migrated
-    first, and must then give every field, or the load fails as <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_Unsupported">Unsupported</a>. A load
-    never writes the stored file.
+    A load that fails hands back no document. A load that succeeds hands back a <a class="xref" href="CodeSmile.Luny.Save.SaveDocument.html">SaveDocument</a> holding
+    every field the stored copy could give; <a class="xref" href="CodeSmile.Luny.Save.LoadOperation.html#CodeSmile_Luny_Save_LoadOperation_Omitted_CodeSmile_Luny_Save_SaveField_">Omitted(SaveField)</a> names the others, which hold no value, so the
+    caller's own values for them stay as they were. A record, list or map is loaded whole or omitted whole: one bad
+    value inside it omits the field and <a class="xref" href="CodeSmile.Luny.Save.LoadOperation.html#CodeSmile_Luny_Save_LoadOperation_OmissionReason_CodeSmile_Luny_Save_SaveField_">OmissionReason(SaveField)</a> names its path, such as "Items[3].Count". A
+    stored copy of an older version is migrated first and must then give every field, or the load fails as
+    <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_Unsupported">Unsupported</a>. A load never writes the stored file.
 </p>
 </div>
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="CodeSmile_Luny_Save_LoadOperation_DeadlineSeconds" data-uid="CodeSmile.Luny.Save.LoadOperation.DeadlineSeconds">
+  DeadlineSeconds
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L38"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The real seconds a packaged load waits for its download before it fails as
+<a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_Timeout">Timeout</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public const int DeadlineSeconds = 30</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">int</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
 
 
   <h2 class="section" id="properties">Properties
@@ -147,7 +209,7 @@ if (loading.IsDone &amp;&amp; loading.Succeeded &amp;&amp; loading.Document.TryG
 
   <h3 id="CodeSmile_Luny_Save_LoadOperation_Document" data-uid="CodeSmile.Luny.Save.LoadOperation.Document">
   Document
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L58"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The document the load read, or null until it succeeded.</p>
@@ -171,42 +233,7 @@ if (loading.IsDone &amp;&amp; loading.Succeeded &amp;&amp; loading.Document.TryG
 
 
   <h4 class="section" id="CodeSmile_Luny_Save_LoadOperation_Document_examples">Examples</h4>
-  <pre><code class="lang-csharp">loading.Document.TryGetText("PilotName", out var pilot);</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_Luny_Save_LoadOperation_Failure_" data-uid="CodeSmile.Luny.Save.LoadOperation.Failure*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_LoadOperation_Failure" data-uid="CodeSmile.Luny.Save.LoadOperation.Failure">
-  Failure
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L78"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Why the load failed; <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_None">None</a> while pending and after success.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveFailure Failure { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html">SaveFailure</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_LoadOperation_Failure_examples">Examples</h4>
-  <pre><code class="lang-csharp">if (loading.Failure == SaveFailure.NotFound) StartNewGame();</code></pre>
+  <pre><code class="lang-csharp">loading.Document.TryGet(PilotName, out var pilot);</code></pre>
 
 
 
@@ -217,7 +244,7 @@ if (loading.IsDone &amp;&amp; loading.Succeeded &amp;&amp; loading.Document.TryG
 
   <h3 id="CodeSmile_Luny_Save_LoadOperation_HasOmissions" data-uid="CodeSmile.Luny.Save.LoadOperation.HasOmissions">
   HasOmissions
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L96"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L67"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>True when the load succeeded and omitted at least one declared field.</p>
@@ -248,117 +275,11 @@ if (loading.IsDone &amp;&amp; loading.Succeeded &amp;&amp; loading.Document.TryG
 
 
 
-  <a id="CodeSmile_Luny_Save_LoadOperation_IsDone_" data-uid="CodeSmile.Luny.Save.LoadOperation.IsDone*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_LoadOperation_IsDone" data-uid="CodeSmile.Luny.Save.LoadOperation.IsDone">
-  IsDone
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L56"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>True once the load has ended, successfully or not.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsDone { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">bool</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_LoadOperation_IsDone_examples">Examples</h4>
-  <pre><code class="lang-csharp">if (m_Loading != null &amp;&amp; m_Loading.IsDone) Apply(m_Loading);</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_Luny_Save_LoadOperation_Path_" data-uid="CodeSmile.Luny.Save.LoadOperation.Path*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_LoadOperation_Path" data-uid="CodeSmile.Luny.Save.LoadOperation.Path">
-  Path
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L52"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>The path the load was given, relative to the folder it reads.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Path { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">string</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_LoadOperation_Path_examples">Examples</h4>
-  <pre><code class="lang-csharp">Debug.Log($"loaded {loading.Path}");</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_Luny_Save_LoadOperation_Problem_" data-uid="CodeSmile.Luny.Save.LoadOperation.Problem*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_LoadOperation_Problem" data-uid="CodeSmile.Luny.Save.LoadOperation.Problem">
-  Problem
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L83"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>What went wrong, or null: the file system's message, what makes the stored copy unreadable, or which
-version or migration step refused it.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Problem { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">string</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_LoadOperation_Problem_examples">Examples</h4>
-  <pre><code class="lang-csharp">Debug.LogWarning(loading.Problem);</code></pre>
-
-
-
-
-
-
   <a id="CodeSmile_Luny_Save_LoadOperation_StoredVersion_" data-uid="CodeSmile.Luny.Save.LoadOperation.StoredVersion*"></a>
 
   <h3 id="CodeSmile_Luny_Save_LoadOperation_StoredVersion" data-uid="CodeSmile.Luny.Save.LoadOperation.StoredVersion">
   StoredVersion
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L92"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L63"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The version the stored copy had before any migration, or 0 until the load succeeded. Lower than the
@@ -390,59 +311,24 @@ schema's version when the load migrated it.</p>
 
 
 
-  <a id="CodeSmile_Luny_Save_LoadOperation_Succeeded_" data-uid="CodeSmile.Luny.Save.LoadOperation.Succeeded*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_LoadOperation_Succeeded" data-uid="CodeSmile.Luny.Save.LoadOperation.Succeeded">
-  Succeeded
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L74"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>True when the load has ended and <a class="xref" href="CodeSmile.Luny.Save.LoadOperation.html#CodeSmile_Luny_Save_LoadOperation_Document">Document</a> holds what it read.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Succeeded { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">bool</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_LoadOperation_Succeeded_examples">Examples</h4>
-  <pre><code class="lang-csharp">if (loading.Succeeded) Apply(loading.Document);</code></pre>
-
-
-
-
-
-
   <h2 class="section" id="methods">Methods
 </h2>
 
 
   <a id="CodeSmile_Luny_Save_LoadOperation_OmissionReason_" data-uid="CodeSmile.Luny.Save.LoadOperation.OmissionReason*"></a>
 
-  <h3 id="CodeSmile_Luny_Save_LoadOperation_OmissionReason_System_String_" data-uid="CodeSmile.Luny.Save.LoadOperation.OmissionReason(System.String)">
-  OmissionReason(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L127"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_Luny_Save_LoadOperation_OmissionReason_CodeSmile_Luny_Save_SaveField_" data-uid="CodeSmile.Luny.Save.LoadOperation.OmissionReason(CodeSmile.Luny.Save.SaveField)">
+  OmissionReason(SaveField)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L83"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Why the load omitted this field, such as &quot;absent&quot; or &quot;a text of 80 bytes, and PilotName holds 64&quot;, or
-null when the field loaded or the load did not succeed.</p>
+  <div class="markdown level1 summary"><p>Why the load omitted this field, such as &quot;absent&quot;, &quot;a text of 80 bytes, and PilotName holds 64&quot; or &quot;a
+number 1.5, and Items[3].Count is an Int64&quot;, or null when the field loaded or the load did not succeed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string OmissionReason(string name)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string OmissionReason(SaveField field)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -454,9 +340,9 @@ null when the field loaded or the load did not succeed.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
-    <td style="width: 99%"><dd><p>A field the schema declares.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.Luny.Save.SaveField.html">SaveField</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>field</code></dt></td>
+    <td style="width: 99%"><dd><p>A field the schema was built with.</p>
 </dd></td>
   </tr>
   </dl>
@@ -474,15 +360,15 @@ null when the field loaded or the load did not succeed.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_Luny_Save_LoadOperation_OmissionReason_System_String__examples">Examples</h4>
-  <pre><code class="lang-csharp">Debug.Log(loading.OmissionReason("PilotName"));</code></pre>
+  <h4 class="section" id="CodeSmile_Luny_Save_LoadOperation_OmissionReason_CodeSmile_Luny_Save_SaveField__examples">Examples</h4>
+  <pre><code class="lang-csharp">Debug.Log(loading.OmissionReason(PilotName));</code></pre>
 
 
 
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.Luny.Save.LunySaveException.html">LunySaveException</a></dt>
-    <dd><p>The schema declares no field of this name.</p>
+    <dd><p>The schema was not built with this field.</p>
 </dd>
   </dl>
 
@@ -490,18 +376,18 @@ null when the field loaded or the load did not succeed.</p>
 
   <a id="CodeSmile_Luny_Save_LoadOperation_Omitted_" data-uid="CodeSmile.Luny.Save.LoadOperation.Omitted*"></a>
 
-  <h3 id="CodeSmile_Luny_Save_LoadOperation_Omitted_System_String_" data-uid="CodeSmile.Luny.Save.LoadOperation.Omitted(System.String)">
-  Omitted(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L119"><i class="bi bi-code-slash"></i></a>
+  <h3 id="CodeSmile_Luny_Save_LoadOperation_Omitted_CodeSmile_Luny_Save_SaveField_" data-uid="CodeSmile.Luny.Save.LoadOperation.Omitted(CodeSmile.Luny.Save.SaveField)">
+  Omitted(SaveField)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L75"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>True when the load succeeded and the stored copy could not give this field: absent, or holding a
-value the field cannot hold.</p>
+  <div class="markdown level1 summary"><p>True when the load succeeded and the stored copy could not give this field: absent, or holding a value
+the field cannot hold.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Omitted(string name)</code></pre>
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Omitted(SaveField field)</code></pre>
   </div>
 
   <h4 class="section">Parameters</h4>
@@ -513,9 +399,9 @@ value the field cannot hold.</p>
   </tr>
   <dl class="parameters">
   <tr>
-    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">string</span></dt></td>
-    <td style="width: fit-content;white-space: nowrap"><dt><code>name</code></dt></td>
-    <td style="width: 99%"><dd><p>A field the schema declares.</p>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.Luny.Save.SaveField.html">SaveField</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>field</code></dt></td>
+    <td style="width: 99%"><dd><p>A field the schema was built with.</p>
 </dd></td>
   </tr>
   </dl>
@@ -533,54 +419,17 @@ value the field cannot hold.</p>
 
 
 
-  <h4 class="section" id="CodeSmile_Luny_Save_LoadOperation_Omitted_System_String__examples">Examples</h4>
-  <pre><code class="lang-csharp">if (loading.Omitted("PilotName")) m_PilotName = "Pilot";</code></pre>
+  <h4 class="section" id="CodeSmile_Luny_Save_LoadOperation_Omitted_CodeSmile_Luny_Save_SaveField__examples">Examples</h4>
+  <pre><code class="lang-csharp">if (loading.Omitted(PilotName)) m_PilotName = "Pilot";</code></pre>
 
 
 
   <h4 class="section">Exceptions</h4>
   <dl class="parameters">
     <dt><a class="xref" href="CodeSmile.Luny.Save.LunySaveException.html">LunySaveException</a></dt>
-    <dd><p>The schema declares no field of this name.</p>
+    <dd><p>The schema was not built with this field.</p>
 </dd>
   </dl>
-
-
-
-  <a id="CodeSmile_Luny_Save_LoadOperation_ToString_" data-uid="CodeSmile.Luny.Save.LoadOperation.ToString*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_LoadOperation_ToString" data-uid="CodeSmile.Luny.Save.LoadOperation.ToString">
-  ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L141"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>&quot;loaded savegames/001.sav&quot;, or the failure and its problem, for a log line; &quot;loading&quot; and the path
-while pending.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override string ToString()</code></pre>
-  </div>
-
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><span class="xref">string</span></dt>
-    <dd><p>The outcome.</p>
-</dd>
-  </dl>
-
-
-
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_LoadOperation_ToString_examples">Examples</h4>
-  <pre><code class="lang-csharp">Debug.Log(loading.ToString());</code></pre>
-
-
-
 
 
 
@@ -588,7 +437,7 @@ while pending.</p>
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L32" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/LoadOperation.cs/#L34" class="edit-link">Edit this page</a>
         </div>
 
 

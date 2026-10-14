@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Class DeleteOperation | LunyScript API Reference ">
       
-      <meta name="description" content="One : whether it is done, and how it ended.">
+      <meta name="description" content="One  or : whether nothing is stored at the path afterwards.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_Luny_Save_DeleteOperation" data-uid="CodeSmile.Luny.Save.DeleteOperation" class="text-break">
-Class DeleteOperation  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/DeleteOperation.cs/#L22"><i class="bi bi-code-slash"></i></a>
+Class DeleteOperation  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/DeleteOperation.cs/#L20"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,12 +85,13 @@ Class DeleteOperation  <a class="header-action link-secondary" title="View sourc
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>One <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Delete_System_String_">Delete(string)</a>: whether it is done, and how it ended.</p>
+  <div class="markdown summary"><p>One <a class="xref" href="CodeSmile.Luny.Save.SaveSlot.html#CodeSmile_Luny_Save_SaveSlot_Delete">Delete()</a> or <a class="xref" href="CodeSmile.Luny.Save.SaveGroupSlot.html#CodeSmile_Luny_Save_SaveGroupSlot_Delete">Delete()</a>: whether nothing is stored at the path
+afterwards.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class DeleteOperation</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class DeleteOperation : SaveRequest</code></pre>
   </div>
 
 
@@ -103,257 +104,61 @@ Class DeleteOperation  <a class="header-action link-secondary" title="View sourc
     <dt>Inheritance</dt>
     <dd>
       <div><span class="xref">object</span></div>
+      <div><a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html">SaveRequest</a></div>
       <div><span class="xref">DeleteOperation</span></div>
     </dd>
   </dl>
 
 
 
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <ul>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_Path">SaveRequest.Path</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_State">SaveRequest.State</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_IsDone">SaveRequest.IsDone</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_Succeeded">SaveRequest.Succeeded</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_Refusal">SaveRequest.Refusal</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_ToString">SaveRequest.ToString()</a>
+    </li>
+    </ul>
+  </dd></dl>
 
   </details>
 
 
 
   <h2 id="CodeSmile_Luny_Save_DeleteOperation_examples">Examples</h2>
-  <pre><code class="lang-csharp">var deleting = m_Saves.Delete("savegames/001.sav");
+  <pre><code class="lang-csharp">var deleting = m_Slot.Delete();
 if (deleting.Succeeded == false)
-    Debug.LogWarning($"Deleting failed as {deleting.Failure}: {deleting.Problem}");</code></pre>
+    Debug.LogWarning(deleting.Refusal);</code></pre>
 
 
   <h2 id="CodeSmile_Luny_Save_DeleteOperation_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>The file storage completes a delete inside the call that starts it, so <a class="xref" href="CodeSmile.Luny.Save.DeleteOperation.html#CodeSmile_Luny_Save_DeleteOperation_IsDone">IsDone</a> is already true when
-<a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Delete_System_String_">Delete(string)</a> returns. A delete succeeded when nothing is stored at its path afterwards: the
-document and the copy an interrupted save left beside it are gone, and a path where nothing was stored counts as
-well, so a second delete of the same path succeeds too. A delete the file system refused reports
-<a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_Unknown">Unknown</a> with the system's message, and the document may still be there.</p>
+  <div class="markdown level0 remarks"><p>A delete succeeded when nothing is stored at its path afterwards: the document and the copy an interrupted
+save left beside it are gone, and a path where nothing was stored counts as well, so a second delete succeeds too.
+A delete the file system refused fails as <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_Unavailable">Unavailable</a> or
+<a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_Unknown">Unknown</a>, and the document is still there.</p>
 </div>
-
-
-  <h2 class="section" id="properties">Properties
-</h2>
-
-
-  <a id="CodeSmile_Luny_Save_DeleteOperation_Failure_" data-uid="CodeSmile.Luny.Save.DeleteOperation.Failure*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_DeleteOperation_Failure" data-uid="CodeSmile.Luny.Save.DeleteOperation.Failure">
-  Failure
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/DeleteOperation.cs/#L46"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Why the delete failed; <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_None">None</a> after success. A file system that refuses the
-delete reports <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_Unknown">Unknown</a>.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveFailure Failure { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html">SaveFailure</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_DeleteOperation_Failure_examples">Examples</h4>
-  <pre><code class="lang-csharp">if (deleting.Failure == SaveFailure.Unknown) ShowDiskWarning();</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_Luny_Save_DeleteOperation_IsDone_" data-uid="CodeSmile.Luny.Save.DeleteOperation.IsDone*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_DeleteOperation_IsDone" data-uid="CodeSmile.Luny.Save.DeleteOperation.IsDone">
-  IsDone
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/DeleteOperation.cs/#L37"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>True once the delete has ended, successfully or not.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsDone { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">bool</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_DeleteOperation_IsDone_examples">Examples</h4>
-  <pre><code class="lang-csharp">if (deleting.IsDone) m_Deleting = null;</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_Luny_Save_DeleteOperation_Path_" data-uid="CodeSmile.Luny.Save.DeleteOperation.Path*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_DeleteOperation_Path" data-uid="CodeSmile.Luny.Save.DeleteOperation.Path">
-  Path
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/DeleteOperation.cs/#L33"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>The path the delete was given, relative to the player's data folder.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Path { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">string</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_DeleteOperation_Path_examples">Examples</h4>
-  <pre><code class="lang-csharp">Debug.Log($"deleted {deleting.Path}");</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_Luny_Save_DeleteOperation_Problem_" data-uid="CodeSmile.Luny.Save.DeleteOperation.Problem*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_DeleteOperation_Problem" data-uid="CodeSmile.Luny.Save.DeleteOperation.Problem">
-  Problem
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/DeleteOperation.cs/#L50"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>What went wrong, in the file system's own words, or null.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Problem { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">string</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_DeleteOperation_Problem_examples">Examples</h4>
-  <pre><code class="lang-csharp">Debug.LogWarning(deleting.Problem);</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_Luny_Save_DeleteOperation_Succeeded_" data-uid="CodeSmile.Luny.Save.DeleteOperation.Succeeded*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_DeleteOperation_Succeeded" data-uid="CodeSmile.Luny.Save.DeleteOperation.Succeeded">
-  Succeeded
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/DeleteOperation.cs/#L41"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>True when nothing is stored at the path any more.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Succeeded { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">bool</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_DeleteOperation_Succeeded_examples">Examples</h4>
-  <pre><code class="lang-csharp">m_Status.text = deleting.Succeeded ? "Slot cleared" : "Slot not cleared";</code></pre>
-
-
-
-
-
-
-  <h2 class="section" id="methods">Methods
-</h2>
-
-
-  <a id="CodeSmile_Luny_Save_DeleteOperation_ToString_" data-uid="CodeSmile.Luny.Save.DeleteOperation.ToString*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_DeleteOperation_ToString" data-uid="CodeSmile.Luny.Save.DeleteOperation.ToString">
-  ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/DeleteOperation.cs/#L55"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>&quot;deleted savegames/001.sav&quot;, or the failure and its problem, for a log line.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override string ToString()</code></pre>
-  </div>
-
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><span class="xref">string</span></dt>
-    <dd><p>The outcome.</p>
-</dd>
-  </dl>
-
-
-
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_DeleteOperation_ToString_examples">Examples</h4>
-  <pre><code class="lang-csharp">Debug.Log(deleting.ToString());</code></pre>
-
-
-
-
 
 
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/DeleteOperation.cs/#L22" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/DeleteOperation.cs/#L20" class="edit-link">Edit this page</a>
         </div>
 
 

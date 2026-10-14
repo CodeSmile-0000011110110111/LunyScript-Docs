@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Class SaveOperation | LunyScript API Reference ">
       
-      <meta name="description" content="One : whether it is done, and how it ended.">
+      <meta name="description" content="One  or : where it stands and how it ended.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -77,7 +77,7 @@
 
 
   <h1 id="CodeSmile_Luny_Save_SaveOperation" data-uid="CodeSmile.Luny.Save.SaveOperation" class="text-break">
-Class SaveOperation  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveOperation.cs/#L20"><i class="bi bi-code-slash"></i></a>
+Class SaveOperation  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveOperation.cs/#L22"><i class="bi bi-code-slash"></i></a>
   </h1>
 
   <div class="facts text-secondary">
@@ -85,12 +85,12 @@ Class SaveOperation  <a class="header-action link-secondary" title="View source"
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>One <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Save_System_String_CodeSmile_Luny_Save_SaveDocument_">Save(string, SaveDocument)</a>: whether it is done, and how it ended.</p>
+  <div class="markdown summary"><p>One <a class="xref" href="CodeSmile.Luny.Save.SaveSlot.html#CodeSmile_Luny_Save_SaveSlot_Save_CodeSmile_Luny_Save_SaveDocument_">Save(SaveDocument)</a> or <a class="xref" href="CodeSmile.Luny.Save.SaveGroupSlot.html#CodeSmile_Luny_Save_SaveGroupSlot_Save_CodeSmile_Luny_Save_SaveGroup_">Save(SaveGroup)</a>: where it stands and how it ended.</p>
 </div>
   <div class="markdown conceptual"></div>
 
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class SaveOperation</code></pre>
+    <pre><code class="lang-csharp hljs">public sealed class SaveOperation : SaveRequest</code></pre>
   </div>
 
 
@@ -103,255 +103,62 @@ Class SaveOperation  <a class="header-action link-secondary" title="View source"
     <dt>Inheritance</dt>
     <dd>
       <div><span class="xref">object</span></div>
+      <div><a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html">SaveRequest</a></div>
       <div><span class="xref">SaveOperation</span></div>
     </dd>
   </dl>
 
 
 
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <ul>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_Path">SaveRequest.Path</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_State">SaveRequest.State</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_IsDone">SaveRequest.IsDone</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_Succeeded">SaveRequest.Succeeded</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_Refusal">SaveRequest.Refusal</a>
+    </li>
+    <li>
+      <a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_ToString">SaveRequest.ToString()</a>
+    </li>
+    </ul>
+  </dd></dl>
 
   </details>
 
 
 
   <h2 id="CodeSmile_Luny_Save_SaveOperation_examples">Examples</h2>
-  <pre><code class="lang-csharp">var saving = m_Saves.Save("savegames/001.sav", document);
+  <pre><code class="lang-csharp">var saving = m_Slot.Save(document);
 if (saving.IsDone &amp;&amp; saving.Succeeded == false)
-    Debug.LogWarning($"Saving failed as {saving.Failure}: {saving.Problem}");</code></pre>
+    Debug.LogWarning(saving.Refusal);</code></pre>
 
 
   <h2 id="CodeSmile_Luny_Save_SaveOperation_remarks">Remarks</h2>
-  <div class="markdown level0 remarks"><p>The file storage completes a save inside the call that starts it, so <a class="xref" href="CodeSmile.Luny.Save.SaveOperation.html#CodeSmile_Luny_Save_SaveOperation_IsDone">IsDone</a> is already true when
-<a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Save_System_String_CodeSmile_Luny_Save_SaveDocument_">Save(string, SaveDocument)</a> returns. Code that waits for <a class="xref" href="CodeSmile.Luny.Save.SaveOperation.html#CodeSmile_Luny_Save_SaveOperation_IsDone">IsDone</a> before it reads the outcome
-keeps working with a storage that completes later. A failed save leaves the previously stored copy as it was.</p>
+  <div class="markdown level0 remarks"><p>A save copies the document's values when it is accepted, so changing the document afterwards changes nothing it
+stores. On an idle path it has ended when the call returns; behind a request that waits, such as a script's save of
+the same file in the next frame, it is <a class="xref" href="CodeSmile.Luny.Save.SaveState.html#CodeSmile_Luny_Save_SaveState_Pending">Pending</a> and runs by itself once that request ended.
+A save writes a complete copy beside the file, flushes it and replaces the file in one rename, so a failed save
+leaves the previous copy as it was.</p>
 </div>
-
-
-  <h2 class="section" id="properties">Properties
-</h2>
-
-
-  <a id="CodeSmile_Luny_Save_SaveOperation_Failure_" data-uid="CodeSmile.Luny.Save.SaveOperation.Failure*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_SaveOperation_Failure" data-uid="CodeSmile.Luny.Save.SaveOperation.Failure">
-  Failure
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveOperation.cs/#L44"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>Why the save failed; <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_None">None</a> while pending and after success. A file system
-that refuses the write reports <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_Unknown">Unknown</a>.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveFailure Failure { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html">SaveFailure</a></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_SaveOperation_Failure_examples">Examples</h4>
-  <pre><code class="lang-csharp">if (saving.Failure == SaveFailure.Unknown) ShowDiskWarning();</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_Luny_Save_SaveOperation_IsDone_" data-uid="CodeSmile.Luny.Save.SaveOperation.IsDone*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_SaveOperation_IsDone" data-uid="CodeSmile.Luny.Save.SaveOperation.IsDone">
-  IsDone
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveOperation.cs/#L35"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>True once the save has ended, successfully or not.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsDone { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">bool</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_SaveOperation_IsDone_examples">Examples</h4>
-  <pre><code class="lang-csharp">if (saving.IsDone) m_Saving = null;</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_Luny_Save_SaveOperation_Path_" data-uid="CodeSmile.Luny.Save.SaveOperation.Path*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_SaveOperation_Path" data-uid="CodeSmile.Luny.Save.SaveOperation.Path">
-  Path
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveOperation.cs/#L31"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>The path the save was given, relative to the player's data folder.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Path { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">string</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_SaveOperation_Path_examples">Examples</h4>
-  <pre><code class="lang-csharp">Debug.Log($"saved {saving.Path}");</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_Luny_Save_SaveOperation_Problem_" data-uid="CodeSmile.Luny.Save.SaveOperation.Problem*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_SaveOperation_Problem" data-uid="CodeSmile.Luny.Save.SaveOperation.Problem">
-  Problem
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveOperation.cs/#L48"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>What went wrong, in the file system's own words, or null.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string Problem { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">string</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_SaveOperation_Problem_examples">Examples</h4>
-  <pre><code class="lang-csharp">Debug.LogWarning(saving.Problem);</code></pre>
-
-
-
-
-
-
-  <a id="CodeSmile_Luny_Save_SaveOperation_Succeeded_" data-uid="CodeSmile.Luny.Save.SaveOperation.Succeeded*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_SaveOperation_Succeeded" data-uid="CodeSmile.Luny.Save.SaveOperation.Succeeded">
-  Succeeded
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveOperation.cs/#L39"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>True when the document is stored.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool Succeeded { get; }</code></pre>
-  </div>
-
-
-
-
-
-  <h4 class="section">Property Value</h4>
-  <dl class="parameters">
-    <dt><span class="xref">bool</span></dt>
-    <dd></dd>
-  </dl>
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_SaveOperation_Succeeded_examples">Examples</h4>
-  <pre><code class="lang-csharp">m_Status.text = saving.Succeeded ? "Saved" : "Not saved";</code></pre>
-
-
-
-
-
-
-  <h2 class="section" id="methods">Methods
-</h2>
-
-
-  <a id="CodeSmile_Luny_Save_SaveOperation_ToString_" data-uid="CodeSmile.Luny.Save.SaveOperation.ToString*"></a>
-
-  <h3 id="CodeSmile_Luny_Save_SaveOperation_ToString" data-uid="CodeSmile.Luny.Save.SaveOperation.ToString">
-  ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveOperation.cs/#L53"><i class="bi bi-code-slash"></i></a>
-  </h3>
-
-  <div class="markdown level1 summary"><p>&quot;saved savegames/001.sav&quot;, or the failure and its problem, for a log line.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public override string ToString()</code></pre>
-  </div>
-
-
-  <h4 class="section">Returns</h4>
-  <dl class="parameters">
-    <dt><span class="xref">string</span></dt>
-    <dd><p>The outcome.</p>
-</dd>
-  </dl>
-
-
-
-
-
-
-  <h4 class="section" id="CodeSmile_Luny_Save_SaveOperation_ToString_examples">Examples</h4>
-  <pre><code class="lang-csharp">Debug.Log(saving.ToString());</code></pre>
-
-
-
-
 
 
 
 </article>
 
         <div class="contribution d-print-none">
-          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveOperation.cs/#L20" class="edit-link">Edit this page</a>
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveOperation.cs/#L22" class="edit-link">Edit this page</a>
         </div>
 
 

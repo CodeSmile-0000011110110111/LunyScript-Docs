@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Enum SaveFailure | LunyScript API Reference ">
       
-      <meta name="description" content="Why a ,  or  failed.  while the operation is pending and after it succeeded.">
+      <meta name="description" content="Why a LunySave request was refused: the code of its .  while the request is pending and after it succeeded.">
       <link rel="icon" href="../favicon.ico">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css?v=1">
@@ -86,8 +86,8 @@ Enum SaveFailure  <a class="header-action link-secondary" title="View source" hr
   <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
   </div>
 
-  <div class="markdown summary"><p>Why a <a class="xref" href="CodeSmile.Luny.Save.SaveOperation.html">SaveOperation</a>, <a class="xref" href="CodeSmile.Luny.Save.LoadOperation.html">LoadOperation</a> or <a class="xref" href="CodeSmile.Luny.Save.DeleteOperation.html">DeleteOperation</a> failed.
-<a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_None">None</a> while the operation is pending and after it succeeded.</p>
+  <div class="markdown summary"><p>Why a LunySave request was refused: the code of its <a class="xref" href="CodeSmile.Luny.Save.SaveRefusal.html">SaveRefusal</a>. <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_None">None</a> while the
+request is pending and after it succeeded.</p>
 </div>
   <div class="markdown conceptual"></div>
 
@@ -111,35 +111,57 @@ Enum SaveFailure  <a class="header-action link-secondary" title="View source" hr
   <h2 id="fields">Fields
 </h2>
   <dl class="parameters">
+    <dt id="CodeSmile_Luny_Save_SaveFailure_Canceled"><code>Canceled = 8</code></dt>
+  
+  <dd><p>The owner of the request was destroyed while the request waited, so it ended without running.</p>
+</dd>
+    <dt id="CodeSmile_Luny_Save_SaveFailure_Ended"><code>Ended = 7</code></dt>
+  
+  <dd><p>The owner of the slot was destroyed before the request was made, so the slot no longer saves or loads.
+Acquire the path again with a living owner.</p>
+</dd>
+    <dt id="CodeSmile_Luny_Save_SaveFailure_Incomplete"><code>Incomplete = 9</code></dt>
+  
+  <dd><p>A group load found the archive without a member its schema requires.</p>
+</dd>
     <dt id="CodeSmile_Luny_Save_SaveFailure_None"><code>None = 0</code></dt>
   
   <dd><p>Pending, or succeeded.</p>
 </dd>
     <dt id="CodeSmile_Luny_Save_SaveFailure_NotFound"><code>NotFound = 1</code></dt>
   
-  <dd><p>No document is stored at the path: the first load of a new game.</p>
+  <dd><p>No document or group is stored at the path: the first load of a new game.</p>
+</dd>
+    <dt id="CodeSmile_Luny_Save_SaveFailure_Timeout"><code>Timeout = 5</code></dt>
+  
+  <dd><p>A packaged load did not end within its 30 seconds of real time.</p>
+</dd>
+    <dt id="CodeSmile_Luny_Save_SaveFailure_Unavailable"><code>Unavailable = 6</code></dt>
+  
+  <dd><p>The location cannot be used: a folder on the path is a symbolic link or another reparse point, or the
+file system denies access to it. The stored copy, if any, is unchanged.</p>
 </dd>
     <dt id="CodeSmile_Luny_Save_SaveFailure_Unknown"><code>Unknown = 4</code></dt>
   
   <dd><p>The file system failed in a way LunySave cannot classify, such as a full disk, a file another program
-holds open or a folder in a document's place. <a class="xref" href="CodeSmile.Luny.Save.SaveOperation.html#CodeSmile_Luny_Save_SaveOperation_Problem">Problem</a>,
-<a class="xref" href="CodeSmile.Luny.Save.LoadOperation.html#CodeSmile_Luny_Save_LoadOperation_Problem">Problem</a> and <a class="xref" href="CodeSmile.Luny.Save.DeleteOperation.html#CodeSmile_Luny_Save_DeleteOperation_Problem">Problem</a> carry the system's own
+holds open or a folder in a document's place. <a class="xref" href="CodeSmile.Luny.Save.SaveRefusal.html#CodeSmile_Luny_Save_SaveRefusal_Message">Message</a> carries the system's own
 message.</p>
 </dd>
     <dt id="CodeSmile_Luny_Save_SaveFailure_Unreadable"><code>Unreadable = 2</code></dt>
   
-  <dd><p>The stored bytes are not a readable document: not UTF-8, not JSON, or not in the document
-layout.</p>
+  <dd><p>The stored bytes are not a readable document or group: not UTF-8, not JSON, not the document layout,
+or an archive whose members do not match its manifest.</p>
 </dd>
     <dt id="CodeSmile_Luny_Save_SaveFailure_Unsupported"><code>Unsupported = 3</code></dt>
   
-  <dd><p>The stored version is newer than the schema's, no migration step starts from the stored version, a
-step rejected the document or threw, or the migrated document lacks a declared field.</p>
+  <dd><p>The stored copy is of another schema, of a newer version than the schema's, of format 1 when the schema
+does not read format 1, no migration step starts from the stored version, a step rejected the document or
+threw, or the migrated document lacks a declared field.</p>
 </dd>
   </dl>
 
   <h2 id="CodeSmile_Luny_Save_SaveFailure_examples">Examples</h2>
-  <pre><code class="lang-csharp">if (loading.Failure == SaveFailure.NotFound) StartNewGame();</code></pre>
+  <pre><code class="lang-csharp">if (loading.Refusal.Code == SaveFailure.NotFound) StartNewGame();</code></pre>
 
 
 

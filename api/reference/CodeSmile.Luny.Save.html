@@ -99,7 +99,8 @@ the paths it skipped.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.Luny.Save.DeleteOperation.html">DeleteOperation</a></dt>
-      <dd><p>One <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Delete_System_String_">Delete(string)</a>: whether it is done, and how it ended.</p>
+      <dd><p>One <a class="xref" href="CodeSmile.Luny.Save.SaveSlot.html#CodeSmile_Luny_Save_SaveSlot_Delete">Delete()</a> or <a class="xref" href="CodeSmile.Luny.Save.SaveGroupSlot.html#CodeSmile_Luny_Save_SaveGroupSlot_Delete">Delete()</a>: whether nothing is stored at the path
+afterwards.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -108,17 +109,30 @@ the paths it skipped.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.ExistsOperation.html">ExistsOperation</a></dt>
+      <dd><p>One <a class="xref" href="CodeSmile.Luny.Save.SaveSlot.html#CodeSmile_Luny_Save_SaveSlot_Exists">Exists()</a> or <a class="xref" href="CodeSmile.Luny.Save.SaveGroupSlot.html#CodeSmile_Luny_Save_SaveGroupSlot_Exists">Exists()</a>: whether a load would find something at
+the path, without reading it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.GroupLoadOperation.html">GroupLoadOperation</a></dt>
+      <dd><p>One <a class="xref" href="CodeSmile.Luny.Save.SaveGroupSlot.html#CodeSmile_Luny_Save_SaveGroupSlot_Load">Load()</a>: where it stands, how it ended, and the group it read.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.Luny.Save.LoadOperation.html">LoadOperation</a></dt>
-      <dd><p>One <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Load_System_String_CodeSmile_Luny_Save_SaveSchema_">Load(string, SaveSchema)</a> or <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_LoadStreamingAsset_System_String_CodeSmile_Luny_Save_SaveSchema_">LoadStreamingAsset(string, SaveSchema)</a>: whether it is done, how it
-ended, the document it read, and which declared fields the stored copy could not give.</p>
+      <dd><p>One <a class="xref" href="CodeSmile.Luny.Save.SaveSlot.html#CodeSmile_Luny_Save_SaveSlot_Load">Load()</a> or <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_LoadStreamingAsset_UnityEngine_MonoBehaviour_System_String_CodeSmile_Luny_Save_SaveSchema_">LoadStreamingAsset(MonoBehaviour, string, SaveSchema)</a>: where it stands, how it ended, the
+document it read, and which declared fields the stored copy could not give.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.Luny.Save.LocalSave.html">LocalSave</a></dt>
-      <dd><p>Saves and loads typed documents on this device, for plain C#: <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Save_System_String_CodeSmile_Luny_Save_SaveDocument_">Save(string, SaveDocument)</a>, <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Load_System_String_CodeSmile_Luny_Save_SaveSchema_">Load(string, SaveSchema)</a>,
-<a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Exists_System_String_">Exists(string)</a> and <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Delete_System_String_">Delete(string)</a> in the player's writable data folder,
-<a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_LoadStreamingAsset_System_String_CodeSmile_Luny_Save_SaveSchema_">LoadStreamingAsset(string, SaveSchema)</a> from the read-only StreamingAssets folder the build ships. Every path is
-relative to the folder its call uses.</p>
+      <dd><p>Saves and loads typed documents on this device, for plain C#. <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Acquire_UnityEngine_MonoBehaviour_System_String_CodeSmile_Luny_Save_SaveSchema_">Acquire(MonoBehaviour, string, SaveSchema)</a> binds a path in the player's
+writable data folder, a <a class="xref" href="CodeSmile.Luny.Save.SaveSchema.html">SaveSchema</a> and the <code>MonoBehaviour</code> that owns them into a
+<a class="xref" href="CodeSmile.Luny.Save.SaveSlot.html">SaveSlot</a>, which saves, loads, tests and deletes that one document; <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_AcquireGroup_UnityEngine_MonoBehaviour_System_String_CodeSmile_Luny_Save_SaveGroupSchema_">AcquireGroup(MonoBehaviour, string, SaveGroupSchema)</a> does
+the same for a <a class="xref" href="CodeSmile.Luny.Save.SaveGroupSlot.html">SaveGroupSlot</a>, several documents saved as one archive. <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_LoadStreamingAsset_UnityEngine_MonoBehaviour_System_String_CodeSmile_Luny_Save_SaveSchema_">LoadStreamingAsset(MonoBehaviour, string, SaveSchema)</a>
+reads a document the build ships, <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_List_CodeSmile_Luny_Save_SaveCollection_">List(SaveCollection)</a> lists the saves of a folder, and <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Journal">Journal</a> keeps
+the last requests for a support report.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -143,15 +157,98 @@ and what to change.</p>
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveCollection.html">SaveCollection</a></dt>
+      <dd><p>A folder of the player's data folder whose saves <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_List_CodeSmile_Luny_Save_SaveCollection_">List(SaveCollection)</a> lists, and the kinds of save stored
+there, each recognized by its file extension: documents of a <a class="xref" href="CodeSmile.Luny.Save.SaveSchema.html">SaveSchema</a> and groups of a
+<a class="xref" href="CodeSmile.Luny.Save.SaveGroupSchema.html">SaveGroupSchema</a>. Each method returns a new collection and leaves this one as it was.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.Luny.Save.SaveDocument.html">SaveDocument</a></dt>
-      <dd><p>The values of one document of a <a class="xref" href="CodeSmile.Luny.Save.SaveSchema.html">SaveSchema</a>: what <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Save_System_String_CodeSmile_Luny_Save_SaveDocument_">Save(string, SaveDocument)</a> writes and what a
+      <dd><p>The values of one document of a <a class="xref" href="CodeSmile.Luny.Save.SaveSchema.html">SaveSchema</a>: what <a class="xref" href="CodeSmile.Luny.Save.SaveSlot.html#CodeSmile_Luny_Save_SaveSlot_Save_CodeSmile_Luny_Save_SaveDocument_">Save(SaveDocument)</a> writes and what a
 successful <a class="xref" href="CodeSmile.Luny.Save.LoadOperation.html">LoadOperation</a> returns. Each declared field either holds a value or holds none.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveField.html">SaveField</a></dt>
+      <dd><p>One named field a <a class="xref" href="CodeSmile.Luny.Save.SaveSchema.html">SaveSchema</a> or <a class="xref" href="CodeSmile.Luny.Save.SaveRecordSchema.html">SaveRecordSchema</a> declares, with the
+<a class="xref" href="CodeSmile.Luny.Save.SaveKind.html">SaveKind</a> of its value. Declare each field once, in a <code>static readonly</code> field, and pass that
+object both to the schema and to every <a class="xref" href="CodeSmile.Luny.Save.SaveDocument.html#CodeSmile_Luny_Save_SaveDocument_Set__1_CodeSmile_Luny_Save_SaveField___0____0_">Set&lt;T&gt;(SaveField&lt;T&gt;, T)</a> and
+<a class="xref" href="CodeSmile.Luny.Save.SaveDocument.html#CodeSmile_Luny_Save_SaveDocument_TryGet__1_CodeSmile_Luny_Save_SaveField___0____0__">TryGet&lt;T&gt;(SaveField&lt;T&gt;, out T)</a>, so the compiler checks the value's type where it is written.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveFieldList.html">SaveFieldList</a></dt>
+      <dd><p>A list inside a stored document while a <a class="xref" href="CodeSmile.Luny.Save.SaveMigration.html">SaveMigration</a> step converts it: the values it holds by
+index, read by the kind the step asks for, and changed in place. <a class="xref" href="CodeSmile.Luny.Save.SaveFields.html#CodeSmile_Luny_Save_SaveFields_TryGetList_System_String_CodeSmile_Luny_Save_SaveFieldList__">TryGetList(string, out SaveFieldList)</a> and
+<a class="xref" href="CodeSmile.Luny.Save.SaveFields.html#CodeSmile_Luny_Save_SaveFields_SetList_System_String_">SetList(string)</a> return one.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveField-1.html">SaveField&lt;T&gt;</a></dt>
+      <dd><p>A <a class="xref" href="CodeSmile.Luny.Save.SaveField.html">SaveField</a> whose value is of the C# type <code class="typeparamref">T</code>: what
+<a class="xref" href="CodeSmile.Luny.Save.SaveDocument.html#CodeSmile_Luny_Save_SaveDocument_Set__1_CodeSmile_Luny_Save_SaveField___0____0_">Set&lt;T&gt;(SaveField&lt;T&gt;, T)</a> takes and <a class="xref" href="CodeSmile.Luny.Save.SaveDocument.html#CodeSmile_Luny_Save_SaveDocument_TryGet__1_CodeSmile_Luny_Save_SaveField___0____0__">TryGet&lt;T&gt;(SaveField&lt;T&gt;, out T)</a> returns for it.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.Luny.Save.SaveFields.html">SaveFields</a></dt>
       <dd><p>The stored fields of one document while a <a class="xref" href="CodeSmile.Luny.Save.SaveMigration.html">SaveMigration</a> step converts them. Reads and writes a
 copy: nothing here reaches the stored file or a document a caller holds.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveGroup.html">SaveGroup</a></dt>
+      <dd><p>The documents of one group of a <a class="xref" href="CodeSmile.Luny.Save.SaveGroupSchema.html">SaveGroupSchema</a>: one document per single role, at most one per
+optional role, and any number per keyed role, each under its key. <a class="xref" href="CodeSmile.Luny.Save.SaveGroupSlot.html#CodeSmile_Luny_Save_SaveGroupSlot_Save_CodeSmile_Luny_Save_SaveGroup_">Save(SaveGroup)</a> stores them as
+one archive; a successful <a class="xref" href="CodeSmile.Luny.Save.GroupLoadOperation.html">GroupLoadOperation</a> returns one.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveGroupSchema.html">SaveGroupSchema</a></dt>
+      <dd><p>What one group of documents holds: its family and its roles. A <a class="xref" href="CodeSmile.Luny.Save.SaveGroupSlot.html">SaveGroupSlot</a> saves a
+<a class="xref" href="CodeSmile.Luny.Save.SaveGroup.html">SaveGroup</a> of this schema as one archive file, so every document of the group is replaced together or
+none is, and a load reads them all or fails.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveGroupSlot.html">SaveGroupSlot</a></dt>
+      <dd><p>One acquired group: a path in the player's data folder where a <a class="xref" href="CodeSmile.Luny.Save.SaveGroup.html">SaveGroup</a> of one
+<a class="xref" href="CodeSmile.Luny.Save.SaveGroupSchema.html">SaveGroupSchema</a> is stored as one archive, and the <code>MonoBehaviour</code> that owns the acquisition.
+<a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_AcquireGroup_UnityEngine_MonoBehaviour_System_String_CodeSmile_Luny_Save_SaveGroupSchema_">AcquireGroup(MonoBehaviour, string, SaveGroupSchema)</a> makes it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveJournal.html">SaveJournal</a></dt>
+      <dd><p>The last requests LunySave ended in this process, newest last, without the values they saved or loaded: each
+request's place in the order of accepted requests, its kind, path, owner, schema, stored version, how it ended and
+the fields a load omitted. A support report reads it to explain which owner saved what and in which order after
+the callers let go of their requests.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveKind.html">SaveKind</a></dt>
+      <dd><p>What a stored value is: a number, a flag, a text, a Unity value, an exact 64-bit whole number, or a record, list,
+map or optional value built from those. A <a class="xref" href="CodeSmile.Luny.Save.SaveField.html">SaveField</a> pairs a name with a kind; a list, map or
+optional kind names the kind of its values. <a class="xref" href="CodeSmile.Luny.Save.SaveKind-1.html">SaveKind&lt;T&gt;</a> carries the C# type a set takes and a read
+returns.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveKind-1.html">SaveKind&lt;T&gt;</a></dt>
+      <dd><p>A <a class="xref" href="CodeSmile.Luny.Save.SaveKind.html">SaveKind</a> whose values are of the C# type <code class="typeparamref">T</code>: what
+<a class="xref" href="CodeSmile.Luny.Save.SaveDocument.html#CodeSmile_Luny_Save_SaveDocument_Set__1_CodeSmile_Luny_Save_SaveField___0____0_">Set&lt;T&gt;(SaveField&lt;T&gt;, T)</a> takes and <a class="xref" href="CodeSmile.Luny.Save.SaveDocument.html#CodeSmile_Luny_Save_SaveDocument_TryGet__1_CodeSmile_Luny_Save_SaveField___0____0__">TryGet&lt;T&gt;(SaveField&lt;T&gt;, out T)</a> returns for a field of it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveListEntry.html">SaveListEntry</a></dt>
+      <dd><p>One save a <a class="xref" href="CodeSmile.Luny.Save.SaveListing.html">SaveListing</a> found: its path and name, whether it is a document or a group, and the
+metadata it holds, or why that could not be read.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveListing.html">SaveListing</a></dt>
+      <dd><p>One <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_List_CodeSmile_Luny_Save_SaveCollection_">List(SaveCollection)</a>: the saves stored directly in a <a class="xref" href="CodeSmile.Luny.Save.SaveCollection.html">SaveCollection</a>'s folder, each with
+the metadata it holds or why that could not be read.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -162,14 +259,55 @@ copy: nothing here reaches the stored file or a document a caller holds.</p>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.Luny.Save.SaveOperation.html">SaveOperation</a></dt>
-      <dd><p>One <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Save_System_String_CodeSmile_Luny_Save_SaveDocument_">Save(string, SaveDocument)</a>: whether it is done, and how it ended.</p>
+      <dd><p>One <a class="xref" href="CodeSmile.Luny.Save.SaveSlot.html#CodeSmile_Luny_Save_SaveSlot_Save_CodeSmile_Luny_Save_SaveDocument_">Save(SaveDocument)</a> or <a class="xref" href="CodeSmile.Luny.Save.SaveGroupSlot.html#CodeSmile_Luny_Save_SaveGroupSlot_Save_CodeSmile_Luny_Save_SaveGroup_">Save(SaveGroup)</a>: where it stands and how it ended.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveOptional.html">SaveOptional</a></dt>
+      <dd><p>Makes a <a class="xref" href="CodeSmile.Luny.Save.SaveOptional-1.html">SaveOptional&lt;T&gt;</a> that holds a value, with its type taken from the value.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveRecord.html">SaveRecord</a></dt>
+      <dd><p>The values of one record of a <a class="xref" href="CodeSmile.Luny.Save.SaveRecordSchema.html">SaveRecordSchema</a>: what a record field, or a list or map of records,
+holds. Set every declared field before the document holding it is saved.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveRecordSchema.html">SaveRecordSchema</a></dt>
+      <dd><p>What one record holds: a name for messages and the fields every record of it holds. A record has no version of
+its own; the version of the document that holds it covers it. A <a class="xref" href="CodeSmile.Luny.Save.SaveKind.html#CodeSmile_Luny_Save_SaveKind_Record_CodeSmile_Luny_Save_SaveRecordSchema_">Record(SaveRecordSchema)</a> kind, a
+<a class="xref" href="CodeSmile.Luny.Save.SaveField.html#CodeSmile_Luny_Save_SaveField_Record_System_String_CodeSmile_Luny_Save_SaveRecordSchema_">Record(string, SaveRecordSchema)</a> field and a list or map of records use it.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html">SaveRequest</a></dt>
+      <dd><p>What every LunySave request has: the path it named, where it stands (<a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_State">State</a>), and why it did not
+succeed (<a class="xref" href="CodeSmile.Luny.Save.SaveRequest.html#CodeSmile_Luny_Save_SaveRequest_Refusal">Refusal</a>). <a class="xref" href="CodeSmile.Luny.Save.SaveOperation.html">SaveOperation</a>, <a class="xref" href="CodeSmile.Luny.Save.LoadOperation.html">LoadOperation</a>,
+<a class="xref" href="CodeSmile.Luny.Save.ExistsOperation.html">ExistsOperation</a>, <a class="xref" href="CodeSmile.Luny.Save.DeleteOperation.html">DeleteOperation</a>, <a class="xref" href="CodeSmile.Luny.Save.GroupLoadOperation.html">GroupLoadOperation</a> and
+<a class="xref" href="CodeSmile.Luny.Save.SaveListing.html">SaveListing</a> are requests.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveRole.html">SaveRole</a></dt>
+      <dd><p>One role of a <a class="xref" href="CodeSmile.Luny.Save.SaveGroupSchema.html">SaveGroupSchema</a>: a name, the <a class="xref" href="CodeSmile.Luny.Save.SaveSchema.html">SaveSchema</a> of its documents, and how many
+it holds. Declare each role once, in a <code>static readonly</code> field, and pass that object to the group schema and
+to every <a class="xref" href="CodeSmile.Luny.Save.SaveGroup.html#CodeSmile_Luny_Save_SaveGroup_Set_CodeSmile_Luny_Save_SaveRole_CodeSmile_Luny_Save_SaveDocument_">Set(SaveRole, SaveDocument)</a> and <a class="xref" href="CodeSmile.Luny.Save.SaveGroup.html#CodeSmile_Luny_Save_SaveGroup_TryGet_CodeSmile_Luny_Save_SaveRole_CodeSmile_Luny_Save_SaveDocument__">TryGet(SaveRole, out SaveDocument)</a>.</p>
 </dd>
     </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.Luny.Save.SaveSchema.html">SaveSchema</a></dt>
-      <dd><p>What one kind of document holds: its version, its fields by name and kind, and the migration steps that convert
-an older stored version. Each method returns a new schema and leaves this one as it was, so a schema kept in a
-<code>static readonly</code> field never changes after it is built.</p>
+      <dd><p>What one kind of document holds: its schema family, its version, its fields, the migration steps that convert an
+older stored version, and whether it reads documents of format 1, which name no family. Each method returns a new
+schema and leaves this one as it was, so a schema kept in a <code>static readonly</code> field never changes after it is
+built.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveSlot.html">SaveSlot</a></dt>
+      <dd><p>One acquired document: a path in the player's data folder, the <a class="xref" href="CodeSmile.Luny.Save.SaveSchema.html">SaveSchema</a> every document saved
+there follows, and the <code>MonoBehaviour</code> that owns the acquisition. <a class="xref" href="CodeSmile.Luny.Save.LocalSave.html#CodeSmile_Luny_Save_LocalSave_Acquire_UnityEngine_MonoBehaviour_System_String_CodeSmile_Luny_Save_SaveSchema_">Acquire(MonoBehaviour, string, SaveSchema)</a> makes it;
+every consumer of the document is handed this one slot.</p>
 </dd>
     </dl>
     <h3 id="structs">
@@ -188,9 +326,26 @@ the project's content, how many files and bytes it holds, and why it was not wri
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveJournalEntry.html">SaveJournalEntry</a></dt>
+      <dd><p>One ended request in the <a class="xref" href="CodeSmile.Luny.Save.SaveJournal.html">SaveJournal</a>: metadata only, never a saved value.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.Luny.Save.SaveMigrationResult.html">SaveMigrationResult</a></dt>
       <dd><p>What one <a class="xref" href="CodeSmile.Luny.Save.SaveMigration.html">SaveMigration</a> step returns: the document was converted, or it was rejected with a
 reason.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveOptional-1.html">SaveOptional&lt;T&gt;</a></dt>
+      <dd><p>A value of an optional field, element or record member: a value, or none, which is stored as JSON <code>null</code>.
+The default value holds none. <a class="xref" href="CodeSmile.Luny.Save.SaveOptional.html#CodeSmile_Luny_Save_SaveOptional_Of__1___0_">Of&lt;T&gt;(T)</a> makes one that holds a value.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveRefusal.html">SaveRefusal</a></dt>
+      <dd><p>Why a LunySave request did not succeed: a <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html">SaveFailure</a> code, a sentence in the system's or
+LunySave's words, and the relative path the request named. The default value is no refusal.</p>
 </dd>
     </dl>
     <h3 id="enums">
@@ -198,8 +353,19 @@ Enums
 </h3>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html">SaveFailure</a></dt>
-      <dd><p>Why a <a class="xref" href="CodeSmile.Luny.Save.SaveOperation.html">SaveOperation</a>, <a class="xref" href="CodeSmile.Luny.Save.LoadOperation.html">LoadOperation</a> or <a class="xref" href="CodeSmile.Luny.Save.DeleteOperation.html">DeleteOperation</a> failed.
-<a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_None">None</a> while the operation is pending and after it succeeded.</p>
+      <dd><p>Why a LunySave request was refused: the code of its <a class="xref" href="CodeSmile.Luny.Save.SaveRefusal.html">SaveRefusal</a>. <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_None">None</a> while the
+request is pending and after it succeeded.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveRoleKind.html">SaveRoleKind</a></dt>
+      <dd><p>How many documents a <a class="xref" href="CodeSmile.Luny.Save.SaveRole.html">SaveRole</a> holds in a group.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveState.html">SaveState</a></dt>
+      <dd><p>Where a LunySave request stands. A request is <a class="xref" href="CodeSmile.Luny.Save.SaveState.html#CodeSmile_Luny_Save_SaveState_Pending">Pending</a> until it ends, and then stays in the
+state it ended in.</p>
 </dd>
     </dl>
 
