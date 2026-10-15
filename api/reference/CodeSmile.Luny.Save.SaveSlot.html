@@ -270,7 +270,7 @@ public void SaveNow()
 
   <h3 id="CodeSmile_Luny_Save_SaveSlot_Delete" data-uid="CodeSmile.Luny.Save.SaveSlot.Delete">
   Delete()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSlot.cs/#L121"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSlot.cs/#L136"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Removes the document stored at the slot's path, and the copy an interrupted save left beside it.</p>
@@ -307,7 +307,7 @@ nothing was stored.</p>
 
   <h3 id="CodeSmile_Luny_Save_SaveSlot_Exists" data-uid="CodeSmile.Luny.Save.SaveSlot.Exists">
   Exists()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSlot.cs/#L109"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSlot.cs/#L124"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether a document is stored at the slot's path, without reading it.</p>
@@ -344,7 +344,7 @@ access.</p>
 
   <h3 id="CodeSmile_Luny_Save_SaveSlot_Load" data-uid="CodeSmile.Luny.Save.SaveSlot.Load">
   Load()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSlot.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSlot.cs/#L112"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Reads the document stored at the slot's path.</p>
@@ -381,11 +381,12 @@ access.</p>
 
   <h3 id="CodeSmile_Luny_Save_SaveSlot_Save_CodeSmile_Luny_Save_SaveDocument_" data-uid="CodeSmile.Luny.Save.SaveSlot.Save(CodeSmile.Luny.Save.SaveDocument)">
   Save(SaveDocument)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSlot.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSlot.cs/#L79"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>Stores <code class="paramref">document</code> at the slot's path, replacing what is stored there. The values are
-copied now.</p>
+  <div class="markdown level1 summary"><p>Stores <code class="paramref">document</code> at the slot's path as plain JSON. The values are copied now. A path
+that already holds a compressed document fails as <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_Unstated">Unstated</a> and is left as it was;
+<a class="xref" href="CodeSmile.Luny.Save.SaveSlot.html#CodeSmile_Luny_Save_SaveSlot_Save_CodeSmile_Luny_Save_SaveDocument_CodeSmile_Luny_Save_SaveCompressionPolicy_">Save(SaveDocument, SaveCompressionPolicy)</a> states the policy that replaces it.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -437,11 +438,78 @@ value.</p>
 
 
 
+  <a id="CodeSmile_Luny_Save_SaveSlot_Save_" data-uid="CodeSmile.Luny.Save.SaveSlot.Save*"></a>
+
+  <h3 id="CodeSmile_Luny_Save_SaveSlot_Save_CodeSmile_Luny_Save_SaveDocument_CodeSmile_Luny_Save_SaveCompressionPolicy_" data-uid="CodeSmile.Luny.Save.SaveSlot.Save(CodeSmile.Luny.Save.SaveDocument,CodeSmile.Luny.Save.SaveCompressionPolicy)">
+  Save(SaveDocument, SaveCompressionPolicy)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSlot.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Stores <code class="paramref">document</code> in the representation <code class="paramref">compression</code> states, replacing
+plain JSON or a compressed document. An unstated policy is the same call as <a class="xref" href="CodeSmile.Luny.Save.SaveSlot.html#CodeSmile_Luny_Save_SaveSlot_Save_CodeSmile_Luny_Save_SaveDocument_">Save(SaveDocument)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public SaveOperation Save(SaveDocument document, SaveCompressionPolicy compression)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.Luny.Save.SaveDocument.html">SaveDocument</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>document</code></dt></td>
+    <td style="width: 99%"><dd><p>A document of the slot's schema whose every field holds a value.</p>
+</dd></td>
+  </tr>
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.Luny.Save.SaveCompressionPolicy.html">SaveCompressionPolicy</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>compression</code></dt></td>
+    <td style="width: 99%"><dd><p><a class="xref" href="CodeSmile.Luny.Save.SaveCompressionPolicy.html#CodeSmile_Luny_Save_SaveCompressionPolicy_Uncompressed">Uncompressed</a> or
+<a class="xref" href="CodeSmile.Luny.Save.SaveCompressionPolicy.html#CodeSmile_Luny_Save_SaveCompressionPolicy_Compressed">Compressed</a>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Save.SaveOperation.html">SaveOperation</a></dt>
+    <dd><p>The save; ended when this returns, unless an earlier request for the path still waits.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Save_SaveSlot_Save_CodeSmile_Luny_Save_SaveDocument_CodeSmile_Luny_Save_SaveCompressionPolicy__examples">Examples</h4>
+  <pre><code class="lang-csharp">var saving = m_Slot.Save(document, SaveCompressionPolicy.Compressed);</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Save.LunySaveException.html">LunySaveException</a></dt>
+    <dd><p>The document is null, of another schema, or a declared field holds no
+value.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_Luny_Save_SaveSlot_ToString_" data-uid="CodeSmile.Luny.Save.SaveSlot.ToString*"></a>
 
   <h3 id="CodeSmile_Luny_Save_SaveSlot_ToString" data-uid="CodeSmile.Luny.Save.SaveSlot.ToString">
   ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSlot.cs/#L132"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Assets/CodeSmile/LunySave/Runtime/SaveSlot.cs/#L147"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>&quot;savegames/slot1.sav (demo.progress version 2) of SlotMenu on Menu&quot;, for a log line.</p>

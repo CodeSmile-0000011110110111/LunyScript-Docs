@@ -85,9 +85,11 @@ Classes
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.Luny.Save.ContentFiles.html">ContentFiles</a></dt>
       <dd><p>A game's authored content files, in two named places LunySave chooses: the project's <code>Luny</code> folder beside
-<code>Assets</code>, which the Editor reads and writes, and <code>StreamingAssets/GameData.luny</code>, the uncompressed
-archive of that folder a player reads. Every path is relative to the <code>Luny</code> folder, such as
-&quot;Encounter/room-breach.json&quot;.</p>
+<code>Assets</code>, which the Editor reads and writes, and <code>StreamingAssets/GameData.luny</code>, the archive of
+that folder a player reads. Every path is relative to the <code>Luny</code> folder, such as
+&quot;Encounter/room-breach.json&quot;. The archive stores each entry unless
+<code>ProjectSettings/LunyGameDataArchive.txt</code> says Deflate. The JSON files in the <code>Luny</code> folder stay as
+they were written.</p>
 </dd>
     </dl>
     <dl class="jumplist">
@@ -326,6 +328,12 @@ the project's content, how many files and bytes it holds, and why it was not wri
 </dd>
     </dl>
     <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveCompressionPolicy.html">SaveCompressionPolicy</a></dt>
+      <dd><p>Whether a save states how to store its document. A default value states nothing. <a class="xref" href="CodeSmile.Luny.Save.SaveCompressionPolicy.html#CodeSmile_Luny_Save_SaveCompressionPolicy_Uncompressed">Uncompressed</a> and
+<a class="xref" href="CodeSmile.Luny.Save.SaveCompressionPolicy.html#CodeSmile_Luny_Save_SaveCompressionPolicy_Compressed">Compressed</a> state the two representations this version writes.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.Luny.Save.SaveJournalEntry.html">SaveJournalEntry</a></dt>
       <dd><p>One ended request in the <a class="xref" href="CodeSmile.Luny.Save.SaveJournal.html">SaveJournal</a>: metadata only, never a saved value.</p>
 </dd>
@@ -351,6 +359,18 @@ LunySave's words, and the relative path the request named. The default value is 
     <h3 id="enums">
 Enums
 </h3>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.ContentArchiveCompression.html">ContentArchiveCompression</a></dt>
+      <dd><p>How <code>GameData.luny</code> stores each content file. <a class="xref" href="CodeSmile.Luny.Save.ContentArchiveCompression.html#CodeSmile_Luny_Save_ContentArchiveCompression_None">None</a> stores the bytes. <a class="xref" href="CodeSmile.Luny.Save.ContentArchiveCompression.html#CodeSmile_Luny_Save_ContentArchiveCompression_Deflate">Deflate</a>
+stores them with the ZIP Deflate method. The build reads this from <code>ProjectSettings/LunyGameDataArchive.txt</code>.</p>
+</dd>
+    </dl>
+    <dl class="jumplist">
+      <dt><a class="xref" href="CodeSmile.Luny.Save.SaveCompression.html">SaveCompression</a></dt>
+      <dd><p>How a typed runtime save stores its JSON. <a class="xref" href="CodeSmile.Luny.Save.SaveCompression.html#CodeSmile_Luny_Save_SaveCompression_None">None</a> is plain UTF-8 JSON, which a save writes when
+it states no policy. <a class="xref" href="CodeSmile.Luny.Save.SaveCompression.html#CodeSmile_Luny_Save_SaveCompression_Deflate">Deflate</a> stores that JSON in the version 1 encoding frame.</p>
+</dd>
+    </dl>
     <dl class="jumplist">
       <dt><a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html">SaveFailure</a></dt>
       <dd><p>Why a LunySave request was refused: the code of its <a class="xref" href="CodeSmile.Luny.Save.SaveRefusal.html">SaveRefusal</a>. <a class="xref" href="CodeSmile.Luny.Save.SaveFailure.html#CodeSmile_Luny_Save_SaveFailure_None">None</a> while the
