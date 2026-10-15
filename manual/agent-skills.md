@@ -63,8 +63,10 @@ skill, in each of these folders of your Unity project. **No** writes nothing.
 | `.agents/skills/` | Codex, and Grok |
 
 LunyScript supports these three agents. Another agent finds the skills only when it reads one of
-these two folders. The links are the only files LunyScript writes for an agent: it never writes or
-changes an `AGENTS.md`, a `CLAUDE.md` or a skill of your own.
+these two folders. **Yes** also writes a project-root `AGENTS.md` when that file is missing, with a
+first line that names `Assets/CodeSmile/Luny/AgentSkills/luny/SKILL.md`, and prepends that line when
+the file exists and does not already contain the luny skill path. Path match is enough; the rest of
+the file stays as it is. A `CLAUDE.md` and a skill of your own stay as they are.
 
 LunyScript keeps your answer in `UserSettings/LunyScriptAgentSkills.asset`, yours alone like the
 **Don't show again** choice. When the welcome window opens by itself, the box asks only until you
@@ -118,8 +120,8 @@ symbolic link, so it needs no permission on Windows.
 ## Your own files stay as they are
 
 The last line of a link carries a SHA-256 hash of the text above it. That line is the only way
-LunyScript recognises a file as its own. Before it writes, rewrites or deletes anything, LunyScript
-checks the path, and leaves exactly as it is:
+LunyScript recognises a skill-link file as its own. Before it writes, rewrites or deletes a link,
+LunyScript checks the path, and leaves exactly as it is:
 
 - a file or folder with a skill's name that it did not write, such as your own skill called
   `lunyscript`;
@@ -129,23 +131,26 @@ checks the path, and leaves exactly as it is:
 - a symbolic link or junction anywhere on the path, which it does not follow.
 
 Each of those is listed as a warning in the Console, and every other link is still written. A file
-that only has a skill's name is never taken as permission to write.
+that only has a skill's name is never taken as permission to write. An `AGENTS.md` that already
+names `Assets/CodeSmile/Luny/AgentSkills/luny` or the current luny `SKILL.md` path, in any wording,
+stays as it is. A `CLAUDE.md` stays as it is.
 
 ## Updates and repairs
 
 While at least one link LunyScript recognises as its own exists, it repairs and updates the links,
 without asking, each time the Editor loads scripts: after you import a newer LunyScript, it
 rewrites a link whose skill changed, writes a link for a new skill, rewrites a link you deleted, and
-deletes the link of a skill that no longer ships. A folder where no link exists is written only after
-you answer **Yes** in the Install LunyScript AI Skills box.
+deletes the link of a skill that no longer ships. The same run writes or prepends `AGENTS.md` the
+same way **Yes** does. A folder where no link exists is written only after you answer **Yes** in the
+Install LunyScript AI Skills box.
 
 ## Removing the links
 
 Delete every folder whose name starts with `luny` that LunyScript wrote from `.claude/skills/` and
 `.agents/skills/`. With no link left that LunyScript recognises as its own, it writes nothing
-until you answer **Yes** in the box again. Delete `.claude`, `.claude/skills`, `.agents` and
-`.agents/skills` as well if you have no other use for them; LunyScript records in
-`UserSettings/LunyScriptAgentSkillFolders.txt` which of them it created.
+until you answer **Yes** in the box again. An `AGENTS.md` it wrote or prepended stays. Delete
+`.claude`, `.claude/skills`, `.agents` and `.agents/skills` as well if you have no other use for
+them; LunyScript records in `UserSettings/LunyScriptAgentSkillFolders.txt` which of them it created.
 
 Remove the links before you remove LunyScript from a project. A link left behind names a file that
 no longer exists, and the agent then has nothing to read.

@@ -184,8 +184,10 @@ skill, in each of these folders of your Unity project. <strong>No</strong> write
 </table>
 
 <p>LunyScript supports these three agents. Another agent finds the skills only when it reads one of
-these two folders. The links are the only files LunyScript writes for an agent: it never writes or
-changes an <code class="language-plaintext highlighter-rouge">AGENTS.md</code>, a <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> or a skill of your own.</p>
+these two folders. <strong>Yes</strong> also writes a project-root <code class="language-plaintext highlighter-rouge">AGENTS.md</code> when that file is missing, with a
+first line that names <code class="language-plaintext highlighter-rouge">Assets/CodeSmile/Luny/AgentSkills/luny/SKILL.md</code>, and prepends that line when
+the file exists and does not already contain the luny skill path. Path match is enough; the rest of
+the file stays as it is. A <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> and a skill of your own stay as they are.</p>
 
 <p>LunyScript keeps your answer in <code class="language-plaintext highlighter-rouge">UserSettings/LunyScriptAgentSkills.asset</code>, yours alone like the
 <strong>Don’t show again</strong> choice. When the welcome window opens by itself, the box asks only until you
@@ -240,8 +242,8 @@ symbolic link, so it needs no permission on Windows.</p>
 <h2 id="your-own-files-stay-as-they-are">Your own files stay as they are</h2>
 
 <p>The last line of a link carries a SHA-256 hash of the text above it. That line is the only way
-LunyScript recognises a file as its own. Before it writes, rewrites or deletes anything, LunyScript
-checks the path, and leaves exactly as it is:</p>
+LunyScript recognises a skill-link file as its own. Before it writes, rewrites or deletes a link,
+LunyScript checks the path, and leaves exactly as it is:</p>
 
 <ul>
   <li>a file or folder with a skill’s name that it did not write, such as your own skill called
@@ -253,23 +255,26 @@ checks the path, and leaves exactly as it is:</p>
 </ul>
 
 <p>Each of those is listed as a warning in the Console, and every other link is still written. A file
-that only has a skill’s name is never taken as permission to write.</p>
+that only has a skill’s name is never taken as permission to write. An <code class="language-plaintext highlighter-rouge">AGENTS.md</code> that already
+names <code class="language-plaintext highlighter-rouge">Assets/CodeSmile/Luny/AgentSkills/luny</code> or the current luny <code class="language-plaintext highlighter-rouge">SKILL.md</code> path, in any wording,
+stays as it is. A <code class="language-plaintext highlighter-rouge">CLAUDE.md</code> stays as it is.</p>
 
 <h2 id="updates-and-repairs">Updates and repairs</h2>
 
 <p>While at least one link LunyScript recognises as its own exists, it repairs and updates the links,
 without asking, each time the Editor loads scripts: after you import a newer LunyScript, it
 rewrites a link whose skill changed, writes a link for a new skill, rewrites a link you deleted, and
-deletes the link of a skill that no longer ships. A folder where no link exists is written only after
-you answer <strong>Yes</strong> in the Install LunyScript AI Skills box.</p>
+deletes the link of a skill that no longer ships. The same run writes or prepends <code class="language-plaintext highlighter-rouge">AGENTS.md</code> the
+same way <strong>Yes</strong> does. A folder where no link exists is written only after you answer <strong>Yes</strong> in the
+Install LunyScript AI Skills box.</p>
 
 <h2 id="removing-the-links">Removing the links</h2>
 
 <p>Delete every folder whose name starts with <code class="language-plaintext highlighter-rouge">luny</code> that LunyScript wrote from <code class="language-plaintext highlighter-rouge">.claude/skills/</code> and
 <code class="language-plaintext highlighter-rouge">.agents/skills/</code>. With no link left that LunyScript recognises as its own, it writes nothing
-until you answer <strong>Yes</strong> in the box again. Delete <code class="language-plaintext highlighter-rouge">.claude</code>, <code class="language-plaintext highlighter-rouge">.claude/skills</code>, <code class="language-plaintext highlighter-rouge">.agents</code> and
-<code class="language-plaintext highlighter-rouge">.agents/skills</code> as well if you have no other use for them; LunyScript records in
-<code class="language-plaintext highlighter-rouge">UserSettings/LunyScriptAgentSkillFolders.txt</code> which of them it created.</p>
+until you answer <strong>Yes</strong> in the box again. An <code class="language-plaintext highlighter-rouge">AGENTS.md</code> it wrote or prepended stays. Delete
+<code class="language-plaintext highlighter-rouge">.claude</code>, <code class="language-plaintext highlighter-rouge">.claude/skills</code>, <code class="language-plaintext highlighter-rouge">.agents</code> and <code class="language-plaintext highlighter-rouge">.agents/skills</code> as well if you have no other use for
+them; LunyScript records in <code class="language-plaintext highlighter-rouge">UserSettings/LunyScriptAgentSkillFolders.txt</code> which of them it created.</p>
 
 <p>Remove the links before you remove LunyScript from a project. A link left behind names a file that
 no longer exists, and the agent then has nothing to read.</p>
