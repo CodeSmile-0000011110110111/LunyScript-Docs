@@ -158,7 +158,7 @@ reads a variable of the object's own.
 [Reading a shared variable](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/reading-scripts-from-csharp.html#reading-a-shared-variable)
 shows a `MonoBehaviour` that reads and observes a shared score through an object assigned in the
 Inspector.
-`Assets/CodeSmile/LunyScript/ApiExamples/Perception.unity` runs this with two guards that chase the
+`Assets/Samples/LunyScript.Examples/Perception.unity` runs this with two guards that chase the
 player.
 
 ## Putting variables back to their declared values
@@ -410,7 +410,7 @@ Log = Define.Text(nameof(Log)).Allocating(65536);
 
 The bound is UTF-8 bytes, from 1 to 1048576.
 
-`Assets/CodeSmile/LunyScript/ApiExamples/GrowingText.unity` binds one label to a growing text and one to a
+`Assets/Samples/LunyScript.Examples/GrowingText.unity` binds one label to a growing text and one to a
 64-byte text.
 
 ## Reacting to a change

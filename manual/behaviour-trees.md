@@ -191,7 +191,7 @@ Repeat(node) [ .Times(n) | .UntilFails() | .UntilSucceeds() ]
 
 ## What to read next
 
-- The BehaviorTree scene in `Assets/CodeSmile/LunyScript/ApiExamples`: a guard that patrols, watches
+- The BehaviorTree scene in `Assets/Samples/LunyScript.Examples`: a guard that patrols, watches
   for an intruder, chases it and patrols again.
 - [State machines](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/state-machines.html) — one named situation at a
   time, with Enter and Exit.

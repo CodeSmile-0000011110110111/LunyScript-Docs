@@ -116,7 +116,7 @@ The same module carries the rest of the cloud surface:
   observed with `When.Leaderboard(op)`. A score submitted offline waits in a
   queue on the device that a restart keeps, and `board.Waiting` counts it.
 
-The agent skill at `Assets/CodeSmile/LunyCloud/AgentSkills/lunycloud/SKILL.md`
+The agent skill at `Packages/com.codesmile.luny/CodeSmile/LunyCloud/AgentSkills/lunycloud/SKILL.md`
 states every rule of these calls.
 
 ## A worked example

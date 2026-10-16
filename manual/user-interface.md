@@ -289,11 +289,11 @@ fixed number of clones are planned; world-space panels turned to face the camera
 
 ## Seeing it run
 
-`Assets/CodeSmile/LunyScript/ApiExamples/UserInterface.unity` runs everything on
+`Assets/Samples/LunyScript.Examples/UserInterface.unity` runs everything on
 this page: the two bound controls, the three separately scoped `health` Labels, both `When.UI`
 watches, and `Panel.Open` and `Panel.Close` on a second `PanelRenderer`. Open it and press Play.
 
-`Assets/CodeSmile/LunyScript/ApiExamples/DamageNumbers.unity` runs the labels at world positions:
+`Assets/Samples/LunyScript.Examples/DamageNumbers.unity` runs the labels at world positions:
 two dummies walk, each with a name plate, a damage number struck every 0.9 seconds and a marker
 left where the last hit landed.
 

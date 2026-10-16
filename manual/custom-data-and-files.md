@@ -225,7 +225,7 @@ writes one into the object's renderer.
 - A shared copy is filled once per Play session and has no JSON form. A later scene that assigns an
   asset with other values to the same copy does not start those objects.
 
-The `DataInputs` scene in `ApiExamples` shows every call on this page, and the `Colors` scene shows
+The `DataInputs` scene in `LunyScript.Examples` shows every call on this page, and the `Colors` scene shows
 a colour saved in a team asset.
 
 Next: [Saving progress and settings](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/saving-progress-and-settings.html),

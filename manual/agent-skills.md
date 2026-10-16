@@ -16,7 +16,7 @@ remain with their owner modules. A first general query gives the supported core 
 loops need, and planned modules. When available, `luny-new-game` opens with that same overview and asks unanswered
 questions one at a time. Other replies start with `Oy!` to indicate that the skill loaded.
 
-The central skill is `Assets/CodeSmile/Luny/AgentSkills/luny/SKILL.md`. Module skill descriptions direct the agent
+The central skill is `Packages/com.codesmile.luny/CodeSmile/Luny/AgentSkills/luny/SKILL.md`. Module skill descriptions direct the agent
 there first. The following skills apply once the task needs a LunyScript script:
 
 | Skill | An agent loads it when a script |
@@ -49,8 +49,8 @@ LunyScript AI Skills** asks:
 
 > LunyScript includes AI agent skills. To ensure agents find and use them, we need to create
 > .agents/skills/luny* and .claude/skills/luny* in the project's root. These redirecting skills guide
-> AI agents to the skills located in Assets/CodeSmile/*/AgentSkills/luny*, where the luny skill in
-> Assets/CodeSmile/Luny/AgentSkills names each Luny product and the skill for each of its parts.
+> AI agents to the skills located in Packages/com.codesmile.luny/CodeSmile/*/AgentSkills/luny*, where the luny skill in
+> Packages/com.codesmile.luny/CodeSmile/Luny/AgentSkills names each Luny product and the skill for each of its parts.
 >
 > Allow LunyScript to install the links to its AI agent skills?
 
@@ -64,7 +64,7 @@ skill, in each of these folders of your Unity project. **No** writes nothing.
 
 LunyScript supports these three agents. Another agent finds the skills only when it reads one of
 these two folders. **Yes** also writes a project-root `AGENTS.md` when that file is missing, with a
-first line that names `Assets/CodeSmile/Luny/AgentSkills/luny/SKILL.md`, and prepends that line when
+first line that names `Packages/com.codesmile.luny/CodeSmile/Luny/AgentSkills/luny/SKILL.md`, and prepends that line when
 the file exists and does not already contain the luny skill path. Path match is enough; the rest of
 the file stays as it is. A `CLAUDE.md` and a skill of your own stay as they are.
 
@@ -108,7 +108,7 @@ here. LunyScript updates this file and deletes it on request; an edit
 stops both. -->
 
 The lunyscript skill ships with LunyScript in this Unity project. Read
-`Assets/CodeSmile/LunyScript/AgentSkills/lunyscript/SKILL.md`, a path
+`Packages/com.codesmile.luny/CodeSmile/LunyScript/AgentSkills/lunyscript/SKILL.md`, a path
 relative to the Unity project folder that holds this `.claude` folder,
 and follow it. Paths inside that file are relative to its own folder.
 <!-- lunyscript-skill-link sha256:35ad9e19...9a7ac4 -->
@@ -132,7 +132,7 @@ LunyScript checks the path, and leaves exactly as it is:
 
 Each of those is listed as a warning in the Console, and every other link is still written. A file
 that only has a skill's name is never taken as permission to write. An `AGENTS.md` that already
-names `Assets/CodeSmile/Luny/AgentSkills/luny` or the current luny `SKILL.md` path, in any wording,
+names `Packages/com.codesmile.luny/CodeSmile/Luny/AgentSkills/luny` or the current luny `SKILL.md` path, in any wording,
 stays as it is. A `CLAUDE.md` stays as it is.
 
 ## Updates and repairs
@@ -158,7 +158,7 @@ no longer exists, and the agent then has nothing to read.
 ## Without the links
 
 - Tell the agent where the skills are: "read
-  `Assets/CodeSmile/Luny/AgentSkills/luny/SKILL.md` first". That skill names the skill of every Luny
+  `Packages/com.codesmile.luny/CodeSmile/Luny/AgentSkills/luny/SKILL.md` first". That skill names the skill of every Luny
   module in your project.
 - Or copy a skill's folder into a skill folder your agent reads, such as `~/.claude/skills/` for
   every project of one user. A copy does not update with LunyScript.

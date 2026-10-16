@@ -250,7 +250,7 @@ that ships with LunyScript: `LocalSave` saves and loads a `SaveSchema`'s fields
 at a path relative to `Application.persistentDataPath`, such as
 `savegames/001.sav`, and reads documents the build ships from StreamingAssets.
 Scripts' documents are stored through the same writer, file layout and migration
-rules. LunySave's own folder, `Assets/CodeSmile/LunySave`, holds its guide, an
+rules. LunySave's own folder, `Packages/com.codesmile.luny/CodeSmile/LunySave`, holds its guide, an
 agent skill and a demo scene.
 
 ## A worked example

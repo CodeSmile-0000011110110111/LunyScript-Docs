@@ -1171,7 +1171,7 @@ remain with their owner modules. A first general query gives the supported core 
 loops need, and planned modules. When available, `luny-new-game` opens with that same overview and asks unanswered
 questions one at a time. Other replies start with `Oy!` to indicate that the skill loaded.
 
-The central skill is `Assets/CodeSmile/Luny/AgentSkills/luny/SKILL.md`. Module skill descriptions direct the agent
+The central skill is `Packages/com.codesmile.luny/CodeSmile/Luny/AgentSkills/luny/SKILL.md`. Module skill descriptions direct the agent
 there first. The following skills apply once the task needs a LunyScript script:
 
 | Skill | An agent loads it when a script |
@@ -1204,8 +1204,8 @@ LunyScript AI Skills** asks:
 
 > LunyScript includes AI agent skills. To ensure agents find and use them, we need to create
 > .agents/skills/luny* and .claude/skills/luny* in the project's root. These redirecting skills guide
-> AI agents to the skills located in Assets/CodeSmile/*/AgentSkills/luny*, where the luny skill in
-> Assets/CodeSmile/Luny/AgentSkills names each Luny product and the skill for each of its parts.
+> AI agents to the skills located in Packages/com.codesmile.luny/CodeSmile/*/AgentSkills/luny*, where the luny skill in
+> Packages/com.codesmile.luny/CodeSmile/Luny/AgentSkills names each Luny product and the skill for each of its parts.
 >
 > Allow LunyScript to install the links to its AI agent skills?
 
@@ -1219,7 +1219,7 @@ skill, in each of these folders of your Unity project. **No** writes nothing.
 
 LunyScript supports these three agents. Another agent finds the skills only when it reads one of
 these two folders. **Yes** also writes a project-root `AGENTS.md` when that file is missing, with a
-first line that names `Assets/CodeSmile/Luny/AgentSkills/luny/SKILL.md`, and prepends that line when
+first line that names `Packages/com.codesmile.luny/CodeSmile/Luny/AgentSkills/luny/SKILL.md`, and prepends that line when
 the file exists and does not already contain the luny skill path. Path match is enough; the rest of
 the file stays as it is. A `CLAUDE.md` and a skill of your own stay as they are.
 
@@ -1263,7 +1263,7 @@ here. LunyScript updates this file and deletes it on request; an edit
 stops both. -->
 
 The lunyscript skill ships with LunyScript in this Unity project. Read
-`Assets/CodeSmile/LunyScript/AgentSkills/lunyscript/SKILL.md`, a path
+`Packages/com.codesmile.luny/CodeSmile/LunyScript/AgentSkills/lunyscript/SKILL.md`, a path
 relative to the Unity project folder that holds this `.claude` folder,
 and follow it. Paths inside that file are relative to its own folder.
 <!-- lunyscript-skill-link sha256:35ad9e19...9a7ac4 -->
@@ -1287,7 +1287,7 @@ LunyScript checks the path, and leaves exactly as it is:
 
 Each of those is listed as a warning in the Console, and every other link is still written. A file
 that only has a skill's name is never taken as permission to write. An `AGENTS.md` that already
-names `Assets/CodeSmile/Luny/AgentSkills/luny` or the current luny `SKILL.md` path, in any wording,
+names `Packages/com.codesmile.luny/CodeSmile/Luny/AgentSkills/luny` or the current luny `SKILL.md` path, in any wording,
 stays as it is. A `CLAUDE.md` stays as it is.
 
 ## Updates and repairs
@@ -1313,7 +1313,7 @@ no longer exists, and the agent then has nothing to read.
 ## Without the links
 
 - Tell the agent where the skills are: "read
-  `Assets/CodeSmile/Luny/AgentSkills/luny/SKILL.md` first". That skill names the skill of every Luny
+  `Packages/com.codesmile.luny/CodeSmile/Luny/AgentSkills/luny/SKILL.md` first". That skill names the skill of every Luny
   module in your project.
 - Or copy a skill's folder into a skill folder your agent reads, such as `~/.claude/skills/` for
   every project of one user. A copy does not update with LunyScript.
@@ -1489,7 +1489,7 @@ reads a variable of the object's own.
 [Reading a shared variable](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/reading-scripts-from-csharp.html#reading-a-shared-variable)
 shows a `MonoBehaviour` that reads and observes a shared score through an object assigned in the
 Inspector.
-`Assets/CodeSmile/LunyScript/ApiExamples/Perception.unity` runs this with two guards that chase the
+`Assets/Samples/LunyScript.Examples/Perception.unity` runs this with two guards that chase the
 player.
 
 ## Putting variables back to their declared values
@@ -1741,7 +1741,7 @@ Log = Define.Text(nameof(Log)).Allocating(65536);
 
 The bound is UTF-8 bytes, from 1 to 1048576.
 
-`Assets/CodeSmile/LunyScript/ApiExamples/GrowingText.unity` binds one label to a growing text and one to a
+`Assets/Samples/LunyScript.Examples/GrowingText.unity` binds one label to a growing text and one to a
 64-byte text.
 
 ## Reacting to a change
@@ -4243,7 +4243,7 @@ Repeat(node) [ .Times(n) | .UntilFails() | .UntilSucceeds() ]
 
 ## What to read next
 
-- The BehaviorTree scene in `Assets/CodeSmile/LunyScript/ApiExamples`: a guard that patrols, watches
+- The BehaviorTree scene in `Assets/Samples/LunyScript.Examples`: a guard that patrols, watches
   for an intruder, chases it and patrols again.
 - [State machines](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/state-machines.html) — one named situation at a
   time, with Enter and Exit.
@@ -6356,7 +6356,7 @@ The number 2 allows the host and one guest. `new InputSystemProvider(actions)`, 
 player 0 present from the start on every device and pairs nothing.
 
 The backend reads its players through LunyInput, a C# module that ships with LunyScript in
-`Assets/CodeSmile/LunyInput`. A `MonoBehaviour` that reads input without a script uses LunyInput's
+`Packages/com.codesmile.luny/CodeSmile/LunyInput`. A `MonoBehaviour` that reads input without a script uses LunyInput's
 `LocalInput` directly, and C# beside your scripts reads the same players through the backend's
 `LocalPlayer(n)` method, which returns the LunyInput player a script reads as `Input.ForPlayer(n)`.
 LunyInput numbers its players from 0 with the host at 0, so a script's numbers 0 and 1 are LunyInput's
@@ -7104,11 +7104,11 @@ fixed number of clones are planned; world-space panels turned to face the camera
 
 ## Seeing it run
 
-`Assets/CodeSmile/LunyScript/ApiExamples/UserInterface.unity` runs everything on
+`Assets/Samples/LunyScript.Examples/UserInterface.unity` runs everything on
 this page: the two bound controls, the three separately scoped `health` Labels, both `When.UI`
 watches, and `Panel.Open` and `Panel.Close` on a second `PanelRenderer`. Open it and press Play.
 
-`Assets/CodeSmile/LunyScript/ApiExamples/DamageNumbers.unity` runs the labels at world positions:
+`Assets/Samples/LunyScript.Examples/DamageNumbers.unity` runs the labels at world positions:
 two dummies walk, each with a name plate, a damage number struck every 0.9 seconds and a marker
 left where the last hit landed.
 
@@ -7362,7 +7362,7 @@ Interaction.UsesPointer
 
 ## What to read next
 
-- The example scene `ApiExamples/Interaction.unity`: a door, a lamp and a pickup for two local players,
+- The example scene `LunyScript.Examples/Interaction.unity`: a door, a lamp and a pickup for two local players,
   one with the keyboard and mouse and one with a gamepad.
 - [Player input](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/player-input.html) — actions, and pairing local
   players.
@@ -7962,7 +7962,7 @@ writes one into the object's renderer.
 - A shared copy is filled once per Play session and has no JSON form. A later scene that assigns an
   asset with other values to the same copy does not start those objects.
 
-The `DataInputs` scene in `ApiExamples` shows every call on this page, and the `Colors` scene shows
+The `DataInputs` scene in `LunyScript.Examples` shows every call on this page, and the `Colors` scene shows
 a colour saved in a team asset.
 
 Next: [Saving progress and settings](https://codesmile-0000011110110111.github.io/LunyScript-Docs/manual/saving-progress-and-settings.html),
@@ -8224,7 +8224,7 @@ that ships with LunyScript: `LocalSave` saves and loads a `SaveSchema`'s fields
 at a path relative to `Application.persistentDataPath`, such as
 `savegames/001.sav`, and reads documents the build ships from StreamingAssets.
 Scripts' documents are stored through the same writer, file layout and migration
-rules. LunySave's own folder, `Assets/CodeSmile/LunySave`, holds its guide, an
+rules. LunySave's own folder, `Packages/com.codesmile.luny/CodeSmile/LunySave`, holds its guide, an
 agent skill and a demo scene.
 
 ## A worked example
@@ -8401,7 +8401,7 @@ The same module carries the rest of the cloud surface:
   observed with `When.Leaderboard(op)`. A score submitted offline waits in a
   queue on the device that a restart keeps, and `board.Waiting` counts it.
 
-The agent skill at `Assets/CodeSmile/LunyCloud/AgentSkills/lunycloud/SKILL.md`
+The agent skill at `Packages/com.codesmile.luny/CodeSmile/LunyCloud/AgentSkills/lunycloud/SKILL.md`
 states every rule of these calls.
 
 ## A worked example
