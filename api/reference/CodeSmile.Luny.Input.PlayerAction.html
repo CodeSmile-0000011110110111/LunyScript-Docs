@@ -152,6 +152,44 @@ the Input System processed input, so <code>FixedUpdate</code> and <code>Update</
 </h2>
 
 
+  <a id="CodeSmile_Luny_Input_PlayerAction_ActivePath_" data-uid="CodeSmile.Luny.Input.PlayerAction.ActivePath*"></a>
+
+  <h3 id="CodeSmile_Luny_Input_PlayerAction_ActivePath" data-uid="CodeSmile.Luny.Input.PlayerAction.ActivePath">
+  ActivePath
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/PlayerAction.cs/#L84"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The control path of the binding the player's own devices use, such as <code>&lt;Keyboard&gt;/space</code> for a
+player on the keyboard and <code>&lt;Gamepad&gt;/buttonSouth</code> for one on a gamepad, with the override a rebind applied;
+<a class="xref" href="CodeSmile.Luny.Input.PlayerAction.html#CodeSmile_Luny_Input_PlayerAction_BoundPath">BoundPath</a> when no binding matches a device of the player, and null when every binding is a composite.
+A HUD prompt reads it, so it follows the device the player uses and every accepted rebind.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string ActivePath { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Input_PlayerAction_ActivePath_examples">Examples</h4>
+  <pre><code class="lang-csharp">m_Prompt.text = $"{InputControlPath.ToHumanReadableString(m_Jump.ActivePath)}  Jump";</code></pre>
+
+
+
+
+
+
   <a id="CodeSmile_Luny_Input_PlayerAction_BoundPath_" data-uid="CodeSmile.Luny.Input.PlayerAction.BoundPath*"></a>
 
   <h3 id="CodeSmile_Luny_Input_PlayerAction_BoundPath" data-uid="CodeSmile.Luny.Input.PlayerAction.BoundPath">
@@ -440,11 +478,54 @@ input.</p>
 </h2>
 
 
+  <a id="CodeSmile_Luny_Input_PlayerAction_Capture_" data-uid="CodeSmile.Luny.Input.PlayerAction.Capture*"></a>
+
+  <h3 id="CodeSmile_Luny_Input_PlayerAction_Capture" data-uid="CodeSmile.Luny.Input.PlayerAction.Capture">
+  Capture()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/PlayerAction.cs/#L108"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts a candidate capture: the next control the player presses on their own devices becomes a
+<a class="xref" href="CodeSmile.Luny.Input.BindingCandidate.html">BindingCandidate</a> for the action's binding of that device, with every binding it would displace, and
+the live controls stay unchanged until the candidate is accepted. Escape and the gamepad's East button cancel.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public BindingCandidate Capture()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Input.BindingCandidate.html">BindingCandidate</a></dt>
+    <dd><p>The candidate, <a class="xref" href="CodeSmile.Luny.Input.BindingCaptureState.html#CodeSmile_Luny_Input_BindingCaptureState_Listening">Listening</a> when it started.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Input_PlayerAction_Capture_examples">Examples</h4>
+  <pre><code class="lang-csharp">m_Candidate = m_Input.Player(1).Button("Jump").Capture();</code></pre>
+
+
+  <h4 class="section" id="CodeSmile_Luny_Input_PlayerAction_Capture_remarks">Remarks</h4>
+  <div class="markdown level1 remarks"><p>Use it for a settings page that shows conflicts before it changes anything; <a class="xref" href="CodeSmile.Luny.Input.PlayerAction.html#CodeSmile_Luny_Input_PlayerAction_Rebind">Rebind()</a> is the
+capture that applies at once and denies a conflict. One player captures one control at a time; a second capture
+for the same player returns a candidate that is <a class="xref" href="CodeSmile.Luny.Input.BindingCaptureState.html#CodeSmile_Luny_Input_BindingCaptureState_Failed">Failed</a>.</p>
+</div>
+
+
+
+
   <a id="CodeSmile_Luny_Input_PlayerAction_Part_" data-uid="CodeSmile.Luny.Input.PlayerAction.Part*"></a>
 
   <h3 id="CodeSmile_Luny_Input_PlayerAction_Part_System_String_" data-uid="CodeSmile.Luny.Input.PlayerAction.Part(System.String)">
   Part(string)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/PlayerAction.cs/#L100"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/PlayerAction.cs/#L117"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>One part of the action's composite binding, by the part's name in the action asset, such as
@@ -504,7 +585,7 @@ input.</p>
 
   <h3 id="CodeSmile_Luny_Input_PlayerAction_Rebind" data-uid="CodeSmile.Luny.Input.PlayerAction.Rebind">
   Rebind()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/PlayerAction.cs/#L91"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/PlayerAction.cs/#L98"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Starts listening for the control that becomes this action's binding. The next control the player
@@ -547,7 +628,7 @@ at a time through <a class="xref" href="CodeSmile.Luny.Input.PlayerAction.html#C
 
   <h3 id="CodeSmile_Luny_Input_PlayerAction_ResetBinding" data-uid="CodeSmile.Luny.Input.PlayerAction.ResetBinding">
   ResetBinding()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/PlayerAction.cs/#L81"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/PlayerAction.cs/#L88"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Removes every override of the action, its composite parts included, so the asset's paths return.</p>
@@ -577,7 +658,7 @@ at a time through <a class="xref" href="CodeSmile.Luny.Input.PlayerAction.html#C
 
   <h3 id="CodeSmile_Luny_Input_PlayerAction_ToString" data-uid="CodeSmile.Luny.Input.PlayerAction.ToString">
   ToString()
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/PlayerAction.cs/#L118"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/PlayerAction.cs/#L135"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>The action for a diagnostic.</p>
@@ -610,7 +691,7 @@ at a time through <a class="xref" href="CodeSmile.Luny.Input.PlayerAction.html#C
 
   <h3 id="CodeSmile_Luny_Input_PlayerAction_TryFindPart_System_String_CodeSmile_Luny_Input_BindingPart__" data-uid="CodeSmile.Luny.Input.PlayerAction.TryFindPart(System.String,CodeSmile.Luny.Input.BindingPart@)">
   TryFindPart(string, out BindingPart)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/PlayerAction.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/PlayerAction.cs/#L131"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Finds one part of the action's composite binding without throwing.</p>

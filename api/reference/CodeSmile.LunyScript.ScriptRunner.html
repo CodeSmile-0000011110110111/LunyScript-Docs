@@ -458,11 +458,13 @@ declaration names a local player and an action name and both are written in
 
   <h3 id="CodeSmile_LunyScript_ScriptRunner_IsPaused" data-uid="CodeSmile.LunyScript.ScriptRunner.IsPaused">
   IsPaused
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L573"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L576"><i class="bi bi-code-slash"></i></a>
   </h3>
 
-  <div class="markdown level1 summary"><p>True while <code>Time.Pause</code> has set the runner flag. This is what
-<code>Time.IsPaused</code> reads. It is not whether the time scale is zero.</p>
+  <div class="markdown level1 summary"><p>True while the runner is paused: its scripts' <code>Time.Pause</code> set the runner flag, or an owner
+outside the scripts holds a pause, such as LunyUI's pause menu through its LunyScript integration. This is what
+<code>Time.IsPaused</code> reads, and what the process modes follow. It is not whether the time scale is zero:
+<code>Time.SetScale(0)</code> sets no pause.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
 
@@ -481,6 +483,9 @@ declaration names a local player and an action name and both are written in
   </dl>
 
 
+
+  <h4 class="section" id="CodeSmile_LunyScript_ScriptRunner_IsPaused_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (runner.IsPaused) ShowPausedBanner();</code></pre>
 
 
 
@@ -713,7 +718,7 @@ Element lookup is spawn-time cache, not per-use Q.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptRunner_Despawn_CodeSmile_LunyScript_ScriptInstance_" data-uid="CodeSmile.LunyScript.ScriptRunner.Despawn(CodeSmile.LunyScript.ScriptInstance)">
   Despawn(ScriptInstance)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L884"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L887"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Stops running an instance and keeps it for the next spawn of the same program.</p>
@@ -765,7 +770,7 @@ Element lookup is spawn-time cache, not per-use Q.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptRunner_GetOrBuildProgram_CodeSmile_LunyScript_ScriptBase_" data-uid="CodeSmile.LunyScript.ScriptRunner.GetOrBuildProgram(CodeSmile.LunyScript.ScriptBase)">
   GetOrBuildProgram(ScriptBase)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L685"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L688"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Returns the program for this script type, building it the first time it is asked for.</p>
@@ -827,7 +832,7 @@ same type reaches nothing: the cached program is returned unchanged.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptRunner_HasProgram_System_Type_" data-uid="CodeSmile.LunyScript.ScriptRunner.HasProgram(System.Type)">
   HasProgram(Type)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L716"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L719"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Whether this runner has already built a program for a script type, without building
@@ -880,7 +885,7 @@ one.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptRunner_PooledCount_CodeSmile_LunyScript_ScriptProgram_" data-uid="CodeSmile.LunyScript.ScriptRunner.PooledCount(CodeSmile.LunyScript.ScriptProgram)">
   PooledCount(ScriptProgram)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L1060"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L1063"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>How many pooled instances are waiting for a respawn of one program.</p>
@@ -1308,7 +1313,7 @@ editor runner.</p>
 
   <h3 id="CodeSmile_LunyScript_ScriptRunner_SetEnabled_CodeSmile_LunyScript_ScriptInstance_System_Boolean_" data-uid="CodeSmile.LunyScript.ScriptRunner.SetEnabled(CodeSmile.LunyScript.ScriptInstance,System.Boolean)">
   SetEnabled(ScriptInstance, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L1100"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L1103"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Turns an instance's per-frame blocks on or off, following the host's own enabled
@@ -1361,7 +1366,7 @@ state. Unity owns that state and LunyScript re-implements none of it; AGENTS.md 
 
   <h3 id="CodeSmile_LunyScript_ScriptRunner_Spawn_CodeSmile_LunyScript_ScriptProgram_CodeSmile_LunyScript_IScriptHost_System_Boolean_" data-uid="CodeSmile.LunyScript.ScriptRunner.Spawn(CodeSmile.LunyScript.ScriptProgram,CodeSmile.LunyScript.IScriptHost,System.Boolean)">
   Spawn(ScriptProgram, IScriptHost, bool)
-  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L739"><i class="bi bi-code-slash"></i></a>
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyScript/Core/Runtime/Core/Runner/ScriptRunner.cs/#L742"><i class="bi bi-code-slash"></i></a>
   </h3>
 
   <div class="markdown level1 summary"><p>Creates or reuses an instance of a program for one host, and starts running it.</p>

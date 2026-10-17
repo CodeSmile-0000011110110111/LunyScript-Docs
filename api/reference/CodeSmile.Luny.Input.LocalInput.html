@@ -598,6 +598,61 @@ pressed.</p>
 
 
 
+  <a id="CodeSmile_Luny_Input_LocalInput_DeclareBindingUnit_" data-uid="CodeSmile.Luny.Input.LocalInput.DeclareBindingUnit*"></a>
+
+  <h3 id="CodeSmile_Luny_Input_LocalInput_DeclareBindingUnit_System_Collections_Generic_IReadOnlyList_System_String__" data-uid="CodeSmile.Luny.Input.LocalInput.DeclareBindingUnit(System.Collections.Generic.IReadOnlyList{System.String})">
+  DeclareBindingUnit(IReadOnlyList&lt;string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/LocalInput.Candidates.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares actions, each <code>map/action</code>, whose bindings change together: a capture for one of them gives
+every member's binding of the same device the captured control, as the default character controller's held Aim
+and its mounted Lock share one control. Stored controls that disagree inside a unit are not applied and stay
+stored. Each call adds one unit.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void DeclareBindingUnit(IReadOnlyList&lt;string&gt; actions)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">IReadOnlyList</span>&lt;<span class="xref">string</span>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actions</code></dt></td>
+    <td style="width: 99%"><dd><p>Two or more actions as <code>map/action</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Input_LocalInput_DeclareBindingUnit_System_Collections_Generic_IReadOnlyList_System_String___examples">Examples</h4>
+  <pre><code class="lang-csharp">input.DeclareBindingUnit(new[] { "OnFoot/Aim", "Mounted/Lock" });</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="CodeSmile.Luny.Input.LunyInputException.html">LunyInputException</a></dt>
+    <dd><p>Fewer than two actions are given, or a name is empty.</p>
+</dd>
+  </dl>
+
+
+
   <a id="CodeSmile_Luny_Input_LocalInput_DeclareExclusiveMaps_" data-uid="CodeSmile.Luny.Input.LocalInput.DeclareExclusiveMaps*"></a>
 
   <h3 id="CodeSmile_Luny_Input_LocalInput_DeclareExclusiveMaps_System_Collections_Generic_IReadOnlyList_System_String__" data-uid="CodeSmile.Luny.Input.LocalInput.DeclareExclusiveMaps(System.Collections.Generic.IReadOnlyList{System.String})">
@@ -650,6 +705,101 @@ one; an empty list makes every map coexist again.</p>
     <dd><p><code class="paramref">maps</code> is null or holds an empty name.</p>
 </dd>
   </dl>
+
+
+
+  <a id="CodeSmile_Luny_Input_LocalInput_DeclareProtectedActions_" data-uid="CodeSmile.Luny.Input.LocalInput.DeclareProtectedActions*"></a>
+
+  <h3 id="CodeSmile_Luny_Input_LocalInput_DeclareProtectedActions_System_Collections_Generic_IReadOnlyList_System_String__" data-uid="CodeSmile.Luny.Input.LocalInput.DeclareProtectedActions(System.Collections.Generic.IReadOnlyList{System.String})">
+  DeclareProtectedActions(IReadOnlyList&lt;string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/LocalInput.Candidates.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares actions, each <code>map/action</code>, whose last route a capture's Replace never takes, such as the
+menu's Cancel and Menu, so a player can always leave a menu with the device they hold.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void DeclareProtectedActions(IReadOnlyList&lt;string&gt; actions)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">IReadOnlyList</span>&lt;<span class="xref">string</span>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actions</code></dt></td>
+    <td style="width: 99%"><dd><p>The actions as <code>map/action</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Input_LocalInput_DeclareProtectedActions_System_Collections_Generic_IReadOnlyList_System_String___examples">Examples</h4>
+  <pre><code class="lang-csharp">input.DeclareProtectedActions(new[] { "UI/Cancel", "Common/Menu" });</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Input_LocalInput_DeclareSharedActions_" data-uid="CodeSmile.Luny.Input.LocalInput.DeclareSharedActions*"></a>
+
+  <h3 id="CodeSmile_Luny_Input_LocalInput_DeclareSharedActions_System_Collections_Generic_IReadOnlyList_System_String__" data-uid="CodeSmile.Luny.Input.LocalInput.DeclareSharedActions(System.Collections.Generic.IReadOnlyList{System.String})">
+  DeclareSharedActions(IReadOnlyList&lt;string&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/LunyInput/Runtime/LocalInput.Candidates.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Declares actions, each <code>map/action</code>, that may keep one control together with another action, such
+as the menu's Submit and Jump on Space: a capture's Keep Both is permitted only when every action it shares the
+control with, or the captured action itself, is declared here.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void DeclareSharedActions(IReadOnlyList&lt;string&gt; actions)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><span class="xref">IReadOnlyList</span>&lt;<span class="xref">string</span>&gt;</dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>actions</code></dt></td>
+    <td style="width: 99%"><dd><p>The actions as <code>map/action</code>.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Input_LocalInput_DeclareSharedActions_System_Collections_Generic_IReadOnlyList_System_String___examples">Examples</h4>
+  <pre><code class="lang-csharp">input.DeclareSharedActions(new[] { "UI/Submit", "OnFoot/Jump" });</code></pre>
+
+
+
 
 
 

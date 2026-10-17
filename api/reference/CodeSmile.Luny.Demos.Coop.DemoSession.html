@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+      <title>Class DemoSession | LunyScript API Reference </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class DemoSession | LunyScript API Reference ">
+      
+      <meta name="description" content="The installed DemoSupport&#39;s session integration over a LunyCoop host: the main menu&#39;s Multiplayer starts a new local group and opens the roster, and Exit returns to the main menu through one transaction. The transaction runs the game&#39;s save, the integrations&#39; steps, such as LunyNet&#39;s Leave and LunyPlayer&#39;s end of play, then ends the group by disabling the co-op host, which ends the session with every participant&#39;s departure, and then opens the game&#39;s main menu.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css?v=1">
+      <link rel="stylesheet" href="../public/alert.css?v=1">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/CodeSmile-0000011110110111/LunyScript2/new/main/apiSpec/new?filename=CodeSmile_Luny_Demos_Coop_DemoSession.md&amp;value=---%0Auid%3A%20CodeSmile.Luny.Demos.Coop.DemoSession%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+      <script src="../public/highlight-custom.js?v=1"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="LunyScript API Reference">
+            LunyScript API Reference
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="CodeSmile.Luny.Demos.Coop.DemoSession">
+
+
+
+  <h1 id="CodeSmile_Luny_Demos_Coop_DemoSession" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession" class="text-break">
+Class DemoSession  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><span class="xref">CodeSmile</span>.<a class="xref" href="CodeSmile.Luny.html">Luny</a>.<a class="xref" href="CodeSmile.Luny.Demos.html">Demos</a>.<a class="xref" href="CodeSmile.Luny.Demos.Coop.html">Coop</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>ApiSource.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>The installed DemoSupport's session integration over a LunyCoop host: the main menu's Multiplayer starts a new local
+group and opens the roster, and Exit returns to the main menu through one transaction. The transaction runs the game's
+save, the integrations' steps, such as LunyNet's Leave and LunyPlayer's end of play, then ends the group by disabling
+the co-op host, which ends the session with every participant's departure, and then opens the game's main menu.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[AddComponentMenu(&quot;Luny/Demo Session&quot;)]
+public sealed class DemoSession : MonoBehaviour</code></pre>
+  </div>
+
+
+
+
+  <details>
+  <summary style="display: list-item; font-size: 15px"><i>Expand Details ...</i></summary>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">object</span></div>
+      <div><span class="xref">Object</span></div>
+      <div><span class="xref">Component</span></div>
+      <div><span class="xref">Behaviour</span></div>
+      <div><span class="xref">MonoBehaviour</span></div>
+      <div><span class="xref">DemoSession</span></div>
+    </dd>
+  </dl>
+
+
+
+
+  </details>
+
+
+
+  <h2 id="CodeSmile_Luny_Demos_Coop_DemoSession_examples">Examples</h2>
+  <pre><code class="lang-csharp">m_Session.Save = () =&gt; m_Game.Save() ? DemoStepResult.Done : DemoStepResult.Fail("The save failed.");
+m_Session.ToMain = player =&gt; m_UI.Menus.Main.Open(player);</code></pre>
+
+
+  <h2 id="CodeSmile_Luny_Demos_Coop_DemoSession_remarks">Remarks</h2>
+  <div class="markdown level0 remarks"><p>
+    A failed step keeps the transaction where it stopped: the menu shows why, and Exit again retries that step without
+    repeating the ones that succeeded. A failed save may be abandoned only where the game permits it, after a
+    confirmation that names what is lost. While a return is unresolved, Multiplayer stays disabled.
+</p>
+<p>
+    A new group is a new session, so every participant's id, view and HUD lines are fresh; persistent camera, player
+    and preferences hosts continue. Back from a roster that began at the main menu, before a game started, ends that
+    group the same way without a confirmation. The game binds Play and calls <a class="xref" href="CodeSmile.Luny.Demos.Coop.DemoSession.html#CodeSmile_Luny_Demos_Coop_DemoSession_EnsureGroup">EnsureGroup()</a> from it.
+</p>
+</div>
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="CodeSmile_Luny_Demos_Coop_DemoSession_IsReturning_" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.IsReturning*"></a>
+
+  <h3 id="CodeSmile_Luny_Demos_Coop_DemoSession_IsReturning" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.IsReturning">
+  IsReturning
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L147"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True while a return to the main menu runs or stopped at a failed step.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool IsReturning { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Demos_Coop_DemoSession_IsReturning_examples">Examples</h4>
+  <pre><code class="lang-csharp">if (m_Session.IsReturning) return;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Demos_Coop_DemoSession_MayDiscardFailedSave_" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.MayDiscardFailedSave*"></a>
+
+  <h3 id="CodeSmile_Luny_Demos_Coop_DemoSession_MayDiscardFailedSave" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.MayDiscardFailedSave">
+  MayDiscardFailedSave
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L130"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>True when the game permits leaving with a failed save, after a confirmation.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public bool MayDiscardFailedSave { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">bool</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Demos_Coop_DemoSession_MayDiscardFailedSave_examples">Examples</h4>
+  <pre><code class="lang-csharp">m_Session.MayDiscardFailedSave = true;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Demos_Coop_DemoSession_ReturnProblem_" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.ReturnProblem*"></a>
+
+  <h3 id="CodeSmile_Luny_Demos_Coop_DemoSession_ReturnProblem" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.ReturnProblem">
+  ReturnProblem
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L151"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The message of the step the return stopped at, or null.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string ReturnProblem { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Demos_Coop_DemoSession_ReturnProblem_examples">Examples</h4>
+  <pre><code class="lang-csharp">Debug.Log(m_Session.ReturnProblem);</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Demos_Coop_DemoSession_Save_" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.Save*"></a>
+
+  <h3 id="CodeSmile_Luny_Demos_Coop_DemoSession_Save" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.Save">
+  Save
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L126"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The game's save or finalization of the session, called each frame until it reports Succeeded or Failed;
+null when the game saves nothing at the main menu boundary.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Func&lt;DemoStepResult&gt; Save { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Func</span>&lt;<a class="xref" href="CodeSmile.Luny.Demos.Coop.DemoStepResult.html">DemoStepResult</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Demos_Coop_DemoSession_Save_examples">Examples</h4>
+  <pre><code class="lang-csharp">m_Session.Save = () =&gt; DemoStepResult.Done;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Demos_Coop_DemoSession_Session_" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.Session*"></a>
+
+  <h3 id="CodeSmile_Luny_Demos_Coop_DemoSession_Session" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.Session">
+  Session
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L143"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The running session, or null while no group exists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CoopSession Session { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">CoopSession</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Demos_Coop_DemoSession_Session_examples">Examples</h4>
+  <pre><code class="lang-csharp">var players = m_Session.Session?.Actors.Count;</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Demos_Coop_DemoSession_ToMain_" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.ToMain*"></a>
+
+  <h3 id="CodeSmile_Luny_Demos_Coop_DemoSession_ToMain" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.ToMain">
+  ToMain
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L139"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Opens the game's main menu once the group ended, such as <code>m_UI.Menus.Main.Open(player)</code> or loading the
+main menu's scene; null opens the host's main menu.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public Action&lt;UIPlayer&gt; ToMain { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Action</span>&lt;<span class="xref">UIPlayer</span>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Demos_Coop_DemoSession_ToMain_examples">Examples</h4>
+  <pre><code class="lang-csharp">m_Session.ToMain = player =&gt; SceneManager.LoadScene("Main");</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Demos_Coop_DemoSession_UnsavedData_" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.UnsavedData*"></a>
+
+  <h3 id="CodeSmile_Luny_Demos_Coop_DemoSession_UnsavedData" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.UnsavedData">
+  UnsavedData
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L134"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>What the confirmation of an abandoned save names as lost.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public string UnsavedData { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">string</span></dt>
+    <dd></dd>
+  </dl>
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Demos_Coop_DemoSession_UnsavedData_examples">Examples</h4>
+  <pre><code class="lang-csharp">m_Session.UnsavedData = "the run's progress since the last checkpoint";</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="CodeSmile_Luny_Demos_Coop_DemoSession_AddStep_" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.AddStep*"></a>
+
+  <h3 id="CodeSmile_Luny_Demos_Coop_DemoSession_AddStep_CodeSmile_Luny_Demos_Coop_IDemoReturnStep_" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.AddStep(CodeSmile.Luny.Demos.Coop.IDemoReturnStep)">
+  AddStep(IDemoReturnStep)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L165"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds an owner's step to the return, run after the game's save in the order added.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void AddStep(IDemoReturnStep step)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <table>
+  <tr>
+  <th>Type</th>
+  <th>Name</th>
+  <th>Description</th>
+  </tr>
+  <dl class="parameters">
+  <tr>
+    <td style="width: fit-content;white-space: nowrap"><dt><a class="xref" href="CodeSmile.Luny.Demos.Coop.IDemoReturnStep.html">IDemoReturnStep</a></dt></td>
+    <td style="width: fit-content;white-space: nowrap"><dt><code>step</code></dt></td>
+    <td style="width: 99%"><dd><p>The step.</p>
+</dd></td>
+  </tr>
+  </dl>
+  </table>
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Demos_Coop_DemoSession_AddStep_CodeSmile_Luny_Demos_Coop_IDemoReturnStep__examples">Examples</h4>
+  <pre><code class="lang-csharp">m_Session.AddStep(new DemoNetLeave(m_NetHost.Session));</code></pre>
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><span class="xref">ArgumentNullException</span></dt>
+    <dd><p>The step is null.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="CodeSmile_Luny_Demos_Coop_DemoSession_Disband_" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.Disband*"></a>
+
+  <h3 id="CodeSmile_Luny_Demos_Coop_DemoSession_Disband" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.Disband">
+  Disband()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L184"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Ends the local group without a transaction, as Back from an unstarted main-menu roster does: the co-op host
+is disabled, which ends the session and publishes every participant's departure.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public void Disband()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Demos_Coop_DemoSession_Disband_examples">Examples</h4>
+  <pre><code class="lang-csharp">m_Session.Disband();</code></pre>
+
+
+
+
+
+
+  <a id="CodeSmile_Luny_Demos_Coop_DemoSession_EnsureGroup_" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.EnsureGroup*"></a>
+
+  <h3 id="CodeSmile_Luny_Demos_Coop_DemoSession_EnsureGroup" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.EnsureGroup">
+  EnsureGroup()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L171"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Starts a new local group when none runs: enables the co-op host, whose new session the roster and the UI
+host then show. The game's Play command calls it before it starts.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public CoopSession EnsureGroup()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">CoopSession</span></dt>
+    <dd><p>The running session.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+  <h4 class="section" id="CodeSmile_Luny_Demos_Coop_DemoSession_EnsureGroup_examples">Examples</h4>
+  <pre><code class="lang-csharp">var session = m_Session.EnsureGroup();</code></pre>
+
+
+
+
+
+
+  <h2 class="section" id="events">Events
+</h2>
+
+
+
+  <h3 id="CodeSmile_Luny_Demos_Coop_DemoSession_GroupEnded" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.GroupEnded">
+  GroupEnded
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L159"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Raised after a group ended, by a return to the main menu or a discarded roster.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public event Action GroupEnded</code></pre>
+  </div>
+
+
+
+
+
+
+  <h4 class="section">Event Type</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Action</span></dt>
+    <dd></dd>
+  </dl>
+
+
+  <h4 class="section" id="CodeSmile_Luny_Demos_Coop_DemoSession_GroupEnded_examples">Examples</h4>
+  <pre><code class="lang-csharp">m_Session.GroupEnded += () =&gt; m_SeatLines.Use(null);</code></pre>
+
+
+
+
+
+
+
+  <h3 id="CodeSmile_Luny_Demos_Coop_DemoSession_GroupStarted" data-uid="CodeSmile.Luny.Demos.Coop.DemoSession.GroupStarted">
+  GroupStarted
+  <a class="header-action link-secondary" title="View source" href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L155"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Raised when a new group's session started, before it admits control: bind the scene's adapters to it.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs" style="display: block;white-space: pre-wrap;padding-left: 6em;text-indent: -5em;">public event Action&lt;CoopSession&gt; GroupStarted</code></pre>
+  </div>
+
+
+
+
+
+
+  <h4 class="section">Event Type</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Action</span>&lt;<span class="xref">CoopSession</span>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+  <h4 class="section" id="CodeSmile_Luny_Demos_Coop_DemoSession_GroupStarted_examples">Examples</h4>
+  <pre><code class="lang-csharp">m_Session.GroupStarted += session =&gt; m_SeatLines.Use(session);</code></pre>
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/CodeSmile-0000011110110111/LunyScript2/blob/main/Packages/de.codesmile.luny/CodeSmile/Luny/DemoSupport/Coop/DemoSession.cs/#L101" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
